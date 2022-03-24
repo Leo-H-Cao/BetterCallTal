@@ -1,9 +1,10 @@
 {
-	"dimensions": [
+	"general": [
 		{
 			"xSize": 8,
 			"ySize": 8,
-			"colors": ["black", "white"]
+			"colors": ["black", "white"],
+			"wincondition": ["checkmate", "stalemate"]
 		}
 	],
 	"playerInfo": [
