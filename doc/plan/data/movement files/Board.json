@@ -2,7 +2,8 @@
 	"dimensions": [
 		{
 			"xSize": 8,
-			"ySize": 8
+			"ySize": 8,
+			"colors": ["black", "white"]
 		}
 	],
 	"pieces": [
@@ -10,6 +11,7 @@
 			"coordinateX": 0,
 			"coordinateY": 1,
 			"pieceName": "Pawn",
+			"imgFile": "pawn.jpg",
 			"pointValue": 1,
 			"team": 1,
 			"movements": [
@@ -30,6 +32,7 @@
 			"coordinateX": 0,
 			"coordinateY": 4,
 			"pieceName": "King",
+			"imgFile": "king.jpg",
 			"pointValue": 4,
 			"team": 1,
 			"movements": ["verticalOne", "horizontalOne", "diagonalOne"],
@@ -42,6 +45,7 @@
 			"coordinateX": 4,
 			"coordinateY": 4,
 			"pieceName": "Blackhole",
+			"imgFile": "blackhole.jpg",
 			"pointValue": 0,
 			"team": -1,
 			"movements": [],
