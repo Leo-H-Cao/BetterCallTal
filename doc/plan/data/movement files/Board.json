@@ -48,7 +48,7 @@
 			"captures": [],
 			"movementModifiers": [],
 			"onIteractionModifier": ["blackhole"],
-			"mainPiece": 1
+			"mainPiece": 0
 		}
 	]
 }
