@@ -33,7 +33,7 @@
 				"diagonalOne"
 			],
 			"movementModifiers": [
-				"doublefirstmove",
+				"doublefirstmove"
 			],
 			"onInteractionModifier": ["removePiece"],
 			"mainPiece": false

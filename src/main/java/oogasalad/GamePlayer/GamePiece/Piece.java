@@ -3,6 +3,8 @@ package oogasalad.GamePlayer.GamePiece;
 import java.util.List;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.Movement.MovementModifier;
+import oogasalad.GamePlayer.Movement.MovementSetModifier;
 
 public class Piece {
 
@@ -14,6 +16,7 @@ public class Piece {
 
   private List<Movement> movements;
   private List<Movement> captures;
+  private List<MovementSetModifier> movementSetModifiers;
   private List<MovementModifier> movementModifiers;
   private List<MovementModifier> onInteractionModifiers;
   /***
@@ -27,6 +30,7 @@ public class Piece {
     this.mainPiece = pieceData.mainPiece();
     this.movements = pieceData.movements();
     this.captures = pieceData.captures();
+    this.movementSetModifiers = pieceData.movementSetModifiers();
     this.movementModifiers = pieceData.movementModifiers();
     this.onInteractionModifiers = pieceData.onInteractionModifiers();
   }
