@@ -36,7 +36,7 @@
 				"doublefirstmove",
 			],
 			"onInteractionModifier": ["removePiece"],
-			"mainPiece": 0
+			"mainPiece": false
 		},
 		{
 			"coordinateX": 0,
@@ -49,7 +49,7 @@
 			"captures": ["verticalOne", "horizontalOne", "diagonalOne"],
 			"movementModifiers": [],
 			"onInteractionModifier": ["removePiece"],
-			"mainPiece": 1
+			"mainPiece": true
 		},
 		{
 			"coordinateX": 4,
@@ -62,7 +62,7 @@
 			"captures": [],
 			"movementModifiers": [],
 			"onInteractionModifier": ["blackhole"],
-			"mainPiece": 0
+			"mainPiece": false
 		}
 	]
 }

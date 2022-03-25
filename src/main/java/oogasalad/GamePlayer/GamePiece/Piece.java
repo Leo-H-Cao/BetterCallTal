@@ -1,42 +1,34 @@
 package oogasalad.GamePlayer.GamePiece;
 
-import java.util.Collection;
 import java.util.List;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.ChessTile;
-import oogasalad.GamePlayer.UnboundedMovement;
+import oogasalad.GamePlayer.Movement.Movement;
 
-public class Piece implements UnboundedMovement {
+public class Piece {
 
+  private Coordinate coordinates;
+  private String name;
+  private double pointValue;
+  private int team;
+  private boolean mainPiece;
 
-  /**
-   * set rules for bounded movement of a piece (e.g. knight). For setup purposes, the piece is placed at (0,0).
-   * @param allowedMovement list of relative coordinates to which this piece may move (e.g. [(-1,-2), (-1,2), ... for a knight)
+  private List<Movement> movements;
+  private List<Movement> captures;
+  private List<MovementModifier> movementModifiers;
+  private List<MovementModifier> onInteractionModifiers;
+  /***
+   * Creates a chess piece with all of its attributes
    */
-  @Override
-  public void setBoundedMovementRules(List<Coordinate> allowedMovement) {
+  public Piece(PieceData pieceData) {
+    this.coordinates = pieceData.startingLocation();
+    this.name = pieceData.name();
+    this.pointValue = pieceData.pointValue();
+    this.team = pieceData.team();
+    this.mainPiece = pieceData.mainPiece();
+    this.movements = pieceData.movements();
+    this.captures = pieceData.captures();
+    this.movementModifiers = pieceData.movementModifiers();
+    this.onInteractionModifiers = pieceData.onInteractionModifiers();
 
-  }
-
-  /**
-   * set rules for unbounded movement of a piece (e.g. queen). For setup purposes, the piece is placed at (0,0).
-   * @param direction list of relative coordinates to which this piece may move (e.g. call with (-1,-1), then (-1,0), etc. for a queen)
-   */
-  @Override
-  public void setUnboundedMovementPattern(Coordinate direction) {
-
-  }
-
-  /**
-   * calculates all reachable squares for a piece in a given direction
-   * @param position position of the piece
-   * @param direction direction to search for movement
-   * @param board current chessboard
-   * @return a collection of chess tiles that are reachable in the given direction
-   */
-  @Override
-  public Collection<ChessTile> seekDirection(Coordinate position, Coordinate direction, ChessBoard board) {
-    return null;
   }
 }
