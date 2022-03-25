@@ -10,5 +10,5 @@ public interface EndCondition {
    *
    * @return the point values awarded to every team if a game is over, else an empty map
    */
-  Map<Integer, Double> getWinningTeams(ChessBoard board);
+  Map<Integer, Double> getScores(ChessBoard board);
 }
