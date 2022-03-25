@@ -10,4 +10,10 @@ public interface Board {
    * @return if move can be done
    */
   boolean move(Piece piece, Tile toSquare);
+
+  /***
+   * retrieves the current state of the Board
+   * @return
+   */
+  Board retrieveState();
 }
