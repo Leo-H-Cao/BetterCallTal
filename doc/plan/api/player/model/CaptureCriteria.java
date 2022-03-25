@@ -9,5 +9,5 @@ public interface CaptureCriteria {
    * @param tile that the piece moves to
    * @return map of updated tiles
    */
-  boolean capture(Piece piece, Tile toTile);
+  boolean isCapture(Piece piece, Tile toTile);
 }
