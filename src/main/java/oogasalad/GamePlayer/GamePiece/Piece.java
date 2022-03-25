@@ -29,6 +29,5 @@ public class Piece {
     this.captures = pieceData.captures();
     this.movementModifiers = pieceData.movementModifiers();
     this.onInteractionModifiers = pieceData.onInteractionModifiers();
-
   }
 }
