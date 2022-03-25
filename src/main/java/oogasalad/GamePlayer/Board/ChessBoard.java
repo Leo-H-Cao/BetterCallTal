@@ -1,10 +1,14 @@
 package oogasalad.GamePlayer.Board;
 
+import java.util.List;
 import java.util.Set;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
 public class ChessBoard {
 
+  public ChessBoard(int length, int height, TurnCriteria turnCriteria, int numTeams, List<EndCondition> endConditions) {
+
+  }
   /***
    * Moves the piece on fromSquare to toSquare
    *

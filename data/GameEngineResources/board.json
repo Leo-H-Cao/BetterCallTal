@@ -5,7 +5,7 @@
 			"ySize": 8,
 			"turnCriteria": "linear",
 			"colors": ["black", "white"],
-			"winCondition": ["tenMoves"]
+			"winCondition": ["checkmate", "stalemate"]
 		}
 	],
 	"playerInfo": [
@@ -34,6 +34,8 @@
 			],
 			"movementModifiers": [
 				"doublefirstmove",
+				"promotion",
+				"enpassant"
 			],
 			"onInteractionModifier": ["removePiece"],
 			"mainPiece": 0
@@ -47,7 +49,7 @@
 			"team": 1,
 			"movements": ["verticalOne", "horizontalOne", "diagonalOne"],
 			"captures": ["verticalOne", "horizontalOne", "diagonalOne"],
-			"movementModifiers": [],
+			"movementModifiers": ["castle"],
 			"onInteractionModifier": ["removePiece"],
 			"mainPiece": 1
 		},
