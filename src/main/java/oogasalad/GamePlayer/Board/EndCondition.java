@@ -2,6 +2,7 @@ package oogasalad.GamePlayer.Board;
 
 import java.util.List;
 import java.util.Map;
+import oogasalad.GamePlayer.Board.ChessBoard;
 
 public interface EndCondition {
 
