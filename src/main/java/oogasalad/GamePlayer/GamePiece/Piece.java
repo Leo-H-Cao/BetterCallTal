@@ -2,7 +2,7 @@ package oogasalad.GamePlayer.GamePiece;
 
 import java.util.Collection;
 import java.util.List;
-import oogasalad.GamePlayer.Board.BoardCoordinate;
+import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.ChessTile;
 import oogasalad.GamePlayer.UnboundedMovement;
@@ -15,7 +15,7 @@ public class Piece implements UnboundedMovement {
    * @param allowedMovement list of relative coordinates to which this piece may move (e.g. [(-1,-2), (-1,2), ... for a knight)
    */
   @Override
-  public void setBoundedMovementRules(List<BoardCoordinate> allowedMovement) {
+  public void setBoundedMovementRules(List<Coordinate> allowedMovement) {
 
   }
 
@@ -24,7 +24,7 @@ public class Piece implements UnboundedMovement {
    * @param direction list of relative coordinates to which this piece may move (e.g. call with (-1,-1), then (-1,0), etc. for a queen)
    */
   @Override
-  public void setUnboundedMovementPattern(BoardCoordinate direction) {
+  public void setUnboundedMovementPattern(Coordinate direction) {
 
   }
 
@@ -36,7 +36,7 @@ public class Piece implements UnboundedMovement {
    * @return a collection of chess tiles that are reachable in the given direction
    */
   @Override
-  public Collection<ChessTile> seekDirection(BoardCoordinate position, BoardCoordinate direction, ChessBoard board) {
+  public Collection<ChessTile> seekDirection(Coordinate position, Coordinate direction, ChessBoard board) {
     return null;
   }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
+import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
 public class ChessBoard {
@@ -20,13 +21,13 @@ public class ChessBoard {
     this.endConditions = endConditions;
   }
   /***
-   * Moves the piece on fromSquare to toSquare
+   * Moves the piece to the finalSquare
    *
    * @param piece to move
    * @param toSquare end square
    * @return set of updated tiles
    */
-  public Set<ChessTile> move(Piece piece, ChessTile toSquare) throws InvalidMoveException {
+  public Set<ChessTile> move(Piece piece, ChessTile finalSquare) throws InvalidMoveException, OutsideOfBoardException {
     return null;
   }
 
