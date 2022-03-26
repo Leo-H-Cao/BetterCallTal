@@ -5,9 +5,15 @@ public interface Board {
   /***
    * Moves the piece on fromSquare to toSquare
    *
-   * @param fromSquare origin square
+   * @param piece to move
    * @param toSquare end square
-   * @return if move can be done
+   * @return set of updated tiles
    */
-  boolean move(Tile fromSquare, Tile toSquare);
+  Set<Tile> move(Piece piece, Tile toSquare);
+
+  /***
+   * retrieves the current state of the Board
+   * @return
+   */
+  Board retrieveState();
 }
