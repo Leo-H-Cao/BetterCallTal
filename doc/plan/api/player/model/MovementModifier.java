@@ -9,5 +9,5 @@ public interface MovementModifier {
    * @param movementSet to modify
    * @return movementSet modified to fit rule determined by the exact implementation
    */
-  Set<Movement> modifyMovement(Set<Movement> movementSet);
+  Set<Movement> modifyMovement(Piece piece, Set<Movement> movementSet);
 }
