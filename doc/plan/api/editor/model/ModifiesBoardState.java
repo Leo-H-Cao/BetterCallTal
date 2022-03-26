@@ -8,7 +8,7 @@ public interface ModifiesBoardState {
    * @param width of board
    * @return BoardShape with new dimensions
    */
-  public BoardShape changeBoardShape(int height, int width);
+  public void changeBoardShape(int height, int width);
 
   /**
    * Creates special effect that can be placed on board tiles as described by user
