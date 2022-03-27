@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 public class MainView {
 	private ResourceBundle language;
 	public MainView(Stage stage) {
-		LanguageModal languageModal = new LanguageModal();
+		LanguageModal languageModal = new LanguageModal(stage);
 
 	}
 }
