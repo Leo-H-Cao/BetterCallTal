@@ -1,8 +1,8 @@
 {
 	"general": [
 		{
-			"xSize": 8,
-			"ySize": 8,
+			"rows": 8,
+			"columns": 8,
 			"turnCriteria": "linear",
 			"colors": ["black", "white"],
 			"winCondition": ["tenMoves"]
