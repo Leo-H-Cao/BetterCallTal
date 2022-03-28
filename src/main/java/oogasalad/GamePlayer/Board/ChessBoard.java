@@ -25,9 +25,9 @@ public class ChessBoard {
    *
    * @param piece to move
    * @param finalSquare end square
-   * @return set of updated tiles
+   * @return set of updated tiles + next player turn
    */
-    public Set<ChessTile> move(Piece piece, ChessTile finalSquare) throws InvalidMoveException, OutsideOfBoardException {
+    public TurnUpdate move(Piece piece, ChessTile finalSquare) throws InvalidMoveException, OutsideOfBoardException {
     return null;
   }
 
