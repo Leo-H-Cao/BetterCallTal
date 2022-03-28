@@ -12,12 +12,12 @@ public class ChessBoard {
 
   private ChessTile[][] board;
   private TurnCriteria turnCriteria;
-  private int numTeams;
+  private Player[] players;
   private List<EndCondition> endConditions;
-  public ChessBoard(int length, int height, TurnCriteria turnCriteria, int numTeams, List<EndCondition> endConditions) {
+  public ChessBoard(int length, int height, TurnCriteria turnCriteria, Player[] players, List<EndCondition> endConditions) {
     board = new ChessTile[length][height];
     this.turnCriteria = turnCriteria;
-    this.numTeams = numTeams;
+    this.players = players;
     this.endConditions = endConditions;
   }
   /***
@@ -84,4 +84,6 @@ public class ChessBoard {
     if(!inBounds(coordinate)) throw new OutsideOfBoardException(coordinate.toString());
     return getTile(coordinate).getPiece().isEmpty();
   }
+
+  public
 }
