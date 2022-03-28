@@ -64,7 +64,8 @@
 				[-1,0],
 				[-1,-1]
 			],
-			"captures": [
+			"unboundedCaptures": [],
+			"boundedCaptures": [
 				[1,1],
 				[1,0],
 				[1,-1],
@@ -86,8 +87,10 @@
 			"imgFile": "blackhole.jpg",
 			"pointValue": 0,
 			"team": -1,
-			"movements": [],
-			"captures": [],
+			"unboundedMovements": [],
+			"boundedMovements": [],
+			"unboundedCaptures": [],
+			"boundedCaptures": [],
 			"movementSetModifiers": [],
 			"movementModifiers": [],
 			"onInteractionModifier": ["blackhole"],
