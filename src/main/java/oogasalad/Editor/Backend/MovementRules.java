@@ -1,2 +1,5 @@
-package oogasalad.Editor.Backend;public class MovementRules {
+package oogasalad.Editor.Backend;
+
+public class MovementRules {
+
 }
