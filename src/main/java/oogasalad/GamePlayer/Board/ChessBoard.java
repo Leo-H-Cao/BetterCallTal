@@ -62,7 +62,7 @@ public class ChessBoard {
   public boolean inBounds(Coordinate coordinates) {return coordinates.row() < board.length && coordinates.col() < board[coordinates.row()].length;}
 
   /***
-   * Gets the tile at the specified coordinate
+   * Gets the tile at the specified coordinates
    *
    * @param coordinate is the coordinate of the tile to get
    * @return tile at specificed coordinate
