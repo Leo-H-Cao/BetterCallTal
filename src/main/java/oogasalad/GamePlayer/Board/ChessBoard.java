@@ -59,7 +59,7 @@ public class ChessBoard {
    * @param coordinates to check
    * @return if a given coordinate is in bounds
    */
-  public boolean inBounds(Coordinate coordinates) {return coordinates.row() < board.length && coordinates.col() < board[coordinates.row()].length;}
+  public boolean inBounds(Coordinate coordinates) {return coordinates.getRow() < board.length && coordinates.getCol() < board[coordinates.getRow()].length;}
 
   /***
    * Gets the tile at the specified coordinates
@@ -70,7 +70,7 @@ public class ChessBoard {
    */
   public ChessTile getTile(Coordinate coordinate) throws OutsideOfBoardException {
     if(!inBounds(coordinate)) throw new OutsideOfBoardException(coordinate.toString());
-    return board[coordinate.row()][coordinate.col()];
+    return board[coordinate.getRow()][coordinate.getCol()];
   }
 
   /***

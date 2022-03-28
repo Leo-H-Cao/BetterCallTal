@@ -44,11 +44,11 @@ public class Movement {
   public Set<ChessTile> getMoves(Piece piece, ChessBoard board, boolean isCapture) {
     Set<ChessTile> moves = new HashSet<>();
     Coordinate baseCoordinates = piece.getCoordinates();
-    for (Coordinate coordinates : possibleMoves) {
-      Coordinate newCoordinate = new Coordinate(baseCoordinates.row() + coordinates.row(),
-          baseCoordinates.col() + coordinates.col());
-      if (board.inBounds(newCoordinate)) {
-        infinite ? moves.addAll(getMoves(piece, board)) : moves.add(get(newCoordinate));
+    for (Coordinate delta : possibleMoves) {
+      if(infinite) {
+        moves.addAll(getMoveBeam(baseCoordinates, delta, board));
+      } else{
+        moves.add(board.getTile(Coordinate.add(baseCoordinates, delta)));
       }
     }
     return null;
@@ -63,11 +63,11 @@ public class Movement {
    */
   private Set<ChessTile> getMoveBeam(Coordinate base, Coordinate delta, ChessBoard board) {
     Set<ChessTile> beam = new HashSet<>();
-    Coordinate currentCoords = new Coordinate(base.row() + delta.row(), base.col() + delta.col());
+    Coordinate currentCoords = new Coordinate(base.getRow() + delta.getRow(), base.getCol() + delta.getCol());
     while (board.inBounds(currentCoords) && isTileEmpty(board, currentCoords)) {
       try {
         beam.add(board.getTile(currentCoords));
-        currentCoords = new Coordinate(currentCoords.row() + delta.row(), currentCoords.col() + delta.col());
+        currentCoords = new Coordinate(currentCoords.getRow() + delta.getRow(), currentCoords.getCol() + delta.getCol());
       } catch (OutsideOfBoardException e) {
         break;
       }
