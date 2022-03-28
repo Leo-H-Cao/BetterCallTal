@@ -21,6 +21,7 @@ public class BoardSetup {
     int rows = Integer.parseInt(myJSONObject.getJSONArray("general").getJSONObject(0).get("rows").toString());
     int columns = Integer.parseInt(myJSONObject.getJSONArray("general").getJSONObject(0).get("columns").toString());
     myBoard = new ChessBoard(rows, columns, null ,2, null);
+
     return myBoard;
   }
 
