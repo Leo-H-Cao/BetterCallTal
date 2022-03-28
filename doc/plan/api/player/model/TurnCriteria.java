@@ -1,6 +1,6 @@
 package oogasalad;
 
-public interface CaptureCriteria {
+public interface TurnCriteria {
 
   /***
    * Determines which player is currently playing

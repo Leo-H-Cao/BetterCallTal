@@ -1,0 +1,12 @@
+[
+	{
+		"coordinateX": 1,
+		"coordinateY": 0,
+		"infinite": true
+	},
+	{
+		"coordinateX": -1,
+		"coordinateY": 0,
+		"infinite": true
+	}
+]
