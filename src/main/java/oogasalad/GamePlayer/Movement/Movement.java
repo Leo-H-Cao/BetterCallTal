@@ -2,7 +2,9 @@ package oogasalad.GamePlayer.Movement;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Queue;
 import java.util.Set;
+import java.util.Stack;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
@@ -30,7 +32,6 @@ public class Movement {
    * @return set of updated tiles
    */
   public Set<ChessTile> movePiece(Piece piece, ChessTile finalSquare, ChessBoard board) {
-
   }
 
   /***
@@ -46,14 +47,14 @@ public class Movement {
     Coordinate baseCoordinates = piece.getCoordinates();
     for (Coordinate delta : possibleMoves) {
       if(infinite) {
-        moves.addAll(getMoveBeam(baseCoordinates, delta, board));
+       moves.addAll(getMoveBeam(baseCoordinates, delta, board, isCapture));
       } else{
         try {
           moves.add(board.getTile(Coordinate.add(baseCoordinates, delta)));
         } catch(OutsideOfBoardException ignored) {}
       }
     }
-    return null;
+    return moves;
   }
 
   /***
@@ -61,10 +62,10 @@ public class Movement {
    *
    * @param base coordinate
    * @param delta change in coordinate
-   * @return Set of Chess Tiles extending in that direction
+   * @return Stack of Chess Tiles extending in that direction up until an occupied square is reached
    */
-  private Set<ChessTile> getMoveBeam(Coordinate base, Coordinate delta, ChessBoard board) {
-    Set<ChessTile> beam = new HashSet<>();
+  private Stack<ChessTile> getMoveBeam(Coordinate base, Coordinate delta, ChessBoard board) {
+    Stack<ChessTile> beam = new Stack<>();
     Coordinate currentCoords = new Coordinate(base.getRow() + delta.getRow(), base.getCol() + delta.getCol());
     while (board.inBounds(currentCoords) && isTileEmpty(board, currentCoords)) {
       try {

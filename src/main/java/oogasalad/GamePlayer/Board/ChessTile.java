@@ -33,6 +33,13 @@ public class ChessTile {
   }
 
   /***
+   * @return coordinates of tile
+   */
+  public Coordinate getCoordinates() {
+    return coordinate;
+  }
+
+  /***
    * Gets the piece on the square or the most recent piece on the square
    *
    * @return piece on the square or empty Optional if no piece is on the square

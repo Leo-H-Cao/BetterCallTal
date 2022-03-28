@@ -72,4 +72,15 @@ public class Piece {
     }
     return false;
   }
+
+  /***
+   * @param pieces to potentially capture
+   * @return if this piece can capture any piece in a list of pieces
+   */
+  public boolean canCapture(List<Piece> pieces) {
+    for(Piece piece: pieces) {
+      if(canCapture(piece)) return true;
+    }
+    return false;
+  }
 }
