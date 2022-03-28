@@ -27,7 +27,7 @@ public class ChessBoard {
    * @param finalSquare end square
    * @return set of updated tiles
    */
-  public Set<ChessTile> move(Piece piece, ChessTile finalSquare) throws InvalidMoveException, OutsideOfBoardException {
+    public Set<ChessTile> move(Piece piece, ChessTile finalSquare) throws InvalidMoveException, OutsideOfBoardException {
     return null;
   }
 
