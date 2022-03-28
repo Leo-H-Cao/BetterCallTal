@@ -56,7 +56,21 @@ public class ChessBoard {
   }
 
   /***
+   * @param coordinates to check
    * @return if a given coordinate is in bounds
    */
   public boolean inBounds(Coordinate coordinates) {return coordinates.row() < board.length && coordinates.col() < board[coordinates.row()].length;}
+
+  /***
+   * @param coordinate is the coordinate of the tile to get
+   * @return tile at specificed coordinate
+   */
+  public ChessTile getTile(Coordinate coordinate) throws OutsideOfBoardException {
+    if(!inBounds(coordinate)) throw new OutsideOfBoardException(coordinate.toString());
+    return board[coordinate.row()][coordinate.col()];
+  }
+
+  public boolean isTileEmpty(Coordinate coordinate) {
+
+  }
 }
