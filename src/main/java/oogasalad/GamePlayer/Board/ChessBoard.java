@@ -85,5 +85,11 @@ public class ChessBoard {
     return getTile(coordinate).getPiece().isEmpty();
   }
 
-  public
+  /***
+   * @param id of player
+   * @return player with given id
+   */
+  public Player getPlayer(int id) {
+    return players[Math.min(id, players.length - 1)];
+  }
 }

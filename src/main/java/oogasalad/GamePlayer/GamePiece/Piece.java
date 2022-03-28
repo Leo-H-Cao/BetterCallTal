@@ -64,6 +64,12 @@ public class Piece {
    * @return if this piece can capture another piece
    */
   public boolean canCapture(Piece piece) {
-    return board.getPlayer(this.team).getOpponents().contains(piece.team);
+    int[] opponentIDs = board.getPlayer(this.team).opponentIDs();
+    for(int opponentID : opponentIDs) {
+      if (piece.team == board.getPlayer(opponentID).teamID()) {
+        return true;
+      }
+    }
+    return false;
   }
 }
