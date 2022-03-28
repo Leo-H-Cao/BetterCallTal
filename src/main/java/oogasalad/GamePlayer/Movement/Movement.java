@@ -38,16 +38,17 @@ public class Movement {
    *
    * @param piece to get moves from
    * @param board to move on
+   * @param isCapture to decide whether to return a
    * @return set of tiles the piece can move to
    */
-  public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
+  public Set<ChessTile> getMoves(Piece piece, ChessBoard board, boolean isCapture) {
     Set<ChessTile> moves = new HashSet<>();
     Coordinate baseCoordinates = piece.getCoordinates();
     for (Coordinate coordinates : possibleMoves) {
       Coordinate newCoordinate = new Coordinate(baseCoordinates.row() + coordinates.row(),
           baseCoordinates.col() + coordinates.col());
       if (board.inBounds(newCoordinate)) {
-        moves.addAll()
+        infinite ? moves.addAll(getMoves(piece, board)) : moves.add(get(newCoordinate));
       }
     }
     return null;

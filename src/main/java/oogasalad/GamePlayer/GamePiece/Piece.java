@@ -52,7 +52,18 @@ public class Piece {
     return null;
   }
 
+  /***
+   * @return coordinate of piece
+   */
   public Coordinate getCoordinates() {
     return coordinates;
+  }
+
+  /***
+   * @param piece to capture
+   * @return if this piece can capture another piece
+   */
+  public boolean canCapture(Piece piece) {
+    return board.getPlayer(this.team).getOpponents().contains(piece.team);
   }
 }
