@@ -27,10 +27,11 @@
 			"pointValue": 1,
 			"team": 1,
 			"movements": [
-				"verticalOne"
+				[0, 1]
 			],
 			"captures": [
-				"diagonalOne"
+				[-1, 1]
+				[-1, -1]
 			],
 			"movementSetModifiers": [
 				"doublefirstmove",
