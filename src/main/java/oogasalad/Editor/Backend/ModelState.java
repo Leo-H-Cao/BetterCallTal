@@ -12,7 +12,7 @@ public class ModelState implements ModifiesBoardState {
 
 
   @Override
-  public void changeBoardShape(int width, int height) {
+  public void changeBoardSize(int width, int height) {
     myEditorBoard.changeBoardSize(width, height);
   }
 
@@ -34,5 +34,15 @@ public class ModelState implements ModifiesBoardState {
   @Override
   public void removePiece(int x, int y) {
     myEditorBoard.removePieceStartingLocation(x, y);
+  }
+
+  @Override
+  public int getBoardWidth(){
+    return myEditorBoard.getBoardWidth();
+  }
+
+  @Override
+  public int getBoardHeight(){
+    return myEditorBoard.getBoardHeight();
   }
 }

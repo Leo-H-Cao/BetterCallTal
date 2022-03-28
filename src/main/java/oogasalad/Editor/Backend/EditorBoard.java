@@ -61,6 +61,14 @@ public class EditorBoard {
     board.get(y).get(x).addPiece(piece);
   }
 
+  public int getBoardWidth(){
+    return board.get(0).size();
+  }
+
+  public int getBoardHeight(){
+    return board.size();
+  }
+
   public void removePieceStartingLocation(int x, int y){
     board.get(y).get(x).removePiece();
   }
