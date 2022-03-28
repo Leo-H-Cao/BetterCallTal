@@ -1,0 +1,76 @@
+{
+	"general": [
+		{
+			"rows": 8,
+			"columns": 8,
+			"turnCriteria": "linear",
+			"colors": ["black", "white"],
+			"winCondition": ["checkmate", "stalemate"]
+		}
+	],
+	"playerInfo": [
+		{
+			"team": 0,
+			"opponents": [1]
+		},
+		{
+			"team": 1,
+			"opponents": [0]
+		}
+	],
+	"pieces": [
+		{
+			"coordinateX": 0,
+			"coordinateY": 1,
+			"pieceName": "Pawn",
+			"imgFile": "pawn.jpg",
+			"pointValue": 1,
+			"team": 1,
+			"movements": [
+				"verticalOne"
+			],
+			"captures": [
+				"diagonalOne"
+			],
+			"movementSetModifiers": [
+				"doublefirstmove",
+				"enpassant",
+				"check"
+			],
+			"movementModifiers": [
+				"promotion",
+				"atomic"
+			],
+			"onInteractionModifier": ["removePiece"],
+			"mainPiece": 0
+		},
+		{
+			"coordinateX": 0,
+			"coordinateY": 4,
+			"pieceName": "King",
+			"imgFile": "king.jpg",
+			"pointValue": 4,
+			"team": 1,
+			"movements": ["verticalOne", "horizontalOne", "diagonalOne"],
+			"captures": ["verticalOne", "horizontalOne", "diagonalOne"],
+			"movementSetModifiers": ["castle", "check"],
+			"movementModifiers": ["atomic"],
+			"onInteractionModifier": ["removePiece"],
+			"mainPiece": 1
+		},
+		{
+			"coordinateX": 4,
+			"coordinateY": 4,
+			"pieceName": "Blackhole",
+			"imgFile": "blackhole.jpg",
+			"pointValue": 0,
+			"team": -1,
+			"movements": [],
+			"captures": [],
+			"movementSetModifiers": [],
+			"movementModifiers": [],
+			"onInteractionModifier": ["blackhole"],
+			"mainPiece": 0
+		}
+	]
+}

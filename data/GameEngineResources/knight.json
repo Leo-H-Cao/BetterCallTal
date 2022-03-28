@@ -1,0 +1,32 @@
+[
+	{
+		"coordinateX": 1,
+		"coordinateY": 2,
+		"infinite": false
+	},
+	{
+		"coordinateX": 2,
+		"coordinateY": 1,
+		"infinite": false
+	},
+	{
+		"coordinateX": -1,
+		"coordinateY": 2,
+		"infinite": false
+	},
+	{
+		"coordinateX": -2,
+		"coordinateY": 1,
+		"infinite": false
+	},
+	{
+		"coordinateX": 1,
+		"coordinateY": -2,
+		"infinite": false
+	},
+	{
+		"coordinateX": 2,
+		"coordinateY": -1,
+		"infinite": false
+	}
+]

@@ -1,4 +1,4 @@
-package oogasalad;
+package oogasalad.GamePlayer.Board;
 
 public interface TurnCriteria {
 

@@ -7,9 +7,9 @@ public interface Board {
    *
    * @param piece to move
    * @param toSquare end square
-   * @return if move can be done
+   * @return set of updated tiles
    */
-  boolean move(Piece piece, Tile toSquare);
+  Set<Tile> move(Piece piece, Tile toSquare);
 
   /***
    * retrieves the current state of the Board
