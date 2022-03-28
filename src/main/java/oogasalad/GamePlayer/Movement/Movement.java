@@ -2,6 +2,7 @@ package oogasalad.GamePlayer.Movement;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
@@ -46,13 +47,23 @@ public class Movement {
     Set<ChessTile> moves = new HashSet<>();
     Coordinate baseCoordinates = piece.getCoordinates();
     for (Coordinate delta : possibleMoves) {
+      Stack<ChessTile> moveStack = new Stack<>();
       if(infinite) {
-       moves.addAll(getMoveBeam(baseCoordinates, delta, board, isCapture));
+        moveStack = getMoveBeam(baseCoordinates, delta, board);
       } else{
-        try {
-          moves.add(board.getTile(Coordinate.add(baseCoordinates, delta)));
-        } catch(OutsideOfBoardException ignored) {}
+        Optional<ChessTile> nextTile = getNextTile(baseCoordinates, delta, board);
+        if(nextTile.isPresent()) {
+          moveStack.add(nextTile.get());
+        }
       }
+      if(isCapture) {
+        ChessTile captureSquare = moveStack.peek();
+        moveStack = new Stack<>();
+        if(piece.canCapture(captureSquare.getPieces())) {
+          moveStack.add(captureSquare);
+        }
+      }
+      moves.addAll(moveStack);
     }
     return moves;
   }
@@ -68,14 +79,31 @@ public class Movement {
     Stack<ChessTile> beam = new Stack<>();
     Coordinate currentCoords = new Coordinate(base.getRow() + delta.getRow(), base.getCol() + delta.getCol());
     while (board.inBounds(currentCoords) && isTileEmpty(board, currentCoords)) {
-      try {
-        beam.add(board.getTile(currentCoords));
+      Optional<ChessTile> nextTile = getNextTile(base, delta, board);
+      if(nextTile.isPresent()) {
+        beam.add(nextTile.get());
         currentCoords = new Coordinate(currentCoords.getRow() + delta.getRow(), currentCoords.getCol() + delta.getCol());
-      } catch (OutsideOfBoardException e) {
+      } else {
         break;
       }
     }
     return beam;
+  }
+
+  /***
+   * Gets the next tile given a base and delta
+   *
+   * @param base to start from
+   * @param delta to add to
+   * @param board to go on
+   * @return next tile
+   */
+  private Optional<ChessTile> getNextTile(Coordinate base, Coordinate delta, ChessBoard board) {
+    try {
+      return Optional.of(board.getTile(Coordinate.add(base, delta)));
+    } catch(OutsideOfBoardException e) {
+      return Optional.empty();
+    }
   }
 
   /***
