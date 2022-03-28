@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.Stack;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.ChessTile;
+import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
@@ -31,8 +32,14 @@ public class Movement {
    * @param finalSquare end square
    * @param board to move on
    * @return set of updated tiles
+   * @throws InvalidMoveException if the piece cannot move to the given square
    */
-  public Set<ChessTile> movePiece(Piece piece, ChessTile finalSquare, ChessBoard board) {
+  public Set<ChessTile> movePiece(Piece piece, ChessTile finalSquare, ChessBoard board)
+      throws InvalidMoveException {
+    if(getMoves(piece, board).contains(finalSquare)) {
+      return piece.move(finalSquare);
+    }
+    throw new InvalidMoveException(piece + ": " + finalSquare);
   }
 
   /***
@@ -40,10 +47,9 @@ public class Movement {
    *
    * @param piece to get moves from
    * @param board to move on
-   * @param isCapture to decide whether to return a
    * @return set of tiles the piece can move to
    */
-  public Set<ChessTile> getMoves(Piece piece, ChessBoard board, boolean isCapture) {
+  public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
     Set<ChessTile> moves = new HashSet<>();
     Coordinate baseCoordinates = piece.getCoordinates();
     for (Coordinate delta : possibleMoves) {
@@ -56,10 +62,9 @@ public class Movement {
           moveStack.add(nextTile.get());
         }
       }
-      if(isCapture) {
+      if(!moveStack.isEmpty()) {
         ChessTile captureSquare = moveStack.peek();
-        moveStack = new Stack<>();
-        if(piece.canCapture(captureSquare.getPieces())) {
+        if (piece.canCapture(captureSquare.getPieces())) {
           moveStack.add(captureSquare);
         }
       }
