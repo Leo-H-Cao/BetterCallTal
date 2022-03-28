@@ -3,7 +3,6 @@ package oogasalad.GamePlayer.Movement;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 import oogasalad.GamePlayer.Board.ChessBoard;
