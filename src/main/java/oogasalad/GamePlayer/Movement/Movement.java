@@ -48,7 +48,9 @@ public class Movement {
       if(infinite) {
         moves.addAll(getMoveBeam(baseCoordinates, delta, board));
       } else{
-        moves.add(board.getTile(Coordinate.add(baseCoordinates, delta)));
+        try {
+          moves.add(board.getTile(Coordinate.add(baseCoordinates, delta)));
+        } catch(OutsideOfBoardException ignored) {}
       }
     }
     return null;
