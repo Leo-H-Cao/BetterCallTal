@@ -51,4 +51,8 @@ public class Piece {
   public Set<ChessTile> move(ChessTile finalSquare) {
     return null;
   }
+
+  public Coordinate getCoordinates() {
+    return coordinates;
+  }
 }

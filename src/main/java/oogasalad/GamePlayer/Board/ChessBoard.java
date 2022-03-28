@@ -6,6 +6,7 @@ import java.util.Set;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.Movement.Coordinate;
 
 public class ChessBoard {
 
@@ -53,4 +54,9 @@ public class ChessBoard {
   public Map<Integer, Double> getScores() {
     return null;
   }
+
+  /***
+   * @return if a given coordinate is in bounds
+   */
+  public boolean inBounds(Coordinate coordinates) {return coordinates.row() < board.length && coordinates.col() < board[coordinates.row()].length;}
 }
