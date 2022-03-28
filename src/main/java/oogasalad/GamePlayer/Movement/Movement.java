@@ -3,7 +3,6 @@ package oogasalad.GamePlayer.Movement;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -43,6 +42,44 @@ public class Movement {
   }
 
   /***
+   * Captures piece on captureSquare
+   *
+   * @param piece to move
+   * @param captureSquare end square
+   * @param board to move on
+   * @return set of updated tiles
+   * @throws InvalidMoveException if the piece cannot move to the given square
+   */
+  public Set<ChessTile> capturePiece(Piece piece, ChessTile captureSquare, ChessBoard board) throws InvalidMoveException {
+    if(getCaptures(piece, board).contains(captureSquare)) {
+      return piece.move(captureSquare);
+    }
+    throw new InvalidMoveException(piece + ": " + captureSquare);
+  }
+
+  /***
+   * Returns all possible captures a piece can make
+   *
+   * @param piece to get captures from
+   * @param board to move on
+   * @return set of tiles the piece can capture on
+   */
+  public Set<ChessTile> getCaptures(Piece piece, ChessBoard board) {
+    Set<ChessTile> captures = new HashSet<>();
+    Coordinate baseCoordinates = piece.getCoordinates();
+    for (Coordinate delta : possibleMoves) {
+      Stack<ChessTile> moveStack = generateMoveStack(baseCoordinates, delta, board);
+      if(!moveStack.isEmpty()) {
+        ChessTile captureSquare = moveStack.peek();
+        if (piece.canCapture(captureSquare.getPieces())) {
+          moveStack.add(captureSquare);
+        }
+      }
+    }
+    return captures;
+  }
+
+  /***
    * Returns all possible moves a piece can make
    *
    * @param piece to get moves from
@@ -53,24 +90,30 @@ public class Movement {
     Set<ChessTile> moves = new HashSet<>();
     Coordinate baseCoordinates = piece.getCoordinates();
     for (Coordinate delta : possibleMoves) {
-      Stack<ChessTile> moveStack = new Stack<>();
-      if(infinite) {
-        moveStack = getMoveBeam(baseCoordinates, delta, board);
-      } else{
-        Optional<ChessTile> nextTile = getNextTile(baseCoordinates, delta, board);
-        if(nextTile.isPresent()) {
-          moveStack.add(nextTile.get());
-        }
-      }
-      if(!moveStack.isEmpty()) {
-        ChessTile captureSquare = moveStack.peek();
-        if (piece.canCapture(captureSquare.getPieces())) {
-          moveStack.add(captureSquare);
-        }
-      }
-      moves.addAll(moveStack);
+      moves.addAll(generateMoveStack(baseCoordinates, delta, board));
     }
     return moves;
+  }
+
+  /***
+   * Generates stack of possible moves, with the furthest being at the top
+   *
+   * @param base to move from
+   * @param delta to change
+   * @param board to move on
+   * @return stack of possible moves
+   */
+  private Stack<ChessTile> generateMoveStack(Coordinate base, Coordinate delta, ChessBoard board) {
+    Stack<ChessTile> moveStack = new Stack<>();
+    if(infinite) {
+      moveStack = getMoveBeam(base, delta, board);
+    } else{
+      Optional<ChessTile> nextTile = getNextTile(base, delta, board);
+      if(nextTile.isPresent()) {
+        moveStack.add(nextTile.get());
+      }
+    }
+    return moveStack;
   }
 
   /***

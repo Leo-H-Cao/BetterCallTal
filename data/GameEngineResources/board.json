@@ -26,11 +26,13 @@
 			"imgFile": "pawn.jpg",
 			"pointValue": 1,
 			"team": 1,
-			"movements": [
-				"verticalOne"
+			"unboundedMovements": [],
+			"boundedMovements": [
+				[-1, 0]
 			],
 			"captures": [
-				"diagonalOne"
+				[-1, 1],
+				[-1, -1]
 			],
 			"movementSetModifiers": [
 				"doublefirstmove",
@@ -51,8 +53,27 @@
 			"imgFile": "king.jpg",
 			"pointValue": 4,
 			"team": 1,
-			"movements": ["verticalOne", "horizontalOne", "diagonalOne"],
-			"captures": ["verticalOne", "horizontalOne", "diagonalOne"],
+			"unboundedMovements": [],
+			"boundedMovements": [
+				[1,1],
+				[1,0],
+				[1,-1],
+				[0,1],
+				[0,-1],
+				[-1,1],
+				[-1,0],
+				[-1,-1]
+			],
+			"captures": [
+				[1,1],
+				[1,0],
+				[1,-1],
+				[0,1],
+				[0,-1],
+				[-1,1],
+				[-1,0],
+				[-1,-1]
+			],
 			"movementSetModifiers": ["castle", "check"],
 			"movementModifiers": ["atomic"],
 			"onInteractionModifier": ["removePiece"],
