@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.ChessTile;
+import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
 public class Movement {
@@ -61,9 +62,30 @@ public class Movement {
    */
   private Set<ChessTile> getMoveBeam(Coordinate base, Coordinate delta, ChessBoard board) {
     Set<ChessTile> beam = new HashSet<>();
-    Coordinate currentCoords = new Coordinate(base.row(), base.col());
-    while (board.inBounds(currentCoords) && board.isTileEmpty(currentCoords)) {
+    Coordinate currentCoords = new Coordinate(base.row() + delta.row(), base.col() + delta.col());
+    while (board.inBounds(currentCoords) && isTileEmpty(board, currentCoords)) {
+      try {
+        beam.add(board.getTile(currentCoords));
+        currentCoords = new Coordinate(currentCoords.row() + delta.row(), currentCoords.col() + delta.col());
+      } catch (OutsideOfBoardException e) {
+        break;
+      }
+    }
+    return beam;
+  }
 
+  /***
+   * Handles exception from board empty method
+   *
+   * @param board to check for coordinate on
+   * @param coordinate to check for emptiness
+   * @return if the coordinate on the board is empty
+   */
+  private boolean isTileEmpty(ChessBoard board, Coordinate coordinate) {
+    try {
+      return board.isTileEmpty(coordinate);
+    } catch (OutsideOfBoardException e) {
+      return false;
     }
   }
 }
