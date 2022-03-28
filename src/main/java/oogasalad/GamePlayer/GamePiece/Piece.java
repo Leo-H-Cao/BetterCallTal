@@ -51,4 +51,36 @@ public class Piece {
   public Set<ChessTile> move(ChessTile finalSquare) {
     return null;
   }
+
+  /***
+   * @return coordinate of piece
+   */
+  public Coordinate getCoordinates() {
+    return coordinates;
+  }
+
+  /***
+   * @param piece to capture
+   * @return if this piece can capture another piece
+   */
+  public boolean canCapture(Piece piece) {
+    int[] opponentIDs = board.getPlayer(this.team).opponentIDs();
+    for(int opponentID : opponentIDs) {
+      if (piece.team == board.getPlayer(opponentID).teamID()) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /***
+   * @param pieces to potentially capture
+   * @return if this piece can capture any piece in a list of pieces
+   */
+  public boolean canCapture(List<Piece> pieces) {
+    for(Piece piece: pieces) {
+      if(canCapture(piece)) return true;
+    }
+    return false;
+  }
 }
