@@ -1,9 +1,13 @@
 package oogasalad.GamePlayer.GamePiece;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.ChessTile;
+import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementModifier;
@@ -49,7 +53,17 @@ public class Piece {
    * @return set of updated chess tiles
    */
   public Set<ChessTile> move(ChessTile finalSquare) {
-    return null;
+    //TODO ASK ABOUT WHY THIS RETURNS Set<ChessTile>
+    List<Movement> allMoves = Stream.concat(movements.stream(), captures.stream()).toList();
+    Set<ChessTile> validMoves = new HashSet<>();
+
+    allMoves.forEach(move -> validMoves.addAll(move.getMoves(this, board)));
+
+    if (validMoves.contains(finalSquare)) {
+      coordinates = finalSquare.getCoordinates();
+      finalSquare.appendPiece(this);
+    }
+    return validMoves;
   }
 
   /***

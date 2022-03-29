@@ -11,6 +11,7 @@ public class TileTests {
   void setUp() {
     Main m = new Main();
   }
+
   /**
    * This test checks to see if moving a horse from its original position
    * (in original chess) moves correctly and the respective tiles are updated
@@ -20,5 +21,12 @@ public class TileTests {
 
   }
 
+  /**
+   * This test checks to see if a tile that originally had a horse piece is not empty
+   * after the horse piece is moved to a separate tile
+   */
+  @Test void doesNotContainHorse() {
+    
+  }
 
 }

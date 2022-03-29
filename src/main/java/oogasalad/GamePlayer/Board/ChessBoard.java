@@ -3,6 +3,7 @@ package oogasalad.GamePlayer.Board;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
@@ -14,6 +15,7 @@ public class ChessBoard {
   private TurnCriteria turnCriteria;
   private Player[] players;
   private List<EndCondition> endConditions;
+
   public ChessBoard(int length, int height, TurnCriteria turnCriteria, Player[] players, List<EndCondition> endConditions) {
     board = new ChessTile[length][height];
     this.turnCriteria = turnCriteria;
