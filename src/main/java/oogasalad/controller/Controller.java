@@ -1,5 +1,9 @@
 package oogasalad.controller;
 
+/**
+ * The controller will handle all interactions between components of the project to ensure fluid passing of information.
+ */
+
 import javafx.stage.Stage;
 import oogasalad.Frontend.MainView;
 
