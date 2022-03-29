@@ -56,6 +56,15 @@ public class Piece {
   }
 
   /***
+   * Gets all possible moves the piece can make
+   *
+   * @return set of possible moves
+   */
+  public Set<ChessTile> getMoves() {
+    return null;
+  }
+
+  /***
    * @return coordinate of piece
    */
   public Coordinate getCoordinates() {
@@ -92,5 +101,15 @@ public class Piece {
    */
   public String getImgFile() {
     return img;
+  }
+
+  /***
+   * Checks if a given team matches the piece team
+   *
+   * @param team to check
+   * @return if the provided team is the same as this piece's team
+   */
+  public boolean checkTeam(int team) {
+    return this.team == team;
   }
 }
