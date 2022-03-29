@@ -2,7 +2,6 @@ package oogasalad;
 
 
 import javafx.stage.Stage;
-import oogasalad.Frontend.MainView;
 import javafx.application.Application;
 import oogasalad.controller.Controller;
 import java.util.List;

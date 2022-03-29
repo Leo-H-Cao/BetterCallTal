@@ -1,10 +1,13 @@
 package oogasalad.controller;
 
 import javafx.stage.Stage;
+import oogasalad.Frontend.MainView;
 
 public class Controller {
 
-    public Controller(Stage stage, Runnable newControllerHandler) {
+    private MainView myView;
 
+    public Controller(Stage stage, Runnable newControllerHandler) {
+        myView = new MainView(stage);
     }
 }
