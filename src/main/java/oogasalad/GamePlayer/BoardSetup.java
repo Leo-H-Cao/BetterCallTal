@@ -42,7 +42,7 @@ public class BoardSetup {
   }
 
   private List<Movement> getMovements(){
-    JSONArray a = myJSONObject.getJSONArray("pieces").getJSONObject(0).getJSONArray("movements").getJSONArray(0);
+    JSONArray a = myJSONObject.getJSONArray("pieces").getJSONObject(0).getJSONArray("boundedMovements").getJSONArray(0);
     System.out.println(a);
     System.out.println("HI");
     return null;
