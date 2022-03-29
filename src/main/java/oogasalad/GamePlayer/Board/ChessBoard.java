@@ -1,7 +1,9 @@
 package oogasalad.GamePlayer.Board;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
@@ -16,6 +18,7 @@ public class ChessBoard {
   private Player[] players;
   private List<EndCondition> endConditions;
   private int currentPlayer;
+  private Map<Integer, Double> endResult;
 
   public ChessBoard(int length, int height, TurnCriteria turnCriteria, Player[] players, List<EndCondition> endConditions) {
     board = new ChessTile[length][height];
@@ -23,6 +26,7 @@ public class ChessBoard {
     this.players = players;
     this.endConditions = endConditions;
     currentPlayer = turnCriteria.getCurrentPlayer();
+    endResult = new HashMap<>();
   }
 
   /***
@@ -53,14 +57,22 @@ public class ChessBoard {
    * @return if the game is over
    */
   public boolean isGameOver() {
+    for(EndCondition ec: endConditions) {
+      Optional<Map<Integer, Double>> endResultOptional = ec.getScores(this);
+      if(endResultOptional.isPresent()) {
+        endResult = endResultOptional.get();
+        return true;
+      }
+    }
     return false;
   }
 
   /***
-   * @return scores of all teams after game is over. If game isn't over, an empty map is returned.
+   * @return scores of all teams after game over. If game isn't over, an empty optional is returned.
    */
-  public Map<Integer, Double> getScores() {
-    return null;
+  public Optional<Map<Integer, Double>> getScores() {
+    if(!endResult.isEmpty()) return Optional.of(endResult);
+    return Optional.empty();
   }
 
   /***
