@@ -8,12 +8,21 @@ public class ConstantIncrease extends TurnCriteria {
 
   private int numMovesTotal;
   private int numMovesPlayed;
-  
+
+  /***
+   * Creates TurnCriteria where each player gets one more move than the last
+   * @param players array to get turns for
+   */
   public ConstantIncrease(Player[] players) {
     super(players);
     numMovesTotal = 1;
   }
 
+  /***
+   * Goes to next player if they've played all their moves
+   *
+   * @return next player id
+   */
   @Override
   public int incrementTurn() {
     numMovesPlayed++;
