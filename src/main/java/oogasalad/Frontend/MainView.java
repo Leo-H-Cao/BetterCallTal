@@ -1,13 +1,22 @@
 package oogasalad.Frontend;
 
 import javafx.stage.Stage;
-
-import java.util.ResourceBundle;
+import oogasalad.Frontend.Editor.GameEditorView;
+import oogasalad.Frontend.Game.GameView;
+import oogasalad.Frontend.Menu.MenuView;
 
 public class MainView {
-	private ResourceBundle language;
+
+	private GameView myGameView;
+	private GameEditorView myEditorView;
+	private MenuView myMenuView;
+
 	public MainView(Stage stage) {
-		LanguageModal languageModal = new LanguageModal(stage);
+
+		myGameView = new GameView(stage);
+		myEditorView = new GameEditorView(stage);
+		myMenuView = new MenuView(stage);
+
 
 	}
 }

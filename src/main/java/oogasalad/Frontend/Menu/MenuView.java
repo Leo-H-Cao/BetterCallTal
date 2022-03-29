@@ -6,9 +6,13 @@ package oogasalad.Frontend.Menu;
 
 import javafx.stage.Stage;
 
+import java.util.ResourceBundle;
+
 public class MenuView {
 
-    public MenuView(Stage stage) {
+    private ResourceBundle language;
 
+    public MenuView(Stage stage) {
+        LanguageModal languageModal = new LanguageModal(stage);
     }
 }
