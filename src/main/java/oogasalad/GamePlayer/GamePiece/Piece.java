@@ -29,6 +29,8 @@ public class Piece {
   private List<MovementModifier> movementModifiers;
   private List<MovementModifier> onInteractionModifiers;
 
+  private String img;
+
   private ChessBoard board;
 
   /***
@@ -45,6 +47,7 @@ public class Piece {
     this.movementSetModifiers = pieceData.movementSetModifiers();
     this.movementModifiers = pieceData.movementModifiers();
     this.onInteractionModifiers = pieceData.onInteractionModifiers();
+    this.img = pieceData.img();
     this.board = board;
   }
 
@@ -97,5 +100,12 @@ public class Piece {
       if(canCapture(piece)) return true;
     }
     return false;
+  }
+
+  /***
+   * @return file path to image file representing piece
+   */
+  public String getImgFile() {
+    return img;
   }
 }

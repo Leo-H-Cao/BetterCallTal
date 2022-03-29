@@ -6,6 +6,7 @@ import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementModifier;
 import oogasalad.GamePlayer.Movement.MovementSetModifier;
 
+
 public record PieceData(Coordinate startingLocation,
                         String name,
                         double pointValue,
@@ -15,6 +16,7 @@ public record PieceData(Coordinate startingLocation,
                         List<Movement> captures,
                         List<MovementSetModifier> movementSetModifiers,
                         List<MovementModifier> movementModifiers,
-                        List<MovementModifier> onInteractionModifiers) {
+                        List<MovementModifier> onInteractionModifiers,
+                        String img) {
 
 }
