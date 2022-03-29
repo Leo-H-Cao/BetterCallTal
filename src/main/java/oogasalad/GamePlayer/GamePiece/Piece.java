@@ -56,6 +56,15 @@ public class Piece {
   }
 
   /***
+   * Gets all possible moves the piece can make
+   *
+   * @return set of possible moves
+   */
+  public Set<ChessTile> getMoves() {
+    return null;
+  }
+
+  /***
    * @return coordinate of piece
    */
   public Coordinate getCoordinates() {

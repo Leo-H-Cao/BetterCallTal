@@ -24,6 +24,7 @@ public class ChessBoard {
     this.endConditions = endConditions;
     currentPlayer = turnCriteria.getCurrentPlayer();
   }
+
   /***
    * Moves the piece to the finalSquare
    *
@@ -45,7 +46,7 @@ public class ChessBoard {
    * @return set of tiles the piece can move to
    */
   public Set<ChessTile> getMoves(Piece piece) {
-    return null;
+    return piece.getMoves();
   }
 
   /***
