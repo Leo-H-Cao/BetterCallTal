@@ -21,5 +21,4 @@ class BoardStateTest {
     assertEquals(modelState.getBoardWidth(), 10);
   }
 
-
 }

@@ -1,13 +1,16 @@
 package oogasalad.Editor.Backend;
 
 import oogasalad.Editor.Backend.API.ModifiesBoardState;
+import oogasalad.Editor.Backend.API.ModifiesPiecesState;
 
-public class ModelState implements ModifiesBoardState {
+public class ModelState implements ModifiesBoardState, ModifiesPiecesState {
 
   private EditorBoard myEditorBoard;
+  private PiecesManager piecesManager;
 
   public ModelState(){
     myEditorBoard = new EditorBoard();
+    piecesManager = new PiecesManager();
   }
 
 
@@ -27,8 +30,8 @@ public class ModelState implements ModifiesBoardState {
   }
 
   @Override
-  public void addPieceStartingLocation(EditorPiece piece, int x, int y) {
-    myEditorBoard.addPieceStartingLocation(piece, x, y);
+  public void addPieceStartingLocation(String pieceID, int x, int y) {
+    myEditorBoard.addPieceStartingLocation(piecesManager.getPiece(pieceID), x, y);
   }
 
   @Override
@@ -44,5 +47,20 @@ public class ModelState implements ModifiesBoardState {
   @Override
   public int getBoardHeight(){
     return myEditorBoard.getBoardHeight();
+  }
+
+  @Override
+  public void changePieceImage(String pieceID, String imageFile) {
+    piecesManager.changePieceImage(pieceID, imageFile);
+  }
+
+  @Override
+  public void createCustomPiece(int points, int teamNumber, String image, MovementRules movementRules, String pieceID) {
+    piecesManager.createPiece(points, teamNumber, image, movementRules, pieceID);
+  }
+
+  @Override
+  public void changePieceMovement(String pieceID, MovementRules movementRules) {
+    piecesManager.changePieceMovement(pieceID, movementRules);
   }
 }
