@@ -1,4 +1,4 @@
-package oogasalad.Frontend;
+package oogasalad.Frontend.Menu;
 
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
