@@ -30,7 +30,8 @@
 			"boundedMovements": [
 				[-1, 0]
 			],
-			"captures": [
+			"unboundedCaptures": [],
+			"boundedCaptures": [
 				[-1, 1],
 				[-1, -1]
 			],
