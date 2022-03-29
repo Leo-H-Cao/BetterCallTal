@@ -93,4 +93,14 @@ public class Piece {
   public String getImgFile() {
     return img;
   }
+
+  /***
+   * Checks if a given team matches the piece team
+   *
+   * @param team to check
+   * @return if the provided team is the same as this piece's team
+   */
+  public boolean checkTeam(int team) {
+    return this.team == team;
+  }
 }

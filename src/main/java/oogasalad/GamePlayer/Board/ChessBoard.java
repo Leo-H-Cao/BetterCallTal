@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
+import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
@@ -14,11 +15,14 @@ public class ChessBoard {
   private TurnCriteria turnCriteria;
   private Player[] players;
   private List<EndCondition> endConditions;
+  private int currentPlayer;
+
   public ChessBoard(int length, int height, TurnCriteria turnCriteria, Player[] players, List<EndCondition> endConditions) {
     board = new ChessTile[length][height];
     this.turnCriteria = turnCriteria;
     this.players = players;
     this.endConditions = endConditions;
+    currentPlayer = turnCriteria.getCurrentPlayer();
   }
   /***
    * Moves the piece to the finalSquare
@@ -27,8 +31,11 @@ public class ChessBoard {
    * @param finalSquare end square
    * @return set of updated tiles + next player turn
    */
-    public TurnUpdate move(Piece piece, ChessTile finalSquare) throws InvalidMoveException, OutsideOfBoardException {
-    return null;
+  public TurnUpdate move(Piece piece, ChessTile finalSquare) throws InvalidMoveException, OutsideOfBoardException, WrongPlayerException {
+    if(piece.checkTeam(turnCriteria.getCurrentPlayer())) {
+      return new TurnUpdate(piece.move(finalSquare), turnCriteria.incrementTurn());
+    }
+    throw new WrongPlayerException(turnCriteria.getCurrentPlayer() + "");
   }
 
   /***
