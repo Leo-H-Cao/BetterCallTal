@@ -15,6 +15,8 @@ import oogasalad.GamePlayer.Movement.MovementSetModifier;
 
 public class Piece {
 
+  private static final boolean VALID_SQUARE = true;
+  private static final boolean INVALID_SQUARE = false;
   private Coordinate coordinates;
   private String name;
   private double pointValue;
@@ -53,7 +55,6 @@ public class Piece {
    * @return set of updated chess tiles
    */
   public Set<ChessTile> move(ChessTile finalSquare) {
-    //TODO ASK ABOUT WHY THIS RETURNS Set<ChessTile>
     List<Movement> allMoves = Stream.concat(movements.stream(), captures.stream()).toList();
     Set<ChessTile> validMoves = new HashSet<>();
 
