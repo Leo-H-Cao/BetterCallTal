@@ -20,13 +20,15 @@ public interface ModifiesPiecesState {
    * @param pieceRules describe where the custom piece is allowed to move, how it interacts with other pieces
    * @return PieceConfig object containing information for new piece
    */
-   EditorPiece createCustomPiece(int points, int teamNumber, String image, MovementRules movementRules, String pieceID);
+   EditorPiece createCustomPiece(int points, int teamNumber, String image, MovementRules movementRules, String pieceID, String pieceName);
 
   /**
    * Changes movement patterns/rules for a given piece
    * @param movementRules describes the squares that the piece can move to relative to itself
    */
   public void changePieceMovement(String pieceID, MovementRules movementRules);
+
+  void setPiecePointValue(String pieceID, int points);
 
 //  /**
 //   * Adds modifier to a piece such as inivisible or make the piece the objective of the game

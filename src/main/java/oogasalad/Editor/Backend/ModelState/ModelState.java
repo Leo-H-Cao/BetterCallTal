@@ -60,12 +60,21 @@ public class ModelState implements ModifiesBoardState, ModifiesPiecesState {
   }
 
   @Override
-  public EditorPiece createCustomPiece(int points, int teamNumber, String image, MovementRules movementRules, String pieceID) {
-    return piecesManager.createPiece(points, teamNumber, image, movementRules, pieceID);
+  public EditorPiece createCustomPiece(int points, int teamNumber, String image, MovementRules movementRules, String pieceID, String pieceName) {
+    return piecesManager.createPiece(points, teamNumber, image, movementRules, pieceID, pieceName);
   }
 
   @Override
   public void changePieceMovement(String pieceID, MovementRules movementRules) {
     piecesManager.changePieceMovement(pieceID, movementRules);
+  }
+
+  @Override
+  public void setPiecePointValue(String pieceID, int points){
+    piecesManager.setPiecePointValue(pieceID, points);
+  }
+
+  public void setPieceName(String pieceID, String name){
+    piecesManager.setPieceName(pieceID, name);
   }
 }

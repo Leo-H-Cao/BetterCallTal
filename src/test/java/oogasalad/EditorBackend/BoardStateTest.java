@@ -26,7 +26,7 @@ class BoardStateTest {
   @Test
   void testCreatePiece(){
     String pieceID = "123";
-    EditorPiece newPiece = modelState.createCustomPiece(1, 1, "image.png", new MovementRules(), pieceID);
+    EditorPiece newPiece = modelState.createCustomPiece(1, 1, "image.png", new MovementRules(), pieceID, "my piece");
     assertEquals(newPiece, modelState.getPiece(pieceID));
   }
 

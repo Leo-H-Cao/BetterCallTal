@@ -11,8 +11,8 @@ public class PiecesManager {
     availablePieces = new ArrayList<>();
   }
 
-  public EditorPiece createPiece(int points, int teamNumber, String image, MovementRules movementRules, String pieceID) {
-    EditorPiece newPiece = new EditorPiece(points, teamNumber, image, movementRules, pieceID);
+  public EditorPiece createPiece(int points, int teamNumber, String image, MovementRules movementRules, String pieceID, String pieceName) {
+    EditorPiece newPiece = new EditorPiece(points, teamNumber, image, movementRules, pieceID, pieceName);
     availablePieces.add(newPiece);
     return newPiece;
   }
@@ -27,6 +27,14 @@ public class PiecesManager {
 
   public EditorPiece getPiece(String pieceID){
     return findPiece(pieceID);
+  }
+
+  public void setPieceName(String pieceID, String name){
+    findPiece(pieceID).setPieceName(name);
+  }
+
+  public void setPiecePointValue(String pieceID, int points){
+    findPiece(pieceID).setPointValue(points);
   }
 
   private EditorPiece findPiece(String pieceID){
