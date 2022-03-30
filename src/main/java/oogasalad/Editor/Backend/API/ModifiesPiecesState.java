@@ -1,7 +1,7 @@
 package oogasalad.Editor.Backend.API;
 
-import oogasalad.Editor.Backend.EditorPiece;
-import oogasalad.Editor.Backend.MovementRules;
+import oogasalad.Editor.Backend.ModelState.EditorPiece;
+import oogasalad.Editor.Backend.ModelState.MovementRules;
 
 public interface ModifiesPiecesState {
 

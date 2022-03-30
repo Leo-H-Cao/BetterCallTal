@@ -1,4 +1,4 @@
-package oogasalad.Editor.Backend;
+package oogasalad.Editor.Backend.ModelState;
 
 import oogasalad.Editor.Backend.API.ModifiesBoardState;
 import oogasalad.Editor.Backend.API.ModifiesPiecesState;

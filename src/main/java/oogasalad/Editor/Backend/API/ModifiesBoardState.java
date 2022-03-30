@@ -1,8 +1,5 @@
 package oogasalad.Editor.Backend.API;
 
-import oogasalad.Editor.Backend.EditorPiece;
-import oogasalad.Editor.Backend.TileEffect;
-
 public interface ModifiesBoardState {
 
   /**
