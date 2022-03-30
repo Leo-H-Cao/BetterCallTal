@@ -11,9 +11,10 @@ public class PiecesManager {
     availablePieces = new ArrayList<>();
   }
 
-  public void createPiece(int points, int teamNumber, String image, MovementRules movementRules, String pieceID) {
+  public EditorPiece createPiece(int points, int teamNumber, String image, MovementRules movementRules, String pieceID) {
     EditorPiece newPiece = new EditorPiece(points, teamNumber, image, movementRules, pieceID);
     availablePieces.add(newPiece);
+    return newPiece;
   }
 
   public void changePieceImage(String pieceID, String pieceImage){
@@ -22,7 +23,6 @@ public class PiecesManager {
 
   public void changePieceMovement(String pieceID, MovementRules movementRules){
     findPiece(pieceID).setPieceMovement(movementRules);
-
   }
 
   public EditorPiece getPiece(String pieceID){
