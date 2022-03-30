@@ -1,10 +1,12 @@
 package oogasalad.GamePlayer.Board;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.IntStream;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
@@ -23,11 +25,21 @@ public class ChessBoard {
 
   public ChessBoard(int length, int height, TurnCriteria turnCriteria, Player[] players, List<EndCondition> endConditions) {
     board = new ChessTile[length][height];
+    IntStream.range(0, board.length).forEach((i) -> IntStream.range(0, board[i].length).forEach((j) -> board[i][j] = new ChessTile(new Coordinate(i, j))));
     this.turnCriteria = turnCriteria;
     this.players = players;
     this.endConditions = endConditions;
     currentPlayer = turnCriteria.getCurrentPlayer();
     endResult = new HashMap<>();
+  }
+
+  /***
+   * Sets the pieces on the chess board
+   *
+   * @param pieces to add to the board
+   */
+  public void setPieces(List<Piece> pieces) {
+    pieces.forEach((p) -> board[p.getCoordinates().getRow()][p.getCoordinates().getCol()].addPiece(p));
   }
 
   /***

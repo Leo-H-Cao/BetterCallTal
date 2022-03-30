@@ -33,6 +33,14 @@ public class ChessTile {
   }
 
   /***
+   * Adds a piece to the given square
+   * @param piece to add
+   */
+  void addPiece(Piece piece) {
+    pieces.add(piece);
+  }
+
+  /***
    * @return coordinates of tile
    */
   public Coordinate getCoordinates() {
