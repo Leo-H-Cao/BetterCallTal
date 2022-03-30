@@ -33,13 +33,6 @@ public abstract class TurnCriteria {
   }
 
   /***
-   * @return current index
-   */
-  protected final int getCurrentIndex() {
-    return index;
-  }
-
-  /***
    * @return last index in players array
    */
   protected final int maxIndex() {

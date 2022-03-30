@@ -5,6 +5,7 @@ import java.util.List;
 import oogasalad.GamePlayer.Board.TurnCriteria.ConstantIncrease;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
+import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
@@ -77,8 +78,33 @@ class TurnTest {
       assertEquals(board.move(pieceThree, new Coordinate(2, 2)).nextPlayer(), 2);
       assertEquals(board.move(pieceThree, new Coordinate(2, 3)).nextPlayer(), 0);
     } catch(Exception e) {
-      e.printStackTrace();
       fail();
     }
+  }
+
+  @Test
+  void testLinearSad() {
+    turnCriteria = new Linear(players);
+    setBoard();
+    assertThrows(WrongPlayerException.class, () -> board.move(pieceTwo, new Coordinate(0, 1)));
+    try {
+      board.move(pieceOne, new Coordinate(0, 1));
+    } catch(Exception e) {fail();}
+
+    assertThrows(WrongPlayerException.class, () -> board.move(pieceOne, new Coordinate(1, 1)));
+  }
+
+  @Test
+  void testIncrSad() {
+    turnCriteria = new ConstantIncrease(players);
+    setBoard();
+    assertThrows(WrongPlayerException.class, () -> board.move(pieceTwo, new Coordinate(0, 1)));
+
+    try{
+      board.move(pieceOne, new Coordinate(0, 1));
+      board.move(pieceTwo, new Coordinate(1, 1));
+    } catch(Exception e) {fail();}
+
+    assertThrows(WrongPlayerException.class, () -> board.move(pieceOne, new Coordinate(0, 2)));
   }
 }
