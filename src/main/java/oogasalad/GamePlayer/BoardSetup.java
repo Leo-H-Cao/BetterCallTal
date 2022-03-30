@@ -7,6 +7,8 @@ import java.nio.file.Path;
 import java.util.List;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Player;
+import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
+import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.Movement.Movement;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,7 +27,7 @@ public class BoardSetup {
     int rows = Integer.parseInt(myJSONObject.getJSONArray("general").getJSONObject(0).get("rows").toString());
     int columns = Integer.parseInt(myJSONObject.getJSONArray("general").getJSONObject(0).get("columns").toString());
 
-    myBoard = new ChessBoard(rows, columns, null ,getPlayers(), null);
+    myBoard = new ChessBoard(rows, columns, new Linear(getPlayers()) ,getPlayers(), null);
     getMovements();
     return myBoard;
   }
@@ -37,6 +39,7 @@ public class BoardSetup {
 
       //TODO: Fix this line (cannot cast to int[])
       //players[i] = new Player((Integer) rawData.getJSONObject(i).get("team"), (int[]) rawData.getJSONObject(i).get("opponents"));
+      players[i] = new Player(i, null);
     }
     return players;
   }
