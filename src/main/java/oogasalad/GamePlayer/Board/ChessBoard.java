@@ -92,8 +92,7 @@ public class ChessBoard {
    * @return scores of all teams after game over. If game isn't over, an empty optional is returned.
    */
   public Optional<Map<Integer, Double>> getScores() {
-    if(!endResult.isEmpty()) return Optional.of(endResult);
-    return Optional.empty();
+    return !endResult.isEmpty() ? Optional.of(endResult) : Optional.empty();
   }
 
   /***

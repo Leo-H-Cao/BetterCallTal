@@ -1,7 +1,9 @@
 package oogasalad.GamePlayer.GamePiece;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.IntStream;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.ChessTile;
 import oogasalad.GamePlayer.Movement.Coordinate;
@@ -77,12 +79,7 @@ public class Piece {
    */
   public boolean canCapture(Piece piece) {
     int[] opponentIDs = board.getPlayer(this.team).opponentIDs();
-    for(int opponentID : opponentIDs) {
-      if (piece.team == board.getPlayer(opponentID).teamID()) {
-        return true;
-      }
-    }
-    return false;
+    return Arrays.stream(opponentIDs).anyMatch((o) -> piece.team == board.getPlayer(o).teamID());
   }
 
   /***
@@ -90,10 +87,7 @@ public class Piece {
    * @return if this piece can capture any piece in a list of pieces
    */
   public boolean canCapture(List<Piece> pieces) {
-    for(Piece piece: pieces) {
-      if(canCapture(piece)) return true;
-    }
-    return false;
+    return pieces.stream().anyMatch(this::canCapture);
   }
 
   /***
