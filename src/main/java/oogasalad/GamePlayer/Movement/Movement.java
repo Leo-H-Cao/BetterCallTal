@@ -1,9 +1,10 @@
 package oogasalad.GamePlayer.Movement;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -13,6 +14,9 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
 public class Movement {
+
+  private static final String MOVE_KEY = "move";
+  private static final String CAPTURE_KEY = "capture";
 
   private List<Coordinate> possibleMoves;
   private boolean infinite;
@@ -43,6 +47,58 @@ public class Movement {
   }
 
   /***
+   * Captures piece on captureSquare
+   *
+   * @param piece to move
+   * @param captureSquare end square
+   * @param board to move on
+   * @return set of updated tiles
+   * @throws InvalidMoveException if the piece cannot move to the given square
+   */
+  public Set<ChessTile> capturePiece(Piece piece, ChessTile captureSquare, ChessBoard board) throws InvalidMoveException {
+    if(getCaptures(piece, board).contains(captureSquare)) {
+      return piece.move(captureSquare);
+    }
+    throw new InvalidMoveException(piece + ": " + captureSquare);
+  }
+
+  /***
+   * Gets all moves for a piece, including potential captures
+   *
+   * @param piece to get moves from
+   * @param board to move on
+   * @return Map of all moves, with moves mapped to "move" and captures mapped to "captures"
+   */
+  private Map<String, Set<ChessTile>> getAllMoves(Piece piece, ChessBoard board) {
+    Map<String, Set<ChessTile>> allMoves = new HashMap<>();
+    allMoves.put(MOVE_KEY, Set.of());
+    allMoves.put(CAPTURE_KEY, Set.of());
+
+    Coordinate baseCoordinates = piece.getCoordinates();
+    for (Coordinate delta : possibleMoves) {
+      Stack<ChessTile> moveStack = generateMoveStack(baseCoordinates, delta, board);
+      allMoves.get(MOVE_KEY).addAll(moveStack);
+      if(!moveStack.isEmpty()) {
+        ChessTile captureSquare = getNextTile(moveStack.peek().getCoordinates(), delta, board).orElse(moveStack.peek());
+        if (piece.canCapture(captureSquare.getPieces())) {
+          allMoves.get(CAPTURE_KEY).add(captureSquare);
+        }
+      }
+    }
+    return allMoves;
+  }
+  /***
+   * Returns all possible captures a piece can make
+   *
+   * @param piece to get captures from
+   * @param board to move on
+   * @return set of tiles the piece can capture on
+   */
+  public Set<ChessTile> getCaptures(Piece piece, ChessBoard board) {
+    return getFromMovesMap(piece, board, CAPTURE_KEY);
+  }
+
+  /***
    * Returns all possible moves a piece can make
    *
    * @param piece to get moves from
@@ -50,27 +106,37 @@ public class Movement {
    * @return set of tiles the piece can move to
    */
   public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
-    Set<ChessTile> moves = new HashSet<>();
-    Coordinate baseCoordinates = piece.getCoordinates();
-    for (Coordinate delta : possibleMoves) {
-      Stack<ChessTile> moveStack = new Stack<>();
-      if(infinite) {
-        moveStack = getMoveBeam(baseCoordinates, delta, board);
-      } else{
-        Optional<ChessTile> nextTile = getNextTile(baseCoordinates, delta, board);
-        if(nextTile.isPresent()) {
-          moveStack.add(nextTile.get());
-        }
+    return getFromMovesMap(piece, board, MOVE_KEY);
+  }
+  
+  /***
+   * Helper method for getting set from moves map
+   * @param key in map
+   * @return Set in allMoves map associated with key
+   */
+  private Set<ChessTile> getFromMovesMap(Piece piece, ChessBoard board, String key) {
+    return getAllMoves(piece, board).get(key);
+  }
+
+  /***
+   * Generates stack of possible moves, with the furthest being at the top
+   *
+   * @param base to move from
+   * @param delta to change
+   * @param board to move on
+   * @return stack of possible moves
+   */
+  private Stack<ChessTile> generateMoveStack(Coordinate base, Coordinate delta, ChessBoard board) {
+    Stack<ChessTile> moveStack = new Stack<>();
+    if(infinite) {
+      moveStack = getMoveBeam(base, delta, board);
+    } else{
+      Optional<ChessTile> nextTile = getNextTile(base, delta, board);
+      if(nextTile.isPresent()) {
+        moveStack.add(nextTile.get());
       }
-      if(!moveStack.isEmpty()) {
-        ChessTile captureSquare = moveStack.peek();
-        if (piece.canCapture(captureSquare.getPieces())) {
-          moveStack.add(captureSquare);
-        }
-      }
-      moves.addAll(moveStack);
     }
-    return moves;
+    return moveStack;
   }
 
   /***
