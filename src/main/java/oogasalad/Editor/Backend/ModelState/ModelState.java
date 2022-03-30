@@ -1,16 +1,20 @@
 package oogasalad.Editor.Backend.ModelState;
 
+import java.util.List;
 import oogasalad.Editor.Backend.API.ModifiesBoardState;
 import oogasalad.Editor.Backend.API.ModifiesPiecesState;
+import oogasalad.Editor.Backend.API.ModifiesRulesState;
 
-public class ModelState implements ModifiesBoardState, ModifiesPiecesState {
+public class ModelState implements ModifiesBoardState, ModifiesPiecesState, ModifiesRulesState {
 
   private EditorBoard myEditorBoard;
   private PiecesManager piecesManager;
+  private GameRules myGameRules;
 
   public ModelState(){
     myEditorBoard = new EditorBoard();
     piecesManager = new PiecesManager();
+    myGameRules = new GameRules();
   }
 
 
@@ -74,7 +78,23 @@ public class ModelState implements ModifiesBoardState, ModifiesPiecesState {
     piecesManager.setPiecePointValue(pieceID, points);
   }
 
+  @Override
   public void setPieceName(String pieceID, String name){
     piecesManager.setPieceName(pieceID, name);
+  }
+
+  @Override
+  public void setWinConditions(List<String> winConditions) {
+    myGameRules.setWinConditions(winConditions);
+  }
+
+  @Override
+  public void setTurnCriteria(String turnCriteria) {
+    myGameRules.setTurnCriteria(turnCriteria);
+  }
+
+  //For testing
+  public GameRules getGameRules(){
+    return myGameRules;
   }
 }

@@ -30,6 +30,8 @@ public interface ModifiesPiecesState {
 
   void setPiecePointValue(String pieceID, int points);
 
+  void setPieceName(String pieceID, String name);
+
 //  /**
 //   * Adds modifier to a piece such as inivisible or make the piece the objective of the game
 //   * @param piece user is trying add modifier to
