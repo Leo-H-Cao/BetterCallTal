@@ -29,6 +29,7 @@ public class ConstantIncrease extends TurnCriteria {
     if(numMovesTotal == numMovesPlayed) {
       incrementIndex(TURN_INCREMENT_NUM);
       numMovesTotal++;
+      numMovesPlayed = 0;
     }
     return getCurrentPlayer();
   }

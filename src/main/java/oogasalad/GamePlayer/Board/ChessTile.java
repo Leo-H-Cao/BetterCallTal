@@ -1,5 +1,7 @@
 package oogasalad.GamePlayer.Board;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import oogasalad.GamePlayer.GamePiece.Piece;
@@ -14,14 +16,14 @@ public class ChessTile {
    * Creates a chess tile with a given coordinate
    */
   public ChessTile(Coordinate coordinate) {
-    this(coordinate, List.of());
+    this(coordinate, new ArrayList<>());
   }
 
   /***
    * Creates a chess tile with one piece and a given coordinate
    */
   public ChessTile(Coordinate coordinate, Piece piece) {
-    this(coordinate, List.of(piece));
+    this(coordinate, new ArrayList<>(List.of(piece)));
   }
 
   /***

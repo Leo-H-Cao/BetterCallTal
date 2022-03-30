@@ -49,11 +49,19 @@ public class ChessBoard {
    * @param finalSquare end square
    * @return set of updated tiles + next player turn
    */
-  public TurnUpdate move(Piece piece, ChessTile finalSquare) throws InvalidMoveException, OutsideOfBoardException, WrongPlayerException {
+  public TurnUpdate move(Piece piece, Coordinate finalSquare) throws InvalidMoveException, OutsideOfBoardException, WrongPlayerException {
     if(piece.checkTeam(turnCriteria.getCurrentPlayer())) {
-      return new TurnUpdate(piece.move(finalSquare), turnCriteria.incrementTurn());
+      return new TurnUpdate(piece.move(getTileFromCoords(finalSquare)), turnCriteria.incrementTurn());
     }
     throw new WrongPlayerException(turnCriteria.getCurrentPlayer() + "");
+  }
+
+  /***
+   * @param coordinates to get in board
+   * @return corresponding tile in board
+   */
+  private ChessTile getTileFromCoords(Coordinate coordinates) {
+    return board[coordinates.getRow()][coordinates.getCol()];
   }
 
   /***
