@@ -86,6 +86,7 @@ public class BoardSetup {
       int startRow = rawPieceData.getInt("coordinateX");
       int startCol = rawPieceData.getInt("coordinateY");
       String name = rawPieceData.getString("pieceName");
+      String imageFile = rawPieceData.getString("imgFile");
       Coordinate startingCoordinate = new Coordinate(startRow, startCol);
       int team = rawPieceData.getInt("team");
       int pointValue = rawPieceData.getInt("pointValue");
@@ -96,7 +97,7 @@ public class BoardSetup {
       captures.add(unboundedCaptures);
       captures.add(boundedCaptures);
 
-      PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, false, movements, captures, null, null, null, null);
+      PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, false, movements, captures, null, null, null, imageFile);
       Piece currentPiece = new Piece(pieceData, board);
 
 
