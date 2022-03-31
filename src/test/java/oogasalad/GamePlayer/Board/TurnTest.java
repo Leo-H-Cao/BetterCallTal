@@ -47,7 +47,7 @@ class TurnTest {
   }
 
   private void setBoard() {
-    board = new ChessBoard(8, 8, turnCriteria, players, null);
+    board = new ChessBoard(8, 8, turnCriteria, players, List.of());
     board.setPieces(pieces);
   }
 

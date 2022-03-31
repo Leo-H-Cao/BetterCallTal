@@ -7,14 +7,14 @@ import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Player;
 
-public class ThreeMoves implements EndCondition {
+public class TwoMoves implements EndCondition {
 
-  private static final int MULTIPLIER = 3;
+  private static final int MULTIPLIER = 2;
 
   /***
    * Creates an EndCondition object that always ends the game after three moves
    */
-  public ThreeMoves() {}
+  public TwoMoves() {}
 
   @Override
   public Optional<Map<Integer, Double>> getScores(ChessBoard board) {
@@ -33,6 +33,6 @@ public class ThreeMoves implements EndCondition {
    * @return map where every player gets half a point
    */
   private Map<Integer, Double> generatePoints(Player[] players) {
-    return Arrays.stream(players).collect(Collectors.toMap(Player::teamID, (e) -> LOSS));
+    return Arrays.stream(players).collect(Collectors.toMap(Player::teamID, (e) -> DRAW));
   }
 }
