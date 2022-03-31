@@ -34,4 +34,13 @@ public class GameView {
         myPieces = pieces;
     }
 
+
+    /**
+     * lightUpSquares() will be called to make the correct squares light up when a piece is selected.
+     * Only when a square is lit up and clicked will a move be made.
+     */
+
+    public void lightUpSquares(Collection<Collection<ChessTile>> litTiles) {
+
+    }
 }
