@@ -2,34 +2,23 @@ package oogasalad.EditorBackend;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import oogasalad.Editor.Backend.ModelState.EditorPiece;
-import oogasalad.Editor.Backend.ModelState.ModelState;
-import oogasalad.Editor.Backend.ModelState.MovementRules;
-import oogasalad.Editor.Backend.ModelState.PieceInfo;
+import oogasalad.Editor.Backend.ModelState.BoardState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class BoardStateTest {
-  private ModelState modelState;
+  private BoardState boardState;
 
   @BeforeEach
   void setup() {
-    modelState = new ModelState();
+    boardState = new BoardState();
   }
 
   @Test
   void testChangeBoardSize(){
-    modelState.changeBoardSize(10,5);
-    assertEquals(modelState.getBoardHeight(), 5);
-    assertEquals(modelState.getBoardWidth(), 10);
-  }
-
-  @Test
-  void testCreatePiece(){
-    String pieceID = "123";
-    EditorPiece newPiece = modelState.createCustomPiece(1, 1, "image.png", new MovementRules(), pieceID, "my piece", 0, 0);
-    PieceInfo newPieceInfo = newPiece.getPieceInfo();
-    assertEquals(newPieceInfo, modelState.getPieceInfo(pieceID));
+    boardState.changeBoardSize(10,5);
+    assertEquals(boardState.getBoardHeight(), 5);
+    assertEquals(boardState.getBoardWidth(), 10);
   }
 
 }
