@@ -40,7 +40,14 @@ public class GameView {
      * Only when a square is lit up and clicked will a move be made.
      */
 
-    public void lightUpSquares(Collection<Collection<ChessTile>> litTiles) {
+    public void lightUpSquares(Collection<ChessTile> litTiles) {
 
     }
+
+    /**
+     * completeMove() will be called by the backend when a player clicks a lit up square. All the
+     * the logic such as power ups, captures, etc will be registered on the backend, and an updated
+     * board will be displayed.
+     */
+    public void completeMove(Collection<ChessTile> newboard, Collection<Piece> newpieces){}
 }
