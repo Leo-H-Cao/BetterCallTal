@@ -5,28 +5,17 @@ public class EditorPiece {
   private final int DEFAULT_POINT_VALUE = 1;
 
   private MovementRules myMovementRules;
-  private String pieceImage;
   private int pointValue;
-  private int team;
   private String myPieceID;
   private String myPieceName;
+  private PieceInfo myPieceInfo;
 
-  public EditorPiece(){
-    pieceImage = DEFAULT_PIECE_IMAGE;
-    pointValue = DEFAULT_POINT_VALUE;
-  }
-
-  public EditorPiece(int points, int teamNumber, String image, MovementRules movementRules, String pieceID, String pieceName){
+  public EditorPiece(int points, MovementRules movementRules, String pieceID, String pieceName, PieceInfo pieceInfo){
     myMovementRules = movementRules;
     pointValue = points;
-    team = teamNumber;
-    pieceImage = image;
     myPieceID = pieceID;
     myPieceName = pieceName;
-  }
-
-  public void setPieceImage(String pieceImageFile){
-    pieceImage = pieceImageFile;
+    myPieceInfo = pieceInfo;
   }
 
   public String getPieceID(){
@@ -43,6 +32,10 @@ public class EditorPiece {
 
   public void setPieceName(String name){
     myPieceName = name;
+  }
+
+  public PieceInfo getPieceInfo(){
+    return myPieceInfo;
   }
 
 

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import oogasalad.Editor.Backend.ModelState.EditorPiece;
 import oogasalad.Editor.Backend.ModelState.ModelState;
 import oogasalad.Editor.Backend.ModelState.MovementRules;
+import oogasalad.Editor.Backend.ModelState.PieceInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,8 +27,9 @@ class BoardStateTest {
   @Test
   void testCreatePiece(){
     String pieceID = "123";
-    EditorPiece newPiece = modelState.createCustomPiece(1, 1, "image.png", new MovementRules(), pieceID, "my piece");
-    assertEquals(newPiece, modelState.getPiece(pieceID));
+    EditorPiece newPiece = modelState.createCustomPiece(1, 1, "image.png", new MovementRules(), pieceID, "my piece", 0, 0);
+    PieceInfo newPieceInfo = newPiece.getPieceInfo();
+    assertEquals(newPieceInfo, modelState.getPieceInfo(pieceID));
   }
 
 }

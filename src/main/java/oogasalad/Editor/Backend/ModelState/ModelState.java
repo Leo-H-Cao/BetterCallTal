@@ -54,8 +54,13 @@ public class ModelState implements ModifiesBoardState, ModifiesPiecesState, Modi
   }
 
   @Override
-  public EditorPiece getPiece(String pieceID) {
-    return piecesManager.getPiece(pieceID);
+  public PieceInfo getPieceInfo(String pieceID) {
+    return piecesManager.getPiece(pieceID).getPieceInfo();
+  }
+
+  @Override
+  public void setPieceStartingLocation(String pieceID, int startX, int startY){
+    piecesManager.setStartingLocation(pieceID, startX, startY);
   }
 
   @Override
@@ -64,8 +69,9 @@ public class ModelState implements ModifiesBoardState, ModifiesPiecesState, Modi
   }
 
   @Override
-  public EditorPiece createCustomPiece(int points, int teamNumber, String image, MovementRules movementRules, String pieceID, String pieceName) {
-    return piecesManager.createPiece(points, teamNumber, image, movementRules, pieceID, pieceName);
+  public EditorPiece createCustomPiece(int points, int teamNumber, String image, MovementRules movementRules, String pieceID, String pieceName, int startX, int startY) {
+    PieceInfo pieceInfo = new PieceInfo(startX, startY, image, teamNumber);
+    return piecesManager.createPiece(points,movementRules, pieceID, pieceName, pieceInfo);
   }
 
   @Override
