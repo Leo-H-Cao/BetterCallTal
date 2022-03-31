@@ -3,7 +3,6 @@ package oogasalad.Frontend.Menu;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -14,10 +13,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
-import oogasalad.Frontend.MainView;
 import oogasalad.Frontend.util.ResourceParser;
+import oogasalad.controller.Controller;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -94,7 +92,7 @@ public class LanguageModal {
 			try {
 				selectLanguageLabel.setText(selectedLanguageView.getString("SelectLanguage"));
 				stage.setTitle(selectedLanguageView.getString("SelectLanguage"));
-				startButton.setText(selectedLanguageView.getString("StartSLogo"));
+				startButton.setText(selectedLanguageView.getString("Start"));
 				fullscreenCheckBox.setText(selectedLanguageView.getString("Fullscreen"));
 				currentLanguage = AVAILABLE_LANGUAGES.get(new_value.intValue());
 			} catch (MissingResourceException e) {
@@ -107,14 +105,9 @@ public class LanguageModal {
 
 	// Creates start button
 	private Button makeButton() {
-		Button startButton = new Button(selectedLanguageView.getString("StartSLogo"));
-		startButton.setOnAction((e) -> startHandler());
+		Button startButton = new Button(selectedLanguageView.getString("Start"));
+		startButton.setOnAction((e) -> new Controller(stage, selectedLanguageView));
 		return startButton;
-	}
-
-	// Function to run when start is pressed
-	private static void startHandler() {
-		System.out.println("clicked");
 	}
 
 

@@ -7,11 +7,13 @@ package oogasalad.controller;
 import javafx.stage.Stage;
 import oogasalad.Frontend.MainView;
 
+import java.util.ResourceBundle;
+
 public class Controller {
 
     private MainView myView;
 
-    public Controller(Stage stage, Runnable newControllerHandler) {
-        myView = new MainView(stage);
+    public Controller(Stage stage, ResourceBundle rb) {
+        myView = new MainView(stage, rb);
     }
 }
