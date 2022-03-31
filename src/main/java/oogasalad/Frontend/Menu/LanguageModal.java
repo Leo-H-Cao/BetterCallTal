@@ -14,6 +14,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import oogasalad.Frontend.util.ButtonFactory;
+import oogasalad.Frontend.util.ButtonType;
 import oogasalad.Frontend.util.ResourceParser;
 import oogasalad.controller.Controller;
 
@@ -50,7 +52,10 @@ public class LanguageModal {
 		selectLanguageLabel.setId("selectLanguageTitle");
 		selectLanguageLabel.setFont(new Font(32));
 		fullscreenCheckBox = new CheckBox(selectedLanguageView.getString("Fullscreen"));
-		startButton = makeButton();
+		startButton = ButtonFactory.makeButton(ButtonType.TEXT, selectedLanguageView.getString("Start"), "start", (e) -> {
+			new Controller(stage, selectedLanguageView);
+			System.out.println("clicked");
+		});
 		stage.setTitle(selectedLanguageView.getString("SelectLanguage"));
 	}
 
@@ -101,13 +106,6 @@ public class LanguageModal {
 		});
 
 		return choiceBox;
-	}
-
-	// Creates start button
-	private Button makeButton() {
-		Button startButton = new Button(selectedLanguageView.getString("Start"));
-		startButton.setOnAction((e) -> new Controller(stage, selectedLanguageView));
-		return startButton;
 	}
 
 

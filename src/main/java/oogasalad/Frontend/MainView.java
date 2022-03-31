@@ -3,7 +3,6 @@ package oogasalad.Frontend;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Editor.GameEditorView;
 import oogasalad.Frontend.Game.GameView;
-import oogasalad.Frontend.Menu.MenuView;
 
 import java.util.ResourceBundle;
 
@@ -14,7 +13,6 @@ public class MainView {
 
 	private GameView myGameView;
 	private GameEditorView myEditorView;
-	private MenuView myMenuView;
 	private Stage stage;
 
 
@@ -23,7 +21,6 @@ public class MainView {
 		langBundle = rb;
 		myGameView = new GameView(stage);
 		myEditorView = new GameEditorView(stage);
-		myMenuView = new MenuView(stage);
 	}
 
 	public static ResourceBundle getLanguage() {
