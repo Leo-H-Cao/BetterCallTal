@@ -17,10 +17,6 @@ import oogasalad.Frontend.SceneView;
 
 public class HomeView extends SceneView {
 
-    public HomeView() {
-        super();
-    }
-
     @Override
     protected Scene makeScene() {
         Scene scene = new Scene(myRoot);

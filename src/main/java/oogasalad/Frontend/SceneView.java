@@ -17,5 +17,9 @@ public abstract class SceneView {
 		return myScene;
 	}
 
+	public String getTitle() {
+		return MainView.getLanguage().getString(this.getClass().getSimpleName() + "Title");
+	}
+
 	protected abstract Scene makeScene();
 }
