@@ -4,11 +4,15 @@ package oogasalad.GamePlayer;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Player;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
+import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.GamePiece.PieceData;
+import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,7 +32,7 @@ public class BoardSetup {
     int columns = Integer.parseInt(myJSONObject.getJSONArray("general").getJSONObject(0).get("columns").toString());
 
     myBoard = new ChessBoard(rows, columns, new Linear(getPlayers()) ,getPlayers(), null);
-    getMovements();
+    setStartingPosition(myBoard);
     return myBoard;
   }
 
@@ -36,21 +40,68 @@ public class BoardSetup {
     JSONArray rawData = myJSONObject.getJSONArray("playerInfo");
     Player[] players = new Player[rawData.length()];
     for(int i=0; i<players.length; i++) {
-
-      //TODO: Fix this line (cannot cast to int[])
-      //players[i] = new Player((Integer) rawData.getJSONObject(i).get("team"), (int[]) rawData.getJSONObject(i).get("opponents"));
-      players[i] = new Player(i, null);
+      JSONArray opponents = rawData.getJSONObject(i).getJSONArray("opponents");
+      int[] opponentArray = new int[opponents.length()];
+      for(int j=0; j<opponents.length(); j++){
+        opponentArray[j] = opponents.getInt(j);
+      }
+      players[i] = new Player(i, opponentArray);
     }
     return players;
   }
 
-  private List<Movement> getMovements(){
-    JSONArray a = myJSONObject.getJSONArray("pieces").getJSONObject(0).getJSONArray("boundedMovements").getJSONArray(0);
-    System.out.println(a);
-    System.out.println("HI");
-    return null;
+  private Movement getMovementsByType(String type){
+
+    JSONArray allMovements = myJSONObject.getJSONArray("pieces").getJSONObject(0).getJSONArray(type);
+    List<Coordinate> moveList = new ArrayList<Coordinate>();
+    Movement moves;
+    for(int i=0; i<allMovements.length(); i++){
+      JSONArray currentMovement = allMovements.getJSONArray(i);
+      Coordinate relativeCoordinates = new Coordinate(currentMovement.getInt(0), currentMovement.getInt(1));
+      moveList.add(relativeCoordinates);
+    }
+
+    System.out.println(allMovements);
+
+    if(type.charAt(0) =='u'){
+      moves = new Movement(moveList, true);
+    }
+    else{
+      moves = new Movement(moveList, false);
+    }
+
+    return moves;
   }
 
+  private void setStartingPosition(ChessBoard board){
+    JSONArray pieces = myJSONObject.getJSONArray("pieces");
+    for(int i=0; i<pieces.length(); i++){
+      JSONObject rawPieceData = pieces.getJSONObject(i);
+
+      Movement unboundedMovements = getMovementsByType("unboundedMovements");
+      Movement boundedMovements = getMovementsByType("boundedMovements");
+      Movement unboundedCaptures = getMovementsByType("unboundedCaptures");
+      Movement boundedCaptures = getMovementsByType("boundedCaptures");
+
+      int startRow = rawPieceData.getInt("coordinateX");
+      int startCol = rawPieceData.getInt("coordinateY");
+      String name = rawPieceData.getString("pieceName");
+      Coordinate startingCoordinate = new Coordinate(startRow, startCol);
+      int team = rawPieceData.getInt("team");
+      int pointValue = rawPieceData.getInt("pointValue");
+      List<Movement> movements = new ArrayList<Movement>();
+      List<Movement> captures = new ArrayList<Movement>();
+      movements.add(unboundedMovements);
+      movements.add(boundedMovements);
+      captures.add(unboundedCaptures);
+      captures.add(boundedCaptures);
+
+      PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, false, movements, captures, null, null, null, null);
+      Piece currentPiece = new Piece(pieceData, board);
+
+
+    }
+  }
   public static void main(String[] args) throws IOException {
     BoardSetup a = new BoardSetup("data/GameEngineResources/board.json");
     a.createBoard();
