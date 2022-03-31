@@ -18,11 +18,16 @@ public class MainView {
 	private Stage stage;
 
 
-	public MainView(Stage stage) {
+	public MainView(Stage stage, ResourceBundle rb) {
+		language = rb;
 		this.stage = stage;
 		langbundle = bundle;
 		myGameView = new GameView(stage);
 		myEditorView = new GameEditorView(stage);
 		myMenuView = new MenuView(stage);
+	}
+
+	public static ResourceBundle getLanguage() {
+		return language;
 	}
 }

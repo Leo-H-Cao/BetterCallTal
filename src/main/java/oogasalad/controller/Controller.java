@@ -6,7 +6,6 @@ package oogasalad.controller;
 
 import javafx.stage.Stage;
 import oogasalad.Frontend.MainView;
-import oogasalad.GamePlayer.BoardSetup;
 
 import java.util.ResourceBundle;
 
@@ -14,7 +13,7 @@ public class Controller {
 
     private MainView myView;
 
-    public Controller(Stage stage, ResourceBundle bundle) {
-        myView = new MainView(stage, bundle);
+    public Controller(Stage stage, ResourceBundle rb) {
+        myView = new MainView(stage, rb);
     }
 }
