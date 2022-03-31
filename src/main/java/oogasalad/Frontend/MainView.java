@@ -19,8 +19,10 @@ public class MainView {
 	public MainView(Stage stage, ResourceBundle rb) {
 		this.stage = stage;
 		langBundle = rb;
-		myGameView = new GameView(stage);
-		myEditorView = new GameEditorView(stage);
+		myGameView = new GameView();
+		myEditorView = new GameEditorView();
+
+
 	}
 
 	/**

@@ -9,7 +9,10 @@ import javafx.stage.Stage;
 public class GameEditorView {
     private Stage myStage;
 
-    public GameEditorView(Stage stage) {
-        myStage = stage;
+    public GameEditorView() {
+    }
+
+    private void showEditor() {
+        myStage.show();
     }
 }

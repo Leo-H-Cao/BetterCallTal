@@ -16,10 +16,9 @@ public class GameView {
     private Collection<ChessTile> myBoard;
     private Collection<Piece> myPieces;
 
-    private Stage myStage;
 
-    public GameView(Stage stage) {
-        myStage = stage;
+    public GameView() {
+        ;
     }
 
     /**
@@ -32,6 +31,9 @@ public class GameView {
     public void SetUpBoard(Collection<ChessTile> board, Collection<Piece> pieces) {
         myBoard = board;
         myPieces = pieces;
+
+
+        displayGame();
     }
 
 
@@ -50,4 +52,8 @@ public class GameView {
      * board will be displayed.
      */
     public void completeMove(Collection<ChessTile> newboard, Collection<Piece> newpieces){}
+
+    private void displayGame() {
+        myStage.show();
+    }
 }

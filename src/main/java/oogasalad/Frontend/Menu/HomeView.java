@@ -1,6 +1,8 @@
 package oogasalad.Frontend.Menu;
 
-import javafx.stage.Stage;
+import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 
 /**
  * HomeView class will handle the navigation of the User from the home screen to the next page they seek.
@@ -8,9 +10,10 @@ import javafx.stage.Stage;
  */
 
 public class HomeView {
-    private Stage myStage;
 
-    public HomeView(Stage stage) {
-        myStage = stage;
+    public HomeView() {
+
     }
+
+    public Scene getScene() {return myScene;}
 }
