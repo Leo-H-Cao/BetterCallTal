@@ -3,6 +3,8 @@ package oogasalad.Frontend;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Editor.GameEditorView;
 import oogasalad.Frontend.Game.GameView;
+import oogasalad.Frontend.Menu.HomeView;
+
 import java.util.ResourceBundle;
 
 public class MainView {
@@ -12,6 +14,7 @@ public class MainView {
 
 	private GameView myGameView;
 	private GameEditorView myEditorView;
+	private HomeView myHomeView;
 	private Stage stage;
 
 
@@ -20,8 +23,8 @@ public class MainView {
 		langBundle = rb;
 		myGameView = new GameView();
 		myEditorView = new GameEditorView();
-
-
+		myHomeView = new HomeView();
+		stage.setScene(myHomeView.getScene());
 	}
 
 	/**
