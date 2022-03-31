@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer.Board;
+package oogasalad.GamePlayer.Board.Tiles;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,7 +38,7 @@ public class ChessTile {
    * Adds a piece to the given square
    * @param piece to add
    */
-  void addPiece(Piece piece) {
+  public void addPiece(Piece piece) {
     pieces.add(piece);
   }
 
@@ -66,5 +66,19 @@ public class ChessTile {
    */
   public List<Piece> getPieces() {
     return pieces;
+  }
+
+  /**
+   * Appends a piece to the list of pieces
+   */
+  public boolean appendPiece(Piece piece) {
+    return pieces.add(piece);
+  }
+
+  /**
+   * Removes a piece from the list of pieces
+   */
+  public boolean removePiece(Piece piece) {
+    return pieces.remove(piece);
   }
 }
