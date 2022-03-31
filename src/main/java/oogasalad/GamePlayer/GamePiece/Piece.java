@@ -3,7 +3,6 @@ package oogasalad.GamePlayer.GamePiece;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.IntStream;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.ChessTile;
 import oogasalad.GamePlayer.Movement.Coordinate;

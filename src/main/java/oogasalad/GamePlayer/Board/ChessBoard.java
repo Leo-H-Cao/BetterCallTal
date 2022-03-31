@@ -1,5 +1,6 @@
 package oogasalad.GamePlayer.Board;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +8,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.IntStream;
+import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
+import oogasalad.GamePlayer.EngineExceptions.BoardModificationAfterStartException;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
@@ -22,6 +25,7 @@ public class ChessBoard {
   private List<EndCondition> endConditions;
   private int currentPlayer;
   private Map<Integer, Double> endResult;
+  private List<ChessBoard> history;
 
   public ChessBoard(int length, int height, TurnCriteria turnCriteria, Player[] players, List<EndCondition> endConditions) {
     board = new ChessTile[length][height];
@@ -31,15 +35,23 @@ public class ChessBoard {
     this.endConditions = endConditions;
     currentPlayer = turnCriteria.getCurrentPlayer();
     endResult = new HashMap<>();
+    history = new ArrayList<>();
   }
 
   /***
-   * Sets the pieces on the chess board
+   * Sets the pieces on the chess board if at starting position (i.e. history is empty)
    *
    * @param pieces to add to the board
+   * @return if the pieces are set
    */
-  public void setPieces(List<Piece> pieces) {
-    pieces.forEach((p) -> board[p.getCoordinates().getRow()][p.getCoordinates().getCol()].addPiece(p));
+  public boolean setPieces(List<Piece> pieces) {
+    if(history.isEmpty()) {
+      pieces.forEach(
+          (p) -> board[p.getCoordinates().getRow()][p.getCoordinates().getCol()].addPiece(p));
+      history.add(deepCopy());
+      return true;
+    }
+    return false;
   }
 
   /***
@@ -51,9 +63,22 @@ public class ChessBoard {
    */
   public TurnUpdate move(Piece piece, Coordinate finalSquare) throws InvalidMoveException, OutsideOfBoardException, WrongPlayerException {
     if(piece.checkTeam(turnCriteria.getCurrentPlayer())) {
+      history.add(deepCopy());
       return new TurnUpdate(piece.move(getTileFromCoords(finalSquare)), turnCriteria.incrementTurn());
     }
     throw new WrongPlayerException(turnCriteria.getCurrentPlayer() + "");
+  }
+
+  /***
+   * @return copy of Board object to store in history
+   */
+  private ChessBoard deepCopy() {
+    ChessBoard copy = new ChessBoard(this.board.length, this.board[0].length, this.turnCriteria, this.players, this.endConditions);
+    //TODO: CLONE PIECES AS WELL
+    List<Piece> piecesOnBoard = new ArrayList<>();
+    Arrays.stream(board).forEach((i) -> Arrays.stream(i).forEach((t) -> piecesOnBoard.addAll(t.getPieces())));
+    copy.setPieces(piecesOnBoard);
+    return copy;
   }
 
   /***

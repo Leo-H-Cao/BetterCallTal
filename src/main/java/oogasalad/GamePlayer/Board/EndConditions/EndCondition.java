@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer.Board;
+package oogasalad.GamePlayer.Board.EndConditions;
 
 import java.util.List;
 import java.util.Map;
