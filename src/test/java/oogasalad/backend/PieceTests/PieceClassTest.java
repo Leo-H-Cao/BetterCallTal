@@ -1,21 +1,24 @@
 package oogasalad.backend.PieceTests;
 
-import java.util.List;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.Movement.Movement;
-import oogasalad.GamePlayer.Movement.MovementModifier;
-import oogasalad.GamePlayer.Movement.MovementSetModifier;
-import oogasalad.Main;
+import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.GamePiece.PieceData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class PieceClassTest {
 
   private ChessBoard board;
+  private Piece piece;
+  private static final int SIZE = 8;
+
   @BeforeEach
   void setup() {
-    Main m = new Main();
+    
+//    PieceData data = new PieceData();
+//    board = new ChessBoard(SIZE, SIZE, );
+//    piece = new Piece(data, board);
+
   }
 
   /**

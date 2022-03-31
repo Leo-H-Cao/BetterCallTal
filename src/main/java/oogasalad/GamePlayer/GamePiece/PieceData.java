@@ -6,8 +6,6 @@ import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementModifier;
 import oogasalad.GamePlayer.Movement.MovementSetModifier;
 
-<<<<<<< HEAD
-
 public record PieceData(Coordinate startingLocation,
                         String name,
                         double pointValue,
