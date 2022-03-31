@@ -8,7 +8,7 @@ import oogasalad.GamePlayer.Board.ChessTile;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementModifier;
-import oogasalad.GamePlayer.Movement.MovementSetModifier;
+import oogasalad.GamePlayer.Movement.CustomMovement;
 
 public class Piece {
 
@@ -20,7 +20,7 @@ public class Piece {
 
   private List<Movement> movements;
   private List<Movement> captures;
-  private List<MovementSetModifier> movementSetModifiers;
+  private List<CustomMovement> movementSetModifiers;
   private List<MovementModifier> movementModifiers;
   private List<MovementModifier> onInteractionModifiers;
 
