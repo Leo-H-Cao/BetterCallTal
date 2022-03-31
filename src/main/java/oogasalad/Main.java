@@ -3,6 +3,7 @@ package oogasalad;
 
 import javafx.stage.Stage;
 import javafx.application.Application;
+import oogasalad.Frontend.Menu.LanguageModal;
 import oogasalad.controller.Controller;
 import java.util.List;
 
@@ -21,19 +22,8 @@ public class Main extends Application {
      */
     @Override
     public void start (Stage stage) {
-        myControllers = new ArrayList<>();
-        myControllers.add(new Controller(stage, ()->addController()));
-    }
-
-    /**
-     * Add a controller when the user clicks new window. Creates a new stage and passes it to new controller.
-     */
-    private void addController() {
-        Stage newStage = new Stage();
-        String numWindow = "" + myControllers.size() + 1;
-        newStage.setTitle(TITLE + numWindow);
-        newStage.show();
-        Runnable runHandler = () -> addController();
-        myControllers.add(new Controller(newStage, runHandler));
+        LanguageModal languageModal = new LanguageModal(stage);
+        stage.setScene(languageModal.makeScene());
+        stage.show();
     }
 }

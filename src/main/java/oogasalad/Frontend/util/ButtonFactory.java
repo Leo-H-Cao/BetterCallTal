@@ -8,11 +8,6 @@ import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-enum ButtonType {
-	TEXT,
-	IMAGE,
-}
-
 public class ButtonFactory {
 	public static final String IMAGE_PATH = "src/main/resources/images/button/";
 
