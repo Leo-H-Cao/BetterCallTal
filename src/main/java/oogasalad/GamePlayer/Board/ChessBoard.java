@@ -82,6 +82,13 @@ public class ChessBoard {
   }
 
   /***
+   * @return list of board history
+   */
+  public List<ChessBoard> getHistory() {
+    return history;
+  }
+
+  /***
    * @param coordinates to get in board
    * @return corresponding tile in board
    */
@@ -156,5 +163,12 @@ public class ChessBoard {
    */
   public Player getPlayer(int id) {
     return players[Math.min(id, players.length - 1)];
+  }
+
+  /***
+   * @return players list
+   */
+  public Player[] getPlayers() {
+    return players;
   }
 }
