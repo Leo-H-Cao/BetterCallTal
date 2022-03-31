@@ -24,7 +24,12 @@ public class ButtonFactory {
 			setImage(b, displayText);
 		}
 		b.setId(id);
+		b.setOnAction(action);
 		return b;
+	}
+
+	public static void addAction(Button b, EventHandler<ActionEvent> action) {
+		b.setOnAction(action);
 	}
 
 	private static void setText(Button button, String display) {
