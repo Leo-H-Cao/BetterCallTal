@@ -26,6 +26,10 @@ public class MainView {
 		myMenuView = new MenuView(stage);
 	}
 
+	/**
+	 * The Language Resource Bundle is public so that if they user changes languages, only need to change it in this class.
+	 * @return Resource Bundle of selected language
+	 */
 	public static ResourceBundle getLanguage() {
 		return langBundle;
 	}
