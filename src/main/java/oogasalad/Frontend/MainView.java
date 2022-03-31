@@ -25,4 +25,8 @@ public class MainView {
 		myEditorView = new GameEditorView(stage);
 		myMenuView = new MenuView(stage);
 	}
+
+	public static ResourceBundle getLanguage() {
+		return language;
+	}
 }
