@@ -5,13 +5,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.testfx.framework.junit5.ApplicationTest;
-import org.testfx.matcher.control.LabeledMatchers;
+import util.DukeApplicationTest;
 import static oogasalad.Frontend.util.ButtonType.TEXT;
-import static org.testfx.api.FxAssert.verifyThat;
 
-public class ButtonFactoryTest extends ApplicationTest {
+public class ButtonFactoryTest extends DukeApplicationTest {
 	private String oldText = "old";
 	private String newText = "new";
 	private Text text;
@@ -31,9 +30,8 @@ public class ButtonFactoryTest extends ApplicationTest {
 	void textButtonSimpleAction() {
 		Button b = ButtonFactory.makeButton(TEXT, "testButton", "testButton",
 				(e) -> text.setText(newText));
-		root.getChildren().add(b);
-
+		runAsJFXAction(() -> root.getChildren().add(b));
 		clickOn(b);
-		verifyThat(text.getText(), LabeledMatchers.hasText(newText));
+		Assertions.assertEquals(text.getText(), newText);
 	}
 }

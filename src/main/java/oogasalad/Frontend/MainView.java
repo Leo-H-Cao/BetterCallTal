@@ -3,7 +3,6 @@ package oogasalad.Frontend;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Editor.GameEditorView;
 import oogasalad.Frontend.Game.GameView;
-
 import java.util.ResourceBundle;
 
 public class MainView {

@@ -83,7 +83,22 @@
                     <target>${project.build.java.version}</target>
                 </configuration>
             </plugin>
-            <!-- check for violations of code style -->
+        <!-- used to execute the unit tests of an application and generate a report -->
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.0.0-M5</version>
+            <configuration>
+                <argLine>
+                    @{argLine}
+                    --add-exports oogasalad/util=ALL-UNNAMED
+                    --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
+                    --add-opens javafx.graphics/com.sun.glass.ui=ALL-UNNAMED
+                </argLine>
+            </configuration>
+        </plugin>
+
+        <!-- check for violations of code style -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
