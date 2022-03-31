@@ -1,4 +1,4 @@
-package oogasalad.Frontend;
+package oogasalad.Frontend.Menu;
 
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -16,6 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import oogasalad.Frontend.MainView;
 import oogasalad.Frontend.util.ResourceParser;
 
 import java.io.IOException;
@@ -27,7 +28,7 @@ import java.util.stream.Stream;
 
 public class LanguageModal {
 	private final List<String> AVAILABLE_LANGUAGES;
-	private ResourceBundle selectedLanguageView;
+	private static ResourceBundle selectedLanguageView;
 	private final Label selectLanguageLabel;
 	private final Stage stage;
 	private final Button startButton;
@@ -40,8 +41,8 @@ public class LanguageModal {
 	 * @param stage Stage created by main
 	 */
 	public LanguageModal(Stage stage) {
-		myResources = ResourceBundle.getBundle(getClass().getName());
 		this.stage = stage;
+		myResources = ResourceBundle.getBundle(getClass().getName());
 		AVAILABLE_LANGUAGES = readAvailableLanguages();
 
 		// Set the default language
@@ -94,6 +95,7 @@ public class LanguageModal {
 				selectLanguageLabel.setText(selectedLanguageView.getString("SelectLanguage"));
 				stage.setTitle(selectedLanguageView.getString("SelectLanguage"));
 				startButton.setText(selectedLanguageView.getString("StartSLogo"));
+				fullscreenCheckBox.setText(selectedLanguageView.getString("Fullscreen"));
 				currentLanguage = AVAILABLE_LANGUAGES.get(new_value.intValue());
 			} catch (MissingResourceException e) {
 				// do nothing if resource is not defined
@@ -110,20 +112,12 @@ public class LanguageModal {
 		return startButton;
 	}
 
-	// Function to run when start slogo is pressed
-	private void startHandler() {
-		stage.setX(0);
-		stage.setY(0);
-		Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-		stage.setScene(vc.makeScene(currentLanguage, screenBounds.getWidth(), screenBounds.getHeight()));
-		stage.setWidth(screenBounds.getWidth());
-		stage.setHeight(screenBounds.getHeight());
-		if(fullscreenCheckBox.isSelected()) {
-			stage.setFullScreen(true);
-		}
+	// Function to run when start is pressed
+	private static void startHandler() {
+		System.out.println("clicked");
 	}
 
-	//
+
 	// Reads available language files from the specified path; used in generating the language dropdown
 	// @return list of language names
 	private List<String> readAvailableLanguages() {
