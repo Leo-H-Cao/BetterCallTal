@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer;
+package oogasalad.Server;
 
 
 import java.io.IOException;
@@ -9,7 +9,6 @@ import java.util.List;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Player;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
-import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
