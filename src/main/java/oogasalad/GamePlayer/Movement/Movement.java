@@ -30,6 +30,13 @@ public class Movement {
   }
 
   /***
+   * Creates a class representing a basic piece movement with one coordinate provided
+   */
+  public Movement(Coordinate possibleMove, boolean infinite) {
+    this(List.of(possibleMove), infinite);
+  }
+
+  /***
    * Moves the piece on fromSquare to finalSquare
    *
    * @param piece to move
@@ -71,8 +78,8 @@ public class Movement {
    */
   private Map<String, Set<ChessTile>> getAllMoves(Piece piece, ChessBoard board) {
     Map<String, Set<ChessTile>> allMoves = new HashMap<>();
-    allMoves.put(MOVE_KEY, Set.of());
-    allMoves.put(CAPTURE_KEY, Set.of());
+    allMoves.put(MOVE_KEY, new HashSet<>());
+    allMoves.put(CAPTURE_KEY, new HashSet<>());
 
     Coordinate baseCoordinates = piece.getCoordinates();
     possibleMoves.forEach((delta) -> {
@@ -147,13 +154,12 @@ public class Movement {
     Stack<ChessTile> beam = new Stack<>();
     Coordinate currentCoords = new Coordinate(base.getRow() + delta.getRow(), base.getCol() + delta.getCol());
     while (board.inBounds(currentCoords) && isTileEmpty(board, currentCoords)) {
-      Optional<ChessTile> nextTile = getNextTile(base, delta, board);
-      if(nextTile.isPresent()) {
-        beam.add(nextTile.get());
+      ChessTile currentTile;
+      try {
+        currentTile = board.getTile(currentCoords);
+      } catch(OutsideOfBoardException e) {break;}
+      beam.add(currentTile);
         currentCoords = new Coordinate(currentCoords.getRow() + delta.getRow(), currentCoords.getCol() + delta.getCol());
-      } else {
-        break;
-      }
     }
     return beam;
   }

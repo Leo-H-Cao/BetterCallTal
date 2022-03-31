@@ -81,4 +81,8 @@ public class ChessTile {
   public boolean removePiece(Piece piece) {
     return pieces.remove(piece);
   }
+
+  public String toString() {
+    return coordinate.toString() + ": " + pieces;
+  }
 }

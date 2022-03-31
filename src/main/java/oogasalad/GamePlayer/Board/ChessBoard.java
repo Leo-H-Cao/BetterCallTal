@@ -139,7 +139,7 @@ public class ChessBoard {
    * @param coordinates to check
    * @return if a given coordinate is in bounds
    */
-  public boolean inBounds(Coordinate coordinates) {return coordinates.getRow() < board.length && coordinates.getCol() < board[coordinates.getRow()].length;}
+  public boolean inBounds(Coordinate coordinates) {return coordinates.getRow() >= 0 && coordinates.getCol() >= 0 && coordinates.getRow() < board.length && coordinates.getCol() < board[coordinates.getRow()].length;}
 
   /***
    * Gets the tile at the specified coordinates
