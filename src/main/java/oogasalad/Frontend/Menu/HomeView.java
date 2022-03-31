@@ -11,8 +11,12 @@ import javafx.scene.Scene;
 
 public class HomeView {
 
-    public HomeView() {
+    private Scene myScene;
+    private Group myRoot;
 
+    public HomeView() {
+        myRoot = new Group();
+        myScene = new Scene(myRoot);
     }
 
     public Scene getScene() {return myScene;}

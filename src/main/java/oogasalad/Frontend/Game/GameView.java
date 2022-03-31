@@ -1,5 +1,7 @@
 package oogasalad.Frontend.Game;
 
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import oogasalad.GamePlayer.Board.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
@@ -15,10 +17,12 @@ public class GameView {
 
     private Collection<ChessTile> myBoard;
     private Collection<Piece> myPieces;
-
+    private Scene myScene;
+    private Group myRoot;
 
     public GameView() {
-        ;
+        myRoot = new Group();
+        myScene = new Scene(myRoot);
     }
 
     /**
@@ -31,9 +35,6 @@ public class GameView {
     public void SetUpBoard(Collection<ChessTile> board, Collection<Piece> pieces) {
         myBoard = board;
         myPieces = pieces;
-
-
-        displayGame();
     }
 
 
@@ -53,7 +54,7 @@ public class GameView {
      */
     public void completeMove(Collection<ChessTile> newboard, Collection<Piece> newpieces){}
 
-    private void displayGame() {
-        myStage.show();
+    private Scene getScene() {
+        return myScene;
     }
 }
