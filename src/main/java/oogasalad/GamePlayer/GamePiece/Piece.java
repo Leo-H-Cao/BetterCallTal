@@ -1,10 +1,10 @@
 package oogasalad.GamePlayer.GamePiece;
 
-import java.util.ArrayList;
+
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
@@ -71,6 +71,15 @@ public class Piece {
   }
 
   /***
+   * Gets all possible moves the piece can make
+   *
+   * @return set of possible moves
+   */
+  public Set<ChessTile> getMoves() {
+    return null;
+  }
+
+  /***
    * @return coordinate of piece
    */
   public Coordinate getCoordinates() {
@@ -83,12 +92,7 @@ public class Piece {
    */
   public boolean canCapture(Piece piece) {
     int[] opponentIDs = board.getPlayer(this.team).opponentIDs();
-    for(int opponentID : opponentIDs) {
-      if (piece.team == board.getPlayer(opponentID).teamID()) {
-        return true;
-      }
-    }
-    return false;
+    return Arrays.stream(opponentIDs).anyMatch((o) -> piece.team == board.getPlayer(o).teamID());
   }
 
   /***
@@ -96,10 +100,7 @@ public class Piece {
    * @return if this piece can capture any piece in a list of pieces
    */
   public boolean canCapture(List<Piece> pieces) {
-    for(Piece piece: pieces) {
-      if(canCapture(piece)) return true;
-    }
-    return false;
+    return pieces.stream().anyMatch(this::canCapture);
   }
 
   /***
@@ -107,5 +108,15 @@ public class Piece {
    */
   public String getImgFile() {
     return img;
+  }
+
+  /***
+   * Checks if a given team matches the piece team
+   *
+   * @param team to check
+   * @return if the provided team is the same as this piece's team
+   */
+  public boolean checkTeam(int team) {
+    return this.team == team;
   }
 }
