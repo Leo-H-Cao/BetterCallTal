@@ -8,11 +8,12 @@ import util.DukeApplicationTest;
 import java.util.ResourceBundle;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class StartModalTest extends DukeApplicationTest {
+public class LanguageModalTest extends DukeApplicationTest {
 	private ChoiceBox myLanguageSelector;
 	private LanguageModal myLanguageModal;
 	private Scene myScene;
 	private Stage myStage;
+	private ResourceBundle myResources;
 
 
 	@Override
@@ -22,6 +23,7 @@ public class StartModalTest extends DukeApplicationTest {
 		myStage = stage;
 		myStage.setScene(myScene);
 		myStage.show();
+		myResources = ResourceBundle.getBundle("oogasalad.Frontend.Menu.languages.English");
 
 
 		myLanguageSelector = lookup("#languageSelector").query();
@@ -38,12 +40,12 @@ public class StartModalTest extends DukeApplicationTest {
 	@Test
 	void testSelectEnglish() {
 		select(myLanguageSelector, "English");
-		assertEquals(myStage.getTitle(), ResourceBundle.getBundle("oogasalad.Frontend.Menu.languages.English").getString("SelectLanguage"));
+		assertEquals(myStage.getTitle(), myResources.getString("SelectLanguage"));
 	}
 
 	@Test
 	void testStartGame() {
 		clickOn(lookup("#start").query());
-		assertEquals(myStage.getTitle(), ResourceBundle.getBundle("oogasalad.Frontend.Menu.languages.English").getString("HomeViewTitle"));
+		assertEquals(myStage.getTitle(), myResources.getString("HomeViewTitle"));
 	}
 }
