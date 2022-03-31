@@ -1,9 +1,7 @@
 package oogasalad;
 
-
 import javafx.stage.Stage;
 import javafx.application.Application;
-import oogasalad.Frontend.Menu.LanguageModal;
 import oogasalad.Frontend.Menu.LanguageModal;
 
 /**
