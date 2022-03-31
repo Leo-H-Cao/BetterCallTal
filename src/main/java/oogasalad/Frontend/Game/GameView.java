@@ -9,7 +9,9 @@ import javafx.stage.Stage;
 
 public class GameView {
 
-    public GameView(Stage stage) {
+    private Stage myStage;
 
+    public GameView(Stage stage) {
+        myStage = stage;
     }
 }

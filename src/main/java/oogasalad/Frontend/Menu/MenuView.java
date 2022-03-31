@@ -6,7 +6,6 @@ package oogasalad.Frontend.Menu;
 
 import javafx.stage.Stage;
 
-import java.util.ResourceBundle;
 
 public class MenuView {
 

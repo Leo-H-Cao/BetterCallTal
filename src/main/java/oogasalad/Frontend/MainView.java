@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 public class MainView {
 
 	// Bundle made static so all classes can easily access the language
-	private static ResourceBundle language;
+	private static ResourceBundle langbundle;
 
 	private GameView myGameView;
 	private GameEditorView myEditorView;
@@ -20,6 +20,7 @@ public class MainView {
 
 	public MainView(Stage stage) {
 		this.stage = stage;
+		langbundle = bundle;
 		myGameView = new GameView(stage);
 		myEditorView = new GameEditorView(stage);
 		myMenuView = new MenuView(stage);

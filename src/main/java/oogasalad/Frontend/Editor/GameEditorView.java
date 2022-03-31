@@ -5,9 +5,11 @@ package oogasalad.Frontend.Editor;
 
 import javafx.stage.Stage;
 
+
 public class GameEditorView {
+    private Stage myStage;
 
     public GameEditorView(Stage stage) {
-
+        myStage = stage;
     }
 }
