@@ -1,11 +1,6 @@
 package oogasalad.Editor.Backend.ModelState;
 
-import java.util.List;
 import oogasalad.Editor.Backend.API.ModifiesPiecesState;
-import oogasalad.Editor.Backend.ModelState.EditorPiece;
-import oogasalad.Editor.Backend.ModelState.ModelState;
-import oogasalad.Editor.Backend.ModelState.MovementRules;
-import oogasalad.Editor.Backend.ModelState.PieceInfo;
 
 public class PiecesState  extends ModelState implements ModifiesPiecesState {
 
@@ -16,11 +11,6 @@ public class PiecesState  extends ModelState implements ModifiesPiecesState {
   @Override
   public PieceInfo getPieceInfo(String pieceID) {
     return piecesManager.getPiece(pieceID).getPieceInfo();
-  }
-
-  @Override
-  public void setPieceStartingLocation(String pieceID, int startX, int startY){
-    piecesManager.setStartingLocation(pieceID, startX, startY);
   }
 
   @Override
@@ -47,6 +37,10 @@ public class PiecesState  extends ModelState implements ModifiesPiecesState {
   @Override
   public void setPieceName(String pieceID, String name){
     piecesManager.setPieceName(pieceID, name);
+  }
+
+  public void setPieceStart(String pieceID, int x, int y){
+    piecesManager.setStartingLocation(pieceID, x, y);
   }
 
 }

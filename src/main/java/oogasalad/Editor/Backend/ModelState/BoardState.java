@@ -16,8 +16,8 @@ public class BoardState extends ModelState implements ModifiesBoardState {
   }
 
   @Override
-  public void addTileEffect(int x, int y, String effectString) {
-    myEditorBoard.addTileEffect(x, y, effectString);
+  public void addTileEffect(int x, int y, String effect) {
+    myEditorBoard.addTileEffect(x, y, effect);
   }
 
   @Override
@@ -26,7 +26,7 @@ public class BoardState extends ModelState implements ModifiesBoardState {
   }
 
   @Override
-  public void addPieceStartingLocation(String pieceID, int x, int y) {
+  public void setPieceStartingLocation(String pieceID, int x, int y) {
     myEditorBoard.addPieceStartingLocation(piecesManager.getPiece(pieceID), x, y);
   }
 
