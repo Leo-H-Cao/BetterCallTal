@@ -33,7 +33,7 @@ public class Main extends Application {
         String numWindow = "" + myControllers.size() + 1;
         newStage.setTitle(TITLE + numWindow);
         newStage.show();
-        Runnable runHandler = ()-> addController();
+        Runnable runHandler = () -> addController();
         myControllers.add(new Controller(newStage, runHandler));
     }
 }

@@ -10,9 +10,9 @@ import java.util.ResourceBundle;
 
 public class MenuView {
 
-    private ResourceBundle language;
-
     public MenuView(Stage stage) {
         LanguageModal languageModal = new LanguageModal(stage);
+        stage.setScene(languageModal.makeScene());
+        stage.show();
     }
 }
