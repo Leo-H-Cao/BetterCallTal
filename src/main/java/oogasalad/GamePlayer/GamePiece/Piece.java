@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementModifier;
@@ -17,6 +18,7 @@ public class Piece {
 
   private static final boolean VALID_SQUARE = true;
   private static final boolean INVALID_SQUARE = false;
+
   private Coordinate coordinates;
   private String name;
   private double pointValue;
@@ -57,7 +59,7 @@ public class Piece {
    * @param finalSquare to move the piece to
    * @return set of updated chess tiles
    */
-  public Set<ChessTile> move(ChessTile finalSquare) {
+  public Set<ChessTile> move(ChessTile finalSquare) throws InvalidMoveException {
     List<Movement> allMoves = Stream.concat(movements.stream(), captures.stream()).toList();
     Set<ChessTile> validMoves = new HashSet<>();
 
@@ -66,8 +68,9 @@ public class Piece {
     if (validMoves.contains(finalSquare)) {
       coordinates = finalSquare.getCoordinates();
       finalSquare.appendPiece(this);
+      return validMoves;
     }
-    return validMoves;
+    throw new InvalidMoveException("Tile is not a valid move!");
   }
 
   /***
