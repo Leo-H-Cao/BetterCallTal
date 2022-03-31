@@ -75,16 +75,16 @@ public class Movement {
     allMoves.put(CAPTURE_KEY, Set.of());
 
     Coordinate baseCoordinates = piece.getCoordinates();
-    for (Coordinate delta : possibleMoves) {
+    possibleMoves.forEach((delta) -> {
       Stack<ChessTile> moveStack = generateMoveStack(baseCoordinates, delta, board);
       allMoves.get(MOVE_KEY).addAll(moveStack);
       if(!moveStack.isEmpty()) {
-        ChessTile captureSquare = getNextTile(moveStack.peek().getCoordinates(), delta, board).orElse(moveStack.peek());
-        if (piece.canCapture(captureSquare.getPieces())) {
-          allMoves.get(CAPTURE_KEY).add(captureSquare);
-        }
-      }
-    }
+        getNextTile(moveStack.peek().getCoordinates(), delta, board).ifPresent((t) -> {
+          if (piece.canCapture(t.getPieces())) {
+            allMoves.get(CAPTURE_KEY).add(t);
+          }
+        });
+      }});
     return allMoves;
   }
   /***
@@ -131,10 +131,7 @@ public class Movement {
     if(infinite) {
       moveStack = getMoveBeam(base, delta, board);
     } else{
-      Optional<ChessTile> nextTile = getNextTile(base, delta, board);
-      if(nextTile.isPresent()) {
-        moveStack.add(nextTile.get());
-      }
+      getNextTile(base, delta, board).ifPresent(moveStack::add);
     }
     return moveStack;
   }
