@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer;
+package oogasalad.Server;
 
 
 import java.io.IOException;
@@ -9,7 +9,6 @@ import java.util.List;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Player;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
-import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
@@ -100,12 +99,10 @@ public class BoardSetup {
       PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, false, movements, captures, null, null, null, imageFile);
       Piece currentPiece = new Piece(pieceData, board);
 
+      myBoard.placePiece(new Coordinate(startRow, startCol), currentPiece);
+
+
 
     }
-  }
-  public static void main(String[] args) throws IOException {
-    BoardSetup a = new BoardSetup("data/GameEngineResources/board.json");
-    a.createBoard();
-    System.out.println(a.myJSONObject.getJSONArray("general").getJSONObject(0).get("rows"));
   }
 }

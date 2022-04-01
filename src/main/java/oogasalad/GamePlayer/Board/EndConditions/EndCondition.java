@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer.Board;
+package oogasalad.GamePlayer.Board.EndConditions;
 
 import java.util.List;
 import java.util.Map;
@@ -6,6 +6,10 @@ import java.util.Optional;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
 public interface EndCondition {
+
+  double WIN = 1.0;
+  double DRAW = 0.5;
+  double LOSS = 0.0;
 
   /***
    * Determines if the game is over, and if so, returns the points awarded to each team

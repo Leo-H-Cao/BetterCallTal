@@ -1,45 +1,83 @@
 package oogasalad.GamePlayer.Board;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Queue;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.IntStream;
+import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
+import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
-import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
+import oogasalad.GamePlayer.EngineExceptions.MoveAfterGameEndException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
-public class ChessBoard {
+public class ChessBoard implements Iterable<ChessTile>{
 
-  private ChessTile[][] board;
+  private List<List<ChessTile>> board;
   private TurnCriteria turnCriteria;
   private Player[] players;
   private List<EndCondition> endConditions;
   private int currentPlayer;
   private Map<Integer, Double> endResult;
+  private List<ChessBoard> history;
 
-  public ChessBoard(int length, int height, TurnCriteria turnCriteria, Player[] players, List<EndCondition> endConditions) {
-    board = new ChessTile[length][height];
-    IntStream.range(0, board.length).forEach((i) -> IntStream.range(0, board[i].length).forEach((j) -> board[i][j] = new ChessTile(new Coordinate(i, j))));
+  /***
+   * Creates a representation of a chessboard if an array of pieces is already provided
+   */
+  public ChessBoard(List<List<ChessTile>> board, TurnCriteria turnCriteria, Player[] players, List<EndCondition> endConditions) {
+    this.board = board;
     this.turnCriteria = turnCriteria;
     this.players = players;
     this.endConditions = endConditions;
     currentPlayer = turnCriteria.getCurrentPlayer();
     endResult = new HashMap<>();
+    history = new ArrayList<>();
   }
 
   /***
-   * Sets the pieces on the chess board
+   * Creates a representation of a chessboard with length/height of board given
+   */
+  public ChessBoard(int length, int height, TurnCriteria turnCriteria, Player[] players, List<EndCondition> endConditions) {
+    this(null, turnCriteria, players, endConditions);
+
+    board = new ArrayList<>();
+    IntStream.range(0, height)
+        .forEach(i -> {
+          List<ChessTile> list = new ArrayList<>();
+          IntStream.range(0, length)
+              .forEach(j -> list.add(new ChessTile(new Coordinate(i, j))));
+          board.add(list);
+        });
+  }
+
+  /***
+   * Sets the pieces on the chess board if at starting position (i.e. history is empty)
    *
    * @param pieces to add to the board
+   * @return if the pieces are set
    */
-  public void setPieces(List<Piece> pieces) {
-    pieces.forEach((p) -> board[p.getCoordinates().getRow()][p.getCoordinates().getCol()].addPiece(p));
+  public boolean setPieces(List<Piece> pieces) {
+    if(history.isEmpty()) {
+
+      pieces.forEach(p -> {
+        Coordinate coordinate = p.getCoordinates();
+        board.get(coordinate.getRow()).get(coordinate.getCol()).addPiece(p);
+      });
+
+      history.add(deepCopy());
+      return true;
+    }
+    return false;
   }
 
   /***
@@ -49,11 +87,27 @@ public class ChessBoard {
    * @param finalSquare end square
    * @return set of updated tiles + next player turn
    */
-  public TurnUpdate move(Piece piece, Coordinate finalSquare) throws InvalidMoveException, OutsideOfBoardException, WrongPlayerException {
-    if(piece.checkTeam(turnCriteria.getCurrentPlayer())) {
+  public TurnUpdate move(Piece piece, Coordinate finalSquare) throws EngineException {
+    if(!isGameOver() && piece.checkTeam(turnCriteria.getCurrentPlayer())) {
+      history.add(deepCopy());
       return new TurnUpdate(piece.move(getTileFromCoords(finalSquare)), turnCriteria.incrementTurn());
     }
-    throw new WrongPlayerException(turnCriteria.getCurrentPlayer() + "");
+    throw isGameOver() ? new MoveAfterGameEndException("") : new WrongPlayerException(turnCriteria.getCurrentPlayer() + "");
+  }
+
+  /***
+   * @return copy of Board object to store in history
+   */
+  private ChessBoard deepCopy() {
+    //TODO: CLONE PIECES AS WELL
+    return new ChessBoard(this.board, this.turnCriteria, this.players, this.endConditions);
+  }
+
+  /***
+   * @return list of board history
+   */
+  public List<ChessBoard> getHistory() {
+    return history;
   }
 
   /***
@@ -61,7 +115,7 @@ public class ChessBoard {
    * @return corresponding tile in board
    */
   private ChessTile getTileFromCoords(Coordinate coordinates) {
-    return board[coordinates.getRow()][coordinates.getCol()];
+    return board.get(coordinates.getRow()).get(coordinates.getCol());
   }
 
   /***
@@ -92,15 +146,17 @@ public class ChessBoard {
    * @return scores of all teams after game over. If game isn't over, an empty optional is returned.
    */
   public Optional<Map<Integer, Double>> getScores() {
-    if(!endResult.isEmpty()) return Optional.of(endResult);
-    return Optional.empty();
+    return endResult != null && !endResult.isEmpty() ? Optional.of(endResult) : Optional.empty();
   }
 
   /***
    * @param coordinates to check
    * @return if a given coordinate is in bounds
    */
-  public boolean inBounds(Coordinate coordinates) {return coordinates.getRow() < board.length && coordinates.getCol() < board[coordinates.getRow()].length;}
+  public boolean inBounds(Coordinate coordinates) {
+    return coordinates.getRow() >= 0 && coordinates.getCol() >= 0 && coordinates.getRow() < board.size()
+      && coordinates.getCol() < board.get(coordinates.getRow()).size();
+  }
 
   /***
    * Gets the tile at the specified coordinates
@@ -111,7 +167,7 @@ public class ChessBoard {
    */
   public ChessTile getTile(Coordinate coordinate) throws OutsideOfBoardException {
     if(!inBounds(coordinate)) throw new OutsideOfBoardException(coordinate.toString());
-    return board[coordinate.getRow()][coordinate.getCol()];
+    return board.get(coordinate.getRow()).get(coordinate.getCol());
   }
 
   /***
@@ -132,5 +188,65 @@ public class ChessBoard {
    */
   public Player getPlayer(int id) {
     return players[Math.min(id, players.length - 1)];
+  }
+
+  /***
+   * @return players list
+   */
+  public Player[] getPlayers() {
+    return players;
+  }
+
+  /**
+   * @return The length of the board
+   */
+  public int getBoardLength(){
+    return board.get(0).size();
+  }
+
+  /**
+   * @return The height of the board
+   */
+  public int getBoardHeight(){
+    return board.size();
+  }
+
+  /**
+   *
+   * @param pieceLocation
+   * @param piece
+   */
+  public void placePiece(Coordinate pieceLocation, Piece piece) {
+    this.board.get(pieceLocation.getRow()).get(pieceLocation.getCol()).addPiece(piece);
+  }
+
+  @Override
+  public Iterator<ChessTile> iterator() {
+    return new ChessBoardIterator(board);
+  }
+
+  @Override
+  public void forEach(Consumer<? super ChessTile> action) {
+    Iterable.super.forEach(action);
+  }
+
+  private class ChessBoardIterator implements Iterator<ChessTile> {
+
+    private final Queue<ChessTile> queue;
+
+    public ChessBoardIterator(List<List<ChessTile>> board) {
+      queue = new LinkedList<>();
+      board.forEach(queue::addAll);
+    }
+
+    @Override
+    public boolean hasNext() {
+      return !queue.isEmpty();
+    }
+
+    @Override
+    public ChessTile next() {
+      return queue.poll();
+    }
   }
 }
