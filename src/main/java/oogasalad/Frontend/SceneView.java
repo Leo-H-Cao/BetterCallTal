@@ -47,7 +47,7 @@ public abstract class SceneView {
 	}
 
 	protected Button makeExitButton() {
-		Button b = ButtonFactory.makeButton(ButtonType.TEXT, MainView.getLanguage().getString("exit"), "exitGameEditor",
+		Button b = ButtonFactory.makeButton(ButtonType.TEXT, MainView.getLanguage().getString("exit"), "exit",
 				(e) -> getMainView().getViews().stream().filter((c) -> c.getClass() == HomeView.class).forEach((c) ->
 						getMainView().changeScene(c)));
 		return b;
