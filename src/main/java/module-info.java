@@ -11,6 +11,6 @@ open module oogasalad {
     exports oogasalad;
     exports oogasalad.Frontend;
     exports oogasalad.Server;
-    exports oogasalad.Editor;
+    exports oogasalad.Editor.Backend.API;
     exports oogasalad.Frontend.Menu;
 }

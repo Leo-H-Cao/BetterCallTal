@@ -2,10 +2,8 @@ package oogasalad.Frontend.Game;
 
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
-import oogasalad.GamePlayer.Board.ChessTile;
+import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
-
 import java.util.Collection;
 
 /**

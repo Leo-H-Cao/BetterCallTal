@@ -6,18 +6,19 @@ package oogasalad.Frontend.Editor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import oogasalad.Frontend.SceneView;
 
 
-public class GameEditorView {
-    private Scene myScene;
-    private Group myRoot;
+public class GameEditorView extends SceneView {
 
     public GameEditorView() {
         myRoot = new Group();
         myScene = new Scene(myRoot);
     }
 
-    private Scene getScene() {
-        return myScene;
+    @Override
+    protected Scene makeScene() {
+
+        return null;
     }
 }
