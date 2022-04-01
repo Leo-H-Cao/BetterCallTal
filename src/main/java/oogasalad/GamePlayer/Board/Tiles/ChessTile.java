@@ -82,6 +82,7 @@ public class ChessTile {
     return pieces.remove(piece);
   }
 
+
   /***
    * @return coordinates of tile and pieces on it
    */
