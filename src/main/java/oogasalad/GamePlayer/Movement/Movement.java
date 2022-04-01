@@ -36,7 +36,7 @@ public class Movement {
     this(List.of(possibleMove), infinite);
   }
 
-  /***
+  /**
    * Moves the piece on fromSquare to finalSquare
    *
    * @param piece to move
@@ -44,13 +44,24 @@ public class Movement {
    * @param board to move on
    * @return set of updated tiles
    * @throws InvalidMoveException if the piece cannot move to the given square
+   * @throws OutsideOfBoardException if the provided square is outside the board
    */
-  public Set<ChessTile> movePiece(Piece piece, ChessTile finalSquare, ChessBoard board)
-      throws InvalidMoveException {
-    if(getMoves(piece, board).contains(finalSquare)) {
-      return piece.move(finalSquare);
+  public Set<ChessTile> movePiece(Piece piece, Coordinate finalSquare, ChessBoard board)
+      throws InvalidMoveException, OutsideOfBoardException {
+    ChessTile finalTile = convertCordToTile(finalSquare, board);
+    if(getMoves(piece, board).contains(finalTile)) {
+      return piece.move(finalTile);
     }
     throw new InvalidMoveException(piece + ": " + finalSquare);
+  }
+
+  private ChessTile convertCordToTile(Coordinate coordinates, ChessBoard board)
+      throws OutsideOfBoardException {
+    try {
+      return board.getTile(coordinates);
+    } catch (OutsideOfBoardException e) {
+      throw new OutsideOfBoardException(coordinates.toString());
+    }
   }
 
   /***
@@ -62,9 +73,11 @@ public class Movement {
    * @return set of updated tiles
    * @throws InvalidMoveException if the piece cannot move to the given square
    */
-  public Set<ChessTile> capturePiece(Piece piece, ChessTile captureSquare, ChessBoard board) throws InvalidMoveException {
-    if(getCaptures(piece, board).contains(captureSquare)) {
-      return piece.move(captureSquare);
+  public Set<ChessTile> capturePiece(Piece piece, Coordinate captureSquare, ChessBoard board)
+      throws InvalidMoveException, OutsideOfBoardException {
+    ChessTile captureTile = convertCordToTile(captureSquare, board);
+    if(getCaptures(piece, board).contains(captureTile)) {
+      return piece.move(captureTile);
     }
     throw new InvalidMoveException(piece + ": " + captureSquare);
   }
@@ -85,13 +98,15 @@ public class Movement {
     possibleMoves.forEach((delta) -> {
       Stack<ChessTile> moveStack = generateMoveStack(baseCoordinates, delta, board);
       allMoves.get(MOVE_KEY).addAll(moveStack);
-      if(!moveStack.isEmpty()) {
-        getNextTile(moveStack.peek().getCoordinates(), delta, board).ifPresent((t) -> {
-          if (piece.canCapture(t.getPieces())) {
-            allMoves.get(CAPTURE_KEY).add(t);
-          }
-        });
-      }});
+      Optional<ChessTile> capTile = moveStack.isEmpty() ? getNextTile(baseCoordinates, delta, board)
+          : (infinite ? getNextTile(moveStack.peek().getCoordinates(), delta, board)
+              : Optional.of(moveStack.peek()));
+      capTile.ifPresent((t) -> {
+        if (piece.canCapture(t.getPieces())) {
+          allMoves.get(CAPTURE_KEY).add(t);
+        }
+      });
+    });
     return allMoves;
   }
   /***
@@ -153,6 +168,7 @@ public class Movement {
   private Stack<ChessTile> getMoveBeam(Coordinate base, Coordinate delta, ChessBoard board) {
     Stack<ChessTile> beam = new Stack<>();
     Coordinate currentCoords = new Coordinate(base.getRow() + delta.getRow(), base.getCol() + delta.getCol());
+    System.out.println(currentCoords);
     while (board.inBounds(currentCoords) && isTileEmpty(board, currentCoords)) {
       ChessTile currentTile;
       try {
