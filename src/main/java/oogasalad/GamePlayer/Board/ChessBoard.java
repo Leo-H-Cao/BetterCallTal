@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.IntStream;
@@ -179,5 +180,29 @@ public class ChessBoard {
    */
   public Player[] getPlayers() {
     return players;
+  }
+
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof ChessBoard)) {
+      return false;
+    }
+    ChessBoard that = (ChessBoard) o;
+    return currentPlayer == that.currentPlayer && Arrays.equals(board, that.board)
+        && Objects.equals(turnCriteria, that.turnCriteria) && Arrays.equals(
+        players, that.players) && Objects.equals(endConditions, that.endConditions)
+        && Objects.equals(endResult, that.endResult);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = Objects.hash(turnCriteria, endConditions, currentPlayer, endResult);
+    result = 31 * result + Arrays.hashCode(board);
+    result = 31 * result + Arrays.hashCode(players);
+    return result;
   }
 }
