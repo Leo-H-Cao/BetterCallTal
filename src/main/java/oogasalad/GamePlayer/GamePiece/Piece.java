@@ -1,6 +1,7 @@
 package oogasalad.GamePlayer.GamePiece;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -20,7 +21,7 @@ import oogasalad.GamePlayer.Movement.CustomMovement;
  * @author Jed Yang
  * @author Jose Santillan
  */
-public class Piece {
+public class Piece implements Cloneable {
 
   private static final boolean VALID_SQUARE = true;
   private static final boolean INVALID_SQUARE = false;
@@ -142,7 +143,31 @@ public class Piece {
   }
 
 
+  /***
+   * @return name of piece
+   */
   public String getName(){
     return name;
+  }
+
+  /***
+   * @return complete copy of the piece, including copies of all instance variables
+   */
+  @Override
+  public Piece clone() {
+    PieceData clonedData = new PieceData(
+        new Coordinate(getCoordinates().getRow(), getCoordinates().getCol()),
+        name,
+        pointValue,
+        team,
+        mainPiece,
+        new ArrayList<>(movements),
+        new ArrayList<>(captures),
+        new ArrayList<>(movementSetModifiers),
+        new ArrayList<>(movementModifiers),
+        new ArrayList<>(onInteractionModifiers),
+        img
+    );
+    return new Piece(clonedData, board);
   }
 }

@@ -99,8 +99,12 @@ public class ChessBoard implements Iterable<ChessTile>{
    * @return copy of Board object to store in history
    */
   private ChessBoard deepCopy() {
-    //TODO: CLONE PIECES AS WELL
-    return new ChessBoard(this.board, this.turnCriteria, this.players, this.endConditions);
+    List<List<ChessTile>> boardCopy = new ArrayList<>();
+    IntStream.range(0, this.board.size()).forEach((i) -> {
+      boardCopy.add(new ArrayList<>());
+      boardCopy.get(i).addAll(this.board.get(i).stream().map(ChessTile::clone).toList());
+    });
+    return new ChessBoard(boardCopy, this.turnCriteria, this.players, this.endConditions);
   }
 
   /***
