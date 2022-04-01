@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
 /**
@@ -60,9 +61,10 @@ public class ChessHistory {
    *
    * @param newState The new state to add.
    */
-  public void addToHistory(ChessBoard newState) {
+  public ChessBoard addToHistory(ChessBoard newState) {
     historyDeque.addLast(newState);
     currentIndex++;
+    return newState;
   }
 
   /**
@@ -81,7 +83,13 @@ public class ChessHistory {
    * @return the state at a given index.
    */
   public ChessBoard getState(int index) {
-    return historyList.get(index);
+    if (index < 0) {
+      return getFirstState();
+    } else if (index > historyList.size()) {
+      return getLastState();
+    } else {
+      return historyList.get(index);
+    }
   }
 
   /**
@@ -168,11 +176,30 @@ public class ChessHistory {
 
   /**
    * Clears the history.
+   *
+   * @return the state that was cleared to.
    */
-  public void clearHistory() {
+  public ChessHistory clearHistory() {
     historyDeque.clear();
     currentIndex = 0;
+    return this;
   }
 
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof ChessHistory)) {
+      return false;
+    }
+    ChessHistory that = (ChessHistory) o;
+    return currentIndex == that.currentIndex && Objects.equals(historyDeque,
+        that.historyDeque) && Objects.equals(historyList, that.historyList);
+  }
 
+  @Override
+  public int hashCode() {
+    return Objects.hash(historyDeque, historyList, currentIndex);
+  }
 }
