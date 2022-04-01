@@ -212,38 +212,59 @@ public class ChessBoard implements Iterable<ChessTile>{
   }
 
   /**
+   * Places piece at designated spot
    *
-   * @param pieceLocation
-   * @param piece
+   * @param pieceLocation to put piece
+   * @param piece to place
    */
   public void placePiece(Coordinate pieceLocation, Piece piece) {
     this.board.get(pieceLocation.getRow()).get(pieceLocation.getCol()).addPiece(piece);
   }
 
+  /***
+   * @return iterator over the board list
+   */
   @Override
   public Iterator<ChessTile> iterator() {
     return new ChessBoardIterator(board);
   }
 
+  /***
+   * For each loop over the board list
+   *
+   * @param action to do in the for each loop
+   */
   @Override
   public void forEach(Consumer<? super ChessTile> action) {
     Iterable.super.forEach(action);
   }
 
+  /***
+   * Iterator class over the board list
+   */
   private class ChessBoardIterator implements Iterator<ChessTile> {
 
     private final Queue<ChessTile> queue;
 
+    /***
+     * Creates an iterator over a given list
+     */
     public ChessBoardIterator(List<List<ChessTile>> board) {
       queue = new LinkedList<>();
       board.forEach(queue::addAll);
     }
 
+    /***
+     * @return if there's another ChessTile
+     */
     @Override
     public boolean hasNext() {
       return !queue.isEmpty();
     }
 
+    /***
+     * @return next ChessTile
+     */
     @Override
     public ChessTile next() {
       return queue.poll();
