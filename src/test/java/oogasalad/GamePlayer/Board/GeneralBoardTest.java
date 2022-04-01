@@ -3,8 +3,10 @@ package oogasalad.GamePlayer.Board;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
+import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.GamePiece.Piece;
@@ -38,7 +40,7 @@ class GeneralBoardTest {
 
     turnCriteria = new Linear(players);
 
-    board = new ChessBoard(8, 8, turnCriteria, players, List.of());
+    board = new ChessBoard(3, 3, turnCriteria, players, List.of());
     pieceOne = new Piece(new PieceData(new Coordinate(0, 0), "test1", 0, 0, false,
         List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
     pieceTwo = new Piece(new PieceData(new Coordinate(1, 0), "test2", 0, 1, false,
@@ -52,11 +54,37 @@ class GeneralBoardTest {
   @Test
   void generalBoardTestHappy() {
     try {
+      assertEquals(3, board.getBoardLength());
+      assertEquals(3, board.getBoardHeight());
       assertFalse(board.setPieces(null));
 //      assertEquals(Set.of(board.getTile(new Coordinate(0, 1))), board.getMoves(pieceOne));
       assertTrue(board.getTile(new Coordinate(0, 0)).removePiece(pieceOne));
       assertFalse(board.getTile(new Coordinate(0, 0)).removePiece(pieceOne));
+      board.placePiece(new Coordinate(0, 0), pieceOne);
+      assertEquals(board.getTile(new Coordinate(0, 0)).getPiece().get(), pieceOne);
+      board.getTile(new Coordinate(0, 0)).removePiece(pieceOne);
       assertEquals("(0, 0): []", board.getTile(new Coordinate(0, 0)).toString());
+    } catch(Exception e) {
+      fail();
+    }
+  }
+
+  @Test
+  void boardIteratorTestHS() {
+    try {
+      Iterator<ChessTile> iterator = board.iterator();
+      for(int i=0; i<3; i++) {
+        for(int j=0; j<3; j++) {
+          assertTrue(iterator.hasNext());
+          assertEquals(iterator.next(), board.getTile(new Coordinate(i, j)));
+        }
+      }
+      assertFalse(iterator.hasNext());
+
+      AtomicInteger count = new AtomicInteger();
+      board.forEach((c) -> {
+        count.getAndIncrement();});
+      assertEquals(9, count.get());
     } catch(Exception e) {
       fail();
     }
