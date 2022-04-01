@@ -1,4 +1,4 @@
-open module oogasalad_app {
+open module oogasalad {
     // list all imported class packages since they are dependencies
     requires javafx.controls;
     requires javafx.graphics;
