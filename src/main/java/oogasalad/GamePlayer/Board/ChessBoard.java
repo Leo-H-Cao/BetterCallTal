@@ -160,7 +160,7 @@ public class ChessBoard implements Iterable<ChessTile>{
    * @return if a given coordinate is in bounds
    */
   public boolean inBounds(Coordinate coordinates) {
-    return coordinates.getRow() < board.size()
+    return coordinates.getRow() >= 0 && coordinates.getCol() >= 0 && coordinates.getRow() < board.size()
       && coordinates.getCol() < board.get(coordinates.getRow()).size();
   }
 
@@ -204,7 +204,7 @@ public class ChessBoard implements Iterable<ChessTile>{
   }
 
   /**
-   * @return The lenght of the board
+   * @return The length of the board
    */
   public int getBoardLength(){
     return board.get(0).size();
