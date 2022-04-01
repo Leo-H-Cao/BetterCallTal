@@ -10,12 +10,6 @@ import oogasalad.Frontend.SceneView;
 
 
 public class GameEditorView extends SceneView {
-
-    public GameEditorView() {
-        myRoot = new Group();
-        myScene = new Scene(myRoot);
-    }
-
     @Override
     protected Scene makeScene() {
 
