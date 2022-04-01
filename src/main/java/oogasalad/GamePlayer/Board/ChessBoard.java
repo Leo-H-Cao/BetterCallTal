@@ -60,10 +60,6 @@ public class ChessBoard implements Iterable<ChessTile> {
               .forEach(j -> list.add(new ChessTile(new Coordinate(i, j))));
           board.add(list);
         });
-
-//    board = new ChessTile[length][height];
-//    IntStream.range(0, board.size())
-//        .forEach((i) -> IntStream.range(0, board[i].length).forEach((j) -> board[i][j] = new ChessTile(new Coordinate(i, j))));
   }
 
   /***
@@ -80,8 +76,6 @@ public class ChessBoard implements Iterable<ChessTile> {
         board.get(coordinate.getRow()).get(coordinate.getCol()).addPiece(p);
       });
 
-//      pieces.forEach(
-//          (p) -> board[p.getCoordinates().getRow()][p.getCoordinates().getCol()].addPiece(p));
       history.add(deepCopy());
       return true;
     }
@@ -175,7 +169,7 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @return if a given coordinate is in bounds
    */
   public boolean inBounds(Coordinate coordinates) {
-    return coordinates.getRow() < board.size()
+    return coordinates.getRow() >= 0 && coordinates.getCol() >= 0 && coordinates.getRow() < board.size()
       && coordinates.getCol() < board.get(coordinates.getRow()).size();
   }
 
@@ -266,7 +260,7 @@ public class ChessBoard implements Iterable<ChessTile> {
 
     @Override
     public boolean hasNext() {
-      return queue.isEmpty();
+      return !queue.isEmpty();
     }
 
     @Override

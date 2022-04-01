@@ -81,4 +81,12 @@ public class ChessTile {
   public boolean removePiece(Piece piece) {
     return pieces.remove(piece);
   }
+
+
+  /***
+   * @return coordinates of tile and pieces on it
+   */
+  public String toString() {
+    return coordinate.toString() + ": " + pieces;
+  }
 }
