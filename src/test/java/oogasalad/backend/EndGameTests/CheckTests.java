@@ -55,10 +55,17 @@ public class CheckTests {
   }
 
   void pieceLocations(int row1, int col1, int row2, int col2) {
-    pieceOne = new Piece(new PieceData(new Coordinate(row1, col1), "test1", 0, 0, false,
-        List.of(new Movement(List.of(new Coordinate(1, 0)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
-    pieceTwo = new Piece(new PieceData(new Coordinate(row2, col2), "test2", 0, 1, true,
-        List.of(new Movement(List.of(new Coordinate(1, 0)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
+
+    pieceOne = new Piece(new PieceData(new Coordinate(row1, col1),
+        "test1", 0, 0, false,
+        List.of(new Movement(List.of(new Coordinate(1, 0)), false)),
+        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
+
+    pieceTwo = new Piece(new PieceData(new Coordinate(row2, col2),
+        "test2", 0, 1, true,
+        List.of(new Movement(List.of(new Coordinate(1, 0)), false)),
+        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
+
     pieces = List.of(pieceOne, pieceTwo);
     board.setPieces(pieces);
   }
