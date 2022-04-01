@@ -180,4 +180,14 @@ public class ChessBoard {
   public Player[] getPlayers() {
     return players;
   }
+
+  public int getBoardLength(){
+    return board[0].length;
+  }
+  public int getBoardHeight(){
+    return board.length;
+  }
+  public void placePiece(Coordinate pieceLocation, Piece piece){
+    this.board[pieceLocation.getRow()][pieceLocation.getCol()].addPiece(piece);
+  }
 }

@@ -105,4 +105,9 @@ public class Piece {
   public boolean checkTeam(int team) {
     return this.team == team;
   }
+
+
+  public String getName(){
+    return name;
+  }
 }
