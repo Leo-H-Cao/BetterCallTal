@@ -13,7 +13,7 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementModifier;
-import oogasalad.GamePlayer.Movement.MovementSetModifier;
+import oogasalad.GamePlayer.Movement.CustomMovement;
 
 /**
  * @author Vincent Chen
@@ -33,7 +33,7 @@ public class Piece {
 
   private List<Movement> movements;
   private List<Movement> captures;
-  private List<MovementSetModifier> movementSetModifiers;
+  private List<CustomMovement> movementSetModifiers;
   private List<MovementModifier> movementModifiers;
   private List<MovementModifier> onInteractionModifiers;
 
@@ -139,5 +139,10 @@ public class Piece {
    */
   public boolean checkTeam(int team) {
     return this.team == team;
+  }
+
+
+  public String getName(){
+    return name;
   }
 }

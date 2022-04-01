@@ -203,6 +203,29 @@ public class ChessBoard implements Iterable<ChessTile>{
     return players;
   }
 
+  /**
+   * @return The lenght of the board
+   */
+  public int getBoardLength(){
+    return board.get(0).size();
+  }
+
+  /**
+   * @return The height of the board
+   */
+  public int getBoardHeight(){
+    return board.size();
+  }
+
+  /**
+   *
+   * @param pieceLocation
+   * @param piece
+   */
+  public void placePiece(Coordinate pieceLocation, Piece piece) {
+    this.board.get(pieceLocation.getRow()).get(pieceLocation.getCol()).addPiece(piece);
+  }
+
   @Override
   public Iterator<ChessTile> iterator() {
     return new ChessBoardIterator(board);
@@ -215,11 +238,11 @@ public class ChessBoard implements Iterable<ChessTile>{
 
   private class ChessBoardIterator implements Iterator<ChessTile> {
 
-    private Queue<ChessTile> queue;
+    private final Queue<ChessTile> queue;
 
     public ChessBoardIterator(List<List<ChessTile>> board) {
       queue = new LinkedList<>();
-      board.forEach(list -> queue.addAll(list));
+      board.forEach(queue::addAll);
     }
 
     @Override
