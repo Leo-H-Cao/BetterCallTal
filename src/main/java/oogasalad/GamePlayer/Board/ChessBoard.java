@@ -204,7 +204,7 @@ public class ChessBoard implements Iterable<ChessTile>{
   }
 
   /**
-   * @return The lenght of the board
+   * @return The length of the board
    */
   public int getBoardLength(){
     return board.get(0).size();

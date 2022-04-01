@@ -55,6 +55,12 @@ public class Movement {
     throw new InvalidMoveException(piece + ": " + finalSquare);
   }
 
+  /**
+   * @param coordinates that the tile is on
+   * @param board to get tile on
+   * @return corresponding ChessTile to given coordinates
+   * @throws OutsideOfBoardException
+   */
   private ChessTile convertCordToTile(Coordinate coordinates, ChessBoard board)
       throws OutsideOfBoardException {
     try {
