@@ -1,16 +1,29 @@
 package oogasalad.GamePlayer.GamePiece;
 
+
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.ChessTile;
+import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
+import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementModifier;
-import oogasalad.GamePlayer.Movement.MovementSetModifier;
+import oogasalad.GamePlayer.Movement.CustomMovement;
 
+/**
+ * @author Vincent Chen
+ * @author Jed Yang
+ * @author Jose Santillan
+ */
 public class Piece {
+
+  private static final boolean VALID_SQUARE = true;
+  private static final boolean INVALID_SQUARE = false;
 
   private Coordinate coordinates;
   private String name;
@@ -20,7 +33,7 @@ public class Piece {
 
   private List<Movement> movements;
   private List<Movement> captures;
-  private List<MovementSetModifier> movementSetModifiers;
+  private List<CustomMovement> movementSetModifiers;
   private List<MovementModifier> movementModifiers;
   private List<MovementModifier> onInteractionModifiers;
 
@@ -52,8 +65,18 @@ public class Piece {
    * @param finalSquare to move the piece to
    * @return set of updated chess tiles
    */
-  public Set<ChessTile> move(ChessTile finalSquare) {
-    return null;
+  public Set<ChessTile> move(ChessTile finalSquare)
+      throws InvalidMoveException, OutsideOfBoardException {
+    Set<ChessTile> moves = getMoves();
+
+    if (!moves.contains(finalSquare)) {
+      throw new InvalidMoveException("Tile is not a valid move!");
+    }
+    //TODO NOT COMPLETELY FINISHED, AM WAITING TO SEE HOW DIFFERENT TILES ARE IMPLEMENTED TO FINISH
+    ChessTile firstSquare = board.getTile(coordinates);
+    coordinates = finalSquare.getCoordinates();
+    finalSquare.appendPiece(this);
+    return new HashSet<>(Set.of(firstSquare, finalSquare));
   }
 
   /***
@@ -62,7 +85,19 @@ public class Piece {
    * @return set of possible moves
    */
   public Set<ChessTile> getMoves() {
-    return null;
+    Set<ChessTile> allMoves = new HashSet<>();
+
+    movements.stream()
+        .map(move -> move.getMoves(this, board))
+        .collect(Collectors.toSet())
+        .forEach(allMoves::addAll);
+
+    movements.stream()
+        .map(move -> move.getCaptures(this, board))
+        .collect(Collectors.toSet())
+        .forEach(allMoves::addAll);
+
+    return allMoves;
   }
 
   /***
@@ -104,5 +139,10 @@ public class Piece {
    */
   public boolean checkTeam(int team) {
     return this.team == team;
+  }
+
+
+  public String getName(){
+    return name;
   }
 }

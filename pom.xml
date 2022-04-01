@@ -17,19 +17,19 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>${project.build.java.version}.0.2-ea+2</version>
+            <version>18</version>
         </dependency>
         <!-- in case anyone wants to play sounds in the game -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-media</artifactId>
-            <version>${project.build.java.version}.0.2-ea+2</version>
+            <version>18</version>
         </dependency>
         <!-- in case anyone wants to display HTML files -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-web</artifactId>
-            <version>${project.build.java.version}.0.2-ea+2</version>
+            <version>18</version>
         </dependency>
         <!-- framework for writing repeatable tests by using assertions about your code's values -->
         <dependency>
