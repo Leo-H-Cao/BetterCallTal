@@ -10,7 +10,9 @@ import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
@@ -21,7 +23,7 @@ import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
-public class ChessBoard implements Iterable<ChessTile>{
+public class ChessBoard implements Iterable<ChessTile> {
 
   private List<List<ChessTile>> board;
   private TurnCriteria turnCriteria;
@@ -101,6 +103,19 @@ public class ChessBoard implements Iterable<ChessTile>{
     throw isGameOver() ? new MoveAfterGameEndException("") : new WrongPlayerException(turnCriteria.getCurrentPlayer() + "");
   }
 
+  /**
+   * This method gets the target pieces for the specified team
+   * @param team the Team we want information from
+   * @return all the Target Pieces this team has
+   */
+  public List<Piece> targetPiece(int team) {
+    return board.stream()
+        .flatMap(List::stream).toList().stream()
+        .map(ChessTile::getPieces)
+        .flatMap(List::stream).toList().stream()
+        .filter(piece -> piece.checkTeam(team) && piece.isTargetPiece())
+        .collect(Collectors.toList());
+  }
   /***
    * @return copy of Board object to store in history
    */
@@ -204,7 +219,7 @@ public class ChessBoard implements Iterable<ChessTile>{
   }
 
   /**
-   * @return The lenght of the board
+   * @return The length of the board
    */
   public int getBoardLength(){
     return board.get(0).size();
@@ -229,6 +244,10 @@ public class ChessBoard implements Iterable<ChessTile>{
   @Override
   public Iterator<ChessTile> iterator() {
     return new ChessBoardIterator(board);
+  }
+
+  public Stream<List<ChessTile>> stream() {
+    return board.stream();
   }
 
   @Override

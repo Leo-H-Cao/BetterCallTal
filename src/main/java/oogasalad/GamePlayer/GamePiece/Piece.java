@@ -36,9 +36,7 @@ public class Piece {
   private List<CustomMovement> movementSetModifiers;
   private List<MovementModifier> movementModifiers;
   private List<MovementModifier> onInteractionModifiers;
-
   private String img;
-
   private ChessBoard board;
 
   /***
@@ -141,7 +139,9 @@ public class Piece {
     return this.team == team;
   }
 
-
+  public boolean isTargetPiece() {
+    return mainPiece;
+  }
   public String getName(){
     return name;
   }

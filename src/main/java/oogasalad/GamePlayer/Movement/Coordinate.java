@@ -41,4 +41,8 @@ public class Coordinate{
   public String toString() {
     return String.format("(%d, %d)", row, col);
   }
+
+  public boolean equals(Coordinate other) {
+    return this.row == other.getRow() && this.col == other.getCol();
+  }
 }

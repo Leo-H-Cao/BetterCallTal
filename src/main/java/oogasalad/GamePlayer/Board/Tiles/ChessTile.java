@@ -81,5 +81,4 @@ public class ChessTile {
   public boolean removePiece(Piece piece) {
     return pieces.remove(piece);
   }
-
 }
