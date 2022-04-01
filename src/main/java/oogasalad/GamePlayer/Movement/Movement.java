@@ -39,7 +39,7 @@ public class Movement {
    * @throws InvalidMoveException if the piece cannot move to the given square
    */
   public Set<ChessTile> movePiece(Piece piece, ChessTile finalSquare, ChessBoard board)
-      throws InvalidMoveException {
+      throws InvalidMoveException, OutsideOfBoardException {
     if(getMoves(piece, board).contains(finalSquare)) {
       return piece.move(finalSquare);
     }
@@ -55,7 +55,8 @@ public class Movement {
    * @return set of updated tiles
    * @throws InvalidMoveException if the piece cannot move to the given square
    */
-  public Set<ChessTile> capturePiece(Piece piece, ChessTile captureSquare, ChessBoard board) throws InvalidMoveException {
+  public Set<ChessTile> capturePiece(Piece piece, ChessTile captureSquare, ChessBoard board)
+      throws InvalidMoveException, OutsideOfBoardException {
     if(getCaptures(piece, board).contains(captureSquare)) {
       return piece.move(captureSquare);
     }
