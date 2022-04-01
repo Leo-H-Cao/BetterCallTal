@@ -101,6 +101,7 @@ public class Movement {
     allMoves.put(CAPTURE_KEY, new HashSet<>());
 
     Coordinate baseCoordinates = piece.getCoordinates();
+
     possibleMoves.forEach((delta) -> {
       Stack<ChessTile> moveStack = generateMoveStack(baseCoordinates, delta, board);
       allMoves.get(MOVE_KEY).addAll(moveStack);
