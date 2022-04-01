@@ -9,7 +9,7 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
-public class ChessTile implements Tile{
+public class ChessTile implements Tile, Cloneable {
 
   private Coordinate coordinate;
   private List<Piece> pieces;
@@ -95,5 +95,20 @@ public class ChessTile implements Tile{
    */
   public String toString() {
     return coordinate.toString() + ": " + pieces;
+  }
+
+  /***
+   * @return copy of tile and its pieces
+   */
+  @Override
+  public ChessTile clone() {
+    return new ChessTile(new Coordinate(this.coordinate.getRow(), this.coordinate.getCol()), clonePieces());
+  }
+
+  /***
+   * @return clone of all pieces in this tile
+   */
+  private List<Piece> clonePieces() {
+    return pieces.stream().map(Piece::clone).toList();
   }
 }
