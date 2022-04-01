@@ -1,16 +1,23 @@
 package oogasalad.GamePlayer.GamePiece;
 
+
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.ChessTile;
+import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementModifier;
 import oogasalad.GamePlayer.Movement.CustomMovement;
 
 public class Piece {
+
+  private static final boolean VALID_SQUARE = true;
+  private static final boolean INVALID_SQUARE = false;
 
   private Coordinate coordinates;
   private String name;
@@ -52,8 +59,18 @@ public class Piece {
    * @param finalSquare to move the piece to
    * @return set of updated chess tiles
    */
-  public Set<ChessTile> move(ChessTile finalSquare) {
-    return null;
+  public Set<ChessTile> move(ChessTile finalSquare) throws InvalidMoveException {
+    List<Movement> allMoves = Stream.concat(movements.stream(), captures.stream()).toList();
+    Set<ChessTile> validMoves = new HashSet<>();
+
+    allMoves.forEach(move -> validMoves.addAll(move.getMoves(this, board)));
+
+    if (validMoves.contains(finalSquare)) {
+      coordinates = finalSquare.getCoordinates();
+      finalSquare.appendPiece(this);
+      return validMoves;
+    }
+    throw new InvalidMoveException("Tile is not a valid move!");
   }
 
   /***

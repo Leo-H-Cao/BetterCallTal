@@ -1,7 +1,6 @@
 package oogasalad.GamePlayer.Board;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,10 +8,10 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.IntStream;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
+import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
-import oogasalad.GamePlayer.EngineExceptions.BoardModificationAfterStartException;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
-import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.MoveAfterGameEndException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;

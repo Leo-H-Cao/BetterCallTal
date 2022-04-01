@@ -6,6 +6,16 @@ import oogasalad.GamePlayer.Movement.CustomMovement;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementModifier;
 
-public record PieceData(Coordinate startingLocation, String name, double pointValue, int team, boolean mainPiece, List<Movement> movements, List<Movement> captures, List<CustomMovement> movementSetModifiers, List<MovementModifier> movementModifiers, List<MovementModifier> onInteractionModifiers, String img) {
+public record PieceData(Coordinate startingLocation,
+                        String name,
+                        double pointValue,
+                        int team,
+                        boolean mainPiece,
+                        List<Movement> movements,
+                        List<Movement> captures,
+                        List<MovementSetModifier> movementSetModifiers,
+                        List<MovementModifier> movementModifiers,
+                        List<MovementModifier> onInteractionModifiers,
+                        String img) {
 
 }

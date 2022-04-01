@@ -4,16 +4,17 @@ oogasalad
 This project implements an authoring environment and player for multiple related games.
 
 Names:
+Jose Santillan
 
 
 ### Timeline
 
 Start Date: 
-
+    3/21/22
 Finish Date: 
 
 Hours Spent:
-
+0 hrs
 ### Primary Roles
 
 
