@@ -20,8 +20,13 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 public class ChessBoard implements Iterable<ChessTile>{
+
+  private static final Logger LOG = LogManager.getLogger(ChessBoard.class);
 
   private List<List<ChessTile>> board;
   private TurnCriteria turnCriteria;
@@ -49,7 +54,6 @@ public class ChessBoard implements Iterable<ChessTile>{
    */
   public ChessBoard(int length, int height, TurnCriteria turnCriteria, Player[] players, List<EndCondition> endConditions) {
     this(null, turnCriteria, players, endConditions);
-
     board = new ArrayList<>();
     IntStream.range(0, height)
         .forEach(i -> {
@@ -68,15 +72,14 @@ public class ChessBoard implements Iterable<ChessTile>{
    */
   public boolean setPieces(List<Piece> pieces) {
     if(history.isEmpty()) {
-
       pieces.forEach(p -> {
         Coordinate coordinate = p.getCoordinates();
         board.get(coordinate.getRow()).get(coordinate.getCol()).addPiece(p);
       });
-
       history.add(deepCopy());
       return true;
     }
+    LOG.warn("Attempted board setting after game start");
     return false;
   }
 
@@ -92,6 +95,7 @@ public class ChessBoard implements Iterable<ChessTile>{
       history.add(deepCopy());
       return new TurnUpdate(piece.move(getTileFromCoords(finalSquare)), turnCriteria.incrementTurn());
     }
+    LOG.warn(isGameOver() ? "Move made after game over" : "Move made by wrong player");
     throw isGameOver() ? new MoveAfterGameEndException("") : new WrongPlayerException(turnCriteria.getCurrentPlayer() + "");
   }
 
