@@ -10,7 +10,9 @@ import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
@@ -99,6 +101,19 @@ public class ChessBoard implements Iterable<ChessTile>{
     throw isGameOver() ? new MoveAfterGameEndException("") : new WrongPlayerException(turnCriteria.getCurrentPlayer() + "");
   }
 
+  /**
+   * This method gets the target pieces for the specified team
+   * @param team the Team we want information from
+   * @return all the Target Pieces this team has
+   */
+  public List<Piece> targetPiece(int team) {
+    return board.stream()
+        .flatMap(List::stream).toList().stream()
+        .map(ChessTile::getPieces)
+        .flatMap(List::stream).toList().stream()
+        .filter(piece -> piece.checkTeam(team) && piece.isTargetPiece())
+        .collect(Collectors.toList());
+  }
   /***
    * @return copy of Board object to store in history
    */
@@ -237,10 +252,16 @@ public class ChessBoard implements Iterable<ChessTile>{
     return new ChessBoardIterator(board);
   }
 
+  /**
+   * @return stream over the board
+   */
+  public Stream<List<ChessTile>> stream() {
+    return board.stream();
+  }
+
   /***
-   * For each loop over the board list
-   *
-   * @param action to do in the for each loop
+   * Creates foreach loop over board
+   * @param action to do in loop
    */
   @Override
   public void forEach(Consumer<? super ChessTile> action) {

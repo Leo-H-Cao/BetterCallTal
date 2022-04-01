@@ -16,7 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Movement {
-
+  
   private static final Logger LOG = LogManager.getLogger(Movement.class);
 
   private static final String MOVE_KEY = "move";
