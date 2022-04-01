@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.EndConditions.TwoMoves;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
@@ -30,8 +31,12 @@ class EndConditionsTest {
   private Piece pieceTwo;
   private List<Piece> pieces;
 
+  private Map<Integer, Double> scores;
+
   @BeforeEach
   void setUp() {
+    scores = Map.of(0, 0.5, 1, 0.5);
+
     playerOne = new Player(0, null);
     playerTwo = new Player(1, null);
     players = new Player[]{playerOne, playerTwo};
@@ -65,6 +70,7 @@ class EndConditionsTest {
       assertFalse(board.isGameOver());
       board.move(pieceTwo, new Coordinate(1, 2));
       assertTrue(board.isGameOver());
+      assertEquals(board.getScores().get(), scores);
     } catch(Exception e) {
       fail();
     }

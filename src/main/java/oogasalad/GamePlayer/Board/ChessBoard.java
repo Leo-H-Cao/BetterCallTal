@@ -179,11 +179,4 @@ public class ChessBoard {
   public Player[] getPlayers() {
     return players;
   }
-
-  public int getLength() {
-    return board.length;
-  }
-  public int getWidth() {
-    return board[0].length;
-  }
 }
