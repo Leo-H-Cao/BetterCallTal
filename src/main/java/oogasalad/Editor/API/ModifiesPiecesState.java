@@ -8,7 +8,6 @@ public interface ModifiesPiecesState {
 
   PieceInfo getPieceInfo(String pieceID);
 
-  void setPieceStartingLocation(String pieceID, int startX, int startY);
 
   /**
    * Change piece display image to a custom image provided by user
