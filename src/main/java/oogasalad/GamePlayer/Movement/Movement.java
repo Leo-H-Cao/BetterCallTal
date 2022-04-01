@@ -12,8 +12,12 @@ import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Movement {
+  
+  private static final Logger LOG = LogManager.getLogger(Movement.class);
 
   private static final String MOVE_KEY = "move";
   private static final String CAPTURE_KEY = "capture";
@@ -52,6 +56,7 @@ public class Movement {
     if(getMoves(piece, board).contains(finalTile)) {
       return piece.move(finalTile);
     }
+    LOG.warn("Invalid move made");
     throw new InvalidMoveException(piece + ": " + finalSquare);
   }
 
@@ -66,6 +71,7 @@ public class Movement {
     try {
       return board.getTile(coordinates);
     } catch (OutsideOfBoardException e) {
+      LOG.warn("Coordinate outside of board");
       throw new OutsideOfBoardException(coordinates.toString());
     }
   }
@@ -85,6 +91,7 @@ public class Movement {
     if(getCaptures(piece, board).contains(captureTile)) {
       return piece.move(captureTile);
     }
+    LOG.warn("Invalid move made");
     throw new InvalidMoveException(piece + ": " + captureSquare);
   }
 

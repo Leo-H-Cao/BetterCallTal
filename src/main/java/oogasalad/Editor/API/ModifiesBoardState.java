@@ -28,7 +28,7 @@ public interface ModifiesBoardState {
   /**
    * Places a certain piece at a location specified by user on board for initial starting position
    */
-  void addPieceStartingLocation(String pieceID, int x, int y);
+  void setPieceStartingLocation(String pieceID, int x, int y);
 
   /**
    * Removes piece from board representing starting locations

@@ -113,8 +113,18 @@ public class Piece implements Cloneable {
    * @return if this piece can capture another piece
    */
   public boolean canCapture(Piece piece) {
-    int[] opponentIDs = board.getPlayer(this.team).opponentIDs();
-    return Arrays.stream(opponentIDs).anyMatch((o) -> piece.team == board.getPlayer(o).teamID());
+    //int[] opponentIDs = board.getPlayer(this.team).opponentIDs();
+    //boolean sameTeam = Arrays.stream(opponentIDs).anyMatch((o) -> piece.team == board.getPlayer(o).teamID());
+    boolean sameTeam = piece.checkTeam(team);
+
+    //TODO MOVEMENTS IS A PLACEHOLDER, MUST IMPLEMENT CAPTURES AS IT IS NULL WHEN THE PIECE IS FIRST INITIALED
+    boolean canCap = movements.stream()
+        .map(capture -> capture.getCaptures(this, board))
+        .flatMap(Set::stream)
+        .map(ChessTile::getCoordinates)
+        .anyMatch(coords -> coords.equals(piece.getCoordinates()));
+
+    return !sameTeam && canCap;
   }
 
   /***
@@ -142,8 +152,14 @@ public class Piece implements Cloneable {
     return this.team == team;
   }
 
-
   /***
+   * @return if this piece is the main piece
+   */
+  public boolean isTargetPiece() {
+    return mainPiece;
+  }
+
+  /**
    * @return name of piece
    */
   public String getName(){
