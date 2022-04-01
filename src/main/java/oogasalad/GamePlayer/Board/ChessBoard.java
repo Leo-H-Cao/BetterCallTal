@@ -2,14 +2,17 @@ package oogasalad.GamePlayer.Board;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Queue;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.stream.IntStream;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.MoveAfterGameEndException;
@@ -18,9 +21,9 @@ import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
-public class ChessBoard {
+public class ChessBoard implements Iterable<ChessTile>{
 
-  private ChessTile[][] board;
+  private List<List<ChessTile>> board;
   private TurnCriteria turnCriteria;
   private Player[] players;
   private List<EndCondition> endConditions;
@@ -31,7 +34,7 @@ public class ChessBoard {
   /***
    * Creates a representation of a chessboard if an array of pieces is already provided
    */
-  public ChessBoard(ChessTile[][] board, TurnCriteria turnCriteria, Player[] players, List<EndCondition> endConditions) {
+  public ChessBoard(List<List<ChessTile>> board, TurnCriteria turnCriteria, Player[] players, List<EndCondition> endConditions) {
     this.board = board;
     this.turnCriteria = turnCriteria;
     this.players = players;
@@ -46,8 +49,15 @@ public class ChessBoard {
    */
   public ChessBoard(int length, int height, TurnCriteria turnCriteria, Player[] players, List<EndCondition> endConditions) {
     this(null, turnCriteria, players, endConditions);
-    board = new ChessTile[length][height];
-    IntStream.range(0, board.length).forEach((i) -> IntStream.range(0, board[i].length).forEach((j) -> board[i][j] = new ChessTile(new Coordinate(i, j))));
+
+    board = new ArrayList<>();
+    IntStream.range(0, height)
+        .forEach(i -> {
+          List<ChessTile> list = new ArrayList<>();
+          IntStream.range(0, length)
+              .forEach(j -> list.add(new ChessTile(new Coordinate(i, j))));
+          board.add(list);
+        });
   }
 
   /***
@@ -58,8 +68,12 @@ public class ChessBoard {
    */
   public boolean setPieces(List<Piece> pieces) {
     if(history.isEmpty()) {
-      pieces.forEach(
-          (p) -> board[p.getCoordinates().getRow()][p.getCoordinates().getCol()].addPiece(p));
+
+      pieces.forEach(p -> {
+        Coordinate coordinate = p.getCoordinates();
+        board.get(coordinate.getRow()).get(coordinate.getCol()).addPiece(p);
+      });
+
       history.add(deepCopy());
       return true;
     }
@@ -101,7 +115,7 @@ public class ChessBoard {
    * @return corresponding tile in board
    */
   private ChessTile getTileFromCoords(Coordinate coordinates) {
-    return board[coordinates.getRow()][coordinates.getCol()];
+    return board.get(coordinates.getRow()).get(coordinates.getCol());
   }
 
   /***
@@ -139,7 +153,10 @@ public class ChessBoard {
    * @param coordinates to check
    * @return if a given coordinate is in bounds
    */
-  public boolean inBounds(Coordinate coordinates) {return coordinates.getRow() < board.length && coordinates.getCol() < board[coordinates.getRow()].length;}
+  public boolean inBounds(Coordinate coordinates) {
+    return coordinates.getRow() >= 0 && coordinates.getCol() >= 0 && coordinates.getRow() < board.size()
+      && coordinates.getCol() < board.get(coordinates.getRow()).size();
+  }
 
   /***
    * Gets the tile at the specified coordinates
@@ -150,7 +167,7 @@ public class ChessBoard {
    */
   public ChessTile getTile(Coordinate coordinate) throws OutsideOfBoardException {
     if(!inBounds(coordinate)) throw new OutsideOfBoardException(coordinate.toString());
-    return board[coordinate.getRow()][coordinate.getCol()];
+    return board.get(coordinate.getRow()).get(coordinate.getCol());
   }
 
   /***
@@ -178,5 +195,58 @@ public class ChessBoard {
    */
   public Player[] getPlayers() {
     return players;
+  }
+
+  /**
+   * @return The length of the board
+   */
+  public int getBoardLength(){
+    return board.get(0).size();
+  }
+
+  /**
+   * @return The height of the board
+   */
+  public int getBoardHeight(){
+    return board.size();
+  }
+
+  /**
+   *
+   * @param pieceLocation
+   * @param piece
+   */
+  public void placePiece(Coordinate pieceLocation, Piece piece) {
+    this.board.get(pieceLocation.getRow()).get(pieceLocation.getCol()).addPiece(piece);
+  }
+
+  @Override
+  public Iterator<ChessTile> iterator() {
+    return new ChessBoardIterator(board);
+  }
+
+  @Override
+  public void forEach(Consumer<? super ChessTile> action) {
+    Iterable.super.forEach(action);
+  }
+
+  private class ChessBoardIterator implements Iterator<ChessTile> {
+
+    private final Queue<ChessTile> queue;
+
+    public ChessBoardIterator(List<List<ChessTile>> board) {
+      queue = new LinkedList<>();
+      board.forEach(queue::addAll);
+    }
+
+    @Override
+    public boolean hasNext() {
+      return !queue.isEmpty();
+    }
+
+    @Override
+    public ChessTile next() {
+      return queue.poll();
+    }
   }
 }

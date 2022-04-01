@@ -8,7 +8,7 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 public interface MovementModifier {
 
   /***
-   * Modifies a movement based on rules
+   * Modifies a movement based on rules such as check
    *
    * @param piece that is referenced
    * @param board that piece is on
