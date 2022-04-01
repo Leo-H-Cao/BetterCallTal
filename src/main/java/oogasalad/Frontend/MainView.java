@@ -6,25 +6,36 @@ import oogasalad.Frontend.Editor.GameEditorView;
 import oogasalad.Frontend.Game.GameView;
 import oogasalad.Frontend.Menu.HomeView;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.ResourceBundle;
 
 public class MainView {
 	// Bundle made static so all classes can easily access the language
 	private static ResourceBundle langBundle;
 
-	private GameView myGameView;
-	private GameEditorView myEditorView;
-	private HomeView myHomeView;
+	private Collection<SceneView> myViews;
 	private Stage stage;
 
 
 	public MainView(Stage stage, ResourceBundle rb) {
+		myViews = new ArrayList<>();
 		this.stage = stage;
 		langBundle = rb;
-		myGameView = new GameView();
-		myEditorView = new GameEditorView();
-		myHomeView = new HomeView();
-		changeScene(myHomeView);
+		addView(new HomeView(this));
+		addView(new GameView(this));
+		addView(new GameEditorView(this));
+
+		// Changes the current scene to the home page on initialization
+		myViews.stream().filter((e) -> e.getClass() == HomeView.class).forEach(this::changeScene);
+	}
+
+	private void addView(SceneView view) {
+		myViews.add(view);
+	}
+
+	public Collection<SceneView> getViews() {
+		return myViews;
 	}
 
 	/**

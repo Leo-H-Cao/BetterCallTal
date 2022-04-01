@@ -3,16 +3,20 @@ package oogasalad.Frontend.Editor;
  * This class will handle the view for the Game Editor.
  */
 
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
+import oogasalad.Frontend.MainView;
 import oogasalad.Frontend.SceneView;
 
 
 public class GameEditorView extends SceneView {
+    public GameEditorView(MainView mainView) {
+        super(mainView);
+    }
+
     @Override
     protected Scene makeScene() {
-
-        return null;
+        Scene scene = new Scene(myRoot);
+        myRoot.getChildren().add(makeExitButton());
+        return scene;
     }
 }

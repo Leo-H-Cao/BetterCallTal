@@ -7,8 +7,15 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import oogasalad.Frontend.Editor.GameEditorView;
+import oogasalad.Frontend.Game.GameView;
 import oogasalad.Frontend.MainView;
 import oogasalad.Frontend.SceneView;
+import oogasalad.Frontend.util.ButtonFactory;
+import oogasalad.Frontend.util.ButtonType;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * HomeView class will handle the navigation of the User from the home screen to the next page they seek.
@@ -18,13 +25,13 @@ import oogasalad.Frontend.SceneView;
 public class HomeView extends SceneView {
 
     private VBox myVbox;
-    private static final String RESOURCE_PATH = "HomeView";
     private static final String[] ButtonOptions = {"Create", "Join", "Host"};
     private static final String TITLE = "Title";
     private static final int VBOX_SPACING = 5;
     private static final int SCREEN_SIZE = 500;
 
-    public HomeView() {
+    public HomeView(MainView mainView) {
+        super(mainView);
     }
 
     @Override
@@ -35,12 +42,12 @@ public class HomeView extends SceneView {
         myVbox.setPrefSize(SCREEN_SIZE, SCREEN_SIZE);
 
 
-        Text t = new Text(MainView.getLanguage().getString(RESOURCE_PATH + TITLE));
+        Text t = new Text(MainView.getLanguage().getString(getClass().getSimpleName() + TITLE));
         t.setFont(new Font(64));
         t.setWrappingWidth(SCREEN_SIZE);
         myVbox.getChildren().add(t);
 
-        Button[] buttons = makeButtons();
+        Collection<Button> buttons = makeButtons();
 
         //TODO: Figure out setVgrow
         //VBox.setVgrow(buttons[0], Priority.ALWAYS);
@@ -53,13 +60,20 @@ public class HomeView extends SceneView {
         return scene;
     }
 
-    private Button[] makeButtons() {
-        Button[] ret = new Button[ButtonOptions.length];
-        for (int i=0; i < ButtonOptions.length; i++) {
-            ret[i] = new Button(MainView.getLanguage().getString(RESOURCE_PATH + ButtonOptions[i]));
-            ret[i].setPrefSize(SCREEN_SIZE, SCREEN_SIZE);
-            ret[i].setAlignment(Pos.CENTER);
-        }
+    private Collection<Button> makeButtons() {
+        Collection<Button> ret = new ArrayList<>();
+        ret.add(ButtonFactory.makeButton(ButtonType.TEXT, MainView.getLanguage().getString(getClass().getSimpleName() + "Create"), "createButton",
+                (e) -> getMainView().getViews().stream().filter((c) -> c.getClass() == GameEditorView.class).forEach(getMainView()::changeScene)));
+        ret.add(ButtonFactory.makeButton(ButtonType.TEXT, MainView.getLanguage().getString(getClass().getSimpleName() + "Join"), "joinButton",
+                (e) -> getMainView().getViews().stream().filter((c) -> c.getClass() == GameView.class).forEach(getMainView()::changeScene)));
+        ret.add(ButtonFactory.makeButton(ButtonType.TEXT, MainView.getLanguage().getString(getClass().getSimpleName() + "Host"), "hostButton",
+                (e) -> getMainView().getViews().stream().filter((c) -> c.getClass() == GameView.class).forEach(getMainView()::changeScene)));
+
+        ret.stream().forEach((b) -> {
+            b.setPrefSize(SCREEN_SIZE, SCREEN_SIZE);
+            b.setAlignment(Pos.CENTER);
+        });
+
         return ret;
     }
 }
