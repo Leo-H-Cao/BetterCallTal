@@ -1,5 +1,7 @@
 package oogasalad.Server;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,20 +13,46 @@ import oogasalad.GamePlayer.Board.ChessBoard;
  */
 public class ChessHistory {
 
-  private final Deque<ChessBoard> historyDeque;
-  private final List<ChessBoard> historyList;
+  private Deque<ChessBoard> historyDeque;
+  private List<ChessBoard> historyList;
   private int currentIndex;
 
 
   /**
-   * Creates a new chess history that keeps track of the game states. A linked list is used to store
-   * the states as it can be referenced by index and be used a queue.
+   * Creates a chess history object, which can be used to store the past game states. Overloaded
+   * constructor used to create an empty history.
    */
   public ChessHistory() {
-    LinkedList<ChessBoard> history = new LinkedList<>();
-    historyDeque = history;
-    historyList = history;
-    currentIndex = 0;
+    setUpHistory(Collections.emptyList());
+  }
+
+  /**
+   * Creates a chess history object, which can be used to store the past game states.
+   *
+   * @param history array of chess boards to store in the history
+   */
+  public ChessHistory(ChessBoard[] history) {
+    setUpHistory(List.of(history));
+  }
+
+  /**
+   * Creates a chess history object, which can be used to store the past game states.
+   *
+   * @param history the collection of states to store.
+   */
+  public ChessHistory(Collection<ChessBoard> history) {
+    setUpHistory(history);
+  }
+
+  /**
+   * Private set the datastructures used to store the history.
+   *
+   * @param history collection of states to store.
+   */
+  private void setUpHistory(Collection<ChessBoard> history) {
+    this.historyDeque = new LinkedList<>(history);
+    this.historyList = new LinkedList<>(history);
+    this.currentIndex = history.size() - 1;
   }
 
   /**
