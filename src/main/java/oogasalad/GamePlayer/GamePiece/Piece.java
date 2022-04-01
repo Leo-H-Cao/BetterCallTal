@@ -93,8 +93,8 @@ public class Piece implements Cloneable {
         .collect(Collectors.toSet())
         .forEach(allMoves::addAll);
 
-    movements.stream()
-        .map(move -> move.getCaptures(this, board))
+    captures.stream()
+        .map(capture -> capture.getCaptures(this, board))
         .collect(Collectors.toSet())
         .forEach(allMoves::addAll);
 
