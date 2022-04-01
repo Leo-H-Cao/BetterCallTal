@@ -168,7 +168,6 @@ public class Movement {
   private Stack<ChessTile> getMoveBeam(Coordinate base, Coordinate delta, ChessBoard board) {
     Stack<ChessTile> beam = new Stack<>();
     Coordinate currentCoords = new Coordinate(base.getRow() + delta.getRow(), base.getCol() + delta.getCol());
-    System.out.println(currentCoords);
     while (board.inBounds(currentCoords) && isTileEmpty(board, currentCoords)) {
       ChessTile currentTile;
       try {
