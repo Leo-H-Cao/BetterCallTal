@@ -15,7 +15,7 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Movement {
+public class Movement implements MovementInterface{
   
   private static final Logger LOG = LogManager.getLogger(Movement.class);
 
@@ -122,6 +122,7 @@ public class Movement {
     });
     return allMoves;
   }
+
   /***
    * Returns all possible captures a piece can make
    *

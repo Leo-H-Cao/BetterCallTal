@@ -2,7 +2,6 @@ package oogasalad.GamePlayer.GamePiece;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,7 +13,7 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementModifier;
-import oogasalad.GamePlayer.Movement.CustomMovement;
+import oogasalad.GamePlayer.Movement.CustomMovements.CustomMovement;
 
 /**
  * @author Vincent Chen
@@ -31,14 +30,14 @@ public class Piece implements Cloneable {
   private double pointValue;
   private int team;
   private boolean mainPiece;
+  private String img;
+  private List<Coordinate> history;
 
   private List<Movement> movements;
   private List<Movement> captures;
-  private List<CustomMovement> movementSetModifiers;
+  private List<CustomMovement> customMovements;
   private List<MovementModifier> movementModifiers;
   private List<MovementModifier> onInteractionModifiers;
-
-  private String img;
 
   private ChessBoard board;
 
@@ -53,11 +52,12 @@ public class Piece implements Cloneable {
     this.mainPiece = pieceData.mainPiece();
     this.movements = pieceData.movements();
     this.captures = pieceData.captures();
-    this.movementSetModifiers = pieceData.movementSetModifiers();
+    this.customMovements = pieceData.customMovements();
     this.movementModifiers = pieceData.movementModifiers();
     this.onInteractionModifiers = pieceData.onInteractionModifiers();
     this.img = pieceData.img();
     this.board = board;
+    this.history = new ArrayList<>(List.of(pieceData.startingLocation()));
   }
 
   /***
@@ -77,6 +77,7 @@ public class Piece implements Cloneable {
     ChessTile firstSquare = board.getTile(coordinates);
     coordinates = finalSquare.getCoordinates();
     finalSquare.appendPiece(this);
+    history.add(finalSquare.getCoordinates());
     return new HashSet<>(Set.of(firstSquare, finalSquare));
   }
 
@@ -166,6 +167,13 @@ public class Piece implements Cloneable {
     return name;
   }
 
+  /**
+   * @return history of piece movement
+   */
+  public List<Coordinate> getHistory() {
+    return history;
+  }
+
   /***
    * @return complete copy of the piece, including copies of all instance variables
    */
@@ -179,7 +187,7 @@ public class Piece implements Cloneable {
         mainPiece,
         new ArrayList<>(movements),
         new ArrayList<>(captures),
-        new ArrayList<>(movementSetModifiers),
+        new ArrayList<>(customMovements),
         new ArrayList<>(movementModifiers),
         new ArrayList<>(onInteractionModifiers),
         img
