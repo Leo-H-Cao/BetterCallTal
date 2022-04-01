@@ -52,8 +52,12 @@ public class LanguageModal {
 		selectLanguageLabel.setId("selectLanguageTitle");
 		selectLanguageLabel.setFont(new Font(32));
 		fullscreenCheckBox = new CheckBox(selectedLanguageView.getString("Fullscreen"));
+		fullscreenCheckBox.setId("fullscreen");
 		startButton = ButtonFactory.makeButton(ButtonType.TEXT, selectedLanguageView.getString("Start"), "start",
-				(e) -> new Controller(stage, selectedLanguageView));
+				(e) -> {
+				new Controller(stage, selectedLanguageView);
+				stage.setFullScreen(fullscreenCheckBox.isSelected());
+				});
 		stage.setTitle(selectedLanguageView.getString("SelectLanguage"));
 	}
 

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 import java.util.ResourceBundle;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LanguageModalTest extends DukeApplicationTest {
 	private ChoiceBox myLanguageSelector;
@@ -47,5 +48,12 @@ public class LanguageModalTest extends DukeApplicationTest {
 	void testStartGame() {
 		clickOn(lookup("#start").query());
 		assertEquals(myStage.getTitle(), myResources.getString("HomeViewTitle"));
+	}
+
+	@Test
+	void testFullscreen() {
+		clickOn(lookup("#fullscreen").query());
+		clickOn(lookup("#start").query());
+		assertTrue(myStage.isFullScreen());
 	}
 }

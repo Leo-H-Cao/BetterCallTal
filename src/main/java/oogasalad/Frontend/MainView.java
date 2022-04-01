@@ -35,7 +35,7 @@ public class MainView {
 		return langBundle;
 	}
 
-	private void changeScene(SceneView sceneClass) {
+	public void changeScene(SceneView sceneClass) {
 		stage.setScene(sceneClass.getScene());
 		stage.setTitle(sceneClass.getTitle());
 	}
