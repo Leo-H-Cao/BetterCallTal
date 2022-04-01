@@ -36,17 +36,18 @@ class EndConditionsTest {
     playerTwo = new Player(1, null);
     players = new Player[]{playerOne, playerTwo};
 
+    turnCriteria = new Linear(players);
+  }
+
+  private void setBoard() {
+    board = new ChessBoard(8, 8, turnCriteria, players, List.of(endCondition));
+
     pieceOne = new Piece(new PieceData(new Coordinate(0, 0), "test1", 0, 0, false,
         List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
     pieceTwo = new Piece(new PieceData(new Coordinate(1, 0), "test2", 0, 1, false,
         List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
     pieces = List.of(pieceOne, pieceTwo);
 
-    turnCriteria = new Linear(players);
-  }
-
-  private void setBoard() {
-    board = new ChessBoard(8, 8, turnCriteria, players, List.of(endCondition));
     board.setPieces(pieces);
   }
 
