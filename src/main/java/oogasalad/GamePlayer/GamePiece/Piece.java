@@ -110,8 +110,15 @@ public class Piece {
    * @return if this piece can capture another piece
    */
   public boolean canCapture(Piece piece) {
-    int[] opponentIDs = board.getPlayer(this.team).opponentIDs();
-    return Arrays.stream(opponentIDs).anyMatch((o) -> piece.team == board.getPlayer(o).teamID());
+    //int[] opponentIDs = board.getPlayer(this.team).opponentIDs();
+    //boolean sameTeam = Arrays.stream(opponentIDs).anyMatch((o) -> piece.team == board.getPlayer(o).teamID());
+    boolean sameTeam = piece.checkTeam(team);
+    boolean canCap = movements.stream()
+        .map(move -> move.getMoves(this, board))
+        .flatMap(Set::stream)
+        .map(ChessTile::getCoordinates)
+        .anyMatch(coords -> coords.equals(piece.getCoordinates()));
+    return !sameTeam && canCap;
   }
 
   /***

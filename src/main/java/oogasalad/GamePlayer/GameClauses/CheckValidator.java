@@ -27,6 +27,7 @@ public class CheckValidator implements MovementModifier {
         .flatMap(List::stream).toList().stream()
         .map(ChessTile::getPieces)
         .flatMap(List::stream).toList().stream()
+        .filter(piece -> !piece.checkTeam(id))
         .anyMatch(piece -> piece.canCapture(targetPieces));
 
 //    boolean check;

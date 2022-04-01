@@ -72,8 +72,8 @@ public class Movement {
    */
   private Map<String, Set<ChessTile>> getAllMoves(Piece piece, ChessBoard board) {
     Map<String, Set<ChessTile>> allMoves = new HashMap<>();
-    allMoves.put(MOVE_KEY, Set.of());
-    allMoves.put(CAPTURE_KEY, Set.of());
+    allMoves.put(MOVE_KEY, new HashSet<>());
+    allMoves.put(CAPTURE_KEY, new HashSet<>());
 
     Coordinate baseCoordinates = piece.getCoordinates();
     possibleMoves.forEach((delta) -> {
