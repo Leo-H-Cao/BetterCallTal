@@ -32,4 +32,16 @@ public class PieceInfo {
     team = teamNumber;
   }
 
+  public int getStartingPosX(){
+    return startingPosX;
+  }
+
+  public int getStartingPosY(){
+    return startingPosY;
+  }
+
+  public String getImageFile(){
+    return myImage;
+  }
+
 }

@@ -21,28 +21,28 @@ public class EditorBoard {
     //adjusting height
     if(height < curHeight){
       for(int i = 0; i < curHeight - height; i++){
-        board.remove(0);
+        board.remove(board.size()-1);
       }
     }
     else{
-      for(int i = 0; i < height- curHeight; i++){
+      for(int i = curHeight; i < height; i++){
         board.add(new ArrayList<EditorTile>());
-        addDefaultRow(curWidth);
+        addDefaultRow(curWidth, curHeight);
       }
     }
 
     //adjusting width
     if(width < curWidth){
       for(int i = 0; i < height; i++){
-        for(int j = 0; j < curWidth-width; j++){
-          board.get(i).remove(0);
+        for(int j = curWidth-1; j >= width; j--){
+          board.get(i).remove(j);
         }
       }
     }
     else{
       for(int i = 0; i< height; i++){
-        for(int j = 0; j < width-curWidth; j++){
-          board.get(i).add(new EditorTile());
+        for(int j = curWidth; j < width; j++){
+          board.get(i).add(new EditorTile(i, j));
         }
       }
     }
@@ -76,13 +76,13 @@ public class EditorBoard {
   private void initializeBoard(int boardSize){
     for(int i = 0; i < boardSize; i++){
       board.add(new ArrayList<EditorTile>());
-      addDefaultRow(boardSize);
+      addDefaultRow(boardSize, i);
     }
   }
 
-  private void addDefaultRow(int rowWidth){
+  private void addDefaultRow(int rowWidth, int rowNum){
     for(int j = 0; j < rowWidth; j++){
-      board.get(board.size()-1).add(new EditorTile());
+      board.get(board.size()-1).add(new EditorTile(rowNum, j));
     }
   }
 
