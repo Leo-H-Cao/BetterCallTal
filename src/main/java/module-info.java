@@ -9,8 +9,4 @@ open module oogasalad {
 
     // allow other classes to access listed packages in your project
     exports oogasalad;
-    exports oogasalad.Frontend;
-    exports oogasalad.Server;
-    exports oogasalad.Editor.Backend.API;
-    exports oogasalad.Frontend.Menu;
 }
