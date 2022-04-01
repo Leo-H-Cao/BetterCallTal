@@ -22,8 +22,13 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 public class ChessBoard implements Iterable<ChessTile> {
+
+  private static final Logger LOG = LogManager.getLogger(ChessBoard.class);
 
   private List<List<ChessTile>> board;
   private TurnCriteria turnCriteria;
@@ -45,7 +50,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     endResult = new HashMap<>();
     history = new ArrayList<>();
   }
-
+  
   /***
    * Creates a representation of a chessboard with length/height of board given
    */
