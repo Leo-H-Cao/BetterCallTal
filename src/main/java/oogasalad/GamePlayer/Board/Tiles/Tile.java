@@ -1,7 +1,16 @@
 package oogasalad.GamePlayer.Board.Tiles;
 
-public interface Tile {
+import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
+import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.Movement.Coordinate;
 
-  void setModifer();
+public interface Tile {
+  void addPiece(Piece piece);
+  Coordinate getCoordinates();
+  void executeAction(ChessBoard board) throws OutsideOfBoardException;
+
+
+  //void setModifer();
 
 }
