@@ -2,6 +2,7 @@ package oogasalad.GamePlayer.GamePiece;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -126,6 +127,15 @@ public class Piece implements Cloneable {
         .anyMatch(coords -> coords.equals(piece.getCoordinates()));
 
     return !sameTeam && canCap;
+  }
+
+  /***
+   * @return if this piece is opposing any piece in the given list (i.e. player numbers are
+   * opposing)
+   */
+  public boolean isOpposing(List<Piece> opponents) {
+    return Arrays.stream(board.getPlayer(this.team).opponentIDs()).anyMatch((o) -> opponents.stream().anyMatch((t) ->
+        t.checkTeam(o)));
   }
 
   /***

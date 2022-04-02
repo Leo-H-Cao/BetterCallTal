@@ -114,8 +114,9 @@ public class Movement implements MovementInterface{
       Optional<ChessTile> capTile = moveStack.isEmpty() ? getNextTile(baseCoordinates, delta, board)
           : (infinite ? getNextTile(moveStack.peek().getCoordinates(), delta, board)
               : Optional.of(moveStack.peek()));
+      LOG.debug(capTile);
       capTile.ifPresent((t) -> {
-        if (piece.canCapture(t.getPieces())) {
+        if (piece.isOpposing(t.getPieces())) {
           allMoves.get(CAPTURE_KEY).add(t);
         }
       });
