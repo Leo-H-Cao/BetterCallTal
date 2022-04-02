@@ -134,8 +134,18 @@ public class Piece implements Cloneable {
    * opposing)
    */
   public boolean isOpposing(List<Piece> opponents) {
-    return Arrays.stream(board.getPlayer(this.team).opponentIDs()).anyMatch((o) -> opponents.stream().anyMatch((t) ->
-        t.checkTeam(o)));
+//    return Arrays.stream(board.getPlayer(this.team).opponentIDs()).anyMatch((o) -> opponents.stream().anyMatch((t) ->
+//        t.checkTeam(o)));
+    return opponents.stream().anyMatch(this::isOpposing);
+  }
+
+  /***
+   * @param piece to check
+   * @return if a given piece opposes this piece
+   */
+  private boolean isOpposing(Piece piece) {
+    int[] opponentIDs = board.getPlayer(this.team).opponentIDs();
+    return Arrays.stream(opponentIDs).anyMatch((o) -> piece.team == board.getPlayer(o).teamID());
   }
 
   /***
