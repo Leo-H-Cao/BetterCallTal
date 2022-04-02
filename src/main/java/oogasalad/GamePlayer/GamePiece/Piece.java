@@ -153,6 +153,14 @@ public class Piece implements Cloneable {
     return this.team == team;
   }
 
+  /**
+   * @param piece to check
+   * @return if this and piece are on the same team
+   */
+  public boolean onSameTeam(Piece piece) {
+    return this.team == piece.team;
+  }
+
   /***
    * @return if this piece is the main piece
    */
