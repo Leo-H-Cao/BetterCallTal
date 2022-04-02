@@ -12,7 +12,7 @@ import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
-import oogasalad.GamePlayer.Movement.MovementModifier;
+import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
 import oogasalad.GamePlayer.Movement.CustomMovements.CustomMovement;
 
 /**

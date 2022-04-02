@@ -1,6 +1,7 @@
 package oogasalad.GamePlayer.Movement.CustomMovements;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
@@ -65,14 +66,13 @@ public class Castling implements CustomMovement{
       }
 
       @Override
-      public Set<ChessTile> capturePiece(Piece piece, Coordinate captureSquare, ChessBoard board)
-          throws InvalidMoveException, OutsideOfBoardException {
-        return null;
+      public Set<ChessTile> capturePiece(Piece piece, Coordinate captureSquare, ChessBoard board) {
+        return new HashSet<>();
       }
 
       @Override
       public Set<ChessTile> getCaptures(Piece piece, ChessBoard board) {
-        return null;
+        return new HashSet<>();
       }
 
       @Override

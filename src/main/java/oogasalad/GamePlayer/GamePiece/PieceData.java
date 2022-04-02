@@ -4,7 +4,7 @@ import java.util.List;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.CustomMovements.CustomMovement;
 import oogasalad.GamePlayer.Movement.Movement;
-import oogasalad.GamePlayer.Movement.MovementModifier;
+import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
 
 public record PieceData(Coordinate startingLocation,
                         String name,
