@@ -1,6 +1,15 @@
 package oogasalad.Frontend.Game;
 
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import oogasalad.Frontend.MainView;
 import oogasalad.Frontend.SceneView;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
@@ -16,6 +25,9 @@ public class GameView extends SceneView {
 
     private Collection<ChessTile> myBoard;
     private Collection<Piece> myPieces;
+    private static Integer SCENE_WIDTH_SIZE = 1500;
+    private static Integer SCENE_HEIGHT_SIZE = 1000;
+    private static final String TITLE = "Title";
 
     public GameView(MainView mainView) {
         super(mainView);
@@ -52,8 +64,36 @@ public class GameView extends SceneView {
 
     @Override
     protected Scene makeScene() {
-        Scene scene = new Scene(myRoot);
-        myRoot.getChildren().add(makeExitButton());
-        return scene;
+        BorderPane bp = new BorderPane();
+        bp.setTop(makeTopSection());
+        myRoot.getChildren().add(bp);
+        return new Scene(myRoot, SCENE_WIDTH_SIZE, SCENE_HEIGHT_SIZE);
+    }
+
+    private GridPane makeTopSection() {
+        GridPane gp = new GridPane();
+        gp.getColumnConstraints().add(new ColumnConstraints(500));
+        gp.getColumnConstraints().add(new ColumnConstraints(500));
+        gp.getColumnConstraints().add(new ColumnConstraints(500));
+
+        HBox left = new HBox();
+        left.setAlignment(Pos.CENTER_LEFT);
+        Button Exit = makeExitButton();
+        left.getChildren().add(Exit);
+
+        HBox middle = new HBox();
+        middle.setAlignment(Pos.CENTER);
+        Text title = new Text(MainView.getLanguage().getString(getClass().getSimpleName() + TITLE));
+        title.setFont(new Font("Courier New", 30));
+        title.setFill(Color.PURPLE);
+        middle.getChildren().add(title);
+
+        HBox right = new HBox(new Text("Image here maybe"));
+        right.setAlignment(Pos.CENTER);
+
+        gp.add(left, 0, 0);
+        gp.add(middle, 1, 0);
+        gp.add(right, 2, 0);
+        return gp;
     }
 }

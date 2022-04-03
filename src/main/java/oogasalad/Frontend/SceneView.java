@@ -50,6 +50,8 @@ public abstract class SceneView {
 		Button b = ButtonFactory.makeButton(ButtonType.TEXT, MainView.getLanguage().getString("exit"), "exit",
 				(e) -> getMainView().getViews().stream().filter((c) -> c.getClass() == HomeView.class).forEach((c) ->
 						getMainView().changeScene(c)));
+		b.setPrefWidth(150);
+		b.setPrefHeight(50);
 		return b;
 	}
 
