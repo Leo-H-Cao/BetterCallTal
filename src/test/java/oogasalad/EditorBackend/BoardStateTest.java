@@ -2,9 +2,8 @@ package oogasalad.EditorBackend;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import oogasalad.Editor.Backend.ModelState.BoardState;
-import oogasalad.Editor.Backend.ModelState.MovementRules;
-import oogasalad.Editor.Backend.ModelState.PiecesState;
+import oogasalad.Editor.ModelState.BoardState;
+import oogasalad.Editor.ModelState.PiecesState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
