@@ -14,6 +14,9 @@ import oogasalad.Frontend.MainView;
 import oogasalad.Frontend.SceneView;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -72,14 +75,27 @@ public class GameView extends SceneView {
 
     private GridPane makeTopSection() {
         GridPane gp = new GridPane();
-        gp.getColumnConstraints().add(new ColumnConstraints(500));
-        gp.getColumnConstraints().add(new ColumnConstraints(500));
-        gp.getColumnConstraints().add(new ColumnConstraints(500));
+        setTopColConstraints(gp);
+        ArrayList<HBox> Hboxes = createHBoxes();
+        gp.add(Hboxes.get(0), 0, 0);
+        gp.add(Hboxes.get(1), 1, 0);
+        gp.add(Hboxes.get(2), 2, 0);
+        return gp;
+    }
 
+    private void setTopColConstraints(GridPane gridpane) {
+        gridpane.getColumnConstraints().add(new ColumnConstraints(500));
+        gridpane.getColumnConstraints().add(new ColumnConstraints(500));
+        gridpane.getColumnConstraints().add(new ColumnConstraints(500));
+    }
+
+    private ArrayList<HBox> createHBoxes() {
+        ArrayList<HBox> hboxes = new ArrayList<>();
         HBox left = new HBox();
         left.setAlignment(Pos.CENTER_LEFT);
         Button Exit = makeExitButton();
         left.getChildren().add(Exit);
+        hboxes.add(left);
 
         HBox middle = new HBox();
         middle.setAlignment(Pos.CENTER);
@@ -87,13 +103,11 @@ public class GameView extends SceneView {
         title.setFont(new Font("Courier New", 30));
         title.setFill(Color.PURPLE);
         middle.getChildren().add(title);
+        hboxes.add(middle);
 
         HBox right = new HBox(new Text("Image here maybe"));
         right.setAlignment(Pos.CENTER);
-
-        gp.add(left, 0, 0);
-        gp.add(middle, 1, 0);
-        gp.add(right, 2, 0);
-        return gp;
+        hboxes.add(right);
+        return hboxes;
     }
 }
