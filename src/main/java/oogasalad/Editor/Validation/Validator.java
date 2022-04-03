@@ -1,6 +1,7 @@
-package oogasalad.Editor.Backend.Validation;
+package oogasalad.Editor.Validation;
 
-import oogasalad.Editor.Backend.API.ValidateSettings;
+
+import oogasalad.Editor.API.ValidateSettings;
 
 public class Validator implements ValidateSettings {
   private final int MAX_BOARD_SIZE = 25;
