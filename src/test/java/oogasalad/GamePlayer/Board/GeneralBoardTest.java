@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
@@ -42,7 +43,7 @@ class GeneralBoardTest {
 
     board = new ChessBoard(3, 3, turnCriteria, players, List.of());
     pieceOne = new Piece(new PieceData(new Coordinate(0, 0), "test1", 0, 0, false,
-        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
+        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), "test1.png"), board);
     pieceTwo = new Piece(new PieceData(new Coordinate(1, 0), "test2", 0, 1, false,
         List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
     pieceThree = new Piece(new PieceData(new Coordinate(2, 0), "test3", 0, 2, false,
@@ -57,7 +58,7 @@ class GeneralBoardTest {
       assertEquals(3, board.getBoardLength());
       assertEquals(3, board.getBoardHeight());
       assertFalse(board.setPieces(null));
-//      assertEquals(Set.of(board.getTile(new Coordinate(0, 1))), board.getMoves(pieceOne));
+      assertEquals(Set.of(board.getTile(new Coordinate(0, 1))), board.getMoves(pieceOne));
       assertTrue(board.getTile(new Coordinate(0, 0)).removePiece(pieceOne));
       assertFalse(board.getTile(new Coordinate(0, 0)).removePiece(pieceOne));
       board.placePiece(new Coordinate(0, 0), pieceOne);
@@ -85,6 +86,16 @@ class GeneralBoardTest {
       board.forEach((c) -> {
         count.getAndIncrement();});
       assertEquals(9, count.get());
+    } catch(Exception e) {
+      fail();
+    }
+  }
+
+  @Test
+  void testPieceGeneralHS() {
+    try {
+      assertEquals("test1", pieceOne.getName());
+      assertEquals("test1.png", pieceOne.getImgFile());
     } catch(Exception e) {
       fail();
     }
