@@ -5,9 +5,23 @@ public class Coordinate{
   private int row;
   private int col;
 
+  /***
+   * Creates a new coordinate object with row, col
+   * @param row of coordinate
+   * @param col of coordinate
+   */
   public Coordinate(int row, int col) {
     this.row = row;
     this.col = col;
+  }
+
+  /***
+   * @param row of coordinate
+   * @param col of coordinate
+   * @return new coordinate object with row and col
+   */
+  public static Coordinate of(int row, int col) {
+    return new Coordinate(row, col);
   }
 
   /**
@@ -42,6 +56,10 @@ public class Coordinate{
     return String.format("(%d, %d)", row, col);
   }
 
+  /***
+   * @param other coordinate to compare to
+   * @return if the coordinates have the same row, col
+   */
   public boolean equals(Coordinate other) {
     return this.row == other.getRow() && this.col == other.getCol();
   }

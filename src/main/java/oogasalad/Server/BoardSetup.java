@@ -13,6 +13,7 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.Movement.MovementInterface;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -89,8 +90,8 @@ public class BoardSetup {
       Coordinate startingCoordinate = new Coordinate(startRow, startCol);
       int team = rawPieceData.getInt("team");
       int pointValue = rawPieceData.getInt("pointValue");
-      List<Movement> movements = new ArrayList<Movement>();
-      List<Movement> captures = new ArrayList<Movement>();
+      List<MovementInterface> movements = new ArrayList<>();
+      List<MovementInterface> captures = new ArrayList<>();
       movements.add(unboundedMovements);
       movements.add(boundedMovements);
       captures.add(unboundedCaptures);
@@ -100,9 +101,6 @@ public class BoardSetup {
       Piece currentPiece = new Piece(pieceData, board);
 
       myBoard.placePiece(new Coordinate(startRow, startCol), currentPiece);
-
-
-
     }
   }
 }

@@ -1,6 +1,7 @@
 package oogasalad.GamePlayer.Board;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -26,13 +27,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
-public class ChessBoard implements Iterable<ChessTile> {
+public class ChessBoard implements Iterable<ChessTile>{
 
   private static final Logger LOG = LogManager.getLogger(ChessBoard.class);
 
   private List<List<ChessTile>> board;
   private TurnCriteria turnCriteria;
   private Player[] players;
+  private int[] teamNums;
   private List<EndCondition> endConditions;
   private int currentPlayer;
   private Map<Integer, Double> endResult;
@@ -45,18 +47,25 @@ public class ChessBoard implements Iterable<ChessTile> {
     this.board = board;
     this.turnCriteria = turnCriteria;
     this.players = players;
+    this.teamNums = getTeamNums(players);
     this.endConditions = endConditions;
     currentPlayer = turnCriteria.getCurrentPlayer();
     endResult = new HashMap<>();
     history = new ArrayList<>();
   }
-  
+
+  /**
+   * @return team nums associated with each player
+   */
+  private int[] getTeamNums(Player[] players) {
+    return Arrays.stream(players).mapToInt(Player::teamID).toArray();
+  }
+
   /***
    * Creates a representation of a chessboard with length/height of board given
    */
   public ChessBoard(int length, int height, TurnCriteria turnCriteria, Player[] players, List<EndCondition> endConditions) {
     this(null, turnCriteria, players, endConditions);
-
     board = new ArrayList<>();
     IntStream.range(0, height)
         .forEach(i -> {
@@ -75,15 +84,14 @@ public class ChessBoard implements Iterable<ChessTile> {
    */
   public boolean setPieces(List<Piece> pieces) {
     if(history.isEmpty()) {
-
       pieces.forEach(p -> {
         Coordinate coordinate = p.getCoordinates();
         board.get(coordinate.getRow()).get(coordinate.getCol()).addPiece(p);
       });
-
       history.add(deepCopy());
       return true;
     }
+    LOG.warn("Attempted board setting after game start");
     return false;
   }
 
@@ -99,6 +107,7 @@ public class ChessBoard implements Iterable<ChessTile> {
       history.add(deepCopy());
       return new TurnUpdate(piece.move(getTileFromCoords(finalSquare)), turnCriteria.incrementTurn());
     }
+    LOG.warn(isGameOver() ? "Move made after game over" : "Move made by wrong player");
     throw isGameOver() ? new MoveAfterGameEndException("") : new WrongPlayerException(turnCriteria.getCurrentPlayer() + "");
   }
 
@@ -115,12 +124,17 @@ public class ChessBoard implements Iterable<ChessTile> {
         .filter(piece -> piece.checkTeam(team) && piece.isTargetPiece())
         .collect(Collectors.toList());
   }
+
   /***
    * @return copy of Board object to store in history
    */
-  public ChessBoard deepCopy() {
-    //TODO: CLONE PIECES AS WELL
-    return new ChessBoard(this.board, this.turnCriteria, this.players, this.endConditions);
+  private ChessBoard deepCopy() {
+    List<List<ChessTile>> boardCopy = new ArrayList<>();
+    IntStream.range(0, this.board.size()).forEach((i) -> {
+      boardCopy.add(new ArrayList<>());
+      boardCopy.get(i).addAll(this.board.get(i).stream().map(ChessTile::clone).toList());
+    });
+    return new ChessBoard(boardCopy, this.turnCriteria, this.players, this.endConditions);
   }
 
   /***
@@ -232,42 +246,72 @@ public class ChessBoard implements Iterable<ChessTile> {
   }
 
   /**
+   * Places piece at designated spot
    *
-   * @param pieceLocation
-   * @param piece
+   * @param pieceLocation to put piece
+   * @param piece to place
    */
   public void placePiece(Coordinate pieceLocation, Piece piece) {
     this.board.get(pieceLocation.getRow()).get(pieceLocation.getCol()).addPiece(piece);
   }
 
+  /***
+   * @return iterator over the board list
+   */
   @Override
   public Iterator<ChessTile> iterator() {
     return new ChessBoardIterator(board);
   }
 
+  /**
+   * @return stream over the board
+   */
   public Stream<List<ChessTile>> stream() {
     return board.stream();
   }
 
+  /***
+   * @return team numbers for all players
+   */
+  public int[] getTeams() {
+    return teamNums;
+  }
+
+  /***
+   * Creates foreach loop over board
+   * @param action to do in loop
+   */
   @Override
   public void forEach(Consumer<? super ChessTile> action) {
     Iterable.super.forEach(action);
   }
 
+  /***
+   * Iterator class over the board list
+   */
   private class ChessBoardIterator implements Iterator<ChessTile> {
 
     private final Queue<ChessTile> queue;
 
+    /***
+     * Creates an iterator over a given list
+     */
     public ChessBoardIterator(List<List<ChessTile>> board) {
       queue = new LinkedList<>();
       board.forEach(queue::addAll);
     }
 
+    /***
+     * @return if there's another ChessTile
+     */
     @Override
     public boolean hasNext() {
       return !queue.isEmpty();
     }
 
+    /***
+     * @return next ChessTile
+     */
     @Override
     public ChessTile next() {
       return queue.poll();
