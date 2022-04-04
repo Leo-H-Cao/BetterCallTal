@@ -124,6 +124,7 @@ public class ChessBoard implements Iterable<ChessTile>{
         .filter(piece -> piece.checkTeam(team) && piece.isTargetPiece())
         .collect(Collectors.toList());
   }
+
   /***
    * @return copy of Board object to store in history
    */

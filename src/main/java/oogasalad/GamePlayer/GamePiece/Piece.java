@@ -13,6 +13,7 @@ import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.Movement.MovementInterface;
 import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
 import oogasalad.GamePlayer.Movement.CustomMovements.CustomMovement;
 
@@ -34,8 +35,8 @@ public class Piece implements Cloneable {
   private String img;
   private List<Coordinate> history;
 
-  private List<Movement> movements;
-  private List<Movement> captures;
+  private List<MovementInterface> movements;
+  private List<MovementInterface> captures;
   private List<CustomMovement> customMovements;
   private List<MovementModifier> movementModifiers;
   private List<MovementModifier> onInteractionModifiers;
