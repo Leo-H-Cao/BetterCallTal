@@ -3,6 +3,7 @@ package oogasalad.Frontend.Editor;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import oogasalad.Frontend.util.ButtonFactory;
 
@@ -36,7 +37,7 @@ public class ChessBoardView {
 
 	private Node makeGridTile(double width, double height) {
 		Rectangle ret = new Rectangle(width, height);
-//		ret.setFill(Paint.valueOf("green"));
+		ret.setFill(Paint.valueOf("green"));
 		ButtonFactory.addAction(ret, (e) -> System.out.println("clicked"));
 
 		return ret;

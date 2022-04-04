@@ -16,7 +16,6 @@ public abstract class View {
 	public View(MainView mainView) {
 		myMainView = mainView;
 		myRoot = new Group();
-//		myScene = makeScene();
 	}
 
 	/**
