@@ -16,13 +16,16 @@ public abstract class View {
 	public View(MainView mainView) {
 		myMainView = mainView;
 		myRoot = new Group();
-		myScene = makeScene();
+//		myScene = makeScene();
 	}
 
 	/**
 	 * @return The stored scene in myScene
 	 */
 	public Scene getScene() {
+		if(myScene == null) {
+			myScene = makeScene();
+		}
 		return myScene;
 	}
 
