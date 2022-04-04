@@ -28,6 +28,7 @@ public class GameView extends SceneView {
 
     private Collection<ChessTile> myBoard;
     private Collection<Piece> myPieces;
+    private BoardGrid myBoardGrid;
     private static Integer SCENE_WIDTH_SIZE = 1500;
     private static Integer SCENE_HEIGHT_SIZE = 1000;
     private static final String TITLE = "Title";
@@ -69,6 +70,10 @@ public class GameView extends SceneView {
     protected Scene makeScene() {
         BorderPane bp = new BorderPane();
         bp.setTop(makeTopSection());
+        myBoardGrid = new BoardGrid(8, 8);
+        myBoardGrid.getBoard().setAlignment(Pos.CENTER);
+        bp.setCenter(myBoardGrid.getBoard());
+
         myRoot.getChildren().add(bp);
         return new Scene(myRoot, SCENE_WIDTH_SIZE, SCENE_HEIGHT_SIZE);
     }
@@ -76,7 +81,7 @@ public class GameView extends SceneView {
     private GridPane makeTopSection() {
         GridPane gp = new GridPane();
         setTopColConstraints(gp);
-        ArrayList<HBox> Hboxes = createHBoxes();
+        ArrayList<HBox> Hboxes = createTopHBoxes();
         gp.add(Hboxes.get(0), 0, 0);
         gp.add(Hboxes.get(1), 1, 0);
         gp.add(Hboxes.get(2), 2, 0);
@@ -89,7 +94,7 @@ public class GameView extends SceneView {
         gridpane.getColumnConstraints().add(new ColumnConstraints(500));
     }
 
-    private ArrayList<HBox> createHBoxes() {
+    private ArrayList<HBox> createTopHBoxes() {
         ArrayList<HBox> hboxes = new ArrayList<>();
         HBox left = new HBox();
         left.setAlignment(Pos.CENTER_LEFT);
