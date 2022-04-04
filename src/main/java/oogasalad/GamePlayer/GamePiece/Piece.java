@@ -156,6 +156,11 @@ public class Piece {
     return this.team == team;
   }
 
+
+  public int getTeam(){
+    return team;
+  }
+
   public boolean isTargetPiece() {
     return mainPiece;
   }

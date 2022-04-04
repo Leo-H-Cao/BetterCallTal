@@ -9,8 +9,11 @@ import java.util.Set;
 import java.util.Stack;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
+import oogasalad.GamePlayer.GameClauses.CheckValidator;
+import oogasalad.GamePlayer.GameClauses.CheckmateValidator;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
 public class Movement {
@@ -115,6 +118,21 @@ public class Movement {
       });
     });
     return allMoves;
+  }
+
+  public Map<String, Set<ChessTile>> getLegalMoves(Piece piece, ChessBoard board)
+      throws EngineException {
+    Map<String, Set<ChessTile>> allMoves = getAllMoves(piece, board);
+    for(String moveType : allMoves.keySet()){
+      for(ChessTile move : allMoves.get(moveType)){
+        ChessBoard deepCopy = board.deepCopy();
+        deepCopy.move(piece, move.getCoordinates());
+        if(CheckValidator.isInCheck(board, piece.getTeam())){
+          allMoves.get(moveType).remove(move);
+        }
+      }
+    }
+    return null;
   }
   /***
    * Returns all possible captures a piece can make
