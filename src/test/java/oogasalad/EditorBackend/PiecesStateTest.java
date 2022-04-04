@@ -2,10 +2,10 @@ package oogasalad.EditorBackend;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import oogasalad.Editor.Backend.ModelState.EditorPiece;
-import oogasalad.Editor.Backend.ModelState.MovementRules;
-import oogasalad.Editor.Backend.ModelState.PieceInfo;
-import oogasalad.Editor.Backend.ModelState.PiecesState;
+import oogasalad.Editor.ModelState.EditorPiece;
+import oogasalad.Editor.ModelState.MovementRules;
+import oogasalad.Editor.ModelState.PieceInfo;
+import oogasalad.Editor.ModelState.PiecesState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -47,5 +47,4 @@ public class PiecesStateTest {
     piecesState.changePieceImage(pieceID,newImage);
     assertEquals(newImage, piecesState.getPieceInfo(pieceID).getImageFile());
   }
-
 }

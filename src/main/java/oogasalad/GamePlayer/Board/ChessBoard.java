@@ -196,7 +196,7 @@ public class ChessBoard implements Iterable<ChessTile>{
    * Gets the tile at the specified coordinates
    *
    * @param coordinate is the coordinate of the tile to get
-   * @return tile at specificed coordinate
+   * @return tile at specified coordinate
    * @throws OutsideOfBoardException if the coordinate falls outside the board
    */
   public ChessTile getTile(Coordinate coordinate) throws OutsideOfBoardException {

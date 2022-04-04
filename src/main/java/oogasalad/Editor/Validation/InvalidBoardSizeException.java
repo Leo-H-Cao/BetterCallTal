@@ -1,4 +1,4 @@
-package oogasalad.Editor.Backend.Validation;
+package oogasalad.Editor.Validation;
 
 public class InvalidBoardSizeException extends RuntimeException{
 

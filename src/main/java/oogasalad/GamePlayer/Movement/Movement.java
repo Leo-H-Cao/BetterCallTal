@@ -9,14 +9,17 @@ import java.util.Set;
 import java.util.Stack;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
+import oogasalad.GamePlayer.GameClauses.CheckValidator;
+import oogasalad.GamePlayer.GameClauses.CheckmateValidator;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Movement implements MovementInterface{
-  
+
   private static final Logger LOG = LogManager.getLogger(Movement.class);
 
   private static final String MOVE_KEY = "move";
@@ -64,7 +67,7 @@ public class Movement implements MovementInterface{
    * @param coordinates that the tile is on
    * @param board to get tile on
    * @return corresponding ChessTile to given coordinates
-   * @throws OutsideOfBoardException
+   * @throws OutsideOfBoardException if coord is outside of board
    */
   private ChessTile convertCordToTile(Coordinate coordinates, ChessBoard board)
       throws OutsideOfBoardException {
@@ -108,6 +111,7 @@ public class Movement implements MovementInterface{
     allMoves.put(CAPTURE_KEY, new HashSet<>());
 
     Coordinate baseCoordinates = piece.getCoordinates();
+
     possibleMoves.forEach((delta) -> {
       Stack<ChessTile> moveStack = generateMoveStack(baseCoordinates, delta, board);
       allMoves.get(MOVE_KEY).addAll(moveStack);
@@ -122,6 +126,21 @@ public class Movement implements MovementInterface{
       });
     });
     return allMoves;
+  }
+
+  public Map<String, Set<ChessTile>> getLegalMoves(Piece piece, ChessBoard board)
+      throws EngineException {
+    Map<String, Set<ChessTile>> allMoves = getAllMoves(piece, board);
+    for(String moveType : allMoves.keySet()){
+      for(ChessTile move : allMoves.get(moveType)){
+        ChessBoard deepCopy = board.deepCopy();
+        deepCopy.move(piece, move.getCoordinates());
+        if(CheckValidator.isInCheck(board, piece.getTeam())){
+          allMoves.get(moveType).remove(move);
+        }
+      }
+    }
+    return null;
   }
 
   /***

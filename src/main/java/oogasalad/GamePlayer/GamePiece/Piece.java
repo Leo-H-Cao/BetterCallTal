@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
@@ -104,6 +105,27 @@ public class Piece implements Cloneable {
   }
 
   /***
+   * @param coordinate to check for captures
+   * @return if this piece can capture a piece on the given coordinate
+   */
+  private boolean validCapture(Coordinate coordinate) {
+    //TODO MOVEMENTS IS A PLACEHOLDER, MUST IMPLEMENT CAPTURES AS IT IS NULL WHEN THE PIECE IS FIRST INITIALED AS WELL AS THE GETMOVES METHOD
+    return movements.stream().map(move -> move.getMoves(this, board))
+        .collect(Collectors.toSet())
+        .stream().flatMap(Set::stream)
+        .collect(Collectors.toSet()).stream()
+        .anyMatch(tile -> tile.getCoordinates().equals(coordinate));
+  }
+
+  /***
+   * @param coordinates to check for captures
+   * @return if this piece can capture a piece on the given coordinates
+   */
+  public boolean validCapture(List<Coordinate> coordinates) {
+    return coordinates.stream().anyMatch(this::validCapture);
+  }
+
+  /***
    * @return coordinate of piece
    */
   public Coordinate getCoordinates() {
@@ -171,6 +193,14 @@ public class Piece implements Cloneable {
    */
   public boolean checkTeam(int team) {
     return this.team == team;
+  }
+
+
+  /**
+   * @return team of piece
+   */
+  public int getTeam(){
+    return team;
   }
 
   /**
