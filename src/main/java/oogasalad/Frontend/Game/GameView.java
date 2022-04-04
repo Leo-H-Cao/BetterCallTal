@@ -44,7 +44,7 @@ public class GameView extends SceneView {
      * setting up the board.
      */
 
-    public void SetUpBoard(Collection<ChessTile> board, Collection<Piece> pieces) {
+    public void SetUpBoard(Chess board, Collection<Piece> pieces) {
         myBoard = board;
         myPieces = pieces;
     }

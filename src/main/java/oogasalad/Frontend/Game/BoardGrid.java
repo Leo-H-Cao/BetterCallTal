@@ -7,14 +7,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 /**
- * This class is handlles the chess board
+ * This class is handlles the chess board GridPane.
  */
 
 public class BoardGrid {
 
     private GridPane myBoard;
-    private static Double HEIGHT_BOARD = 700.0;
-    private static Double WIDTH_Board = 700.0;
+    private static Double HEIGHT_BOARD = 600.0;
+    private static Double WIDTH_Board = 600.0;
 
     public BoardGrid(int rows, int cols) {
         myBoard = setUpBoard(rows, cols);
@@ -42,5 +42,9 @@ public class BoardGrid {
         return gp;
     }
 
+    /**
+     * method for GameView to use to retrieve GridPane of Board
+     * @return GridPane myBoard
+     */
     public GridPane getBoard() {return myBoard;}
 }
