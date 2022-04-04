@@ -39,11 +39,11 @@ class MovementModifierTest {
 
     board = new ChessBoard(8, 8,  new Linear(players), players, List.of(new AtomicEndCondition()));
     whiteKing = new Piece(new PieceData(Coordinate.of(0, 0), "test1", 0, 0, true,
-        List.of(), Collections.emptyList(), Collections.emptyList(), List.of(new Atomic()), Collections.emptyList(), ""), board);
+        List.of(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), List.of(new Atomic()), ""), board);
     blackKing = new Piece(new PieceData(Coordinate.of(1, 0), "test2", 0, 1, true,
-        List.of(), Collections.emptyList(), Collections.emptyList(), List.of(new Atomic()), Collections.emptyList(), ""), board);
+        List.of(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), List.of(new Atomic()), ""), board);
     whiteAttacker = new Piece(new PieceData(Coordinate.of(1, 1), "test2", 0, 0, false,
-        List.of(), List.of(new Movement(List.of(Coordinate.of(0, -1)), false)), Collections.emptyList(), List.of(new Atomic()), Collections.emptyList(), ""), board);
+        List.of(), List.of(new Movement(List.of(Coordinate.of(0, -1)), false)), Collections.emptyList(), Collections.emptyList(), List.of(new Atomic()),""), board);
     pieces = List.of(whiteKing, blackKing, whiteAttacker);
     board.setPieces(pieces);
   }
