@@ -36,18 +36,8 @@ public class CheckValidator implements MovementModifier {
             .map(Piece::getCoordinates)
             .collect(Collectors.toList())));
 
-    if (!isInCheck) return false;
     boolean isInCheckMate = checkMate.isInMate(board, id);
-
-//    boolean check;
-//    for (ChessTile tile : board) {
-//      check = tile.getPieces()
-//          .stream()
-//          .filter(piece -> !piece.checkTeam(id))
-//          .anyMatch(piece -> piece.canCapture(targetPieces));
-//
-//    }
-//    return false;
+    return isInCheck;
   }
 
   @Override
