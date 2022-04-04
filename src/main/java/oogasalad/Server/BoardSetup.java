@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+<<<<<<< HEAD
 import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
 import oogasalad.Frontend.GamePlayer.Board.Player;
 import oogasalad.Frontend.GamePlayer.Board.TurnCriteria.Linear;
@@ -13,6 +14,16 @@ import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
 import oogasalad.Frontend.GamePlayer.GamePiece.PieceData;
 import oogasalad.Frontend.GamePlayer.Movement.Coordinate;
 import oogasalad.Frontend.GamePlayer.Movement.Movement;
+=======
+import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.Player;
+import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
+import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.GamePiece.PieceData;
+import oogasalad.Editor.Movement.Coordinate;
+import oogasalad.Editor.Movement.Movement;
+import oogasalad.Editor.Movement.MovementInterface;
+>>>>>>> 13bbc0787cf1e68b3a5d1149146123c54d282f81
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -89,8 +100,8 @@ public class BoardSetup {
       Coordinate startingCoordinate = new Coordinate(startRow, startCol);
       int team = rawPieceData.getInt("team");
       int pointValue = rawPieceData.getInt("pointValue");
-      List<Movement> movements = new ArrayList<Movement>();
-      List<Movement> captures = new ArrayList<Movement>();
+      List<MovementInterface> movements = new ArrayList<>();
+      List<MovementInterface> captures = new ArrayList<>();
       movements.add(unboundedMovements);
       movements.add(boundedMovements);
       captures.add(unboundedCaptures);
@@ -100,9 +111,6 @@ public class BoardSetup {
       Piece currentPiece = new Piece(pieceData, board);
 
       myBoard.placePiece(new Coordinate(startRow, startCol), currentPiece);
-
-
-
     }
   }
 }

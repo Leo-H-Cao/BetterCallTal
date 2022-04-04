@@ -2,9 +2,9 @@ package oogasalad.Frontend.Game;
 
 import javafx.scene.Scene;
 import oogasalad.Frontend.MainView;
-import oogasalad.Frontend.SceneView;
 import oogasalad.Frontend.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
+import oogasalad.Frontend.View;
 import java.util.Collection;
 
 /**
@@ -12,7 +12,7 @@ import java.util.Collection;
  */
 
 
-public class GameView extends SceneView {
+public class GameView extends View {
 
     private Collection<ChessTile> myBoard;
     private Collection<Piece> myPieces;

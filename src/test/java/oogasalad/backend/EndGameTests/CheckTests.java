@@ -1,9 +1,7 @@
 package oogasalad.backend.EndGameTests;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.Collections;
 import java.util.List;
 import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
@@ -18,7 +16,6 @@ import oogasalad.Frontend.GamePlayer.GameClauses.CheckValidator;
 import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
 import oogasalad.Frontend.GamePlayer.GamePiece.PieceData;
 import oogasalad.Frontend.GamePlayer.Movement.Coordinate;
-import oogasalad.Frontend.GamePlayer.Movement.Movement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

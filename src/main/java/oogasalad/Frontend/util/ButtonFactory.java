@@ -2,9 +2,13 @@ package oogasalad.Frontend.util;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Shape;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -25,6 +29,10 @@ public class ButtonFactory {
 
 	public static void addAction(Button b, EventHandler<ActionEvent> action) {
 		b.setOnAction(action);
+	}
+
+	public static void addAction(Node n, EventHandler<MouseEvent> action) {
+		n.setOnMouseClicked(action);
 	}
 
 	private static void setText(Button button, String display) {

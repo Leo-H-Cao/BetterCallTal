@@ -3,14 +3,13 @@ package oogasalad.Frontend.Menu;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import oogasalad.Frontend.Editor.GameEditorView;
 import oogasalad.Frontend.Game.GameView;
 import oogasalad.Frontend.MainView;
-import oogasalad.Frontend.SceneView;
+import oogasalad.Frontend.View;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
 
@@ -22,7 +21,7 @@ import java.util.Collection;
  * Home Screen is the screen that displays "Build Game," "Join Game," and "Host Game"
  */
 
-public class HomeView extends SceneView {
+public class HomeView extends View {
 
     private VBox myVbox;
     private static final String[] ButtonOptions = {"Create", "Join", "Host"};

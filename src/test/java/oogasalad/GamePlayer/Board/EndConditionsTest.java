@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+<<<<<<< HEAD
 import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
 import oogasalad.Frontend.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.Frontend.GamePlayer.Board.EndConditions.TwoMoves;
@@ -16,6 +17,17 @@ import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
 import oogasalad.Frontend.GamePlayer.GamePiece.PieceData;
 import oogasalad.Frontend.GamePlayer.Movement.Coordinate;
 import oogasalad.Frontend.GamePlayer.Movement.Movement;
+=======
+import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
+import oogasalad.GamePlayer.Board.EndConditions.TwoMoves;
+import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
+import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
+import oogasalad.GamePlayer.EngineExceptions.MoveAfterGameEndException;
+import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.GamePiece.PieceData;
+import oogasalad.Editor.Movement.Coordinate;
+import oogasalad.Editor.Movement.Movement;
+>>>>>>> 13bbc0787cf1e68b3a5d1149146123c54d282f81
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -74,6 +86,7 @@ class EndConditionsTest {
       assertTrue(board.isGameOver());
       assertEquals(board.getScores().get(), scores);
     } catch(Exception e) {
+      e.printStackTrace();
       fail();
     }
   }

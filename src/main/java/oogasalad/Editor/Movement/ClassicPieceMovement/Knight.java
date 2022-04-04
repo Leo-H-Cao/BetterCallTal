@@ -1,4 +1,4 @@
-package oogasalad.Frontend.GamePlayer.Movement.ClassicPieceMovement;
+package oogasalad.Editor.Movement.ClassicPieceMovement;
 
 import java.util.Collection;
 import java.util.List;

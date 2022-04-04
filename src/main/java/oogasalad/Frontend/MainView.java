@@ -1,6 +1,5 @@
 package oogasalad.Frontend;
 
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Editor.GameEditorView;
 import oogasalad.Frontend.Game.GameView;
@@ -14,7 +13,7 @@ public class MainView {
 	// Bundle made static so all classes can easily access the language
 	private static ResourceBundle langBundle;
 
-	private Collection<SceneView> myViews;
+	private Collection<View> myViews;
 	private Stage stage;
 
 
@@ -30,11 +29,11 @@ public class MainView {
 		myViews.stream().filter((e) -> e.getClass() == HomeView.class).forEach(this::changeScene);
 	}
 
-	private void addView(SceneView view) {
+	private void addView(View view) {
 		myViews.add(view);
 	}
 
-	public Collection<SceneView> getViews() {
+	public Collection<View> getViews() {
 		return myViews;
 	}
 
@@ -46,7 +45,7 @@ public class MainView {
 		return langBundle;
 	}
 
-	public void changeScene(SceneView sceneClass) {
+	public void changeScene(View sceneClass) {
 		stage.setScene(sceneClass.getScene());
 		stage.setTitle(sceneClass.getTitle());
 	}
