@@ -21,31 +21,8 @@ public class CheckmateValidator {
    * checkmate
    * @return Whether the board is in checkmate or not
    */
-  public boolean isInMate(ChessBoard board, int id) throws OutsideOfBoardException {
+  public static boolean isInMate(ChessBoard board, int id) throws OutsideOfBoardException {
 
-    if(!CheckValidator.isInCheck(board, id)){
-      return false;
-    }
-
-    Set<Piece> friendlyPieces = friendlyPieces(board, id);
-    List<Piece> targetPieces = board.targetPiece(id);
-
-    boolean cantMove = targetPieces.stream()
-        .noneMatch(piece -> piece.getMoves().size() == 0);
-    //boolean cantBlock = friendlyPieces.stream();
-
-
-
-    return cantMove;// && cantBlock;
+    return CheckValidator.isInCheck(board, id) && StalemateValidator.isStaleMate(board, id);
   }
-
-  private Set<Piece> friendlyPieces(ChessBoard board, int id) {
-    return board.stream()
-        .flatMap(List::stream).toList().stream()
-        .map(ChessTile::getPieces)
-        .flatMap(List::stream).toList().stream()
-        .filter(piece -> piece.checkTeam(id))
-        .collect(Collectors.toSet());
-  }
-
 }

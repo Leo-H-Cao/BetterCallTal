@@ -11,6 +11,8 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
+import oogasalad.GamePlayer.GameClauses.CheckValidator;
+import oogasalad.GamePlayer.GameClauses.CheckmateValidator;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
 public class Movement {
@@ -115,6 +117,16 @@ public class Movement {
       });
     });
     return allMoves;
+  }
+
+  public Map<String, Set<ChessTile>> getLegalMoves(Piece piece, ChessBoard board){
+    Map<String, Set<ChessTile>> allMoves = getAllMoves(piece, board);
+    for(Set<ChessTile> moveSet : allMoves.values()){
+      for(ChessTile move : moveSet){
+        //ChessBoard deepCopy = board.deepCopy()
+      }
+    }
+    return null;
   }
   /***
    * Returns all possible captures a piece can make
