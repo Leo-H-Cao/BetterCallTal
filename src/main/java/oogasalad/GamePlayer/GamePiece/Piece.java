@@ -13,8 +13,8 @@ import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
-import oogasalad.GamePlayer.Movement.MovementModifier;
-import oogasalad.GamePlayer.Movement.CustomMovement;
+import oogasalad.GamePlayer.Movement.MovementInterface;
+import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
 
 /**
  * @author Vincent Chen
@@ -31,14 +31,14 @@ public class Piece implements Cloneable {
   private double pointValue;
   private int team;
   private boolean mainPiece;
+  private String img;
+  private List<Coordinate> history;
 
-  private List<Movement> movements;
-  private List<Movement> captures;
-  private List<CustomMovement> movementSetModifiers;
+  private List<MovementInterface> movements;
+  private List<MovementInterface> captures;
+  private List<MovementInterface> customMovements;
   private List<MovementModifier> movementModifiers;
   private List<MovementModifier> onInteractionModifiers;
-
-  private String img;
 
   private ChessBoard board;
 
@@ -53,11 +53,12 @@ public class Piece implements Cloneable {
     this.mainPiece = pieceData.mainPiece();
     this.movements = pieceData.movements();
     this.captures = pieceData.captures();
-    this.movementSetModifiers = pieceData.movementSetModifiers();
+    this.customMovements = pieceData.customMovements();
     this.movementModifiers = pieceData.movementModifiers();
     this.onInteractionModifiers = pieceData.onInteractionModifiers();
     this.img = pieceData.img();
     this.board = board;
+    this.history = new ArrayList<>(List.of(pieceData.startingLocation()));
   }
 
   /***
@@ -77,6 +78,7 @@ public class Piece implements Cloneable {
     ChessTile firstSquare = board.getTile(coordinates);
     coordinates = finalSquare.getCoordinates();
     finalSquare.appendPiece(this);
+    history.add(finalSquare.getCoordinates());
     return new HashSet<>(Set.of(firstSquare, finalSquare));
   }
 
@@ -128,6 +130,25 @@ public class Piece implements Cloneable {
   }
 
   /***
+   * @return if this piece is opposing any piece in the given list (i.e. player numbers are
+   * opposing)
+   */
+  public boolean isOpposing(List<Piece> opponents) {
+//    return Arrays.stream(board.getPlayer(this.team).opponentIDs()).anyMatch((o) -> opponents.stream().anyMatch((t) ->
+//        t.checkTeam(o)));
+    return opponents.stream().anyMatch(this::isOpposing);
+  }
+
+  /***
+   * @param piece to check
+   * @return if a given piece opposes this piece
+   */
+  private boolean isOpposing(Piece piece) {
+    int[] opponentIDs = board.getPlayer(this.team).opponentIDs();
+    return Arrays.stream(opponentIDs).anyMatch((o) -> piece.team == board.getPlayer(o).teamID());
+  }
+
+  /***
    * @param pieces to potentially capture
    * @return if this piece can capture any piece in a list of pieces
    */
@@ -152,6 +173,14 @@ public class Piece implements Cloneable {
     return this.team == team;
   }
 
+  /**
+   * @param piece to check
+   * @return if this and piece are on the same team
+   */
+  public boolean onSameTeam(Piece piece) {
+    return this.team == piece.team;
+  }
+
   /***
    * @return if this piece is the main piece
    */
@@ -164,6 +193,13 @@ public class Piece implements Cloneable {
    */
   public String getName(){
     return name;
+  }
+
+  /**
+   * @return history of piece movement
+   */
+  public List<Coordinate> getHistory() {
+    return history;
   }
 
   /***
@@ -179,7 +215,7 @@ public class Piece implements Cloneable {
         mainPiece,
         new ArrayList<>(movements),
         new ArrayList<>(captures),
-        new ArrayList<>(movementSetModifiers),
+        new ArrayList<>(customMovements),
         new ArrayList<>(movementModifiers),
         new ArrayList<>(onInteractionModifiers),
         img

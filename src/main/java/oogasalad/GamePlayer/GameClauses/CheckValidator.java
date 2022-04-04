@@ -6,7 +6,7 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.Movement.MovementModifier;
+import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
 
 /**
  * @author Jose Santillan
@@ -42,7 +42,7 @@ public class CheckValidator implements MovementModifier {
   }
 
   @Override
-  public Set<ChessTile> updateMovement(Piece piece, ChessBoard board) {
+  public Set<ChessTile> updateMovement(Piece piece, ChessTile finalTile, ChessBoard board) {
     return null;
   }
 }

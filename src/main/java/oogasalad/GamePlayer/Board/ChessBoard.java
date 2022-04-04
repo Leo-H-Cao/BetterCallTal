@@ -1,6 +1,7 @@
 package oogasalad.GamePlayer.Board;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -33,6 +34,7 @@ public class ChessBoard implements Iterable<ChessTile>{
   private List<List<ChessTile>> board;
   private TurnCriteria turnCriteria;
   private Player[] players;
+  private int[] teamNums;
   private List<EndCondition> endConditions;
   private int currentPlayer;
   private Map<Integer, Double> endResult;
@@ -45,10 +47,18 @@ public class ChessBoard implements Iterable<ChessTile>{
     this.board = board;
     this.turnCriteria = turnCriteria;
     this.players = players;
+    this.teamNums = getTeamNums(players);
     this.endConditions = endConditions;
     currentPlayer = turnCriteria.getCurrentPlayer();
     endResult = new HashMap<>();
     history = new ArrayList<>();
+  }
+
+  /**
+   * @return team nums associated with each player
+   */
+  private int[] getTeamNums(Player[] players) {
+    return Arrays.stream(players).mapToInt(Player::teamID).toArray();
   }
 
   /***
@@ -114,6 +124,7 @@ public class ChessBoard implements Iterable<ChessTile>{
         .filter(piece -> piece.checkTeam(team) && piece.isTargetPiece())
         .collect(Collectors.toList());
   }
+
   /***
    * @return copy of Board object to store in history
    */
@@ -257,6 +268,13 @@ public class ChessBoard implements Iterable<ChessTile>{
    */
   public Stream<List<ChessTile>> stream() {
     return board.stream();
+  }
+
+  /***
+   * @return team numbers for all players
+   */
+  public int[] getTeams() {
+    return teamNums;
   }
 
   /***

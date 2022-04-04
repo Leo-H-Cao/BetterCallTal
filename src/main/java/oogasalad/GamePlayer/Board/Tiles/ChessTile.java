@@ -111,4 +111,11 @@ public class ChessTile implements Tile, Cloneable {
   private List<Piece> clonePieces() {
     return pieces.stream().map(Piece::clone).toList();
   }
+
+  /***
+   * Clears pieces on tile
+   */
+  public void clearPieces() {
+    pieces = new ArrayList<>();
+  }
 }
