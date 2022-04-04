@@ -3,20 +3,17 @@ package oogasalad.Frontend;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.effect.Reflection;
 import oogasalad.Frontend.Menu.HomeView;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
 
-import java.util.stream.Stream;
-
-public abstract class SceneView {
+public abstract class View {
 
 	protected Scene myScene;
 	protected Group myRoot;
 	private MainView myMainView;
 
-	public SceneView(MainView mainView) {
+	public View(MainView mainView) {
 		myMainView = mainView;
 		myRoot = new Group();
 		myScene = makeScene();

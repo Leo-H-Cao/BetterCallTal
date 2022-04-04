@@ -5,10 +5,10 @@ package oogasalad.Frontend.Editor;
 
 import javafx.scene.Scene;
 import oogasalad.Frontend.MainView;
-import oogasalad.Frontend.SceneView;
+import oogasalad.Frontend.View;
 
 
-public class GameEditorView extends SceneView {
+public class GameEditorView extends View {
     public GameEditorView(MainView mainView) {
         super(mainView);
     }
