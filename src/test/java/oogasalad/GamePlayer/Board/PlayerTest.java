@@ -1,17 +1,10 @@
 package oogasalad.GamePlayer.Board;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
-<<<<<<< HEAD
 import oogasalad.Frontend.GamePlayer.Board.Player;
 import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
-=======
-
-import oogasalad.GamePlayer.GamePiece.Piece;
->>>>>>> 13bbc0787cf1e68b3a5d1149146123c54d282f81
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

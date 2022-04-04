@@ -1,11 +1,12 @@
 package oogasalad.GamePlayer.Movement;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-<<<<<<< HEAD
 import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
 import oogasalad.Frontend.GamePlayer.Board.Player;
 import oogasalad.Frontend.GamePlayer.Board.TurnCriteria.Linear;
@@ -16,19 +17,6 @@ import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
 import oogasalad.Frontend.GamePlayer.GamePiece.PieceData;
 import oogasalad.Frontend.GamePlayer.Movement.Coordinate;
 import oogasalad.Frontend.GamePlayer.Movement.Movement;
-=======
-
-import oogasalad.Editor.Movement.Coordinate;
-import oogasalad.Editor.Movement.Movement;
-import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Player;
-import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
-import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
-import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
-import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.GamePiece.PieceData;
->>>>>>> 13bbc0787cf1e68b3a5d1149146123c54d282f81
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

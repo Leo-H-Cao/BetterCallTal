@@ -1,8 +1,4 @@
-<<<<<<< HEAD:src/main/java/oogasalad/Frontend/GamePlayer/Movement/Movement.java
 package oogasalad.Frontend.GamePlayer.Movement;
-=======
-package oogasalad.Editor.Movement;
->>>>>>> 13bbc0787cf1e68b3a5d1149146123c54d282f81:src/main/java/oogasalad/Editor/Movement/Movement.java
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,27 +7,18 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.Stack;
-<<<<<<< HEAD:src/main/java/oogasalad/Frontend/GamePlayer/Movement/Movement.java
+import oogasalad.Editor.Movement.MovementInterface;
 import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
 import oogasalad.Frontend.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.Frontend.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.Frontend.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.Frontend.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
 import oogasalad.Frontend.GamePlayer.GameClauses.CheckValidator;
-=======
-import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.EngineExceptions.EngineException;
-import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
-import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.GameClauses.CheckValidator;
-import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
->>>>>>> 13bbc0787cf1e68b3a5d1149146123c54d282f81:src/main/java/oogasalad/Editor/Movement/Movement.java
 
-public class Movement implements MovementInterface{
+public class Movement implements MovementInterface {
 
   private static final Logger LOG = LogManager.getLogger(Movement.class);
 

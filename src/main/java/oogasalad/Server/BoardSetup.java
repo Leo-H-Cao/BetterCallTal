@@ -6,24 +6,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-<<<<<<< HEAD
+import oogasalad.Editor.Movement.Movement;
+import oogasalad.Editor.Movement.MovementInterface;
 import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
 import oogasalad.Frontend.GamePlayer.Board.Player;
 import oogasalad.Frontend.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
 import oogasalad.Frontend.GamePlayer.GamePiece.PieceData;
 import oogasalad.Frontend.GamePlayer.Movement.Coordinate;
-import oogasalad.Frontend.GamePlayer.Movement.Movement;
-=======
-import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Player;
-import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
-import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.GamePiece.PieceData;
-import oogasalad.Editor.Movement.Coordinate;
-import oogasalad.Editor.Movement.Movement;
-import oogasalad.Editor.Movement.MovementInterface;
->>>>>>> 13bbc0787cf1e68b3a5d1149146123c54d282f81
 import org.json.JSONArray;
 import org.json.JSONObject;
 

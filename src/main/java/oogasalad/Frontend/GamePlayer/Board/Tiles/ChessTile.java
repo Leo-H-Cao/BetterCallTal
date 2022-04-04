@@ -3,6 +3,8 @@ package oogasalad.Frontend.GamePlayer.Board.Tiles;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
+import oogasalad.Frontend.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
 import oogasalad.Frontend.GamePlayer.Movement.Coordinate;
 

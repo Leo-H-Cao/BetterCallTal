@@ -14,6 +14,7 @@ import oogasalad.Frontend.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.Frontend.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
 import oogasalad.Frontend.GamePlayer.GameClauses.CheckValidator;
+import oogasalad.Frontend.GamePlayer.Movement.Coordinate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

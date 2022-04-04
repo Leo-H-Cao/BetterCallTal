@@ -1,8 +1,4 @@
-<<<<<<< HEAD:src/main/java/oogasalad/Frontend/GamePlayer/Movement/MovementModifier.java
-package oogasalad.Frontend.GamePlayer.Movement;
-=======
 package oogasalad.Editor.Movement.MovementModifiers;
->>>>>>> 13bbc0787cf1e68b3a5d1149146123c54d282f81:src/main/java/oogasalad/Editor/Movement/MovementModifiers/MovementModifier.java
 
 import java.util.Set;
 import oogasalad.Frontend.GamePlayer.Board.ChessBoard;

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.Collections;
 import java.util.List;
+import oogasalad.Editor.Movement.Movement;
 import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
 import oogasalad.Frontend.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.Frontend.GamePlayer.Board.EndConditions.TwoMoves;

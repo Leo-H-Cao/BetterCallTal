@@ -1,9 +1,5 @@
 package oogasalad.Editor.Validation;
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 9e661200c405b8f5a0233731b9291bdf4ccb4834
 import oogasalad.Editor.API.ValidateSettings;
 
 public class Validator implements ValidateSettings {

@@ -47,8 +47,5 @@ public class PiecesStateTest {
     piecesState.changePieceImage(pieceID,newImage);
     assertEquals(newImage, piecesState.getPieceInfo(pieceID).getImageFile());
   }
-<<<<<<< HEAD
 
-=======
->>>>>>> 9e661200c405b8f5a0233731b9291bdf4ccb4834
 }

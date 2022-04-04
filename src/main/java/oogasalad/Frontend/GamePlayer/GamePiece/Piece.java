@@ -1,31 +1,19 @@
 package oogasalad.Frontend.GamePlayer.GamePiece;
 
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-<<<<<<< HEAD:src/main/java/oogasalad/Frontend/GamePlayer/GamePiece/Piece.java
-import oogasalad.Frontend.GamePlayer.EngineExceptions.InvalidMoveException;
+import oogasalad.Editor.Movement.MovementInterface;
 import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
 import oogasalad.Frontend.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.Frontend.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.Frontend.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.Frontend.GamePlayer.Movement.Coordinate;
-import oogasalad.Frontend.GamePlayer.Movement.Movement;
 import oogasalad.Frontend.GamePlayer.Movement.MovementModifier;
-import oogasalad.Frontend.GamePlayer.Movement.CustomMovement;
-=======
 
-import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
-import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.Editor.Movement.Coordinate;
-import oogasalad.Editor.Movement.MovementInterface;
-import oogasalad.Editor.Movement.MovementModifiers.MovementModifier;
->>>>>>> 13bbc0787cf1e68b3a5d1149146123c54d282f81:src/main/java/oogasalad/GamePlayer/GamePiece/Piece.java
 
 /**
  * @author Vincent Chen

@@ -6,14 +6,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
-
-import oogasalad.Editor.Movement.Coordinate;
-import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
-import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.Editor.Movement.MovementInterface;
+import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
+import oogasalad.Frontend.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.Frontend.GamePlayer.EngineExceptions.InvalidMoveException;
+import oogasalad.Frontend.GamePlayer.EngineExceptions.OutsideOfBoardException;
+import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
+import oogasalad.Frontend.GamePlayer.Movement.Coordinate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

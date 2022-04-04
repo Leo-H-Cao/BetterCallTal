@@ -14,7 +14,6 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-<<<<<<< HEAD:src/main/java/oogasalad/Frontend/GamePlayer/Board/ChessBoard.java
 import oogasalad.Frontend.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.Frontend.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.Frontend.GamePlayer.Board.TurnCriteria.TurnCriteria;
@@ -24,17 +23,6 @@ import oogasalad.Frontend.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.Frontend.GamePlayer.EngineExceptions.WrongPlayerException;
 import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
 import oogasalad.Frontend.GamePlayer.Movement.Coordinate;
-=======
-import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
-import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
-import oogasalad.GamePlayer.EngineExceptions.EngineException;
-import oogasalad.GamePlayer.EngineExceptions.MoveAfterGameEndException;
-import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
-import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.Editor.Movement.Coordinate;
->>>>>>> 13bbc0787cf1e68b3a5d1149146123c54d282f81:src/main/java/oogasalad/GamePlayer/Board/ChessBoard.java
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -1,8 +1,4 @@
-<<<<<<< HEAD:src/main/java/oogasalad/Frontend/GamePlayer/Movement/Coordinate.java
-package oogasalad.Frontend.GamePlayer.Movement;
-=======
 package oogasalad.Editor.Movement;
->>>>>>> 13bbc0787cf1e68b3a5d1149146123c54d282f81:src/main/java/oogasalad/Editor/Movement/Coordinate.java
 
 public class Coordinate{
 
