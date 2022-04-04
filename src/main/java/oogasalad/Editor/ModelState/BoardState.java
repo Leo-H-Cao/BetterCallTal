@@ -1,5 +1,6 @@
 package oogasalad.Editor.ModelState;
 
+
 import oogasalad.Editor.API.ModifiesBoardState;
 
 public class BoardState extends ModelState implements ModifiesBoardState {
@@ -8,6 +9,25 @@ public class BoardState extends ModelState implements ModifiesBoardState {
     super();
   }
 
+  @Override
+  public EditorPiece createCustomPiece(int points, int teamNumber, String image, MovementRules movementRules, String pieceID, String pieceName, int startX, int startY) {
+    return null;
+  }
+
+  @Override
+  public void changePieceMovement(String pieceID, MovementRules movementRules) {
+
+  }
+
+  @Override
+  public void setPiecePointValue(String pieceID, int points) {
+
+  }
+
+  @Override
+  public void setPieceName(String pieceID, String name) {
+
+  }
 
   @Override
   public void changeBoardSize(int width, int height) {

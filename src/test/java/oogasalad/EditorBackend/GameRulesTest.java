@@ -26,5 +26,8 @@ public class GameRulesTest {
     gameRulesState.setTurnCriteria(newTurnCriteria);
     assertEquals(gameRules.getTurnCriteria(), newTurnCriteria);
   }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9e661200c405b8f5a0233731b9291bdf4ccb4834
 }

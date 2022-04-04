@@ -1,8 +1,7 @@
 package oogasalad.backend.PieceTests;
 
-import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.GamePiece.PieceData;
+import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
+import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

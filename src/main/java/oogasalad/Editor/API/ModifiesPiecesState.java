@@ -11,7 +11,7 @@ public interface ModifiesPiecesState {
 
   /**
    * Change piece display image to a custom image provided by user
-   * @param piece whose image user is attempting to change
+   * @param pieceID whose image user is attempting to change
    * @param imageFile, new image file for piece
    */
     void changePieceImage(String pieceID, String imageFile);
@@ -19,7 +19,7 @@ public interface ModifiesPiecesState {
 
   /**
    * Creates a new custom piece according to rules defined by user
-   * @param pieceRules describe where the custom piece is allowed to move, how it interacts with other pieces
+   * @param movementRules describe where the custom piece is allowed to move, how it interacts with other pieces
    * @return PieceConfig object containing information for new piece
    */
    EditorPiece createCustomPiece(int points, int teamNumber, String image, MovementRules movementRules, String pieceID, String pieceName, int startX, int startY);

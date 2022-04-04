@@ -2,14 +2,16 @@ package oogasalad.GamePlayer.Board;
 
 import java.util.Collections;
 import java.util.List;
-import oogasalad.GamePlayer.Board.TurnCriteria.ConstantIncrease;
-import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
-import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
-import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
-import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.GamePiece.PieceData;
-import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
+import oogasalad.Frontend.GamePlayer.Board.Player;
+import oogasalad.Frontend.GamePlayer.Board.TurnCriteria.ConstantIncrease;
+import oogasalad.Frontend.GamePlayer.Board.TurnCriteria.Linear;
+import oogasalad.Frontend.GamePlayer.Board.TurnCriteria.TurnCriteria;
+import oogasalad.Frontend.GamePlayer.EngineExceptions.WrongPlayerException;
+import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
+import oogasalad.Frontend.GamePlayer.GamePiece.PieceData;
+import oogasalad.Frontend.GamePlayer.Movement.Coordinate;
+import oogasalad.Frontend.GamePlayer.Movement.Movement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

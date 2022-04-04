@@ -6,7 +6,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
 
 /**
  * This class is used to store prior states of the game, allowing for checking complex game

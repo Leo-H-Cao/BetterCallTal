@@ -7,10 +7,10 @@ import java.util.Locale;
 public class EditorBoard {
 
   private final int DEFAULT_BOARD_SIZE = 8;
-  private List<ArrayList<EditorTile>> board;
+  private List<ArrayList<oogasalad.Editor.ModelState.EditorTile>> board;
 
   public EditorBoard(){
-    board = new ArrayList<ArrayList<EditorTile>>(DEFAULT_BOARD_SIZE);
+    board = new ArrayList<>(DEFAULT_BOARD_SIZE);
     initializeBoard(DEFAULT_BOARD_SIZE);
   }
 
@@ -75,7 +75,7 @@ public class EditorBoard {
 
   private void initializeBoard(int boardSize){
     for(int i = 0; i < boardSize; i++){
-      board.add(new ArrayList<EditorTile>());
+      board.add(new ArrayList<>());
       addDefaultRow(boardSize, i);
     }
   }
@@ -85,5 +85,4 @@ public class EditorBoard {
       board.get(board.size()-1).add(new EditorTile(rowNum, j));
     }
   }
-
 }

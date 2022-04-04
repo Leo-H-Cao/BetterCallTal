@@ -9,9 +9,7 @@
 		"coordinateX": -1,
 		"coordinateY": 0,
 		"infinite": 1
-	}	
-	
-[
+	},
 	{
 		"coordinateX": 1,
 		"coordinateY": 2,
@@ -41,6 +39,5 @@
 		"coordinateX": 2,
 		"coordinateY": -1,
 		"infinite": 0
-	},	
-	
+	}
 ]
