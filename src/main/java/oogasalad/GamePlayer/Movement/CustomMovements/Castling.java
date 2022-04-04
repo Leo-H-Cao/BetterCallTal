@@ -19,6 +19,8 @@ import org.apache.logging.log4j.Logger;
 
 public class Castling implements MovementInterface {
 
+  public static final int NO_MOVEMENT_HISTORY_LENGTH = 1;
+
   private static final Logger LOG = LogManager.getLogger(Castling.class);
 
   private static final int MAIN_SQUARE_MOVES = 2;
@@ -82,8 +84,10 @@ public class Castling implements MovementInterface {
    * @return empty set because no capture possible
    */
   @Override
-  public Set<ChessTile> capturePiece(Piece piece, Coordinate captureSquare, ChessBoard board) {
-    return new HashSet<>();
+  public Set<ChessTile> capturePiece(Piece piece, Coordinate captureSquare, ChessBoard board)
+      throws InvalidMoveException {
+    LOG.warn("Castling does not support captures");
+    throw new InvalidMoveException("Castling does not support captures");
   }
 
   /**
@@ -142,7 +146,7 @@ public class Castling implements MovementInterface {
    * @return gets pieces that the given piece can castle with
    */
   private boolean canCastle(Piece piece, Piece supporter, ChessBoard board) {
-     return piece.isTargetPiece() && piece.getHistory().isEmpty() && piece.onSameTeam(supporter) && pathIsClear(piece, supporter, board) && supporter.getHistory().isEmpty();
+     return piece.isTargetPiece() && piece.getHistory().size() == NO_MOVEMENT_HISTORY_LENGTH && piece.onSameTeam(supporter) && pathIsClear(piece, supporter, board) && supporter.getHistory().size() == NO_MOVEMENT_HISTORY_LENGTH;
   }
 
   /***
