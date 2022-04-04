@@ -24,11 +24,12 @@ public class Atomic implements MovementModifier{
    */
   @Override
   public Set<ChessTile> updateMovement(Piece piece, ChessTile finalTile, ChessBoard board) {
-    if(piece.isOpposing(finalTile.getPieces())) {
-      return getSurroundingTiles(finalTile, board).stream().filter((t) -> !t.getPieces().isEmpty()).collect(
-          Collectors.toSet());
-    }
-    return Collections.emptySet();
+    Set<ChessTile> explodedSquares = new HashSet<>();
+    getSurroundingTiles(finalTile, board).stream().filter((t) -> !t.getPieces().isEmpty()).forEach((t) -> {
+      t.clearPieces();
+      explodedSquares.add(t);
+    });
+    return explodedSquares;
   }
 
   /***
