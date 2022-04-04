@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
@@ -98,6 +99,20 @@ public class Piece {
     return allMoves;
   }
 
+  private boolean validCapture(Coordinate coordinate) {
+    //TODO MOVEMENTS IS A PLACEHOLDER, MUST IMPLEMENT CAPTURES AS IT IS NULL WHEN THE PIECE IS FIRST INITIALED AS WELL AS THE GETMOVES METHOD
+    return movements.stream().map(move -> move.getMoves(this, board))
+        .collect(Collectors.toSet())
+        .stream().flatMap(Set::stream)
+        .collect(Collectors.toSet()).stream()
+        .anyMatch(tile -> tile.getCoordinates().equals(coordinate));
+  }
+  /**
+   *
+   */
+  public boolean validCapture(List<Coordinate> coordinate) {
+    return coordinate.stream().anyMatch(this::validCapture);
+  }
   /***
    * @return coordinate of piece
    */
@@ -110,18 +125,10 @@ public class Piece {
    * @return if this piece can capture another piece
    */
   public boolean canCapture(Piece piece) {
-    //int[] opponentIDs = board.getPlayer(this.team).opponentIDs();
-    //boolean sameTeam = Arrays.stream(opponentIDs).anyMatch((o) -> piece.team == board.getPlayer(o).teamID());
-    boolean sameTeam = piece.checkTeam(team);
+    int[] opponentIDs = board.getPlayer(this.team).opponentIDs();
+    boolean sameTeam = Arrays.stream(opponentIDs).anyMatch((o) -> piece.team == board.getPlayer(o).teamID());
 
-    //TODO MOVEMENTS IS A PLACEHOLDER, MUST IMPLEMENT CAPTURES AS IT IS NULL WHEN THE PIECE IS FIRST INITIALED
-    boolean canCap = movements.stream()
-        .map(move -> move.getMoves(this, board))
-        .flatMap(Set::stream)
-        .map(ChessTile::getCoordinates)
-        .anyMatch(coords -> coords.equals(piece.getCoordinates()));
-
-    return !sameTeam && canCap;
+    return !sameTeam;
   }
 
   /***
@@ -147,6 +154,11 @@ public class Piece {
    */
   public boolean checkTeam(int team) {
     return this.team == team;
+  }
+
+
+  public int getTeam(){
+    return team;
   }
 
   public boolean isTargetPiece() {

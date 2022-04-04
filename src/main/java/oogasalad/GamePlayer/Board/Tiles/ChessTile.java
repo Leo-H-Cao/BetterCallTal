@@ -1,7 +1,6 @@
 package oogasalad.GamePlayer.Board.Tiles;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import oogasalad.GamePlayer.GamePiece.Piece;

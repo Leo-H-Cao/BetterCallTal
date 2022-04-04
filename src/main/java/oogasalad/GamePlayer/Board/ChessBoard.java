@@ -118,7 +118,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   /***
    * @return copy of Board object to store in history
    */
-  private ChessBoard deepCopy() {
+  public ChessBoard deepCopy() {
     //TODO: CLONE PIECES AS WELL
     return new ChessBoard(this.board, this.turnCriteria, this.players, this.endConditions);
   }
@@ -182,7 +182,7 @@ public class ChessBoard implements Iterable<ChessTile> {
    * Gets the tile at the specified coordinates
    *
    * @param coordinate is the coordinate of the tile to get
-   * @return tile at specificed coordinate
+   * @return tile at specified coordinate
    * @throws OutsideOfBoardException if the coordinate falls outside the board
    */
   public ChessTile getTile(Coordinate coordinate) throws OutsideOfBoardException {
