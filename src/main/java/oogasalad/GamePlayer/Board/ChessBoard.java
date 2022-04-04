@@ -113,7 +113,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   /***
    * @return copy of Board object to store in history
    */
-  private ChessBoard deepCopy() {
+  public ChessBoard deepCopy() {
     //TODO: CLONE PIECES AS WELL
     return new ChessBoard(this.board, this.turnCriteria, this.players, this.endConditions);
   }
