@@ -1,4 +1,4 @@
-package oogasalad.Frontend.Game;
+package oogasalad.Frontend.Game.Sections;
 
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;

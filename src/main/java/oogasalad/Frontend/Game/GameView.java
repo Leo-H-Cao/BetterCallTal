@@ -2,21 +2,16 @@ package oogasalad.Frontend.Game;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import oogasalad.Frontend.Game.Sections.BoardGrid;
+import oogasalad.Frontend.Game.Sections.BoardTile;
+import oogasalad.Frontend.Game.Sections.TopSection;
 import oogasalad.Frontend.MainView;
 import oogasalad.Frontend.SceneView;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.Board.ChessBoard;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -26,8 +21,8 @@ import java.util.Collection;
 
 public class GameView extends SceneView {
 
-    private Collection<ChessTile> myBoard;
-    private Collection<Piece> myPieces;
+    private ChessBoard myBoard;
+    private Collection<ChessTile> myTiles;
     private BoardGrid myBoardGrid;
     private static Integer SCENE_WIDTH_SIZE = 1500;
     private static Integer SCENE_HEIGHT_SIZE = 1000;
@@ -44,9 +39,11 @@ public class GameView extends SceneView {
      * setting up the board.
      */
 
-    public void SetUpBoard(Chess board, Collection<Piece> pieces) {
-        myBoard = board;
-        myPieces = pieces;
+    public void SetUpBoard(ChessBoard chessboard) {
+        myBoard = chessboard;
+        for (ChessTile ct : myBoard) {
+            BoardTile bt = new BoardTile(ct.getCoordinates().getRow(), ct.getCoordinates().getCol(), ct.getPiece());
+        }
     }
 
 
@@ -69,7 +66,7 @@ public class GameView extends SceneView {
     @Override
     protected Scene makeScene() {
         BorderPane bp = new BorderPane();
-        bp.setTop(makeTopSection());
+        bp.setTop(new TopSection(getClass().getSimpleName()).getGP());
         myBoardGrid = new BoardGrid(8, 8);
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
         bp.setCenter(myBoardGrid.getBoard());
@@ -78,41 +75,5 @@ public class GameView extends SceneView {
         return new Scene(myRoot, SCENE_WIDTH_SIZE, SCENE_HEIGHT_SIZE);
     }
 
-    private GridPane makeTopSection() {
-        GridPane gp = new GridPane();
-        setTopColConstraints(gp);
-        ArrayList<HBox> Hboxes = createTopHBoxes();
-        gp.add(Hboxes.get(0), 0, 0);
-        gp.add(Hboxes.get(1), 1, 0);
-        gp.add(Hboxes.get(2), 2, 0);
-        return gp;
-    }
 
-    private void setTopColConstraints(GridPane gridpane) {
-        gridpane.getColumnConstraints().add(new ColumnConstraints(500));
-        gridpane.getColumnConstraints().add(new ColumnConstraints(500));
-        gridpane.getColumnConstraints().add(new ColumnConstraints(500));
-    }
-
-    private ArrayList<HBox> createTopHBoxes() {
-        ArrayList<HBox> hboxes = new ArrayList<>();
-        HBox left = new HBox();
-        left.setAlignment(Pos.CENTER_LEFT);
-        Button Exit = makeExitButton();
-        left.getChildren().add(Exit);
-        hboxes.add(left);
-
-        HBox middle = new HBox();
-        middle.setAlignment(Pos.CENTER);
-        Text title = new Text(MainView.getLanguage().getString(getClass().getSimpleName() + TITLE));
-        title.setFont(new Font("Courier New", 30));
-        title.setFill(Color.PURPLE);
-        middle.getChildren().add(title);
-        hboxes.add(middle);
-
-        HBox right = new HBox(new Text("Image here maybe"));
-        right.setAlignment(Pos.CENTER);
-        hboxes.add(right);
-        return hboxes;
-    }
 }
