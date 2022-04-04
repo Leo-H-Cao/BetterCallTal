@@ -1,10 +1,10 @@
-package oogasalad.GamePlayer.Movement.ClassicPieceMovement;
+package oogasalad.Editor.Movement.ClassicPieceMovement;
 
 import java.util.Collection;
 import java.util.List;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.Movement.Coordinate;
+import oogasalad.Editor.Movement.Coordinate;
 import oogasalad.GamePlayer.UnboundedMovement;
 
 @Deprecated

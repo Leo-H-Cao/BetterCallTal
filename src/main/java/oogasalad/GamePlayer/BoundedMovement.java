@@ -1,7 +1,7 @@
 package oogasalad.GamePlayer;
 
 import java.util.List;
-import oogasalad.GamePlayer.Movement.Coordinate;
+import oogasalad.Editor.Movement.Coordinate;
 
 public interface BoundedMovement {
 
