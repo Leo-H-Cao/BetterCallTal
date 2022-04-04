@@ -15,7 +15,6 @@ import oogasalad.GamePlayer.Movement.MovementModifier;
  */
 public class CheckValidator implements MovementModifier {
 
-  private final CheckmateValidator checkMate = new CheckmateValidator();
 
   /**
    * This method checks if the target piece of the current team is in check
@@ -23,7 +22,7 @@ public class CheckValidator implements MovementModifier {
    * @param id The id of the pieces that are being attacked
    * @return whether the target-piece is under attack
    */
-  public boolean isInCheck(ChessBoard board, int id) throws OutsideOfBoardException {
+  public static boolean isInCheck(ChessBoard board, int id) throws OutsideOfBoardException {
 
     List<Piece> targetPieces = board.targetPiece(id);
 
@@ -37,7 +36,6 @@ public class CheckValidator implements MovementModifier {
             .collect(Collectors.toList())));
 
     if (!isInCheck) return false;
-    boolean isInCheckMate = checkMate.isInMate(board, id);
 
 //    boolean check;
 //    for (ChessTile tile : board) {
@@ -48,6 +46,7 @@ public class CheckValidator implements MovementModifier {
 //
 //    }
 //    return false;
+    return false;
   }
 
   @Override

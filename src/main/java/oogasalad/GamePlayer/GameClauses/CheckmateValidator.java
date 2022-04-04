@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
 /**
@@ -20,7 +21,11 @@ public class CheckmateValidator {
    * checkmate
    * @return Whether the board is in checkmate or not
    */
-  public boolean isInMate(ChessBoard board, int id) {
+  public boolean isInMate(ChessBoard board, int id) throws OutsideOfBoardException {
+
+    if(!CheckValidator.isInCheck(board, id)){
+      return false;
+    }
 
     Set<Piece> friendlyPieces = friendlyPieces(board, id);
     List<Piece> targetPieces = board.targetPiece(id);
@@ -28,6 +33,8 @@ public class CheckmateValidator {
     boolean cantMove = targetPieces.stream()
         .noneMatch(piece -> piece.getMoves().size() == 0);
     //boolean cantBlock = friendlyPieces.stream();
+
+
 
     return cantMove;// && cantBlock;
   }
