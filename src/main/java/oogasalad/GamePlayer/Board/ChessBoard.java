@@ -128,7 +128,7 @@ public class ChessBoard implements Iterable<ChessTile>{
   /***
    * @return copy of Board object to store in history
    */
-  private ChessBoard deepCopy() {
+  public ChessBoard deepCopy() {
     List<List<ChessTile>> boardCopy = new ArrayList<>();
     IntStream.range(0, this.board.size()).forEach((i) -> {
       boardCopy.add(new ArrayList<>());
