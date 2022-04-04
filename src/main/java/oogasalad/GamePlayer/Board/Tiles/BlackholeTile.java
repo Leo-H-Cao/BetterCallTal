@@ -3,6 +3,7 @@ package oogasalad.GamePlayer.Board.Tiles;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 
+@Deprecated
 public class BlackholeTile extends ChessTile{
 
   public void executeAction(ChessBoard board) throws OutsideOfBoardException {
