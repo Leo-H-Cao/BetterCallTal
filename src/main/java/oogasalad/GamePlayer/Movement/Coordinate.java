@@ -1,4 +1,4 @@
-package oogasalad.Editor.Movement;
+package oogasalad.GamePlayer.Movement;
 
 public class Coordinate{
 

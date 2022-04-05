@@ -7,8 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Shape;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
