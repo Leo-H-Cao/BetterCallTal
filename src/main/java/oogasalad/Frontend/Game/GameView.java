@@ -52,7 +52,7 @@ public class GameView extends View {
 
     @Override
     protected Scene makeScene() {
-        Scene scene = new Scene(myRoot);
+        Scene scene = new Scene(myRoot, myScreenSize.getWidth(), myScreenSize.getHeight());
         myRoot.getChildren().add(makeExitButton());
         return scene;
     }

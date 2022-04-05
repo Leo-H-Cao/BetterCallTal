@@ -1,8 +1,10 @@
 package oogasalad.Frontend;
 
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Screen;
 import oogasalad.Frontend.Menu.HomeView;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
@@ -11,9 +13,11 @@ public abstract class View {
 
 	protected Scene myScene;
 	protected Group myRoot;
+	protected Rectangle2D myScreenSize;
 	private MainView myMainView;
 
 	public View(MainView mainView) {
+		myScreenSize = Screen.getPrimary().getVisualBounds();
 		myMainView = mainView;
 		myRoot = new Group();
 	}

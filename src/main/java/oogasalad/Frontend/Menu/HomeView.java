@@ -24,7 +24,6 @@ import java.util.Collection;
 public class HomeView extends View {
 
     private VBox myVbox;
-    private static final String[] ButtonOptions = {"Create", "Join", "Host"};
     private static final String TITLE = "Title";
     private static final int VBOX_SPACING = 5;
     private static final int SCREEN_SIZE = 500;
@@ -35,8 +34,7 @@ public class HomeView extends View {
 
     @Override
     protected Scene makeScene() {
-
-        Scene scene = new Scene(myRoot, 500, 500);
+        Scene scene = new Scene(myRoot, myScreenSize.getWidth(), myScreenSize.getHeight());
         myVbox = new VBox(VBOX_SPACING);
         myVbox.setPrefSize(SCREEN_SIZE, SCREEN_SIZE);
 
