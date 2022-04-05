@@ -199,10 +199,9 @@ public class ChessHistory {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof ChessHistory)) {
+    if (!(o instanceof ChessHistory that)) {
       return false;
     }
-    ChessHistory that = (ChessHistory) o;
     return currentIndex == that.currentIndex && Objects.equals(historyDeque,
         that.historyDeque) && Objects.equals(historyList, that.historyList);
   }
