@@ -1,9 +1,9 @@
 package oogasalad.Editor.Movement.MovementModifiers;
 
 import java.util.Set;
-import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
-import oogasalad.Frontend.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.GamePiece.Piece;
 
 public interface MovementModifier {
 

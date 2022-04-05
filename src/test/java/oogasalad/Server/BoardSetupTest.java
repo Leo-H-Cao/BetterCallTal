@@ -1,12 +1,13 @@
 package oogasalad.Server;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
-import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
-import oogasalad.Frontend.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.Frontend.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.Frontend.GamePlayer.Movement.Coordinate;
+import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
+import oogasalad.Editor.Movement.Coordinate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

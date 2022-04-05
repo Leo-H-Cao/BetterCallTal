@@ -1,5 +1,6 @@
 package oogasalad.Editor.Validation;
 
+
 import oogasalad.Editor.API.ValidateSettings;
 
 public class Validator implements ValidateSettings {
