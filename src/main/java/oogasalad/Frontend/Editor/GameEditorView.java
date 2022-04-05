@@ -37,6 +37,7 @@ public class GameEditorView extends View {
 
 	private Node makeLayout() {
 		BorderPane ret = new BorderPane();
+		ret.setPrefWidth(myScreenSize.getWidth());
 		ret.setTop(makeMenu());
 		ret.setCenter(myBoardEditor.getNode());
 		return ret;
