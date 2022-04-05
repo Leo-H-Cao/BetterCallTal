@@ -73,6 +73,7 @@ public class CheckTests {
   void inCheck() throws OutsideOfBoardException {
     pieceLocations(0, 0, 1, 0);
     //TEAM 1 is in check
+    System.out.println(board);
     assertTrue(CheckValidator.isInCheck(board, 1));
     //Team 2 is NOT in check
     assertFalse(CheckValidator.isInCheck(board, 0));

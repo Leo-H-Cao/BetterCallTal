@@ -1,5 +1,6 @@
 package oogasalad.backend.EndGameTests;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -10,7 +11,9 @@ import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
 import oogasalad.Frontend.GamePlayer.Board.EndConditions.TwoMoves;
 import oogasalad.Frontend.GamePlayer.Board.Player;
 import oogasalad.Frontend.GamePlayer.Board.TurnCriteria.Linear;
+import oogasalad.Frontend.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.Frontend.GamePlayer.EngineExceptions.OutsideOfBoardException;
+import oogasalad.Frontend.GamePlayer.GameClauses.CheckValidator;
 import oogasalad.Frontend.GamePlayer.GameClauses.CheckmateValidator;
 import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
 import oogasalad.Frontend.GamePlayer.GamePiece.PieceData;
@@ -24,9 +27,10 @@ import org.junit.jupiter.api.Test;
  */
 public class CheckmateTests {
 
-  private ChessBoard board;
+  private static final int TEAM_1 = 1;
+  private static final int TEAM_2 = 2;
 
-  private Piece player1King;
+  private ChessBoard board;
   private List<Piece> pieces;
 
   @BeforeEach
@@ -40,45 +44,27 @@ public class CheckmateTests {
     TwoMoves endCondition = new TwoMoves();
 
     board = new ChessBoard(8, 8, turnCriteria, players, List.of(endCondition));
-
-  }
-
-  void pieceLocations(int row1, int col1, List<Integer> list, String code) {
-
-    player1King = new Piece(new PieceData(new Coordinate(row1, col1),
-        "test2", 0, 0, true,
-        List.of(new Movement(List.of(new Coordinate(1, 0)), false)),
-        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
-
     pieces = new ArrayList<>();
-    pieces.add(player1King);
 
-    for (int i = 0; i < list.size(); i += 2) {
-      switch (code) {
-        case "rook" -> {
-          Piece newRook = makeRook(list.get(i), list.get(i + 1));
-          pieces.add(newRook);
-        }
-        case "pawn" -> {
-          Piece newPawn = makePawn(list.get(i), list.get(i + 1));
-          pieces.add(newPawn);
-        }
-      }
-    }
-
-    board.setPieces(pieces);
   }
-  Piece makePawn(int row, int col) {
+
+  Piece makeKing(int row, int col, int team) {
     return new Piece(new PieceData(new Coordinate(row, col),
-        "test1", 0, 1, false,
+        "king" + team, 0, team, true,
         List.of(new Movement(List.of(new Coordinate(1, 0)), false)),
         Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
   }
 
-
-  Piece makeRook(int row, int col) {
+  Piece makePawn(int row, int col, int team) {
     return new Piece(new PieceData(new Coordinate(row, col),
-        "test1", 0, 1, false,
+        "pawn" + team, 0, team, false,
+        List.of(new Movement(List.of(new Coordinate(1, 0)), false)),
+        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
+  }
+
+  Piece makeRook(int row, int col, int team) {
+    return new Piece(new PieceData(new Coordinate(row, col),
+        "rook" + team, 0, team, false,
         List.of(new Movement(List.of(new Coordinate(1, 0), new Coordinate(-1, 0), new Coordinate(0, 1), new Coordinate(0, -1)),
             true)),
         Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
@@ -92,41 +78,64 @@ public class CheckmateTests {
   void playerInMate() throws OutsideOfBoardException {
 
     //TODO DOES NOT WORK BECAUSE INFINITE MOVEMENT DOES NOT WORK YET (I THINK)
-    pieceLocations(0, 0, List.of(2, 0, 2, 1), "rook");
+    pieces.addAll(List.of(makeKing(0, 0, 0), makeRook(2, 0, 1), makeRook(2, 1, 1)));
+    board.setPieces(pieces);
     System.out.println(board);
     assertTrue(CheckmateValidator.isInMate(board, 0));
 
   }
 
   /**
-   * More rooks to pressure king, he cannot move nor capture the rook on 1, 0
+   * Army of pawns attacking king
    * @throws OutsideOfBoardException
    */
   @Test
   void playerInMate2() throws OutsideOfBoardException {
-    pieceLocations(0, 0, List.of(2, 0, 1, 0, 2, 1), "pawn");
+    pieces.addAll(List.of(makeKing(0, 0, TEAM_1), makePawn(1, 0, TEAM_2), makePawn(2, 1, TEAM_2), makePawn(1, 1, TEAM_2), makePawn(2, 0, TEAM_2)));
+    board.setPieces(pieces);
     System.out.println(board);
     assertTrue(CheckmateValidator.isInMate(board, 0));
   }
 
 
   @Test
-  void boardNotInCheckmate() {
-    //ChessBoard board = new ChessBoard();
+  void boardNotInCheckmate() throws OutsideOfBoardException {
+    pieces.addAll(List.of(makeKing(0, 0, TEAM_1), makePawn(3, 0, TEAM_2)));
+    board.setPieces(pieces);
+    assertFalse(CheckmateValidator.isInMate(board, 0));
   }
 
   @Test
-  void playerCanMoveKingOutOfMate() {
-    //ChessBoard board = new ChessBoard();
+  void playerCanMoveKingOutOfMate() throws OutsideOfBoardException {
+    pieces.addAll(List.of(makeKing(0, 0, TEAM_1), makePawn(1, 0, TEAM_2), makePawn(1, 1, TEAM_2)));
+    board.setPieces(pieces);
+    System.out.println(board);
+    assertFalse(CheckmateValidator.isInMate(board, TEAM_1));
+
   }
 
   @Test
-  void playerCanMovePieceToRemoveMate() {
-    //ChessBoard board = new ChessBoard();
+  void playerCanMovePieceToRemoveMate() throws OutsideOfBoardException {
+    pieces.addAll(List.of(makeKing(0, 0, TEAM_1), makeRook(1, 5, TEAM_1), makeRook(3, 0, TEAM_2), makeRook(3, 1, TEAM_2)));
+    board.setPieces(pieces);
+    System.out.println(board);
+    assertFalse(CheckmateValidator.isInMate(board, TEAM_1));
   }
 
   @Test
-  void playerBlocksMateThenEntersMateNextTurn() {
+  void playerBlocksMateThenEntersMateNextTurn() throws OutsideOfBoardException, InvalidMoveException {
+    Piece rook1 = makeRook(1, 5, TEAM_1);
+    Piece rook2 = makeRook(4, 0, TEAM_2);
+    Piece king1 = makeKing(0, 0, TEAM_1);
+    pieces.addAll(List.of(king1, rook1, makeRook(3, 0, TEAM_2), makeRook(3, 1, TEAM_2),
+        rook2));
+    board.setPieces(pieces);
+    System.out.println(board);
+    assertFalse(CheckmateValidator.isInMate(board, TEAM_1));
+    rook1.move(board.getTile(new Coordinate(1, 0)));
+    rook2.move(board.getTile(new Coordinate(1, 0)));
+    king1.move(board.getTile(new Coordinate(1, 0)));
+    assertTrue(CheckmateValidator.isInMate(board, TEAM_2));
 
   }
 
