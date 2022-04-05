@@ -56,7 +56,7 @@ public class CheckmateTests {
   Piece makePawn(int row, int col, int team) {
     return new Piece(new PieceData(new Coordinate(row, col),
         "pawn" + team, 0, team, false,
-        List.of(new Movement(List.of(new Coordinate(1, 0)), false)),
+        List.of(new Movement(List.of(new Coordinate(-1, 0)), false)),
         Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
   }
 

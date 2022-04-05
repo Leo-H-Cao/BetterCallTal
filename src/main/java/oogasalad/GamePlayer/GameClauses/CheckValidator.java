@@ -26,7 +26,7 @@ public class CheckValidator implements MovementModifier {
 
     List<Piece> targetPieces = board.targetPiece(id);
 
-    boolean isInCheck = board.stream()
+    return board.stream()
         .flatMap(List::stream).toList().stream()
         .map(ChessTile::getPieces)
         .flatMap(List::stream).toList().stream()
@@ -34,22 +34,6 @@ public class CheckValidator implements MovementModifier {
         .anyMatch(piece -> piece.validCapture(targetPieces.stream()
             .map(Piece::getCoordinates)
             .collect(Collectors.toList())));
-<<<<<<< HEAD:src/main/java/oogasalad/Frontend/GamePlayer/GameClauses/CheckValidator.java
-=======
-
-    if (!isInCheck) return false;
-
-//    boolean check;
-//    for (ChessTile tile : board) {
-//      check = tile.getPieces()
-//          .stream()
-//          .filter(piece -> !piece.checkTeam(id))
-//          .anyMatch(piece -> piece.canCapture(targetPieces));
-//
-//    }
-//    return false;
-    return false;
->>>>>>> af40542604cf2a0b755d49abcb50cb77f78ba65f:src/main/java/oogasalad/GamePlayer/GameClauses/CheckValidator.java
   }
 
   @Override
