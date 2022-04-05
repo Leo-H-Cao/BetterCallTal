@@ -55,8 +55,9 @@ public class LanguageModal {
 		fullscreenCheckBox.setId("fullscreen");
 		startButton = ButtonFactory.makeButton(ButtonType.TEXT, selectedLanguageView.getString("Start"), "start",
 				(e) -> {
-				new Controller(stage, selectedLanguageView);
-				stage.setFullScreen(fullscreenCheckBox.isSelected());
+					new Controller(stage, selectedLanguageView);
+					stage.setMaximized(true);
+					stage.setFullScreen(fullscreenCheckBox.isSelected());
 				});
 		stage.setTitle(selectedLanguageView.getString("SelectLanguage"));
 	}
@@ -68,7 +69,6 @@ public class LanguageModal {
 		BorderPane root = new BorderPane();
 		Scene ret = new Scene(root, ResourceParser.getInt(myResources, "Width"), ResourceParser.getInt(myResources, "Height"));
 		ret.getStylesheets().add(Objects.requireNonNull(getClass().getResource("display.css")).toExternalForm());
-
 		root.setTop(wrap(selectLanguageLabel));
 		root.setCenter(makeCenterOptions());
 		root.setBottom(wrap(startButton));
