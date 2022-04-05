@@ -6,10 +6,12 @@ import javafx.scene.layout.BorderPane;
 
 public class BoardEditor {
 	private ChessBoard myChessBoard;
+	private PieceLibrary myPieceLibrary;
 	private Group myNode;
 
 	public BoardEditor() {
 		myChessBoard = new ChessBoard();
+		myPieceLibrary = new PieceLibrary();
 	}
 
 	public Node getNode() {

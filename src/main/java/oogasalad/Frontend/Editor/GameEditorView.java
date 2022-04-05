@@ -25,7 +25,7 @@ public class GameEditorView extends View {
 		super(mainView);
 		myBoardEditor = new BoardEditor();
 		myTabs = new TabPane();
-		Tab boardTab = makeTab("Board", myBoardEditor.getNode());
+		Tab boardTab = makeTab(getLanguageResource("Board"), myBoardEditor.getNode());
 		boardTab.setClosable(false);
 		myTabs.getTabs().add(boardTab);
 	}
@@ -35,17 +35,17 @@ public class GameEditorView extends View {
 		return makeLayout();
 	}
 
-	private Tab makeTab(String name, Node content) {
-		Tab ret = new Tab();
-		ret.setText(name);
-		ret.setContent(content);
-		return ret;
-	}
-
 	private Node makeLayout() {
 		BorderPane ret = new BorderPane();
 		ret.setTop(makeMenu());
 		ret.setCenter(myBoardEditor.getNode());
+		return ret;
+	}
+
+	private Tab makeTab(String name, Node content) {
+		Tab ret = new Tab();
+		ret.setText(name);
+		ret.setContent(content);
 		return ret;
 	}
 

@@ -10,6 +10,7 @@ public class ChessBoardTile {
 	private double myWidth;
 	private double myHeight;
 	private boolean alt;
+	private int x, y;
 
 	public ChessBoardTile(double w, double h, boolean toggled) {
 		myWidth = w;
