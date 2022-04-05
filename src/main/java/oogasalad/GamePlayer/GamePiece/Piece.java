@@ -16,6 +16,8 @@ import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementInterface;
 import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author Vincent Chen
@@ -23,6 +25,8 @@ import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
  * @author Jose Santillan
  */
 public class Piece implements Cloneable {
+
+  private static final Logger LOG = LogManager.getLogger(Piece.class);
 
   private static final boolean VALID_SQUARE = true;
   private static final boolean INVALID_SQUARE = false;
@@ -75,12 +79,32 @@ public class Piece implements Cloneable {
     if (!moves.contains(finalSquare)) {
       throw new InvalidMoveException("Tile is not a valid move!");
     }
-    //TODO NOT COMPLETELY FINISHED, AM WAITING TO SEE HOW DIFFERENT TILES ARE IMPLEMENTED TO FINISH
-    ChessTile firstSquare = board.getTile(coordinates);
-    coordinates = finalSquare.getCoordinates();
-    finalSquare.appendPiece(this);
-    history.add(finalSquare.getCoordinates());
-    return new HashSet<>(Set.of(firstSquare, finalSquare));
+
+    //TODO: need to know whether a move is a capture or not for OIM, things like atomic
+
+    Set<ChessTile> updatedSquares = new HashSet<>(Set.of(board.getTile(coordinates), finalSquare));
+    updateCoordinates(finalSquare);
+    history.add(finalSquare.getCoordinates()); // TODO: history modified based on movement modifiers
+    movementModifiers.forEach((mm) -> updatedSquares.addAll(mm.updateMovement(this, finalSquare, board)));
+    
+    return updatedSquares;
+  }
+
+  /***
+   * Updates this piece's coordinates to the parameter passed and updates that tile to hold the
+   * new piece
+   *
+   * @param tile to put piece on
+   */
+  private void updateCoordinates(ChessTile tile) throws OutsideOfBoardException {
+    try {
+      board.getTile(coordinates).removePiece(this);
+      coordinates = tile.getCoordinates();
+      tile.appendPiece(this);
+    } catch(OutsideOfBoardException e) {
+      LOG.warn("Couldn't update piece coordinates");
+      throw new OutsideOfBoardException(coordinates.toString());
+    }
   }
 
   /***
@@ -105,7 +129,7 @@ public class Piece implements Cloneable {
       allMoves.addAll(cm.getMoves(this, board));
       allMoves.addAll(cm.getCaptures(this, board));
     });
-    
+
     return allMoves;
   }
 
