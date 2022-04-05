@@ -14,6 +14,7 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.Server.ChessHistory;
 import org.junit.jupiter.api.Test;
 
 class ChessHistoryTest {
