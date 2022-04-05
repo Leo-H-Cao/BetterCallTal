@@ -26,6 +26,8 @@ public class BoardTile {
         myCoord = new Coordinate(y, x);
 
         myRectangle = new Rectangle(WIDTH_Board / rows, HEIGHT_BOARD / cols);
+        myPieces = new ArrayList<>();
+        myImages = new ArrayList<>();
     }
 
     /**
@@ -45,7 +47,8 @@ public class BoardTile {
     }
 
     public void givePiece(Piece p) {
-
+        myPieces.add(p);
+        myImages.add(p.getImgFile());
     }
 
     public Rectangle getMyRectangle() {return myRectangle;}
