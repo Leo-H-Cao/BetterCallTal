@@ -45,7 +45,9 @@ public class BoardTile {
         }
     }
 
-    public void givePiece(Optional<Piece> p) {
+    public void givePiece(Piece p) {
 
     }
+
+    public Rectangle getMyRectangle() {return myRectangle;}
 }

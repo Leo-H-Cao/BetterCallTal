@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
 import java.util.Collection;
@@ -21,15 +22,16 @@ public class BoardGrid {
     private static Double HEIGHT_BOARD = 600.0;
     private static Double WIDTH_Board = 600.0;
 
-    public BoardGrid(ChessBoard cb) {
-        myBoard = setUpBoard(cb.getBoardHeight(), cb.getBoardLength());
+    public BoardGrid(ChessBoard cb, int PlayerID) {
+        myBoard = setUpGP(cb.getBoardHeight(), cb.getBoardLength());
+        makeBoard(myBoard, cb, PlayerID);
     }
 
     public BoardGrid() {
-        myBoard = setUpBoard(8, 8);
+        myBoard = setUpGP(8, 8);
     }
 
-    private GridPane setUpBoard(int rows, int cols) {
+    private GridPane setUpGP(int rows, int cols) {
         GridPane gp = new GridPane();
         for (int i=0; i < rows; i++) {
             gp.getRowConstraints().add(new RowConstraints(WIDTH_Board / rows));
@@ -37,27 +39,36 @@ public class BoardGrid {
         for (int k=0; k < cols; k ++) {
             gp.getColumnConstraints().add(new ColumnConstraints(HEIGHT_BOARD / cols));
         }
-        for (int i=0; i < rows; i++) {
-            for (int k=0; k < cols; k ++) {
-                BoardTile bt = new BoardTile(k, i, rows, cols);
-                Rectangle rect = new Rectangle(WIDTH_Board / rows, HEIGHT_BOARD / cols);
-                if ((i + k) % 2 == 0) {
-                    rect.setFill(Color.BLACK);
-                } else {
-                    rect.setFill(Color.RED);
-                }
-                gp.add(rect, k, i);
-            }
-        }
         return gp;
     }
 
-    private void placePieces() {
+    private void makeBoard(GridPane gp, ChessBoard cb, int id) {
+        for (ChessTile ct : cb) {
+            BoardTile tile = new BoardTile(ct.getCoordinates().getCol(), ct.getCoordinates().getRow(), cb.getBoardHeight(), cb.getBoardLength());
+            if (! ct.getPieces().isEmpty()) {
+                for (Piece p : ct.getPieces()) {
+                    tile.givePiece(p);
+                }
+            }
+            int grid_x = ct.getCoordinates().getRow();
+            int grid_y = ct.getCoordinates().getCol();
+
+            if (id == 1) {
+                grid_x = cb.getBoardHeight() - grid_x;
+                grid_y = cb.getBoardLength() - grid_y;
+            }
+
+            gp.add(tile.getMyRectangle(), grid_x, grid_y);
+        }
+    }
+
+    private void placePiece() {
 
     }
 
+    // TODO: grabTile() method
     private BoardTile grabTile(Coordinate coor) {
-
+        return null;
     }
 
     /**
