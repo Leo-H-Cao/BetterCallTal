@@ -7,17 +7,16 @@ import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
 import oogasalad.Frontend.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
 
+/**
+ * @author Jose Santillan
+ */
 public class StalemateValidator {
-
 
   public static boolean isStaleMate(ChessBoard board, int id){
     Set<Piece> friendlyPieces = friendlyPieces(board, id);
-    for(Piece p : friendlyPieces){
-      if(!p.getMoves().isEmpty()){
-        return false;
-      }
-    }
-    return true;
+
+    return friendlyPieces.stream()
+        .allMatch(p -> p.getMoves().isEmpty());
   }
 
 
@@ -29,5 +28,4 @@ public class StalemateValidator {
         .filter(piece -> piece.checkTeam(id))
         .collect(Collectors.toSet());
   }
-
 }

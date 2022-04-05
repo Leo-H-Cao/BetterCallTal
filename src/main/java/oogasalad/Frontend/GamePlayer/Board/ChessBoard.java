@@ -317,4 +317,15 @@ public class ChessBoard implements Iterable<ChessTile>{
       return queue.poll();
     }
   }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+
+    for (List<ChessTile> tileList : board) {
+      tileList.forEach(sb::append);
+      sb.append("\n");
+    }
+    return sb.toString();
+  }
 }

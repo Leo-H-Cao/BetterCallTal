@@ -25,7 +25,6 @@ import org.junit.jupiter.api.Test;
  */
 public class CheckTests {
 
-  CheckValidator check;
   private ChessBoard board;
   private TurnCriteria turnCriteria;
   private EndCondition endCondition;
@@ -48,8 +47,6 @@ public class CheckTests {
     turnCriteria = new Linear(players);
     endCondition = new TwoMoves();
     board = new ChessBoard(8, 8, turnCriteria, players, List.of(endCondition));
-
-    check = new CheckValidator();
 
   }
 
@@ -76,9 +73,9 @@ public class CheckTests {
   void inCheck() throws OutsideOfBoardException {
     pieceLocations(0, 0, 1, 0);
     //TEAM 1 is in check
-    assertTrue(check.isInCheck(board, 1));
+    assertTrue(CheckValidator.isInCheck(board, 1));
     //Team 2 is NOT in check
-    assertFalse(check.isInCheck(board, 0));
+    assertFalse(CheckValidator.isInCheck(board, 0));
   }
 
   /**
@@ -87,8 +84,8 @@ public class CheckTests {
   @Test
   void notInCheck() throws OutsideOfBoardException {
     pieceLocations(0, 0, 3, 0);
-    assertFalse(check.isInCheck(board, 0));
-    assertFalse(check.isInCheck(board, 1));
+    assertFalse(CheckValidator.isInCheck(board, 0));
+    assertFalse(CheckValidator.isInCheck(board, 1));
   }
 
   /**
@@ -98,14 +95,14 @@ public class CheckTests {
   @Test
   void movesIntoCheck() throws OutsideOfBoardException, InvalidMoveException {
     pieceLocations(0, 0, 3, 0);
-    assertFalse(check.isInCheck(board, 1));
+    assertFalse(CheckValidator.isInCheck(board, 1));
 
     //Can't actually move into check thanks to InvalidMoveException
     try {
       pieceTwo.move(board.getTile(new Coordinate(1, 0)));
     } catch (InvalidMoveException ignored) {}
 
-    assertFalse(check.isInCheck(board, 1));
+    assertFalse(CheckValidator.isInCheck(board, 1));
   }
 
   /**
@@ -114,8 +111,8 @@ public class CheckTests {
   @Test
   void movesOutOfCheck() throws OutsideOfBoardException, InvalidMoveException {
     pieceLocations(0, 0, 1, 0);
-    assertTrue(check.isInCheck(board, 1));
+    assertTrue(CheckValidator.isInCheck(board, 1));
     pieceTwo.move(board.getTile(new Coordinate(2, 0)));
-    assertFalse(check.isInCheck(board, 1));
+    assertFalse(CheckValidator.isInCheck(board, 1));
   }
 }

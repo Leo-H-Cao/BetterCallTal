@@ -91,13 +91,6 @@ public class ChessTile implements Tile, Cloneable {
   public void executeAction(ChessBoard board) throws OutsideOfBoardException {}
 
   /***
-   * @return coordinates of tile and pieces on it
-   */
-  public String toString() {
-    return coordinate.toString() + ": " + pieces;
-  }
-
-  /***
    * @return copy of tile and its pieces
    */
   @Override
@@ -122,5 +115,16 @@ public class ChessTile implements Tile, Cloneable {
   @Override
   public void setModifer() {
 
+  }
+
+  /***
+   * @return coordinates of tile and pieces on it
+   */
+  @Override
+  public String toString() {
+    if (pieces.isEmpty()) return String.format("%s: EMPTY ", coordinate);
+    StringBuilder sb = new StringBuilder();
+    pieces.forEach(sb::append);
+    return String.format("%s: %s ", coordinate, sb);
   }
 }

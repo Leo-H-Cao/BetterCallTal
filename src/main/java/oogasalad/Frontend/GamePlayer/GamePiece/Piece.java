@@ -250,4 +250,9 @@ public class Piece implements Cloneable {
     );
     return new Piece(clonedData, board);
   }
+
+  @Override
+  public String toString() {
+    return name;
+  }
 }

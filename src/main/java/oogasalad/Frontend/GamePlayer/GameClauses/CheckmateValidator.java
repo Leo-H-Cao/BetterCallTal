@@ -17,6 +17,9 @@ public class CheckmateValidator {
    */
   public static boolean isInMate(ChessBoard board, int id) throws OutsideOfBoardException {
 
-    return CheckValidator.isInCheck(board, id) && StalemateValidator.isStaleMate(board, id);
+    boolean inCheck = CheckValidator.isInCheck(board, id);
+
+    boolean staleMate = StalemateValidator.isStaleMate(board, id);
+    return inCheck && staleMate;
   }
 }

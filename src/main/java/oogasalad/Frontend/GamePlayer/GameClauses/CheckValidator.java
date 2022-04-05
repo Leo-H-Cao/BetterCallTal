@@ -24,10 +24,9 @@ public class CheckValidator implements MovementModifier {
    * @return whether the target-piece is under attack
    */
   public static boolean isInCheck(ChessBoard board, int id) throws OutsideOfBoardException {
-
     List<Piece> targetPieces = board.targetPiece(id);
 
-    boolean isInCheck = board.stream()
+    return board.stream()
         .flatMap(List::stream).toList().stream()
         .map(ChessTile::getPieces)
         .flatMap(List::stream).toList().stream()
@@ -36,18 +35,6 @@ public class CheckValidator implements MovementModifier {
             .map(Piece::getCoordinates)
             .collect(Collectors.toList())));
 
-//    boolean isInCheckMate = checkMate.isInMate(board, id);
-    return isInCheck;
-
-//    boolean check;
-//    for (ChessTile tile : board) {
-//      check = tile.getPieces()
-//          .stream()
-//          .filter(piece -> !piece.checkTeam(id))
-//          .anyMatch(piece -> piece.canCapture(targetPieces));
-//
-//    }
-//    return false;
   }
 
   @Override
