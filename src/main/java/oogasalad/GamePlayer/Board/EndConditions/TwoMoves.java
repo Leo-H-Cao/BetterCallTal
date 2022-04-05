@@ -14,11 +14,13 @@ public class TwoMoves implements EndCondition {
   /***
    * Creates an EndCondition object that always ends the game after three moves
    */
-  public TwoMoves() {}
+  public TwoMoves() {
+  }
 
   @Override
   public Optional<Map<Integer, Double>> getScores(ChessBoard board) {
-    return board.getHistory().size() == getHistoryLength(board.getPlayers().length) ? Optional.of(generatePoints(board.getPlayers())): Optional.empty();
+    return board.getHistory().size() == getHistoryLength(board.getPlayers().length) ? Optional.of(
+        generatePoints(board.getPlayers())) : Optional.empty();
   }
 
   /***

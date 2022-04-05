@@ -61,7 +61,7 @@ public class ChessHistory {
    *
    * @param newState The new state to add.
    */
-  public ChessBoard addToHistory(ChessBoard newState) {
+  public ChessBoard add(ChessBoard newState) {
     historyDeque.addLast(newState);
     currentIndex++;
     return newState;
@@ -72,7 +72,7 @@ public class ChessHistory {
    *
    * @return the size of the history.
    */
-  public int getHistorySize() {
+  public int size() {
     return historyList.size();
   }
 
@@ -183,6 +183,15 @@ public class ChessHistory {
     historyDeque.clear();
     currentIndex = 0;
     return this;
+  }
+
+  /**
+   * Returns whether the history is empty.
+   *
+   * @return true if the history is empty, false otherwise.
+   */
+  public boolean isEmpty() {
+    return historyDeque.isEmpty();
   }
 
   @Override
