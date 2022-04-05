@@ -101,6 +101,11 @@ public class Piece implements Cloneable {
         .collect(Collectors.toSet())
         .forEach(allMoves::addAll);
 
+    customMovements.forEach(cm -> {
+      allMoves.addAll(cm.getMoves(this, board));
+      allMoves.addAll(cm.getCaptures(this, board));
+    });
+    
     return allMoves;
   }
 
