@@ -68,9 +68,9 @@ public class HomeView extends View {
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, MainView.getLanguage().getString(getClass().getSimpleName() + "Join"), "joinButton",
                 (e) -> getMainView().changeScene(getView(GameView.class))), 0, 1);
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, MainView.getLanguage().getString(getClass().getSimpleName() + "Host"), "hostButton",
-                (e) -> getMainView().changeScene(getView(GameView.class))), 0, 2);
+                (e) -> getMainView().changeScene(getView(HostGame.class))), 0, 2);
 
-        buttonList.getChildren().stream().forEach((b) -> {
+        buttonList.getChildren().forEach((b) -> {
             if(b instanceof Button) {
                 ((Button)b).setAlignment(Pos.CENTER);
                 ((Button)b).setPrefSize(400, 100);
