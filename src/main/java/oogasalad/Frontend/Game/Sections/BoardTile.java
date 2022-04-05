@@ -1,20 +1,20 @@
 package oogasalad.Frontend.Game.Sections;
 
+import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Optional;
+
 
 /**
  * BoardTile class will contain all the information about each tile that must be displayed, and will hold the node.
  */
 
 public class BoardTile {
+    private StackPane myStackPane;
     private static Rectangle myRectangle;
     private static ArrayList<String> myImages;
     private static ArrayList<Piece> myPieces;
@@ -24,8 +24,10 @@ public class BoardTile {
 
     public BoardTile(int x, int y, int rows, int cols) {
         myCoord = new Coordinate(y, x);
-
+        myStackPane = new StackPane();
         myRectangle = new Rectangle(WIDTH_Board / rows, HEIGHT_BOARD / cols);
+        ColorRect(x, y);
+        myStackPane.getChildren().add(myRectangle);
         myPieces = new ArrayList<>();
         myImages = new ArrayList<>();
     }
@@ -46,12 +48,29 @@ public class BoardTile {
         }
     }
 
+    /**
+     * Used in BoardGrid to give Board tile the correct piece.
+     * @param p Piece object to be held by BoardTile
+     */
     public void givePiece(Piece p) {
         myPieces.add(p);
         myImages.add(p.getImgFile());
     }
 
-    public Rectangle getMyRectangle() {return myRectangle;}
 
+    /**
+     * sets the color of the given tile
+     * @param x x coor
+     * @param y y coor
+     */
+    private void ColorRect(int x, int y) {
+        if ((x + y) % 2 == 1) {
+            myRectangle.setFill(Color.BLACK);
+        } else {
+            myRectangle.setFill(Color.WHITESMOKE);
+        }
+    }
+
+    public StackPane getMyStackPane() {return myStackPane;}
     public Coordinate getCoordinate() {return myCoord;}
 }

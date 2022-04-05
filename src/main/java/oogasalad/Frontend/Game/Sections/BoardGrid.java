@@ -2,7 +2,6 @@ package oogasalad.Frontend.Game.Sections;
 
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
@@ -29,7 +28,7 @@ public class BoardGrid {
         myBoard = new GridPane();
         setUpGP(myBoard, cb.getBoardHeight(), cb.getBoardLength());
         makeBoard(myBoard, cb, PlayerID);
-        myLitUpBorder = makeLitUpBoarder();
+        myLitUpBorder = makeLitUpBorder();
     }
 
     /**
@@ -38,6 +37,7 @@ public class BoardGrid {
     public BoardGrid() {
         myBoard = new GridPane();
         setUpGP(myBoard, 8, 8);
+        myLitUpBorder = makeLitUpBorder();
         makeBoard2(myBoard, 8, 8);
     }
 
@@ -53,23 +53,19 @@ public class BoardGrid {
     private void makeBoard(GridPane gp, ChessBoard cb, int id) {
         myBoardTiles = new ArrayList<>();
         for (ChessTile ct : cb) {
-            BoardTile tile = new BoardTile(ct.getCoordinates().getRow(), ct.getCoordinates().getCol(), cb.getBoardHeight(), cb.getBoardLength());
-            if (! ct.getPieces().isEmpty()) {
-                for (Piece p : ct.getPieces()) {
-                    tile.givePiece(p);
-                }
-            }
-
-            myBoardTiles.add(tile);
-
             int grid_x = ct.getCoordinates().getRow();
             int grid_y = ct.getCoordinates().getCol();
+            BoardTile tile = new BoardTile(grid_x, grid_y, cb.getBoardHeight(), cb.getBoardLength());
+            if (! ct.getPieces().isEmpty()) {
+                for (Piece p : ct.getPieces()) {
+                    tile.givePiece(p);}}
+            myBoardTiles.add(tile);
 
             if (id == 1) {
                 grid_x = cb.getBoardHeight() - grid_x;
                 grid_y = cb.getBoardLength() - grid_y;
             }
-            gp.add(tile.getMyRectangle(), grid_x, grid_y);
+            gp.add(tile.getMyStackPane(), grid_x, grid_y);
         }
     }
 
@@ -98,8 +94,8 @@ public class BoardGrid {
      */
     public GridPane getBoard() {return myBoard;}
 
-    private Border makeLitUpBoarder() {
-        BorderStroke bordstroke = new BorderStroke(Paint.valueOf("Color.BLUE"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(BORDER_WIDTH));
+    private Border makeLitUpBorder() {
+        BorderStroke bordstroke = new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(BORDER_WIDTH));
         Border bord = new Border(bordstroke);
         return bord;
     }

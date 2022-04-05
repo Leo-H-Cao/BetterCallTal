@@ -4,6 +4,7 @@ import javafx.stage.Stage;
 import oogasalad.Frontend.Editor.GameEditorView;
 import oogasalad.Frontend.Game.GameView;
 import oogasalad.Frontend.Menu.HomeView;
+import oogasalad.GamePlayer.Board.ChessBoard;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -49,4 +50,8 @@ public class MainView {
 		stage.setScene(sceneClass.getScene());
 		stage.setTitle(sceneClass.getTitle());
 	}
+
+	public void setUpGameView(ChessBoard board, int player) {
+		//TODO: call GameView SetUpBoard() w this method
+		}
 }

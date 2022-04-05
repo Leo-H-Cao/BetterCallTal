@@ -32,6 +32,7 @@ public class GameView extends View {
 
     public GameView(MainView mainView) {
         super(mainView);
+
     }
 
     /**
@@ -43,6 +44,7 @@ public class GameView extends View {
 
     public void SetUpBoard(ChessBoard chessboard, int id) {
         Turn = 0;   // give white player first turn
+        // TODO: FIX THIS WHEN SERVER GETS FIGURED OUT
         myID = id;
         //myBoardGrid = new BoardGrid(chessboard, id); UNCOMMENT WHEN JSON IS READY
         myBoardGrid = new BoardGrid();
@@ -63,6 +65,7 @@ public class GameView extends View {
      * updateBoard() method called by Backend to update the chess board and game state (update whose turn)
      */
     public void updateBoard(TurnUpdate tu) {
+
         Turn = tu.nextPlayer();
         myBoardGrid.updateTiles(tu.updatedSquares());
     }
