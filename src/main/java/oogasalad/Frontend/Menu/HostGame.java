@@ -1,5 +1,6 @@
 package oogasalad.Frontend.Menu;
 
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import oogasalad.Frontend.MainView;
 import oogasalad.Frontend.View;
@@ -11,7 +12,7 @@ public class HostGame extends View {
     }
 
     @Override
-    protected Scene makeScene() {
+    protected Node makeNode() {
         return null;
     }
 }
