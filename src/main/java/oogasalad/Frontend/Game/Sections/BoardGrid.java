@@ -48,6 +48,7 @@ public class BoardGrid {
     }
 
     private void makeBoard(GridPane gp, ChessBoard cb, int id) {
+        myBoardTiles = new ArrayList<>();
         for (ChessTile ct : cb) {
             BoardTile tile = new BoardTile(ct.getCoordinates().getRow(), ct.getCoordinates().getCol(), cb.getBoardHeight(), cb.getBoardLength());
             if (! ct.getPieces().isEmpty()) {
