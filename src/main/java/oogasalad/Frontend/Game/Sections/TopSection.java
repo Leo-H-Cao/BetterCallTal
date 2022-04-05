@@ -20,10 +20,8 @@ import java.util.ArrayList;
 public class TopSection {
     private GridPane myGP;
     private static final String TITLE = "Title";
-    private String GameViewName;
 
-    public TopSection(String ClassName) {
-        GameViewName = ClassName;
+    public TopSection() {
 
         myGP = new GridPane();
         setTopColConstraints();
@@ -51,7 +49,7 @@ public class TopSection {
 
         HBox middle = new HBox();
         middle.setAlignment(Pos.CENTER);
-        Text title = new Text(MainView.getLanguage().getString(GameViewName + TITLE));
+        Text title = new Text(MainView.getLanguage().getString(getClass().getSimpleName() + TITLE));
         title.setFont(new Font("Courier New", 30));
         title.setFill(Color.PURPLE);
         middle.getChildren().add(title);

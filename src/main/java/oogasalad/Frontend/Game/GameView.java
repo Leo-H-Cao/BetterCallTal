@@ -74,7 +74,7 @@ public class GameView extends View {
     @Override
     protected Node makeNode() {
         BorderPane bp = new BorderPane();
-        bp.setTop(new TopSection(getClass().getSimpleName()).getGP());
+        bp.setTop(new TopSection().getGP());
         myBP = bp;
         // REMOVE LATER
         myBoardGrid = new BoardGrid();
