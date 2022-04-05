@@ -3,6 +3,7 @@ package oogasalad.Frontend.Game.Sections;
 import javafx.scene.shape.Rectangle;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.Movement.Coordinate;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -14,17 +15,15 @@ import java.util.Optional;
  */
 
 public class BoardTile {
-    private static Integer myX;
-    private static Integer myY;
     private static Rectangle myRectangle;
     private static ArrayList<String> myImages;
     private static ArrayList<Piece> myPieces;
     private static Double HEIGHT_BOARD = 600.0;
     private static Double WIDTH_Board = 600.0;
+    private static Coordinate myCoord;
 
     public BoardTile(int x, int y, int rows, int cols) {
-        myX = x;
-        myY = y;
+        myCoord = new Coordinate(y, x);
 
         myRectangle = new Rectangle(WIDTH_Board / rows, HEIGHT_BOARD / cols);
     }
@@ -50,4 +49,6 @@ public class BoardTile {
     }
 
     public Rectangle getMyRectangle() {return myRectangle;}
+
+    public Coordinate getCoordinate() {return myCoord;}
 }

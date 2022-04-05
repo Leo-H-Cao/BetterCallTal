@@ -58,7 +58,6 @@ public class GameView extends SceneView {
      */
 
     public void lightUpSquares(Collection<ChessTile> litTiles) {
-
     }
 
     /**
