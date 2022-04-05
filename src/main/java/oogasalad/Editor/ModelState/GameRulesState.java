@@ -1,9 +1,9 @@
 package oogasalad.Editor.ModelState;
 
 import java.util.List;
-import oogasalad.Editor.API.ModifiesRulesState;
 
-public class GameRulesState extends ModelState implements ModifiesRulesState {
+public class GameRulesState extends ModelState implements
+    oogasalad.Editor.API.ModifiesRulesState {
 
   public GameRulesState(){
     super();

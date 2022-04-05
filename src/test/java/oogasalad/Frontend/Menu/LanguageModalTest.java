@@ -1,13 +1,14 @@
 package oogasalad.Frontend.Menu;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.ResourceBundle;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
-import java.util.ResourceBundle;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LanguageModalTest extends DukeApplicationTest {
 	private ChoiceBox myLanguageSelector;
@@ -15,7 +16,6 @@ public class LanguageModalTest extends DukeApplicationTest {
 	private Scene myScene;
 	private Stage myStage;
 	private ResourceBundle myResources;
-
 
 	@Override
 	public void start (Stage stage) {
@@ -25,7 +25,6 @@ public class LanguageModalTest extends DukeApplicationTest {
 		myStage.setScene(myScene);
 		myStage.show();
 		myResources = ResourceBundle.getBundle("oogasalad.Frontend.Menu.languages.English");
-
 
 		myLanguageSelector = lookup("#languageSelector").query();
 	}
@@ -41,7 +40,7 @@ public class LanguageModalTest extends DukeApplicationTest {
 	@Test
 	void testSelectEnglish() {
 		select(myLanguageSelector, "English");
-		assertEquals(myStage.getTitle(), myResources.getString("SelectLanguage"));
+		assertEquals(myStage.getTitle(), ResourceBundle.getBundle("oogasalad.Frontend.Menu.languages.English").getString("SelectLanguage"));
 	}
 
 	@Test

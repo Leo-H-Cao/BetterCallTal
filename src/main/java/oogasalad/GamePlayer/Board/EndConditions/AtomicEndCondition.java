@@ -4,8 +4,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
+import oogasalad.Frontend.GamePlayer.Board.EndConditions.EndCondition;
+import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
 
 public class AtomicEndCondition implements EndCondition {
 

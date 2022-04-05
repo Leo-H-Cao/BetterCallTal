@@ -1,11 +1,12 @@
 package oogasalad.Editor.Movement;
 
 import java.util.Set;
-import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
-import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
+import oogasalad.Frontend.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.Frontend.GamePlayer.EngineExceptions.InvalidMoveException;
+import oogasalad.Frontend.GamePlayer.EngineExceptions.OutsideOfBoardException;
+import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
+import oogasalad.Frontend.GamePlayer.Movement.Coordinate;
 
 public interface MovementInterface {
 
@@ -51,4 +52,5 @@ public interface MovementInterface {
    * @return set of tiles the piece can move to
    */
   Set<ChessTile> getMoves(Piece piece, ChessBoard board);
+
 }

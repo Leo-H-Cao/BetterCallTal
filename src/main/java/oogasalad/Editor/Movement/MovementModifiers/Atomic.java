@@ -3,14 +3,14 @@ package oogasalad.Editor.Movement.MovementModifiers;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.IntStream;
+import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
+import oogasalad.Frontend.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.Frontend.GamePlayer.EngineExceptions.OutsideOfBoardException;
+import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
+import oogasalad.Frontend.GamePlayer.Movement.Coordinate;
+import oogasalad.Frontend.GamePlayer.Movement.MovementModifier;
 
-import oogasalad.Editor.Movement.Coordinate;
-import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.GamePiece.Piece;
-
-public class Atomic implements MovementModifier{
+public class Atomic implements MovementModifier {
 
   private static final int surroundDistance = 1;
   /***
@@ -41,7 +41,8 @@ public class Atomic implements MovementModifier{
     IntStream.range(-surroundDistance, surroundDistance).forEach((i) -> {
       IntStream.range(-surroundDistance, surroundDistance).forEach((j) -> {
         try {
-          surroundingTiles.add(board.getTile(Coordinate.of(center.getCoordinates().getRow()+i, center.getCoordinates().getCol()+j)));
+          surroundingTiles.add(board.getTile(
+              Coordinate.of(center.getCoordinates().getRow()+i, center.getCoordinates().getCol()+j)));
         } catch(OutsideOfBoardException ignored) {}
       });
     });

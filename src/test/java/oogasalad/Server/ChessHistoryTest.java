@@ -1,19 +1,20 @@
 package oogasalad.Server;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.EndConditions.TwoMoves;
-import oogasalad.GamePlayer.Board.Player;
-import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
-import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.GamePiece.PieceData;
-import oogasalad.Editor.Movement.Coordinate;
-import oogasalad.Editor.Movement.Movement;
+import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
+import oogasalad.Frontend.GamePlayer.Board.EndConditions.TwoMoves;
+import oogasalad.Frontend.GamePlayer.Board.Player;
+import oogasalad.Frontend.GamePlayer.Board.TurnCriteria.Linear;
+import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
+import oogasalad.Frontend.GamePlayer.GamePiece.PieceData;
+import oogasalad.Frontend.GamePlayer.Movement.Coordinate;
+import oogasalad.Frontend.GamePlayer.Movement.Movement;
 import org.junit.jupiter.api.Test;
 
 class ChessHistoryTest {

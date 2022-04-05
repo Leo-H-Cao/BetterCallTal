@@ -1,7 +1,5 @@
 package oogasalad.Editor.ModelState;
 
-import oogasalad.Editor.ModelState.TileEffect;
-
 public class EditorTile {
   private TileEffect myTileEffect;
   private EditorPiece myEditorPiece;
