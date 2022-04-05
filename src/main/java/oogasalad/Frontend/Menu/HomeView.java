@@ -33,12 +33,8 @@ public class HomeView extends View {
     }
 
     @Override
-    protected Scene makeScene() {
-        Scene scene = new Scene(myRoot, myScreenSize.getWidth(), myScreenSize.getHeight());
-
-        myRoot.getChildren().add(makeLayout());
-
-        return scene;
+    protected Node makeNode() {
+        return makeLayout();
     }
 
     private Node makeLayout() {

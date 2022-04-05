@@ -1,18 +1,11 @@
 package oogasalad.Frontend.Game;
 
-import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import oogasalad.Frontend.Game.Sections.BoardGrid;
-import oogasalad.Frontend.Game.Sections.BoardTile;
-import oogasalad.Frontend.Game.Sections.TopSection;
 import oogasalad.Frontend.MainView;
 import oogasalad.Frontend.View;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.Board.TurnUpdate;
 import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.Board.ChessBoard;
-
 import java.util.Collection;
 
 /**
@@ -22,15 +15,11 @@ import java.util.Collection;
 
 public class GameView extends View {
 
-    private BoardGrid myBoardGrid;
-    private static final String TITLE = "Title";
-    private Integer Turn;
-    private static Integer myID;
-    private BorderPane myBP;
+    private Collection<ChessTile> myBoard;
+    private Collection<Piece> myPieces;
 
     public GameView(MainView mainView) {
         super(mainView);
-
     }
 
     /**
@@ -40,14 +29,9 @@ public class GameView extends View {
      * setting up the board.
      */
 
-    public void SetUpBoard(ChessBoard chessboard, int id) {
-        Turn = 0;   // give white player first turn
-        // TODO: FIX THIS WHEN SERVER GETS FIGURED OUT
-        myID = id;
-        //myBoardGrid = new BoardGrid(chessboard, id); UNCOMMENT WHEN JSON IS READY
-        myBoardGrid = new BoardGrid();
-        myBoardGrid.getBoard().setAlignment(Pos.CENTER);
-        myBP.setCenter(myBoardGrid.getBoard());
+    public void SetUpBoard(Collection<ChessTile> board, Collection<Piece> pieces) {
+        myBoard = board;
+        myPieces = pieces;
     }
 
 
@@ -57,15 +41,7 @@ public class GameView extends View {
      */
 
     public void lightUpSquares(Collection<ChessTile> litTiles) {
-    }
 
-    /**
-     * updateBoard() method called by Backend to update the chess board and game state (update whose turn)
-     */
-    public void updateBoard(TurnUpdate tu) {
-
-        Turn = tu.nextPlayer();
-        myBoardGrid.updateTiles(tu.updatedSquares());
     }
 
     /**
@@ -76,21 +52,7 @@ public class GameView extends View {
     public void completeMove(Collection<ChessTile> newboard, Collection<Piece> newpieces){}
 
     @Override
-    protected Scene makeScene() {
-        BorderPane bp = new BorderPane();
-        myBP = bp;
-        bp.setTop(new TopSection(getClass().getSimpleName()).getGP());
-
-        // REMOVE LATER
-        myBoardGrid = new BoardGrid();
-        myBoardGrid.getBoard().setAlignment(Pos.CENTER);
-        bp.setCenter(myBoardGrid.getBoard());
-        //REMOVE LATLER ^^^
-
-        myRoot.getChildren().add(bp);
-
-        return new Scene(myRoot, SCENE_WIDTH_SIZE, SCENE_HEIGHT_SIZE);
+    protected Node makeNode() {
+        return makeExitButton();
     }
-
-
 }

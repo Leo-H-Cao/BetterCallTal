@@ -29,6 +29,7 @@ public class ChessBoard {
 				myGrid.add(newTile.getNode(), j, i);
 				alt = !alt;
 			}
+			alt = !alt;
 		}
 	}
 }
