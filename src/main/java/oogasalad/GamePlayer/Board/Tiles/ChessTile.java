@@ -1,16 +1,21 @@
 package oogasalad.GamePlayer.Board.Tiles;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
-public class ChessTile {
+public class ChessTile implements Tile, Cloneable {
 
   private Coordinate coordinate;
   private List<Piece> pieces;
+
+  public ChessTile(){
+    this(new Coordinate(0,0), new ArrayList<>());
+  }
 
   /***
    * Creates a chess tile with a given coordinate
@@ -82,10 +87,34 @@ public class ChessTile {
     return pieces.remove(piece);
   }
 
+  public void executeAction(ChessBoard board) throws OutsideOfBoardException {}
+
   /***
    * @return coordinates of tile and pieces on it
    */
   public String toString() {
     return coordinate.toString() + ": " + pieces;
+  }
+
+  /***
+   * @return copy of tile and its pieces
+   */
+  @Override
+  public ChessTile clone() {
+    return new ChessTile(new Coordinate(this.coordinate.getRow(), this.coordinate.getCol()), clonePieces());
+  }
+
+  /***
+   * @return clone of all pieces in this tile
+   */
+  private List<Piece> clonePieces() {
+    return pieces.stream().map(Piece::clone).toList();
+  }
+
+  /***
+   * Clears pieces on tile
+   */
+  public void clearPieces() {
+    pieces = new ArrayList<>();
   }
 }

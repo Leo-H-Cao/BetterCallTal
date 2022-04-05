@@ -72,6 +72,7 @@ class EndConditionsTest {
       assertTrue(board.isGameOver());
       assertEquals(board.getScores().get(), scores);
     } catch(Exception e) {
+      e.printStackTrace();
       fail();
     }
   }

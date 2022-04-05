@@ -7,6 +7,7 @@ import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.UnboundedMovement;
 
+@Deprecated
 public class Knight implements UnboundedMovement {
 
   @Override

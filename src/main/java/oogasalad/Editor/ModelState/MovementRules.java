@@ -1,4 +1,4 @@
-package oogasalad.Editor.Backend.ModelState;
+package oogasalad.Editor.ModelState;
 
 public class MovementRules {
 

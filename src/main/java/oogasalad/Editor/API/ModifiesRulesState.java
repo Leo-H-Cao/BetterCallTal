@@ -1,4 +1,4 @@
-package oogasalad.Editor.Backend.API;
+package oogasalad.Editor.API;
 
 import java.util.List;
 

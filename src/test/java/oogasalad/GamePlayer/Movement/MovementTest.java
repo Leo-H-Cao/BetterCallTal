@@ -98,7 +98,7 @@ class MovementTest {
   @Test
   void finiteCaptureTestHappy() {
     try {
-      assertEquals(captureOne.getCaptures(pieceOne, board), Set.of(board.getTile(new Coordinate(1, 0))));
+      assertEquals(Set.of(board.getTile(new Coordinate(1, 0))), captureOne.getCaptures(pieceOne, board));
       assertEquals(captureOne.getCaptures(pieceTwo, board), Set.of());
     } catch(Exception e) {
       e.printStackTrace();

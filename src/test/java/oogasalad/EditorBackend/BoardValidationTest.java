@@ -3,8 +3,8 @@ package oogasalad.EditorBackend;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import oogasalad.Editor.Backend.Validation.InvalidBoardSizeException;
-import oogasalad.Editor.Backend.Validation.Validator;
+import oogasalad.Editor.Validation.InvalidBoardSizeException;
+import oogasalad.Editor.Validation.Validator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

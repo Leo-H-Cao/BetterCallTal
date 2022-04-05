@@ -9,11 +9,18 @@ import java.util.Set;
 import java.util.Stack;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
+import oogasalad.GamePlayer.GameClauses.CheckValidator;
+import oogasalad.GamePlayer.GameClauses.CheckmateValidator;
 import oogasalad.GamePlayer.GamePiece.Piece;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class Movement {
+public class Movement implements MovementInterface{
+
+  private static final Logger LOG = LogManager.getLogger(Movement.class);
 
   private static final String MOVE_KEY = "move";
   private static final String CAPTURE_KEY = "capture";
@@ -52,6 +59,7 @@ public class Movement {
     if(getMoves(piece, board).contains(finalTile)) {
       return piece.move(finalTile);
     }
+    LOG.warn("Invalid move made");
     throw new InvalidMoveException(piece + ": " + finalSquare);
   }
 
@@ -59,13 +67,14 @@ public class Movement {
    * @param coordinates that the tile is on
    * @param board to get tile on
    * @return corresponding ChessTile to given coordinates
-   * @throws OutsideOfBoardException
+   * @throws OutsideOfBoardException if coord is outside of board
    */
   private ChessTile convertCordToTile(Coordinate coordinates, ChessBoard board)
       throws OutsideOfBoardException {
     try {
       return board.getTile(coordinates);
     } catch (OutsideOfBoardException e) {
+      LOG.warn("Coordinate outside of board");
       throw new OutsideOfBoardException(coordinates.toString());
     }
   }
@@ -85,6 +94,7 @@ public class Movement {
     if(getCaptures(piece, board).contains(captureTile)) {
       return piece.move(captureTile);
     }
+    LOG.warn("Invalid move made");
     throw new InvalidMoveException(piece + ": " + captureSquare);
   }
 
@@ -101,20 +111,38 @@ public class Movement {
     allMoves.put(CAPTURE_KEY, new HashSet<>());
 
     Coordinate baseCoordinates = piece.getCoordinates();
+
     possibleMoves.forEach((delta) -> {
       Stack<ChessTile> moveStack = generateMoveStack(baseCoordinates, delta, board);
       allMoves.get(MOVE_KEY).addAll(moveStack);
       Optional<ChessTile> capTile = moveStack.isEmpty() ? getNextTile(baseCoordinates, delta, board)
           : (infinite ? getNextTile(moveStack.peek().getCoordinates(), delta, board)
               : Optional.of(moveStack.peek()));
+      LOG.debug(capTile);
       capTile.ifPresent((t) -> {
-        if (piece.canCapture(t.getPieces())) {
+        if (piece.isOpposing(t.getPieces())) {
           allMoves.get(CAPTURE_KEY).add(t);
         }
       });
     });
     return allMoves;
   }
+
+  public Map<String, Set<ChessTile>> getLegalMoves(Piece piece, ChessBoard board)
+      throws EngineException {
+    Map<String, Set<ChessTile>> allMoves = getAllMoves(piece, board);
+    for(String moveType : allMoves.keySet()){
+      for(ChessTile move : allMoves.get(moveType)){
+        ChessBoard deepCopy = board.deepCopy();
+        deepCopy.move(piece, move.getCoordinates());
+        if(CheckValidator.isInCheck(board, piece.getTeam())){
+          allMoves.get(moveType).remove(move);
+        }
+      }
+    }
+    return null;
+  }
+
   /***
    * Returns all possible captures a piece can make
    *

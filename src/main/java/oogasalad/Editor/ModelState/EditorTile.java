@@ -1,4 +1,6 @@
-package oogasalad.Editor.Backend.ModelState;
+package oogasalad.Editor.ModelState;
+
+import oogasalad.Editor.ModelState.TileEffect;
 
 public class EditorTile {
   private TileEffect myTileEffect;
