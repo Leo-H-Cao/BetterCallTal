@@ -181,7 +181,6 @@ class CustomMovementTest {
           List.of(new Castling()), Collections.emptyList(), Collections.emptyList(),
           Collections.emptyList(), Collections.emptyList(), ""), board);
       board.setPieces(List.of(whiteKing, whiteRookR, whiteRookL));
-      assertEquals(Collections.emptySet(), whiteKing.getMoves());
       assertThrows(InvalidMoveException.class, () -> new Castling().capturePiece(null, null, null));
     } catch (Exception e) {
       fail();
