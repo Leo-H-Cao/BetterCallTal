@@ -64,11 +64,11 @@ public class HomeView extends View {
     private Node makeButtons() {
         GridPane buttonList = new GridPane();
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, MainView.getLanguage().getString(getClass().getSimpleName() + "Create"), "createButton",
-                (e) -> getMainView().getViews().stream().filter((c) -> c.getClass() == GameEditorView.class).forEach(getMainView()::changeScene)), 0, 0);
+                (e) -> getMainView().changeScene(getView(GameEditorView.class))), 0, 0);
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, MainView.getLanguage().getString(getClass().getSimpleName() + "Join"), "joinButton",
-                (e) -> getMainView().getViews().stream().filter((c) -> c.getClass() == GameView.class).forEach(getMainView()::changeScene)), 0, 1);
+                (e) -> getMainView().changeScene(getView(GameView.class))), 0, 1);
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, MainView.getLanguage().getString(getClass().getSimpleName() + "Host"), "hostButton",
-                (e) -> getMainView().getViews().stream().filter((c) -> c.getClass() == GameView.class).forEach(getMainView()::changeScene)), 0, 2);
+                (e) -> getMainView().changeScene(getView(GameView.class))), 0, 2);
 
         buttonList.getChildren().stream().forEach((b) -> {
             if(b instanceof Button) {
