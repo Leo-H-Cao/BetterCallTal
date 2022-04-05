@@ -1,10 +1,10 @@
-package oogasalad.Editor.Movement.MovementModifiers;
+package oogasalad.GamePlayer.Movement.MovementModifiers;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.IntStream;
 
-import oogasalad.Editor.Movement.Coordinate;
+import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
@@ -41,7 +41,8 @@ public class Atomic implements MovementModifier{
     IntStream.range(-surroundDistance, surroundDistance).forEach((i) -> {
       IntStream.range(-surroundDistance, surroundDistance).forEach((j) -> {
         try {
-          surroundingTiles.add(board.getTile(Coordinate.of(center.getCoordinates().getRow()+i, center.getCoordinates().getCol()+j)));
+          surroundingTiles.add(board.getTile(
+              Coordinate.of(center.getCoordinates().getRow()+i, center.getCoordinates().getCol()+j)));
         } catch(OutsideOfBoardException ignored) {}
       });
     });

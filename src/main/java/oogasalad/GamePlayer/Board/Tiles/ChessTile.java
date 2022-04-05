@@ -6,7 +6,7 @@ import java.util.Optional;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.Editor.Movement.Coordinate;
+import oogasalad.GamePlayer.Movement.Coordinate;
 
 public class ChessTile implements Tile, Cloneable {
 

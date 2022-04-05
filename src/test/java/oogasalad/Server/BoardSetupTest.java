@@ -7,7 +7,7 @@ import java.io.IOException;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.Editor.Movement.Coordinate;
+import oogasalad.GamePlayer.Movement.Coordinate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
