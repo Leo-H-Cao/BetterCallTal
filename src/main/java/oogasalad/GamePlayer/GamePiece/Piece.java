@@ -12,9 +12,9 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.Editor.Movement.Coordinate;
-import oogasalad.Editor.Movement.MovementInterface;
-import oogasalad.Editor.Movement.MovementModifiers.MovementModifier;
+import oogasalad.GamePlayer.Movement.Coordinate;
+import oogasalad.GamePlayer.Movement.MovementInterface;
+import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
 
 /**
  * @author Vincent Chen
