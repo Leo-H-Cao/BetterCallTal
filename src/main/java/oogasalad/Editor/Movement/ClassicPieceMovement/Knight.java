@@ -2,11 +2,10 @@ package oogasalad.Editor.Movement.ClassicPieceMovement;
 
 import java.util.Collection;
 import java.util.List;
-import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
-import oogasalad.Frontend.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.Frontend.GamePlayer.UnboundedMovement;
-import oogasalad.Frontend.GamePlayer.Movement.Coordinate;
-
+import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.Editor.Movement.Coordinate;
+import oogasalad.GamePlayer.UnboundedMovement;
 
 @Deprecated
 public class Knight implements UnboundedMovement {
