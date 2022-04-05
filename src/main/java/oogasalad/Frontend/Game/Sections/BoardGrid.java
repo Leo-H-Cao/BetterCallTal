@@ -1,9 +1,8 @@
 package oogasalad.Frontend.Game.Sections;
 
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
@@ -23,11 +22,14 @@ public class BoardGrid {
     private static Double HEIGHT_BOARD = 600.0;
     private static Double WIDTH_Board = 600.0;
     private ArrayList<BoardTile> myBoardTiles;
+    private Border myLitUpBorder;
+    private Double BORDER_WIDTH = 5.0;
 
     public BoardGrid(ChessBoard cb, int PlayerID) {
         myBoard = new GridPane();
         setUpGP(myBoard, cb.getBoardHeight(), cb.getBoardLength());
         makeBoard(myBoard, cb, PlayerID);
+        myLitUpBorder = makeLitUpBoarder();
     }
 
     /**
@@ -95,6 +97,12 @@ public class BoardGrid {
      * @return GridPane myBoard
      */
     public GridPane getBoard() {return myBoard;}
+
+    private Border makeLitUpBoarder() {
+        BorderStroke bordstroke = new BorderStroke(Paint.valueOf("Color.BLUE"), BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(BORDER_WIDTH));
+        Border bord = new Border(bordstroke);
+        return bord;
+    }
 
     /**
      * THIS METHOD SOLELY FOR TESTING
