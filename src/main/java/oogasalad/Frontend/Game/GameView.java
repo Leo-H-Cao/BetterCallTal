@@ -9,6 +9,7 @@ import oogasalad.Frontend.Game.Sections.TopSection;
 import oogasalad.Frontend.MainView;
 import oogasalad.Frontend.SceneView;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.Board.TurnUpdate;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
@@ -21,12 +22,14 @@ import java.util.Collection;
 
 public class GameView extends SceneView {
 
-    private ChessBoard myBoard;
     private Collection<ChessTile> myTiles;
     private BoardGrid myBoardGrid;
     private static Integer SCENE_WIDTH_SIZE = 1500;
     private static Integer SCENE_HEIGHT_SIZE = 1000;
     private static final String TITLE = "Title";
+    private Integer Turn;
+    private static Integer myID;
+    private BorderPane myBP;
 
     public GameView(MainView mainView) {
         super(mainView);
@@ -39,11 +42,13 @@ public class GameView extends SceneView {
      * setting up the board.
      */
 
-    public void SetUpBoard(ChessBoard chessboard) {
-        myBoard = chessboard;
-        for (ChessTile ct : myBoard) {
-            BoardTile bt = new BoardTile(ct.getCoordinates().getRow(), ct.getCoordinates().getCol(), ct.getPiece());
-        }
+    public void SetUpBoard(ChessBoard chessboard, int id) {
+        Turn = 0;   // give white player first turn
+        myID = id;
+        //myBoardGrid = new BoardGrid(chessboard); UNCOMMENT WHEN JSON IS READY
+        myBoardGrid = new BoardGrid();
+        myBoardGrid.getBoard().setAlignment(Pos.CENTER);
+        myBP.setCenter(myBoardGrid.getBoard());
     }
 
 
@@ -57,6 +62,14 @@ public class GameView extends SceneView {
     }
 
     /**
+     * updateBoard() method called by Backend to update the chess board and game state (update whose turn)
+     */
+    public void updateBoard(TurnUpdate tu) {
+        Turn = tu.nextPlayer();
+        myBoardGrid.updateTiles(tu.updatedSquares());
+    }
+
+    /**
      * completeMove() will be called by the backend when a player clicks a lit up square. All the
      * the logic such as power ups, captures, etc will be registered on the backend, and an updated
      * board will be displayed.
@@ -67,11 +80,11 @@ public class GameView extends SceneView {
     protected Scene makeScene() {
         BorderPane bp = new BorderPane();
         bp.setTop(new TopSection(getClass().getSimpleName()).getGP());
-        myBoardGrid = new BoardGrid(8, 8);
-        myBoardGrid.getBoard().setAlignment(Pos.CENTER);
-        bp.setCenter(myBoardGrid.getBoard());
+
 
         myRoot.getChildren().add(bp);
+
+        myBP = bp;
         return new Scene(myRoot, SCENE_WIDTH_SIZE, SCENE_HEIGHT_SIZE);
     }
 
