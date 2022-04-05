@@ -1,23 +1,22 @@
 package oogasalad.backend.EndGameTests;
-
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import oogasalad.Editor.Movement.Coordinate;
 import oogasalad.Editor.Movement.Movement;
-import oogasalad.Frontend.GamePlayer.Board.ChessBoard;
-import oogasalad.Frontend.GamePlayer.Board.EndConditions.TwoMoves;
-import oogasalad.Frontend.GamePlayer.Board.Player;
-import oogasalad.Frontend.GamePlayer.Board.TurnCriteria.Linear;
-import oogasalad.Frontend.GamePlayer.EngineExceptions.InvalidMoveException;
-import oogasalad.Frontend.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.Frontend.GamePlayer.GameClauses.CheckValidator;
-import oogasalad.Frontend.GamePlayer.GameClauses.CheckmateValidator;
-import oogasalad.Frontend.GamePlayer.GamePiece.Piece;
-import oogasalad.Frontend.GamePlayer.GamePiece.PieceData;
-import oogasalad.Frontend.GamePlayer.Movement.Coordinate;
+import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.EndConditions.TwoMoves;
+import oogasalad.GamePlayer.Board.Player;
+import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
+import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
+import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
+import oogasalad.GamePlayer.GameClauses.CheckValidator;
+import oogasalad.GamePlayer.GameClauses.CheckmateValidator;
+import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.GamePiece.PieceData;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -93,10 +92,6 @@ public class CheckmateTests {
     assertTrue(CheckmateValidator.isInMate(board, TEAM_1));
   }
 
-  /**
-   * Army of pawns attacking king
-   * @throws OutsideOfBoardException
-   */
   @Test
   void playerInMate2() throws OutsideOfBoardException {
     pieces.addAll(List.of(makeKing(0, 0, TEAM_2),
@@ -111,7 +106,6 @@ public class CheckmateTests {
     assertTrue(CheckmateValidator.isInMate(board, TEAM_2));
   }
 
-
   @Test
   void boardNotInCheckmate() throws OutsideOfBoardException {
     pieces.addAll(List.of(
@@ -120,23 +114,7 @@ public class CheckmateTests {
 
     board.setPieces(pieces);
     assertFalse(CheckmateValidator.isInMate(board, TEAM_1));
-  }
 
-  @Test
-  void playerCanMoveKingOutOfMate() throws OutsideOfBoardException {
-    pieces.addAll(List.of(makeKing(0, 0, TEAM_1), makePawn(1, 0, TEAM_2), makePawn(1, 1, TEAM_2)));
-    board.setPieces(pieces);
-    System.out.println(board);
-    assertFalse(CheckmateValidator.isInMate(board, TEAM_1));
-
-  }
-
-  @Test
-  void playerCanMovePieceToRemoveMate() throws OutsideOfBoardException {
-    pieces.addAll(List.of(makeKing(0, 0, TEAM_1), makeRook(1, 5, TEAM_1), makeRook(3, 0, TEAM_2), makeRook(3, 1, TEAM_2)));
-    board.setPieces(pieces);
-    System.out.println(board);
-    assertFalse(CheckmateValidator.isInMate(board, TEAM_1));
   }
 
   @Test
@@ -157,5 +135,4 @@ public class CheckmateTests {
 
     assertTrue(CheckmateValidator.isInMate(board, TEAM_2));
   }
-
 }
