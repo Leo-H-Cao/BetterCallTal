@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer.Movement.MovementModifiers;
+package oogasalad.Editor.Movement.MovementModifiers;
 
 import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;

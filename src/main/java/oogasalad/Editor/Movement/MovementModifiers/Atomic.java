@@ -1,15 +1,14 @@
-package oogasalad.GamePlayer.Movement.MovementModifiers;
+package oogasalad.Editor.Movement.MovementModifiers;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import oogasalad.Editor.Movement.Coordinate;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.Movement.Coordinate;
 
 public class Atomic implements MovementModifier{
 

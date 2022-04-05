@@ -5,18 +5,21 @@ package oogasalad.Frontend.Editor;
 
 import javafx.scene.Scene;
 import oogasalad.Frontend.MainView;
-import oogasalad.Frontend.SceneView;
+import oogasalad.Frontend.View;
 
 
-public class GameEditorView extends SceneView {
+public class GameEditorView extends View {
+    private ChessBoardView myChessBoard;
+
     public GameEditorView(MainView mainView) {
         super(mainView);
+        myChessBoard = new ChessBoardView();
     }
 
     @Override
     protected Scene makeScene() {
         Scene scene = new Scene(myRoot);
-        myRoot.getChildren().add(makeExitButton());
+        myRoot.getChildren().add(myChessBoard.getNode());
         return scene;
     }
 }

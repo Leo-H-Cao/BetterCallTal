@@ -22,7 +22,7 @@ import oogasalad.GamePlayer.EngineExceptions.MoveAfterGameEndException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
 import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.Movement.Coordinate;
+import oogasalad.Editor.Movement.Coordinate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -128,7 +128,7 @@ public class ChessBoard implements Iterable<ChessTile>{
   /***
    * @return copy of Board object to store in history
    */
-  private ChessBoard deepCopy() {
+  public ChessBoard deepCopy() {
     List<List<ChessTile>> boardCopy = new ArrayList<>();
     IntStream.range(0, this.board.size()).forEach((i) -> {
       boardCopy.add(new ArrayList<>());

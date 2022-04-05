@@ -7,7 +7,7 @@ import oogasalad.Frontend.Game.Sections.BoardGrid;
 import oogasalad.Frontend.Game.Sections.BoardTile;
 import oogasalad.Frontend.Game.Sections.TopSection;
 import oogasalad.Frontend.MainView;
-import oogasalad.Frontend.SceneView;
+import oogasalad.Frontend.View;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnUpdate;
 import oogasalad.GamePlayer.GamePiece.Piece;
@@ -20,7 +20,7 @@ import java.util.Collection;
  */
 
 
-public class GameView extends SceneView {
+public class GameView extends View {
 
     private Collection<ChessTile> myTiles;
     private BoardGrid myBoardGrid;
