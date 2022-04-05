@@ -1,4 +1,4 @@
-package oogasalad.Editor.Movement;
+package oogasalad.GamePlayer.Movement;
 
 import java.util.HashMap;
 import java.util.HashSet;

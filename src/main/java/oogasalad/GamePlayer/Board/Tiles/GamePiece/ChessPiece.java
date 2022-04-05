@@ -2,7 +2,7 @@ package oogasalad.GamePlayer.Board.Tiles.GamePiece;
 
 import java.util.Collection;
 import java.util.List;
-import oogasalad.Editor.Movement.Coordinate;
+import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.UnboundedMovement;

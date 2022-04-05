@@ -33,6 +33,4 @@ public class CheckmateValidator {
     return true;
   }
 
-
-
 }

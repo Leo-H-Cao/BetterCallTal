@@ -1,4 +1,4 @@
-package oogasalad.Editor.Movement.CustomMovements;
+package oogasalad.GamePlayer.Movement.CustomMovements;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,14 +6,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.IntStream;
-
-import oogasalad.Editor.Movement.Coordinate;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
-import oogasalad.Editor.Movement.MovementInterface;
+import oogasalad.GamePlayer.Movement.Coordinate;
+import oogasalad.GamePlayer.Movement.MovementInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

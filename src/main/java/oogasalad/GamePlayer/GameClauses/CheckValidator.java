@@ -5,9 +5,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
-import oogasalad.Editor.Movement.MovementModifiers.MovementModifier;
+import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
+import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
 
 /**
  * @author Jose Santillan

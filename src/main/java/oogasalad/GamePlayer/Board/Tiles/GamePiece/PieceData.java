@@ -1,9 +1,9 @@
 package oogasalad.GamePlayer.Board.Tiles.GamePiece;
 
 import java.util.List;
-import oogasalad.Editor.Movement.Coordinate;
-import oogasalad.Editor.Movement.MovementInterface;
-import oogasalad.Editor.Movement.MovementModifiers.MovementModifier;
+import oogasalad.GamePlayer.Movement.Coordinate;
+import oogasalad.GamePlayer.Movement.MovementInterface;
+import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
 
 public record PieceData(Coordinate startingLocation,
                         String name,
