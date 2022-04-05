@@ -22,7 +22,6 @@ import java.util.Collection;
 
 public class GameView extends View {
 
-    private Collection<ChessTile> myTiles;
     private BoardGrid myBoardGrid;
     private static Integer SCENE_WIDTH_SIZE = 1500;
     private static Integer SCENE_HEIGHT_SIZE = 1000;
@@ -78,12 +77,17 @@ public class GameView extends View {
     @Override
     protected Scene makeScene() {
         BorderPane bp = new BorderPane();
+        myBP = bp;
         bp.setTop(new TopSection(getClass().getSimpleName()).getGP());
 
+        // REMOVE LATER
+        myBoardGrid = new BoardGrid();
+        myBoardGrid.getBoard().setAlignment(Pos.CENTER);
+        bp.setCenter(myBoardGrid.getBoard());
+        //REMOVE LATLER ^^^
 
         myRoot.getChildren().add(bp);
 
-        myBP = bp;
         return new Scene(myRoot, SCENE_WIDTH_SIZE, SCENE_HEIGHT_SIZE);
     }
 

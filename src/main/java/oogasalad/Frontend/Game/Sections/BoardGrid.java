@@ -8,7 +8,7 @@ import javafx.scene.shape.Rectangle;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.Movement.Coordinate;
+import oogasalad.Editor.Movement.Coordinate;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,6 +36,7 @@ public class BoardGrid {
     public BoardGrid() {
         myBoard = new GridPane();
         setUpGP(myBoard, 8, 8);
+        makeBoard2(myBoard, 8, 8);
     }
 
     private void setUpGP(GridPane gp, int rows, int cols) {
@@ -94,4 +95,21 @@ public class BoardGrid {
      * @return GridPane myBoard
      */
     public GridPane getBoard() {return myBoard;}
+
+    /**
+     * THIS METHOD SOLELY FOR TESTING
+     */
+    private void makeBoard2(GridPane gp, int rows, int cols) {
+        for (int r =0; r < rows; r++) {
+            for (int c=0; c < cols; c++) {
+                Rectangle rect = new Rectangle(WIDTH_Board / rows,HEIGHT_BOARD / cols);
+                if ((c+r) % 2 == 1) {
+                    rect.setFill(Color.BLACK);
+                } else {
+                    rect.setFill(Color.WHITESMOKE);
+                }
+                gp.add(rect, r, c);
+            }
+        }
+    }
 }
