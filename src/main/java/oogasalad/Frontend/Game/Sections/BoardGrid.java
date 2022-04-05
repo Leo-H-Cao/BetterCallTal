@@ -8,7 +8,7 @@ import javafx.scene.shape.Rectangle;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.Editor.Movement.Coordinate;
+import oogasalad.GamePlayer.Movement.Coordinate;
 
 import java.util.ArrayList;
 import java.util.Collection;
