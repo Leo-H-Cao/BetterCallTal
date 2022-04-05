@@ -2,6 +2,7 @@ package oogasalad.Frontend;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Screen;
@@ -27,9 +28,15 @@ public abstract class View {
 	 */
 	public Scene getScene() {
 		if(myScene == null) {
-			myScene = makeScene();
+			myScene = createScene();
 		}
 		return myScene;
+	}
+
+	private Scene createScene() {
+		Scene scene = new Scene(myRoot, myScreenSize.getWidth(), myScreenSize.getHeight());
+		myRoot.getChildren().add(makeNode());
+		return scene;
 	}
 
 	/**
@@ -43,7 +50,8 @@ public abstract class View {
 	 * @return The final scene that should be displayed by the frontend.
 	 *     This function is called in the constructor and the return value is saved in myScene
 	 */
-	protected abstract Scene makeScene();
+
+	protected abstract Node makeNode();
 
 	protected MainView getMainView() {
 		return myMainView;

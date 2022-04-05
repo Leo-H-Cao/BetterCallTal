@@ -1,5 +1,6 @@
 package oogasalad.Frontend.Game;
 
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import oogasalad.Frontend.MainView;
 import oogasalad.Frontend.View;
@@ -51,9 +52,7 @@ public class GameView extends View {
     public void completeMove(Collection<ChessTile> newboard, Collection<Piece> newpieces){}
 
     @Override
-    protected Scene makeScene() {
-        Scene scene = new Scene(myRoot, myScreenSize.getWidth(), myScreenSize.getHeight());
-        myRoot.getChildren().add(makeExitButton());
-        return scene;
+    protected Node makeNode() {
+        return makeExitButton();
     }
 }
