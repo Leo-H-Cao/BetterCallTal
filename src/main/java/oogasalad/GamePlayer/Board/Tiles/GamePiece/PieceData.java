@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer.GamePiece;
+package oogasalad.GamePlayer.Board.Tiles.GamePiece;
 
 import java.util.List;
 import oogasalad.Editor.Movement.Coordinate;

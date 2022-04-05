@@ -12,7 +12,7 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
 import oogasalad.Editor.Movement.MovementInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

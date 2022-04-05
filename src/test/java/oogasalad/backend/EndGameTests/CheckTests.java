@@ -2,6 +2,7 @@ package oogasalad.backend.EndGameTests;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.Collections;
 import java.util.List;
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -13,8 +14,8 @@ import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GameClauses.CheckValidator;
-import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.GamePiece.PieceData;
+import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
+import oogasalad.GamePlayer.Board.Tiles.GamePiece.PieceData;
 import oogasalad.Editor.Movement.Coordinate;
 import oogasalad.Editor.Movement.Movement;
 import org.junit.jupiter.api.BeforeEach;

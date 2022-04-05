@@ -3,7 +3,7 @@ package oogasalad.Editor.Movement.MovementModifiers;
 import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
 
 public interface MovementModifier {
 

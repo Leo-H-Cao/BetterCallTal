@@ -4,7 +4,7 @@ import javafx.scene.Scene;
 import oogasalad.Frontend.MainView;
 import oogasalad.Frontend.View;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
 import java.util.Collection;
 
 /**
