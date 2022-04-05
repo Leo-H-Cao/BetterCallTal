@@ -23,8 +23,6 @@ import java.util.Collection;
 public class GameView extends View {
 
     private BoardGrid myBoardGrid;
-    private static Integer SCENE_WIDTH_SIZE = 1500;
-    private static Integer SCENE_HEIGHT_SIZE = 1000;
     private static final String TITLE = "Title";
     private Integer Turn;
     private static Integer myID;

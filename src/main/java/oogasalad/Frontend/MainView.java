@@ -4,6 +4,7 @@ import javafx.stage.Stage;
 import oogasalad.Frontend.Editor.GameEditorView;
 import oogasalad.Frontend.Game.GameView;
 import oogasalad.Frontend.Menu.HomeView;
+import oogasalad.Frontend.Menu.HostGame;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class MainView {
 		addView(new HomeView(this));
 		addView(new GameView(this));
 		addView(new GameEditorView(this));
+		addView(new HostGame(this));
 
 		// Changes the current scene to the home page on initialization
 		myViews.stream().filter((e) -> e.getClass() == HomeView.class).forEach(this::changeScene);
