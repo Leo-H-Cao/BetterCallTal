@@ -34,7 +34,6 @@ public class CheckValidator implements MovementModifier {
         .anyMatch(piece -> piece.validCapture(targetPieces.stream()
             .map(Piece::getCoordinates)
             .collect(Collectors.toList())));
-
   }
 
   @Override

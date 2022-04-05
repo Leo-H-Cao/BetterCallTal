@@ -28,7 +28,7 @@ import org.junit.jupiter.api.Test;
 public class CheckmateTests {
 
   private static final int TEAM_1 = 1;
-  private static final int TEAM_2 = 2;
+  private static final int TEAM_2 = 0;
 
   private ChessBoard board;
   private List<Piece> pieces;
@@ -36,8 +36,8 @@ public class CheckmateTests {
   @BeforeEach
   void setUp() {
 
-    Player playerOne = new Player(0, new int[]{1});
-    Player playerTwo = new Player(1, new int[]{0});
+    Player playerOne = new Player(1, new int[]{1});
+    Player playerTwo = new Player(2, new int[]{0});
     Player[] players = new Player[]{playerOne, playerTwo};
 
     Linear turnCriteria = new Linear(players);
@@ -45,7 +45,6 @@ public class CheckmateTests {
 
     board = new ChessBoard(8, 8, turnCriteria, players, List.of(endCondition));
     pieces = new ArrayList<>();
-
   }
 
   Piece makeKing(int row, int col, int team) {
@@ -63,10 +62,16 @@ public class CheckmateTests {
   }
 
   Piece makeRook(int row, int col, int team) {
+    Movement rookMovement = new Movement(List.of(
+        new Coordinate(1, 0),
+        new Coordinate(-1, 0),
+        new Coordinate(0, 1),
+        new Coordinate(0, -1)),
+        true);
+
     return new Piece(new PieceData(new Coordinate(row, col),
         "rook" + team, 0, team, false,
-        List.of(new Movement(List.of(new Coordinate(1, 0), new Coordinate(-1, 0), new Coordinate(0, 1), new Coordinate(0, -1)),
-            true)),
+        List.of(rookMovement),
         Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
   }
 
@@ -78,11 +83,14 @@ public class CheckmateTests {
   void playerInMate() throws OutsideOfBoardException {
 
     //TODO DOES NOT WORK BECAUSE INFINITE MOVEMENT DOES NOT WORK YET (I THINK)
-    pieces.addAll(List.of(makeKing(0, 0, 0), makeRook(2, 0, 1), makeRook(2, 1, 1)));
+    pieces.addAll(List.of(makeKing(0, 0, TEAM_1),
+        makeRook(2, 0, TEAM_2),
+        makeRook(2, 1, TEAM_2)));
+
     board.setPieces(pieces);
     System.out.println(board);
-    assertTrue(CheckmateValidator.isInMate(board, 0));
-
+    assertTrue(CheckValidator.isInCheck(board, TEAM_1));
+    assertTrue(CheckmateValidator.isInMate(board, TEAM_1));
   }
 
   /**
@@ -91,18 +99,27 @@ public class CheckmateTests {
    */
   @Test
   void playerInMate2() throws OutsideOfBoardException {
-    pieces.addAll(List.of(makeKing(0, 0, TEAM_1), makePawn(1, 0, TEAM_2), makePawn(2, 1, TEAM_2), makePawn(1, 1, TEAM_2), makePawn(2, 0, TEAM_2)));
+    pieces.addAll(List.of(makeKing(0, 0, TEAM_2),
+        makePawn(1, 0, TEAM_1),
+        makePawn(2, 1, TEAM_1),
+        makePawn(1, 1, TEAM_1),
+        makePawn(2, 0, TEAM_1)));
+
     board.setPieces(pieces);
     System.out.println(board);
-    assertTrue(CheckmateValidator.isInMate(board, 0));
+    assertTrue(CheckValidator.isInCheck(board, TEAM_2));
+    assertTrue(CheckmateValidator.isInMate(board, TEAM_2));
   }
 
 
   @Test
   void boardNotInCheckmate() throws OutsideOfBoardException {
-    pieces.addAll(List.of(makeKing(0, 0, TEAM_1), makePawn(3, 0, TEAM_2)));
+    pieces.addAll(List.of(
+        makeKing(0, 0, TEAM_1),
+        makePawn(3, 0, TEAM_2)));
+
     board.setPieces(pieces);
-    assertFalse(CheckmateValidator.isInMate(board, 0));
+    assertFalse(CheckmateValidator.isInMate(board, TEAM_1));
   }
 
   @Test
@@ -132,11 +149,13 @@ public class CheckmateTests {
     board.setPieces(pieces);
     System.out.println(board);
     assertFalse(CheckmateValidator.isInMate(board, TEAM_1));
+
+    //Some Movement
     rook1.move(board.getTile(new Coordinate(1, 0)));
     rook2.move(board.getTile(new Coordinate(1, 0)));
     king1.move(board.getTile(new Coordinate(1, 0)));
-    assertTrue(CheckmateValidator.isInMate(board, TEAM_2));
 
+    assertTrue(CheckmateValidator.isInMate(board, TEAM_2));
   }
 
 }
