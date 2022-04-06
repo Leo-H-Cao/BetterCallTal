@@ -12,15 +12,14 @@ public class PiecesManager {
     availablePieces = new ArrayList<>();
   }
 
-  public EditorPiece createPiece(int points, MovementRules movementRules, String pieceID, String pieceName, PieceInfo pieceInfo) {
-    EditorPiece newPiece = new EditorPiece(points, movementRules, pieceID, pieceName, pieceInfo);
+  public EditorPiece createPiece(int points, MovementRules movementRules, String pieceID, String pieceName, int teamNumber, String image) {
+    EditorPiece newPiece = new EditorPiece(points, movementRules, pieceID, pieceName, teamNumber, image);
     availablePieces.add(newPiece);
     return newPiece;
   }
 
   public void changePieceImage(String pieceID, String pieceImage){
-    PieceInfo pieceInfo = findPiece(pieceID).getPieceInfo();
-    pieceInfo.setImage(pieceImage);
+    findPiece(pieceID).setPieceImage(pieceImage);
   }
 
   public void changePieceMovement(String pieceID, MovementRules movementRules){
@@ -31,26 +30,16 @@ public class PiecesManager {
     return findPiece(pieceID);
   }
 
+  public List<EditorPiece> getAllPieces(){
+    return availablePieces;
+  }
+
   public void setPieceName(String pieceID, String name){
     findPiece(pieceID).setPieceName(name);
   }
 
   public void setPiecePointValue(String pieceID, int points){
     findPiece(pieceID).setPointValue(points);
-  }
-
-  public void setStartingLocation(String pieceID, int startX, int startY){
-    PieceInfo pieceInfo = findPiece(pieceID).getPieceInfo();
-    pieceInfo.setStartingPosX(startX);
-    pieceInfo.setStartingPosY(startY);
-  }
-
-  public List<PieceInfo> getAllPieceInfo(){
-    List<PieceInfo> allPieceInfo = new ArrayList<>();
-    for( EditorPiece piece: availablePieces){
-      allPieceInfo.add(piece.getPieceInfo());
-    }
-    return allPieceInfo;
   }
 
   private EditorPiece findPiece(String pieceID){

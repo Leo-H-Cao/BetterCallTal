@@ -38,18 +38,18 @@ class BoardStateTest {
     assertEquals(newWidth, boardState.getBoardWidth());
   }
 
-  @Test
-  void testChangePieceStartingLocation(){
-    String pieceID = "123";
-    piecesState.createCustomPiece(1, 1, "image.png", new MovementRules(), pieceID, "my piece");
-    assertEquals(0, piecesState.getPieceInfo(pieceID).getStartingPosX());
-    assertEquals(0, piecesState.getPieceInfo(pieceID).getStartingPosY());
-    int newX = 6;
-    int newY = 5;
-    boardState.setPieceStartingLocation(pieceID, newX, newY);
-    assertEquals(newX, piecesState.getPieceInfo(pieceID).getStartingPosX());
-    assertEquals(newY, piecesState.getPieceInfo(pieceID).getStartingPosY());
-  }
+//  @Test
+//  void testChangePieceStartingLocation(){
+//    String pieceID = "123";
+//    piecesState.createCustomPiece(1, 1, "image.png", new MovementRules(), pieceID, "my piece");
+//    assertEquals(0, piecesState.getPieceInfo(pieceID).getStartingPosX());
+//    assertEquals(0, piecesState.getPieceInfo(pieceID).getStartingPosY());
+//    int newX = 6;
+//    int newY = 5;
+//    boardState.setPieceStartingLocation(pieceID, newX, newY);
+//    assertEquals(newX, piecesState.getPieceInfo(pieceID).getStartingPosX());
+//    assertEquals(newY, piecesState.getPieceInfo(pieceID).getStartingPosY());
+//  }
 
 
 }
