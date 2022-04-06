@@ -13,12 +13,13 @@ import java.util.MissingResourceException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public abstract class View {
 
 	protected Scene myScene;
 	protected Group myRoot;
 	protected Rectangle2D myScreenSize;
-	protected ResourceBundle myResources;
+	protected Optional<ResourceBundle> myResources;
 	private final MainView myMainView;
 
 	public View(MainView mainView) {
@@ -26,9 +27,9 @@ public abstract class View {
 		myMainView = mainView;
 		myRoot = new Group();
 		try {
-			myResources = ResourceBundle.getBundle(getClass().getSimpleName());
+			myResources = Optional.of(ResourceBundle.getBundle(getClass().getSimpleName()));
 		} catch (MissingResourceException e) {
-			// Do nothing if file isn't found
+			myResources = Optional.empty();
 		}
 	}
 

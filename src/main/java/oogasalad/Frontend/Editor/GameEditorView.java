@@ -11,7 +11,6 @@ import oogasalad.Frontend.MainView;
 import oogasalad.Frontend.View;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
