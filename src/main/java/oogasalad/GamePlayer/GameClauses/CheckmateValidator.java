@@ -3,8 +3,15 @@ package oogasalad.GamePlayer.GameClauses;
 import static oogasalad.GamePlayer.GameClauses.CheckValidator.isInCheck;
 import static oogasalad.GamePlayer.GameClauses.StalemateValidator.isStaleMate;
 
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
+import oogasalad.GamePlayer.Movement.MovementInterface;
 
 /**
  * This class
@@ -22,14 +29,22 @@ public class CheckmateValidator {
     return CheckValidator.isInCheck(board, id) && StalemateValidator.isStaleMate(board, id);
   }
 
-  public static boolean isInMate2(ChessBoard board, int id) throws OutsideOfBoardException {
+  public static boolean isInMate2(ChessBoard board, int id) throws EngineException {
     if (!isInCheck(board, id) || isStaleMate(board, id)) return false;
 
-    boolean mainCanMove = board.getPieces().stream()
-        .anyMatch(p -> p.checkTeam(id) && p.isTargetPiece());
-    if (mainCanMove) return false;
+    Piece targetPiece = board.getPieces().stream()
+        .filter(piece -> piece.isTargetPiece() && piece.checkTeam(id))
+        .toList().get(0);
 
-    //TODO finish implementing checkmate
+    Set<Piece> friendlyPieces = StalemateValidator.friendlyPieces(board, id);
+
+    for (Piece p : friendlyPieces) {
+      for (ChessTile move : p.getMoves()) {
+        ChessBoard tempBoard = board.deepCopy();
+        board.move(p, move.getCoordinates());
+        if (!CheckValidator.isInCheck(tempBoard, id)) return false;
+      }
+    }
     return true;
   }
 
