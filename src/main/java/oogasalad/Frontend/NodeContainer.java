@@ -30,8 +30,5 @@ public abstract class NodeContainer {
 		return myNode;
 	}
 
-	/**
-	 * @return Parent node of this class. This function is called the first time getNode is called and the result is saved in myNode
-	 */
 	protected abstract Node makeNode();
 }
