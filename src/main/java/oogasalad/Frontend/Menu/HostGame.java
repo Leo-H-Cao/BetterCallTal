@@ -1,17 +1,31 @@
 package oogasalad.Frontend.Menu;
 
+import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import oogasalad.Frontend.MainView;
 import oogasalad.Frontend.View;
+import oogasalad.Frontend.util.ButtonFactory;
+import oogasalad.Frontend.util.ButtonType;
 
+import java.io.File;
 
 
 public class HostGame extends View {
 
     private static final String TITLE = "Title";
+    private static final String Load_Button_ID = "Upload";
+    private static final String LOAD = "Load";
     private static final String PROMPT = "Prompt";
+    private final Integer TITLE_SIZE = 64;
+    private final Integer PROMPT_SIZE = 40;
 
     public HostGame(MainView mainview) {
         super(mainview);
@@ -28,11 +42,41 @@ public class HostGame extends View {
 
     private StackPane MakeStackPane() {
         StackPane sp = new StackPane();
+        sp.setPrefSize(myScreenSize.getWidth(), myScreenSize.getHeight());
+        Node exit = makeExitGroup();
+        Node title = makeLabelGroup(getLanguageResource(TITLE), TITLE_SIZE);
+        Node prompt = makeLabelGroup(getLanguageResource(PROMPT), PROMPT_SIZE);
+        Node load = makeFileUploadGroup();
 
-        Text title = new Text(MainView.getLanguage().getString(getClass().getSimpleName() + TITLE));
-        Text prompt = new Text(MainView.getLanguage().getString(getClass().getSimpleName() + PROMPT));
+        sp.setAlignment(exit, Pos.TOP_LEFT);
+        sp.setAlignment(title, Pos.TOP_CENTER);
+        sp.setAlignment(prompt, Pos.CENTER);
+        sp.setAlignment(load, Pos.CENTER_RIGHT);
 
-        sp.getChildren().addAll(title, prompt);
+        sp.getChildren().addAll(exit, title, prompt, load);
         return sp;
+    }
+
+    private Node makeExitGroup() {
+        Button Exit = makeExitButton();
+        return new Group(Exit);
+    }
+
+    private Node makeFileUploadGroup() {
+        Button load = ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource(LOAD), Load_Button_ID,
+                (e) -> {
+                    File f = getMainView().chooseLoadFile();
+                    getMainView().getMyBackend().initalizeChessBoard(f);
+                });
+        load.setPrefWidth(150);
+        load.setPrefHeight(50);
+        return new Group(load);
+    }
+
+    private Node makeLabelGroup(String s, Integer size){
+        Label l = new Label(s);
+        l.setFont(new Font(size));
+        l.setTextAlignment(TextAlignment.CENTER);
+        return new Group(l);
     }
 }

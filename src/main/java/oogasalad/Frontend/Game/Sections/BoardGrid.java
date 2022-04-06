@@ -106,14 +106,9 @@ public class BoardGrid {
     private void makeBoard2(GridPane gp, int rows, int cols) {
         for (int r =0; r < rows; r++) {
             for (int c=0; c < cols; c++) {
-                Rectangle rect = new Rectangle(WIDTH_Board / rows,HEIGHT_BOARD / cols);
-                if ((c+r) % 2 == 1) {
+                Rectangle rect = new Rectangle(WIDTH_Board / rows, HEIGHT_BOARD / cols);
+                if ((c + r) % 2 == 1) {
                     rect.setFill(Color.BLACK);
                 } else {
-                    rect.setFill(Color.WHITESMOKE);
-                }
-                gp.add(rect, r, c);
-            }
-        }
-    }
-}
+                    rect.setFill(Color.WHITESMOKE);}
+                gp.add(rect, r, c);}}}}
