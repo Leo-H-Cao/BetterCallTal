@@ -1,6 +1,5 @@
 package oogasalad.Frontend;
 
-import javafx.scene.layout.Background;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Editor.GameEditorView;
@@ -8,6 +7,7 @@ import oogasalad.Frontend.Game.GameBackend;
 import oogasalad.Frontend.Game.GameView;
 import oogasalad.Frontend.Menu.HomeView;
 import oogasalad.Frontend.Menu.HostGame;
+import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
 import java.io.File;
@@ -15,16 +15,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
-public class MainView {
+public class ViewManager {
 	// Bundle made static so all classes can easily access the language
 	private static ResourceBundle langBundle;
 
 	private final Collection<View> myViews;
 	private final Stage stage;
-	private GameBackend myBackend;
+	private final GameBackend myGameBackend;
 
-	public MainView(Stage stage, ResourceBundle rb) {
-		myBackend = new GameBackend();
+	public ViewManager(Stage stage, ResourceBundle rb) {
+		myGameBackend = new GameBackend(this);
 		myViews = new ArrayList<>();
 		this.stage = stage;
 		langBundle = rb;
@@ -70,5 +70,5 @@ public class MainView {
 		FileChooser fileChooser = new FileChooser();
 		return fileChooser.showOpenDialog(stage);
 	}
-	public GameBackend getMyBackend(){return myBackend;}
+	public GameBackend getMyGameBackend(){return myGameBackend;}
 }

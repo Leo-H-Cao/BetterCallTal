@@ -1,4 +1,4 @@
-package oogasalad.Editor.ModelState;
+package oogasalad.Editor;
 
 import java.io.FileWriter;
 import java.io.IOException;

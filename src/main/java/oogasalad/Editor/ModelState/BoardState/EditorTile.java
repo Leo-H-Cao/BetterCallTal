@@ -23,12 +23,12 @@ public class EditorTile {
     myTileEffect = TileEffect.NONE;
   }
 
-//  public void addPiece(EditorPiece piece){
-//    myEditorPiece = piece;
-//  }
-//
-//  public void removePiece(){
-//    myEditorPiece = null;
-//  }
+  public void addPiece(EditorPiece piece){
+    myEditorPiece = piece;
+  }
+
+  public void removePiece(){
+    myEditorPiece = null;
+  }
 
 }

@@ -3,6 +3,7 @@ package oogasalad.Editor.ModelState.BoardState;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import oogasalad.Editor.ModelState.PiecesState.EditorPiece;
 
 public class EditorBoard {
 
@@ -57,13 +58,13 @@ public class EditorBoard {
     board.get(y).get(x).deleteTileEffect();
   }
 
-//  public void addPieceStartingLocation(EditorPiece piece, int x, int y){
-//    board.get(y).get(x).addPiece(piece);
-//  }
+  public void addPieceStartingLocation(EditorPiece piece, int x, int y){
+    board.get(y).get(x).addPiece(piece);
+  }
 
-//  public void removePieceStartingLocation(int x, int y){
-//    board.get(y).get(x).removePiece();
-//  }
+  public void removePieceStartingLocation(int x, int y){
+    board.get(y).get(x).removePiece();
+  }
 
   public int getBoardWidth(){
     return board.get(0).size();

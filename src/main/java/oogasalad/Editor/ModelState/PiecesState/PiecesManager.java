@@ -5,7 +5,7 @@ import java.util.List;
 
 public class PiecesManager {
 
-  private List<EditorPiece> availablePieces;
+  private ArrayList<EditorPiece> availablePieces;
 
   public PiecesManager(){
     availablePieces = new ArrayList<>();
@@ -44,6 +44,17 @@ public class PiecesManager {
     pieceInfo.setStartingPosY(startY);
   }
 
+  public List<PieceInfo> getAllPieceInfo(){
+    List<PieceInfo> allPieceInfo = new ArrayList<>();
+    for( EditorPiece piece: availablePieces){
+      allPieceInfo.add(piece.getPieceInfo());
+    }
+    return allPieceInfo;
+  }
+
+  public List<EditorPiece> getAllPieces() {
+    return availablePieces;
+  }
 
   private EditorPiece findPiece(String pieceID){
     for(EditorPiece piece : availablePieces){
@@ -53,5 +64,4 @@ public class PiecesManager {
     }
     return null;
   }
-
 }

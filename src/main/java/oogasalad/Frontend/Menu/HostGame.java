@@ -6,13 +6,11 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import oogasalad.Frontend.Game.GameView;
-import oogasalad.Frontend.MainView;
-import oogasalad.Frontend.View;
+import oogasalad.Frontend.ViewManager;
+import oogasalad.Frontend.util.View;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -29,14 +27,13 @@ public class HostGame extends View {
     private final Integer TITLE_SIZE = 64;
     private final Integer PROMPT_SIZE = 40;
 
-    public HostGame(MainView mainview) {
+    public HostGame(ViewManager mainview) {
         super(mainview);
     }
 
     @Override
     protected Node makeNode() {
-        StackPane sp = MakeStackPane();
-        return sp;
+        return MakeStackPane();
     }
 
     private StackPane MakeStackPane() {
@@ -61,6 +58,9 @@ public class HostGame extends View {
                 (e) -> getMainView().getViews().stream().filter((c) -> c.getClass() == GameView.class).forEach((c) ->
                         getMainView().changeScene(c)));
 
+        Button start = ButtonFactory.makeButton(ButtonType.TEXT, ViewManager.getLanguage().getString("Start"), "start",
+                (e) -> getViewManager().getViews().stream().filter((c) -> c.getClass() == GameView.class).forEach((c) ->
+                        getViewManager().changeScene(c)));
         start.setPrefWidth(150);
         start.setPrefHeight(50);
         return new Group(start);
@@ -74,7 +74,7 @@ public class HostGame extends View {
     private Node makeFileUploadGroup(StackPane sp) {
         Button load = ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource(LOAD), Load_Button_ID,
                 (e) -> {
-                    File f = getMainView().chooseLoadFile();
+                    File f = getViewManager().chooseLoadFile();
                     ChessBoard cb = getMainView().getMyBackend().initalizeChessBoard(f);
 
                     getMainView().getViews().stream()

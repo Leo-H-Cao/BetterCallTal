@@ -1,6 +1,6 @@
 package oogasalad.Frontend.Game;
 
-import oogasalad.Frontend.MainView;
+import oogasalad.Frontend.ViewManager;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.Server.BoardSetup;
 
@@ -15,6 +15,8 @@ public class GameBackend {
 
     private ChessBoard myChessBoard;
 
+
+    public void initalizeChessBoard(File JSON) {
     public ChessBoard initalizeChessBoard(File JSON) {
         try {
             BoardSetup bs = new BoardSetup(JSON.getPath());
