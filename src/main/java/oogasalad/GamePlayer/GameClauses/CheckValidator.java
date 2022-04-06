@@ -5,8 +5,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
 
 /**
@@ -26,7 +26,7 @@ public class CheckValidator implements MovementModifier {
 
     List<Piece> targetPieces = board.targetPiece(id);
 
-    boolean isInCheck = board.stream()
+    return board.stream()
         .flatMap(List::stream).toList().stream()
         .map(ChessTile::getPieces)
         .flatMap(List::stream).toList().stream()
@@ -34,19 +34,6 @@ public class CheckValidator implements MovementModifier {
         .anyMatch(piece -> piece.validCapture(targetPieces.stream()
             .map(Piece::getCoordinates)
             .collect(Collectors.toList())));
-
-    if (!isInCheck) return false;
-
-//    boolean check;
-//    for (ChessTile tile : board) {
-//      check = tile.getPieces()
-//          .stream()
-//          .filter(piece -> !piece.checkTeam(id))
-//          .anyMatch(piece -> piece.canCapture(targetPieces));
-//
-//    }
-//    return false;
-    return false;
   }
 
   @Override

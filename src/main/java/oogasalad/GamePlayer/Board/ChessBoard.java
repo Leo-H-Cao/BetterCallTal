@@ -16,12 +16,12 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.MoveAfterGameEndException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
-import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -275,6 +275,16 @@ public class ChessBoard implements Iterable<ChessTile>{
    */
   public int[] getTeams() {
     return teamNums;
+  }
+
+  /**
+   * Gets all the pieces on the board
+   */
+  public List<Piece> getPieces() {
+    return board.stream()
+        .flatMap(List::stream).toList().stream()
+        .map(ChessTile::getPieces)
+        .flatMap(List::stream).toList();
   }
 
   /***

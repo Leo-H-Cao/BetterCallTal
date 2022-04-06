@@ -1,12 +1,12 @@
 package oogasalad.Frontend.Game.Sections;
 
+import java.util.ArrayList;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import java.util.ArrayList;
 
 
 /**
@@ -14,6 +14,7 @@ import java.util.ArrayList;
  */
 
 public class BoardTile {
+
     private StackPane myStackPane;
     private static Rectangle myRectangle;
     private static ArrayList<String> myImages;

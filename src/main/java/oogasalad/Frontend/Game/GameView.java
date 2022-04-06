@@ -1,5 +1,6 @@
 package oogasalad.Frontend.Game;
 
+import java.util.Collection;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
@@ -9,9 +10,8 @@ import oogasalad.Frontend.MainView;
 import oogasalad.Frontend.View;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
 import oogasalad.GamePlayer.Board.TurnUpdate;
-import oogasalad.GamePlayer.GamePiece.Piece;
-import java.util.Collection;
 
 /**
  * This class will handle the View for the game being played.

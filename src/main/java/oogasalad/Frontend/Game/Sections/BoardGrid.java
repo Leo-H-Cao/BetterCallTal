@@ -1,15 +1,21 @@
 package oogasalad.Frontend.Game.Sections;
 
-import javafx.scene.layout.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
-
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * This class is handles the chess board GridPane.
