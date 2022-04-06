@@ -1,9 +1,9 @@
 package oogasalad.Editor.API;
 
 
-import oogasalad.Editor.ModelState.EditorPiece;
-import oogasalad.Editor.ModelState.MovementRules;
-import oogasalad.Editor.ModelState.PieceInfo;
+import oogasalad.Editor.ModelState.PiecesState.EditorPiece;
+import oogasalad.Editor.ModelState.PiecesState.MovementRules;
+import oogasalad.Editor.ModelState.PiecesState.PieceInfo;
 
 public interface ModifiesPiecesState {
 

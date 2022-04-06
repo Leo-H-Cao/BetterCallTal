@@ -1,7 +1,10 @@
-package oogasalad.Editor.ModelState;
+package oogasalad.Editor.ModelState.BoardState;
 
 
 import oogasalad.Editor.API.ModifiesBoardState;
+import oogasalad.Editor.ModelState.PiecesState.EditorPiece;
+import oogasalad.Editor.ModelState.ModelState;
+import oogasalad.Editor.ModelState.PiecesState.MovementRules;
 
 public class BoardState extends ModelState implements ModifiesBoardState {
 

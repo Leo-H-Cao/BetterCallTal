@@ -1,7 +1,8 @@
-package oogasalad.Editor.ModelState;
+package oogasalad.Editor.ModelState.PiecesState;
 
 
 import oogasalad.Editor.API.ModifiesPiecesState;
+import oogasalad.Editor.ModelState.ModelState;
 
 public class PiecesState extends ModelState implements ModifiesPiecesState {
 

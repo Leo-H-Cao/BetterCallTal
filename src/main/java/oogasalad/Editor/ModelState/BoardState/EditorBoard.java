@@ -1,4 +1,4 @@
-package oogasalad.Editor.ModelState;
+package oogasalad.Editor.ModelState.BoardState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.Locale;
 public class EditorBoard {
 
   private final int DEFAULT_BOARD_SIZE = 8;
-  private List<List<oogasalad.Editor.ModelState.EditorTile>> board;
+  private List<List<EditorTile>> board;
 
   public EditorBoard(){
     board = new ArrayList<>(DEFAULT_BOARD_SIZE);
