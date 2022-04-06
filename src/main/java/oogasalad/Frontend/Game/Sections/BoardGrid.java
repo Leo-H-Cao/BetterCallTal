@@ -21,14 +21,13 @@ public class BoardGrid {
     private static Double HEIGHT_BOARD = 600.0;
     private static Double WIDTH_Board = 600.0;
     private ArrayList<BoardTile> myBoardTiles;
-    private Border myLitUpBorder;
-    private Double BORDER_WIDTH = 5.0;
+
 
     public BoardGrid(ChessBoard cb, int PlayerID) {
         myBoard = new GridPane();
         setUpGP(myBoard, cb.getBoardHeight(), cb.getBoardLength());
         makeBoard(myBoard, cb, PlayerID);
-        myLitUpBorder = makeLitUpBorder();
+
     }
 
     /**
@@ -37,7 +36,6 @@ public class BoardGrid {
     public BoardGrid() {
         myBoard = new GridPane();
         setUpGP(myBoard, 8, 8);
-        myLitUpBorder = makeLitUpBorder();
         makeBoard2(myBoard, 8, 8);
     }
 
@@ -56,6 +54,7 @@ public class BoardGrid {
             int grid_x = ct.getCoordinates().getRow();
             int grid_y = ct.getCoordinates().getCol();
             BoardTile tile = new BoardTile(grid_x, grid_y, cb.getBoardHeight(), cb.getBoardLength());
+            tile.LightUp(Boolean.TRUE);
             if (! ct.getPieces().isEmpty()) {
                 for (Piece p : ct.getPieces()) {
                     tile.givePiece(p);}}
@@ -94,11 +93,6 @@ public class BoardGrid {
      */
     public GridPane getBoard() {return myBoard;}
 
-    private Border makeLitUpBorder() {
-        BorderStroke bordstroke = new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(BORDER_WIDTH));
-        Border bord = new Border(bordstroke);
-        return bord;
-    }
 
     /**
      * THIS METHOD SOLELY FOR TESTING
@@ -106,9 +100,6 @@ public class BoardGrid {
     private void makeBoard2(GridPane gp, int rows, int cols) {
         for (int r =0; r < rows; r++) {
             for (int c=0; c < cols; c++) {
-                Rectangle rect = new Rectangle(WIDTH_Board / rows, HEIGHT_BOARD / cols);
-                if ((c + r) % 2 == 1) {
-                    rect.setFill(Color.BLACK);
-                } else {
-                    rect.setFill(Color.WHITESMOKE);}
-                gp.add(rect, r, c);}}}}
+                BoardTile tile = new BoardTile(c, r, rows, cols);
+                tile.LightUp(Boolean.FALSE);
+                gp.add(tile.getMyStackPane(), r, c);}}}}

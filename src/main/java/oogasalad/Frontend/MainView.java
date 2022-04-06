@@ -34,7 +34,9 @@ public class MainView {
 		addView(new HostGame(this));
 
 		// Changes the current scene to the home page on initialization
-		myViews.stream().filter((e) -> e.getClass() == HomeView.class).forEach(this::changeScene);
+		myViews.stream()
+				.filter(e -> e.getClass() == HomeView.class)
+				.forEach(this::changeScene);
 	}
 
 	private void addView(View view) {

@@ -1,6 +1,6 @@
 package oogasalad.Frontend.Game.Sections;
 
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
@@ -21,6 +21,9 @@ public class BoardTile {
     private static Double HEIGHT_BOARD = 600.0;
     private static Double WIDTH_Board = 600.0;
     private static Coordinate myCoord;
+    private Border myLitUpBorder;
+    private Border myClearBorder;
+    private Double BORDER_WIDTH = 5.0;
 
     public BoardTile(int x, int y, int rows, int cols) {
         myCoord = new Coordinate(y, x);
@@ -30,6 +33,8 @@ public class BoardTile {
         myStackPane.getChildren().add(myRectangle);
         myPieces = new ArrayList<>();
         myImages = new ArrayList<>();
+        myLitUpBorder = makeLitUpBorder();
+        myClearBorder = makeClearBorder();
     }
 
     /**
@@ -69,6 +74,25 @@ public class BoardTile {
         } else {
             myRectangle.setFill(Color.WHITESMOKE);
         }
+    }
+
+    public void LightUp(Boolean b) {
+        if (b) {
+            myStackPane.setBorder(myLitUpBorder);
+        } else {
+            myStackPane.setBorder(myClearBorder);
+        }
+    }
+
+    private Border makeLitUpBorder() {
+        BorderStroke bordstroke = new BorderStroke(Color.CYAN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(BORDER_WIDTH));
+        Border bord = new Border(bordstroke);
+        return bord;
+    }
+    private Border makeClearBorder() {
+        BorderStroke bordstroke = new BorderStroke(Color.TRANSPARENT, BorderStrokeStyle.NONE, CornerRadii.EMPTY, new BorderWidths(BORDER_WIDTH));
+        Border bord = new Border(bordstroke);
+        return bord;
     }
 
     public StackPane getMyStackPane() {return myStackPane;}

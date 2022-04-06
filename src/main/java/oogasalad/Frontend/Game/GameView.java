@@ -42,7 +42,7 @@ public class GameView extends View {
     public void SetUpBoard(ChessBoard chessboard, int id) {
         Turn = 0;   // give white player first turn
         myID = id;
-        //myBoardGrid = new BoardGrid(chessboard, id); UNCOMMENT WHEN JSON IS READY
+        myBoardGrid = new BoardGrid(chessboard, id); //TODO: Figure out player ID stuff
         myBoardGrid = new BoardGrid();
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
         myBP.setCenter(myBoardGrid.getBoard());
