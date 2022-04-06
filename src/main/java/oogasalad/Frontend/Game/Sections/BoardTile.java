@@ -14,6 +14,7 @@ import oogasalad.GamePlayer.Movement.Coordinate;
  */
 
 public class BoardTile {
+
     private StackPane myStackPane;
     private static Rectangle myRectangle;
     private static ArrayList<String> myImages;
