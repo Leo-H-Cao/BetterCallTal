@@ -28,4 +28,8 @@ public interface ModifiesBoardState {
   int getBoardWidth();
 
   int getBoardHeight();
+
+  void setPieceStartingLocation(String pieceID, int x, int y);
+
+  void removePiece(String pieceID, int x, int y);
 }

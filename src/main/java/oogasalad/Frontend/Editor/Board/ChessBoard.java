@@ -2,8 +2,8 @@ package oogasalad.Frontend.Editor.Board;
 
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
-import javafx.scene.shape.StrokeType;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
+import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Frontend.NodeContainer;
 
 public class ChessBoard extends NodeContainer {
@@ -11,7 +11,9 @@ public class ChessBoard extends NodeContainer {
 	private final BoardState myBackend;
 
 	public ChessBoard() {
-		myBackend = new BoardState();
+		BoardAndPieces board = new BoardAndPieces();
+		myBackend = board.getBoardState();
+		PiecesState ps = board.getPiecesState();
 	}
 
 	@Override

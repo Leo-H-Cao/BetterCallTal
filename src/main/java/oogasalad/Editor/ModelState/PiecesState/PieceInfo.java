@@ -9,9 +9,7 @@ public class PieceInfo {
   private String myImage;
   private int team;
 
-  public PieceInfo(int startX, int startY, String imageFile, int teamNumber){
-    startingPosX = startX;
-    startingPosY = startY;
+  public PieceInfo(String imageFile, int teamNumber){
     myImage = imageFile;
     team = teamNumber;
   }
