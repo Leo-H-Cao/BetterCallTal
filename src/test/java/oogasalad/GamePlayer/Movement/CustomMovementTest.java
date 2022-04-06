@@ -75,10 +75,10 @@ class CustomMovementTest {
   }
 
   // Uncomment once movement fully implemented
-  //@Test
+  @Test
   void castleTestMovementK() {
     try {
-      otherKing = new Piece(new PieceData(new Coordinate(0, 4), "whiteKing", 0, 0, true,
+      whiteKing = new Piece(new PieceData(new Coordinate(0, 4), "whiteKing", 0, 0, true,
           List.of(new Movement(Coordinate.of(0, 1), false), new Castling()), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
       whiteRookL = new Piece(new PieceData(new Coordinate(0, 0), "whiteRookL", 0, 0, true,
           List.of(new Castling()), Collections.emptyList(), Collections.emptyList(),
@@ -92,10 +92,10 @@ class CustomMovementTest {
   }
 
   // Uncomment once movement fully implemented
-  //@Test
+  @Test
   void castleTestMovementR() {
     try {
-      otherKing = new Piece(new PieceData(new Coordinate(0, 4), "whiteKing", 0, 0, true,
+      whiteKing = new Piece(new PieceData(new Coordinate(0, 4), "whiteKing", 0, 0, true,
           List.of(new Castling()), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
       whiteRookL = new Piece(new PieceData(new Coordinate(0, 1), "whiteRookL", 0, 0, true,
           List.of(new Movement(Coordinate.of(0, -1), false)), Collections.emptyList(), Collections.emptyList(),
@@ -120,10 +120,12 @@ class CustomMovementTest {
       board.setPieces(List.of(whiteKing, whiteRookR));
       assertEquals(Set.of(board.getTile(Coordinate.of(0, 6))), whiteKing.getMoves());
 
-      //uncomment when move fully implemented
-//      whiteKing.move(board.getTile(Coordinate.of(0, 6)));
-//      assertEquals(whiteKing, board.getTile(Coordinate.of(0, 6)).getPiece().get());
-//      assertEquals(whiteRookR, board.getTile(Coordinate.of(0, 5)).getPiece().get());
+      whiteKing.move(board.getTile(Coordinate.of(0, 6)));
+
+      assertEquals(List.of(), board.getTile(Coordinate.of(0, 4)).getPieces());
+      assertEquals(List.of(), board.getTile(Coordinate.of(0, 7)).getPieces());
+      assertEquals(whiteKing, board.getTile(Coordinate.of(0, 6)).getPiece().get());
+      assertEquals(whiteRookR, board.getTile(Coordinate.of(0, 5)).getPiece().get());
     } catch (Exception e) {
       e.printStackTrace();
       fail();
@@ -141,10 +143,13 @@ class CustomMovementTest {
           Collections.emptyList(), Collections.emptyList(), ""), board);
       board.setPieces(List.of(whiteKing, whiteRookL));
       assertEquals(Set.of(board.getTile(Coordinate.of(0, 2))), whiteKing.getMoves());
-//      whiteKing.move(board.getTile(Coordinate.of(0, 2)));
-//      assertEquals(whiteKing, board.getTile(Coordinate.of(0, 2)).getPiece().get());
-//      assertEquals(whiteRookR, board.getTile(Coordinate.of(0, 3)).getPiece().get());
+
+      whiteKing.move(board.getTile(Coordinate.of(0, 2)));
+
+      assertEquals(whiteKing, board.getTile(Coordinate.of(0, 2)).getPiece().get());
+      assertEquals(whiteRookL, board.getTile(Coordinate.of(0, 3)).getPiece().get());
     } catch (Exception e) {
+      e.printStackTrace();
       fail();
     }
   }

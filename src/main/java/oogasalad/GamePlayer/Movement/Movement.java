@@ -56,12 +56,40 @@ public class Movement implements MovementInterface{
   public Set<ChessTile> movePiece(Piece piece, Coordinate finalSquare, ChessBoard board)
       throws InvalidMoveException, OutsideOfBoardException {
     ChessTile finalTile = convertCordToTile(finalSquare, board);
+    LOG.debug("Moves: " + getMoves(piece, board));
+
     if(getMoves(piece, board).contains(finalTile)) {
-      return piece.move(finalTile);
+      Set<ChessTile> updatedSquares = new HashSet<>(Set.of(board.getTile(piece.getCoordinates()), finalTile));
+      piece.updateCoordinates(finalTile);
+      return updatedSquares;
     }
+
     LOG.warn("Invalid move made");
     throw new InvalidMoveException(piece + ": " + finalSquare);
   }
+
+  /***
+   * Captures piece on captureSquare
+   *
+   * @param piece to move
+   * @param captureSquare end square
+   * @param board to move on
+   * @return set of updated tiles
+   * @throws InvalidMoveException if the piece cannot move to the given square
+   */
+  public Set<ChessTile> capturePiece(Piece piece, Coordinate captureSquare, ChessBoard board)
+      throws InvalidMoveException, OutsideOfBoardException {
+
+    ChessTile captureTile = convertCordToTile(captureSquare, board);
+    if(getMoves(piece, board).contains(captureTile)) {
+      Set<ChessTile> updatedSquares = new HashSet<>(Set.of(board.getTile(piece.getCoordinates()), board.getTile(captureSquare)));
+      piece.updateCoordinates(board.getTile(captureSquare));
+      return updatedSquares;
+    }
+    LOG.warn("Invalid move made");
+    throw new InvalidMoveException(piece + ": " + captureSquare);
+  }
+
 
   /**
    * @param coordinates that the tile is on
@@ -77,25 +105,6 @@ public class Movement implements MovementInterface{
       LOG.warn("Coordinate outside of board");
       throw new OutsideOfBoardException(coordinates.toString());
     }
-  }
-
-  /***
-   * Captures piece on captureSquare
-   *
-   * @param piece to move
-   * @param captureSquare end square
-   * @param board to move on
-   * @return set of updated tiles
-   * @throws InvalidMoveException if the piece cannot move to the given square
-   */
-  public Set<ChessTile> capturePiece(Piece piece, Coordinate captureSquare, ChessBoard board)
-      throws InvalidMoveException, OutsideOfBoardException {
-    ChessTile captureTile = convertCordToTile(captureSquare, board);
-    if(getCaptures(piece, board).contains(captureTile)) {
-      return piece.move(captureTile);
-    }
-    LOG.warn("Invalid move made");
-    throw new InvalidMoveException(piece + ": " + captureSquare);
   }
 
   /***

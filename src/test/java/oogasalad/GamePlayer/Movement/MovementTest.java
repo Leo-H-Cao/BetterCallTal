@@ -74,12 +74,10 @@ class MovementTest {
     try {
       assertEquals(movementOne.getMoves(pieceOne, board),
           Set.of(board.getTile(new Coordinate(1, 1))));
-//      assertEquals(movementOne.movePiece(pieceOne, new Coordinate(1, 1), board), Set.of(board.getTile(new Coordinate(0, 0)), board.getTile(new Coordinate(1, 1))));
+      assertEquals(pieceOne.move(board.getTile(Coordinate.of(1, 1))), Set.of(board.getTile(new Coordinate(0, 0)), board.getTile(new Coordinate(1, 1))));
       assertEquals(movementThree.getMoves(pieceThree, board),
           Set.of(board.getTile(new Coordinate(2, 0))));
-//      assertEquals(movementOne.movePiece(pieceThree, new Coordinate(2, 0), board), Set.of(board.getTile(new Coordinate(2, 0)), board.getTile(new Coordinate(2, 1))));
     } catch(Exception e) {
-      e.printStackTrace();
       fail();
     }
   }
@@ -89,7 +87,9 @@ class MovementTest {
     try {
       assertEquals(movementTwo.getMoves(pieceTwo, board),
           Set.of(board.getTile(new Coordinate(1, 1)), board.getTile(new Coordinate(1, 2))));
-//      assertEquals(movementOne.movePiece(pieceTwo, new Coordinate(1, 2), board), Set.of(board.getTile(new Coordinate(1, 0)), board.getTile(new Coordinate(1, 2))));
+      assertEquals(pieceTwo.move(board.getTile(Coordinate.of(1, 2))), Set.of(board.getTile(new Coordinate(1, 0)), board.getTile(new Coordinate(1, 2))));
+      assertEquals(List.of(), board.getTile(Coordinate.of(1, 0)).getPieces());
+      assertEquals(List.of(pieceTwo), board.getTile(Coordinate.of(1, 2)).getPieces());
     } catch(Exception e) {
       fail();
     }
