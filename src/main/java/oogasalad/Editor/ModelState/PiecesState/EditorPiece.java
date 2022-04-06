@@ -1,4 +1,4 @@
-package oogasalad.Editor.ModelState;
+package oogasalad.Editor.ModelState.PiecesState;
 
 public class EditorPiece {
   private final String DEFAULT_PIECE_IMAGE = "";

@@ -159,7 +159,7 @@ public class ChessBoard implements Iterable<ChessTile>{
    * @return set of tiles the piece can move to
    */
   public Set<ChessTile> getMoves(Piece piece) {
-    return piece.getMoves();
+    return piece.checkTeam(turnCriteria.getCurrentPlayer()) ? piece.getMoves() : Set.of();
   }
 
   /***
