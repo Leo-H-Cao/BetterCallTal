@@ -54,8 +54,6 @@ public class Castling implements MovementInterface {
     Piece supporter = getSupporter(piece, finalSquare, board);
     int supporterPieceDelta = piece.getCoordinates().getCol() < supporter.getCoordinates().getCol() ? -SUPPORTER_RELATIVE_SQUARE : SUPPORTER_RELATIVE_SQUARE;
 
-    board.getTile(piece.getCoordinates()).removePiece(piece);
-    board.getTile(finalSquare).addPiece(piece);
     piece.updateCoordinates(board.getTile(finalSquare));
 
     board.getTile(supporter.getCoordinates()).removePiece(supporter);
