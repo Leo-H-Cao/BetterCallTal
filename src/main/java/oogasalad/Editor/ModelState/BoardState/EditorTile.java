@@ -1,6 +1,6 @@
-package oogasalad.Editor.ModelState;
+package oogasalad.Editor.ModelState.BoardState;
 
-import oogasalad.Editor.ModelState.TileEffect;
+import oogasalad.Editor.ModelState.PiecesState.EditorPiece;
 
 public class EditorTile {
   private TileEffect myTileEffect;
@@ -23,12 +23,12 @@ public class EditorTile {
     myTileEffect = TileEffect.NONE;
   }
 
-  public void addPiece(EditorPiece piece){
-    myEditorPiece = piece;
-  }
-
-  public void removePiece(){
-    myEditorPiece = null;
-  }
+//  public void addPiece(EditorPiece piece){
+//    myEditorPiece = piece;
+//  }
+//
+//  public void removePiece(){
+//    myEditorPiece = null;
+//  }
 
 }

@@ -2,8 +2,8 @@ package oogasalad.EditorBackend;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import oogasalad.Editor.ModelState.GameRules;
-import oogasalad.Editor.ModelState.GameRulesState;
+import oogasalad.Editor.ModelState.RulesState.GameRules;
+import oogasalad.Editor.ModelState.RulesState.GameRulesState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

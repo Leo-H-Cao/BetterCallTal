@@ -1,4 +1,4 @@
-package oogasalad.Editor.ModelState;
+package oogasalad.Editor.ModelState.PiecesState;
 
 /**
  * abstraction pieces with only information that front end needs

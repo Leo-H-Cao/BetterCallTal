@@ -1,4 +1,4 @@
-package oogasalad.Editor.ModelState;
+package oogasalad.Editor.ModelState.BoardState;
 
 public enum TileEffect {
   NONE,
