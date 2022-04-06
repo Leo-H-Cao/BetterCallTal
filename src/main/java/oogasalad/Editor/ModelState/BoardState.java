@@ -45,16 +45,6 @@ public class BoardState extends ModelState implements ModifiesBoardState {
   }
 
   @Override
-  public void setPieceStartingLocation(String pieceID, int x, int y) {
-    myEditorBoard.addPieceStartingLocation(piecesManager.getPiece(pieceID), x, y);
-  }
-
-  @Override
-  public void removePiece(int x, int y) {
-    myEditorBoard.removePieceStartingLocation(x, y);
-  }
-
-  @Override
   public int getBoardWidth(){
     return myEditorBoard.getBoardWidth();
   }
@@ -63,6 +53,16 @@ public class BoardState extends ModelState implements ModifiesBoardState {
   public int getBoardHeight(){
     return myEditorBoard.getBoardHeight();
   }
+
+  //  @Override
+//  public void setPieceStartingLocation(String pieceID, int x, int y) {
+//    myEditorBoard.addPieceStartingLocation(piecesManager.getPiece(pieceID), x, y);
+//  }
+//
+//  @Override
+//  public void removePiece(int x, int y) {
+//    myEditorBoard.removePieceStartingLocation(x, y);
+//  }
 
 
 }

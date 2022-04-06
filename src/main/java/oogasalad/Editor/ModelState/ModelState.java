@@ -26,10 +26,6 @@ public abstract class ModelState{
 
   public abstract void deleteTileEffect(int x, int y);
 
-  public abstract void setPieceStartingLocation(String pieceID, int x, int y);
-
-  public abstract void removePiece(int x, int y);
-
   public abstract int getBoardWidth();
 
   public abstract int getBoardHeight();
