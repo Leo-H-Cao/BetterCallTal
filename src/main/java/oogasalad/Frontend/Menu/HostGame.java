@@ -10,7 +10,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import oogasalad.Frontend.Game.GameView;
 import oogasalad.Frontend.ViewManager;
-import oogasalad.Frontend.View;
+import oogasalad.Frontend.util.View;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
 
@@ -56,8 +56,8 @@ public class HostGame extends View {
 
     private Node makeStartGroup() {
         Button start = ButtonFactory.makeButton(ButtonType.TEXT, ViewManager.getLanguage().getString("Start"), "start",
-                (e) -> getMainView().getViews().stream().filter((c) -> c.getClass() == GameView.class).forEach((c) ->
-                        getMainView().changeScene(c)));
+                (e) -> getViewManager().getViews().stream().filter((c) -> c.getClass() == GameView.class).forEach((c) ->
+                        getViewManager().changeScene(c)));
         start.setPrefWidth(150);
         start.setPrefHeight(50);
         return new Group(start);
@@ -71,8 +71,8 @@ public class HostGame extends View {
     private Node makeFileUploadGroup() {
         Button load = ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource(LOAD), Load_Button_ID,
                 (e) -> {
-                    File f = getMainView().chooseLoadFile();
-                    getMainView().getMyGameBackend().initalizeChessBoard(f);
+                    File f = getViewManager().chooseLoadFile();
+                    getViewManager().getMyGameBackend().initalizeChessBoard(f);
                 });
         load.setPrefWidth(150);
         load.setPrefHeight(50);

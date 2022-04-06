@@ -1,8 +1,6 @@
 package oogasalad.Frontend.Editor;
 
-import javafx.geometry.HPos;
 import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -11,15 +9,15 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
-import oogasalad.Frontend.NodeContainer;
+import oogasalad.Frontend.util.NodeContainer;
 
 import java.util.Collection;
 
 public abstract class LabelledContainer extends NodeContainer {
 	private String myTitle;
 
-	public LabelledContainer(String s) {
-		super();
+	public LabelledContainer(String s, EditorController controller) {
+		super(controller);
 		setTitle(s);
 	}
 

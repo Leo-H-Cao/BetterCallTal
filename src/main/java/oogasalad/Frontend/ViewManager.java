@@ -2,12 +2,12 @@ package oogasalad.Frontend;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import oogasalad.Frontend.Editor.EditorBackendConnector;
 import oogasalad.Frontend.Editor.GameEditorView;
 import oogasalad.Frontend.Game.GameBackend;
 import oogasalad.Frontend.Game.GameView;
 import oogasalad.Frontend.Menu.HomeView;
 import oogasalad.Frontend.Menu.HostGame;
+import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
 import java.io.File;
@@ -22,11 +22,9 @@ public class ViewManager {
 	private final Collection<View> myViews;
 	private final Stage stage;
 	private final GameBackend myGameBackend;
-	private final EditorBackendConnector myEditorBackend;
 
 	public ViewManager(Stage stage, ResourceBundle rb) {
 		myGameBackend = new GameBackend(this);
-		myEditorBackend = new EditorBackendConnector();
 		myViews = new ArrayList<>();
 		this.stage = stage;
 		langBundle = rb;
@@ -39,10 +37,6 @@ public class ViewManager {
 		myViews.stream()
 				.filter(e -> e.getClass() == HomeView.class)
 				.forEach(this::changeScene);
-	}
-
-	public EditorBackendConnector getMyEditorBackend() {
-		return myEditorBackend;
 	}
 
 	private void addView(View view) {

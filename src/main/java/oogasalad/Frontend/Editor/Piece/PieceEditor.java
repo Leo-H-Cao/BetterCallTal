@@ -2,14 +2,19 @@ package oogasalad.Frontend.Editor.Piece;
 
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
-import oogasalad.Editor.ModelState.PiecesState.PiecesState;
-import oogasalad.Frontend.NodeContainer;
+import oogasalad.Frontend.Editor.EditorController;
+import oogasalad.Frontend.util.NodeContainer;
 
 public class PieceEditor extends NodeContainer {
-	private PiecesState myPiece;
+	private final String ID;
 
-	public PieceEditor() {
+	public PieceEditor(EditorController controller, String id) {
+		super(controller);
+		ID = id;
+	}
 
+	public String getId() {
+		return ID;
 	}
 
 	@Override

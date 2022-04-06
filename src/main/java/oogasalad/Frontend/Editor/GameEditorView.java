@@ -6,27 +6,33 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import oogasalad.Editor.ModelState.PiecesState.EditorPiece;
+import oogasalad.Editor.ModelState.PiecesState.MovementRules;
 import oogasalad.Frontend.Editor.Board.BoardEditor;
 import oogasalad.Frontend.Editor.Piece.PieceEditor;
 import oogasalad.Frontend.ViewManager;
-import oogasalad.Frontend.View;
+import oogasalad.Frontend.util.View;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
-import java.util.ArrayList;
-import java.util.Collection;
+
+import java.util.*;
 
 
 public class GameEditorView extends View {
 	private static String selectedPieceId;
 	private final BoardEditor myBoardEditor;
-	private final Collection<PieceEditor> myPieceEditors;
+	private final Map<String, PieceEditor> myPieceEditors;
 	private final TabPane myTabs;
+	private int pieceEditorCount = 0;
+	private final EditorController myController;
 
 	public GameEditorView(ViewManager viewManager) {
 		super(viewManager);
+		myController = new EditorController();
+		createDefaultPieces();
 		selectedPieceId = "default_pawn";
-		myBoardEditor = new BoardEditor();
-		myPieceEditors = new ArrayList<>();
+		myBoardEditor = new BoardEditor(myController);
+		myPieceEditors = new HashMap<>();
 		Tab boardTab = makeTab(getLanguageResource("Board"), myBoardEditor.getNode());
 		boardTab.setClosable(false);
 		myTabs = new TabPane(boardTab);
@@ -53,11 +59,17 @@ public class GameEditorView extends View {
 	}
 
 	private void newCustomPiece() {
-		PieceEditor newPieceEditor = new PieceEditor();
-		myPieceEditors.add(newPieceEditor);
-		Tab newTab = makeTab(getLanguageResource("CustomPiece") + " " + myPieceEditors.size(), newPieceEditor.getNode());
+		pieceEditorCount++;
+		PieceEditor newPieceEditor = new PieceEditor(myController, String.valueOf(pieceEditorCount));
+		myPieceEditors.put("custom" + pieceEditorCount, newPieceEditor);
+		Tab newTab = makeTab(getTabTitle(), newPieceEditor.getNode());
+		newTab.setOnClosed((e) -> myPieceEditors.remove(newPieceEditor.getId()));
 		myTabs.getTabs().add(newTab);
 		myTabs.getSelectionModel().select(newTab);
+	}
+
+	private String getTabTitle() {
+		return getLanguageResource("CustomPiece") + " " + pieceEditorCount;
 	}
 
 	private Tab makeTab(String name, Node content) {
@@ -77,5 +89,12 @@ public class GameEditorView extends View {
 		ret.add(buttons, 0, 0);
 		ret.add(myTabs, 0, 1);
 		return ret;
+	}
+
+	private void createDefaultPieces() {
+		// Rook
+		MovementRules rookMovement = new MovementRules();
+		myController.getPiecesState().createCustomPiece(5, 0, "img", rookMovement, "default_rook", "Rook");
+		myController.getPiecesState().createCustomPiece(5, 1, "img", rookMovement, "default_rook", "Rook");
 	}
 }

@@ -1,4 +1,4 @@
-package oogasalad.Frontend;
+package oogasalad.Frontend.util;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
@@ -7,15 +7,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Screen;
 import oogasalad.Frontend.Menu.HomeView;
-import oogasalad.Frontend.util.ButtonFactory;
-import oogasalad.Frontend.util.ButtonType;
+import oogasalad.Frontend.ViewManager;
+
 import java.util.MissingResourceException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public abstract class View {
-
 	protected Scene myScene;
 	protected Group myRoot;
 	protected Rectangle2D myScreenSize;
@@ -61,7 +60,7 @@ public abstract class View {
 	 */
 	protected abstract Node makeNode();
 
-	protected ViewManager getMainView() {
+	protected ViewManager getViewManager() {
 		return myViewManager;
 	}
 
@@ -82,7 +81,7 @@ public abstract class View {
 	 * @return Optional View if it is found in myViews from MainView
 	 */
 	protected <T> Optional<View> getView(Class<T> className) {
-		Optional<View> v = getMainView().getViews().stream().filter((e) -> className == e.getClass()).findFirst();
+		Optional<View> v = getViewManager().getViews().stream().filter((e) -> className == e.getClass()).findFirst();
 		if(v.isPresent()) {
 			return v;
 		} else {

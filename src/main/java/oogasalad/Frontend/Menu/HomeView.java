@@ -12,7 +12,7 @@ import javafx.scene.text.TextAlignment;
 import oogasalad.Frontend.Editor.GameEditorView;
 import oogasalad.Frontend.Game.GameView;
 import oogasalad.Frontend.ViewManager;
-import oogasalad.Frontend.View;
+import oogasalad.Frontend.util.View;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
 
@@ -58,11 +58,11 @@ public class HomeView extends View {
     private Node makeButtons() {
         GridPane buttonList = new GridPane();
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Create"), "createButton",
-                (e) -> getView(GameEditorView.class).ifPresent(getMainView()::changeScene)), 0, 0);
+                (e) -> getView(GameEditorView.class).ifPresent(getViewManager()::changeScene)), 0, 0);
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Join"), "joinButton",
-                (e) -> getView(GameView.class).ifPresent(getMainView()::changeScene)), 0, 1);
+                (e) -> getView(GameView.class).ifPresent(getViewManager()::changeScene)), 0, 1);
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Host"), "hostButton",
-                (e) -> getView(HostGame.class).ifPresent(getMainView()::changeScene)), 0, 2);
+                (e) -> getView(HostGame.class).ifPresent(getViewManager()::changeScene)), 0, 2);
 
         buttonList.getChildren().forEach((b) -> {
             if(b instanceof Button) {
