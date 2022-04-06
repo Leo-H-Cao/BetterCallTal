@@ -1,6 +1,5 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import oogasalad.GamePlayer.Board.ChessBoard;

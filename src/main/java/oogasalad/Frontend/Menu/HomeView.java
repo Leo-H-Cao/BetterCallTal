@@ -3,14 +3,11 @@ package oogasalad.Frontend.Menu;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import oogasalad.Frontend.Editor.GameEditorView;
 import oogasalad.Frontend.Game.GameView;
@@ -18,8 +15,6 @@ import oogasalad.Frontend.MainView;
 import oogasalad.Frontend.View;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * HomeView class will handle the navigation of the User from the home screen to the next page they seek.
