@@ -8,7 +8,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import oogasalad.Frontend.Editor.Board.BoardEditor;
 import oogasalad.Frontend.Editor.Piece.PieceEditor;
-import oogasalad.Frontend.MainView;
+import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.View;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
@@ -22,8 +22,8 @@ public class GameEditorView extends View {
 	private final Collection<PieceEditor> myPieceEditors;
 	private final TabPane myTabs;
 
-	public GameEditorView(MainView mainView) {
-		super(mainView);
+	public GameEditorView(ViewManager viewManager) {
+		super(viewManager);
 		selectedPieceId = "default_pawn";
 		myBoardEditor = new BoardEditor();
 		myPieceEditors = new ArrayList<>();

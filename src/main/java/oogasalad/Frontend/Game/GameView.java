@@ -5,7 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import oogasalad.Frontend.Game.Sections.BoardGrid;
 import oogasalad.Frontend.Game.Sections.TopSection;
-import oogasalad.Frontend.MainView;
+import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.View;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
@@ -32,8 +32,8 @@ public class GameView extends View {
     private Consumer<Coordinate> MoveCons;
 
 
-    public GameView(MainView mainView) {
-        super(mainView);
+    public GameView(ViewManager viewManager) {
+        super(viewManager);
     }
 
     /**
@@ -55,18 +55,18 @@ public class GameView extends View {
     }
 
     private void makeConsumers() {
-        lightUpCons = piece -> lightUpSquares(piece);
-        MoveCons = coor -> makeMove(coor);
+        lightUpCons = this::lightUpSquares;
+        MoveCons = this::makeMove;
     }
 
 
 
     private void makeMove(Coordinate c) {
         try {
-            TurnUpdate tu = getMainView().getMyBackend().getChessBoard().move(myBoardGrid.getSelectedPiece(), c);
+            TurnUpdate tu = getMainView().getMyGameBackend().getChessBoard().move(myBoardGrid.getSelectedPiece(), c);
             updateBoard(tu);
         } catch (Exception e) {
-            return;
+            // Do nothing
         }
     }
 
@@ -76,7 +76,7 @@ public class GameView extends View {
      */
 
     public void lightUpSquares(Piece p) {
-        Collection<ChessTile> possibletiles = getMainView().getMyBackend().getChessBoard().getMoves(p);
+        Collection<ChessTile> possibletiles = getMainView().getMyGameBackend().getChessBoard().getMoves(p);
         myBoardGrid.lightSquares(possibletiles);
     }
 

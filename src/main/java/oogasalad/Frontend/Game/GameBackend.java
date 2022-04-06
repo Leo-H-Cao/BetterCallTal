@@ -1,6 +1,6 @@
 package oogasalad.Frontend.Game;
 
-import oogasalad.Frontend.MainView;
+import oogasalad.Frontend.ViewManager;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.Server.BoardSetup;
 
@@ -14,17 +14,17 @@ import java.io.File;
 public class GameBackend {
 
     private ChessBoard myChessBoard;
-    private MainView myMainView;
+    private final ViewManager myViewManager;
 
-    public GameBackend (MainView mv) {
-        myMainView = mv;
+    public GameBackend (ViewManager mv) {
+        myViewManager = mv;
     }
 
     public void initalizeChessBoard(File JSON) {
         try {
             BoardSetup bs = new BoardSetup(JSON.getPath());
             myChessBoard = bs.createBoard();
-            myMainView.getViews().stream()
+            myViewManager.getViews().stream()
                     .filter(e -> e.getClass() == GameView.class)
                     .forEach(e -> ((GameView) e).SetUpBoard(myChessBoard, 0)); //TODO: Figure out player ID stuff
         } catch (Exception e){

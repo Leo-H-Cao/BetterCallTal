@@ -6,12 +6,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import oogasalad.Frontend.Game.GameView;
-import oogasalad.Frontend.MainView;
+import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.View;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
@@ -28,14 +26,13 @@ public class HostGame extends View {
     private final Integer TITLE_SIZE = 64;
     private final Integer PROMPT_SIZE = 40;
 
-    public HostGame(MainView mainview) {
+    public HostGame(ViewManager mainview) {
         super(mainview);
     }
 
     @Override
     protected Node makeNode() {
-        StackPane sp = MakeStackPane();
-        return sp;
+        return MakeStackPane();
     }
 
     private StackPane MakeStackPane() {
@@ -47,18 +44,18 @@ public class HostGame extends View {
         Node load = makeFileUploadGroup();
         Node start = makeStartGroup();
 
-        sp.setAlignment(exit, Pos.TOP_LEFT);
-        sp.setAlignment(title, Pos.TOP_CENTER);
-        sp.setAlignment(prompt, Pos.CENTER);
-        sp.setAlignment(load, Pos.CENTER_RIGHT);
-        sp.setAlignment(start, Pos.CENTER_LEFT);
+        StackPane.setAlignment(exit, Pos.TOP_LEFT);
+        StackPane.setAlignment(title, Pos.TOP_CENTER);
+        StackPane.setAlignment(prompt, Pos.CENTER);
+        StackPane.setAlignment(load, Pos.CENTER_RIGHT);
+        StackPane.setAlignment(start, Pos.CENTER_LEFT);
 
         sp.getChildren().addAll(exit, title, prompt, load, start);
         return sp;
     }
 
     private Node makeStartGroup() {
-        Button start = ButtonFactory.makeButton(ButtonType.TEXT, MainView.getLanguage().getString("Start"), "start",
+        Button start = ButtonFactory.makeButton(ButtonType.TEXT, ViewManager.getLanguage().getString("Start"), "start",
                 (e) -> getMainView().getViews().stream().filter((c) -> c.getClass() == GameView.class).forEach((c) ->
                         getMainView().changeScene(c)));
         start.setPrefWidth(150);
@@ -75,7 +72,7 @@ public class HostGame extends View {
         Button load = ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource(LOAD), Load_Button_ID,
                 (e) -> {
                     File f = getMainView().chooseLoadFile();
-                    getMainView().getMyBackend().initalizeChessBoard(f);
+                    getMainView().getMyGameBackend().initalizeChessBoard(f);
                 });
         load.setPrefWidth(150);
         load.setPrefHeight(50);

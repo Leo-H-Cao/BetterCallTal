@@ -14,7 +14,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import oogasalad.Frontend.MainView;
+import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
 import oogasalad.Frontend.util.ResourceParser;
@@ -54,7 +54,7 @@ public class LanguageModal {
 		fullscreenCheckBox.setId("fullscreen");
 		startButton = ButtonFactory.makeButton(ButtonType.TEXT, selectedLanguageView.getString("Start"), "start",
 				(e) -> {
-					new MainView(stage, selectedLanguageView);
+					new ViewManager(stage, selectedLanguageView);
 					stage.setMaximized(true);
 					stage.setFullScreen(fullscreenCheckBox.isSelected());
 				});

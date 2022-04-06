@@ -11,7 +11,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import oogasalad.Frontend.Editor.GameEditorView;
 import oogasalad.Frontend.Game.GameView;
-import oogasalad.Frontend.MainView;
+import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.View;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
@@ -23,8 +23,8 @@ import oogasalad.Frontend.util.ButtonType;
 
 public class HomeView extends View {
 
-    public HomeView(MainView mainView) {
-        super(mainView);
+    public HomeView(ViewManager viewManager) {
+        super(viewManager);
     }
 
     @Override

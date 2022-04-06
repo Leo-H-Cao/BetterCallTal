@@ -3,11 +3,11 @@ package oogasalad.Frontend.Editor;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 
-public class Controller {
-	private PiecesState myPiecesState;
-	private BoardState myBoardState;
+public class EditorBackendConnector {
+	private final PiecesState myPiecesState;
+	private final BoardState myBoardState;
 
-	public Controller(){
+	public EditorBackendConnector(){
 		myPiecesState = new PiecesState();
 		myBoardState = new BoardState(myPiecesState.getPiecesManager());
 	}

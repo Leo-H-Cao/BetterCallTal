@@ -1,8 +1,8 @@
 package oogasalad.Frontend;
 
-import javafx.scene.layout.Background;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import oogasalad.Frontend.Editor.EditorBackendConnector;
 import oogasalad.Frontend.Editor.GameEditorView;
 import oogasalad.Frontend.Game.GameBackend;
 import oogasalad.Frontend.Game.GameView;
@@ -15,16 +15,18 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
-public class MainView {
+public class ViewManager {
 	// Bundle made static so all classes can easily access the language
 	private static ResourceBundle langBundle;
 
 	private final Collection<View> myViews;
 	private final Stage stage;
-	private GameBackend myBackend;
+	private final GameBackend myGameBackend;
+	private final EditorBackendConnector myEditorBackend;
 
-	public MainView(Stage stage, ResourceBundle rb) {
-		myBackend = new GameBackend(this);
+	public ViewManager(Stage stage, ResourceBundle rb) {
+		myGameBackend = new GameBackend(this);
+		myEditorBackend = new EditorBackendConnector();
 		myViews = new ArrayList<>();
 		this.stage = stage;
 		langBundle = rb;
@@ -37,6 +39,10 @@ public class MainView {
 		myViews.stream()
 				.filter(e -> e.getClass() == HomeView.class)
 				.forEach(this::changeScene);
+	}
+
+	public EditorBackendConnector getMyEditorBackend() {
+		return myEditorBackend;
 	}
 
 	private void addView(View view) {
@@ -70,7 +76,7 @@ public class MainView {
 		FileChooser fileChooser = new FileChooser();
 		return fileChooser.showOpenDialog(stage);
 	}
-	public GameBackend getMyBackend(){return myBackend;}
+	public GameBackend getMyGameBackend(){return myGameBackend;}
 
 	public void setUpGameView(ChessBoard board, int player) {
 		//TODO: call GameView SetUpBoard() w this method
