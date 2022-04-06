@@ -57,7 +57,7 @@ public class ChessHistory {
   }
 
   /**
-   * Adds a new state to the history.
+   * Adds a new state to the history. Makes copy of state passed in to prevent mutation.
    *
    * @param newState The new state to add.
    */
