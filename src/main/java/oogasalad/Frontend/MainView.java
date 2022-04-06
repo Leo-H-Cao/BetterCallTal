@@ -15,8 +15,8 @@ public class MainView {
 	// Bundle made static so all classes can easily access the language
 	private static ResourceBundle langBundle;
 
-	private Collection<View> myViews;
-	private Stage stage;
+	private final Collection<View> myViews;
+	private final Stage stage;
 
 
 	public MainView(Stage stage, ResourceBundle rb) {
@@ -48,9 +48,9 @@ public class MainView {
 		return langBundle;
 	}
 
-	public void changeScene(View sceneClass) {
-		stage.setScene(sceneClass.getScene());
-		stage.setTitle(sceneClass.getTitle());
+	public void changeScene(View viewClass) {
+		stage.setScene(viewClass.getScene());
+		stage.setTitle(viewClass.getTitle());
 	}
 
 	public void setUpGameView(ChessBoard board, int player) {

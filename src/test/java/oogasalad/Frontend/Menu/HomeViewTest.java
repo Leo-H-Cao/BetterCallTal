@@ -5,8 +5,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
-import java.util.ResourceBundle;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HomeViewTest extends DukeApplicationTest{
     private HomeView myHomeView;
@@ -31,7 +29,4 @@ public class HomeViewTest extends DukeApplicationTest{
         clickOn(lookup("#start").query());
 
     }
-
-
-
 }

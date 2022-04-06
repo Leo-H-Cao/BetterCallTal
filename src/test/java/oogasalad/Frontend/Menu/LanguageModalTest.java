@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LanguageModalTest extends DukeApplicationTest {
-	private ChoiceBox myLanguageSelector;
+	private ChoiceBox<String> myLanguageSelector;
 	private LanguageModal myLanguageModal;
 	private Scene myScene;
 	private Stage myStage;

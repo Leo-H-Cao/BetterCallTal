@@ -4,7 +4,6 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -14,13 +13,11 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
-import java.awt.*;
-
 import static oogasalad.Frontend.util.ButtonType.TEXT;
 
 public class ButtonFactoryTest extends DukeApplicationTest {
-	private String oldText = "old";
-	private String newText = "new";
+	private final String oldText = "old";
+	private final String newText = "new";
 	private Text text;
 	private Group root;
 	private Stage myStage;

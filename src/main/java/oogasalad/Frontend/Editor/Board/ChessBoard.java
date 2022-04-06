@@ -3,33 +3,32 @@ package oogasalad.Frontend.Editor.Board;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import oogasalad.Editor.ModelState.BoardState;
+import oogasalad.Frontend.NodeContainer;
 
-public class ChessBoard {
+public class ChessBoard extends NodeContainer {
 
-	private GridPane myGrid;
 	private final BoardState myBackend;
 
 	public ChessBoard() {
 		myBackend = new BoardState();
 	}
 
-	public Node getNode() {
-		if(myGrid == null) {
-			makeGrid();
-		}
-		return myGrid;
+	@Override
+	protected Node makeNode() {
+		return makeGrid();
 	}
 
-	private void makeGrid() {
-		myGrid = new GridPane();
+	private Node makeGrid() {
+		GridPane grid = new GridPane();
 		boolean alt = false;
 		for(int i = 0; i < myBackend.getBoardWidth(); i++) {
 			for(int j = 0; j < myBackend.getBoardHeight(); j++) {
-				ChessBoardTile newTile = new ChessBoardTile(25, 25, alt);
-				myGrid.add(newTile.getNode(), j, i);
+				ChessBoardTile newTile = new ChessBoardTile(50, 50, alt);
+				grid.add(newTile.getNode(), j, i);
 				alt = !alt;
 			}
 			alt = !alt;
 		}
+		return grid;
 	}
 }
