@@ -2,6 +2,7 @@ package oogasalad.Frontend.Editor.Board;
 
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
+import javafx.scene.shape.StrokeType;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
 import oogasalad.Frontend.NodeContainer;
 

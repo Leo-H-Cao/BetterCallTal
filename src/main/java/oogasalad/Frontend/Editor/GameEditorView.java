@@ -1,6 +1,7 @@
 package oogasalad.Frontend.Editor;
 
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
@@ -16,12 +17,14 @@ import java.util.Collection;
 
 
 public class GameEditorView extends View {
+	private static String selectedPieceId;
 	private final BoardEditor myBoardEditor;
 	private final Collection<PieceEditor> myPieceEditors;
 	private final TabPane myTabs;
 
 	public GameEditorView(MainView mainView) {
 		super(mainView);
+		selectedPieceId = "default_pawn";
 		myBoardEditor = new BoardEditor();
 		myPieceEditors = new ArrayList<>();
 		Tab boardTab = makeTab(getLanguageResource("Board"), myBoardEditor.getNode());
@@ -32,6 +35,14 @@ public class GameEditorView extends View {
 	@Override
 	protected Node makeNode() {
 		return makeLayout();
+	}
+
+	public static String getSelectedPieceId() {
+		return selectedPieceId;
+	}
+
+	public static void setSelectedPieceId(String s) {
+		selectedPieceId = s;
 	}
 
 	private Node makeLayout() {
@@ -58,10 +69,11 @@ public class GameEditorView extends View {
 	private Node makeMenu() {
 		GridPane ret = new GridPane();
 		GridPane buttons = new GridPane();
-//		ret.setPrefHeight(5000);
 		buttons.add(makeExitButton(), 0, 0);
-		buttons.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("NewCustomPiece"), "newCustomPiece",
-				(e) -> newCustomPiece()), 1, 0);
+		Button addCustomPieceButton = ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("NewCustomPiece"), "newCustomPiece",
+				(e) -> newCustomPiece());
+		buttons.add(addCustomPieceButton, 1, 0);
+		GridPane.setFillHeight(addCustomPieceButton, true);
 		ret.add(buttons, 0, 0);
 		ret.add(myTabs, 0, 1);
 		return ret;

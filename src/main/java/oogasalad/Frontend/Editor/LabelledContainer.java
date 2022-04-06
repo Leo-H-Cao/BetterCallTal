@@ -1,10 +1,16 @@
 package oogasalad.Frontend.Editor;
 
+import javafx.geometry.HPos;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import oogasalad.Frontend.NodeContainer;
 
 import java.util.Collection;
@@ -23,7 +29,7 @@ public abstract class LabelledContainer extends NodeContainer {
 
 	@Override
 	protected Node makeNode() {
-		return makeLayout();
+		return new Group(makeLayout());
 	}
 
 	private Node makeLayout() {
@@ -33,11 +39,20 @@ public abstract class LabelledContainer extends NodeContainer {
 		ret.add(flowPane, 0, 1);
 		flowPane.setOrientation(Orientation.HORIZONTAL);
 		flowPane.getChildren().addAll(fillContent());
-		return ret;
+		flowPane.setHgap(5);
+		flowPane.setVgap(5);
+		ScrollPane scrollPane = new ScrollPane();
+		scrollPane.setContent(ret);
+		scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+		scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+		return scrollPane;
 	}
 
 	private Node makeTitle() {
-		return new Label(myTitle);
+		Label ret = new Label(myTitle);
+		ret.setFont(new Font(36));
+		ret.setTextAlignment(TextAlignment.CENTER);
+		return ret;
 	}
 
 	/**

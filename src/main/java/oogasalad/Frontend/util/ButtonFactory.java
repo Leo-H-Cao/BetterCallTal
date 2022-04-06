@@ -15,6 +15,7 @@ public class ButtonFactory {
 
 	public static Button makeButton(ButtonType type, String displayText, String id, EventHandler<ActionEvent> action) {
 		Button b = new Button();
+		b.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		if (type == ButtonType.TEXT) {
 			setText(b, displayText);
 		} else if(type == ButtonType.IMAGE) {
