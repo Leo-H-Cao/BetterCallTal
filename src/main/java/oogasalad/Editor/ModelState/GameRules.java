@@ -7,7 +7,7 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class GameRules {
-  private static final String CONFIGURATION_RESOURCE_PATH = "Editor/Backend/GameRules";
+  private static final String CONFIGURATION_RESOURCE_PATH = "oogasalad/Editor/GameRules";
 
   private List<String> winConditions;
   private String turnCriteria;
