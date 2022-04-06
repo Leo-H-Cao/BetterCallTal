@@ -10,6 +10,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import oogasalad.Frontend.Game.GameView;
 import oogasalad.Frontend.MainView;
 import oogasalad.Frontend.View;
 import oogasalad.Frontend.util.ButtonFactory;
@@ -34,9 +35,6 @@ public class HostGame extends View {
     @Override
     protected Node makeNode() {
         StackPane sp = MakeStackPane();
-
-
-
         return sp;
     }
 
@@ -47,14 +45,25 @@ public class HostGame extends View {
         Node title = makeLabelGroup(getLanguageResource(TITLE), TITLE_SIZE);
         Node prompt = makeLabelGroup(getLanguageResource(PROMPT), PROMPT_SIZE);
         Node load = makeFileUploadGroup();
+        Node start = makeStartGroup();
 
         sp.setAlignment(exit, Pos.TOP_LEFT);
         sp.setAlignment(title, Pos.TOP_CENTER);
         sp.setAlignment(prompt, Pos.CENTER);
         sp.setAlignment(load, Pos.CENTER_RIGHT);
+        sp.setAlignment(start, Pos.CENTER_LEFT);
 
-        sp.getChildren().addAll(exit, title, prompt, load);
+        sp.getChildren().addAll(exit, title, prompt, load, start);
         return sp;
+    }
+
+    private Node makeStartGroup() {
+        Button start = ButtonFactory.makeButton(ButtonType.TEXT, MainView.getLanguage().getString("Start"), "start",
+                (e) -> getMainView().getViews().stream().filter((c) -> c.getClass() == GameView.class).forEach((c) ->
+                        getMainView().changeScene(c)));
+        start.setPrefWidth(150);
+        start.setPrefHeight(50);
+        return new Group(start);
     }
 
     private Node makeExitGroup() {
