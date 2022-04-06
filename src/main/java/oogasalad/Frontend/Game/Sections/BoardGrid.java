@@ -28,25 +28,13 @@ public class BoardGrid {
     private Integer myID;
 
 
-    public BoardGrid(ChessBoard cb, int PlayerID, Consumer<Piece> lightupCons, int id, Consumer<Coordinate> MoveCons) {
+    public BoardGrid(ChessBoard cb, int PlayerID, Consumer<Piece> lightupCons, Consumer<Coordinate> MoveCons) {
         myLitTiles = new ArrayList<>();
         myBoard = new GridPane();
         makeRunAndCons();
         setUpGP(myBoard, cb.getBoardHeight(), cb.getBoardLength());
         makeBoard(myBoard, cb, PlayerID, lightupCons, MoveCons);
-        myID = id;
-    }
-
-    /**
-     * creates a standard 8x8 board. Used for testing.
-     */
-    public BoardGrid(Consumer<Piece> lightupCons, int id, Consumer<Coordinate> MoveCons) {
-        myLitTiles = new ArrayList<>();
-        myBoard = new GridPane();
-        makeRunAndCons();
-        setUpGP(myBoard, 8, 8);
-        makeBoard2(myBoard, 8, 8, lightupCons, MoveCons);
-        myID = id;
+        myID = PlayerID;
     }
 
     private void setUpGP(GridPane gp, int rows, int cols) {
@@ -63,7 +51,7 @@ public class BoardGrid {
         for (ChessTile ct : cb) {
             int grid_x = ct.getCoordinates().getRow();
             int grid_y = ct.getCoordinates().getCol();
-            BoardTile tile = new BoardTile(grid_x, grid_y, cb.getBoardHeight(), cb.getBoardLength(), lightupCons, ClearLitTilesRun, setSelPiece, MoveCons);
+            BoardTile tile = new BoardTile(ct.getCoordinates(), cb.getBoardHeight(), cb.getBoardLength(), lightupCons, ClearLitTilesRun, setSelPiece, MoveCons);
             if (! ct.getPieces().isEmpty()) {
                 for (Piece p : ct.getPieces()) {
                     tile.givePiece(p);}}
@@ -101,9 +89,12 @@ public class BoardGrid {
      * @param cts
      */
     public void lightSquares(Collection<ChessTile> cts) {
+        System.out.print("Got to lightsquares in Boardgrid");
+        turnOffTiles();
         for (ChessTile ct : cts) {
             BoardTile bt = grabTile(ct.getCoordinates());
             bt.LightUp(true);
+            myLitTiles.add(bt);
         }
     }
 
@@ -111,6 +102,7 @@ public class BoardGrid {
      * To be called by clicking on a square that is not lit up.
      */
     private void turnOffTiles() {
+        System.out.print("CLEARED LIT TILES!\n");
         if (! myLitTiles.isEmpty()) {
             for (BoardTile bt : myLitTiles) {
                 bt.LightUp(false);
@@ -138,16 +130,29 @@ public class BoardGrid {
      * @param p piece to be made selected piece.
      */
     public void setSelectedPiece(Piece p) {
+        System.out.print(String.format("SELECTED PIECE IS NOW: %s \n", p.getName()));
         if (p.getTeam() == myID) {
             mySelectedPiece = p;
         }
     }
     /**
-     * THIS METHOD SOLELY FOR TESTING
+     * TESTING FROM HERE DOWNWARD
      */
+
+    /**
+     * creates a standard 8x8 board. Used for testing.
+     */
+    public BoardGrid(Consumer<Piece> lightupCons, int id, Consumer<Coordinate> MoveCons) {
+        myLitTiles = new ArrayList<>();
+        myBoard = new GridPane();
+        makeRunAndCons();
+        setUpGP(myBoard, 8, 8);
+        makeBoard2(myBoard, 8, 8, lightupCons, MoveCons);
+        myID = id;
+    }
     private void makeBoard2(GridPane gp, int rows, int cols, Consumer<Piece> lightupCons, Consumer<Coordinate> MoveCons) {
         for (int r =0; r < rows; r++) {
             for (int c=0; c < cols; c++) {
-                BoardTile tile = new BoardTile(c, r, rows, cols, lightupCons, ClearLitTilesRun, setSelPiece, MoveCons);
+                BoardTile tile = new BoardTile(new Coordinate(c,r), rows, cols, lightupCons, ClearLitTilesRun, setSelPiece, MoveCons);
                 tile.LightUp(Boolean.FALSE);
                 gp.add(tile.getMyStackPane(), r, c);}}}}

@@ -14,21 +14,17 @@ import java.io.File;
 public class GameBackend {
 
     private ChessBoard myChessBoard;
-    private final ViewManager myViewManager;
 
-    public GameBackend (ViewManager mv) {
-        myViewManager = mv;
-    }
 
     public void initalizeChessBoard(File JSON) {
+    public ChessBoard initalizeChessBoard(File JSON) {
         try {
             BoardSetup bs = new BoardSetup(JSON.getPath());
             myChessBoard = bs.createBoard();
-            myViewManager.getViews().stream()
-                    .filter(e -> e.getClass() == GameView.class)
-                    .forEach(e -> ((GameView) e).SetUpBoard(myChessBoard, 0)); //TODO: Figure out player ID stuff
+            return myChessBoard;
         } catch (Exception e){
             // myMainView.showError();
+            return null;
         }
     }
 

@@ -13,6 +13,7 @@ import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.View;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
+import oogasalad.GamePlayer.Board.ChessBoard;
 
 import java.io.File;
 
@@ -41,20 +42,22 @@ public class HostGame extends View {
         Node exit = makeExitGroup();
         Node title = makeLabelGroup(getLanguageResource(TITLE), TITLE_SIZE);
         Node prompt = makeLabelGroup(getLanguageResource(PROMPT), PROMPT_SIZE);
-        Node load = makeFileUploadGroup();
-        Node start = makeStartGroup();
+        Node load = makeFileUploadGroup(sp);
 
-        StackPane.setAlignment(exit, Pos.TOP_LEFT);
-        StackPane.setAlignment(title, Pos.TOP_CENTER);
-        StackPane.setAlignment(prompt, Pos.CENTER);
-        StackPane.setAlignment(load, Pos.CENTER_RIGHT);
-        StackPane.setAlignment(start, Pos.CENTER_LEFT);
+        sp.setAlignment(exit, Pos.TOP_LEFT);
+        sp.setAlignment(title, Pos.TOP_CENTER);
+        sp.setAlignment(prompt, Pos.CENTER);
+        sp.setAlignment(load, Pos.CENTER_RIGHT);
 
-        sp.getChildren().addAll(exit, title, prompt, load, start);
+        sp.getChildren().addAll(exit, title, prompt, load);
         return sp;
     }
 
     private Node makeStartGroup() {
+        Button start = ButtonFactory.makeButton(ButtonType.TEXT, MainView.getLanguage().getString("Start"), "start",
+                (e) -> getMainView().getViews().stream().filter((c) -> c.getClass() == GameView.class).forEach((c) ->
+                        getMainView().changeScene(c)));
+
         Button start = ButtonFactory.makeButton(ButtonType.TEXT, ViewManager.getLanguage().getString("Start"), "start",
                 (e) -> getViewManager().getViews().stream().filter((c) -> c.getClass() == GameView.class).forEach((c) ->
                         getViewManager().changeScene(c)));
@@ -68,11 +71,20 @@ public class HostGame extends View {
         return new Group(Exit);
     }
 
-    private Node makeFileUploadGroup() {
+    private Node makeFileUploadGroup(StackPane sp) {
         Button load = ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource(LOAD), Load_Button_ID,
                 (e) -> {
                     File f = getViewManager().chooseLoadFile();
-                    getViewManager().getMyGameBackend().initalizeChessBoard(f);
+                    ChessBoard cb = getMainView().getMyBackend().initalizeChessBoard(f);
+
+                    getMainView().getViews().stream()
+                            .filter(d -> d.getClass() == GameView.class)
+                            .forEach(c -> ((GameView) c).SetUpBoard(cb, 0)); //TODO: Figure out player ID stuff
+                    // Make the start button
+
+                    Node start = makeStartGroup();
+                    sp.setAlignment(start, Pos.CENTER_LEFT);
+                    sp.getChildren().add(start);
                 });
         load.setPrefWidth(150);
         load.setPrefHeight(50);

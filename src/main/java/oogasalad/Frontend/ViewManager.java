@@ -71,8 +71,4 @@ public class ViewManager {
 		return fileChooser.showOpenDialog(stage);
 	}
 	public GameBackend getMyGameBackend(){return myGameBackend;}
-
-	public void setUpGameView(ChessBoard board, int player) {
-		//TODO: call GameView SetUpBoard() w this method
-		}
 }
