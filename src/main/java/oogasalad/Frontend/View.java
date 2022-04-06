@@ -9,10 +9,8 @@ import javafx.stage.Screen;
 import oogasalad.Frontend.Menu.HomeView;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
-import oogasalad.Frontend.util.ResourceParser;
-
-import java.io.FileNotFoundException;
 import java.util.MissingResourceException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public abstract class View {
@@ -21,7 +19,7 @@ public abstract class View {
 	protected Group myRoot;
 	protected Rectangle2D myScreenSize;
 	protected ResourceBundle myResources;
-	private MainView myMainView;
+	private final MainView myMainView;
 
 	public View(MainView mainView) {
 		myScreenSize = Screen.getPrimary().getVisualBounds();
@@ -30,7 +28,7 @@ public abstract class View {
 		try {
 			myResources = ResourceBundle.getBundle(getClass().getSimpleName());
 		} catch (MissingResourceException e) {
-			System.out.println("No ResourceBundle found for " + getClass());
+			// Do nothing if file isn't found
 		}
 	}
 
@@ -58,8 +56,7 @@ public abstract class View {
 	}
 
 	/**
-	 * @return The final node that should a direct child of .
-	 *     This function is called in the constructor and the return value is saved in myScene
+	 * @return The parent node of the scene which will be the direct child of myRoot
 	 */
 	protected abstract Node makeNode();
 
@@ -69,8 +66,7 @@ public abstract class View {
 
 	protected Button makeExitButton() {
 		Button b = ButtonFactory.makeButton(ButtonType.TEXT, MainView.getLanguage().getString("exit"), "exit",
-				(e) -> getMainView().getViews().stream().filter((c) -> c.getClass() == HomeView.class).forEach((c) ->
-						getMainView().changeScene(c)));
+				(e) -> getView(HomeView.class).ifPresent(myMainView::changeScene));
 		b.setPrefWidth(150);
 		b.setPrefHeight(50);
 		return b;
@@ -80,8 +76,17 @@ public abstract class View {
 		return MainView.getLanguage().getString(getClass().getSimpleName() + s);
 	}
 
-	// TODO: fix method to streamline getting other classes
-	protected <T> View getView(Class<T> className) {
-		return getMainView().getViews().stream().filter((e) -> className == e.getClass()).findFirst().get();
+	/**
+	 * @param className Class to check getViews() for
+	 * @return Optional View if it is found in myViews from MainView
+	 */
+	protected <T> Optional<View> getView(Class<T> className) {
+		Optional<View> v = getMainView().getViews().stream().filter((e) -> className == e.getClass()).findFirst();
+		if(v.isPresent()) {
+			return v;
+		} else {
+			System.out.printf("%s not found in %s%n", className, myMainView.getViews());
+			return Optional.empty();
+		}
 	}
 }

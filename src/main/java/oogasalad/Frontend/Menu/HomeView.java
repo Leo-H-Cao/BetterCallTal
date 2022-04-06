@@ -46,8 +46,8 @@ public class HomeView extends View {
                 buttons,
                 title
         );
-        ret.setAlignment(buttons, Pos.CENTER);
-        ret.setAlignment(title, Pos.TOP_CENTER);
+        StackPane.setAlignment(buttons, Pos.CENTER);
+        StackPane.setAlignment(title, Pos.TOP_CENTER);
 
         return ret;
     }
@@ -57,18 +57,17 @@ public class HomeView extends View {
         Label t = new Label(getLanguageResource("Title"));
         t.setFont(new Font(64));
         t.setTextAlignment(TextAlignment.CENTER);
-        Group ret = new Group(t);
-        return ret;
+        return new Group(t);
     }
 
     private Node makeButtons() {
         GridPane buttonList = new GridPane();
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Create"), "createButton",
-                (e) -> getMainView().changeScene(getView(GameEditorView.class))), 0, 0);
+                (e) -> getView(View.class).ifPresent(getMainView()::changeScene)), 0, 0);
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Join"), "joinButton",
-                (e) -> getMainView().changeScene(getView(GameView.class))), 0, 1);
+                (e) -> getView(GameView.class).ifPresent(getMainView()::changeScene)), 0, 1);
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Host"), "hostButton",
-                (e) -> getMainView().changeScene(getView(HostGame.class))), 0, 2);
+                (e) -> getView(HostGame.class).ifPresent(getMainView()::changeScene)), 0, 2);
 
         buttonList.getChildren().forEach((b) -> {
             if(b instanceof Button) {
@@ -77,8 +76,6 @@ public class HomeView extends View {
             }
         });
         buttonList.setVgap(25);
-        Group ret = new Group(buttonList);
-
-        return ret;
+        return new Group(buttonList);
     }
 }

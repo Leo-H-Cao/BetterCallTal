@@ -1,13 +1,6 @@
 package oogasalad.Frontend.Editor;
-/**
- * This class will handle the view for the Game Editor.
- */
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Separator;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
@@ -24,9 +17,9 @@ import java.util.Collection;
 
 
 public class GameEditorView extends View {
-	private BoardEditor myBoardEditor;
-	private Collection<PieceEditor> myPieceEditors;
-	private TabPane myTabs;
+	private final BoardEditor myBoardEditor;
+	private final Collection<PieceEditor> myPieceEditors;
+	private final TabPane myTabs;
 
 	public GameEditorView(MainView mainView) {
 		super(mainView);
