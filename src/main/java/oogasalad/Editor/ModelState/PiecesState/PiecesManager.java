@@ -1,6 +1,5 @@
 package oogasalad.Editor.ModelState.PiecesState;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +52,10 @@ public class PiecesManager {
     return allPieceInfo;
   }
 
+  public List<EditorPiece> getAllPieces() {
+    return availablePieces;
+  }
+
   private EditorPiece findPiece(String pieceID){
     for(EditorPiece piece : availablePieces){
       if(piece.getPieceID().equals(pieceID)){
@@ -61,5 +64,4 @@ public class PiecesManager {
     }
     return null;
   }
-
 }

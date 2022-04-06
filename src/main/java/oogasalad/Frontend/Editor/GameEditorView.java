@@ -36,6 +36,7 @@ public class GameEditorView extends View {
 		Tab boardTab = makeTab(getLanguageResource("Board"), myBoardEditor.getNode());
 		boardTab.setClosable(false);
 		myTabs = new TabPane(boardTab);
+		myTabs.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
 	}
 
 	@Override
