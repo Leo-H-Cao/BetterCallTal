@@ -63,7 +63,7 @@ public class HomeView extends View {
     private Node makeButtons() {
         GridPane buttonList = new GridPane();
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Create"), "createButton",
-                (e) -> getView(View.class).ifPresent(getMainView()::changeScene)), 0, 0);
+                (e) -> getView(GameEditorView.class).ifPresent(getMainView()::changeScene)), 0, 0);
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Join"), "joinButton",
                 (e) -> getView(GameView.class).ifPresent(getMainView()::changeScene)), 0, 1);
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Host"), "hostButton",

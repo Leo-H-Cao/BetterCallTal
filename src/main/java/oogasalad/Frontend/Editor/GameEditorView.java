@@ -37,7 +37,6 @@ public class GameEditorView extends View {
 
 	private Node makeLayout() {
 		BorderPane ret = new BorderPane();
-		ret.setPrefWidth(myScreenSize.getWidth());
 		ret.setTop(makeMenu());
 		ret.setCenter(myBoardEditor.getNode());
 		return ret;
@@ -57,11 +56,13 @@ public class GameEditorView extends View {
 
 	private Node makeMenu() {
 		GridPane ret = new GridPane();
-		ret.setPrefHeight(5000);
-		ret.add(makeExitButton(), 0, 0);
-		ret.add(myTabs, 0, 1);
-		ret.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("NewCustomPiece"), "newCustomPiece",
+		GridPane buttons = new GridPane();
+//		ret.setPrefHeight(5000);
+		buttons.add(makeExitButton(), 0, 0);
+		buttons.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("NewCustomPiece"), "newCustomPiece",
 				(e) -> newCustomPiece()), 1, 0);
+		ret.add(buttons, 0, 0);
+		ret.add(myTabs, 0, 1);
 		return ret;
 	}
 }

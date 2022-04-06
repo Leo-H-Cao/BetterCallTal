@@ -20,6 +20,7 @@ public class BoardEditor extends NodeContainer {
 
 	private Node makeLayout() {
 		BorderPane ret = new BorderPane();
+		ret.setPrefWidth(myScreenSize.getWidth());
 		ret.setCenter(myChessBoard.getNode());
 		ret.setLeft(myPieceLibrary.getNode());
 		return ret;
