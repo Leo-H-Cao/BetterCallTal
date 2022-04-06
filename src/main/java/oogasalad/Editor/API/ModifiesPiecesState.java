@@ -35,6 +35,8 @@ public interface ModifiesPiecesState {
 
   void setPieceName(String pieceID, String name);
 
+  void setPieceStart(String pieceID, int x, int y);
+
 //  /**
 //   * Adds modifier to a piece such as inivisible or make the piece the objective of the game
 //   * @param piece user is trying add modifier to

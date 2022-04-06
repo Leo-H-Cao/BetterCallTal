@@ -25,7 +25,7 @@ public class GameRules {
     try {
       myResources = ResourceBundle.getBundle(CONFIGURATION_RESOURCE_PATH, Locale.ENGLISH);
     } catch (NullPointerException | MissingResourceException e) {
-      throw new IllegalArgumentException(String.format("Invalid resource file: %s", "pen"));
+      throw new IllegalArgumentException(String.format("Invalid resource file: %s", "GameRules"));
     }
   }
 

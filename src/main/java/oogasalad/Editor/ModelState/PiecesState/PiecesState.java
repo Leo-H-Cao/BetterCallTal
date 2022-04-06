@@ -41,8 +41,8 @@ public class PiecesState extends ModelState implements ModifiesPiecesState {
     piecesManager.setPieceName(pieceID, name);
   }
 
+  @Override
   public void setPieceStart(String pieceID, int x, int y){
     piecesManager.setStartingLocation(pieceID, x, y);
   }
-
 }
