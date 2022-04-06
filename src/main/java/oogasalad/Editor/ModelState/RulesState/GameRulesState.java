@@ -1,9 +1,8 @@
-package oogasalad.Editor.ModelState;
+package oogasalad.Editor.ModelState.RulesState;
 
 import java.util.List;
 import oogasalad.Editor.API.ModifiesRulesState;
-import oogasalad.Editor.ModelState.PiecesState.EditorPiece;
-import oogasalad.Editor.ModelState.PiecesState.MovementRules;
+import oogasalad.Editor.ModelState.ModelState;
 
 public class GameRulesState extends ModelState implements ModifiesRulesState {
 

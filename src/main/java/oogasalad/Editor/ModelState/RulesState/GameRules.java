@@ -1,4 +1,4 @@
-package oogasalad.Editor.ModelState;
+package oogasalad.Editor.ModelState.RulesState;
 
 import java.util.ArrayList;
 import java.util.List;

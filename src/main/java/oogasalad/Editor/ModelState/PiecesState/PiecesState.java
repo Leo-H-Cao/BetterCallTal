@@ -41,41 +41,6 @@ public class PiecesState extends ModelState implements ModifiesPiecesState {
     piecesManager.setPieceName(pieceID, name);
   }
 
-  @Override
-  public void changeBoardSize(int width, int height) {
-
-  }
-
-  @Override
-  public void addTileEffect(int x, int y, String effect) {
-
-  }
-
-  @Override
-  public void deleteTileEffect(int x, int y) {
-
-  }
-
-  @Override
-  public void setPieceStartingLocation(String pieceID, int x, int y) {
-
-  }
-
-  @Override
-  public void removePiece(int x, int y) {
-
-  }
-
-  @Override
-  public int getBoardWidth() {
-    return 0;
-  }
-
-  @Override
-  public int getBoardHeight() {
-    return 0;
-  }
-
   public void setPieceStart(String pieceID, int x, int y){
     piecesManager.setStartingLocation(pieceID, x, y);
   }

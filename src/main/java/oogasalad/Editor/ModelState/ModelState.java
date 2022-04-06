@@ -1,9 +1,8 @@
 package oogasalad.Editor.ModelState;
 
 import oogasalad.Editor.ModelState.BoardState.EditorBoard;
-import oogasalad.Editor.ModelState.PiecesState.EditorPiece;
-import oogasalad.Editor.ModelState.PiecesState.MovementRules;
 import oogasalad.Editor.ModelState.PiecesState.PiecesManager;
+import oogasalad.Editor.ModelState.RulesState.GameRules;
 
 public abstract class ModelState{
 
