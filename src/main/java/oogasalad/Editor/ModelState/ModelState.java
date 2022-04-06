@@ -1,5 +1,9 @@
 package oogasalad.Editor.ModelState;
 
+import oogasalad.Editor.ModelState.BoardState.EditorBoard;
+import oogasalad.Editor.ModelState.PiecesState.PiecesManager;
+import oogasalad.Editor.ModelState.RulesState.GameRules;
+
 public abstract class ModelState{
 
   protected EditorBoard myEditorBoard;
@@ -11,26 +15,4 @@ public abstract class ModelState{
     piecesManager = new PiecesManager();
     myGameRules = new GameRules();
   }
-
-  public abstract EditorPiece createCustomPiece(int points, int teamNumber, String image, MovementRules movementRules, String pieceID, String pieceName, int startX, int startY);
-
-  public abstract void changePieceMovement(String pieceID, MovementRules movementRules);
-
-  public abstract void setPiecePointValue(String pieceID, int points);
-
-  public abstract void setPieceName(String pieceID, String name);
-
-  public abstract void changeBoardSize(int width, int height);
-
-  public abstract void addTileEffect(int x, int y, String effect);
-
-  public abstract void deleteTileEffect(int x, int y);
-
-  public abstract void setPieceStartingLocation(String pieceID, int x, int y);
-
-  public abstract void removePiece(int x, int y);
-
-  public abstract int getBoardWidth();
-
-  public abstract int getBoardHeight();
 }

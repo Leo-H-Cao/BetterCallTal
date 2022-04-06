@@ -1,4 +1,4 @@
-package oogasalad.Editor.ModelState;
+package oogasalad.Editor.ModelState.BoardState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.Locale;
 public class EditorBoard {
 
   private final int DEFAULT_BOARD_SIZE = 8;
-  private List<List<oogasalad.Editor.ModelState.EditorTile>> board;
+  private List<List<EditorTile>> board;
 
   public EditorBoard(){
     board = new ArrayList<>(DEFAULT_BOARD_SIZE);
@@ -57,9 +57,13 @@ public class EditorBoard {
     board.get(y).get(x).deleteTileEffect();
   }
 
-  public void addPieceStartingLocation(EditorPiece piece, int x, int y){
-    board.get(y).get(x).addPiece(piece);
-  }
+//  public void addPieceStartingLocation(EditorPiece piece, int x, int y){
+//    board.get(y).get(x).addPiece(piece);
+//  }
+
+//  public void removePieceStartingLocation(int x, int y){
+//    board.get(y).get(x).removePiece();
+//  }
 
   public int getBoardWidth(){
     return board.get(0).size();
@@ -69,9 +73,6 @@ public class EditorBoard {
     return board.size();
   }
 
-  public void removePieceStartingLocation(int x, int y){
-    board.get(y).get(x).removePiece();
-  }
 
   private void initializeBoard(int boardSize){
     for(int i = 0; i < boardSize; i++){
