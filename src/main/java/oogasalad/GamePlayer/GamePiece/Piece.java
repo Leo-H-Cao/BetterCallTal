@@ -3,8 +3,10 @@ package oogasalad.GamePlayer.GamePiece;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -15,6 +17,8 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.MovementInterface;
 import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author Vincent Chen
@@ -22,6 +26,8 @@ import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
  * @author Jose Santillan
  */
 public class Piece implements Cloneable {
+
+  private static final Logger LOG = LogManager.getLogger(Piece.class);
 
   private static final boolean VALID_SQUARE = true;
   private static final boolean INVALID_SQUARE = false;
@@ -69,17 +75,51 @@ public class Piece implements Cloneable {
    */
   public Set<ChessTile> move(ChessTile finalSquare)
       throws InvalidMoveException, OutsideOfBoardException {
-    Set<ChessTile> moves = getMoves();
 
-    if (!moves.contains(finalSquare)) {
+    if (!getMoves().contains(finalSquare)) {
       throw new InvalidMoveException("Tile is not a valid move!");
     }
-    //TODO NOT COMPLETELY FINISHED, AM WAITING TO SEE HOW DIFFERENT TILES ARE IMPLEMENTED TO FINISH
-    ChessTile firstSquare = board.getTile(coordinates);
-    coordinates = finalSquare.getCoordinates();
-    finalSquare.appendPiece(this);
-    history.add(finalSquare.getCoordinates());
-    return new HashSet<>(Set.of(firstSquare, finalSquare));
+
+    //TODO: need to know whether a move is a capture or not for OIM, things like atomic
+    Set<ChessTile> updatedSquares = new HashSet<>(findMovements(finalSquare, movements));
+    updatedSquares.addAll(findMovements(finalSquare, customMovements));
+    updatedSquares.addAll(findCaptures(finalSquare, customMovements));
+    updatedSquares.addAll(findCaptures(finalSquare, captures));
+
+    movementModifiers.forEach((mm) -> updatedSquares.addAll(mm.updateMovement(this, finalSquare, board)));
+    return updatedSquares;
+  }
+
+  private Set<ChessTile> findMovements(ChessTile finalSquare, List<MovementInterface> movements) {
+    Set<ChessTile> updatedSquares = new HashSet<>();
+    movements.stream().filter((m) -> m.getMoves(this, board).contains(finalSquare)).findFirst().ifPresent((m) ->
+    {try{updatedSquares.addAll(m.movePiece(this, finalSquare.getCoordinates(), board));} catch (Exception ignored){}});
+    return updatedSquares;
+  }
+
+  private Set<ChessTile> findCaptures(ChessTile finalSquare, List<MovementInterface> captures) {
+    Set<ChessTile> updatedSquares = new HashSet<>();
+    captures.stream().filter((m) -> m.getCaptures(this, board).contains(finalSquare)).findFirst().ifPresent((m) ->
+    {try{updatedSquares.addAll(m.capturePiece(this, finalSquare.getCoordinates(), board));} catch (Exception ignored){}});
+    return updatedSquares;
+  }
+
+  /***
+   * Updates this piece's coordinates to the parameter passed and updates that tile to hold the
+   * new piece
+   *
+   * @param tile to put piece on
+   */
+  public void updateCoordinates(ChessTile tile) throws OutsideOfBoardException {
+    try {
+      board.getTile(coordinates).removePiece(this);
+      coordinates = tile.getCoordinates();
+      tile.appendPiece(this);
+      history.add(tile.getCoordinates());
+    } catch(OutsideOfBoardException e) {
+      LOG.warn("Couldn't update piece coordinates");
+      throw new OutsideOfBoardException(coordinates.toString());
+    }
   }
 
   /***
@@ -89,18 +129,42 @@ public class Piece implements Cloneable {
    */
   public Set<ChessTile> getMoves() {
     Set<ChessTile> allMoves = new HashSet<>();
+    Map<MovementInterface, Set<ChessTile>> movementSquaresMap = getMovementSquaresMap();
 
-    movements.stream()
-        .map(move -> move.getMoves(this, board))
-        .collect(Collectors.toSet())
-        .forEach(allMoves::addAll);
-
-    captures.stream()
-        .map(capture -> capture.getCaptures(this, board))
-        .collect(Collectors.toSet())
-        .forEach(allMoves::addAll);
+    movementSquaresMap.keySet().forEach((k) -> allMoves.addAll(movementSquaresMap.get(k)));
 
     return allMoves;
+  }
+
+  /***
+   * @return map of movement object to squares to move to
+   */
+  private Map<MovementInterface, Set<ChessTile>> getMovementSquaresMap() {
+    Map<MovementInterface, Set<ChessTile>> movementSquaresMap = new HashMap<>();
+
+    movementSquaresMap.putAll(streamMapMovements(movements));
+    movementSquaresMap.putAll(streamMapMovements(customMovements));
+
+    movementSquaresMap.putAll(streamMapCaptures(captures));
+    movementSquaresMap.putAll(streamMapCaptures(customMovements));
+
+    return movementSquaresMap;
+  }
+
+  /***
+   * @param movements to map
+   * @return map of movements to movement squares
+   */
+  private Map<MovementInterface, Set<ChessTile>> streamMapMovements(List<MovementInterface> movements) {
+    return movements.stream().collect(Collectors.toMap((m) -> m, (m) -> m.getMoves(this, board)));
+  }
+
+  /**
+   * @param captures to map
+   * @return map of captures to capture squares
+   */
+  private Map<MovementInterface, Set<ChessTile>> streamMapCaptures(List<MovementInterface> captures) {
+    return captures.stream().collect(Collectors.toMap((m) -> m, (m) -> m.getCaptures(this, board)));
   }
 
   /***

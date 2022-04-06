@@ -50,7 +50,7 @@ class MovementModifierTest {
   void atomicTestHappy() {
     try {
       assertFalse(board.isGameOver());
-      // Uncomment when pieces actually use movement modifiers to modify their movement
+      // Uncomment when pieces actually use on interaction modifiers
 //      whiteAttacker.move(board.getTile(Coordinate.of(1, 0)));
 //      assertTrue(board.isGameOver());
 //      assertEquals(Map.of(0, 0.0, 1, 0.0),board.getScores().get());
