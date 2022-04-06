@@ -8,7 +8,6 @@ import oogasalad.GamePlayer.Movement.Coordinate;
 public interface Tile {
   void addPiece(Piece piece);
   Coordinate getCoordinates();
-  void executeAction(ChessBoard board) throws OutsideOfBoardException;
 
 
   //void setModifer();

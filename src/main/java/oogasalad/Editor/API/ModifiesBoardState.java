@@ -25,20 +25,11 @@ public interface ModifiesBoardState {
    void deleteTileEffect(int x, int y);
 
 
-  /**
-   * Places a certain piece at a location specified by user on board for initial starting position
-   */
-  void setPieceStartingLocation(String pieceID, int x, int y);
-
-  /**
-   * Removes piece from board representing starting locations
-   * @param x coordinate of piece to be removed
-   * @param y coordinate of piece to be removed
-   */
-  void removePiece(int x, int y);
-
-
   int getBoardWidth();
 
   int getBoardHeight();
+
+  void setPieceStartingLocation(String pieceID, int x, int y);
+
+  void removePiece(String pieceID, int x, int y);
 }

@@ -49,14 +49,16 @@ public class Castling implements MovementInterface {
       LOG.warn("Illegal castling move attempted");
       throw new InvalidMoveException(finalSquare.toString());
     }
-    Set<ChessTile> updatedSquares = new HashSet<>(piece.move(
-        board.getTile(finalSquare)));
 
     Piece supporter = getSupporter(piece, finalSquare, board);
-    int supporterPieceNewCol = piece.getCoordinates().getCol() < supporter.getCoordinates().getCol() ? -SUPPORTER_RELATIVE_SQUARE : SUPPORTER_RELATIVE_SQUARE;
-    updatedSquares.addAll(supporter.move(board.getTile(Coordinate.of(supporter.getCoordinates().getRow(), supporterPieceNewCol))));
+    int supporterPieceDelta = piece.getCoordinates().getCol() < supporter.getCoordinates().getCol() ? -SUPPORTER_RELATIVE_SQUARE : SUPPORTER_RELATIVE_SQUARE;
 
-    return updatedSquares;
+    piece.updateCoordinates(board.getTile(finalSquare));
+
+    board.getTile(supporter.getCoordinates()).removePiece(supporter);
+    board.getTile(Coordinate.of(supporter.getCoordinates().getRow(), supporterPieceDelta + piece.getCoordinates().getCol())).addPiece(supporter);
+
+    return Set.of(board.getTile(piece.getCoordinates()), board.getTile(supporter.getCoordinates()));
   }
 
   /**

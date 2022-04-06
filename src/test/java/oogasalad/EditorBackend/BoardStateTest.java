@@ -2,19 +2,24 @@ package oogasalad.EditorBackend;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import oogasalad.Editor.ModelState.BoardState;
-import oogasalad.Editor.ModelState.PiecesState;
+import oogasalad.Editor.ModelState.BoardAndPieces;
+import oogasalad.Editor.ModelState.BoardState.BoardState;
+import oogasalad.Editor.ModelState.PiecesState.MovementRules;
+import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class BoardStateTest {
   private BoardState boardState;
   private PiecesState piecesState;
+  private BoardAndPieces boardAndPieces;
 
   @BeforeEach
   void setup() {
-    boardState = new BoardState();
-    piecesState = new PiecesState();
+    boardAndPieces = new BoardAndPieces();
+    piecesState = boardAndPieces.getPiecesState();
+    boardState = boardAndPieces.getBoardState();
+
   }
 
   @Test
@@ -32,5 +37,19 @@ class BoardStateTest {
     assertEquals(newHeight, boardState.getBoardHeight());
     assertEquals(newWidth, boardState.getBoardWidth());
   }
+
+  @Test
+  void testChangePieceStartingLocation(){
+    String pieceID = "123";
+    piecesState.createCustomPiece(1, 1, "image.png", new MovementRules(), pieceID, "my piece");
+    assertEquals(0, piecesState.getPieceInfo(pieceID).getStartingPosX());
+    assertEquals(0, piecesState.getPieceInfo(pieceID).getStartingPosY());
+    int newX = 6;
+    int newY = 5;
+    boardState.setPieceStartingLocation(pieceID, newX, newY);
+    assertEquals(newX, piecesState.getPieceInfo(pieceID).getStartingPosX());
+    assertEquals(newY, piecesState.getPieceInfo(pieceID).getStartingPosY());
+  }
+
 
 }

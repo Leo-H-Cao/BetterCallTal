@@ -1,14 +1,12 @@
 package oogasalad.Frontend;
 
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Menu.LanguageModal;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 import java.util.ResourceBundle;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestNavigation extends DukeApplicationTest {
 	private LanguageModal myLanguageModal;

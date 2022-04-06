@@ -1,14 +1,17 @@
 package oogasalad.Editor.API;
 
 
-import oogasalad.Editor.ModelState.EditorPiece;
-import oogasalad.Editor.ModelState.MovementRules;
-import oogasalad.Editor.ModelState.PieceInfo;
+import java.util.List;
+import oogasalad.Editor.ModelState.PiecesState.EditorPiece;
+import oogasalad.Editor.ModelState.PiecesState.MovementRules;
+import oogasalad.Editor.ModelState.PiecesState.PieceInfo;
 
 public interface ModifiesPiecesState {
 
   PieceInfo getPieceInfo(String pieceID);
 
+
+  List<PieceInfo> getAllPieceInfo();
 
   /**
    * Change piece display image to a custom image provided by user
@@ -23,7 +26,7 @@ public interface ModifiesPiecesState {
    * @param movementRules describe where the custom piece is allowed to move, how it interacts with other pieces
    * @return PieceConfig object containing information for new piece
    */
-   EditorPiece createCustomPiece(int points, int teamNumber, String image, MovementRules movementRules, String pieceID, String pieceName, int startX, int startY);
+   EditorPiece createCustomPiece(int points, int teamNumber, String image, MovementRules movementRules, String pieceID, String pieceName);
 
   /**
    * Changes movement patterns/rules for a given piece

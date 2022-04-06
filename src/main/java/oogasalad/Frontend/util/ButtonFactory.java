@@ -11,7 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class ButtonFactory {
-	public static final String IMAGE_PATH = "src/main/resources/images/button/";
+	public static final String IMAGE_PATH = "src/main/resources/images/";
 
 	public static Button makeButton(ButtonType type, String displayText, String id, EventHandler<ActionEvent> action) {
 		Button b = new Button();
@@ -42,6 +42,8 @@ public class ButtonFactory {
 			Image image = new Image(new FileInputStream(IMAGE_PATH + imageName));
 			ImageView imageView = new ImageView(image);
 			button.setGraphic(imageView);
-		} catch (FileNotFoundException ignored) {}
+		} catch (FileNotFoundException ignored) {
+			System.out.println("Setting image failed");
+		}
 	}
 }

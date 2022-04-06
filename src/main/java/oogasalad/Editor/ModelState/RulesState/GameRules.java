@@ -1,4 +1,4 @@
-package oogasalad.Editor.ModelState;
+package oogasalad.Editor.ModelState.RulesState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class GameRules {
-  private static final String CONFIGURATION_RESOURCE_PATH = "Editor/Backend/GameRules";
+  private static final String CONFIGURATION_RESOURCE_PATH = "oogasalad/Editor/GameRules";
 
   private List<String> winConditions;
   private String turnCriteria;
@@ -25,7 +25,7 @@ public class GameRules {
     try {
       myResources = ResourceBundle.getBundle(CONFIGURATION_RESOURCE_PATH, Locale.ENGLISH);
     } catch (NullPointerException | MissingResourceException e) {
-      throw new IllegalArgumentException(String.format("Invalid resource file: %s", "pen"));
+      throw new IllegalArgumentException(String.format("Invalid resource file: %s", "GameRules"));
     }
   }
 

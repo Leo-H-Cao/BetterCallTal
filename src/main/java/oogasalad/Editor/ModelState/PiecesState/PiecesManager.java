@@ -1,11 +1,12 @@
-package oogasalad.Editor.ModelState;
+package oogasalad.Editor.ModelState.PiecesState;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PiecesManager {
 
-  private List<EditorPiece> availablePieces;
+  private ArrayList<EditorPiece> availablePieces;
 
   public PiecesManager(){
     availablePieces = new ArrayList<>();
@@ -44,6 +45,13 @@ public class PiecesManager {
     pieceInfo.setStartingPosY(startY);
   }
 
+  public List<PieceInfo> getAllPieceInfo(){
+    List<PieceInfo> allPieceInfo = new ArrayList<>();
+    for( EditorPiece piece: availablePieces){
+      allPieceInfo.add(piece.getPieceInfo());
+    }
+    return allPieceInfo;
+  }
 
   private EditorPiece findPiece(String pieceID){
     for(EditorPiece piece : availablePieces){
