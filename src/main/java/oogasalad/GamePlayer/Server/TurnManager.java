@@ -54,8 +54,9 @@ public interface TurnManager {
   /**
    * Checks all endConditions and
    *
+   * @param board the board to check
    * @return if the game is over
    */
-  boolean isGameOver();
+  boolean isGameOver(ChessBoard board);
 
 }
