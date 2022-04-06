@@ -31,4 +31,8 @@ public class GameBackend {
             // myMainView.showError();
         }
     }
+
+    public ChessBoard getChessBoard() {
+        return myChessBoard;
+    }
 }
