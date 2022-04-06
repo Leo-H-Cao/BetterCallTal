@@ -44,7 +44,9 @@ public class GameEditorView extends View {
 	private void newCustomPiece() {
 		PieceEditor newPieceEditor = new PieceEditor();
 		myPieceEditors.add(newPieceEditor);
-		myTabs.getTabs().add(makeTab(getLanguageResource("CustomPiece") + " " + myPieceEditors.size(), newPieceEditor.getNode()));
+		Tab newTab = makeTab(getLanguageResource("CustomPiece") + " " + myPieceEditors.size(), newPieceEditor.getNode());
+		myTabs.getTabs().add(newTab);
+		myTabs.getSelectionModel().select(newTab);
 	}
 
 	private Tab makeTab(String name, Node content) {
