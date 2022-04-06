@@ -2,14 +2,15 @@ package oogasalad.Editor.ModelState.BoardState;
 
 
 import oogasalad.Editor.API.ModifiesBoardState;
-import oogasalad.Editor.ModelState.PiecesState.EditorPiece;
-import oogasalad.Editor.ModelState.ModelState;
-import oogasalad.Editor.ModelState.PiecesState.MovementRules;
+import oogasalad.Editor.ModelState.PiecesState.PiecesManager;
 
-public class BoardState extends ModelState implements ModifiesBoardState {
+public class BoardState implements ModifiesBoardState {
+  private EditorBoard myEditorBoard;
+  private PiecesManager piecesManager;
 
-  public BoardState(){
-    super();
+  public BoardState(PiecesManager statePiecesManager){
+    myEditorBoard = new EditorBoard();
+    piecesManager = statePiecesManager;
   }
 
   @Override
@@ -37,15 +38,17 @@ public class BoardState extends ModelState implements ModifiesBoardState {
     return myEditorBoard.getBoardHeight();
   }
 
-  //  @Override
-//  public void setPieceStartingLocation(String pieceID, int x, int y) {
-//    myEditorBoard.addPieceStartingLocation(piecesManager.getPiece(pieceID), x, y);
-//  }
-//
-//  @Override
-//  public void removePiece(int x, int y) {
-//    myEditorBoard.removePieceStartingLocation(x, y);
-//  }
+  @Override
+  public void setPieceStartingLocation(String pieceID, int x, int y) {
+    myEditorBoard.addPieceStartingLocation(piecesManager.getPiece(pieceID), x, y);
+    piecesManager.setStartingLocation(pieceID, x, y);
+  }
+
+  @Override
+  public void removePiece(String pieceID, int x, int y) {
+    myEditorBoard.removePieceStartingLocation(x, y);
+    piecesManager.setStartingLocation(pieceID, -1, -1);
+  }
 
 
 }

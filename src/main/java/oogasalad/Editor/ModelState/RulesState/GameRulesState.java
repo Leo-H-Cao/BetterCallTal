@@ -2,14 +2,14 @@ package oogasalad.Editor.ModelState.RulesState;
 
 import java.util.List;
 import oogasalad.Editor.API.ModifiesRulesState;
-import oogasalad.Editor.ModelState.ModelState;
 
-public class GameRulesState extends ModelState implements ModifiesRulesState {
+public class GameRulesState implements ModifiesRulesState {
+
+  private GameRules myGameRules;
 
   public GameRulesState(){
-    super();
+    myGameRules = new GameRules();
   }
-
 
   @Override
   public void setWinConditions(List<String> winConditions) {

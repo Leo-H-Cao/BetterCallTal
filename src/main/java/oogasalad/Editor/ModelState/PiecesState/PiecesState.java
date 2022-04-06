@@ -1,13 +1,14 @@
 package oogasalad.Editor.ModelState.PiecesState;
 
 
+import java.util.List;
 import oogasalad.Editor.API.ModifiesPiecesState;
-import oogasalad.Editor.ModelState.ModelState;
 
-public class PiecesState extends ModelState implements ModifiesPiecesState {
+public class PiecesState implements ModifiesPiecesState {
+  private PiecesManager piecesManager;
 
   public PiecesState(){
-    super();
+    piecesManager = new PiecesManager();
   }
 
   @Override
@@ -16,13 +17,18 @@ public class PiecesState extends ModelState implements ModifiesPiecesState {
   }
 
   @Override
+  public List<PieceInfo> getAllPieceInfo(){
+    return piecesManager.getAllPieceInfo();
+  }
+
+  @Override
   public void changePieceImage(String pieceID, String imageFile) {
     piecesManager.changePieceImage(pieceID, imageFile);
   }
 
   @Override
-  public EditorPiece createCustomPiece(int points, int teamNumber, String image, MovementRules movementRules, String pieceID, String pieceName, int startX, int startY) {
-    PieceInfo pieceInfo = new PieceInfo(startX, startY, image, teamNumber);
+  public EditorPiece createCustomPiece(int points, int teamNumber, String image, MovementRules movementRules, String pieceID, String pieceName) {
+    PieceInfo pieceInfo = new PieceInfo(image, teamNumber);
     return piecesManager.createPiece(points,movementRules, pieceID, pieceName, pieceInfo);
   }
 
@@ -41,8 +47,7 @@ public class PiecesState extends ModelState implements ModifiesPiecesState {
     piecesManager.setPieceName(pieceID, name);
   }
 
-  @Override
-  public void setPieceStart(String pieceID, int x, int y){
-    piecesManager.setStartingLocation(pieceID, x, y);
+  public PiecesManager getPiecesManager(){
+    return piecesManager;
   }
 }
