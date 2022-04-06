@@ -2,6 +2,7 @@ package oogasalad.Frontend.Editor.Board;
 
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
+import oogasalad.Editor.ModelState.BoardAndPieces;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Frontend.NodeContainer;
