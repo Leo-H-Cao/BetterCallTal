@@ -23,7 +23,6 @@ import java.util.function.Consumer;
 
 public class GameView extends View {
 
-    private Collection<Piece> myPieces;
     private BoardGrid myBoardGrid;
     private Integer Turn;
     private static Integer myID;
@@ -47,10 +46,9 @@ public class GameView extends View {
         Turn = 0;   // give white player first turn
         myID = id;
         makeConsumers();
-        //myBoardGrid = new BoardGrid(chessboard, id, lightUpCons); //TODO: Figure out player ID stuff
-        myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons);
+        myBoardGrid = new BoardGrid(chessboard, id, lightUpCons, MoveCons); //TODO: Figure out player ID stuff
+        //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
-        myBP.setCenter(myBoardGrid.getBoard());
 
     }
 
@@ -62,6 +60,7 @@ public class GameView extends View {
 
 
     private void makeMove(Coordinate c) {
+        System.out.print("makeMove in GameView reached\n");
         try {
             TurnUpdate tu = getMainView().getMyBackend().getChessBoard().move(myBoardGrid.getSelectedPiece(), c);
             updateBoard(tu);
@@ -76,6 +75,7 @@ public class GameView extends View {
      */
 
     public void lightUpSquares(Piece p) {
+        System.out.print("I made it to lightUpSquares method in GameView\n");
         Collection<ChessTile> possibletiles = getMainView().getMyBackend().getChessBoard().getMoves(p);
         myBoardGrid.lightSquares(possibletiles);
     }
@@ -95,14 +95,9 @@ public class GameView extends View {
     @Override
     protected Node makeNode() {
         BorderPane bp = new BorderPane();
-        bp.setTop(new TopSection().getGP());
         myBP = bp;
-        // REMOVE LATER
-        makeConsumers();
-        myBoardGrid = new BoardGrid(lightUpCons, 0, MoveCons);
-        myBoardGrid.getBoard().setAlignment(Pos.CENTER);
+        bp.setTop(new TopSection().getGP());
         bp.setCenter(myBoardGrid.getBoard());
-        //REMOVE LATLER ^^^
 
         return bp;
     }

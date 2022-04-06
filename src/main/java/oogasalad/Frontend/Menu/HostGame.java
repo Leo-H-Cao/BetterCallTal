@@ -15,6 +15,7 @@ import oogasalad.Frontend.MainView;
 import oogasalad.Frontend.View;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
+import oogasalad.GamePlayer.Board.ChessBoard;
 
 import java.io.File;
 
@@ -44,16 +45,14 @@ public class HostGame extends View {
         Node exit = makeExitGroup();
         Node title = makeLabelGroup(getLanguageResource(TITLE), TITLE_SIZE);
         Node prompt = makeLabelGroup(getLanguageResource(PROMPT), PROMPT_SIZE);
-        Node load = makeFileUploadGroup();
-        Node start = makeStartGroup();
+        Node load = makeFileUploadGroup(sp);
 
         sp.setAlignment(exit, Pos.TOP_LEFT);
         sp.setAlignment(title, Pos.TOP_CENTER);
         sp.setAlignment(prompt, Pos.CENTER);
         sp.setAlignment(load, Pos.CENTER_RIGHT);
-        sp.setAlignment(start, Pos.CENTER_LEFT);
 
-        sp.getChildren().addAll(exit, title, prompt, load, start);
+        sp.getChildren().addAll(exit, title, prompt, load);
         return sp;
     }
 
@@ -61,6 +60,7 @@ public class HostGame extends View {
         Button start = ButtonFactory.makeButton(ButtonType.TEXT, MainView.getLanguage().getString("Start"), "start",
                 (e) -> getMainView().getViews().stream().filter((c) -> c.getClass() == GameView.class).forEach((c) ->
                         getMainView().changeScene(c)));
+
         start.setPrefWidth(150);
         start.setPrefHeight(50);
         return new Group(start);
@@ -71,11 +71,20 @@ public class HostGame extends View {
         return new Group(Exit);
     }
 
-    private Node makeFileUploadGroup() {
+    private Node makeFileUploadGroup(StackPane sp) {
         Button load = ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource(LOAD), Load_Button_ID,
                 (e) -> {
                     File f = getMainView().chooseLoadFile();
-                    getMainView().getMyBackend().initalizeChessBoard(f);
+                    ChessBoard cb = getMainView().getMyBackend().initalizeChessBoard(f);
+
+                    getMainView().getViews().stream()
+                            .filter(d -> d.getClass() == GameView.class)
+                            .forEach(c -> ((GameView) c).SetUpBoard(cb, 0)); //TODO: Figure out player ID stuff
+                    // Make the start button
+
+                    Node start = makeStartGroup();
+                    sp.setAlignment(start, Pos.CENTER_LEFT);
+                    sp.getChildren().add(start);
                 });
         load.setPrefWidth(150);
         load.setPrefHeight(50);

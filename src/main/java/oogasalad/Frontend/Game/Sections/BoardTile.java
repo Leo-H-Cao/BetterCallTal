@@ -1,6 +1,7 @@
 package oogasalad.Frontend.Game.Sections;
 
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -9,7 +10,10 @@ import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
+
+import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.function.Consumer;
 
 
@@ -31,15 +35,16 @@ public class BoardTile {
     private Border myClearBorder;
     private Double BORDER_WIDTH = 5.0;
     private Boolean Lit;
+    private String Image_Path = "src/main/resources/images/pieces/";
 
-    public BoardTile(int x, int y, int rows, int cols, Consumer<Piece> lightupCons, Runnable clearlitrun, Consumer<Piece> setSelPiece, Consumer<Coordinate> MoveCons) {
-        myCoord = new Coordinate(y, x);
+    public BoardTile(Coordinate c, int rows, int cols, Consumer<Piece> lightupCons, Runnable clearlitrun, Consumer<Piece> setSelPiece, Consumer<Coordinate> MoveCons) {
+        myCoord = c;
         myStackPane = new StackPane();
         addActionToSP(lightupCons, clearlitrun, setSelPiece, MoveCons);
         myTileHeight = HEIGHT_BOARD / cols;
         myTileWidth = WIDTH_Board / rows;
         myRectangle = new Rectangle(myTileWidth, myTileHeight);
-        ColorRect(x, y);
+        ColorRect(c.getCol(), c.getRow());
 
         myPieces = new ArrayList<>();
         myImages = new ArrayList<>();
@@ -77,7 +82,7 @@ public class BoardTile {
         }
         myPieces.addAll(ct.getPieces());
         for (Piece p : myPieces) {
-            ImageView pieceview = CreateImage(p.getImgFile());
+            ImageView pieceview = CreateImage(p.getName(), p.getTeam());
             myImages.add(pieceview);
             myStackPane.getChildren().add(pieceview);
         }
@@ -89,20 +94,36 @@ public class BoardTile {
      */
     public void givePiece(Piece p) {
         myPieces.add(p);
-        ImageView pieceview = CreateImage(p.getImgFile());
+        //System.out.println(p.getImgFile());
+        ImageView pieceview = CreateImage(p.getName(), p.getTeam());
         myImages.add(pieceview);
         myStackPane.getChildren().add(pieceview);
     }
 
-    private ImageView CreateImage(String image) {
-        //ImageView myPieceView = new ImageView(image);
-        ImageView PieceView = new ImageView("Duvall.png");
-        PieceView.setFitHeight(myTileHeight - 10);
-        PieceView.setFitHeight(myTileWidth - 10);
-        PieceView.setPreserveRatio(true);
-        PieceView.setSmooth(true);
-        PieceView.setCache(true);
-        return PieceView;
+    private ImageView CreateImage(String name, int team) {
+        try {
+            String TEAM;
+            if (team == 0) {
+                TEAM = "white/";
+            }
+            else if (team == 1){
+                TEAM = "black/";
+            } else {
+                TEAM = "modifiers/";
+            }
+
+            Image image = new Image(new FileInputStream(Image_Path + TEAM + name.toLowerCase() + ".png"));
+            ImageView PieceView = new ImageView(image);
+            PieceView.setFitHeight(myTileHeight - 10);
+            PieceView.setFitHeight(myTileWidth - 10);
+            PieceView.setPreserveRatio(true);
+            PieceView.setSmooth(true);
+            PieceView.setCache(true);
+            return PieceView;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -112,9 +133,9 @@ public class BoardTile {
      */
     private void ColorRect(int x, int y) {
         if ((x + y) % 2 == 1) {
-            myRectangle.setFill(Color.BLACK);
+            myRectangle.setFill(Color.GREEN);
         } else {
-            myRectangle.setFill(Color.WHITESMOKE);
+            myRectangle.setFill(Color.GRAY);
         }
         myStackPane.getChildren().add(myRectangle);
     }
@@ -124,12 +145,12 @@ public class BoardTile {
      * @param b True for turn it on, false for turn it off.
      */
     public void LightUp(Boolean b) {
-        if (b) {
+        Lit = b;
+        System.out.printf("Lit up: %d, %d", myCoord.getCol(), myCoord.getRow());
+        if (Lit) {
             myStackPane.setBorder(myLitUpBorder);
-            Lit = true;
         } else {
             myStackPane.setBorder(myClearBorder);
-            Lit = false;
         }
     }
 

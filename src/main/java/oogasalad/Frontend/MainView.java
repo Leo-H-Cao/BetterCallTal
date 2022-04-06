@@ -24,7 +24,7 @@ public class MainView {
 	private GameBackend myBackend;
 
 	public MainView(Stage stage, ResourceBundle rb) {
-		myBackend = new GameBackend(this);
+		myBackend = new GameBackend();
 		myViews = new ArrayList<>();
 		this.stage = stage;
 		langBundle = rb;
@@ -71,8 +71,4 @@ public class MainView {
 		return fileChooser.showOpenDialog(stage);
 	}
 	public GameBackend getMyBackend(){return myBackend;}
-
-	public void setUpGameView(ChessBoard board, int player) {
-		//TODO: call GameView SetUpBoard() w this method
-		}
 }
