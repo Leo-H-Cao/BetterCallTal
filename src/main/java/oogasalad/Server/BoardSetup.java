@@ -14,6 +14,7 @@ import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.CustomMovements.Castling;
+import oogasalad.GamePlayer.Movement.CustomMovements.DoubleFirstMove;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementInterface;
 import org.apache.logging.log4j.LogManager;
@@ -104,7 +105,7 @@ public class BoardSetup {
       captures.add(unboundedCaptures);
       captures.add(boundedCaptures);
 
-      PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, mainPiece, movements, captures, List.of(new Castling()), List.of(), List.of(), imageFile);
+      PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, mainPiece, movements, captures, List.of(new Castling(), new DoubleFirstMove()), List.of(), List.of(), imageFile);
 
       Piece currentPiece = new Piece(pieceData, board);
       myBoard.placePiece(new Coordinate(startRow, startCol), currentPiece);

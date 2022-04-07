@@ -302,6 +302,13 @@ public class Piece implements Cloneable {
   }
 
   /***
+   * @return relative coordinates for all regular moves
+   */
+  public List<Coordinate> getRelativeMoveCoords() {
+    return movements.stream().flatMap((m) -> m.getRelativeCoords().stream()).toList();
+  }
+
+  /***
    * @return complete copy of the piece, including copies of all instance variables
    */
   @Override

@@ -158,6 +158,14 @@ public class Castling implements MovementInterface {
   }
 
   /***
+   * @return nothing, not applicable
+   */
+  @Override
+  public List<Coordinate> getRelativeCoords() {
+    return List.of();
+  }
+
+  /***
    * @return gets pieces that the given piece can castle with
    */
   private boolean canCastle(Piece piece, Piece supporter, ChessBoard board) {

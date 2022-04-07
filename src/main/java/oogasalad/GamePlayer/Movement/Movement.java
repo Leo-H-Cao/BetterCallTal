@@ -174,7 +174,12 @@ public class Movement implements MovementInterface{
   public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
     return getFromMovesMap(piece, board, MOVE_KEY);
   }
-  
+
+  @Override
+  public List<Coordinate> getRelativeCoords() {
+    return possibleMoves;
+  }
+
   /***
    * Helper method for getting set from moves map
    * @param key in map
