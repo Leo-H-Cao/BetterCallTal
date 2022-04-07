@@ -3,18 +3,22 @@ package oogasalad.Frontend.Game.Sections;
 import javafx.scene.layout.*;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
+import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.function.Consumer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This class is handles the chess board GridPane.
  */
 
 public class BoardGrid {
+
+    private static final Logger LOG = LogManager.getLogger(BoardGrid.class);
 
     private GridPane myBoard;
     private static Double HEIGHT_BOARD = 600.0;
@@ -130,7 +134,8 @@ public class BoardGrid {
      * @param p piece to be made selected piece.
      */
     public void setSelectedPiece(Piece p) {
-        System.out.print(String.format("SELECTED PIECE IS NOW: %s \n", p.getName()));
+        LOG.debug(String.format("SELECTED PIECE IS NOW: %s \n", p.getName()));
+        LOG.debug("SELECTED PIECE MOVES: " + p.getMoves());
         if (p.getTeam() == myID) {
             mySelectedPiece = p;
         }

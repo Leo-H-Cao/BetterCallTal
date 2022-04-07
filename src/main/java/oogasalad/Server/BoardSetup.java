@@ -97,7 +97,7 @@ public class BoardSetup {
       captures.add(unboundedCaptures);
       captures.add(boundedCaptures);
 
-      PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, false, movements, captures, null, null, null, imageFile);
+      PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, false, movements, captures, List.of(), List.of(), List.of(), imageFile);
       Piece currentPiece = new Piece(pieceData, board);
 
       myBoard.placePiece(new Coordinate(startRow, startCol), currentPiece);

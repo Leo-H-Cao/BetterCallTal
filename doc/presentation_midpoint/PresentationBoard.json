@@ -20,146 +20,8 @@
   ],
   "pieces": [
     {
-      "coordinateX": 6,
-      "coordinateY": 0,
-      "pieceName": "Pawn",
-      "imgFile": "whitepawn",
-      "pointValue": 1,
-      "team": 0,
-      "unboundedMovements": [],
-      "boundedMovements": [
-        [-1, 0]
-      ],
-      "unboundedCaptures": [],
-      "boundedCaptures": [
-        [-1, 1],
-        [-1, -1]
-      ],
-      "movementSetModifiers": [
-      ],
-      "movementModifiers": [
-      ],
-      "onInteractionModifier": [],
-      "mainPiece": 0
-    },
-    {
-      "coordinateX": 6,
-      "coordinateY": 1,
-      "pieceName": "Pawn",
-      "imgFile": "whitepawn",
-      "pointValue": 1,
-      "team": 0,
-      "unboundedMovements": [],
-      "boundedMovements": [
-        [-1, 0]
-      ],
-      "unboundedCaptures": [],
-      "boundedCaptures": [
-        [-1, 1],
-        [-1, -1]
-      ],
-      "movementSetModifiers": [
-      ],
-      "movementModifiers": [
-      ],
-      "onInteractionModifier": [],
-      "mainPiece": 0
-    },
-    {
-      "coordinateX": 6,
-      "coordinateY": 2,
-      "pieceName": "Pawn",
-      "imgFile": "whitepawn",
-      "pointValue": 1,
-      "team": 0,
-      "unboundedMovements": [],
-      "boundedMovements": [
-        [-1, 0]
-      ],
-      "unboundedCaptures": [],
-      "boundedCaptures": [
-        [-1, 1],
-        [-1, -1]
-      ],
-      "movementSetModifiers": [
-      ],
-      "movementModifiers": [
-      ],
-      "onInteractionModifier": [],
-      "mainPiece": 0
-    },
-    {
-      "coordinateX": 6,
-      "coordinateY": 3,
-      "pieceName": "Pawn",
-      "imgFile": "whitepawn",
-      "pointValue": 1,
-      "team": 0,
-      "unboundedMovements": [],
-      "boundedMovements": [
-        [-1, 0]
-      ],
-      "unboundedCaptures": [],
-      "boundedCaptures": [
-        [-1, 1],
-        [-1, -1]
-      ],
-      "movementSetModifiers": [
-      ],
-      "movementModifiers": [
-      ],
-      "onInteractionModifier": [],
-      "mainPiece": 0
-    },
-    {
-      "coordinateX": 6,
-      "coordinateY": 4,
-      "pieceName": "Pawn",
-      "imgFile": "whitepawn",
-      "pointValue": 1,
-      "team": 0,
-      "unboundedMovements": [],
-      "boundedMovements": [
-        [-1, 0]
-      ],
-      "unboundedCaptures": [],
-      "boundedCaptures": [
-        [-1, 1],
-        [-1, -1]
-      ],
-      "movementSetModifiers": [
-      ],
-      "movementModifiers": [
-      ],
-      "onInteractionModifier": [],
-      "mainPiece": 0
-    },
-    {
-      "coordinateX": 6,
-      "coordinateY": 5,
-      "pieceName": "Pawn",
-      "imgFile": "whitepawn",
-      "pointValue": 1,
-      "team": 0,
-      "unboundedMovements": [],
-      "boundedMovements": [
-        [-1, 0]
-      ],
-      "unboundedCaptures": [],
-      "boundedCaptures": [
-        [-1, 1],
-        [-1, -1]
-      ],
-      "movementSetModifiers": [
-      ],
-      "movementModifiers": [
-      ],
-      "onInteractionModifier": [],
-      "mainPiece": 0
-    },
-    {
-      "coordinateX": 6,
       "coordinateY": 6,
+      "coordinateX": 0,
       "pieceName": "Pawn",
       "imgFile": "whitepawn",
       "pointValue": 1,
@@ -181,8 +43,123 @@
       "mainPiece": 0
     },
     {
+      "coordinateY": 6,
+      "coordinateX": 1,
+      "pieceName": "Pawn",
+      "imgFile": "whitepawn",
+      "pointValue": 1,
+      "team": 0,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [-1, 0]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [-1, 1],
+        [-1, -1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "coordinateY": 6,
+      "coordinateX": 2,
+      "pieceName": "Pawn",
+      "imgFile": "whitepawn",
+      "pointValue": 1,
+      "team": 0,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [-1, 0]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [-1, 1],
+        [-1, -1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "coordinateY": 6,
+      "coordinateX": 3,
+      "pieceName": "Pawn",
+      "imgFile": "whitepawn",
+      "pointValue": 1,
+      "team": 0,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [-1, 0]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [-1, 1],
+        [-1, -1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "coordinateY": 6,
+      "coordinateX": 4,
+      "pieceName": "Pawn",
+      "imgFile": "whitepawn",
+      "pointValue": 1,
+      "team": 0,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [-1, 0]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [-1, 1],
+        [-1, -1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "coordinateY": 6,
+      "coordinateX": 5,
+      "pieceName": "Pawn",
+      "imgFile": "whitepawn",
+      "pointValue": 1,
+      "team": 0,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [-1, 0]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [-1, 1],
+        [-1, -1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "coordinateY": 6,
       "coordinateX": 6,
-      "coordinateY": 7,
       "pieceName": "Pawn",
       "imgFile": "whitepawn",
       "pointValue": 1,
@@ -204,34 +181,31 @@
       "mainPiece": 0
     },
     {
+      "coordinateY": 6,
       "coordinateX": 7,
-      "coordinateY": 0,
-      "pieceName": "Rook",
-      "imgFile": "whiterook",
-      "pointValue": 5,
+      "pieceName": "Pawn",
+      "imgFile": "whitepawn",
+      "pointValue": 1,
       "team": 0,
-      "unboundedMovements": [
-        [-1,0],
-        [1,0],
-        [0,-1],
-        [0,1]
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [-1, 0]
       ],
-      "boundedMovements": [],
-      "unboundedCaptures": [
-        [-1,0],
-        [1,0],
-        [0,-1],
-        [0,1]
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [-1, 1],
+        [-1, -1]
       ],
-      "boundedCaptures": [],
-      "movementSetModifiers": [],
-      "movementModifiers": [],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
       "onInteractionModifier": [],
       "mainPiece": 0
     },
     {
-      "coordinateX": 7,
       "coordinateY": 7,
+      "coordinateX": 0,
       "pieceName": "Rook",
       "imgFile": "whiterook",
       "pointValue": 5,
@@ -256,8 +230,34 @@
       "mainPiece": 0
     },
     {
+      "coordinateY": 7,
       "coordinateX": 7,
-      "coordinateY": 1,
+      "pieceName": "Rook",
+      "imgFile": "whiterook",
+      "pointValue": 5,
+      "team": 0,
+      "unboundedMovements": [
+        [-1,0],
+        [1,0],
+        [0,-1],
+        [0,1]
+      ],
+      "boundedMovements": [],
+      "unboundedCaptures": [
+        [-1,0],
+        [1,0],
+        [0,-1],
+        [0,1]
+      ],
+      "boundedCaptures": [],
+      "movementSetModifiers": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "coordinateY": 7,
+      "coordinateX": 1,
       "pieceName": "Knight",
       "imgFile": "whiteknight",
       "pointValue": 3,
@@ -290,8 +290,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateX": 7,
-      "coordinateY": 6,
+      "coordinateY": 7,
+      "coordinateX": 6,
       "pieceName": "Knight",
       "imgFile": "whiteknight",
       "pointValue": 3,
@@ -324,8 +324,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateX": 7,
-      "coordinateY": 2,
+      "coordinateY": 7,
+      "coordinateX": 2,
       "pieceName": "Bishop",
       "imgFile": "whitebishop",
       "pointValue": 3,
@@ -350,8 +350,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateX": 7,
-      "coordinateY": 5,
+      "coordinateY": 7,
+      "coordinateX": 5,
       "pieceName": "Bishop",
       "imgFile": "whitebishop",
       "pointValue": 3,
@@ -376,8 +376,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateX": 7,
-      "coordinateY": 3,
+      "coordinateY": 7,
+      "coordinateX": 3,
       "pieceName": "Queen",
       "imgFile": "whitequeen",
       "pointValue": 9,
@@ -410,8 +410,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateX": 7,
-      "coordinateY": 4,
+      "coordinateY": 7,
+      "coordinateX": 4,
       "pieceName": "King",
       "imgFile": "whiteking",
       "pointValue": 4,
@@ -444,192 +444,192 @@
       "mainPiece": 1
     },
     {
-      "coordinateX": 1,
-      "coordinateY": 0,
-      "pieceName": "Pawn",
-      "imgFile": "blackpawn",
-      "pointValue": 1,
-      "team": 1,
-      "unboundedMovements": [],
-      "boundedMovements": [
-        [1, 0]
-      ],
-      "unboundedCaptures": [],
-      "boundedCaptures": [
-        [1, 1],
-        [1, -1]
-      ],
-      "movementSetModifiers": [
-      ],
-      "movementModifiers": [
-      ],
-      "onInteractionModifier": [],
-      "mainPiece": 0
-    },
-    {
-      "coordinateX": 1,
       "coordinateY": 1,
-      "pieceName": "Pawn",
-      "imgFile": "blackpawn",
-      "pointValue": 1,
-      "team": 1,
-      "unboundedMovements": [],
-      "boundedMovements": [
-        [1, 0]
-      ],
-      "unboundedCaptures": [],
-      "boundedCaptures": [
-        [1, 1],
-        [1, -1]
-      ],
-      "movementSetModifiers": [
-      ],
-      "movementModifiers": [
-      ],
-      "onInteractionModifier": [],
-      "mainPiece": 0
-    },
-    {
-      "coordinateX": 1,
-      "coordinateY": 2,
-      "pieceName": "Pawn",
-      "imgFile": "blackpawn",
-      "pointValue": 1,
-      "team": 1,
-      "unboundedMovements": [],
-      "boundedMovements": [
-        [1, 0]
-      ],
-      "unboundedCaptures": [],
-      "boundedCaptures": [
-        [1, 1],
-        [1, -1]
-      ],
-      "movementSetModifiers": [
-      ],
-      "movementModifiers": [
-      ],
-      "onInteractionModifier": [],
-      "mainPiece": 0
-    },
-    {
-      "coordinateX": 1,
-      "coordinateY": 3,
-      "pieceName": "Pawn",
-      "imgFile": "blackpawn",
-      "pointValue": 1,
-      "team": 1,
-      "unboundedMovements": [],
-      "boundedMovements": [
-        [1, 0]
-      ],
-      "unboundedCaptures": [],
-      "boundedCaptures": [
-        [1, 1],
-        [1, -1]
-      ],
-      "movementSetModifiers": [
-      ],
-      "movementModifiers": [
-      ],
-      "onInteractionModifier": [],
-      "mainPiece": 0
-    },
-    {
-      "coordinateX": 1,
-      "coordinateY": 4,
-      "pieceName": "Pawn",
-      "imgFile": "blackpawn",
-      "pointValue": 1,
-      "team": 1,
-      "unboundedMovements": [],
-      "boundedMovements": [
-        [1, 0]
-      ],
-      "unboundedCaptures": [],
-      "boundedCaptures": [
-        [1, 1],
-        [1, -1]
-      ],
-      "movementSetModifiers": [
-      ],
-      "movementModifiers": [
-      ],
-      "onInteractionModifier": [],
-      "mainPiece": 0
-    },
-    {
-      "coordinateX": 1,
-      "coordinateY": 5,
-      "pieceName": "Pawn",
-      "imgFile": "blackpawn",
-      "pointValue": 1,
-      "team": 1,
-      "unboundedMovements": [],
-      "boundedMovements": [
-        [1, 0]
-      ],
-      "unboundedCaptures": [],
-      "boundedCaptures": [
-        [1, 1],
-        [1, -1]
-      ],
-      "movementSetModifiers": [
-      ],
-      "movementModifiers": [
-      ],
-      "onInteractionModifier": [],
-      "mainPiece": 0
-    },
-    {
-      "coordinateX": 1,
-      "coordinateY": 6,
-      "pieceName": "Pawn",
-      "imgFile": "blackpawn",
-      "pointValue": 1,
-      "team": 1,
-      "unboundedMovements": [],
-      "boundedMovements": [
-        [1, 0]
-      ],
-      "unboundedCaptures": [],
-      "boundedCaptures": [
-        [1, 1],
-        [1, -1]
-      ],
-      "movementSetModifiers": [
-      ],
-      "movementModifiers": [
-      ],
-      "onInteractionModifier": [],
-      "mainPiece": 0
-    },
-    {
-      "coordinateX": 1,
-      "coordinateY": 7,
-      "pieceName": "Pawn",
-      "imgFile": "blackpawn",
-      "pointValue": 1,
-      "team": 1,
-      "unboundedMovements": [],
-      "boundedMovements": [
-        [1, 0]
-      ],
-      "unboundedCaptures": [],
-      "boundedCaptures": [
-        [1, 1],
-        [1, -1]
-      ],
-      "movementSetModifiers": [
-      ],
-      "movementModifiers": [
-      ],
-      "onInteractionModifier": [],
-      "mainPiece": 0
-    },
-    {
       "coordinateX": 0,
+      "pieceName": "Pawn",
+      "imgFile": "blackpawn",
+      "pointValue": 1,
+      "team": 1,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [1, 0]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, 1],
+        [1, -1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "coordinateY": 1,
+      "coordinateX": 1,
+      "pieceName": "Pawn",
+      "imgFile": "blackpawn",
+      "pointValue": 1,
+      "team": 1,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [1, 0]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, 1],
+        [1, -1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "coordinateY": 1,
+      "coordinateX": 2,
+      "pieceName": "Pawn",
+      "imgFile": "blackpawn",
+      "pointValue": 1,
+      "team": 1,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [1, 0]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, 1],
+        [1, -1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "coordinateY": 1,
+      "coordinateX": 3,
+      "pieceName": "Pawn",
+      "imgFile": "blackpawn",
+      "pointValue": 1,
+      "team": 1,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [1, 0]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, 1],
+        [1, -1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "coordinateY": 1,
+      "coordinateX": 4,
+      "pieceName": "Pawn",
+      "imgFile": "blackpawn",
+      "pointValue": 1,
+      "team": 1,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [1, 0]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, 1],
+        [1, -1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "coordinateY": 1,
+      "coordinateX": 5,
+      "pieceName": "Pawn",
+      "imgFile": "blackpawn",
+      "pointValue": 1,
+      "team": 1,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [1, 0]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, 1],
+        [1, -1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "coordinateY": 1,
+      "coordinateX": 6,
+      "pieceName": "Pawn",
+      "imgFile": "blackpawn",
+      "pointValue": 1,
+      "team": 1,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [1, 0]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, 1],
+        [1, -1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "coordinateY": 1,
+      "coordinateX": 7,
+      "pieceName": "Pawn",
+      "imgFile": "blackpawn",
+      "pointValue": 1,
+      "team": 1,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [1, 0]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, 1],
+        [1, -1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
       "coordinateY": 0,
+      "coordinateX": 0,
       "pieceName": "Rook",
       "imgFile": "blackrook",
       "pointValue": 5,
@@ -654,8 +654,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateX": 0,
-      "coordinateY": 7,
+      "coordinateY": 0,
+      "coordinateX": 7,
       "pieceName": "Rook",
       "imgFile": "blackrook",
       "pointValue": 5,
@@ -680,8 +680,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateX": 0,
-      "coordinateY": 1,
+      "coordinateY": 0,
+      "coordinateX": 1,
       "pieceName": "Knight",
       "imgFile": "blackknight",
       "pointValue": 3,
@@ -714,8 +714,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateX": 0,
-      "coordinateY": 6,
+      "coordinateY": 0,
+      "coordinateX": 6,
       "pieceName": "Knight",
       "imgFile": "blackknight",
       "pointValue": 3,
@@ -748,8 +748,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateX": 0,
-      "coordinateY": 2,
+      "coordinateY": 0,
+      "coordinateX": 2,
       "pieceName": "Bishop",
       "imgFile": "blackbishop",
       "pointValue": 3,
@@ -774,8 +774,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateX": 0,
-      "coordinateY": 5,
+      "coordinateY": 0,
+      "coordinateX": 5,
       "pieceName": "Bishop",
       "imgFile": "blackbishop",
       "pointValue": 3,
@@ -800,8 +800,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateX": 0,
-      "coordinateY": 3,
+      "coordinateY": 0,
+      "coordinateX": 3,
       "pieceName": "Queen",
       "imgFile": "blackqueen",
       "pointValue": 9,
@@ -834,8 +834,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateX": 0,
-      "coordinateY": 4,
+      "coordinateY": 0,
+      "coordinateX": 4,
       "pieceName": "King",
       "imgFile": "blackking",
       "pointValue": 4,

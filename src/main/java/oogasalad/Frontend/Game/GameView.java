@@ -10,9 +10,8 @@ import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
-import oogasalad.GamePlayer.Board.TurnUpdate;
 import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.Board.TurnUpdate;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
 import java.util.Collection;
