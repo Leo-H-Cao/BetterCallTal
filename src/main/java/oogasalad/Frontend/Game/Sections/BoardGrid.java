@@ -53,8 +53,8 @@ public class BoardGrid {
     private void makeBoard(GridPane gp, ChessBoard cb, int id, Consumer<Piece> lightupCons, Consumer<Coordinate> MoveCons) {
         myBoardTiles = new ArrayList<>();
         for (ChessTile ct : cb) {
-            int grid_x = ct.getCoordinates().getRow();
-            int grid_y = ct.getCoordinates().getCol();
+            int grid_x = ct.getCoordinates().getCol();
+            int grid_y = ct.getCoordinates().getRow();
             BoardTile tile = new BoardTile(ct.getCoordinates(), cb.getBoardHeight(), cb.getBoardLength(), lightupCons, ClearLitTilesRun, setSelPiece, MoveCons);
             if (! ct.getPieces().isEmpty()) {
                 for (Piece p : ct.getPieces()) {
@@ -62,8 +62,8 @@ public class BoardGrid {
             myBoardTiles.add(tile);
 
             if (id == 1) {
-                grid_x = cb.getBoardHeight() - grid_x;
-                grid_y = cb.getBoardLength() - grid_y;
+                grid_x = cb.getBoardLength() - grid_x;
+                grid_y = cb.getBoardHeight() - grid_y;
             }
             gp.add(tile.getMyStackPane(), grid_x, grid_y);
         }
