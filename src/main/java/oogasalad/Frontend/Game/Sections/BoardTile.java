@@ -146,7 +146,7 @@ public class BoardTile {
      */
     public void LightUp(Boolean b) {
         Lit = b;
-        System.out.printf("Lit up: %d, %d", myCoord.getCol(), myCoord.getRow());
+        System.out.printf("Lit up: %d, %d", myCoord.getRow(), myCoord.getCol());
         if (Lit) {
             myStackPane.setBorder(myLitUpBorder);
         } else {
