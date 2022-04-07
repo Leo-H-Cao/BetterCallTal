@@ -28,7 +28,7 @@
       "team": 0,
       "unboundedMovements": [],
       "boundedMovements": [
-        [-1, 0]
+        [0, -1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
@@ -51,7 +51,7 @@
       "team": 0,
       "unboundedMovements": [],
       "boundedMovements": [
-        [-1, 0]
+        [0, -1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
@@ -74,7 +74,7 @@
       "team": 0,
       "unboundedMovements": [],
       "boundedMovements": [
-        [-1, 0]
+        [0, -1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
@@ -97,7 +97,7 @@
       "team": 0,
       "unboundedMovements": [],
       "boundedMovements": [
-        [-1, 0]
+        [0, -1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
@@ -120,7 +120,7 @@
       "team": 0,
       "unboundedMovements": [],
       "boundedMovements": [
-        [-1, 0]
+        [0, -1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
@@ -143,7 +143,7 @@
       "team": 0,
       "unboundedMovements": [],
       "boundedMovements": [
-        [-1, 0]
+        [0, -1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
@@ -166,7 +166,7 @@
       "team": 0,
       "unboundedMovements": [],
       "boundedMovements": [
-        [-1, 0]
+        [0, -1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
@@ -189,7 +189,7 @@
       "team": 0,
       "unboundedMovements": [],
       "boundedMovements": [
-        [-1, 0]
+        [0, -1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
@@ -452,12 +452,12 @@
       "team": 1,
       "unboundedMovements": [],
       "boundedMovements": [
-        [1, 0]
+        [0, 1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
         [1, 1],
-        [1, -1]
+        [-1, 1]
       ],
       "movementSetModifiers": [
       ],
@@ -475,12 +475,12 @@
       "team": 1,
       "unboundedMovements": [],
       "boundedMovements": [
-        [1, 0]
+        [0, 1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
         [1, 1],
-        [1, -1]
+        [-1, 1]
       ],
       "movementSetModifiers": [
       ],
@@ -498,12 +498,12 @@
       "team": 1,
       "unboundedMovements": [],
       "boundedMovements": [
-        [1, 0]
+        [0, 1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
         [1, 1],
-        [1, -1]
+        [-1, 1]
       ],
       "movementSetModifiers": [
       ],
@@ -521,12 +521,12 @@
       "team": 1,
       "unboundedMovements": [],
       "boundedMovements": [
-        [1, 0]
+        [0, 1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
         [1, 1],
-        [1, -1]
+        [-1, 1]
       ],
       "movementSetModifiers": [
       ],
@@ -544,12 +544,12 @@
       "team": 1,
       "unboundedMovements": [],
       "boundedMovements": [
-        [1, 0]
+        [0, 1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
         [1, 1],
-        [1, -1]
+        [-1, 1]
       ],
       "movementSetModifiers": [
       ],
@@ -567,12 +567,12 @@
       "team": 1,
       "unboundedMovements": [],
       "boundedMovements": [
-        [1, 0]
+        [0, 1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
         [1, 1],
-        [1, -1]
+        [-1, 1]
       ],
       "movementSetModifiers": [
       ],
@@ -590,12 +590,12 @@
       "team": 1,
       "unboundedMovements": [],
       "boundedMovements": [
-        [1, 0]
+        [0, 1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
         [1, 1],
-        [1, -1]
+        [-1, 1]
       ],
       "movementSetModifiers": [
       ],
@@ -613,12 +613,12 @@
       "team": 1,
       "unboundedMovements": [],
       "boundedMovements": [
-        [1, 0]
+        [0, 1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
         [1, 1],
-        [1, -1]
+        [-1, 1]
       ],
       "movementSetModifiers": [
       ],

@@ -134,12 +134,13 @@ public class BoardGrid {
      * @param p piece to be made selected piece.
      */
     public void setSelectedPiece(Piece p) {
-        LOG.debug(String.format("SELECTED PIECE IS NOW: %s \n", p.getName()));
+        LOG.debug(String.format("SELECTED PIECE IS NOW: %s (%d, %d)\n", p.getName(), p.getCoordinates().getRow(), p.getCoordinates().getCol()));
         LOG.debug("SELECTED PIECE MOVES: " + p.getMoves());
-        if (p.getTeam() == myID) {
+//        if (p.getTeam() == myID) {
             mySelectedPiece = p;
-        }
+//        }
     }
+
     /**
      * TESTING FROM HERE DOWNWARD
      */

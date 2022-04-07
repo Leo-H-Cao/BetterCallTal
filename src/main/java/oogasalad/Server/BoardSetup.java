@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.EndConditions.NoEndCondition;
 import oogasalad.GamePlayer.Board.Player;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
@@ -36,7 +37,7 @@ public class BoardSetup {
     int rows = Integer.parseInt(myJSONObject.getJSONArray("general").getJSONObject(0).get("rows").toString());
     int columns = Integer.parseInt(myJSONObject.getJSONArray("general").getJSONObject(0).get("columns").toString());
 
-    myBoard = new ChessBoard(rows, columns, new Linear(getPlayers()) ,getPlayers(), null);
+    myBoard = new ChessBoard(rows, columns, new Linear(getPlayers()) ,getPlayers(), List.of(new NoEndCondition()));
     setStartingPosition(myBoard);
     return myBoard;
   }
@@ -55,10 +56,10 @@ public class BoardSetup {
     return players;
   }
 
-  private Movement getMovementsByType(String type){
+  private Movement getMovementsByType(String type, int pieceIndex){
 
-    JSONArray allMovements = myJSONObject.getJSONArray("pieces").getJSONObject(0).getJSONArray(type);
-    List<Coordinate> moveList = new ArrayList<Coordinate>();
+    JSONArray allMovements = myJSONObject.getJSONArray("pieces").getJSONObject(pieceIndex).getJSONArray(type);
+    List<Coordinate> moveList = new ArrayList<>();
     Movement moves;
     for(int i=0; i<allMovements.length(); i++){
       JSONArray currentMovement = allMovements.getJSONArray(i);
@@ -74,7 +75,6 @@ public class BoardSetup {
     else{
       moves = new Movement(moveList, false);
     }
-
     return moves;
   }
 
@@ -83,10 +83,10 @@ public class BoardSetup {
     for(int i=0; i<pieces.length(); i++){
       JSONObject rawPieceData = pieces.getJSONObject(i);
 
-      Movement unboundedMovements = getMovementsByType("unboundedMovements");
-      Movement boundedMovements = getMovementsByType("boundedMovements");
-      Movement unboundedCaptures = getMovementsByType("unboundedCaptures");
-      Movement boundedCaptures = getMovementsByType("boundedCaptures");
+      Movement unboundedMovements = getMovementsByType("unboundedMovements", i);
+      Movement boundedMovements = getMovementsByType("boundedMovements", i);
+      Movement unboundedCaptures = getMovementsByType("unboundedCaptures", i);
+      Movement boundedCaptures = getMovementsByType("boundedCaptures", i);
 
       int startRow = rawPieceData.getInt("coordinateX");
       int startCol = rawPieceData.getInt("coordinateY");
@@ -103,8 +103,8 @@ public class BoardSetup {
       captures.add(boundedCaptures);
 
       PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, false, movements, captures, List.of(), List.of(), List.of(), imageFile);
-      Piece currentPiece = new Piece(pieceData, board);
 
+      Piece currentPiece = new Piece(pieceData, board);
       myBoard.placePiece(new Coordinate(startRow, startCol), currentPiece);
     }
   }

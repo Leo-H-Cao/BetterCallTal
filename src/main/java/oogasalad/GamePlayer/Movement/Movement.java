@@ -252,4 +252,11 @@ public class Movement implements MovementInterface{
       return false;
     }
   }
+
+  /***
+   * @return String of all relative coordinates
+   */
+  public String toString() {
+    return possibleMoves.toString();
+  }
 }

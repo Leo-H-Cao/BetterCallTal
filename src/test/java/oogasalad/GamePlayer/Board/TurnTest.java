@@ -62,7 +62,6 @@ class TurnTest {
       assertEquals(board.move(pieceTwo, new Coordinate(1, 1)).nextPlayer(), 2);
       assertEquals(board.move(pieceThree, new Coordinate(2, 1)).nextPlayer(), 0);
     } catch(Exception e) {
-      e.printStackTrace();
       fail();
     }
   }

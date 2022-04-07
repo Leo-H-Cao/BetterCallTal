@@ -132,7 +132,7 @@ public class Piece implements Cloneable {
     Map<MovementInterface, Set<ChessTile>> movementSquaresMap = getMovementSquaresMap();
 
     movementSquaresMap.keySet().forEach((k) -> allMoves.addAll(movementSquaresMap.get(k)));
-
+    LOG.debug(String.format("%s has the following moves: %s", name, allMoves));
     return allMoves;
   }
 
