@@ -14,10 +14,15 @@ import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementInterface;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class BoardSetup {
+
+  private static final Logger LOG = LogManager.getLogger(BoardSetup.class);
+
   private ChessBoard myBoard;
   private JSONObject myJSONObject;
 
@@ -61,7 +66,7 @@ public class BoardSetup {
       moveList.add(relativeCoordinates);
     }
 
-    System.out.println(allMovements);
+    LOG.debug("All movements: " + allMovements);
 
     if(type.charAt(0) =='u'){
       moves = new Movement(moveList, true);

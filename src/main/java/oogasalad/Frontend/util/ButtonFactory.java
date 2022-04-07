@@ -9,9 +9,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import oogasalad.GamePlayer.Board.ChessBoard;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ButtonFactory {
 	public static final String IMAGE_PATH = "src/main/resources/images/";
+
+	private static final Logger LOG = LogManager.getLogger(ButtonFactory.class);
 
 	public static Button makeButton(ButtonType type, String displayText, String id, EventHandler<ActionEvent> action) {
 		Button b = new Button();
@@ -44,7 +49,7 @@ public class ButtonFactory {
 			ImageView imageView = new ImageView(image);
 			button.setGraphic(imageView);
 		} catch (FileNotFoundException ignored) {
-			System.out.println("Setting image failed");
+			LOG.debug("Setting image failed");
 		}
 	}
 }

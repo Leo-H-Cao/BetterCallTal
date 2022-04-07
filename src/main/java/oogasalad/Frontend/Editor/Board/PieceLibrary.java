@@ -13,8 +13,13 @@ import oogasalad.Frontend.util.ButtonFactory;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import oogasalad.GamePlayer.Board.ChessBoard;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class PieceLibrary extends LabelledContainer {
+
+	private static final Logger LOG = LogManager.getLogger(PieceLibrary.class);
 
 	public PieceLibrary(EditorController controller) {
 		super("Piece Library", controller);
@@ -36,7 +41,7 @@ public class PieceLibrary extends LabelledContainer {
 		rect.setStrokeWidth(3);
 		rect.setStrokeType(StrokeType.INSIDE);
 		StackPane ret = new StackPane(rect);
-		ButtonFactory.addAction(ret, (e) -> System.out.println("clicked " + id));
+		ButtonFactory.addAction(ret, (e) -> LOG.debug("clicked " + id));
 		return new Group(ret);
 	}
 }

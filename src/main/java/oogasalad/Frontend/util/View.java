@@ -12,9 +12,15 @@ import oogasalad.Frontend.ViewManager;
 import java.util.MissingResourceException;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import oogasalad.GamePlayer.Board.ChessBoard;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public abstract class View {
+
+	private static final Logger LOG = LogManager.getLogger(View.class);
+
 	protected Scene myScene;
 	protected Group myRoot;
 	protected Rectangle2D myScreenSize;
@@ -85,7 +91,7 @@ public abstract class View {
 		if(v.isPresent()) {
 			return v;
 		} else {
-			System.out.printf("%s not found in %s%n", className, myViewManager.getViews());
+			LOG.debug("%s not found in %s%n", className, myViewManager.getViews());
 			return Optional.empty();
 		}
 	}

@@ -93,7 +93,7 @@ public class BoardGrid {
      * @param cts
      */
     public void lightSquares(Collection<ChessTile> cts) {
-        System.out.print("Got to lightsquares in Boardgrid");
+        LOG.debug("Got to lightsquares in Boardgrid");
         turnOffTiles();
         for (ChessTile ct : cts) {
             BoardTile bt = grabTile(ct.getCoordinates());
@@ -106,7 +106,7 @@ public class BoardGrid {
      * To be called by clicking on a square that is not lit up.
      */
     private void turnOffTiles() {
-        System.out.print("CLEARED LIT TILES!\n");
+        LOG.debug("CLEARED LIT TILES!\n");
         if (! myLitTiles.isEmpty()) {
             for (BoardTile bt : myLitTiles) {
                 bt.LightUp(false);

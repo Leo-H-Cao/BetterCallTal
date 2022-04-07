@@ -7,6 +7,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import oogasalad.Frontend.util.ButtonFactory;
+import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
@@ -14,6 +15,8 @@ import oogasalad.GamePlayer.Movement.Coordinate;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.function.Consumer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 /**
@@ -21,6 +24,8 @@ import java.util.function.Consumer;
  */
 
 public class BoardTile {
+
+    private static final Logger LOG = LogManager.getLogger(BoardTile.class);
 
     private StackPane myStackPane;
     private ArrayList<Node> myImages;
@@ -94,7 +99,7 @@ public class BoardTile {
      */
     public void givePiece(Piece p) {
         myPieces.add(p);
-        //System.out.println(p.getImgFile());
+        //LOG.debug(p.getImgFile());
         ImageView pieceview = CreateImage(p.getName(), p.getTeam());
         myImages.add(pieceview);
         myStackPane.getChildren().add(pieceview);
@@ -146,7 +151,7 @@ public class BoardTile {
      */
     public void LightUp(Boolean b) {
         Lit = b;
-        System.out.printf("Lit up: %d, %d", myCoord.getRow(), myCoord.getCol());
+        LOG.debug("Lit up: %d, %d", myCoord.getRow(), myCoord.getCol());
         if (Lit) {
             myStackPane.setBorder(myLitUpBorder);
         } else {

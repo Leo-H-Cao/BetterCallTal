@@ -18,6 +18,8 @@ import oogasalad.GamePlayer.GameClauses.CheckValidator;
 import oogasalad.GamePlayer.GameClauses.CheckmateValidator;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,6 +28,8 @@ import org.junit.jupiter.api.Test;
  * @author Jose Santillan
  */
 public class CheckmateTests {
+
+  private static final Logger LOG = LogManager.getLogger(CheckmateTests.class);
 
   private static final int TEAM_1 = 1;
   private static final int TEAM_2 = 0;
@@ -88,7 +92,7 @@ public class CheckmateTests {
         makeRook(2, 1, TEAM_2)));
 
     board.setPieces(pieces);
-    System.out.println(board);
+    LOG.debug(board);
     assertTrue(CheckValidator.isInCheck(board, TEAM_1));
 //    assertTrue(CheckmateValidator.isInMate(board, TEAM_1));
   }
@@ -102,7 +106,7 @@ public class CheckmateTests {
         makePawn(2, 0, TEAM_1)));
 
     board.setPieces(pieces);
-    System.out.println(board);
+    LOG.debug(board);
 
     assertTrue(CheckmateValidator.isInMate(board, TEAM_2));
   }
@@ -138,7 +142,7 @@ public class CheckmateTests {
     pieces.addAll(List.of(king1, rook1, makeRook(3, 0, TEAM_2), makeRook(3, 1, TEAM_2),
         rook2));
     board.setPieces(pieces);
-    System.out.println(board);
+    LOG.debug(board);
     assertFalse(CheckmateValidator.isInMate(board, TEAM_1));
 
     //Some Movement
