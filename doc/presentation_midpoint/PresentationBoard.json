@@ -32,7 +32,7 @@
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
-        [-1, 1],
+        [1, -1],
         [-1, -1]
       ],
       "movementSetModifiers": [
@@ -55,7 +55,7 @@
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
-        [-1, 1],
+        [1, -1],
         [-1, -1]
       ],
       "movementSetModifiers": [
@@ -78,7 +78,7 @@
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
-        [-1, 1],
+        [1, -1],
         [-1, -1]
       ],
       "movementSetModifiers": [
@@ -101,7 +101,7 @@
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
-        [-1, 1],
+        [1, -1],
         [-1, -1]
       ],
       "movementSetModifiers": [
@@ -124,7 +124,7 @@
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
-        [-1, 1],
+        [1, -1],
         [-1, -1]
       ],
       "movementSetModifiers": [
@@ -147,7 +147,7 @@
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
-        [-1, 1],
+        [1, -1],
         [-1, -1]
       ],
       "movementSetModifiers": [
@@ -170,7 +170,7 @@
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
-        [-1, 1],
+        [1, -1],
         [-1, -1]
       ],
       "movementSetModifiers": [
@@ -193,7 +193,7 @@
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
-        [-1, 1],
+        [1, -1],
         [-1, -1]
       ],
       "movementSetModifiers": [
