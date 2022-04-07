@@ -2,6 +2,7 @@ package oogasalad.Editor.ModelState.PiecesState;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.image.Image;
 
 public class PiecesManager {
 
@@ -11,13 +12,13 @@ public class PiecesManager {
     availablePieces = new ArrayList<>();
   }
 
-  public EditorPiece createPiece(int points, MovementRules movementRules, String pieceID, String pieceName, int teamNumber, String image) {
+  public EditorPiece createPiece(int points, MovementRules movementRules, String pieceID, String pieceName, int teamNumber, Image image) {
     EditorPiece newPiece = new EditorPiece(points, movementRules, pieceID, pieceName, teamNumber, image);
     availablePieces.add(newPiece);
     return newPiece;
   }
 
-  public void changePieceImage(String pieceID, String pieceImage){
+  public void changePieceImage(String pieceID, Image pieceImage){
     findPiece(pieceID).setPieceImage(pieceImage);
   }
 
