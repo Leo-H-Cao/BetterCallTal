@@ -1,9 +1,8 @@
 package oogasalad.Editor.ModelState.RulesState;
 
 import java.util.List;
-import oogasalad.Editor.API.ModifiesRulesState;
 
-public class GameRulesState implements ModifiesRulesState {
+public class GameRulesState {
 
   private GameRules myGameRules;
 
@@ -11,12 +10,10 @@ public class GameRulesState implements ModifiesRulesState {
     myGameRules = new GameRules();
   }
 
-  @Override
   public void setWinConditions(List<String> winConditions) {
     myGameRules.setWinConditions(winConditions);
   }
 
-  @Override
   public void setTurnCriteria(String turnCriteria) {
     myGameRules.setTurnCriteria(turnCriteria);
   }

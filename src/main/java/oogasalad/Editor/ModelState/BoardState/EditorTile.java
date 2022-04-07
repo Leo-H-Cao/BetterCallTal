@@ -15,12 +15,20 @@ public class EditorTile {
     myCoordY = y;
   }
 
+  public boolean hasPiece(){
+    return myEditorPiece != null;
+  }
+
   public void setTileEffect(TileEffect effect){
     myTileEffect = effect;
   }
 
   public void deleteTileEffect(){
     myTileEffect = TileEffect.NONE;
+  }
+
+  public EditorPiece getPiece(){
+    return myEditorPiece;
   }
 
   public void addPiece(EditorPiece piece){

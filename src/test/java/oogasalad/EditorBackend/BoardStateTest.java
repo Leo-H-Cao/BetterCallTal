@@ -1,7 +1,10 @@
 package oogasalad.EditorBackend;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import oogasalad.Editor.Exceptions.InavlidPieceIDException;
 import oogasalad.Editor.ModelState.BoardAndPieces;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
 import oogasalad.Editor.ModelState.PiecesState.MovementRules;
@@ -38,18 +41,39 @@ class BoardStateTest {
     assertEquals(newWidth, boardState.getBoardWidth());
   }
 
-//  @Test
-//  void testChangePieceStartingLocation(){
-//    String pieceID = "123";
-//    piecesState.createCustomPiece(1, 1, "image.png", new MovementRules(), pieceID, "my piece");
-//    assertEquals(0, piecesState.getPieceInfo(pieceID).getStartingPosX());
-//    assertEquals(0, piecesState.getPieceInfo(pieceID).getStartingPosY());
-//    int newX = 6;
-//    int newY = 5;
-//    boardState.setPieceStartingLocation(pieceID, newX, newY);
-//    assertEquals(newX, piecesState.getPieceInfo(pieceID).getStartingPosX());
-//    assertEquals(newY, piecesState.getPieceInfo(pieceID).getStartingPosY());
-//  }
+  @Test
+  void testChangePieceStartingLocation(){
+    String pieceID = "123";
+    piecesState.createCustomPiece(1, 1, "image.png", new MovementRules(), pieceID, "my piece");
+    boardState.setPieceStartingLocation(pieceID, 0,  0);
+    assertEquals(0, boardState.getPieceLocation(pieceID).getX());
+    assertEquals(0, boardState.getPieceLocation(pieceID).getY());
+    int newX = 6;
+    int newY = 5;
+    boardState.setPieceStartingLocation(pieceID, newX, newY);
+    assertEquals(newX, boardState.getPieceLocation(pieceID).getX());
+    assertEquals(newY, boardState.getPieceLocation(pieceID).getY());
+  }
 
+  @Test
+  void testFindInvalidPieceIDInBoard(){
+    String pieceID = "123";
+    piecesState.createCustomPiece(1, 1, "image.png", new MovementRules(), pieceID, "my piece");
+    String invalidID = "456";
+
+    Exception noPieceException = assertThrows(InavlidPieceIDException.class, () -> {
+      boardState.removePiece(invalidID);
+    });
+    String noPieceExpected = "Invalid pieceID, piece does not exist in board";
+    String actualMessage = noPieceException.getMessage();
+    assertTrue(actualMessage.contains(noPieceExpected));
+
+    noPieceException = assertThrows(InavlidPieceIDException.class, () -> {
+      boardState.getPieceLocation(invalidID);
+    });
+    actualMessage = noPieceException.getMessage();
+    assertTrue(actualMessage.contains(noPieceExpected));
+
+  }
 
 }
