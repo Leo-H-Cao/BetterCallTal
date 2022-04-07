@@ -44,12 +44,14 @@ class BoardStateTest {
   @Test
   void testChangePieceStartingLocation(){
     String pieceID = "123";
+    int firstX = 5;
+    int firstY = 6;
     piecesState.createCustomPiece(1, 1, "image.png", new MovementRules(), pieceID, "my piece");
-    boardState.setPieceStartingLocation(pieceID, 0,  0);
-    assertEquals(0, boardState.getPieceLocation(pieceID).getX());
-    assertEquals(0, boardState.getPieceLocation(pieceID).getY());
-    int newX = 6;
-    int newY = 5;
+    boardState.setPieceStartingLocation(pieceID, 5,  6);
+    assertEquals(firstX, boardState.getPieceLocation(pieceID).getX());
+    assertEquals(firstY, boardState.getPieceLocation(pieceID).getY());
+    int newX = 2;
+    int newY = 3;
     boardState.setPieceStartingLocation(pieceID, newX, newY);
     assertEquals(newX, boardState.getPieceLocation(pieceID).getX());
     assertEquals(newY, boardState.getPieceLocation(pieceID).getY());

@@ -64,7 +64,8 @@ public class EditorBoard {
   public void addPieceStartingLocation(EditorPiece piece, int x, int y){
     try{
       EditorCoordinate pieceLocation = findPieceLocation(piece.getPieceID());
-      board.get(pieceLocation.getX()).get(pieceLocation.getY()).removePiece();
+      board.get(pieceLocation.getY()).get(pieceLocation.getX()).removePiece();
+      board.get(y).get(x).addPiece(piece);
     }
     catch(InavlidPieceIDException pieceIDException){
       board.get(y).get(x).addPiece(piece);
@@ -73,7 +74,7 @@ public class EditorBoard {
 
   public void removePieceStartingLocation(String pieceID){
     EditorCoordinate pieceLocation = findPieceLocation(pieceID);
-    board.get(pieceLocation.getX()).get(pieceLocation.getY()).removePiece();
+    board.get(pieceLocation.getY()).get(pieceLocation.getX()).removePiece();
   }
 
   public int getBoardWidth(){
