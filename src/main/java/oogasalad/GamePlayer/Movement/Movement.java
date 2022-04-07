@@ -63,7 +63,8 @@ public class Movement implements MovementInterface{
       return updatedSquares;
     }
 
-    LOG.warn("Invalid move made");
+
+    LOG.warn(String.format("Invalid move made: (%d, %d)", finalSquare.getRow(), finalSquare.getCol()));
     throw new InvalidMoveException(piece + ": " + finalSquare);
   }
 
@@ -80,12 +81,13 @@ public class Movement implements MovementInterface{
       throws InvalidMoveException, OutsideOfBoardException {
 
     ChessTile captureTile = convertCordToTile(captureSquare, board);
-    if(getMoves(piece, board).contains(captureTile)) {
+    if(getCaptures(piece, board).contains(captureTile)) {
       Set<ChessTile> updatedSquares = new HashSet<>(Set.of(board.getTile(piece.getCoordinates()), board.getTile(captureSquare)));
+      captureTile.clearPieces();
       piece.updateCoordinates(board.getTile(captureSquare));
       return updatedSquares;
     }
-    LOG.warn("Invalid move made");
+    LOG.warn(String.format("Invalid move made: (%d, %d)", captureSquare.getRow(), captureSquare.getCol()));
     throw new InvalidMoveException(piece + ": " + captureSquare);
   }
 
@@ -172,7 +174,12 @@ public class Movement implements MovementInterface{
   public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
     return getFromMovesMap(piece, board, MOVE_KEY);
   }
-  
+
+  @Override
+  public List<Coordinate> getRelativeCoords() {
+    return possibleMoves;
+  }
+
   /***
    * Helper method for getting set from moves map
    * @param key in map
@@ -195,7 +202,7 @@ public class Movement implements MovementInterface{
     if(infinite) {
       moveStack = getMoveBeam(base, delta, board);
     } else{
-      getNextTile(base, delta, board).ifPresent(moveStack::add);
+      getNextTile(base, delta, board).filter((t) -> t.getPieces().isEmpty()).ifPresent(moveStack::add);
     }
     return moveStack;
   }
@@ -250,5 +257,12 @@ public class Movement implements MovementInterface{
     } catch (OutsideOfBoardException e) {
       return false;
     }
+  }
+
+  /***
+   * @return String of all relative coordinates
+   */
+  public String toString() {
+    return possibleMoves.toString();
   }
 }

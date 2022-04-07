@@ -2,19 +2,13 @@ package oogasalad.Frontend.Editor.Board;
 
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
-import oogasalad.Editor.ModelState.BoardAndPieces;
-import oogasalad.Editor.ModelState.BoardState.BoardState;
-import oogasalad.Editor.ModelState.PiecesState.PiecesState;
-import oogasalad.Frontend.NodeContainer;
+import oogasalad.Frontend.Editor.EditorController;
+import oogasalad.Frontend.util.NodeContainer;
 
 public class ChessBoard extends NodeContainer {
 
-	private final BoardState myBackend;
-
-	public ChessBoard() {
-		BoardAndPieces board = new BoardAndPieces();
-		myBackend = board.getBoardState();
-		PiecesState ps = board.getPiecesState();
+	public ChessBoard(EditorController controller) {
+		super(controller);
 	}
 
 	@Override
@@ -25,9 +19,9 @@ public class ChessBoard extends NodeContainer {
 	private Node makeGrid() {
 		GridPane grid = new GridPane();
 		boolean alt = false;
-		for(int i = 0; i < myBackend.getBoardWidth(); i++) {
-			for(int j = 0; j < myBackend.getBoardHeight(); j++) {
-				ChessBoardTile newTile = new ChessBoardTile(50, 50, alt);
+		for(int i = 0; i < myController.getBoardState().getBoardWidth(); i++) {
+			for(int j = 0; j < myController.getBoardState().getBoardHeight(); j++) {
+				ChessBoardTile newTile = new ChessBoardTile(50, 50, alt, myController);
 				grid.add(newTile.getNode(), j, i);
 				alt = !alt;
 			}

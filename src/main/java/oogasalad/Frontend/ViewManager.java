@@ -1,25 +1,30 @@
 package oogasalad.Frontend;
 
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Editor.GameEditorView;
+import oogasalad.Frontend.Game.GameBackend;
 import oogasalad.Frontend.Game.GameView;
 import oogasalad.Frontend.Menu.HomeView;
 import oogasalad.Frontend.Menu.HostGame;
+import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
-public class MainView {
+public class ViewManager {
 	// Bundle made static so all classes can easily access the language
 	private static ResourceBundle langBundle;
 
 	private final Collection<View> myViews;
 	private final Stage stage;
+	private final GameBackend myGameBackend;
 
-
-	public MainView(Stage stage, ResourceBundle rb) {
+	public ViewManager(Stage stage, ResourceBundle rb) {
+		myGameBackend = new GameBackend();
 		myViews = new ArrayList<>();
 		this.stage = stage;
 		langBundle = rb;
@@ -29,7 +34,9 @@ public class MainView {
 		addView(new HostGame(this));
 
 		// Changes the current scene to the home page on initialization
-		myViews.stream().filter((e) -> e.getClass() == HomeView.class).forEach(this::changeScene);
+		myViews.stream()
+				.filter(e -> e.getClass() == HomeView.class)
+				.forEach(this::changeScene);
 	}
 
 	private void addView(View view) {
@@ -53,7 +60,15 @@ public class MainView {
 		stage.setTitle(viewClass.getTitle());
 	}
 
-	public void setUpGameView(ChessBoard board, int player) {
-		//TODO: call GameView SetUpBoard() w this method
-		}
+	/**
+	 * launches an explorer window for the user to choose the file where they want info to be loaded
+	 * from.
+	 *
+	 * @return the chosen file by the user
+	 */
+	public File chooseLoadFile() {
+		FileChooser fileChooser = new FileChooser();
+		return fileChooser.showOpenDialog(stage);
+	}
+	public GameBackend getMyGameBackend(){return myGameBackend;}
 }

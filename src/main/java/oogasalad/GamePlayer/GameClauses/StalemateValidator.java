@@ -21,7 +21,7 @@ public class StalemateValidator {
   }
 
 
-  private static Set<Piece> friendlyPieces(ChessBoard board, int id) {
+  public static Set<Piece> friendlyPieces(ChessBoard board, int id) {
     return board.stream()
         .flatMap(List::stream).toList().stream()
         .map(ChessTile::getPieces)

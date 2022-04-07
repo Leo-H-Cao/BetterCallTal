@@ -1,6 +1,5 @@
 package oogasalad.Editor.ModelState.PiecesState;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,5 +49,4 @@ public class PiecesManager {
     }
     return null;
   }
-
 }
