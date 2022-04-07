@@ -2,6 +2,7 @@ package oogasalad.Editor.ModelState.PiecesState;
 
 
 import java.util.List;
+import javafx.scene.image.Image;
 
 public class PiecesState {
   private PiecesManager piecesManager;
@@ -18,11 +19,11 @@ public class PiecesState {
     return piecesManager.getAllPieces();
   }
 
-  public void changePieceImage(String pieceID, String imageFile) {
+  public void changePieceImage(String pieceID, Image imageFile) {
     piecesManager.changePieceImage(pieceID, imageFile);
   }
 
-  public EditorPiece createCustomPiece(int points, int teamNumber, String image, MovementRules movementRules, String pieceID, String pieceName) {
+  public EditorPiece createCustomPiece(int points, int teamNumber, Image image, MovementRules movementRules, String pieceID, String pieceName) {
     return piecesManager.createPiece(points,movementRules, pieceID, pieceName, teamNumber, image);
   }
 
