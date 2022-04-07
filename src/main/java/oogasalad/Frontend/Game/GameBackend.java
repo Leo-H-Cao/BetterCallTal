@@ -1,5 +1,6 @@
 package oogasalad.Frontend.Game;
 
+import java.util.Optional;
 import oogasalad.Frontend.ViewManager;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.Server.BoardSetup;
@@ -16,14 +17,14 @@ public class GameBackend {
     private ChessBoard myChessBoard;
 
 
-    public ChessBoard initalizeChessBoard(File JSON) {
+    public Optional<ChessBoard> initalizeChessBoard(File JSON) {
         try {
             BoardSetup bs = new BoardSetup(JSON.getPath());
             myChessBoard = bs.createBoard();
-            return myChessBoard;
+            return Optional.of(myChessBoard);
         } catch (Exception e){
             // myMainView.showError();
-            return null;
+            return Optional.empty();
         }
     }
 

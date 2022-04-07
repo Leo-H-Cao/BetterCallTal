@@ -1,5 +1,6 @@
 package oogasalad.Frontend.Menu;
 
+import java.util.Optional;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -71,16 +72,18 @@ public class HostGame extends View {
         Button load = ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource(LOAD), Load_Button_ID,
                 (e) -> {
                     File f = getViewManager().chooseLoadFile();
-                    ChessBoard cb = getViewManager().getMyGameBackend().initalizeChessBoard(f);
-
-                    getViewManager().getViews().stream()
+                    Optional<ChessBoard> cbOp = getViewManager().getMyGameBackend().initalizeChessBoard(f);
+                    if(cbOp.isPresent()) {
+                        getViewManager().getViews().stream()
                             .filter(d -> d.getClass() == GameView.class)
-                            .forEach(c -> ((GameView) c).SetUpBoard(cb, 0)); //TODO: Figure out player ID stuff
-                    // Make the start button
+                            .forEach(c -> ((GameView) c).SetUpBoard(cbOp.get(),
+                                0)); //TODO: Figure out player ID stuff
+                        // Make the start button
 
-                    Node start = makeStartGroup();
-                    sp.setAlignment(start, Pos.CENTER_LEFT);
-                    sp.getChildren().add(start);
+                        Node start = makeStartGroup();
+                        sp.setAlignment(start, Pos.CENTER_LEFT);
+                        sp.getChildren().add(start);
+                    }
                 });
         load.setPrefWidth(150);
         load.setPrefHeight(50);
