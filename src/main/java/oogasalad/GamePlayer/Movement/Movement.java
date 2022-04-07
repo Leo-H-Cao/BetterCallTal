@@ -82,6 +82,7 @@ public class Movement implements MovementInterface{
     ChessTile captureTile = convertCordToTile(captureSquare, board);
     if(getMoves(piece, board).contains(captureTile)) {
       Set<ChessTile> updatedSquares = new HashSet<>(Set.of(board.getTile(piece.getCoordinates()), board.getTile(captureSquare)));
+      captureTile.clearPieces();
       piece.updateCoordinates(board.getTile(captureSquare));
       return updatedSquares;
     }
