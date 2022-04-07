@@ -24,7 +24,7 @@ public class ViewManager {
 	private final GameBackend myGameBackend;
 
 	public ViewManager(Stage stage, ResourceBundle rb) {
-		myGameBackend = new GameBackend(this);
+		myGameBackend = new GameBackend();
 		myViews = new ArrayList<>();
 		this.stage = stage;
 		langBundle = rb;
