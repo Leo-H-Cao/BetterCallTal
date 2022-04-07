@@ -12,7 +12,7 @@ import oogasalad.GamePlayer.Board.Player;
 import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
 import oogasalad.GamePlayer.Board.Tiles.GamePiece.PieceData;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
-import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GameClauses.CheckValidator;
 import oogasalad.GamePlayer.GameClauses.CheckmateValidator;
@@ -57,7 +57,7 @@ public class CheckmateTests {
   Piece makePawn(int row, int col, int team) {
     return new Piece(new PieceData(new Coordinate(row, col),
         "pawn" + team, 0, team, false,
-        List.of(new Movement(List.of(new Coordinate(-1, 0)), false)),
+        List.of(new Movement(List.of(new Coordinate(-1, 0), new Coordinate(1, 0)), false)),
         Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
   }
 
@@ -80,7 +80,7 @@ public class CheckmateTests {
    * @throws OutsideOfBoardException
    */
   @Test
-  void playerInMate() throws OutsideOfBoardException {
+  void playerInMate() throws EngineException {
 
     //TODO DOES NOT WORK BECAUSE INFINITE MOVEMENT DOES NOT WORK YET (I THINK)
     pieces.addAll(List.of(makeKing(0, 0, TEAM_1),
@@ -89,26 +89,26 @@ public class CheckmateTests {
 
     board.setPieces(pieces);
     System.out.println(board);
-    assertTrue(CheckValidator.isInCheck(board, TEAM_1));
-//    assertTrue(CheckmateValidator.isInMate(board, TEAM_1));
+    //assertTrue(CheckValidator.isInCheck(board, TEAM_1));
+    assertTrue(CheckmateValidator.isInMate(board, TEAM_1));
   }
 
   @Test
-  void playerInMate2() throws OutsideOfBoardException {
-    pieces.addAll(List.of(makeKing(0, 0, TEAM_2),
-        makePawn(1, 0, TEAM_1),
-        makePawn(2, 1, TEAM_1),
-        makePawn(1, 1, TEAM_1),
-        makePawn(2, 0, TEAM_1)));
+  void playerInMate2() throws EngineException {
+    pieces.addAll(List.of(makeKing(0, 0, TEAM_1),
+        makePawn(1, 0, TEAM_2),
+        makePawn(2, 1, TEAM_2),
+        makePawn(1, 1, TEAM_2),
+        makePawn(2, 0, TEAM_2)));
 
     board.setPieces(pieces);
     System.out.println(board);
 
-    assertTrue(CheckmateValidator.isInMate(board, TEAM_2));
+    assertTrue(CheckmateValidator.isInMate(board, TEAM_1));
   }
 
   @Test
-  void boardNotInCheckmate() throws OutsideOfBoardException {
+  void boardNotInCheckmate() throws EngineException {
     pieces.addAll(List.of(
         makeKing(0, 0, TEAM_1),
         makePawn(3, 0, TEAM_2)));
@@ -118,7 +118,7 @@ public class CheckmateTests {
   }
 
   @Test
-  void playerCanBlockCheckThusNotInMate() throws OutsideOfBoardException {
+  void playerCanBlockCheckThusNotInMate() throws EngineException {
     pieces.addAll(List.of(
         makeKing(0, 0, TEAM_1),
         makeRook(1, 5, TEAM_1),
@@ -131,11 +131,11 @@ public class CheckmateTests {
   }
 
   @Test
-  void playerBlocksMateThenEntersMateNextTurn() throws OutsideOfBoardException, InvalidMoveException {
-    Piece rook1 = makeRook(1, 5, TEAM_1);
-    Piece rook2 = makeRook(4, 0, TEAM_2);
+  void playerBlocksMateThenEntersMateNextTurn() throws EngineException {
+    Piece rook1 = makeRook(1, 2, TEAM_1);
+    Piece rook2 = makeRook(1, 0, TEAM_2);
     Piece king1 = makeKing(0, 0, TEAM_1);
-    pieces.addAll(List.of(king1, rook1, makeRook(3, 0, TEAM_2), makeRook(3, 1, TEAM_2),
+    pieces.addAll(List.of(king1, rook1, makeRook(1, 1, TEAM_2), makeRook(2, 1, TEAM_2),
         rook2));
     board.setPieces(pieces);
     System.out.println(board);
@@ -146,6 +146,6 @@ public class CheckmateTests {
     rook2.move(board.getTile(new Coordinate(1, 0)));
     king1.move(board.getTile(new Coordinate(1, 0)));
 
-    assertTrue(CheckmateValidator.isInMate(board, TEAM_2));
+    assertTrue(CheckmateValidator.isInMate(board, TEAM_1));
   }
 }
