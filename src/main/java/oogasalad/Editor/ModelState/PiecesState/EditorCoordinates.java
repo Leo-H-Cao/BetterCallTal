@@ -13,5 +13,4 @@ public class EditorCoordinates {
     this.row = row;
     this.col = col;
   }
-
 }

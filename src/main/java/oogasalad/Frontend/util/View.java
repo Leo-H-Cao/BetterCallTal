@@ -18,7 +18,6 @@ import org.apache.logging.log4j.Logger;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public abstract class View {
-
 	private static final Logger LOG = LogManager.getLogger(View.class);
 
 	protected Scene myScene;
