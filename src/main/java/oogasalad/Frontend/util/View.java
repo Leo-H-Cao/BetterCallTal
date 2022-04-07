@@ -1,4 +1,4 @@
-package oogasalad.Frontend;
+package oogasalad.Frontend.util;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
@@ -7,24 +7,23 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Screen;
 import oogasalad.Frontend.Menu.HomeView;
-import oogasalad.Frontend.util.ButtonFactory;
-import oogasalad.Frontend.util.ButtonType;
+import oogasalad.Frontend.ViewManager;
+
 import java.util.MissingResourceException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public abstract class View {
-
 	protected Scene myScene;
 	protected Group myRoot;
 	protected Rectangle2D myScreenSize;
 	protected Optional<ResourceBundle> myResources;
-	private final MainView myMainView;
+	private final ViewManager myViewManager;
 
-	public View(MainView mainView) {
+	public View(ViewManager viewManager) {
 		myScreenSize = Screen.getPrimary().getVisualBounds();
-		myMainView = mainView;
+		myViewManager = viewManager;
 		myRoot = new Group();
 		try {
 			myResources = Optional.of(ResourceBundle.getBundle(getClass().getSimpleName()));
@@ -53,7 +52,7 @@ public abstract class View {
 	 * @return Stage title for this screen
 	 */
 	public String getTitle() {
-		return MainView.getLanguage().getString(this.getClass().getSimpleName() + "Title");
+		return ViewManager.getLanguage().getString(this.getClass().getSimpleName() + "Title");
 	}
 
 	/**
@@ -61,20 +60,20 @@ public abstract class View {
 	 */
 	protected abstract Node makeNode();
 
-	protected MainView getMainView() {
-		return myMainView;
+	protected ViewManager getViewManager() {
+		return myViewManager;
 	}
 
 	protected Button makeExitButton() {
-		Button b = ButtonFactory.makeButton(ButtonType.TEXT, MainView.getLanguage().getString("exit"), "exit",
-				(e) -> getView(HomeView.class).ifPresent(myMainView::changeScene));
+		Button b = ButtonFactory.makeButton(ButtonType.TEXT, ViewManager.getLanguage().getString("exit"), "exit",
+				(e) -> getView(HomeView.class).ifPresent(myViewManager::changeScene));
 		b.setPrefWidth(150);
 		b.setPrefHeight(50);
 		return b;
 	}
 
 	protected String getLanguageResource(String s) {
-		return MainView.getLanguage().getString(getClass().getSimpleName() + s);
+		return ViewManager.getLanguage().getString(getClass().getSimpleName() + s);
 	}
 
 	/**
@@ -82,11 +81,11 @@ public abstract class View {
 	 * @return Optional View if it is found in myViews from MainView
 	 */
 	protected <T> Optional<View> getView(Class<T> className) {
-		Optional<View> v = getMainView().getViews().stream().filter((e) -> className == e.getClass()).findFirst();
+		Optional<View> v = getViewManager().getViews().stream().filter((e) -> className == e.getClass()).findFirst();
 		if(v.isPresent()) {
 			return v;
 		} else {
-			System.out.printf("%s not found in %s%n", className, myMainView.getViews());
+			System.out.printf("%s not found in %s%n", className, myViewManager.getViews());
 			return Optional.empty();
 		}
 	}

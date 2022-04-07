@@ -6,12 +6,17 @@ import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import oogasalad.Frontend.Game.Sections.BoardGrid;
 import oogasalad.Frontend.Game.Sections.TopSection;
-import oogasalad.Frontend.MainView;
-import oogasalad.Frontend.View;
+import oogasalad.Frontend.ViewManager;
+import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
 import oogasalad.GamePlayer.Board.TurnUpdate;
+import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.Movement.Coordinate;
+
+import java.util.Collection;
+import java.util.function.Consumer;
 
 /**
  * This class will handle the View for the game being played.
@@ -20,16 +25,16 @@ import oogasalad.GamePlayer.Board.TurnUpdate;
 
 public class GameView extends View {
 
-    private Collection<ChessTile> myBoard;
-    private Collection<Piece> myPieces;
     private BoardGrid myBoardGrid;
     private Integer Turn;
     private static Integer myID;
     private BorderPane myBP;
+    private Consumer<Piece> lightUpCons;
+    private Consumer<Coordinate> MoveCons;
 
 
-    public GameView(MainView mainView) {
-        super(mainView);
+    public GameView(ViewManager viewManager) {
+        super(viewManager);
     }
 
     /**
@@ -42,21 +47,39 @@ public class GameView extends View {
     public void SetUpBoard(ChessBoard chessboard, int id) {
         Turn = 0;   // give white player first turn
         myID = id;
-        //myBoardGrid = new BoardGrid(chessboard, id); UNCOMMENT WHEN JSON IS READY
-        myBoardGrid = new BoardGrid();
+        makeConsumers();
+        myBoardGrid = new BoardGrid(chessboard, id, lightUpCons, MoveCons); //TODO: Figure out player ID stuff
+        //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
-        myBP.setCenter(myBoardGrid.getBoard());
 
     }
 
+    private void makeConsumers() {
+        lightUpCons = piece -> lightUpSquares(piece);
+        MoveCons = coor -> makeMove(coor);
+    }
+
+
+
+    private void makeMove(Coordinate c) {
+        System.out.print("makeMove in GameView reached\n");
+        try {
+            TurnUpdate tu = getViewManager().getMyGameBackend().getChessBoard().move(myBoardGrid.getSelectedPiece(), c);
+            updateBoard(tu);
+        } catch (Exception e) {
+            return;
+        }
+    }
 
     /**
      * lightUpSquares() will be called to make the correct squares light up when a piece is selected.
      * Only when a square is lit up and clicked will a move be made.
      */
 
-    public void lightUpSquares(Collection<ChessTile> litTiles) {
-
+    public void lightUpSquares(Piece p) {
+        System.out.print("I made it to lightUpSquares method in GameView\n");
+        Collection<ChessTile> possibletiles = getViewManager().getMyGameBackend().getChessBoard().getMoves(p);
+        myBoardGrid.lightSquares(possibletiles);
     }
 
     /**
@@ -65,7 +88,7 @@ public class GameView extends View {
      * board will be displayed.
      */
 
-    public void updateBoard(TurnUpdate tu) {
+    private void updateBoard(TurnUpdate tu) {
         Turn = tu.nextPlayer();
         myBoardGrid.updateTiles(tu.updatedSquares());
     }
@@ -74,13 +97,9 @@ public class GameView extends View {
     @Override
     protected Node makeNode() {
         BorderPane bp = new BorderPane();
-        bp.setTop(new TopSection().getGP());
         myBP = bp;
-        // REMOVE LATER
-        myBoardGrid = new BoardGrid();
-        myBoardGrid.getBoard().setAlignment(Pos.CENTER);
+        bp.setTop(new TopSection().getGP());
         bp.setCenter(myBoardGrid.getBoard());
-        //REMOVE LATLER ^^^
 
         return bp;
     }

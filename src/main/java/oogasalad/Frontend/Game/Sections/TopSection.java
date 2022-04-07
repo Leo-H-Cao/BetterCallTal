@@ -8,7 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import oogasalad.Frontend.MainView;
+import oogasalad.Frontend.ViewManager;
 
 import java.util.ArrayList;
 
@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 
 public class TopSection {
-    private GridPane myGP;
+    private final GridPane myGP;
     private static final String TITLE = "Title";
 
     public TopSection() {
@@ -49,7 +49,7 @@ public class TopSection {
 
         HBox middle = new HBox();
         middle.setAlignment(Pos.CENTER);
-        Text title = new Text(MainView.getLanguage().getString(getClass().getSimpleName() + TITLE));
+        Text title = new Text(ViewManager.getLanguage().getString(getClass().getSimpleName() + TITLE));
         title.setFont(new Font("Courier New", 30));
         title.setFill(Color.PURPLE);
         middle.getChildren().add(title);

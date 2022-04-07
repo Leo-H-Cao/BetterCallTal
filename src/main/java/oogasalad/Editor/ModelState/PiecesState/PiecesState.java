@@ -21,6 +21,10 @@ public class PiecesState implements ModifiesPiecesState {
     return piecesManager.getAllPieces();
   }
 
+  public List<EditorPiece> getAllPieces() {
+    return piecesManager.getAllPieces();
+  }
+
   @Override
   public void changePieceImage(String pieceID, String imageFile) {
     piecesManager.changePieceImage(pieceID, imageFile);

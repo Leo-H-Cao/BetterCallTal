@@ -10,9 +10,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
+import static oogasalad.Frontend.util.ButtonType.IMAGE;
 import static oogasalad.Frontend.util.ButtonType.TEXT;
 
 public class ButtonFactoryTest extends DukeApplicationTest {
@@ -28,22 +30,38 @@ public class ButtonFactoryTest extends DukeApplicationTest {
 		text = new Text(oldText);
 		root.getChildren().add(text);
 		myStage = stage;
-		Scene scene = new Scene(root, 100, 100);
+		Scene scene = new Scene(root, 600, 600);
 		stage.setScene(scene);
 		stage.show();
 	}
 
+	@BeforeEach
+	void before() {
+		text.setText(oldText);
+	}
+
 	@Test
-	void testButtonSimpleAction() {
+	void createButtonSimpleActionText() {
 		Button b = ButtonFactory.makeButton(TEXT, "testButton", "testButton",
 				(e) -> text.setText(newText));
 		runAsJFXAction(() -> root.getChildren().add(b));
+		Assertions.assertEquals(text.getText(), oldText);
 		clickOn(b);
 		Assertions.assertEquals(text.getText(), newText);
 	}
 
 	@Test
-	void testAddActionSimple() {
+	void createButtonSimpleActionImage() {
+		Button b = ButtonFactory.makeButton(IMAGE, "pieces/black/king.png", "testButton",
+				(e) -> text.setText(newText));
+		runAsJFXAction(() -> root.getChildren().add(b));
+		Assertions.assertEquals(text.getText(), oldText);
+		clickOn(b);
+		Assertions.assertEquals(text.getText(), newText);
+	}
+
+	@Test
+	void addSimpleAction() {
 		FlowPane pane = new FlowPane();
 		String rectText = "rect";
 		Circle c = new Circle(20, 50,25);
