@@ -1,9 +1,11 @@
-package oogasalad.Frontend;
+package oogasalad.Frontend.util;
 
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.stage.Screen;
+import oogasalad.Frontend.Editor.EditorController;
+
 import java.util.MissingResourceException;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -13,8 +15,10 @@ public abstract class NodeContainer {
 	protected Rectangle2D myScreenSize;
 	protected Optional<ResourceBundle> myResources;
 	private Node myNode;
+	protected EditorController myController;
 
-	public NodeContainer() {
+	public NodeContainer(EditorController controller) {
+		myController = controller;
 		myScreenSize = Screen.getPrimary().getVisualBounds();
 		try {
 			myResources = Optional.of(ResourceBundle.getBundle(getClass().getName()));
@@ -30,8 +34,5 @@ public abstract class NodeContainer {
 		return myNode;
 	}
 
-	/**
-	 * @return Parent node of this class. This function is called the first time getNode is called and the result is saved in myNode
-	 */
 	protected abstract Node makeNode();
 }

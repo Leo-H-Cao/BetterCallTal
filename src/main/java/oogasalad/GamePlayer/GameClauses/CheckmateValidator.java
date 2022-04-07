@@ -3,15 +3,12 @@ package oogasalad.GamePlayer.GameClauses;
 import static oogasalad.GamePlayer.GameClauses.CheckValidator.isInCheck;
 import static oogasalad.GamePlayer.GameClauses.StalemateValidator.isStaleMate;
 
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.Movement.MovementInterface;
+import oogasalad.GamePlayer.GamePiece.Piece;
 
 /**
  * This class

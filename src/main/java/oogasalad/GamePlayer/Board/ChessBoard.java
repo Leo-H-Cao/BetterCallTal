@@ -16,7 +16,7 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
+import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.MoveAfterGameEndException;
@@ -108,7 +108,7 @@ public class ChessBoard implements Iterable<ChessTile>{
       return new TurnUpdate(piece.move(getTileFromCoords(finalSquare)), turnCriteria.incrementTurn());
     }
     LOG.warn(isGameOver() ? "Move made after game over" : "Move made by wrong player");
-    throw isGameOver() ? new MoveAfterGameEndException("") : new WrongPlayerException(turnCriteria.getCurrentPlayer() + "");
+    throw isGameOver() ? new MoveAfterGameEndException("") : new WrongPlayerException("Expected: " + turnCriteria.getCurrentPlayer() + "\n Actual: " + piece.getTeam());
   }
 
   /**

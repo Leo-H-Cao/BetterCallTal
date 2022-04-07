@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.CustomTiles.TileAction;
-import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
+import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Coordinate;
 

@@ -9,8 +9,8 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.EndConditions.TwoMoves;
 import oogasalad.GamePlayer.Board.Player;
-import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
-import oogasalad.GamePlayer.Board.Tiles.GamePiece.PieceData;
+import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
@@ -18,6 +18,8 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GameClauses.CheckValidator;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -25,6 +27,8 @@ import org.junit.jupiter.api.Test;
  * Testing class for the Check class
  */
 public class CheckTests {
+
+  private static final Logger LOG = LogManager.getLogger(CheckTests.class);
 
   CheckValidator check;
   private ChessBoard board;
@@ -69,7 +73,7 @@ public class CheckTests {
   @Test
   void inCheck() throws OutsideOfBoardException {
     pieceLocations(0, 0, 1, 0);
-    System.out.println(board);
+    LOG.debug(board);
     //TEAM 1 is in check
     assertTrue(CheckValidator.isInCheck(board, 1));
     //Team 2 is NOT in check

@@ -3,16 +3,17 @@ package oogasalad.Frontend.Editor.Board;
 import javafx.scene.Node;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
-import oogasalad.Frontend.NodeContainer;
+import oogasalad.Frontend.Editor.EditorController;
+import oogasalad.Frontend.util.NodeContainer;
 import oogasalad.Frontend.util.ButtonFactory;
 
 public class ChessBoardTile extends NodeContainer {
-	private double myWidth;
-	private double myHeight;
-	private boolean alt;
-	private int x, y;
+	private final double myWidth;
+	private final double myHeight;
+	private final boolean alt;
 
-	public ChessBoardTile(double w, double h, boolean toggled) {
+	public ChessBoardTile(double w, double h, boolean toggled, EditorController controller) {
+		super(controller);
 		myWidth = w;
 		myHeight = h;
 		alt = toggled;

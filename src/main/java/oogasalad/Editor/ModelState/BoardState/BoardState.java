@@ -41,13 +41,15 @@ public class BoardState implements ModifiesBoardState {
   @Override
   public void setPieceStartingLocation(String pieceID, int x, int y) {
     myEditorBoard.addPieceStartingLocation(piecesManager.getPiece(pieceID), x, y);
-    piecesManager.setStartingLocation(pieceID, x, y);
   }
 
   @Override
   public void removePiece(String pieceID, int x, int y) {
     myEditorBoard.removePieceStartingLocation(x, y);
-    piecesManager.setStartingLocation(pieceID, -1, -1);
+  }
+
+  public void getPieceLocation(String pieceID){
+    //TODO
   }
 
 

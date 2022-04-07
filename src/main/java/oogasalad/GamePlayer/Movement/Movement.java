@@ -13,7 +13,7 @@ import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GameClauses.CheckValidator;
-import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
+import oogasalad.GamePlayer.GamePiece.Piece;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -82,6 +82,7 @@ public class Movement implements MovementInterface{
     ChessTile captureTile = convertCordToTile(captureSquare, board);
     if(getMoves(piece, board).contains(captureTile)) {
       Set<ChessTile> updatedSquares = new HashSet<>(Set.of(board.getTile(piece.getCoordinates()), board.getTile(captureSquare)));
+      captureTile.clearPieces();
       piece.updateCoordinates(board.getTile(captureSquare));
       return updatedSquares;
     }
@@ -250,5 +251,12 @@ public class Movement implements MovementInterface{
     } catch (OutsideOfBoardException e) {
       return false;
     }
+  }
+
+  /***
+   * @return String of all relative coordinates
+   */
+  public String toString() {
+    return possibleMoves.toString();
   }
 }
