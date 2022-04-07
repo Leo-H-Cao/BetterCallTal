@@ -54,10 +54,6 @@ public class HostGame extends View {
     }
 
     private Node makeStartGroup() {
-        Button start = ButtonFactory.makeButton(ButtonType.TEXT, MainView.getLanguage().getString("Start"), "start",
-                (e) -> getMainView().getViews().stream().filter((c) -> c.getClass() == GameView.class).forEach((c) ->
-                        getMainView().changeScene(c)));
-
         Button start = ButtonFactory.makeButton(ButtonType.TEXT, ViewManager.getLanguage().getString("Start"), "start",
                 (e) -> getViewManager().getViews().stream().filter((c) -> c.getClass() == GameView.class).forEach((c) ->
                         getViewManager().changeScene(c)));
@@ -75,9 +71,9 @@ public class HostGame extends View {
         Button load = ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource(LOAD), Load_Button_ID,
                 (e) -> {
                     File f = getViewManager().chooseLoadFile();
-                    ChessBoard cb = getMainView().getMyBackend().initalizeChessBoard(f);
+                    ChessBoard cb = getViewManager().getMyGameBackend().initalizeChessBoard(f);
 
-                    getMainView().getViews().stream()
+                    getViewManager().getViews().stream()
                             .filter(d -> d.getClass() == GameView.class)
                             .forEach(c -> ((GameView) c).SetUpBoard(cb, 0)); //TODO: Figure out player ID stuff
                     // Make the start button

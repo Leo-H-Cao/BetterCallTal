@@ -8,12 +8,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
+import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.function.Consumer;
 
 

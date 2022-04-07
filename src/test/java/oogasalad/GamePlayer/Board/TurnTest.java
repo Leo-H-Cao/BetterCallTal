@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Collections;
 import java.util.List;
-import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
-import oogasalad.GamePlayer.Board.Tiles.GamePiece.PieceData;
+import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Board.TurnCriteria.ConstantIncrease;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
