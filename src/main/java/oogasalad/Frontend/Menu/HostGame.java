@@ -54,7 +54,6 @@ public class HostGame extends View {
     }
 
     private Node makeStartGroup() {
-
         Button start = ButtonFactory.makeButton(ButtonType.TEXT, ViewManager.getLanguage().getString("Start"), "start",
                 (e) -> getViewManager().getViews().stream().filter((c) -> c.getClass() == GameView.class).forEach((c) ->
                         getViewManager().changeScene(c)));

@@ -1,5 +1,6 @@
 package oogasalad.Frontend.Game;
 
+import java.util.Collection;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
@@ -9,12 +10,14 @@ import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.Board.TurnUpdate;
 import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.Board.TurnUpdate;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
 import java.util.Collection;
 import java.util.function.Consumer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * This class will handle the View for the game being played.
@@ -22,6 +25,8 @@ import java.util.function.Consumer;
 
 
 public class GameView extends View {
+
+    private static final Logger LOG = LogManager.getLogger(GameView.class);
 
     private BoardGrid myBoardGrid;
     private Integer Turn;
@@ -60,7 +65,7 @@ public class GameView extends View {
 
 
     private void makeMove(Coordinate c) {
-        System.out.print("makeMove in GameView reached\n");
+        LOG.debug("makeMove in GameView reached\n");
         try {
             TurnUpdate tu = getViewManager().getMyGameBackend().getChessBoard().move(myBoardGrid.getSelectedPiece(), c);
             updateBoard(tu);
@@ -75,7 +80,7 @@ public class GameView extends View {
      */
 
     public void lightUpSquares(Piece p) {
-        System.out.print("I made it to lightUpSquares method in GameView\n");
+        LOG.debug("I made it to lightUpSquares method in GameView\n");
         Collection<ChessTile> possibletiles = getViewManager().getMyGameBackend().getChessBoard().getMoves(p);
         myBoardGrid.lightSquares(possibletiles);
     }

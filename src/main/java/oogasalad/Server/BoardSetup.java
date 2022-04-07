@@ -8,16 +8,21 @@ import java.util.ArrayList;
 import java.util.List;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Player;
-import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
+import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementInterface;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class BoardSetup {
+
+  private static final Logger LOG = LogManager.getLogger(BoardSetup.class);
+
   private ChessBoard myBoard;
   private JSONObject myJSONObject;
 
@@ -61,7 +66,7 @@ public class BoardSetup {
       moveList.add(relativeCoordinates);
     }
 
-    System.out.println(allMovements);
+    LOG.debug("All movements: " + allMovements);
 
     if(type.charAt(0) =='u'){
       moves = new Movement(moveList, true);
@@ -97,7 +102,7 @@ public class BoardSetup {
       captures.add(unboundedCaptures);
       captures.add(boundedCaptures);
 
-      PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, false, movements, captures, null, null, null, imageFile);
+      PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, false, movements, captures, List.of(), List.of(), List.of(), imageFile);
       Piece currentPiece = new Piece(pieceData, board);
 
       myBoard.placePiece(new Coordinate(startRow, startCol), currentPiece);

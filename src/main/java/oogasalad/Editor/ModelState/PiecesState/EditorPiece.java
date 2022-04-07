@@ -1,25 +1,49 @@
 package oogasalad.Editor.ModelState.PiecesState;
 
 public class EditorPiece {
-  private final String DEFAULT_PIECE_IMAGE = "";
-  private final int DEFAULT_POINT_VALUE = 1;
 
   private MovementRules myMovementRules;
   private int pointValue;
   private String myPieceID;
   private String myPieceName;
-  private PieceInfo myPieceInfo;
+  private int myTeamNumber;
+  private String myImage;
 
-  public EditorPiece(int points, MovementRules movementRules, String pieceID, String pieceName, PieceInfo pieceInfo){
+  public EditorPiece(int points, MovementRules movementRules, String pieceID, String pieceName, int teamNumber, String image ){
     myMovementRules = movementRules;
     pointValue = points;
     myPieceID = pieceID;
     myPieceName = pieceName;
-    myPieceInfo = pieceInfo;
+    myTeamNumber = teamNumber;
+    myImage = image;
   }
 
   public String getPieceID(){
     return myPieceID;
+  }
+
+  public String getImage(){
+    return myImage;
+  }
+
+  public MovementRules getMovementRules() {
+    return myMovementRules;
+  }
+
+  public int getPointValue() {
+    return pointValue;
+  }
+
+  public String getPieceName() {
+    return myPieceName;
+  }
+
+  public int getTeamNumber() {
+    return myTeamNumber;
+  }
+
+  public void setTeamNumber(int myTeamNumber) {
+    this.myTeamNumber = myTeamNumber;
   }
 
   public void setPieceMovement(MovementRules movementRules){
@@ -34,8 +58,8 @@ public class EditorPiece {
     myPieceName = name;
   }
 
-  public PieceInfo getPieceInfo(){
-    return myPieceInfo;
+  public void setPieceImage(String image){
+    myImage = image;
   }
 
 

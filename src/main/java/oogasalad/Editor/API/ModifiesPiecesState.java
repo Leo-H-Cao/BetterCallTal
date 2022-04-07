@@ -4,14 +4,13 @@ package oogasalad.Editor.API;
 import java.util.List;
 import oogasalad.Editor.ModelState.PiecesState.EditorPiece;
 import oogasalad.Editor.ModelState.PiecesState.MovementRules;
-import oogasalad.Editor.ModelState.PiecesState.PieceInfo;
 
 public interface ModifiesPiecesState {
 
-  PieceInfo getPieceInfo(String pieceID);
+  EditorPiece getPiece(String pieceID);
 
 
-  List<PieceInfo> getAllPieceInfo();
+  List<EditorPiece> getAllPieces();
 
   /**
    * Change piece display image to a custom image provided by user

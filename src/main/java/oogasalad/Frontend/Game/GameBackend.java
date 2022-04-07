@@ -15,6 +15,7 @@ public class GameBackend {
 
     private ChessBoard myChessBoard;
 
+
     public ChessBoard initalizeChessBoard(File JSON) {
         try {
             BoardSetup bs = new BoardSetup(JSON.getPath());
