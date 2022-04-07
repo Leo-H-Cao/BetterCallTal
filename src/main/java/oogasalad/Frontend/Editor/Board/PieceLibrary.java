@@ -9,17 +9,13 @@ import javafx.scene.shape.StrokeType;
 import oogasalad.Frontend.Editor.EditorController;
 import oogasalad.Frontend.Editor.LabelledContainer;
 import oogasalad.Frontend.util.ButtonFactory;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import oogasalad.GamePlayer.Board.ChessBoard;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class PieceLibrary extends LabelledContainer {
-
-	private static final Logger LOG = LogManager.getLogger(PieceLibrary.class);
 
 	public PieceLibrary(EditorController controller) {
 		super("Piece Library", controller);
@@ -27,9 +23,9 @@ public class PieceLibrary extends LabelledContainer {
 
 	@Override
 	protected Collection<Node> fillContent() {
-		List ret = new ArrayList();
+		Collection<Node> ret = new ArrayList();
 		myController.getPiecesState()
-				.getAllPieces().stream()
+				.getAllPieces()
 				.forEach((piece) -> ret.add(createPiece(piece.getPieceID())));
 		return ret;
 	}

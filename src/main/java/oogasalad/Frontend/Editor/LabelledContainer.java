@@ -9,7 +9,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
-import oogasalad.Frontend.util.NodeContainer;
 
 import java.util.Collection;
 
