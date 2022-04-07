@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
 
 public class StalemateValidator {
 
@@ -21,7 +21,7 @@ public class StalemateValidator {
   }
 
 
-  private static Set<Piece> friendlyPieces(ChessBoard board, int id) {
+  public static Set<Piece> friendlyPieces(ChessBoard board, int id) {
     return board.stream()
         .flatMap(List::stream).toList().stream()
         .map(ChessTile::getPieces)

@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer.GamePiece;
+package oogasalad.GamePlayer.Board.Tiles.GamePiece;
 
 import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;

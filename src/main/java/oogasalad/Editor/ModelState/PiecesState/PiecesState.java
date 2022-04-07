@@ -12,13 +12,13 @@ public class PiecesState implements ModifiesPiecesState {
   }
 
   @Override
-  public PieceInfo getPieceInfo(String pieceID) {
-    return piecesManager.getPiece(pieceID).getPieceInfo();
+  public EditorPiece getPiece(String pieceID) {
+    return piecesManager.getPiece(pieceID);
   }
 
   @Override
-  public List<PieceInfo> getAllPieceInfo(){
-    return piecesManager.getAllPieceInfo();
+  public List<EditorPiece> getAllPieces(){
+    return piecesManager.getAllPieces();
   }
 
   public List<EditorPiece> getAllPieces() {
@@ -32,8 +32,7 @@ public class PiecesState implements ModifiesPiecesState {
 
   @Override
   public EditorPiece createCustomPiece(int points, int teamNumber, String image, MovementRules movementRules, String pieceID, String pieceName) {
-    PieceInfo pieceInfo = new PieceInfo(image, teamNumber);
-    return piecesManager.createPiece(points,movementRules, pieceID, pieceName, pieceInfo);
+    return piecesManager.createPiece(points,movementRules, pieceID, pieceName, teamNumber, image);
   }
 
   @Override

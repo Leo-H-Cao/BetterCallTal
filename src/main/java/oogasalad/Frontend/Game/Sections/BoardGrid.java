@@ -3,7 +3,7 @@ package oogasalad.Frontend.Game.Sections;
 import javafx.scene.layout.*;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.Board.Tiles.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
 import java.util.ArrayList;
