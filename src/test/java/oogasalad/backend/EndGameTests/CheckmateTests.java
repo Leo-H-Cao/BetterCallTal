@@ -54,15 +54,13 @@ public class CheckmateTests {
   Piece makeKing(int row, int col, int team) {
     return new Piece(new PieceData(new Coordinate(row, col),
         "king" + team, 0, team, true,
-        List.of(new Movement(List.of(new Coordinate(1, 0)), false)),
-        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
+        List.of(new Movement(List.of(new Coordinate(1, 0)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
   }
 
   Piece makePawn(int row, int col, int team) {
     return new Piece(new PieceData(new Coordinate(row, col),
         "pawn" + team, 0, team, false,
-        List.of(new Movement(List.of(new Coordinate(-1, 0)), false)),
-        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
+        List.of(new Movement(List.of(new Coordinate(-1, 0)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
   }
 
   Piece makeRook(int row, int col, int team) {
@@ -75,8 +73,7 @@ public class CheckmateTests {
 
     return new Piece(new PieceData(new Coordinate(row, col),
         "rook" + team, 0, team, false,
-        List.of(rookMovement),
-        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
+        List.of(rookMovement), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
   }
 
   /**

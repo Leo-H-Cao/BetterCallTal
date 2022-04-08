@@ -42,7 +42,6 @@ public class Piece implements Cloneable {
 
   private List<MovementInterface> movements;
   private List<MovementInterface> captures;
-  private List<MovementInterface> customMovements;
   private List<MovementModifier> movementModifiers;
   private List<MovementModifier> onInteractionModifiers;
 
@@ -57,7 +56,6 @@ public class Piece implements Cloneable {
     this.mainPiece = pieceData.mainPiece();
     this.movements = pieceData.movements();
     this.captures = pieceData.captures();
-    this.customMovements = pieceData.customMovements();
     this.movementModifiers = pieceData.movementModifiers();
     this.onInteractionModifiers = pieceData.onInteractionModifiers();
     this.img = pieceData.img();
@@ -79,14 +77,18 @@ public class Piece implements Cloneable {
 
     //TODO: need to know whether a move is a capture or not for OIM, things like atomic
     Set<ChessTile> updatedSquares = new HashSet<>(findMovements(finalSquare, movements, board));
-    updatedSquares.addAll(findMovements(finalSquare, customMovements, board));
-    updatedSquares.addAll(findCaptures(finalSquare, customMovements, board));
     updatedSquares.addAll(findCaptures(finalSquare, captures, board));
 
     movementModifiers.forEach((mm) -> updatedSquares.addAll(mm.updateMovement(this, finalSquare, board)));
     return updatedSquares;
   }
 
+  /***
+   * @param finalSquare to move to
+   * @param movements to search in
+   * @param board to search on
+   * @return finds if a possible movement goes to the finalSquare and makes the move, returning updated squares
+   */
   private Set<ChessTile> findMovements(ChessTile finalSquare, List<MovementInterface> movements, ChessBoard board) {
     Set<ChessTile> updatedSquares = new HashSet<>();
     movements.stream().filter((m) -> m.getMoves(this, board).contains(finalSquare)).findFirst().ifPresent((m) ->
@@ -94,10 +96,16 @@ public class Piece implements Cloneable {
     return updatedSquares;
   }
 
-  private Set<ChessTile> findCaptures(ChessTile finalSquare, List<MovementInterface> captures, ChessBoard board) {
+  /***
+   * @param captureSquare to move to
+   * @param captures to search in
+   * @param board to search on
+   * @return finds if a possible movement goes to the captureSquare and makes the move, returning updated squares
+   */
+  private Set<ChessTile> findCaptures(ChessTile captureSquare, List<MovementInterface> captures, ChessBoard board) {
     Set<ChessTile> updatedSquares = new HashSet<>();
-    captures.stream().filter((m) -> m.getCaptures(this, board).contains(finalSquare)).findFirst().ifPresent((m) ->
-    {try{updatedSquares.addAll(m.capturePiece(this, finalSquare.getCoordinates(), board));} catch (Exception ignored){}});
+    captures.stream().filter((m) -> m.getCaptures(this, board).contains(captureSquare)).findFirst().ifPresent((m) ->
+    {try{updatedSquares.addAll(m.capturePiece(this, captureSquare.getCoordinates(), board));} catch (Exception ignored){}});
     return updatedSquares;
   }
 
@@ -130,8 +138,6 @@ public class Piece implements Cloneable {
 
 //    movementSquaresMap.keySet().forEach((k) -> allMoves.addAll(movementSquaresMap.get(k)));
     movements.forEach((m) -> allMoves.addAll(m.getMoves(this, board)));
-    customMovements.forEach((m) -> allMoves.addAll(m.getMoves(this, board)));
-    customMovements.forEach((m) -> allMoves.addAll(m.getCaptures(this, board)));
     captures.forEach((m) -> allMoves.addAll(m.getCaptures(this, board)));
 
     LOG.debug(String.format("%s has the following moves: %s", name, allMoves));
@@ -318,7 +324,6 @@ public class Piece implements Cloneable {
         mainPiece,
         new ArrayList<>(movements),
         new ArrayList<>(captures),
-        new ArrayList<>(customMovements),
         new ArrayList<>(movementModifiers),
         new ArrayList<>(onInteractionModifiers),
         img

@@ -55,13 +55,11 @@ public class CheckTests {
 
     pieceOne = new Piece(new PieceData(new Coordinate(row1, col1),
         "test1", 0, 0, false,
-        List.of(new Movement(List.of(new Coordinate(1, 0)), false)),
-        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
+        List.of(new Movement(List.of(new Coordinate(1, 0)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
 
     pieceTwo = new Piece(new PieceData(new Coordinate(row2, col2),
         "test2", 0, 1, true,
-        List.of(new Movement(List.of(new Coordinate(1, 0)), false)),
-        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
+        List.of(new Movement(List.of(new Coordinate(1, 0)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
 
     List<Piece> pieces = List.of(pieceOne, pieceTwo);
     board.setPieces(pieces);

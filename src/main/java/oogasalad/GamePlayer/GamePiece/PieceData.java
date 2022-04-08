@@ -12,7 +12,6 @@ public record PieceData(Coordinate startingLocation,
                         boolean mainPiece,
                         List<MovementInterface> movements,
                         List<MovementInterface> captures,
-                        List<MovementInterface> customMovements,
                         List<MovementModifier> movementModifiers,
                         List<MovementModifier> onInteractionModifiers,
                         String img) {

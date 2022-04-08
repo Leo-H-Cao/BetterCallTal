@@ -105,7 +105,11 @@ public class BoardSetup {
       captures.add(unboundedCaptures);
       captures.add(boundedCaptures);
 
-      PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, mainPiece, movements, captures, List.of(new Castling(), new DoubleFirstMove()), List.of(), List.of(), imageFile);
+      //TODO: REFLECTION DOES THIS
+      movements.addAll(List.of(new Castling(), new DoubleFirstMove()));
+      captures.addAll(List.of(new Castling(), new DoubleFirstMove()));
+
+      PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, mainPiece, movements, captures, List.of(), List.of(), imageFile);
 
       Piece currentPiece = new Piece(pieceData);
       myBoard.placePiece(new Coordinate(startRow, startCol), currentPiece);
