@@ -129,7 +129,6 @@ public class Movement implements MovementInterface{
           : (infinite ? getNextTile(moveStack.peek().getCoordinates(), delta, board)
               : Optional.of(moveStack.peek()));
       LOG.debug(capTile);
-      capTile.ifPresent(t -> System.out.println("testing"));
       capTile.ifPresent((t) -> {
         if (piece.isOpposing(t.getPieces())) {
           allMoves.get(CAPTURE_KEY).add(t);
