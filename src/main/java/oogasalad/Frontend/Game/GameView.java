@@ -48,10 +48,10 @@ public class GameView extends View {
      */
 
     public void SetUpBoard(ChessBoard chessboard, int id) {
+        myBoardGrid = new BoardGrid(chessboard, id, lightUpCons, MoveCons); //TODO: Figure out player ID stuff
         Turn = 0;   // give white player first turn
         myID = id;
         makeConsumers();
-        myBoardGrid = new BoardGrid(chessboard, id, lightUpCons, MoveCons); //TODO: Figure out player ID stuff
         //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
 

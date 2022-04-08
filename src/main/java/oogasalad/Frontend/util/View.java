@@ -8,11 +8,9 @@ import javafx.scene.control.Button;
 import javafx.stage.Screen;
 import oogasalad.Frontend.Menu.HomeView;
 import oogasalad.Frontend.ViewManager;
-
 import java.util.MissingResourceException;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import oogasalad.GamePlayer.Board.ChessBoard;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
