@@ -105,7 +105,7 @@ public class ChessBoard implements Iterable<ChessTile>{
   public TurnUpdate move(Piece piece, Coordinate finalSquare) throws EngineException {
     if(!isGameOver() && piece.checkTeam(turnCriteria.getCurrentPlayer())) {
       history.add(deepCopy());
-      return new TurnUpdate(piece.move(getTileFromCoords(finalSquare)), turnCriteria.incrementTurn());
+      return new TurnUpdate(piece.move(getTileFromCoords(finalSquare), this), turnCriteria.incrementTurn());
     }
     LOG.warn(isGameOver() ? "Move made after game over" : "Move made by wrong player");
     throw isGameOver() ? new MoveAfterGameEndException("") : new WrongPlayerException("Expected: " + turnCriteria.getCurrentPlayer() + "\n Actual: " + piece.getTeam());
@@ -159,7 +159,7 @@ public class ChessBoard implements Iterable<ChessTile>{
    * @return set of tiles the piece can move to
    */
   public Set<ChessTile> getMoves(Piece piece) {
-    return piece.checkTeam(turnCriteria.getCurrentPlayer()) ? piece.getMoves() : Set.of();
+    return piece.checkTeam(turnCriteria.getCurrentPlayer()) ? piece.getMoves(this) : Set.of();
   }
 
   /***

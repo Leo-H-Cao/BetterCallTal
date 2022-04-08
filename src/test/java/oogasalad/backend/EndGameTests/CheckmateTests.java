@@ -55,14 +55,14 @@ public class CheckmateTests {
     return new Piece(new PieceData(new Coordinate(row, col),
         "king" + team, 0, team, true,
         List.of(new Movement(List.of(new Coordinate(1, 0)), false)),
-        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
+        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
   }
 
   Piece makePawn(int row, int col, int team) {
     return new Piece(new PieceData(new Coordinate(row, col),
         "pawn" + team, 0, team, false,
         List.of(new Movement(List.of(new Coordinate(-1, 0)), false)),
-        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
+        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
   }
 
   Piece makeRook(int row, int col, int team) {
@@ -76,7 +76,7 @@ public class CheckmateTests {
     return new Piece(new PieceData(new Coordinate(row, col),
         "rook" + team, 0, team, false,
         List.of(rookMovement),
-        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
+        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
   }
 
   /**
@@ -146,9 +146,9 @@ public class CheckmateTests {
     assertFalse(CheckmateValidator.isInMate(board, TEAM_1));
 
     //Some Movement
-    rook1.move(board.getTile(new Coordinate(1, 0)));
-    rook2.move(board.getTile(new Coordinate(1, 0)));
-    king1.move(board.getTile(new Coordinate(1, 0)));
+    rook1.move(board.getTile(new Coordinate(1, 0)), board);
+    rook2.move(board.getTile(new Coordinate(1, 0)), board);
+    king1.move(board.getTile(new Coordinate(1, 0)), board);
 
     assertTrue(CheckmateValidator.isInMate(board, TEAM_2));
   }

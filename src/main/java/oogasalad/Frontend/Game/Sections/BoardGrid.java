@@ -135,7 +135,7 @@ public class BoardGrid {
      */
     public void setSelectedPiece(Piece p) {
         LOG.debug(String.format("SELECTED PIECE IS NOW: %s (%d, %d)\n", p.getName(), p.getCoordinates().getRow(), p.getCoordinates().getCol()));
-        LOG.debug("SELECTED PIECE MOVES: " + p.getMoves());
+//        LOG.debug("SELECTED PIECE MOVES: " + myModelBoard.getMoves(p));
 //        if (p.getTeam() == myID) {
             mySelectedPiece = p;
 //        }

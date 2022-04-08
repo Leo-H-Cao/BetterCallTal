@@ -31,7 +31,7 @@ public class DoubleFirstMove implements MovementInterface {
       throw new InvalidMoveException(finalSquare.toString());
     }
     ChessTile oldTile = board.getTile(piece.getCoordinates());
-    piece.updateCoordinates(board.getTile(finalSquare));
+    piece.updateCoordinates(board.getTile(finalSquare), board);
     return Set.of(oldTile, board.getTile(piece.getCoordinates()));
   }
 

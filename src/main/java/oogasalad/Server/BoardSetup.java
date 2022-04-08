@@ -107,7 +107,7 @@ public class BoardSetup {
 
       PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, mainPiece, movements, captures, List.of(new Castling(), new DoubleFirstMove()), List.of(), List.of(), imageFile);
 
-      Piece currentPiece = new Piece(pieceData, board);
+      Piece currentPiece = new Piece(pieceData);
       myBoard.placePiece(new Coordinate(startRow, startCol), currentPiece);
     }
   }
