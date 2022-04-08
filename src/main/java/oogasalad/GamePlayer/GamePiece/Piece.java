@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
@@ -173,7 +172,12 @@ public class Piece implements Cloneable {
    */
   private boolean validCapture(Coordinate coordinate) {
     //TODO MOVEMENTS IS A PLACEHOLDER, MUST IMPLEMENT CAPTURES AS IT IS NULL WHEN THE PIECE IS FIRST INITIALED AS WELL AS THE GETMOVES METHOD
-    return movements.stream().map(move -> move.getMoves(this, board))
+    Set<Set<ChessTile>> set = new HashSet<>();
+    for (MovementInterface move : movements) {
+      set.add(move.getMoves(this, board));
+    }
+    return movements.stream()
+        .map(move -> move.getCaptures(this, board))
         .collect(Collectors.toSet())
         .stream().flatMap(Set::stream)
         .collect(Collectors.toSet()).stream()

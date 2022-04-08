@@ -7,6 +7,7 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
+import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
 
 /**
@@ -34,6 +35,7 @@ public class CheckValidator implements MovementModifier {
         .anyMatch(piece -> piece.validCapture(targetPieces.stream()
             .map(Piece::getCoordinates)
             .collect(Collectors.toList())));
+
   }
 
   @Override
