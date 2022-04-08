@@ -36,6 +36,7 @@ public class CheckValidator implements MovementModifier {
             .map(Piece::getCoordinates)
             .collect(Collectors.toList())));
 
+
   }
 
   @Override

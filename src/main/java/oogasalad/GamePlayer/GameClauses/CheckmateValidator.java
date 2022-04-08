@@ -9,12 +9,13 @@ import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
 
 /**
  * This class
  * @author Jose Santillan
  */
-public class CheckmateValidator {
+public class CheckmateValidator implements MovementModifier {
 
   /**
    * Public method that returns whether the board has reached
@@ -34,7 +35,7 @@ public class CheckmateValidator {
     for (Piece p : friendlyPieces) {
       for (ChessTile move : p.getMoves()) {
         ChessBoard tempBoard = board.deepCopy();
-        board.move(p, move.getCoordinates());
+        tempBoard.move(p, move.getCoordinates());
         if (!CheckValidator.isInCheck(tempBoard, id)) return false;
       }
     }
@@ -42,4 +43,8 @@ public class CheckmateValidator {
     return true;
   }
 
+  @Override
+  public Set<ChessTile> updateMovement(Piece piece, ChessTile finalTile, ChessBoard board) {
+    return null;
+  }
 }

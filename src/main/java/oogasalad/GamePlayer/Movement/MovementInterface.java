@@ -1,8 +1,10 @@
 package oogasalad.GamePlayer.Movement;
 
+import java.util.Map;
 import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
@@ -51,4 +53,5 @@ public interface MovementInterface {
    * @return set of tiles the piece can move to
    */
   Set<ChessTile> getMoves(Piece piece, ChessBoard board);
+
 }

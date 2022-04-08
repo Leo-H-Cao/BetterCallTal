@@ -75,7 +75,10 @@ public class Piece implements Cloneable {
   public Set<ChessTile> move(ChessTile finalSquare)
       throws InvalidMoveException, OutsideOfBoardException {
 
-    if (!getMoves().contains(finalSquare)) {
+    boolean valid = getMoves().stream()
+        .anyMatch(tile -> tile.getCoordinates().equals(finalSquare.getCoordinates()));
+
+    if (!valid) {
       throw new InvalidMoveException("Tile is not a valid move!");
     }
 
@@ -174,7 +177,7 @@ public class Piece implements Cloneable {
     //TODO MOVEMENTS IS A PLACEHOLDER, MUST IMPLEMENT CAPTURES AS IT IS NULL WHEN THE PIECE IS FIRST INITIALED AS WELL AS THE GETMOVES METHOD
     Set<Set<ChessTile>> set = new HashSet<>();
     for (MovementInterface move : movements) {
-      set.add(move.getMoves(this, board));
+      set.add(move.getCaptures(this, board));
     }
     return movements.stream()
         .map(move -> move.getCaptures(this, board))

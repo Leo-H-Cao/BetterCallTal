@@ -40,8 +40,8 @@ public class CheckmateTests {
   @BeforeEach
   void setUp() {
 
-    Player playerOne = new Player(1, new int[]{1});
-    Player playerTwo = new Player(2, new int[]{0});
+    Player playerOne = new Player(TEAM_1, new int[]{TEAM_2});
+    Player playerTwo = new Player(TEAM_2, new int[]{TEAM_1});
     Player[] players = new Player[]{playerOne, playerTwo};
 
     Linear turnCriteria = new Linear(players);
@@ -76,8 +76,10 @@ public class CheckmateTests {
     return new Piece(new PieceData(new Coordinate(row, col),
         "rook" + team, 0, team, false,
         List.of(rookMovement),
-        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
+        List.of(rookMovement), Collections.emptyList(), Collections.emptyList(),
+        Collections.emptyList(), ""), board);
   }
+
 
   /**
    * 2 Rooks pressuring the king (king cannot move nor capture rooks)
@@ -86,17 +88,15 @@ public class CheckmateTests {
   @Test
   void playerInMate() throws EngineException {
 
-    //TODO DOES NOT WORK BECAUSE INFINITE MOVEMENT DOES NOT WORK YET (I THINK)
     pieces.addAll(List.of(makeKing(0, 0, TEAM_1),
         makeRook(2, 0, TEAM_2),
         makeRook(2, 1, TEAM_2)));
 
     board.setPieces(pieces);
-    board.setPieces(pieces);
-
     LOG.debug(board);
+
     assertTrue(CheckValidator.isInCheck(board, TEAM_1));
-//    assertTrue(CheckmateValidator.isInMate(board, TEAM_1));
+    assertTrue(CheckmateValidator.isInMate(board, TEAM_1));
 
   }
 
