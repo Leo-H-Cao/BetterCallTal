@@ -1,20 +1,17 @@
 package oogasalad.GamePlayer.GameClauses;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
 
 /**
  * @author Jose Santillan
  * @author Jed Yang
  */
-public class CheckValidator implements MovementModifier {
-
+public class CheckValidator implements ValidStateChecker {
 
   /**
    * This method checks if the target piece of the current team is in check
@@ -22,7 +19,7 @@ public class CheckValidator implements MovementModifier {
    * @param id The id of the pieces that are being attacked
    * @return whether the target-piece is under attack
    */
-  public static boolean isInCheck(ChessBoard board, int id) throws OutsideOfBoardException {
+  public boolean isValid(ChessBoard board, int id) throws OutsideOfBoardException {
 
     List<Piece> targetPieces = board.targetPiece(id);
 
@@ -34,10 +31,5 @@ public class CheckValidator implements MovementModifier {
         .anyMatch(piece -> piece.validCapture(targetPieces.stream()
             .map(Piece::getCoordinates)
             .collect(Collectors.toList()), board));
-  }
-
-  @Override
-  public Set<ChessTile> updateMovement(Piece piece, ChessTile finalTile, ChessBoard board) {
-    return null;
   }
 }

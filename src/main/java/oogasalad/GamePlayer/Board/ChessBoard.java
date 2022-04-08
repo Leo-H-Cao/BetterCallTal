@@ -103,6 +103,8 @@ public class ChessBoard implements Iterable<ChessTile>{
    * @return set of updated tiles + next player turn
    */
   public TurnUpdate move(Piece piece, Coordinate finalSquare) throws EngineException {
+    // TODO: valid state checker for person who just moved (redundunt - optional)
+    // TODO: check end conditions for other player(s)
     if(!isGameOver() && piece.checkTeam(turnCriteria.getCurrentPlayer())) {
       history.add(deepCopy());
       return new TurnUpdate(piece.move(getTileFromCoords(finalSquare), this), turnCriteria.incrementTurn());
@@ -159,6 +161,7 @@ public class ChessBoard implements Iterable<ChessTile>{
    * @return set of tiles the piece can move to
    */
   public Set<ChessTile> getMoves(Piece piece) {
+    // TODO: add valid state checker here
     return piece.checkTeam(turnCriteria.getCurrentPlayer()) ? piece.getMoves(this) : Set.of();
   }
 

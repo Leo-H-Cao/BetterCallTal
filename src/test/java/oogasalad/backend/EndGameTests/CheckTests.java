@@ -73,9 +73,9 @@ public class CheckTests {
     pieceLocations(0, 0, 1, 0);
     LOG.debug(board);
     //TEAM 1 is in check
-    assertTrue(CheckValidator.isInCheck(board, 1));
+    assertTrue(new CheckValidator().isValid(board, 1));
     //Team 2 is NOT in check
-    assertFalse(CheckValidator.isInCheck(board, 0));
+    assertFalse(new CheckValidator().isValid(board, 0));
   }
 
   /**
@@ -84,8 +84,8 @@ public class CheckTests {
   @Test
   void notInCheck() throws OutsideOfBoardException {
     pieceLocations(0, 0, 3, 0);
-    assertFalse(CheckValidator.isInCheck(board, 0));
-    assertFalse(CheckValidator.isInCheck(board, 1));
+    assertFalse(new CheckValidator().isValid(board, 0));
+    assertFalse(new CheckValidator().isValid(board, 1));
   }
 
   /**
@@ -95,14 +95,14 @@ public class CheckTests {
   @Test
   void movesIntoCheck() throws OutsideOfBoardException {
     pieceLocations(0, 0, 3, 0);
-    assertFalse(CheckValidator.isInCheck(board, 1));
+    assertFalse(new CheckValidator().isValid(board, 1));
 
     //Can't actually move into check thanks to InvalidMoveException
     try {
       pieceTwo.move(board.getTile(new Coordinate(1, 0)), board);
     } catch (InvalidMoveException ignored) {}
 
-    assertFalse(CheckValidator.isInCheck(board, 1));
+    assertFalse(new CheckValidator().isValid(board, 1));
   }
 
   /**
@@ -111,8 +111,8 @@ public class CheckTests {
   @Test
   void movesOutOfCheck() throws OutsideOfBoardException, InvalidMoveException {
     pieceLocations(0, 0, 1, 0);
-    assertTrue(CheckValidator.isInCheck(board, 1));
+    assertTrue(new CheckValidator().isValid(board, 1));
     pieceTwo.move(board.getTile(new Coordinate(2, 0)), board);
-    assertFalse(CheckValidator.isInCheck(board, 1));
+    assertFalse(new CheckValidator().isValid(board, 1));
   }
 }

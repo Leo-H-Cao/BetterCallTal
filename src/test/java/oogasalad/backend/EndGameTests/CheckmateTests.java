@@ -90,7 +90,7 @@ public class CheckmateTests {
 
     board.setPieces(pieces);
     LOG.debug(board);
-    assertTrue(CheckValidator.isInCheck(board, TEAM_1));
+    assertTrue(new CheckValidator().isValid(board, TEAM_1));
 //    assertTrue(CheckmateValidator.isInMate(board, TEAM_1));
   }
 

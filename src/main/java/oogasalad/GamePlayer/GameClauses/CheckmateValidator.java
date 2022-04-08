@@ -1,6 +1,6 @@
 package oogasalad.GamePlayer.GameClauses;
 
-import static oogasalad.GamePlayer.GameClauses.CheckValidator.isInCheck;
+import oogasalad.GamePlayer.GameClauses.CheckValidator;
 import static oogasalad.GamePlayer.GameClauses.StalemateValidator.isStaleMate;
 
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -18,12 +18,11 @@ public class CheckmateValidator {
    * @return Whether the board is in checkmate or not
    */
   public static boolean isInMate(ChessBoard board, int id) throws OutsideOfBoardException {
-
-    return CheckValidator.isInCheck(board, id) && StalemateValidator.isStaleMate(board, id);
+    return new CheckValidator().isValid(board, id) && StalemateValidator.isStaleMate(board, id);
   }
 
   public static boolean isInMate2(ChessBoard board, int id) throws OutsideOfBoardException {
-    if (!isInCheck(board, id) || isStaleMate(board, id)) return false;
+    if (!new CheckValidator().isValid(board, id) || isStaleMate(board, id)) return false;
 
     boolean mainCanMove = board.getPieces().stream()
         .anyMatch(p -> p.checkTeam(id) && p.isTargetPiece());

@@ -145,7 +145,7 @@ public class Movement implements MovementInterface{
       for(ChessTile move : allMoves.get(moveType)){
         ChessBoard deepCopy = board.deepCopy();
         deepCopy.move(piece, move.getCoordinates());
-        if(CheckValidator.isInCheck(board, piece.getTeam())){
+        if(new CheckValidator().isValid(board, piece.getTeam())){
           allMoves.get(moveType).remove(move);
         }
       }
@@ -175,6 +175,9 @@ public class Movement implements MovementInterface{
     return getFromMovesMap(piece, board, MOVE_KEY);
   }
 
+  /***
+   * @return relative coordinates
+   */
   @Override
   public List<Coordinate> getRelativeCoords() {
     return possibleMoves;
