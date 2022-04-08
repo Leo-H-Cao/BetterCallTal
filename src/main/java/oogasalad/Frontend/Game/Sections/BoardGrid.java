@@ -24,6 +24,7 @@ public class BoardGrid {
     private static Double HEIGHT_BOARD = 600.0;
     private static Double WIDTH_Board = 600.0;
     private ArrayList<BoardTile> myBoardTiles;
+    private ChessBoard myModelBoard;
     private Piece mySelectedPiece;
     private ArrayList<BoardTile> myLitTiles;
     private Runnable ClearLitTilesRun;
@@ -51,6 +52,7 @@ public class BoardGrid {
     }
 
     private void makeBoard(GridPane gp, ChessBoard cb, int id, Consumer<Piece> lightupCons, Consumer<Coordinate> MoveCons) {
+        myModelBoard = cb;
         myBoardTiles = new ArrayList<>();
         for (ChessTile ct : cb) {
             int grid_x = ct.getCoordinates().getCol();
@@ -135,7 +137,7 @@ public class BoardGrid {
      */
     public void setSelectedPiece(Piece p) {
         LOG.debug(String.format("SELECTED PIECE IS NOW: %s (%d, %d)\n", p.getName(), p.getCoordinates().getRow(), p.getCoordinates().getCol()));
-        LOG.debug("SELECTED PIECE MOVES: " + p.getMoves());
+        LOG.debug("SELECTED PIECE MOVES: " + myModelBoard.getMoves(p));
 //        if (p.getTeam() == myID) {
             mySelectedPiece = p;
 //        }

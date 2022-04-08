@@ -33,7 +33,7 @@ public class CheckValidator implements MovementModifier {
         .filter(piece -> !piece.checkTeam(id))
         .anyMatch(piece -> piece.validCapture(targetPieces.stream()
             .map(Piece::getCoordinates)
-            .collect(Collectors.toList())));
+            .collect(Collectors.toList()), board));
   }
 
   @Override

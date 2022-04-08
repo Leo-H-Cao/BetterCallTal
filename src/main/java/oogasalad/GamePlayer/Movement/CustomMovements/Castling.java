@@ -57,11 +57,11 @@ public class Castling implements MovementInterface {
 
     int supporterPieceDelta = piece.getCoordinates().getCol() < supporter.getCoordinates().getCol() ? -SUPPORTER_RELATIVE_SQUARE : SUPPORTER_RELATIVE_SQUARE;
 
-    piece.updateCoordinates(board.getTile(finalSquare));
+    piece.updateCoordinates(board.getTile(finalSquare), board);
 
 //    board.getTile(supporter.getCoordinates()).removePiece(supporter);
 //    board.getTile).addPiece(supporter);
-    supporter.updateCoordinates(board.getTile(Coordinate.of(supporter.getCoordinates().getRow(), supporterPieceDelta + piece.getCoordinates().getCol())));
+    supporter.updateCoordinates(board.getTile(Coordinate.of(supporter.getCoordinates().getRow(), supporterPieceDelta + piece.getCoordinates().getCol())), board);
     LOG.debug("Castling new king square: " + board.getTile(piece.getCoordinates()));
     LOG.debug("Castling new rook square: " + board.getTile(supporter.getCoordinates()));
     LOG.debug("Castling old king square: " + oldPieceSquare);

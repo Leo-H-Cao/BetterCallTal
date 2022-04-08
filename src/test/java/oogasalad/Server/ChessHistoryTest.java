@@ -41,10 +41,10 @@ class ChessHistoryTest {
 
     Piece pieceOne = new Piece(new PieceData(new Coordinate(0, index), "test1", 0, 0, false,
         List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
-        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
+        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
     Piece pieceTwo = new Piece(new PieceData(new Coordinate(1, index), "test2", 0, 1, false,
         List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
-        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
+        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
     List<Piece> pieces = List.of(pieceOne, pieceTwo);
 
     board = new ChessBoard(8, 8, turnCriteria, players, List.of(new TwoMoves()));
