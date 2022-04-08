@@ -14,6 +14,5 @@ public class StalemateTests {
 
 }
 
-
 //Snake style turns
 //Custom promotion

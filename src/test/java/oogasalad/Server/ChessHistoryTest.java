@@ -1,6 +1,7 @@
 package oogasalad.Server;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.Collections;
 import java.util.List;
@@ -9,9 +10,9 @@ import java.util.function.Consumer;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.TwoMoves;
 import oogasalad.GamePlayer.Board.Player;
-import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
+import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import org.junit.jupiter.api.Test;
@@ -40,10 +41,10 @@ class ChessHistoryTest {
 
     Piece pieceOne = new Piece(new PieceData(new Coordinate(0, index), "test1", 0, 0, false,
         List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
-        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
+        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
     Piece pieceTwo = new Piece(new PieceData(new Coordinate(1, index), "test2", 0, 1, false,
         List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
-        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
+        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
     List<Piece> pieces = List.of(pieceOne, pieceTwo);
 
     board = new ChessBoard(8, 8, turnCriteria, players, List.of(new TwoMoves()));

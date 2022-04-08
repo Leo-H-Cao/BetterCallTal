@@ -9,8 +9,12 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Atomic implements MovementModifier{
+
+  private static final Logger LOG = LogManager.getLogger(Atomic.class);
 
   private static final int surroundDistance = 1;
   /***
@@ -25,7 +29,7 @@ public class Atomic implements MovementModifier{
   public Set<ChessTile> updateMovement(Piece piece, ChessTile finalTile, ChessBoard board) {
     Set<ChessTile> explodedSquares = new HashSet<>();
     getSurroundingTiles(finalTile, board).stream().filter((t) -> !t.getPieces().isEmpty()).forEach((t) -> {
-      System.out.println(t.getCoordinates());
+      LOG.debug(t.getCoordinates());
       t.clearPieces();
       explodedSquares.add(t);
     });

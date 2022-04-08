@@ -3,23 +3,18 @@ package oogasalad.Frontend.Menu;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import oogasalad.Frontend.Editor.GameEditorView;
 import oogasalad.Frontend.Game.GameView;
-import oogasalad.Frontend.MainView;
-import oogasalad.Frontend.View;
+import oogasalad.Frontend.ViewManager;
+import oogasalad.Frontend.util.View;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
-import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * HomeView class will handle the navigation of the User from the home screen to the next page they seek.
@@ -28,8 +23,8 @@ import java.util.Collection;
 
 public class HomeView extends View {
 
-    public HomeView(MainView mainView) {
-        super(mainView);
+    public HomeView(ViewManager viewManager) {
+        super(viewManager);
     }
 
     @Override
@@ -46,39 +41,36 @@ public class HomeView extends View {
                 buttons,
                 title
         );
-        ret.setAlignment(buttons, Pos.CENTER);
-        ret.setAlignment(title, Pos.TOP_CENTER);
+        StackPane.setAlignment(buttons, Pos.CENTER);
+        StackPane.setAlignment(title, Pos.TOP_CENTER);
 
         return ret;
     }
 
 
     private Node makeTitle() {
-        Label t = new Label(MainView.getLanguage().getString(getClass().getSimpleName() + "Title"));
+        Label t = new Label(getLanguageResource("Title"));
         t.setFont(new Font(64));
         t.setTextAlignment(TextAlignment.CENTER);
-        Group ret = new Group(t);
-        return ret;
+        return new Group(t);
     }
 
     private Node makeButtons() {
         GridPane buttonList = new GridPane();
-        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, MainView.getLanguage().getString(getClass().getSimpleName() + "Create"), "createButton",
-                (e) -> getMainView().changeScene(getView(GameEditorView.class))), 0, 0);
-        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, MainView.getLanguage().getString(getClass().getSimpleName() + "Join"), "joinButton",
-                (e) -> getMainView().changeScene(getView(GameView.class))), 0, 1);
-        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, MainView.getLanguage().getString(getClass().getSimpleName() + "Host"), "hostButton",
-                (e) -> getMainView().changeScene(getView(GameView.class))), 0, 2);
+        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Create"), "createButton",
+                (e) -> getView(GameEditorView.class).ifPresent(getViewManager()::changeScene)), 0, 0);
+        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Join"), "joinButton",
+                (e) -> getView(GameView.class).ifPresent(getViewManager()::changeScene)), 0, 1);
+        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Host"), "hostButton",
+                (e) -> getView(HostGame.class).ifPresent(getViewManager()::changeScene)), 0, 2);
 
-        buttonList.getChildren().stream().forEach((b) -> {
+        buttonList.getChildren().forEach((b) -> {
             if(b instanceof Button) {
                 ((Button)b).setAlignment(Pos.CENTER);
                 ((Button)b).setPrefSize(400, 100);
             }
         });
         buttonList.setVgap(25);
-        Group ret = new Group(buttonList);
-
-        return ret;
+        return new Group(buttonList);
     }
 }

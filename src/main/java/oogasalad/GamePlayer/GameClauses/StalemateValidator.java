@@ -13,7 +13,7 @@ public class StalemateValidator {
   public static boolean isStaleMate(ChessBoard board, int id){
     Set<Piece> friendlyPieces = friendlyPieces(board, id);
     for(Piece p : friendlyPieces){
-      if(!p.getMoves().isEmpty()){
+      if(!p.getMoves(board).isEmpty()){
         return false;
       }
     }
@@ -21,7 +21,7 @@ public class StalemateValidator {
   }
 
 
-  private static Set<Piece> friendlyPieces(ChessBoard board, int id) {
+  public static Set<Piece> friendlyPieces(ChessBoard board, int id) {
     return board.stream()
         .flatMap(List::stream).toList().stream()
         .map(ChessTile::getPieces)

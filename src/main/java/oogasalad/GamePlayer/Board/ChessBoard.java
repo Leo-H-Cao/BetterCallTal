@@ -16,12 +16,12 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.MoveAfterGameEndException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
-import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -105,10 +105,10 @@ public class ChessBoard implements Iterable<ChessTile>{
   public TurnUpdate move(Piece piece, Coordinate finalSquare) throws EngineException {
     if(!isGameOver() && piece.checkTeam(turnCriteria.getCurrentPlayer())) {
       history.add(deepCopy());
-      return new TurnUpdate(piece.move(getTileFromCoords(finalSquare)), turnCriteria.incrementTurn());
+      return new TurnUpdate(piece.move(getTileFromCoords(finalSquare), this), turnCriteria.incrementTurn());
     }
     LOG.warn(isGameOver() ? "Move made after game over" : "Move made by wrong player");
-    throw isGameOver() ? new MoveAfterGameEndException("") : new WrongPlayerException(turnCriteria.getCurrentPlayer() + "");
+    throw isGameOver() ? new MoveAfterGameEndException("") : new WrongPlayerException("Expected: " + turnCriteria.getCurrentPlayer() + "\n Actual: " + piece.getTeam());
   }
 
   /**
@@ -159,7 +159,7 @@ public class ChessBoard implements Iterable<ChessTile>{
    * @return set of tiles the piece can move to
    */
   public Set<ChessTile> getMoves(Piece piece) {
-    return piece.checkTeam(turnCriteria.getCurrentPlayer()) ? piece.getMoves() : Set.of();
+    return piece.checkTeam(turnCriteria.getCurrentPlayer()) ? piece.getMoves(this) : Set.of();
   }
 
   /***
@@ -275,6 +275,16 @@ public class ChessBoard implements Iterable<ChessTile>{
    */
   public int[] getTeams() {
     return teamNums;
+  }
+
+  /**
+   * Gets all the pieces on the board
+   */
+  public List<Piece> getPieces() {
+    return board.stream()
+        .flatMap(List::stream).toList().stream()
+        .map(ChessTile::getPieces)
+        .flatMap(List::stream).toList();
   }
 
   /***

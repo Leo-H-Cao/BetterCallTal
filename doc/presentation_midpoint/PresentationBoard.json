@@ -1,0 +1,871 @@
+{
+  "general": [
+    {
+      "rows": 8,
+      "columns": 8,
+      "turnCriteria": "linear",
+      "colors": ["black", "white"],
+      "winCondition": ["checkmate", "stalemate"]
+    }
+  ],
+  "playerInfo": [
+    {
+      "team": 0,
+      "opponents": [1]
+    },
+    {
+      "team": 1,
+      "opponents": [0]
+    }
+  ],
+  "pieces": [
+    {
+      "row": 6,
+      "col": 0,
+      "pieceName": "Pawn",
+      "imgFile": "whitepawn",
+      "pointValue": 1,
+      "team": 0,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [0, -1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, -1],
+        [-1, -1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 1,
+      "pieceName": "Pawn",
+      "imgFile": "whitepawn",
+      "pointValue": 1,
+      "team": 0,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [0, -1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, -1],
+        [-1, -1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 2,
+      "pieceName": "Pawn",
+      "imgFile": "whitepawn",
+      "pointValue": 1,
+      "team": 0,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [0, -1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, -1],
+        [-1, -1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 3,
+      "pieceName": "Pawn",
+      "imgFile": "whitepawn",
+      "pointValue": 1,
+      "team": 0,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [0, -1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, -1],
+        [-1, -1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 4,
+      "pieceName": "Pawn",
+      "imgFile": "whitepawn",
+      "pointValue": 1,
+      "team": 0,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [0, -1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, -1],
+        [-1, -1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 5,
+      "pieceName": "Pawn",
+      "imgFile": "whitepawn",
+      "pointValue": 1,
+      "team": 0,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [0, -1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, -1],
+        [-1, -1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 6,
+      "pieceName": "Pawn",
+      "imgFile": "whitepawn",
+      "pointValue": 1,
+      "team": 0,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [0, -1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, -1],
+        [-1, -1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 7,
+      "pieceName": "Pawn",
+      "imgFile": "whitepawn",
+      "pointValue": 1,
+      "team": 0,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [0, -1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, -1],
+        [-1, -1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 0,
+      "pieceName": "Rook",
+      "imgFile": "whiterook",
+      "pointValue": 5,
+      "team": 0,
+      "unboundedMovements": [
+        [-1,0],
+        [1,0],
+        [0,-1],
+        [0,1]
+      ],
+      "boundedMovements": [],
+      "unboundedCaptures": [
+        [-1,0],
+        [1,0],
+        [0,-1],
+        [0,1]
+      ],
+      "boundedCaptures": [],
+      "movementSetModifiers": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 7,
+      "pieceName": "Rook",
+      "imgFile": "whiterook",
+      "pointValue": 5,
+      "team": 0,
+      "unboundedMovements": [
+        [-1,0],
+        [1,0],
+        [0,-1],
+        [0,1]
+      ],
+      "boundedMovements": [],
+      "unboundedCaptures": [
+        [-1,0],
+        [1,0],
+        [0,-1],
+        [0,1]
+      ],
+      "boundedCaptures": [],
+      "movementSetModifiers": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 1,
+      "pieceName": "Knight",
+      "imgFile": "whiteknight",
+      "pointValue": 3,
+      "team": 0,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [1,-2],
+        [1,2],
+        [-1,-2],
+        [-1,2],
+        [2,1],
+        [2,-1],
+        [-2,1],
+        [-2,-1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1,-2],
+        [1,2],
+        [-1,-2],
+        [-1,2],
+        [2,1],
+        [2,-1],
+        [-2,1],
+        [-2,-1]
+      ],
+      "movementSetModifiers": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 6,
+      "pieceName": "Knight",
+      "imgFile": "whiteknight",
+      "pointValue": 3,
+      "team": 0,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [1,-2],
+        [1,2],
+        [-1,-2],
+        [-1,2],
+        [2,1],
+        [2,-1],
+        [-2,1],
+        [-2,-1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1,-2],
+        [1,2],
+        [-1,-2],
+        [-1,2],
+        [2,1],
+        [2,-1],
+        [-2,1],
+        [-2,-1]
+      ],
+      "movementSetModifiers": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 2,
+      "pieceName": "Bishop",
+      "imgFile": "whitebishop",
+      "pointValue": 3,
+      "team": 0,
+      "unboundedMovements": [
+        [1,1],
+        [-1,1],
+        [1,-1],
+        [-1,-1]
+      ],
+      "boundedMovements": [],
+      "unboundedCaptures": [
+        [1,1],
+        [-1,1],
+        [1,-1],
+        [-1,-1]
+      ],
+      "boundedCaptures": [],
+      "movementSetModifiers": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 5,
+      "pieceName": "Bishop",
+      "imgFile": "whitebishop",
+      "pointValue": 3,
+      "team": 0,
+      "unboundedMovements": [
+        [1,1],
+        [-1,1],
+        [1,-1],
+        [-1,-1]
+      ],
+      "boundedMovements": [],
+      "unboundedCaptures": [
+        [1,1],
+        [-1,1],
+        [1,-1],
+        [-1,-1]
+      ],
+      "boundedCaptures": [],
+      "movementSetModifiers": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 3,
+      "pieceName": "Queen",
+      "imgFile": "whitequeen",
+      "pointValue": 9,
+      "team": 0,
+      "unboundedMovements": [
+        [1,1],
+        [-1,1],
+        [1,-1],
+        [-1,-1],
+        [1,0],
+        [-1,0],
+        [0,-1],
+        [0,1]
+      ],
+      "boundedMovements": [],
+      "unboundedCaptures": [
+        [1,1],
+        [-1,1],
+        [1,-1],
+        [-1,-1],
+        [1,0],
+        [-1,0],
+        [0,-1],
+        [0,1]
+      ],
+      "boundedCaptures": [],
+      "movementSetModifiers": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 4,
+      "pieceName": "King",
+      "imgFile": "whiteking",
+      "pointValue": 4,
+      "team": 0,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [1,1],
+        [1,0],
+        [1,-1],
+        [0,1],
+        [0,-1],
+        [-1,1],
+        [-1,0],
+        [-1,-1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1,1],
+        [1,0],
+        [1,-1],
+        [0,1],
+        [0,-1],
+        [-1,1],
+        [-1,0],
+        [-1,-1]
+      ],
+      "movementSetModifiers": ["Castling"],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 1
+    },
+    {
+      "row": 1,
+      "col": 0,
+      "pieceName": "Pawn",
+      "imgFile": "blackpawn",
+      "pointValue": 1,
+      "team": 1,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [0, 1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, 1],
+        [-1, 1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 1,
+      "pieceName": "Pawn",
+      "imgFile": "blackpawn",
+      "pointValue": 1,
+      "team": 1,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [0, 1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, 1],
+        [-1, 1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 2,
+      "pieceName": "Pawn",
+      "imgFile": "blackpawn",
+      "pointValue": 1,
+      "team": 1,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [0, 1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, 1],
+        [-1, 1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 3,
+      "pieceName": "Pawn",
+      "imgFile": "blackpawn",
+      "pointValue": 1,
+      "team": 1,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [0, 1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, 1],
+        [-1, 1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 4,
+      "pieceName": "Pawn",
+      "imgFile": "blackpawn",
+      "pointValue": 1,
+      "team": 1,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [0, 1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, 1],
+        [-1, 1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 5,
+      "pieceName": "Pawn",
+      "imgFile": "blackpawn",
+      "pointValue": 1,
+      "team": 1,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [0, 1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, 1],
+        [-1, 1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 6,
+      "pieceName": "Pawn",
+      "imgFile": "blackpawn",
+      "pointValue": 1,
+      "team": 1,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [0, 1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, 1],
+        [-1, 1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 7,
+      "pieceName": "Pawn",
+      "imgFile": "blackpawn",
+      "pointValue": 1,
+      "team": 1,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [0, 1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1, 1],
+        [-1, 1]
+      ],
+      "movementSetModifiers": [
+      ],
+      "movementModifiers": [
+      ],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 0,
+      "pieceName": "Rook",
+      "imgFile": "blackrook",
+      "pointValue": 5,
+      "team": 1,
+      "unboundedMovements": [
+        [-1,0],
+        [1,0],
+        [0,-1],
+        [0,1]
+      ],
+      "boundedMovements": [],
+      "unboundedCaptures": [
+        [-1,0],
+        [1,0],
+        [0,-1],
+        [0,1]
+      ],
+      "boundedCaptures": [],
+      "movementSetModifiers": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 7,
+      "pieceName": "Rook",
+      "imgFile": "blackrook",
+      "pointValue": 5,
+      "team": 1,
+      "unboundedMovements": [
+        [-1,0],
+        [1,0],
+        [0,-1],
+        [0,1]
+      ],
+      "boundedMovements": [],
+      "unboundedCaptures": [
+        [-1,0],
+        [1,0],
+        [0,-1],
+        [0,1]
+      ],
+      "boundedCaptures": [],
+      "movementSetModifiers": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 1,
+      "pieceName": "Knight",
+      "imgFile": "blackknight",
+      "pointValue": 3,
+      "team": 1,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [1,-2],
+        [1,2],
+        [-1,-2],
+        [-1,2],
+        [2,1],
+        [2,-1],
+        [-2,1],
+        [-2,-1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1,-2],
+        [1,2],
+        [-1,-2],
+        [-1,2],
+        [2,1],
+        [2,-1],
+        [-2,1],
+        [-2,-1]
+      ],
+      "movementSetModifiers": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 6,
+      "pieceName": "Knight",
+      "imgFile": "blackknight",
+      "pointValue": 3,
+      "team": 1,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [1,-2],
+        [1,2],
+        [-1,-2],
+        [-1,2],
+        [2,1],
+        [2,-1],
+        [-2,1],
+        [-2,-1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1,-2],
+        [1,2],
+        [-1,-2],
+        [-1,2],
+        [2,1],
+        [2,-1],
+        [-2,1],
+        [-2,-1]
+      ],
+      "movementSetModifiers": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 2,
+      "pieceName": "Bishop",
+      "imgFile": "blackbishop",
+      "pointValue": 3,
+      "team": 1,
+      "unboundedMovements": [
+        [1,1],
+        [-1,1],
+        [1,-1],
+        [-1,-1]
+      ],
+      "boundedMovements": [],
+      "unboundedCaptures": [
+        [1,1],
+        [-1,1],
+        [1,-1],
+        [-1,-1]
+      ],
+      "boundedCaptures": [],
+      "movementSetModifiers": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 5,
+      "pieceName": "Bishop",
+      "imgFile": "blackbishop",
+      "pointValue": 3,
+      "team": 1,
+      "unboundedMovements": [
+        [1,1],
+        [-1,1],
+        [1,-1],
+        [-1,-1]
+      ],
+      "boundedMovements": [],
+      "unboundedCaptures": [
+        [1,1],
+        [-1,1],
+        [1,-1],
+        [-1,-1]
+      ],
+      "boundedCaptures": [],
+      "movementSetModifiers": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 3,
+      "pieceName": "Queen",
+      "imgFile": "blackqueen",
+      "pointValue": 9,
+      "team": 1,
+      "unboundedMovements": [
+        [1,1],
+        [-1,1],
+        [1,-1],
+        [-1,-1],
+        [1,0],
+        [-1,0],
+        [0,-1],
+        [0,1]
+      ],
+      "boundedMovements": [],
+      "unboundedCaptures": [
+        [1,1],
+        [-1,1],
+        [1,-1],
+        [-1,-1],
+        [1,0],
+        [-1,0],
+        [0,-1],
+        [0,1]
+      ],
+      "boundedCaptures": [],
+      "movementSetModifiers": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 4,
+      "pieceName": "King",
+      "imgFile": "blackking",
+      "pointValue": 4,
+      "team": 1,
+      "unboundedMovements": [],
+      "boundedMovements": [
+        [1,1],
+        [1,0],
+        [1,-1],
+        [0,1],
+        [0,-1],
+        [-1,1],
+        [-1,0],
+        [-1,-1]
+      ],
+      "unboundedCaptures": [],
+      "boundedCaptures": [
+        [1,1],
+        [1,0],
+        [1,-1],
+        [0,1],
+        [0,-1],
+        [-1,1],
+        [-1,0],
+        [-1,-1]
+      ],
+      "movementSetModifiers": ["Castling"],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 1
+    }
+  ]
+}

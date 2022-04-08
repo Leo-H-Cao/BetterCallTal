@@ -3,26 +3,25 @@ package oogasalad.Frontend.Editor.Board;
 import javafx.scene.Node;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import oogasalad.Frontend.Editor.EditorController;
+import oogasalad.Frontend.util.NodeContainer;
 import oogasalad.Frontend.util.ButtonFactory;
 
-public class ChessBoardTile {
-	private Node myTile;
-	private double myWidth;
-	private double myHeight;
-	private boolean alt;
-	private int x, y;
+public class ChessBoardTile extends NodeContainer {
+	private final double myWidth;
+	private final double myHeight;
+	private final boolean alt;
 
-	public ChessBoardTile(double w, double h, boolean toggled) {
+	public ChessBoardTile(double w, double h, boolean toggled, EditorController controller) {
+		super(controller);
 		myWidth = w;
 		myHeight = h;
 		alt = toggled;
 	}
 
-	public Node getNode() {
-		if(myTile == null) {
-			myTile = makeGridTile();
-		}
-		return myTile;
+	@Override
+	protected Node makeNode() {
+		return makeGridTile();
 	}
 
 	private Node makeGridTile() {
@@ -32,7 +31,7 @@ public class ChessBoardTile {
 		} else {
 			ret.setFill(Paint.valueOf("gray"));
 		}
-		ButtonFactory.addAction(ret, (e) -> System.out.println(e));
+		ButtonFactory.addAction(ret, System.out::println);
 
 		return ret;
 	}
