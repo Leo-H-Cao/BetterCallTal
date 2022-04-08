@@ -13,6 +13,8 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Movement.Coordinate;
+import oogasalad.GamePlayer.Movement.CustomMovements.Castling;
+import oogasalad.GamePlayer.Movement.CustomMovements.DoubleFirstMove;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementInterface;
 import org.apache.logging.log4j.LogManager;
@@ -63,7 +65,7 @@ public class BoardSetup {
     Movement moves;
     for(int i=0; i<allMovements.length(); i++){
       JSONArray currentMovement = allMovements.getJSONArray(i);
-      Coordinate relativeCoordinates = new Coordinate(currentMovement.getInt(0), currentMovement.getInt(1));
+      Coordinate relativeCoordinates = new Coordinate(currentMovement.getInt(1), currentMovement.getInt(0));
       moveList.add(relativeCoordinates);
     }
 
@@ -88,13 +90,14 @@ public class BoardSetup {
       Movement unboundedCaptures = getMovementsByType("unboundedCaptures", i);
       Movement boundedCaptures = getMovementsByType("boundedCaptures", i);
 
-      int startRow = rawPieceData.getInt("coordinateX");
-      int startCol = rawPieceData.getInt("coordinateY");
+      int startRow = rawPieceData.getInt("row");
+      int startCol = rawPieceData.getInt("col");
       String name = rawPieceData.getString("pieceName");
       String imageFile = rawPieceData.getString("imgFile");
       Coordinate startingCoordinate = new Coordinate(startRow, startCol);
       int team = rawPieceData.getInt("team");
       int pointValue = rawPieceData.getInt("pointValue");
+      boolean mainPiece = rawPieceData.getInt("mainPiece") == 1;
       List<MovementInterface> movements = new ArrayList<>();
       List<MovementInterface> captures = new ArrayList<>();
       movements.add(unboundedMovements);
@@ -102,7 +105,7 @@ public class BoardSetup {
       captures.add(unboundedCaptures);
       captures.add(boundedCaptures);
 
-      PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, false, movements, captures, List.of(), List.of(), List.of(), imageFile);
+      PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, mainPiece, movements, captures, List.of(new Castling(), new DoubleFirstMove()), List.of(), List.of(), imageFile);
 
       Piece currentPiece = new Piece(pieceData, board);
       myBoard.placePiece(new Coordinate(startRow, startCol), currentPiece);

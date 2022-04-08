@@ -129,9 +129,14 @@ public class Piece implements Cloneable {
    */
   public Set<ChessTile> getMoves() {
     Set<ChessTile> allMoves = new HashSet<>();
-    Map<MovementInterface, Set<ChessTile>> movementSquaresMap = getMovementSquaresMap();
+//    Map<MovementInterface, Set<ChessTile>> movementSquaresMap = getMovementSquaresMap();
 
-    movementSquaresMap.keySet().forEach((k) -> allMoves.addAll(movementSquaresMap.get(k)));
+//    movementSquaresMap.keySet().forEach((k) -> allMoves.addAll(movementSquaresMap.get(k)));
+    movements.forEach((m) -> allMoves.addAll(m.getMoves(this, board)));
+    customMovements.forEach((m) -> allMoves.addAll(m.getMoves(this, board)));
+    customMovements.forEach((m) -> allMoves.addAll(m.getCaptures(this, board)));
+    captures.forEach((m) -> allMoves.addAll(m.getCaptures(this, board)));
+
     LOG.debug(String.format("%s has the following moves: %s", name, allMoves));
     return allMoves;
   }
@@ -148,23 +153,24 @@ public class Piece implements Cloneable {
     movementSquaresMap.putAll(streamMapCaptures(captures));
     movementSquaresMap.putAll(streamMapCaptures(customMovements));
 
+    LOG.debug("Movement map: " + movementSquaresMap);
     return movementSquaresMap;
   }
 
   /***
-   * @param movements to map
+   * @param movementList to map
    * @return map of movements to movement squares
    */
-  private Map<MovementInterface, Set<ChessTile>> streamMapMovements(List<MovementInterface> movements) {
-    return movements.stream().collect(Collectors.toMap((m) -> m, (m) -> m.getMoves(this, board)));
+  private Map<MovementInterface, Set<ChessTile>> streamMapMovements(List<MovementInterface> movementList) {
+    return movementList.stream().collect(Collectors.toMap((m) -> m, (m) -> m.getMoves(this, board)));
   }
 
   /**
-   * @param captures to map
+   * @param captureList to map
    * @return map of captures to capture squares
    */
-  private Map<MovementInterface, Set<ChessTile>> streamMapCaptures(List<MovementInterface> captures) {
-    return captures.stream().collect(Collectors.toMap((m) -> m, (m) -> m.getCaptures(this, board)));
+  private Map<MovementInterface, Set<ChessTile>> streamMapCaptures(List<MovementInterface> captureList) {
+    return captureList.stream().collect(Collectors.toMap((m) -> m, (m) -> m.getCaptures(this, board)));
   }
 
   /***
@@ -293,6 +299,13 @@ public class Piece implements Cloneable {
    */
   public List<Coordinate> getHistory() {
     return history;
+  }
+
+  /***
+   * @return relative coordinates for all regular moves
+   */
+  public List<Coordinate> getRelativeMoveCoords() {
+    return movements.stream().flatMap((m) -> m.getRelativeCoords().stream()).toList();
   }
 
   /***

@@ -1,5 +1,7 @@
 package oogasalad.Editor.ModelState.PiecesState;
 
+import javafx.scene.image.Image;
+
 public class EditorPiece {
 
   private MovementRules myMovementRules;
@@ -7,9 +9,9 @@ public class EditorPiece {
   private String myPieceID;
   private String myPieceName;
   private int myTeamNumber;
-  private String myImage;
+  private Image myImage;
 
-  public EditorPiece(int points, MovementRules movementRules, String pieceID, String pieceName, int teamNumber, String image ){
+  public EditorPiece(int points, MovementRules movementRules, String pieceID, String pieceName, int teamNumber, Image image ){
     myMovementRules = movementRules;
     pointValue = points;
     myPieceID = pieceID;
@@ -22,7 +24,7 @@ public class EditorPiece {
     return myPieceID;
   }
 
-  public String getImage(){
+  public Image getImage(){
     return myImage;
   }
 
@@ -58,7 +60,7 @@ public class EditorPiece {
     myPieceName = name;
   }
 
-  public void setPieceImage(String image){
+  public void setPieceImage(Image image){
     myImage = image;
   }
 
