@@ -1,17 +1,20 @@
 package oogasalad.GamePlayer.Movement.MovementModifiers;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.Movement.Coordinate;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Atomic implements MovementModifier{
+
+  private static final Logger LOG = LogManager.getLogger(Atomic.class);
 
   private static final int surroundDistance = 1;
   /***
@@ -26,6 +29,7 @@ public class Atomic implements MovementModifier{
   public Set<ChessTile> updateMovement(Piece piece, ChessTile finalTile, ChessBoard board) {
     Set<ChessTile> explodedSquares = new HashSet<>();
     getSurroundingTiles(finalTile, board).stream().filter((t) -> !t.getPieces().isEmpty()).forEach((t) -> {
+      LOG.debug(t.getCoordinates());
       t.clearPieces();
       explodedSquares.add(t);
     });
@@ -42,7 +46,8 @@ public class Atomic implements MovementModifier{
     IntStream.range(-surroundDistance, surroundDistance).forEach((i) -> {
       IntStream.range(-surroundDistance, surroundDistance).forEach((j) -> {
         try {
-          surroundingTiles.add(board.getTile(Coordinate.of(center.getCoordinates().getRow()+i, center.getCoordinates().getCol()+j)));
+          surroundingTiles.add(board.getTile(
+              Coordinate.of(center.getCoordinates().getRow()+i, center.getCoordinates().getCol()+j)));
         } catch(OutsideOfBoardException ignored) {}
       });
     });

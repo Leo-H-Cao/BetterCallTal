@@ -12,8 +12,7 @@ import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.GameClauses.CheckValidator;
-import oogasalad.GamePlayer.GameClauses.CheckmateValidator;
+import oogasalad.GamePlayer.ValidStateChecker.Check;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -56,12 +55,42 @@ public class Movement implements MovementInterface{
   public Set<ChessTile> movePiece(Piece piece, Coordinate finalSquare, ChessBoard board)
       throws InvalidMoveException, OutsideOfBoardException {
     ChessTile finalTile = convertCordToTile(finalSquare, board);
+    LOG.debug("Moves: " + getMoves(piece, board));
+
     if(getMoves(piece, board).contains(finalTile)) {
-      return piece.move(finalTile);
+      Set<ChessTile> updatedSquares = new HashSet<>(Set.of(board.getTile(piece.getCoordinates()), finalTile));
+      piece.updateCoordinates(finalTile, board);
+      return updatedSquares;
     }
-    LOG.warn("Invalid move made");
+
+
+    LOG.warn(String.format("Invalid move made: (%d, %d)", finalSquare.getRow(), finalSquare.getCol()));
     throw new InvalidMoveException(piece + ": " + finalSquare);
   }
+
+  /***
+   * Captures piece on captureSquare
+   *
+   * @param piece to move
+   * @param captureSquare end square
+   * @param board to move on
+   * @return set of updated tiles
+   * @throws InvalidMoveException if the piece cannot move to the given square
+   */
+  public Set<ChessTile> capturePiece(Piece piece, Coordinate captureSquare, ChessBoard board)
+      throws InvalidMoveException, OutsideOfBoardException {
+
+    ChessTile captureTile = convertCordToTile(captureSquare, board);
+    if(getCaptures(piece, board).contains(captureTile)) {
+      Set<ChessTile> updatedSquares = new HashSet<>(Set.of(board.getTile(piece.getCoordinates()), board.getTile(captureSquare)));
+      captureTile.clearPieces();
+      piece.updateCoordinates(board.getTile(captureSquare), board);
+      return updatedSquares;
+    }
+    LOG.warn(String.format("Invalid move made: (%d, %d)", captureSquare.getRow(), captureSquare.getCol()));
+    throw new InvalidMoveException(piece + ": " + captureSquare);
+  }
+
 
   /**
    * @param coordinates that the tile is on
@@ -77,25 +106,6 @@ public class Movement implements MovementInterface{
       LOG.warn("Coordinate outside of board");
       throw new OutsideOfBoardException(coordinates.toString());
     }
-  }
-
-  /***
-   * Captures piece on captureSquare
-   *
-   * @param piece to move
-   * @param captureSquare end square
-   * @param board to move on
-   * @return set of updated tiles
-   * @throws InvalidMoveException if the piece cannot move to the given square
-   */
-  public Set<ChessTile> capturePiece(Piece piece, Coordinate captureSquare, ChessBoard board)
-      throws InvalidMoveException, OutsideOfBoardException {
-    ChessTile captureTile = convertCordToTile(captureSquare, board);
-    if(getCaptures(piece, board).contains(captureTile)) {
-      return piece.move(captureTile);
-    }
-    LOG.warn("Invalid move made");
-    throw new InvalidMoveException(piece + ": " + captureSquare);
   }
 
   /***
@@ -120,7 +130,7 @@ public class Movement implements MovementInterface{
               : Optional.of(moveStack.peek()));
       LOG.debug(capTile);
       capTile.ifPresent((t) -> {
-        if (piece.isOpposing(t.getPieces())) {
+        if (piece.isOpposing(t.getPieces(), board)) {
           allMoves.get(CAPTURE_KEY).add(t);
         }
       });
@@ -135,7 +145,7 @@ public class Movement implements MovementInterface{
       for(ChessTile move : allMoves.get(moveType)){
         ChessBoard deepCopy = board.deepCopy();
         deepCopy.move(piece, move.getCoordinates());
-        if(CheckValidator.isInCheck(board, piece.getTeam())){
+        if(new Check().isValid(board, piece.getTeam())){
           allMoves.get(moveType).remove(move);
         }
       }
@@ -164,7 +174,15 @@ public class Movement implements MovementInterface{
   public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
     return getFromMovesMap(piece, board, MOVE_KEY);
   }
-  
+
+  /***
+   * @return relative coordinates
+   */
+  @Override
+  public List<Coordinate> getRelativeCoords() {
+    return possibleMoves;
+  }
+
   /***
    * Helper method for getting set from moves map
    * @param key in map
@@ -187,7 +205,7 @@ public class Movement implements MovementInterface{
     if(infinite) {
       moveStack = getMoveBeam(base, delta, board);
     } else{
-      getNextTile(base, delta, board).ifPresent(moveStack::add);
+      getNextTile(base, delta, board).filter((t) -> t.getPieces().isEmpty()).ifPresent(moveStack::add);
     }
     return moveStack;
   }
@@ -242,5 +260,12 @@ public class Movement implements MovementInterface{
     } catch (OutsideOfBoardException e) {
       return false;
     }
+  }
+
+  /***
+   * @return String of all relative coordinates
+   */
+  public String toString() {
+    return possibleMoves.toString();
   }
 }

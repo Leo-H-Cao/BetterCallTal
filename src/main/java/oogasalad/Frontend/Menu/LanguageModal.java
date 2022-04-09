@@ -14,11 +14,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
 import oogasalad.Frontend.util.ResourceParser;
-import oogasalad.controller.Controller;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -55,8 +54,9 @@ public class LanguageModal {
 		fullscreenCheckBox.setId("fullscreen");
 		startButton = ButtonFactory.makeButton(ButtonType.TEXT, selectedLanguageView.getString("Start"), "start",
 				(e) -> {
-				new Controller(stage, selectedLanguageView);
-				stage.setFullScreen(fullscreenCheckBox.isSelected());
+					new ViewManager(stage, selectedLanguageView);
+					stage.setMaximized(true);
+					stage.setFullScreen(fullscreenCheckBox.isSelected());
 				});
 		stage.setTitle(selectedLanguageView.getString("SelectLanguage"));
 	}
@@ -68,7 +68,6 @@ public class LanguageModal {
 		BorderPane root = new BorderPane();
 		Scene ret = new Scene(root, ResourceParser.getInt(myResources, "Width"), ResourceParser.getInt(myResources, "Height"));
 		ret.getStylesheets().add(Objects.requireNonNull(getClass().getResource("display.css")).toExternalForm());
-
 		root.setTop(wrap(selectLanguageLabel));
 		root.setCenter(makeCenterOptions());
 		root.setBottom(wrap(startButton));

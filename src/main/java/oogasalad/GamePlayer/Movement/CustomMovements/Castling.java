@@ -5,13 +5,12 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.MovementInterface;
 import org.apache.logging.log4j.LogManager;
@@ -50,14 +49,24 @@ public class Castling implements MovementInterface {
       LOG.warn("Illegal castling move attempted");
       throw new InvalidMoveException(finalSquare.toString());
     }
-    Set<ChessTile> updatedSquares = new HashSet<>(piece.move(
-        board.getTile(finalSquare)));
+
+    ChessTile oldPieceSquare = board.getTile(piece.getCoordinates());
 
     Piece supporter = getSupporter(piece, finalSquare, board);
-    int supporterPieceNewCol = piece.getCoordinates().getCol() < supporter.getCoordinates().getCol() ? -SUPPORTER_RELATIVE_SQUARE : SUPPORTER_RELATIVE_SQUARE;
-    updatedSquares.addAll(supporter.move(board.getTile(Coordinate.of(supporter.getCoordinates().getRow(), supporterPieceNewCol))));
+    ChessTile oldSupporterSquare = board.getTile(supporter.getCoordinates());
 
-    return updatedSquares;
+    int supporterPieceDelta = piece.getCoordinates().getCol() < supporter.getCoordinates().getCol() ? -SUPPORTER_RELATIVE_SQUARE : SUPPORTER_RELATIVE_SQUARE;
+
+    piece.updateCoordinates(board.getTile(finalSquare), board);
+
+//    board.getTile(supporter.getCoordinates()).removePiece(supporter);
+//    board.getTile).addPiece(supporter);
+    supporter.updateCoordinates(board.getTile(Coordinate.of(supporter.getCoordinates().getRow(), supporterPieceDelta + piece.getCoordinates().getCol())), board);
+    LOG.debug("Castling new king square: " + board.getTile(piece.getCoordinates()));
+    LOG.debug("Castling new rook square: " + board.getTile(supporter.getCoordinates()));
+    LOG.debug("Castling old king square: " + oldPieceSquare);
+    LOG.debug("Castling old rook square: " + oldSupporterSquare);
+    return Set.of(oldPieceSquare, oldSupporterSquare, board.getTile(piece.getCoordinates()), board.getTile(supporter.getCoordinates()));
   }
 
   /**
@@ -106,6 +115,7 @@ public class Castling implements MovementInterface {
   private List<Piece> generateSupporters(Piece mainPiece, ChessBoard board) {
     List<Piece> supporters = new ArrayList<>();
     try {
+      LOG.debug("Castling main piece row: " + mainPiece.getCoordinates().getRow());
       board.getTile(new Coordinate(mainPiece.getCoordinates().getRow(),
               board.getBoardLength() - 1)).getPieces().stream().filter((p) -> p.onSameTeam(mainPiece))
           .findAny().ifPresent(supporters::add);
@@ -113,6 +123,7 @@ public class Castling implements MovementInterface {
               0)).getPieces().stream().filter((p) -> p.onSameTeam(mainPiece)).findAny()
           .ifPresent(supporters::add);
     } catch (OutsideOfBoardException ignored) {}
+    supporters.forEach((s) -> LOG.debug("Castling Supporters: " + s.getCoordinates()));
     return supporters;
   }
 
@@ -124,22 +135,34 @@ public class Castling implements MovementInterface {
   @Override
   public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
 
+    LOG.debug("Castling info: " + piece.getCoordinates() + ", " +piece.isTargetPiece());
     if(!piece.isTargetPiece()) return Collections.emptySet();
 
     Set<ChessTile> possibleSquares = new HashSet<>();
     List<Piece> supporters = generateSupporters(piece, board);
 
     supporters.stream().filter((supporter) -> canCastle(piece, supporter, board)).forEach( (supporter) -> {
+      LOG.debug("Supporter coords: " + supporter.getCoordinates());
       int mainMovement = piece.getCoordinates().getCol() < supporter.getCoordinates().getCol() ? MAIN_SQUARE_MOVES : -MAIN_SQUARE_MOVES;
+      LOG.debug("Piece movement: " + mainMovement);
       int mainPieceNewCol = adjustToRange(piece.getCoordinates().getCol() + mainMovement,
           board.getBoardLength());
       try {
         possibleSquares.add(board.getTile(Coordinate.of(piece.getCoordinates().getRow(), mainPieceNewCol)));
+        LOG.debug("Castling king column: " + mainPieceNewCol);
       }
       catch(OutsideOfBoardException ignored) {}
     });
-
+    if(piece.isTargetPiece()) LOG.debug("Castling squares: " + possibleSquares);
     return possibleSquares;
+  }
+
+  /***
+   * @return nothing, not applicable
+   */
+  @Override
+  public List<Coordinate> getRelativeCoords() {
+    return List.of();
   }
 
   /***

@@ -15,5 +15,6 @@ public interface MovementModifier {
    * @param board that piece is on
    * @return Set of updated tiles after movement is modified
    */
+  //TODO: some way to return piece's new square
   Set<ChessTile> updateMovement(Piece piece, ChessTile finalTile, ChessBoard board);
 }
