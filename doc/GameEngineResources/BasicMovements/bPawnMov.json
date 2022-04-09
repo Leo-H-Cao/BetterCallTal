@@ -1,0 +1,11 @@
+{
+	"moves": [
+		{
+			"relativeCoords": [
+				0,
+				1
+			],
+			"infinite": false
+		}
+	]
+}

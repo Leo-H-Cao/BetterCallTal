@@ -4,12 +4,14 @@ package oogasalad.Server;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.Player;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
-import oogasalad.GamePlayer.Movement.MovementModifiers.Atomic;
+import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
@@ -26,7 +28,7 @@ public class BoardSetup {
 
   private static final Logger LOG = LogManager.getLogger(BoardSetup.class);
 
-  private static final String BASIC_MOVEMENT_PACKAGE = "/GameEngineResources/BasicMovements/";
+  private static final String BASIC_MOVEMENT_PACKAGE = "doc/GameEngineResources/BasicMovements/";
   private static final String JSON_EXTENSION = ".json";
 
   private static final String CUSTOM_MOVE_PACKAGE = "oogasalad.GamePlayer.Movement.CustomMovements.";
@@ -34,10 +36,6 @@ public class BoardSetup {
   private static final String END_CONDITION_PACKAGE = "oogasalad.GamePlayer.Board.EndConditions.";
   private static final String VALID_STATE_CHECKER_PACKAGE = "oogasalad.GamePlayer.ValidStateChecker.";
   private static final String MOVEMENT_MODIFIER_PACKAGE = "oogasalad.GamePlayer.Movement.MovementModifiers.";
-
-  public static void main(String[] args) {
-    System.out.println(Atomic.class.getName());
-  }
 
   private ChessBoard myBoard;
   private JSONObject myJSONObject;
@@ -100,11 +98,67 @@ public class BoardSetup {
   }
 
   /***
+   * @return List of movements defined by the coordinates in a given JSON file
+   * @throws IOException if error with reading
+   */
+  public List<MovementInterface> parseMovementFile(String JSONFileName) throws IOException {
+    String content = new String(Files.readAllBytes(Path.of(JSONFileName)));
+    JSONObject movementFileObject = new JSONObject(content);
+    JSONArray moves = movementFileObject.getJSONArray("moves");
+    List<MovementInterface> movements = new ArrayList<>();
+
+    for(int i=0; i<moves.length(); i++) {
+      JSONObject currentMove = moves.getJSONObject(i);
+      Coordinate currentCoordinate = parseCoord(moves.getJSONObject(i).getJSONArray("relativeCoords"));
+      movements.add(new Movement(currentCoordinate, currentMove.getBoolean("infinite")));
+    }
+    LOG.debug("Movements: " + movements);
+    return movements;
+  }
+
+  /***
+   * @param rawCoords to get coord object from
+   * @return coord object based on JSON array
+   */
+  private Coordinate parseCoord(JSONArray rawCoords) {
+    return new Coordinate(rawCoords.getInt(1), rawCoords.getInt(0));
+  }
+
+
+  public static void main(String[] args) {
+    try {
+      BoardSetup boardSetup = new BoardSetup("doc/GameEngineResources/PresentationBoardUpdated.json");
+      boardSetup.parseMovementFile(BASIC_MOVEMENT_PACKAGE + "bishop" + JSON_EXTENSION);
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  /***
    * @param JSONKey to get movement files from
    * @return list of movements based on the file names provided by the list corresponding to JSONKey
    */
-  private List<MovementInterface> getMoveList(String JSONKey) {
-    return List.of();
+  private List<MovementInterface> getMoveList(String JSONKey, int pieceIndex) {
+    JSONArray movementFiles = myJSONObject.getJSONArray("pieces").getJSONObject(pieceIndex).getJSONArray(JSONKey);
+    List<Coordinate> moveList = new ArrayList<>();
+    Movement moves;
+//    for(int i=0; i<movementFiles.length(); i++){
+//      JSONArray currentMovementFile = movementFiles.getJSONArray(i);
+//
+//      Coordinate relativeCoordinates = new Coordinate(currentMovement.getInt(1), currentMovement.getInt(0));
+//      moveList.add(relativeCoordinates);
+//    }
+//
+//    LOG.debug("All movements: " + allMovements);
+//
+//    if(type.charAt(0) =='u'){
+//      moves = new Movement(moveList, true);
+//    }
+//    else{
+//      moves = new Movement(moveList, false);
+//    }
+//    return moves;
+    return null;
   }
 
   /***
@@ -147,8 +201,8 @@ public class BoardSetup {
       int pointValue = rawPieceData.getInt("pointValue");
       boolean mainPiece = rawPieceData.getInt("mainPiece") == 1;
 
-      List<MovementInterface> movements = getMoveList("basicMovements");
-      List<MovementInterface> captures = getMoveList("basicCaptures");
+      List<MovementInterface> movements = getMoveList("basicMovements", i);
+      List<MovementInterface> captures = getMoveList("basicCaptures", i);
       List<MovementInterface> customMovements = getCustomMovements();
       movements.addAll(customMovements);
       captures.addAll(customMovements);
@@ -156,11 +210,7 @@ public class BoardSetup {
       List<MovementModifier> movementModifiers = getMovementModifiers("movementModifiers");
       List<MovementModifier> onInteractionModifiers = getMovementModifiers("onInteractionModifier");
 
-      //TODO: REFLECTION DOES THIS
-//      movements.addAll(List.of(new Castling(), new DoubleFirstMove()));
-//      captures.addAll(List.of(new Castling(), new DoubleFirstMove()));
-
-      PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, mainPiece, movements, captures, List.of(), List.of(), imageFile);
+      PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, mainPiece, movements, captures, movementModifiers, onInteractionModifiers, imageFile);
 
       Piece currentPiece = new Piece(pieceData);
       myBoard.placePiece(new Coordinate(startRow, startCol), currentPiece);
