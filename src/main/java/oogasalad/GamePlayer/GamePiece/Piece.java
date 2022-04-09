@@ -33,18 +33,10 @@ public class Piece implements Cloneable {
   private static final boolean INVALID_SQUARE = false;
 
   private Coordinate coordinates;
-  private String name;
-  private double pointValue;
-  private int team;
-  private boolean mainPiece;
-  private String img;
-  private List<Coordinate> history;
-
+  private SupplementaryPieceData suppPieceData;
   private MovementHandler movementHandler;
-//  private List<MovementInterface> movements;
-//  private List<MovementInterface> captures;
-//  private List<MovementModifier> movementModifiers;
   private List<MovementModifier> onInteractionModifiers;
+  private List<Coordinate> history;
 
   /***
    * Creates a chess piece with all of its attributes
@@ -58,13 +50,10 @@ public class Piece implements Cloneable {
    */
   private Piece(PieceData pieceData, MovementHandler movementHandler) {
     this.coordinates = pieceData.startingLocation();
-    this.name = pieceData.name();
-    this.pointValue = pieceData.pointValue();
-    this.team = pieceData.team();
-    this.mainPiece = pieceData.mainPiece();
+    this.suppPieceData = new SupplementaryPieceData(pieceData.name(), pieceData.pointValue(),
+        pieceData.team(), pieceData.mainPiece(), pieceData.img());
     this.movementHandler = movementHandler;
     this.onInteractionModifiers = pieceData.onInteractionModifiers();
-    this.img = pieceData.img();
     this.history = new ArrayList<>(List.of(pieceData.startingLocation()));
   }
 
@@ -142,8 +131,8 @@ public class Piece implements Cloneable {
    * @return if a given piece opposes this piece
    */
   private boolean isOpposing(Piece piece, ChessBoard board) {
-    int[] opponentIDs = board.getPlayer(this.team).opponentIDs();
-    return Arrays.stream(opponentIDs).anyMatch((o) -> piece.team == board.getPlayer(o).teamID());
+    int[] opponentIDs = board.getPlayer(suppPieceData.team()).opponentIDs();
+    return Arrays.stream(opponentIDs).anyMatch((o) -> piece.getTeam() == board.getPlayer(o).teamID());
   }
 
   /***
@@ -158,7 +147,7 @@ public class Piece implements Cloneable {
    * @return file path to image file representing piece
    */
   public String getImgFile() {
-    return img;
+    return suppPieceData.img();
   }
 
   /***
@@ -168,7 +157,7 @@ public class Piece implements Cloneable {
    * @return if the provided team is the same as this piece's team
    */
   public boolean checkTeam(int team) {
-    return this.team == team;
+    return getTeam() == team;
   }
 
 
@@ -176,7 +165,7 @@ public class Piece implements Cloneable {
    * @return team of piece
    */
   public int getTeam(){
-    return team;
+    return suppPieceData.team();
   }
 
   /**
@@ -184,21 +173,21 @@ public class Piece implements Cloneable {
    * @return if this and piece are on the same team
    */
   public boolean onSameTeam(Piece piece) {
-    return this.team == piece.team;
+    return getTeam() == piece.getTeam();
   }
 
   /***
    * @return if this piece is the main piece
    */
   public boolean isTargetPiece() {
-    return mainPiece;
+    return suppPieceData.mainPiece();
   }
 
   /**
    * @return name of piece
    */
   public String getName(){
-    return name;
+    return suppPieceData.name();
   }
 
   /**
@@ -222,15 +211,15 @@ public class Piece implements Cloneable {
   public Piece clone() {
     PieceData clonedData = new PieceData(
         new Coordinate(getCoordinates().getRow(), getCoordinates().getCol()),
-        name,
-        pointValue,
-        team,
-        mainPiece,
+        getName(),
+        suppPieceData.pointValue(),
+        getTeam(),
+        suppPieceData.mainPiece(),
         List.of(),
         List.of(),
         List.of(),
         new ArrayList<>(onInteractionModifiers),
-        img
+        suppPieceData.img()
     );
     return new Piece(clonedData, movementHandler);
   }
