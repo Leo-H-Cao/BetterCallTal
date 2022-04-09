@@ -3,6 +3,7 @@ package oogasalad.GamePlayer.Board.Tiles;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.CustomTiles.TileAction;
 import oogasalad.GamePlayer.GamePiece.Piece;
@@ -120,7 +121,7 @@ public class ChessTile implements Tile, Cloneable {
    * @return clone of all pieces in this tile
    */
   private List<Piece> clonePieces() {
-    return pieces.stream().map(Piece::clone).toList();
+    return pieces.stream().map(Piece::clone).collect(Collectors.toList());
   }
 
   /***
