@@ -7,6 +7,7 @@ import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import oogasalad.Editor.ModelState.PiecesState.MovementRules;
 import oogasalad.Frontend.Editor.Board.BoardEditor;
 import oogasalad.Frontend.Editor.Piece.PieceEditor;
@@ -25,8 +26,8 @@ public class GameEditorView extends View {
 	private int pieceEditorCount = 0;
 	private final EditorController myController;
 
-	public GameEditorView(ViewManager viewManager) {
-		super(viewManager);
+	public GameEditorView(Stage stage) {
+		super(stage);
 		myController = new EditorController();
 		createDefaultPieces();
 		selectedPieceId = "default_pawn";

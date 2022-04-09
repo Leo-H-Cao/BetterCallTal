@@ -4,7 +4,6 @@ import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
@@ -18,6 +17,7 @@ import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
 import oogasalad.Frontend.util.ResourceParser;
+import oogasalad.Frontend.util.View;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -25,7 +25,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
 
-public class LanguageModal {
+public class LanguageModal extends View {
 	private final List<String> AVAILABLE_LANGUAGES;
 	private static ResourceBundle selectedLanguageView;
 	private final Label selectLanguageLabel;
@@ -40,6 +40,7 @@ public class LanguageModal {
 	 * @param stage Stage created by main
 	 */
 	public LanguageModal(Stage stage) {
+		super(stage);
 		this.stage = stage;
 		myResources = ResourceBundle.getBundle(getClass().getName());
 		AVAILABLE_LANGUAGES = readAvailableLanguages();
@@ -62,15 +63,21 @@ public class LanguageModal {
 	}
 
 	/**
+	 * @return The parent node of the scene which will be the direct child of myRoot
+	 */
+	@Override
+	protected Node makeNode() {
+		return makeLayout();
+	}
+
+	/**
 	 * @return The new scene to display on startup
 	 */
-	public Scene makeScene() {
-		BorderPane root = new BorderPane();
-		Scene ret = new Scene(root, ResourceParser.getInt(myResources, "Width"), ResourceParser.getInt(myResources, "Height"));
-		ret.getStylesheets().add(Objects.requireNonNull(getClass().getResource("display.css")).toExternalForm());
-		root.setTop(wrap(selectLanguageLabel));
-		root.setCenter(makeCenterOptions());
-		root.setBottom(wrap(startButton));
+	public Node makeLayout() {
+		BorderPane ret = new BorderPane();
+		ret.setTop(wrap(selectLanguageLabel));
+		ret.setCenter(makeCenterOptions());
+		ret.setBottom(wrap(startButton));
 
 		return ret;
 	}

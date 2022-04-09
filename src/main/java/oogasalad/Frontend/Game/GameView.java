@@ -4,17 +4,18 @@ import java.util.Collection;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+import oogasalad.Frontend.Editor.EditorController;
 import oogasalad.Frontend.Game.Sections.BoardGrid;
 import oogasalad.Frontend.Game.Sections.TopSection;
-import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Board.TurnUpdate;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
-import java.util.Collection;
 import java.util.function.Consumer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,7 +23,6 @@ import org.apache.logging.log4j.Logger;
 /**
  * This class will handle the View for the game being played.
  */
-
 
 public class GameView extends View {
 
@@ -36,8 +36,9 @@ public class GameView extends View {
     private Consumer<Coordinate> MoveCons;
 
 
-    public GameView(ViewManager viewManager) {
+    public GameView(Stage viewManager) {
         super(viewManager);
+        setBackend(new GameBackend());
     }
 
     /**
@@ -67,13 +68,14 @@ public class GameView extends View {
     private void makeMove(Coordinate c) {
         LOG.debug("makeMove in GameView reached\n");
         LOG.debug(String.format("Current player: %d", Turn));
-        try {
-            TurnUpdate tu = getViewManager().getMyGameBackend().getChessBoard().move(myBoardGrid.getSelectedPiece(), c);
-            updateBoard(tu);
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOG.warn("Move failed");
-        }
+        getBackend(GameBackend.class).ifPresent((e) -> {
+            try {
+                updateBoard(e.getChessBoard().move(myBoardGrid.getSelectedPiece(), c));
+            } catch (EngineException ex) {
+                ex.printStackTrace();
+                LOG.warn("Move failed");
+            }
+        });
     }
 
     /**
@@ -83,8 +85,7 @@ public class GameView extends View {
 
     public void lightUpSquares(Piece p) {
         LOG.debug("I made it to lightUpSquares method in GameView\n");
-        Collection<ChessTile> possibletiles = getViewManager().getMyGameBackend().getChessBoard().getMoves(p);
-        myBoardGrid.lightSquares(possibletiles);
+        getBackend(GameBackend.class).ifPresent((e) -> myBoardGrid.lightSquares(e.getChessBoard().getMoves(p)));
     }
 
     /**

@@ -30,7 +30,7 @@ class BoardStateTest extends DukeApplicationTest {
   @Override
   public void start(Stage stage) {
     mylangmod = new LanguageModal(stage);
-    myScene = mylangmod.makeScene();
+    myScene = mylangmod.getScene();
     myStage = stage;
     myStage.setScene(myScene);
     myStage.show();
@@ -84,9 +84,7 @@ class BoardStateTest extends DukeApplicationTest {
     String invalidID = "456";
 
     //test piece ID for piece that does not exist
-    Exception noPieceException = assertThrows(InavlidPieceIDException.class, () -> {
-      boardState.removePiece(invalidID);
-    });
+    Exception noPieceException = assertThrows(InavlidPieceIDException.class, () -> boardState.removePiece(invalidID));
     String noPieceExpected = "Invalid pieceID, piece does not exist in board";
     String actualMessage = noPieceException.getMessage();
     assertTrue(actualMessage.contains(noPieceExpected));
@@ -94,9 +92,7 @@ class BoardStateTest extends DukeApplicationTest {
     boardState.removePiece(pieceID);
 
     //test removed piece from board
-    noPieceException = assertThrows(InavlidPieceIDException.class, () -> {
-      boardState.getPieceLocation(pieceID);
-    });
+    noPieceException = assertThrows(InavlidPieceIDException.class, () -> boardState.getPieceLocation(pieceID));
     actualMessage = noPieceException.getMessage();
     assertTrue(actualMessage.contains(noPieceExpected));
 

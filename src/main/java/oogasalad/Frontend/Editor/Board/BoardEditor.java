@@ -4,17 +4,20 @@ import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import oogasalad.Frontend.Editor.EditorController;
 import oogasalad.Frontend.Editor.NodeContainer;
+import oogasalad.Frontend.util.Controller;
 
 public class BoardEditor extends NodeContainer {
 	private final ChessBoard myChessBoard;
 	private final PieceLibrary myPieceLibrary;
 	private final ModifierLibrary myModifierLibrary;
+	private Controller myBackend;
 
-	public BoardEditor(EditorController controller) {
+	public BoardEditor(Controller controller) {
 		super(controller);
-		myChessBoard = new ChessBoard(myController);
-		myPieceLibrary = new PieceLibrary(myController);
-		myModifierLibrary = new ModifierLibrary(myController);
+		getBackend(EditorController.class).ifPresent((e) -> myBackend = e);
+		myChessBoard = new ChessBoard((EditorController) myBackend);
+		myPieceLibrary = new PieceLibrary((EditorController) myBackend);
+		myModifierLibrary = new ModifierLibrary((EditorController) myBackend);
 	}
 
 	@Override

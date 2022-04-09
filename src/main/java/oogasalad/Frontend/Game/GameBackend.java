@@ -2,6 +2,7 @@ package oogasalad.Frontend.Game;
 
 import java.util.Optional;
 import oogasalad.Frontend.ViewManager;
+import oogasalad.Frontend.util.Controller;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.Server.BoardSetup;
 
@@ -12,10 +13,9 @@ import java.io.File;
  * FrontEnd needs to make the game work.
  */
 
-public class GameBackend {
+public class GameBackend extends Controller {
 
     private ChessBoard myChessBoard;
-
 
     public Optional<ChessBoard> initalizeChessBoard(File JSON) {
         try {
