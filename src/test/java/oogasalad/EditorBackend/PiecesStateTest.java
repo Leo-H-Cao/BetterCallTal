@@ -2,7 +2,6 @@ package oogasalad.EditorBackend;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -10,7 +9,7 @@ import javafx.stage.Stage;
 import oogasalad.Editor.ModelState.PiecesState.EditorPiece;
 import oogasalad.Editor.ModelState.PiecesState.MovementRules;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
-import oogasalad.Frontend.Menu.LanguageModal;
+import oogasalad.frontend.menu.LanguageModal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
