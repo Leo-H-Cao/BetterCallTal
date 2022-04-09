@@ -1,0 +1,10 @@
+[
+	{
+		"relativeCoords":[1, -1],
+		"infinite": false
+	},
+	{
+		"relativeCoords":[-1, -1],
+		"infinite": false
+	}
+]

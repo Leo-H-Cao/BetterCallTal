@@ -14,8 +14,8 @@ import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.GameClauses.CheckValidator;
-import oogasalad.GamePlayer.GameClauses.CheckmateValidator;
+import oogasalad.GamePlayer.ValidStateChecker.Check;
+import oogasalad.GamePlayer.Board.EndConditions.Checkmate;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import org.apache.logging.log4j.LogManager;
@@ -90,7 +90,7 @@ public class CheckmateTests {
 
     board.setPieces(pieces);
     LOG.debug(board);
-    assertTrue(new CheckValidator().isValid(board, TEAM_1));
+    assertTrue(new Check().isValid(board, TEAM_1));
 //    assertTrue(CheckmateValidator.isInMate(board, TEAM_1));
   }
 
@@ -105,7 +105,7 @@ public class CheckmateTests {
     board.setPieces(pieces);
     LOG.debug(board);
 
-    assertTrue(CheckmateValidator.isInMate(board, TEAM_2));
+    assertTrue(Checkmate.isInMate(board, TEAM_2));
   }
 
   @Test
@@ -115,7 +115,7 @@ public class CheckmateTests {
         makePawn(3, 0, TEAM_2)));
 
     board.setPieces(pieces);
-    assertFalse(CheckmateValidator.isInMate(board, TEAM_1));
+    assertFalse(Checkmate.isInMate(board, TEAM_1));
   }
 
   @Test
@@ -128,7 +128,7 @@ public class CheckmateTests {
     ));
 
     board.setPieces(pieces);
-    assertFalse(CheckmateValidator.isInMate(board, TEAM_1));
+    assertFalse(Checkmate.isInMate(board, TEAM_1));
   }
 
   @Test
@@ -140,13 +140,13 @@ public class CheckmateTests {
         rook2));
     board.setPieces(pieces);
     LOG.debug(board);
-    assertFalse(CheckmateValidator.isInMate(board, TEAM_1));
+    assertFalse(Checkmate.isInMate(board, TEAM_1));
 
     //Some Movement
     rook1.move(board.getTile(new Coordinate(1, 0)), board);
     rook2.move(board.getTile(new Coordinate(1, 0)), board);
     king1.move(board.getTile(new Coordinate(1, 0)), board);
 
-    assertTrue(CheckmateValidator.isInMate(board, TEAM_2));
+    assertTrue(Checkmate.isInMate(board, TEAM_2));
   }
 }

@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer.GameClauses;
+package oogasalad.GamePlayer.ValidStateChecker;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,7 +11,7 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
  * @author Jose Santillan
  * @author Jed Yang
  */
-public class CheckValidator implements ValidStateChecker {
+public class Check implements ValidStateChecker {
 
   /**
    * This method checks if the target piece of the current team is in check

@@ -19,6 +19,7 @@ import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
+import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
@@ -44,15 +45,17 @@ public class ChessBoard implements Iterable<ChessTile>{
   private int currentPlayer;
   private Map<Integer, Double> endResult;
   private List<ChessBoard> history;
+  private List<ValidStateChecker> validStateCheckers;
 
   /***
    * Creates a representation of a chessboard if an array of pieces is already provided
    */
-  public ChessBoard(List<List<ChessTile>> board, TurnCriteria turnCriteria, Player[] players, List<EndCondition> endConditions) {
+  public ChessBoard(List<List<ChessTile>> board, TurnCriteria turnCriteria, Player[] players, List<ValidStateChecker> validStateCheckers, List<EndCondition> endConditions) {
     this.board = board;
     this.turnCriteria = turnCriteria;
     this.players = players;
     this.teamNums = getTeamNums(players);
+    this.validStateCheckers = validStateCheckers;
     this.endConditions = endConditions;
     currentPlayer = turnCriteria.getCurrentPlayer();
     endResult = new HashMap<>();
@@ -67,10 +70,18 @@ public class ChessBoard implements Iterable<ChessTile>{
   }
 
   /***
-   * Creates a representation of a chessboard with length/height of board given
+   * Creates a representation of a chessboard with length/height of board given but no valid state checkers given
    */
   public ChessBoard(int length, int height, TurnCriteria turnCriteria, Player[] players, List<EndCondition> endConditions) {
-    this(null, turnCriteria, players, endConditions);
+    this(length, height , turnCriteria, players, List.of(), endConditions);
+  }
+
+
+  /***
+   * Creates a representation of a chessboard with length/height of board given
+   */
+  public ChessBoard(int length, int height, TurnCriteria turnCriteria, Player[] players, List<ValidStateChecker> validStateCheckers, List<EndCondition> endConditions) {
+    this(null, turnCriteria, players, validStateCheckers, endConditions);
     board = new ArrayList<>();
     IntStream.range(0, height)
         .forEach(i -> {
@@ -180,7 +191,7 @@ public class ChessBoard implements Iterable<ChessTile>{
       boardCopy.add(new ArrayList<>());
       boardCopy.get(i).addAll(this.board.get(i).stream().map(ChessTile::clone).toList());
     });
-    return new ChessBoard(boardCopy, this.turnCriteria, this.players, this.endConditions);
+    return new ChessBoard(boardCopy, this.turnCriteria, this.players, this.validStateCheckers, this.endConditions);
   }
 
   /***
