@@ -1,5 +1,6 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -33,7 +34,7 @@ public class Stalemate implements EndCondition{
   }
 
   @Override
-  public Optional<Map<Integer, Double>> getScores(ChessBoard board) {
-    return Optional.empty();
+  public Map<Integer, Double> getScores(ChessBoard board) {
+    return new HashMap<>();
   }
 }

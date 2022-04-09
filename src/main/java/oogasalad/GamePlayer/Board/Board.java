@@ -89,7 +89,8 @@ public class Board implements Iterable<ChessTile> {
    * @return set of tiles the piece can move to
    */
   public Set<ChessTile> getMoves(Piece piece, int currentPlayer) {
-    return piece.checkTeam(currentPlayer) ? piece.getMoves() : Set.of();
+    //return piece.checkTeam(currentPlayer) ? piece.getMoves(this) : Set.of();
+    return Set.of();
   }
 
   /**
