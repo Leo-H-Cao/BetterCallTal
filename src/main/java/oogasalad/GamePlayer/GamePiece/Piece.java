@@ -40,23 +40,29 @@ public class Piece implements Cloneable {
   private String img;
   private List<Coordinate> history;
 
-  private List<MovementInterface> movements;
-  private List<MovementInterface> captures;
-  private List<MovementModifier> movementModifiers;
+  private MovementHandler movementHandler;
+//  private List<MovementInterface> movements;
+//  private List<MovementInterface> captures;
+//  private List<MovementModifier> movementModifiers;
   private List<MovementModifier> onInteractionModifiers;
 
   /***
    * Creates a chess piece with all of its attributes
    */
   public Piece(PieceData pieceData) {
+    this(pieceData, new MovementHandler(pieceData.movements(), pieceData.captures(), pieceData.movementModifiers()));
+  }
+
+  /***
+   * Helper constructor for clone when a movementHandler is directly provided
+   */
+  private Piece(PieceData pieceData, MovementHandler movementHandler) {
     this.coordinates = pieceData.startingLocation();
     this.name = pieceData.name();
     this.pointValue = pieceData.pointValue();
     this.team = pieceData.team();
     this.mainPiece = pieceData.mainPiece();
-    this.movements = pieceData.movements();
-    this.captures = pieceData.captures();
-    this.movementModifiers = pieceData.movementModifiers();
+    this.movementHandler = movementHandler;
     this.onInteractionModifiers = pieceData.onInteractionModifiers();
     this.img = pieceData.img();
     this.history = new ArrayList<>(List.of(pieceData.startingLocation()));
@@ -70,44 +76,7 @@ public class Piece implements Cloneable {
    */
   public Set<ChessTile> move(ChessTile finalSquare, ChessBoard board)
       throws InvalidMoveException, OutsideOfBoardException {
-
-    if (!getMoves(board).contains(finalSquare)) {
-      throw new InvalidMoveException("Tile is not a valid move!");
-    }
-
-    //TODO: need to know whether a move is a capture or not for OIM, things like atomic
-    Set<ChessTile> updatedSquares = new HashSet<>(findMovements(finalSquare, movements, board));
-    updatedSquares.addAll(findCaptures(finalSquare, captures, board));
-
-    movementModifiers.forEach((mm) -> updatedSquares.addAll(mm.updateMovement(this, finalSquare, board)));
-    return updatedSquares;
-  }
-
-  /***
-   * @param finalSquare to move to
-   * @param movements to search in
-   * @param board to search on
-   * @return finds if a possible movement goes to the finalSquare and makes the move, returning updated squares
-   */
-  private Set<ChessTile> findMovements(ChessTile finalSquare, List<MovementInterface> movements, ChessBoard board) {
-    Set<ChessTile> updatedSquares = new HashSet<>();
-    movements.stream().filter((m) -> m.getMoves(this, board).contains(finalSquare)).findFirst().ifPresent((m) ->
-    {try{updatedSquares.addAll(m.movePiece(this, finalSquare.getCoordinates(), board));} catch (Exception ignored){ignored.printStackTrace();}});
-    LOG.debug("Updated squares: " + updatedSquares);
-    return updatedSquares;
-  }
-
-  /***
-   * @param captureSquare to move to
-   * @param captures to search in
-   * @param board to search on
-   * @return finds if a possible movement goes to the captureSquare and makes the move, returning updated squares
-   */
-  private Set<ChessTile> findCaptures(ChessTile captureSquare, List<MovementInterface> captures, ChessBoard board) {
-    Set<ChessTile> updatedSquares = new HashSet<>();
-    captures.stream().filter((m) -> m.getCaptures(this, board).contains(captureSquare)).findFirst().ifPresent((m) ->
-    {try{updatedSquares.addAll(m.capturePiece(this, captureSquare.getCoordinates(), board));} catch (Exception ignored){}});
-    return updatedSquares;
+    return movementHandler.move(this, finalSquare, board);
   }
 
   /***
@@ -134,60 +103,7 @@ public class Piece implements Cloneable {
    * @return set of possible moves
    */
   public Set<ChessTile> getMoves(ChessBoard board) {
-    Set<ChessTile> allMoves = new HashSet<>();
-//    Map<MovementInterface, Set<ChessTile>> movementSquaresMap = getMovementSquaresMap();
-
-//    movementSquaresMap.keySet().forEach((k) -> allMoves.addAll(movementSquaresMap.get(k)));
-    movements.forEach((m) -> allMoves.addAll(m.getMoves(this, board)));
-    captures.forEach((m) -> allMoves.addAll(m.getCaptures(this, board)));
-
-    LOG.debug(String.format("%s has the following moves: %s", name, allMoves));
-    return allMoves;
-  }
-
-//  /***
-//   * @return map of movement object to squares to move to
-//   */
-//  private Map<MovementInterface, Set<ChessTile>> getMovementSquaresMap() {
-//    Map<MovementInterface, Set<ChessTile>> movementSquaresMap = new HashMap<>();
-//
-//    movementSquaresMap.putAll(streamMapMovements(movements, bo));
-//    movementSquaresMap.putAll(streamMapMovements(customMovements));
-//
-//    movementSquaresMap.putAll(streamMapCaptures(captures));
-//    movementSquaresMap.putAll(streamMapCaptures(customMovements));
-//
-//    LOG.debug("Movement map: " + movementSquaresMap);
-//    return movementSquaresMap;
-//  }
-
-  /***
-   * @param movementList to map
-   * @return map of movements to movement squares
-   */
-  private Map<MovementInterface, Set<ChessTile>> streamMapMovements(List<MovementInterface> movementList, ChessBoard board) {
-    return movementList.stream().collect(Collectors.toMap((m) -> m, (m) -> m.getMoves(this, board)));
-  }
-
-  /**
-   * @param captureList to map
-   * @return map of captures to capture squares
-   */
-  private Map<MovementInterface, Set<ChessTile>> streamMapCaptures(List<MovementInterface> captureList, ChessBoard board) {
-    return captureList.stream().collect(Collectors.toMap((m) -> m, (m) -> m.getCaptures(this, board)));
-  }
-
-  /***
-   * @param coordinate to check for captures
-   * @return if this piece can capture a piece on the given coordinate
-   */
-  private boolean validCapture(Coordinate coordinate, ChessBoard board) {
-    //TODO MOVEMENTS IS A PLACEHOLDER, MUST IMPLEMENT CAPTURES AS IT IS NULL WHEN THE PIECE IS FIRST INITIALED AS WELL AS THE GETMOVES METHOD
-    return movements.stream().map(move -> move.getMoves(this, board))
-        .collect(Collectors.toSet())
-        .stream().flatMap(Set::stream)
-        .collect(Collectors.toSet()).stream()
-        .anyMatch(tile -> tile.getCoordinates().equals(coordinate));
+    return movementHandler.getMoves(this, board);
   }
 
   /***
@@ -195,7 +111,7 @@ public class Piece implements Cloneable {
    * @return if this piece can capture a piece on the given coordinates
    */
   public boolean validCapture(List<Coordinate> coordinates, ChessBoard board) {
-    return coordinates.stream().anyMatch((c) -> validCapture(c, board));
+    return movementHandler.validCapture(this, coordinates, board);
   }
 
   /***
@@ -210,18 +126,7 @@ public class Piece implements Cloneable {
    * @return if this piece can capture another piece
    */
   public boolean canCapture(Piece piece, ChessBoard board) {
-    //int[] opponentIDs = board.getPlayer(this.team).opponentIDs();
-    //boolean sameTeam = Arrays.stream(opponentIDs).anyMatch((o) -> piece.team == board.getPlayer(o).teamID());
-    boolean sameTeam = piece.checkTeam(team);
-
-    //TODO MOVEMENTS IS A PLACEHOLDER, MUST IMPLEMENT CAPTURES AS IT IS NULL WHEN THE PIECE IS FIRST INITIALED
-    boolean canCap = movements.stream()
-        .map(capture -> capture.getCaptures(this, board))
-        .flatMap(Set::stream)
-        .map(ChessTile::getCoordinates)
-        .anyMatch(coords -> coords.equals(piece.getCoordinates()));
-
-    return !sameTeam && canCap;
+    return movementHandler.canCapture(this, piece, board);
   }
 
   /***
@@ -229,8 +134,6 @@ public class Piece implements Cloneable {
    * opposing)
    */
   public boolean isOpposing(List<Piece> opponents, ChessBoard board) {
-//    return Arrays.stream(board.getPlayer(this.team).opponentIDs()).anyMatch((o) -> opponents.stream().anyMatch((t) ->
-//        t.checkTeam(o)));
     return opponents.stream().anyMatch((p) -> isOpposing(p, board));
   }
 
@@ -248,7 +151,7 @@ public class Piece implements Cloneable {
    * @return if this piece can capture any piece in a list of pieces
    */
   public boolean canCapture(List<Piece> pieces, ChessBoard board) {
-    return pieces.stream().anyMatch((p) -> canCapture(p, board));
+    return movementHandler.canCapture(this, pieces, board);
   }
 
   /***
@@ -306,10 +209,10 @@ public class Piece implements Cloneable {
   }
 
   /***
-   * @return relative coordinates for all regular moves
+   * @return relative coordinates for all regular moves, not including captures
    */
   public List<Coordinate> getRelativeMoveCoords() {
-    return movements.stream().flatMap((m) -> m.getRelativeCoords().stream()).toList();
+    return movementHandler.getRelativeMoveCoords();
   }
 
   /***
@@ -323,12 +226,12 @@ public class Piece implements Cloneable {
         pointValue,
         team,
         mainPiece,
-        new ArrayList<>(movements),
-        new ArrayList<>(captures),
-        new ArrayList<>(movementModifiers),
+        List.of(),
+        List.of(),
+        List.of(),
         new ArrayList<>(onInteractionModifiers),
         img
     );
-    return new Piece(clonedData);
+    return new Piece(clonedData, movementHandler);
   }
 }
