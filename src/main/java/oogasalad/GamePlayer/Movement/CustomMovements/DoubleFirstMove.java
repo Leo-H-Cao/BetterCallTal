@@ -56,8 +56,6 @@ public class DoubleFirstMove implements MovementInterface {
   @Override
   public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
     if(piece.getHistory().size() != NO_MOVEMENT_HISTORY_LENGTH) return Set.of();
-    //TODO: FIX THIS ONCE REFLECTION IS ADDED
-    if(!piece.getName().equalsIgnoreCase("Pawn")) {return Set.of();}
     LOG.debug("Getting double moves: " + piece.getName());
     List<MovementInterface> newMovements = new ArrayList<>();
     piece.getRelativeMoveCoords().forEach((c) -> {
