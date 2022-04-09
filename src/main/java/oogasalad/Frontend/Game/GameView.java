@@ -6,12 +6,15 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Game.Sections.BoardGrid;
 import oogasalad.Frontend.Game.Sections.TopSection;
+import oogasalad.Frontend.util.Controller;
 import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Board.TurnUpdate;
 import oogasalad.GamePlayer.Movement.Coordinate;
+
+import java.util.Optional;
 import java.util.function.Consumer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,20 +24,24 @@ import org.apache.logging.log4j.Logger;
  */
 
 public class GameView extends View {
-
-    private static final Logger LOG = LogManager.getLogger(GameView.class);
-
+    private static GameBackend myBackend;
     private BoardGrid myBoardGrid;
     private Integer Turn;
-    private static Integer myID;
+    private Integer myID;
     private BorderPane myBP;
     private Consumer<Piece> lightUpCons;
     private Consumer<Coordinate> MoveCons;
 
 
-    public GameView(Stage viewManager) {
-        super(viewManager);
-        setBackend(new GameBackend());
+    public GameView(Stage stage) {
+        super(stage);
+        if(myBackend == null) {
+            myBackend = new GameBackend();
+        }
+    }
+
+    protected Optional<GameBackend> getBackend() {
+        return Optional.of(myBackend);
     }
 
     /**
@@ -62,14 +69,12 @@ public class GameView extends View {
     private void makeMove(Coordinate c) {
         LOG.debug("makeMove in GameView reached\n");
         LOG.debug(String.format("Current player: %d", Turn));
-        getBackend(GameBackend.class).ifPresent((e) -> {
-            try {
-                updateBoard(e.getChessBoard().move(myBoardGrid.getSelectedPiece(), c));
-            } catch (EngineException ex) {
-                ex.printStackTrace();
-                LOG.warn("Move failed");
-            }
-        });
+        try {
+            updateBoard(myBackend.getChessBoard().move(myBoardGrid.getSelectedPiece(), c));
+        } catch (EngineException ex) {
+            ex.printStackTrace();
+            LOG.warn("Move failed");
+        }
     }
 
     /**
@@ -79,7 +84,7 @@ public class GameView extends View {
 
     public void lightUpSquares(Piece p) {
         LOG.debug("I made it to lightUpSquares method in GameView\n");
-        getBackend(GameBackend.class).ifPresent((e) -> myBoardGrid.lightSquares(e.getChessBoard().getMoves(p)));
+        myBoardGrid.lightSquares(myBackend.getChessBoard().getMoves(p));
     }
 
     /**

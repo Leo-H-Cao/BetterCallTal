@@ -3,6 +3,7 @@ package oogasalad.Frontend.Menu;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -11,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import oogasalad.Frontend.ViewManager;
@@ -42,6 +44,7 @@ public class LanguageModal extends View {
 	public LanguageModal(Stage stage) {
 		super(stage);
 		this.stage = stage;
+		stage.setMaximized(true);
 		myResources = ResourceBundle.getBundle(getClass().getName());
 		AVAILABLE_LANGUAGES = readAvailableLanguages();
 
@@ -56,8 +59,7 @@ public class LanguageModal extends View {
 		startButton = ButtonFactory.makeButton(ButtonType.TEXT, selectedLanguageView.getString("Start"), "start",
 				(e) -> {
 					new ViewManager(stage, selectedLanguageView);
-					stage.setMaximized(true);
-					stage.setFullScreen(fullscreenCheckBox.isSelected());
+					View.setFullscreen(fullscreenCheckBox.isSelected());
 				});
 		stage.setTitle(selectedLanguageView.getString("SelectLanguage"));
 	}
@@ -67,7 +69,10 @@ public class LanguageModal extends View {
 	 */
 	@Override
 	protected Node makeNode() {
-		return makeLayout();
+		Node content = makeLayout();
+		StackPane ret = new StackPane(content);
+		StackPane.setAlignment(content, Pos.CENTER);
+		return ret;
 	}
 
 	/**
@@ -79,7 +84,7 @@ public class LanguageModal extends View {
 		ret.setCenter(makeCenterOptions());
 		ret.setBottom(wrap(startButton));
 
-		return ret;
+		return new Group(ret);
 	}
 
 	// Layout container for options

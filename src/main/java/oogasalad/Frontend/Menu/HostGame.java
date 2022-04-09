@@ -20,7 +20,7 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import java.io.File;
 
 
-public class HostGame extends View {
+public class HostGame extends GameView {
 
     private static final String TITLE = "Title";
     private static final String Load_Button_ID = "Upload";
@@ -73,7 +73,7 @@ public class HostGame extends View {
         Button load = ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource(LOAD), Load_Button_ID,
                 (e) -> {
                     File f = chooseLoadFile();
-                    getBackend(GameBackend.class).ifPresent((a) -> {
+                    getBackend().ifPresent((a) -> {
                         Optional<ChessBoard> cbOp = a.initalizeChessBoard(f);
                         if(cbOp.isPresent()) {
                             getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cbOp.get(), 0));

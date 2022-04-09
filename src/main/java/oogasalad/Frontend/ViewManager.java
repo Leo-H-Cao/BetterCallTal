@@ -2,7 +2,6 @@ package oogasalad.Frontend;
 
 import javafx.stage.Stage;
 import oogasalad.Frontend.Editor.GameEditorView;
-import oogasalad.Frontend.Game.GameBackend;
 import oogasalad.Frontend.Game.GameView;
 import oogasalad.Frontend.Menu.HomeView;
 import oogasalad.Frontend.Menu.HostGame;

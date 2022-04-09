@@ -17,14 +17,14 @@ import org.apache.logging.log4j.Logger;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public abstract class View {
-	private static final Logger LOG = LogManager.getLogger(View.class);
 	private static Collection<View> myViews;
+	private static boolean fullscreen = false;
 	protected Scene myScene;
 	protected Group myRoot;
 	protected Rectangle2D myScreenSize;
 	protected Optional<ResourceBundle> myResources;
 	private final Stage myStage;
-	private Controller myBackend;
+	protected static final Logger LOG = LogManager.getLogger(View.class);
 
 	public View(Stage stage) {
 		if(myViews == null) {
@@ -39,7 +39,9 @@ public abstract class View {
 			myResources = Optional.empty();
 		}
 	}
-
+	public static void setFullscreen(boolean b) {
+		fullscreen = b;
+	}
 	public static void addView(View v) {
 		myViews.add(v);
 	}
@@ -52,10 +54,6 @@ public abstract class View {
 			myScene = createScene();
 		}
 		return myScene;
-	}
-
-	protected void setBackend(Controller backend) {
-		myBackend = backend;
 	}
 
 	/**
@@ -99,6 +97,7 @@ public abstract class View {
 	protected void changeScene(View viewClass) {
 		myStage.setScene(viewClass.getScene());
 		myStage.setTitle(viewClass.getTitle());
+		myStage.setFullScreen(fullscreen);
 	}
 
 	protected String getLanguageResource(String s) {
@@ -113,14 +112,6 @@ public abstract class View {
 		Optional<View> v = myViews.stream().filter((e) -> className == e.getClass()).findFirst();
 		if(v.isPresent()) {
 			return v;
-		} else {
-			return Optional.empty();
-		}
-	}
-
-	protected <T> Optional<T> getBackend(Class<T> type) {
-		if(myBackend.getClass() == type) {
-			return (Optional<T>)Optional.of(myBackend);
 		} else {
 			return Optional.empty();
 		}
