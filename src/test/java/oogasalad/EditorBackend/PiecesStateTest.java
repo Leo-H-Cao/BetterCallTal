@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import oogasalad.Editor.ModelState.PiecesState.EditorPiece;
 import oogasalad.Editor.ModelState.PiecesState.MovementRules;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
-import oogasalad.frontend.menu.LanguageModal;
+import oogasalad.Frontend.menu.LanguageModal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
