@@ -3,12 +3,9 @@ open module oogasalad {
     requires javafx.controls;
     requires javafx.graphics;
     requires javafx.base;
-    requires javafx.media;
-    requires javafx.web;
     requires org.json;
     requires org.apache.logging.log4j;
-    requires java.scripting;
 
-  // allow other classes to access listed packages in your project
+    // allow other classes to access listed packages in your project
     exports oogasalad;
 }
