@@ -3,7 +3,7 @@ package oogasalad.Frontend.Editor.Piece;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import oogasalad.Frontend.Editor.EditorController;
-import oogasalad.Frontend.Editor.NodeContainer;
+import oogasalad.Frontend.util.NodeContainer;
 
 public class PieceEditor extends NodeContainer {
 	private final String ID;

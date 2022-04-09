@@ -1,4 +1,4 @@
-package oogasalad.Frontend.Editor;
+package oogasalad.Frontend.util;
 
 import javafx.geometry.Orientation;
 import javafx.scene.Group;
@@ -9,6 +9,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import oogasalad.Frontend.Editor.EditorController;
 
 import java.util.Collection;
 

@@ -1,21 +1,17 @@
 package oogasalad.Frontend.Game;
 
-import java.util.Collection;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import oogasalad.Frontend.Editor.EditorController;
 import oogasalad.Frontend.Game.Sections.BoardGrid;
 import oogasalad.Frontend.Game.Sections.TopSection;
 import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Board.TurnUpdate;
 import oogasalad.GamePlayer.Movement.Coordinate;
-
 import java.util.function.Consumer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -63,8 +59,6 @@ public class GameView extends View {
         MoveCons = coor -> makeMove(coor);
     }
 
-
-
     private void makeMove(Coordinate c) {
         LOG.debug("makeMove in GameView reached\n");
         LOG.debug(String.format("Current player: %d", Turn));
@@ -107,7 +101,6 @@ public class GameView extends View {
         myBP = bp;
         bp.setTop(new TopSection().getGP());
         bp.setCenter(myBoardGrid.getBoard());
-
         return bp;
     }
 }

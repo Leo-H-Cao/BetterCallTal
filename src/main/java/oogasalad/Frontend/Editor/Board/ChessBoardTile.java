@@ -4,7 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import oogasalad.Frontend.Editor.EditorController;
-import oogasalad.Frontend.Editor.NodeContainer;
+import oogasalad.Frontend.util.NodeContainer;
 import oogasalad.Frontend.util.ButtonFactory;
 
 public class ChessBoardTile extends NodeContainer {

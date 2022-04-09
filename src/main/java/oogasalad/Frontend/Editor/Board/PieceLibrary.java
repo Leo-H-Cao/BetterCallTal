@@ -7,7 +7,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import oogasalad.Frontend.Editor.EditorController;
-import oogasalad.Frontend.Editor.LabelledContainer;
+import oogasalad.Frontend.util.LabelledContainer;
 import oogasalad.Frontend.util.ButtonFactory;
 import java.util.ArrayList;
 import java.util.Collection;
