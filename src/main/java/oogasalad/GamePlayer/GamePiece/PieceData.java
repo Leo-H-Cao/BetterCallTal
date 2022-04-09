@@ -15,5 +15,8 @@ public record PieceData(Coordinate startingLocation,
                         List<MovementModifier> movementModifiers,
                         List<MovementModifier> onInteractionModifiers,
                         String img) {
-
+  @Override
+  public String toString() {
+    return String.format("%s: (%d, %d)", name, startingLocation.getRow(), startingLocation.getCol()) + "; " + movements;
+  }
 }

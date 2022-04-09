@@ -92,7 +92,8 @@ public class Piece implements Cloneable {
   private Set<ChessTile> findMovements(ChessTile finalSquare, List<MovementInterface> movements, ChessBoard board) {
     Set<ChessTile> updatedSquares = new HashSet<>();
     movements.stream().filter((m) -> m.getMoves(this, board).contains(finalSquare)).findFirst().ifPresent((m) ->
-    {try{updatedSquares.addAll(m.movePiece(this, finalSquare.getCoordinates(), board));} catch (Exception ignored){}});
+    {try{updatedSquares.addAll(m.movePiece(this, finalSquare.getCoordinates(), board));} catch (Exception ignored){ignored.printStackTrace();}});
+    LOG.debug("Updated squares: " + updatedSquares);
     return updatedSquares;
   }
 

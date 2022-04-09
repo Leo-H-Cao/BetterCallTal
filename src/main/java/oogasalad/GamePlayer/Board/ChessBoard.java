@@ -2,6 +2,7 @@ package oogasalad.GamePlayer.Board;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -16,13 +17,17 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
+import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.MoveAfterGameEndException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
+import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
+import oogasalad.GamePlayer.Movement.Movement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -111,6 +116,45 @@ public class ChessBoard implements Iterable<ChessTile>{
     }
     LOG.warn(isGameOver() ? "Move made after game over" : "Move made by wrong player");
     throw isGameOver() ? new MoveAfterGameEndException("") : new WrongPlayerException("Expected: " + turnCriteria.getCurrentPlayer() + "\n Actual: " + piece.getTeam());
+  }
+
+  /***
+   * Copies this board and then makes the move
+   *
+   * @param piece to move
+   * @param finalSquare to move the piece to
+   * @return copy of the chessboard after the hypothetical move is made
+   */
+  public Set<ChessTile> makeHypotheticalMove(Piece piece, Coordinate finalSquare) throws EngineException{
+    ChessBoard boardCopy = deepCopy();
+    Piece copiedPiece = boardCopy.getTile(piece.getCoordinates()).getPiece().orElseThrow(
+        () -> new InvalidMoveException("Hypothetical move could not be made"));
+    return copiedPiece.move(boardCopy.getTile(finalSquare), boardCopy);
+  }
+
+  //TODO: remove this testing main method
+  public static void main(String[] args) {
+    Player playerOne = new Player(0, null);
+    Player playerTwo = new Player(1, null);
+    Player playerThree = new Player(2, null);
+    Player[] players = new Player[]{playerOne, playerTwo, playerThree};
+
+    TurnCriteria turnCriteria = new Linear(players);
+
+    ChessBoard board = new ChessBoard(3, 3, turnCriteria, players, List.of());
+    Piece pieceOne = new Piece(new PieceData(new Coordinate(0, 0), "test1", 0, 0, false,
+        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), "test1.png"));
+    Piece pieceTwo = new Piece(new PieceData(new Coordinate(1, 0), "test2", 0, 1, false,
+        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(),  ""));
+    Piece pieceThree = new Piece(new PieceData(new Coordinate(2, 0), "test3", 0, 2, false,
+        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
+    List<Piece> pieces = List.of(pieceOne, pieceTwo, pieceThree);
+    board.setPieces(pieces);
+    try {
+      LOG.debug("Updated moves: " + board.makeHypotheticalMove(pieceOne, Coordinate.of(0, 1)));
+    } catch(Exception e) {
+      e.printStackTrace();
+    }
   }
 
   /**
