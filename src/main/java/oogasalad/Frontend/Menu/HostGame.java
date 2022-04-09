@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
 import oogasalad.Frontend.Game.GameView;
 import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.View;
@@ -45,10 +46,10 @@ public class HostGame extends View {
         Node prompt = makeLabelGroup(getLanguageResource(PROMPT), PROMPT_SIZE);
         Node load = makeFileUploadGroup(sp);
 
-        sp.setAlignment(exit, Pos.TOP_LEFT);
-        sp.setAlignment(title, Pos.TOP_CENTER);
-        sp.setAlignment(prompt, Pos.CENTER);
-        sp.setAlignment(load, Pos.CENTER_RIGHT);
+        StackPane.setAlignment(exit, Pos.TOP_LEFT);
+        StackPane.setAlignment(title, Pos.TOP_CENTER);
+        StackPane.setAlignment(prompt, Pos.CENTER);
+        StackPane.setAlignment(load, Pos.CENTER_RIGHT);
 
         sp.getChildren().addAll(exit, title, prompt, load);
         return sp;
@@ -81,7 +82,7 @@ public class HostGame extends View {
                         // Make the start button
 
                         Node start = makeStartGroup();
-                        sp.setAlignment(start, Pos.CENTER_LEFT);
+                        StackPane.setAlignment(start, Pos.CENTER_LEFT);
                         sp.getChildren().add(start);
                     }
                 });

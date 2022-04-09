@@ -8,8 +8,6 @@ import oogasalad.Frontend.Game.GameView;
 import oogasalad.Frontend.Menu.HomeView;
 import oogasalad.Frontend.Menu.HostGame;
 import oogasalad.Frontend.util.View;
-import oogasalad.GamePlayer.Board.ChessBoard;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,7 +16,6 @@ import java.util.ResourceBundle;
 public class ViewManager {
 	// Bundle made static so all classes can easily access the language
 	private static ResourceBundle langBundle;
-
 	private final Collection<View> myViews;
 	private final Stage stage;
 	private final GameBackend myGameBackend;

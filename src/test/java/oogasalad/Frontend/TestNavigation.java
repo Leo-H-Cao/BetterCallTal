@@ -9,16 +9,14 @@ import java.util.ResourceBundle;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestNavigation extends DukeApplicationTest {
-	private LanguageModal myLanguageModal;
-	private Scene myScene;
 	private Stage myStage;
 	private ResourceBundle myResources;
 
 
 	@Override
 	public void start (Stage stage) {
-		myLanguageModal = new LanguageModal(stage);
-		myScene = myLanguageModal.makeScene();
+		LanguageModal myLanguageModal = new LanguageModal(stage);
+		Scene myScene = myLanguageModal.makeScene();
 		myStage = stage;
 		myStage.setScene(myScene);
 		myStage.show();
