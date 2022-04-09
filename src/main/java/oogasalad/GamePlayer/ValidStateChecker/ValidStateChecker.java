@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer.GameClauses;
+package oogasalad.GamePlayer.ValidStateChecker;
 
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;

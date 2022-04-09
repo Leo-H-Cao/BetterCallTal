@@ -12,7 +12,7 @@ import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.GameClauses.CheckValidator;
+import oogasalad.GamePlayer.ValidStateChecker.Check;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -145,7 +145,7 @@ public class Movement implements MovementInterface{
       for(ChessTile move : allMoves.get(moveType)){
         ChessBoard deepCopy = board.deepCopy();
         deepCopy.move(piece, move.getCoordinates());
-        if(new CheckValidator().isValid(board, piece.getTeam())){
+        if(new Check().isValid(board, piece.getTeam())){
           allMoves.get(moveType).remove(move);
         }
       }

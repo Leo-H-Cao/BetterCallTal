@@ -15,7 +15,7 @@ import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.GameClauses.CheckValidator;
+import oogasalad.GamePlayer.ValidStateChecker.Check;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import org.apache.logging.log4j.LogManager;
@@ -30,7 +30,7 @@ public class CheckTests {
 
   private static final Logger LOG = LogManager.getLogger(CheckTests.class);
 
-  CheckValidator check;
+  Check check;
   private ChessBoard board;
 
   private Piece pieceOne;
@@ -47,7 +47,7 @@ public class CheckTests {
     EndCondition endCondition = new TwoMoves();
     board = new ChessBoard(8, 8, turnCriteria, players, List.of(endCondition));
 
-    check = new CheckValidator();
+    check = new Check();
 
   }
 
@@ -73,9 +73,9 @@ public class CheckTests {
     pieceLocations(0, 0, 1, 0);
     LOG.debug(board);
     //TEAM 1 is in check
-    assertTrue(new CheckValidator().isValid(board, 1));
+    assertTrue(new Check().isValid(board, 1));
     //Team 2 is NOT in check
-    assertFalse(new CheckValidator().isValid(board, 0));
+    assertFalse(new Check().isValid(board, 0));
   }
 
   /**
@@ -84,8 +84,8 @@ public class CheckTests {
   @Test
   void notInCheck() throws OutsideOfBoardException {
     pieceLocations(0, 0, 3, 0);
-    assertFalse(new CheckValidator().isValid(board, 0));
-    assertFalse(new CheckValidator().isValid(board, 1));
+    assertFalse(new Check().isValid(board, 0));
+    assertFalse(new Check().isValid(board, 1));
   }
 
   /**
@@ -95,14 +95,14 @@ public class CheckTests {
   @Test
   void movesIntoCheck() throws OutsideOfBoardException {
     pieceLocations(0, 0, 3, 0);
-    assertFalse(new CheckValidator().isValid(board, 1));
+    assertFalse(new Check().isValid(board, 1));
 
     //Can't actually move into check thanks to InvalidMoveException
     try {
       pieceTwo.move(board.getTile(new Coordinate(1, 0)), board);
     } catch (InvalidMoveException ignored) {}
 
-    assertFalse(new CheckValidator().isValid(board, 1));
+    assertFalse(new Check().isValid(board, 1));
   }
 
   /**
@@ -111,8 +111,8 @@ public class CheckTests {
   @Test
   void movesOutOfCheck() throws OutsideOfBoardException, InvalidMoveException {
     pieceLocations(0, 0, 1, 0);
-    assertTrue(new CheckValidator().isValid(board, 1));
+    assertTrue(new Check().isValid(board, 1));
     pieceTwo.move(board.getTile(new Coordinate(2, 0)), board);
-    assertFalse(new CheckValidator().isValid(board, 1));
+    assertFalse(new Check().isValid(board, 1));
   }
 }
