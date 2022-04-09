@@ -1,6 +1,9 @@
 package oogasalad.GamePlayer.Server;
 
+import java.util.Map;
 import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
+import oogasalad.GamePlayer.Board.Player;
 
 /**
  * Interface for managing all turn interactions. it has two implementations: a local and a server
@@ -8,6 +11,13 @@ import oogasalad.GamePlayer.Board.ChessBoard;
  * used for networked games.
  */
 public interface TurnManager {
+
+  /**
+   * Adds a new EndCondition to the end of the priority of EndConditions to check.
+   *
+   * @param condition the EndCondition to add
+   */
+  void addEndCondition(EndCondition condition);
 
   /**
    * Updates the turn manager with the current board.
@@ -58,5 +68,35 @@ public interface TurnManager {
    * @return if the game is over
    */
   boolean isGameOver(ChessBoard board);
+
+  /**
+   * Gets an immutable map of scores of all players after game over. If game isn't over, an empty
+   * map is returned.
+   *
+   * @return scores of all players after game over.
+   */
+  Map<Integer, Double> getScores();
+
+  /**
+   * Gets the player object with the associated ID
+   *
+   * @param id of player
+   * @return player with given id
+   */
+  Player getPlayer(int id);
+
+  /**
+   * Get array containing all the players
+   *
+   * @return players list
+   */
+  Player[] getPlayers();
+
+  /**
+   * Gets all team numbers
+   *
+   * @return team numbers for all players
+   */
+  int[] getTeams();
 
 }
