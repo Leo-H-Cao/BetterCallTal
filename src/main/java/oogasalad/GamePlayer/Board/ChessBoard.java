@@ -89,34 +89,6 @@ public class ChessBoard implements Iterable<ChessTile> {
         });
   }
 
-  //TODO: remove this testing main method
-  public static void main(String[] args) {
-    Player playerOne = new Player(0, null);
-    Player playerTwo = new Player(1, null);
-    Player playerThree = new Player(2, null);
-    Player[] players = new Player[]{playerOne, playerTwo, playerThree};
-
-    TurnCriteria turnCriteria = new Linear(players);
-
-    ChessBoard board = new ChessBoard(3, 3, turnCriteria, players, List.of());
-    Piece pieceOne = new Piece(new PieceData(new Coordinate(0, 0), "test1", 0, 0, false,
-        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
-        Collections.emptyList(), Collections.emptyList(), "test1.png"));
-    Piece pieceTwo = new Piece(new PieceData(new Coordinate(1, 0), "test2", 0, 1, false,
-        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
-        Collections.emptyList(), Collections.emptyList(), ""));
-    Piece pieceThree = new Piece(new PieceData(new Coordinate(2, 0), "test3", 0, 2, false,
-        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
-        Collections.emptyList(), Collections.emptyList(), ""));
-    List<Piece> pieces = List.of(pieceOne, pieceTwo, pieceThree);
-    board.setPieces(pieces);
-    try {
-      LOG.debug("Updated moves: " + board.makeHypotheticalMove(pieceOne, Coordinate.of(0, 1)));
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
   /**
    * @return team nums associated with each player
    */

@@ -15,6 +15,8 @@ import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.Movement.CustomMovements.Castling;
 import oogasalad.GamePlayer.Movement.CustomMovements.DoubleFirstMove;
+import oogasalad.GamePlayer.Movement.CustomMovements.EnPassant;
+import oogasalad.GamePlayer.Server.BoardSetup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -215,6 +217,57 @@ class CustomMovementTest {
       assertEquals(List.of(), new Castling().getRelativeCoords());
       assertThrows(InvalidMoveException.class, () -> new Castling().capturePiece(null, null, null));
     } catch (Exception e) {
+      fail();
+    }
+  }
+
+  @Test
+  void enPassantTestHappy() {
+    try {
+      BoardSetup setup = new BoardSetup("doc/GameEngineResources/PresentationBoardUpdated.json");
+      ChessBoard chessBoard = setup.createBoard();
+      Piece whiteReference = chessBoard.getTile(Coordinate.of(6, 6)).getPiece().get();
+      chessBoard.move(chessBoard.getTile(Coordinate.of(6, 6)).getPiece().get(), Coordinate.of(4, 6));
+      chessBoard.move(chessBoard.getTile(Coordinate.of(1, 1)).getPiece().get(), Coordinate.of(3, 1));
+      chessBoard.move(chessBoard.getTile(Coordinate.of(4, 6)).getPiece().get(), Coordinate.of(3, 6));
+      chessBoard.move(chessBoard.getTile(Coordinate.of(1, 7)).getPiece().get(), Coordinate.of(3, 7));
+      chessBoard.move(chessBoard.getTile(Coordinate.of(3, 6)).getPiece().get(), Coordinate.of(2, 7));
+      assertEquals(Collections.emptyList(), chessBoard.getTile(Coordinate.of(3, 6)).getPieces());
+      assertEquals(Collections.emptyList(), chessBoard.getTile(Coordinate.of(3, 7)).getPieces());
+      assertEquals(List.of(whiteReference), chessBoard.getTile(Coordinate.of(2, 7)).getPieces());
+
+      chessBoard.move(chessBoard.getTile(Coordinate.of(3, 1)).getPiece().get(), Coordinate.of(4, 1));
+      chessBoard.move(chessBoard.getTile(Coordinate.of(6, 0)).getPiece().get(), Coordinate.of(5, 0));
+      chessBoard.move(chessBoard.getTile(Coordinate.of(1, 0)).getPiece().get(), Coordinate.of(2, 0));
+      chessBoard.move(chessBoard.getTile(Coordinate.of(5, 0)).getPiece().get(), Coordinate.of(4, 0));
+      assertEquals(Set.of(chessBoard.getTile(Coordinate.of(5, 1))), chessBoard.getTile(Coordinate.of(4, 1)).getPiece().get().getMoves(chessBoard));
+
+      Piece blackReference = chessBoard.getTile(Coordinate.of(1, 3)).getPiece().get();
+      chessBoard.move(blackReference, Coordinate.of(3, 3));
+      chessBoard.move(chessBoard.getTile(Coordinate.of(6, 3)).getPiece().get(), Coordinate.of(5, 3));
+      chessBoard.move(blackReference, Coordinate.of(4, 3));
+      chessBoard.move(chessBoard.getTile(Coordinate.of(6, 4)).getPiece().get(), Coordinate.of(4, 4));
+      chessBoard.move(chessBoard.getTile(Coordinate.of(1, 2)).getPiece().get(), Coordinate.of(2, 2));
+      assertEquals(Set.of(), blackReference.getMoves(chessBoard));
+
+    } catch(Exception e) {
+      e.printStackTrace();
+      fail();
+    }
+  }
+
+  @Test
+  void enPassantTestSad() {
+    try {
+      assertThrows(InvalidMoveException.class, () -> new EnPassant().movePiece(null, null, null));
+      assertEquals(Collections.emptySet(), new EnPassant().getMoves(null, null));
+      BoardSetup setup = new BoardSetup("doc/GameEngineResources/PresentationBoardUpdated.json");
+      ChessBoard chessBoard = setup.createBoard();
+      Piece whiteReference = chessBoard.getTile(Coordinate.of(6, 6)).getPiece().get();
+      chessBoard.move(chessBoard.getTile(Coordinate.of(6, 6)).getPiece().get(), Coordinate.of(4, 6));
+      assertThrows(InvalidMoveException.class, () -> new EnPassant().capturePiece(whiteReference, Coordinate.of(2, 2), chessBoard));
+    } catch(Exception e) {
+      e.printStackTrace();
       fail();
     }
   }
