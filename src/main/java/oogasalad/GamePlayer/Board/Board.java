@@ -19,14 +19,17 @@ import oogasalad.GamePlayer.Movement.Coordinate;
 public class Board implements Iterable<ChessTile> {
 
   private final List<List<ChessTile>> board;
+  private final GamePlayers players;
 
   /**
    * Creates a representation of a chessboard with the length and height of board given
    *
-   * @param length the length of the board
-   * @param height the height of the board
+   * @param length  the length of the board
+   * @param height  the height of the board
+   * @param players the players on the board
    */
-  public Board(int length, int height) {
+  public Board(int length, int height, GamePlayers players) {
+    this.players = players;
     board = new ArrayList<>();
     IntStream.range(0, height).forEach(i -> {
       List<ChessTile> list = new ArrayList<>();
@@ -38,18 +41,22 @@ public class Board implements Iterable<ChessTile> {
   /**
    * Creates a representation of a chessboard if a list of lists of chess tiles is already provided
    *
-   * @param board the array of chess tiles
+   * @param board   the array of chess tiles
+   * @param players the players on the board
    */
-  public Board(List<List<ChessTile>> board) {
+  public Board(List<List<ChessTile>> board, GamePlayers players) {
     this.board = board;
+    this.players = players;
   }
 
   /**
    * Creates a representation of a chessboard if a 2D array of chess tiles is already provided
    *
-   * @param board the array of chess tiles
+   * @param board   the array of chess tiles
+   * @param players the players on the board
    */
-  public Board(ChessTile[][] board) {
+  public Board(ChessTile[][] board, GamePlayers players) {
+    this.players = players;
     this.board = new ArrayList<>();
     for (ChessTile[] rowTiles : board) {
       List<ChessTile> rows = new ArrayList<>(Arrays.asList(rowTiles));
@@ -60,9 +67,11 @@ public class Board implements Iterable<ChessTile> {
   /**
    * Creates a representation of a chessboard from a prior board object (used for cloning)
    *
-   * @param board the board to clone
+   * @param board   the board to clone
+   * @param players the players on the board
    */
-  public Board(Board board) {
+  public Board(Board board, GamePlayers players) {
+    this.players = players;
     this.board = new ArrayList<>();
     for (List<ChessTile> row : board.getBoard()) {
       List<ChessTile> rows = new ArrayList<>();
@@ -89,8 +98,7 @@ public class Board implements Iterable<ChessTile> {
    * @return set of tiles the piece can move to
    */
   public Set<ChessTile> getMoves(Piece piece, int currentPlayer) {
-    //return piece.checkTeam(currentPlayer) ? piece.getMoves(this) : Set.of();
-    return Set.of();
+    return piece.checkTeam(currentPlayer) ? piece.getMoves(this) : Set.of();
   }
 
   /**
@@ -200,6 +208,34 @@ public class Board implements Iterable<ChessTile> {
   @Override
   public void forEach(Consumer<? super ChessTile> action) {
     Iterable.super.forEach(action);
+  }
+
+  /**
+   * Gets the player object with the associated ID
+   *
+   * @param id of player
+   * @return player with given id
+   */
+  public Player getPlayer(int id) {
+    return players.getPlayer(id);
+  }
+
+  /**
+   * Get array containing all the players
+   *
+   * @return players list
+   */
+  public Player[] getPlayers() {
+    return players.getPlayers();
+  }
+
+  /**
+   * Gets all team numbers
+   *
+   * @return team numbers for all players
+   */
+  public int[] getTeams() {
+    return players.getTeams();
   }
 
   /**
