@@ -162,7 +162,7 @@ public class Castling implements MovementInterface {
    */
   @Override
   public List<Coordinate> getRelativeCoords() {
-    return List.of();
+    return Collections.emptyList();
   }
 
   /***
