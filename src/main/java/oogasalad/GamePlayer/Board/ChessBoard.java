@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -45,7 +46,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   private List<EndCondition> endConditions;
   private int currentPlayer;
   private Map<Integer, Double> endResult;
-  private List<ChessBoard> history;
+  private List<History> history;
   private List<ValidStateChecker> validStateCheckers;
 
   /**
@@ -133,9 +134,16 @@ public class ChessBoard implements Iterable<ChessTile> {
     if (history.isEmpty()) {
       pieces.forEach(p -> {
         Coordinate coordinate = p.getCoordinates();
-        board.get(coordinate.getRow()).get(coordinate.getCol()).addPiece(p);
+        try {
+          getTile(coordinate).addPiece(p);
+        } catch (OutsideOfBoardException ignored) {
+          LOG.warn("Set pieces has out of bounds coordinate");
+        }
       });
-      history.add(deepCopy());
+      ChessBoard copied = deepCopy();
+      LOG.debug("History updated for first time");
+      history.add(new History(copied, new HashSet<>(pieces), pieces.stream().map((p) -> board.get(p.getCoordinates().getRow()).get(p.getCoordinates().getCol())).collect(
+          Collectors.toSet())));
       return true;
     }
     LOG.warn("Attempted board setting after game start");
@@ -153,9 +161,11 @@ public class ChessBoard implements Iterable<ChessTile> {
     // TODO: valid state checker for person who just moved (redundunt - optional)
     // TODO: check end conditions for other player(s)
     if (!isGameOver() && piece.checkTeam(turnCriteria.getCurrentPlayer())) {
-      history.add(deepCopy());
-      return new TurnUpdate(piece.move(getTileFromCoords(finalSquare), this),
+      TurnUpdate update = new TurnUpdate(piece.move(getTileFromCoords(finalSquare), this),
           turnCriteria.incrementTurn());
+      history.add(new History(deepCopy(), Set.of(piece), update.updatedSquares()));
+      LOG.debug("History updated: " + history.size());
+      return update;
     }
     LOG.warn(isGameOver() ? "Move made after game over" : "Move made by wrong player");
     throw isGameOver() ? new MoveAfterGameEndException("") : new WrongPlayerException(
@@ -210,7 +220,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   /**
    * @return list of board history
    */
-  public List<ChessBoard> getHistory() {
+  public List<History> getHistory() {
     return history;
   }
 
@@ -232,8 +242,8 @@ public class ChessBoard implements Iterable<ChessTile> {
     // TODO: add valid state checker here
     ValidStateChecker check = new Check();
     Set<ChessTile> allPieceMovements = piece.getMoves(this);
-    allPieceMovements.removeIf(entry ->  {
-      ChessBoard copy = null;
+    allPieceMovements.removeIf(entry -> {
+      ChessBoard copy;
       try {
         copy = makeHypotheticalMove(this.getTile(piece.getCoordinates()).getPiece().get(), entry.getCoordinates());
         if(!check.isValid(copy, piece.getTeam())){
