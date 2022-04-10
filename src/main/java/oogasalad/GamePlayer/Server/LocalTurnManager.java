@@ -8,7 +8,6 @@ import java.util.PriorityQueue;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.GamePlayers;
-import oogasalad.GamePlayer.Board.Player;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 
 /**
@@ -143,35 +142,13 @@ public class LocalTurnManager implements TurnManager {
   }
 
   /**
-   * Gets the player object with the associated ID
-   *
-   * @param id of player
-   * @return player with given id
-   */
-  @Override
-  public Player getPlayer(int id) {
-    return players.getPlayer(id);
-  }
-
-  /**
    * Get array containing all the players
    *
    * @return players list
    */
   @Override
-  public Player[] getPlayers() {
-    return players.getPlayers();
+  public GamePlayers getGamePlayers() {
+    return players;
   }
-
-  /**
-   * Gets all team numbers
-   *
-   * @return team numbers for all players
-   */
-  @Override
-  public int[] getTeams() {
-    return players.getTeams();
-  }
-
 
 }

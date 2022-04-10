@@ -3,7 +3,7 @@ package oogasalad.GamePlayer.Server;
 import java.util.Map;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
-import oogasalad.GamePlayer.Board.Player;
+import oogasalad.GamePlayer.Board.GamePlayers;
 
 /**
  * Interface for managing all turn interactions. it has two implementations: a local and a server
@@ -78,25 +78,10 @@ public interface TurnManager {
   Map<Integer, Double> getScores();
 
   /**
-   * Gets the player object with the associated ID
+   * Gets all the players playing in the game
    *
-   * @param id of player
-   * @return player with given id
+   * @return all players playing in the game
    */
-  Player getPlayer(int id);
-
-  /**
-   * Get array containing all the players
-   *
-   * @return players list
-   */
-  Player[] getPlayers();
-
-  /**
-   * Gets all team numbers
-   *
-   * @return team numbers for all players
-   */
-  int[] getTeams();
+  GamePlayers getGamePlayers();
 
 }
