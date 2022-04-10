@@ -1,5 +1,6 @@
 package oogasalad.GamePlayer.Movement.MovementModifiers;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 
 public class Atomic implements MovementModifier{
 
+  private static final String[] EXPLOSION_IMMUNE_NAMES = new String[]{"Pawn"};
   private static final Logger LOG = LogManager.getLogger(Atomic.class);
 
   private static final int surroundDistance = 1;
@@ -30,7 +32,10 @@ public class Atomic implements MovementModifier{
   public Set<ChessTile> updateMovement(Piece piece, ChessBoard board) {
     Set<ChessTile> explodedSquares = new HashSet<>();
     try {
-      getSurroundingTiles(board.getTile(piece.getCoordinates()), board).forEach((t) -> {
+      getSurroundingTiles(board.getTile(piece.getCoordinates()), board).stream().filter(
+          (t) -> t.getPiece().isPresent()).filter((t) -> Arrays.stream(EXPLOSION_IMMUNE_NAMES).anyMatch(
+              (n) -> !t.getPiece().get().getName().equalsIgnoreCase(n) || t.getCoordinates().equals(piece.getCoordinates())
+          )).forEach((t) -> {
             t.clearPieces();
             explodedSquares.add(t);
           });
