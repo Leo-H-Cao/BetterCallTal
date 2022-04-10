@@ -1,22 +1,22 @@
 package oogasalad.Editor.ModelState.BoardState;
 
-import oogasalad.Editor.ModelState.PiecesState.EditorPiece;
+import oogasalad.Editor.ModelState.PiecesState.LibraryPiece;
 
 public class EditorTile {
   private TileEffect myTileEffect;
-  private EditorPiece myEditorPiece;
+  private LibraryPiece myLibraryPiece;
   private int myCoordX;
   private int myCoordY;
 
   public EditorTile(int x, int y){
     myTileEffect = TileEffect.NONE;
-    myEditorPiece = null;
+    myLibraryPiece = null;
     myCoordX = x;
     myCoordY = y;
   }
 
   public boolean hasPiece(){
-    return myEditorPiece != null;
+    return myLibraryPiece != null;
   }
 
   public void setTileEffect(TileEffect effect){
@@ -27,16 +27,16 @@ public class EditorTile {
     myTileEffect = TileEffect.NONE;
   }
 
-  public EditorPiece getPiece(){
-    return myEditorPiece;
+  public LibraryPiece getPiece(){
+    return myLibraryPiece;
   }
 
-  public void addPiece(EditorPiece piece){
-    myEditorPiece = piece;
+  public void addPiece(LibraryPiece piece){
+    myLibraryPiece = piece;
   }
 
   public void removePiece(){
-    myEditorPiece = null;
+    myLibraryPiece = null;
   }
 
 }
