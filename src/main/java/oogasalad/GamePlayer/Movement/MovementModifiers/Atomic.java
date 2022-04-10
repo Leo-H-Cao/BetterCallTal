@@ -1,8 +1,12 @@
 package oogasalad.GamePlayer.Movement.MovementModifiers;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.IntStream;
 
@@ -16,10 +20,39 @@ import org.apache.logging.log4j.Logger;
 
 public class Atomic implements MovementModifier{
 
-  private static final String[] EXPLOSION_IMMUNE_NAMES = new String[]{"Pawn"};
+  private static final String ATOMIC_IMMUNE_FILE_PATH = "doc/GameEngineResources/Other/AtomicImmune";
   private static final Logger LOG = LogManager.getLogger(Atomic.class);
 
+  private static List<String> EXPLOSION_IMMUNE_NAMES;
   private static final int surroundDistance = 1;
+
+  /***
+   * Creates an movement modifier that explodes pieces around it
+   */
+  public Atomic() {
+    if(EXPLOSION_IMMUNE_NAMES == null) {
+      assignImmune();
+    }
+    LOG.debug("Immune pieces: " + EXPLOSION_IMMUNE_NAMES);
+  }
+
+  /***
+   * Assigns piece immune to explosions, default is just pawn
+   */
+  private void assignImmune() {
+    EXPLOSION_IMMUNE_NAMES = new ArrayList<>();
+    try {
+      File immuneFile = new File(ATOMIC_IMMUNE_FILE_PATH);
+      Scanner reader = new Scanner(immuneFile);
+      while (reader.hasNext()) {
+        EXPLOSION_IMMUNE_NAMES.add(reader.next().trim());
+      }
+      reader.close();
+    } catch (Exception e) {
+      LOG.warn("Could not find file: " + ATOMIC_IMMUNE_FILE_PATH);
+      EXPLOSION_IMMUNE_NAMES = List.of("Pawn");
+    }
+  }
 
   /***
    * Explodes all pieces if a capture happens
@@ -33,9 +66,10 @@ public class Atomic implements MovementModifier{
     Set<ChessTile> explodedSquares = new HashSet<>();
     try {
       getSurroundingTiles(board.getTile(piece.getCoordinates()), board).stream().filter(
-          (t) -> t.getPiece().isPresent()).filter((t) -> Arrays.stream(EXPLOSION_IMMUNE_NAMES).anyMatch(
-              (n) -> !t.getPiece().get().getName().equalsIgnoreCase(n) || t.getCoordinates().equals(piece.getCoordinates())
+          (t) -> t.getPiece().isPresent()).filter((t) -> EXPLOSION_IMMUNE_NAMES.stream().noneMatch(
+              (n) -> t.getPiece().get().getName().equalsIgnoreCase(n) && !t.getCoordinates().equals(piece.getCoordinates())
           )).forEach((t) -> {
+            LOG.debug("Exploded piece name: " + t.getPiece().get().getName());
             t.clearPieces();
             explodedSquares.add(t);
           });
