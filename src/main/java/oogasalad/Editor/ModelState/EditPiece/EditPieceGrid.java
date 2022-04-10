@@ -33,12 +33,17 @@ public class EditPieceGrid {
     pieceGrid[row][col] = PieceGridTile.INFINITY;
   }
 
+  public PieceGridTile getTileStatus(int x, int y){
+    return pieceGrid[y][x];
+  }
+
   private void initializePieceBoard(){
     for(int i = 0; i < PIECE_GRID_SIZE; i++){
       for(int j = 0; j < PIECE_GRID_SIZE; j++){
         pieceGrid[i][j] = PieceGridTile.CLOSED;
       }
     }
+    pieceGrid[3][3] = PieceGridTile.PIECE;
   }
 
 }
