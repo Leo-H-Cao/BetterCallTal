@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
+import oogasalad.GamePlayer.Board.GamePlayers;
 import oogasalad.GamePlayer.Board.Player;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 
@@ -19,25 +20,23 @@ import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
  */
 public class LocalTurnManager implements TurnManager {
 
-  private PriorityQueue<EndCondition> endConditions;
-  private TurnCriteria turn;
-  private Player[] players;
-  private int[] teamNums;
-  private ChessHistory history;
+  private final PriorityQueue<EndCondition> endConditions;
+  private final TurnCriteria turn;
+  private final GamePlayers players;
+  private final ChessHistory history;
   private Map<Integer, Double> endResult;
 
   //TO-DO: implement a builder pattern for this class once class finalization is complete
-  public LocalTurnManager(ChessHistory history, Player[] players, TurnCriteria turn,
+  public LocalTurnManager(ChessHistory history, GamePlayers players, TurnCriteria turn,
       EndCondition... conditions) {
     this(history, players, turn, Arrays.asList(conditions));
   }
 
-  public LocalTurnManager(ChessHistory history, Player[] players, TurnCriteria turn,
+  public LocalTurnManager(ChessHistory history, GamePlayers players, TurnCriteria turn,
       Iterable<EndCondition> conditions) {
     this.history = history;
     this.players = players;
     this.turn = turn;
-    teamNums = getTeamNums(players);
     endConditions = new PriorityQueue<>();
     for (EndCondition condition : conditions) {
       endConditions.add(condition);
@@ -151,7 +150,7 @@ public class LocalTurnManager implements TurnManager {
    */
   @Override
   public Player getPlayer(int id) {
-    return players[Math.min(id, players.length - 1)];
+    return players.getPlayer(id);
   }
 
   /**
@@ -161,7 +160,7 @@ public class LocalTurnManager implements TurnManager {
    */
   @Override
   public Player[] getPlayers() {
-    return players;
+    return players.getPlayers();
   }
 
   /**
@@ -171,16 +170,8 @@ public class LocalTurnManager implements TurnManager {
    */
   @Override
   public int[] getTeams() {
-    return teamNums;
+    return players.getTeams();
   }
 
-  /**
-   * Convert players to team numbers
-   *
-   * @return team nums associated with each player
-   */
-  private int[] getTeamNums(Player[] players) {
-    return Arrays.stream(players).mapToInt(Player::teamID).toArray();
-  }
 
 }
