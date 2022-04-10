@@ -30,9 +30,7 @@ public class Atomic implements MovementModifier{
   public Set<ChessTile> updateMovement(Piece piece, ChessBoard board) {
     Set<ChessTile> explodedSquares = new HashSet<>();
     try {
-      getSurroundingTiles(board.getTile(piece.getCoordinates()), board).stream()
-          .filter((t) -> !t.getPieces().isEmpty()).forEach((t) -> {
-            LOG.debug(t.getCoordinates());
+      getSurroundingTiles(board.getTile(piece.getCoordinates()), board).forEach((t) -> {
             t.clearPieces();
             explodedSquares.add(t);
           });
@@ -49,14 +47,15 @@ public class Atomic implements MovementModifier{
    */
   private Set<ChessTile> getSurroundingTiles(ChessTile center, ChessBoard board) {
     Set<ChessTile> surroundingTiles = new HashSet<>();
-    IntStream.range(-surroundDistance, surroundDistance).forEach((i) -> {
-      IntStream.range(-surroundDistance, surroundDistance).forEach((j) -> {
-        try {
-          surroundingTiles.add(board.getTile(
-              Coordinate.of(center.getCoordinates().getRow()+i, center.getCoordinates().getCol()+j)));
-        } catch(OutsideOfBoardException ignored) {}
-      });
-    });
+    IntStream.range(-surroundDistance, surroundDistance+1).forEach((i) -> IntStream.range(-surroundDistance, surroundDistance+1).forEach((j) -> {
+      try {
+        surroundingTiles.add(board.getTile(
+            Coordinate.of(center.getCoordinates().getRow()+i, center.getCoordinates().getCol()+j)));
+      } catch(OutsideOfBoardException ignored) {
+        LOG.debug(String.format("Invalid coordinate detected: (%d, %d)", center.getCoordinates().getRow()+i, center.getCoordinates().getCol()+j));
+      }
+    }));
+    LOG.debug("Surrounding tiles: " + surroundingTiles);
     return surroundingTiles;
   }
 }

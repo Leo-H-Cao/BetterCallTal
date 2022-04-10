@@ -79,8 +79,10 @@ public class MovementHandler {
   private Set<ChessTile> findCaptures(Piece piece, ChessTile captureSquare, ChessBoard board) {
     Set<ChessTile> updatedSquares = new HashSet<>();
     captures.stream().filter((m) -> m.getCaptures(piece, board).contains(captureSquare)).findFirst().ifPresent((m) ->
-    {try{updatedSquares.addAll(m.capturePiece(piece, captureSquare.getCoordinates(), board));} catch (Exception ignored){}});
-    updatedSquares.addAll(piece.runInteractionModifiers(board));
+    {try{
+      updatedSquares.addAll(m.capturePiece(piece, captureSquare.getCoordinates(), board));
+      updatedSquares.addAll(piece.runInteractionModifiers(board));
+    } catch (Exception ignored){}});
     return updatedSquares;
   }
 
