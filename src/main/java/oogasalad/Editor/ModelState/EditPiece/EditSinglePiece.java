@@ -17,8 +17,13 @@ public class EditSinglePiece {
     editorPiece.getEditPieceGrid().setTileClosed(x, y);
   }
 
-  public void setTileInfinite(int dirX, int dirY){
+  public void setInfiniteTiles(int dirX, int dirY){
     editorPiece.getEditPieceGrid().setTileInfinite(dirX, dirY);
+  }
+
+  public void removeInfiniteTiles(int dirX, int dirY){
+    editorPiece.getEditPieceGrid().removeTileInfinite(dirX, dirY);
+
   }
 
   public Image getImage(int team){

@@ -8,7 +8,6 @@ public class EditPieceGrid {
   public EditPieceGrid(){
     pieceGrid = new PieceGridTile[PIECE_GRID_SIZE][PIECE_GRID_SIZE];
     initializePieceBoard();
-
   }
 
   public void setTileOpen(int x, int y){
@@ -31,6 +30,19 @@ public class EditPieceGrid {
       col += dirX;
     }
     pieceGrid[row][col] = PieceGridTile.INFINITY;
+  }
+
+  public void removeTileInfinite(int dirX, int dirY){
+    if(dirX == 0 && dirY == 0){
+      return;
+    }
+    int row = 3-dirY;
+    int col = 3+dirX;
+    while(row >= 0 && row < PIECE_GRID_SIZE && col >= 0 && col < PIECE_GRID_SIZE){
+      pieceGrid[row][col] = PieceGridTile.CLOSED;
+      row -= dirY;
+      col += dirX;
+    }
   }
 
   public PieceGridTile getTileStatus(int x, int y){
