@@ -1,6 +1,7 @@
 package oogasalad.GamePlayer.ValidStateChecker;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
@@ -23,6 +24,21 @@ public class Check implements ValidStateChecker {
 
     List<Piece> targetPieces = board.targetPiece(id);
 
+    List<Piece> allPieces = board.getPieces();
+
+    for(Piece p : allPieces){
+      Set<ChessTile> enemyMoves = p.getMoves(board);
+      for(ChessTile t : enemyMoves){
+        for(Piece target : targetPieces){
+          if(t.getCoordinates().equals(target.getCoordinates())){
+            return false;
+          }
+        }
+      }
+    }
+    return true;
+
+    /*
     return board.stream()
         .flatMap(List::stream).toList().stream()
         .map(ChessTile::getPieces)
@@ -31,5 +47,7 @@ public class Check implements ValidStateChecker {
         .anyMatch(piece -> piece.validCapture(targetPieces.stream()
             .map(Piece::getCoordinates)
             .collect(Collectors.toList()), board));
+
+     */
   }
 }

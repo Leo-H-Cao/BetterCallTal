@@ -28,6 +28,7 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.ValidStateChecker.Check;
 import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -168,12 +169,14 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @param finalSquare to move the piece to
    * @return copy of the chessboard after the hypothetical move is made
    */
-  public Set<ChessTile> makeHypotheticalMove(Piece piece, Coordinate finalSquare)
+  public ChessBoard makeHypotheticalMove(Piece piece, Coordinate finalSquare)
       throws EngineException {
     ChessBoard boardCopy = deepCopy();
     Piece copiedPiece = boardCopy.getTile(piece.getCoordinates()).getPiece().orElseThrow(
         () -> new InvalidMoveException("Hypothetical move could not be made"));
-    return copiedPiece.move(boardCopy.getTile(finalSquare), boardCopy);
+    copiedPiece.move(boardCopy.getTile(finalSquare), boardCopy);
+
+    return boardCopy;
   }
 
   /**
@@ -227,7 +230,20 @@ public class ChessBoard implements Iterable<ChessTile> {
    */
   public Set<ChessTile> getMoves(Piece piece) {
     // TODO: add valid state checker here
-    return piece.checkTeam(turnCriteria.getCurrentPlayer()) ? piece.getMoves(this) : Set.of();
+    ValidStateChecker check = new Check();
+    Set<ChessTile> allPieceMovements = piece.getMoves(this);
+    allPieceMovements.removeIf(entry -> {
+      ChessBoard copy = null;
+      try {
+        copy = makeHypotheticalMove(this.getTile(piece.getCoordinates()).getPiece().get(), entry.getCoordinates());
+        if(!check.isValid(copy, piece.getTeam())){
+          return true;
+        }
+      } catch (EngineException e) {
+        e.printStackTrace();
+      }
+      return false;});
+    return piece.checkTeam(turnCriteria.getCurrentPlayer()) ? allPieceMovements : Set.of();
   }
 
   /**
