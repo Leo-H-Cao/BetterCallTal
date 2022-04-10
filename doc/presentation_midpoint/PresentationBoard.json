@@ -5,7 +5,8 @@
       "columns": 8,
       "turnCriteria": "linear",
       "colors": ["black", "white"],
-      "winCondition": ["checkmate", "stalemate"]
+      "winCondition": ["Checkmate", "Stalemate"],
+      "validStateChecker": ["Check"]
     }
   ],
   "playerInfo": [
