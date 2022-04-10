@@ -49,11 +49,10 @@ public class MovementHandler {
       throw new InvalidMoveException("Tile is not a valid move!");
     }
 
-    //TODO: need to know whether a move is a capture or not for OIM, things like atomic
     Set<ChessTile> updatedSquares = new HashSet<>(findMovements(piece, finalSquare, board));
     updatedSquares.addAll(findCaptures(piece, finalSquare, board));
 
-    movementModifiers.forEach((mm) -> updatedSquares.addAll(mm.updateMovement(piece, finalSquare, board)));
+    movementModifiers.forEach((mm) -> updatedSquares.addAll(mm.updateMovement(piece, board)));
     return updatedSquares;
   }
 
@@ -81,6 +80,7 @@ public class MovementHandler {
     Set<ChessTile> updatedSquares = new HashSet<>();
     captures.stream().filter((m) -> m.getCaptures(piece, board).contains(captureSquare)).findFirst().ifPresent((m) ->
     {try{updatedSquares.addAll(m.capturePiece(piece, captureSquare.getCoordinates(), board));} catch (Exception ignored){}});
+    updatedSquares.addAll(piece.runInteractionModifiers(board));
     return updatedSquares;
   }
 
