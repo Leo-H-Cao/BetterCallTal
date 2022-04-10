@@ -2,7 +2,7 @@ package oogasalad.Editor.ModelState.PiecesState;
 
 import javafx.scene.image.Image;
 
-public class EditorPiece {
+public class LibraryPiece {
 
   private MovementRules myMovementRules;
   private int pointValue;
@@ -11,7 +11,7 @@ public class EditorPiece {
   private int myTeamNumber;
   private Image myImage;
 
-  public EditorPiece(int points, MovementRules movementRules, String pieceID, String pieceName, int teamNumber, Image image ){
+  public LibraryPiece(int points, MovementRules movementRules, String pieceID, String pieceName, int teamNumber, Image image ){
     myMovementRules = movementRules;
     pointValue = points;
     myPieceID = pieceID;

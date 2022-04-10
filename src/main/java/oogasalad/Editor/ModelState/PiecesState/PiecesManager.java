@@ -6,14 +6,14 @@ import javafx.scene.image.Image;
 
 public class PiecesManager {
 
-  private ArrayList<EditorPiece> availablePieces;
+  private ArrayList<LibraryPiece> availablePieces;
 
   public PiecesManager(){
     availablePieces = new ArrayList<>();
   }
 
-  public EditorPiece createPiece(int points, MovementRules movementRules, String pieceID, String pieceName, int teamNumber, Image image) {
-    EditorPiece newPiece = new EditorPiece(points, movementRules, pieceID, pieceName, teamNumber, image);
+  public LibraryPiece createPiece(int points, MovementRules movementRules, String pieceID, String pieceName, int teamNumber, Image image) {
+    LibraryPiece newPiece = new LibraryPiece(points, movementRules, pieceID, pieceName, teamNumber, image);
     availablePieces.add(newPiece);
     return newPiece;
   }
@@ -26,11 +26,11 @@ public class PiecesManager {
     findPiece(pieceID).setPieceMovement(movementRules);
   }
 
-  public EditorPiece getPiece(String pieceID){
+  public LibraryPiece getPiece(String pieceID){
     return findPiece(pieceID);
   }
 
-  public List<EditorPiece> getAllPieces(){
+  public List<LibraryPiece> getAllPieces(){
     return availablePieces;
   }
 
@@ -42,8 +42,8 @@ public class PiecesManager {
     findPiece(pieceID).setPointValue(points);
   }
 
-  private EditorPiece findPiece(String pieceID){
-    for(EditorPiece piece : availablePieces){
+  private LibraryPiece findPiece(String pieceID){
+    for(LibraryPiece piece : availablePieces){
       if(piece.getPieceID().equals(pieceID)){
         return piece;
       }

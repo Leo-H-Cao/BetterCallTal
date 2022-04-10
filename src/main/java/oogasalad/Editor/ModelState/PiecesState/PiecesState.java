@@ -11,11 +11,11 @@ public class PiecesState {
     piecesManager = new PiecesManager();
   }
 
-  public EditorPiece getPiece(String pieceID) {
+  public LibraryPiece getPiece(String pieceID) {
     return piecesManager.getPiece(pieceID);
   }
 
-  public List<EditorPiece> getAllPieces(){
+  public List<LibraryPiece> getAllPieces(){
     return piecesManager.getAllPieces();
   }
 
@@ -23,7 +23,7 @@ public class PiecesState {
     piecesManager.changePieceImage(pieceID, imageFile);
   }
 
-  public EditorPiece createCustomPiece(int points, int teamNumber, Image image, MovementRules movementRules, String pieceID, String pieceName) {
+  public LibraryPiece createCustomPiece(int points, int teamNumber, Image image, MovementRules movementRules, String pieceID, String pieceName) {
     return piecesManager.createPiece(points,movementRules, pieceID, pieceName, teamNumber, image);
   }
 

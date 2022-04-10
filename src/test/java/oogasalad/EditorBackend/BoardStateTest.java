@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import oogasalad.Editor.Exceptions.InavlidPieceIDException;
 import oogasalad.Editor.ModelState.BoardAndPieces;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
-import oogasalad.Editor.ModelState.PiecesState.EditorPiece;
+import oogasalad.Editor.ModelState.PiecesState.LibraryPiece;
 import oogasalad.Editor.ModelState.PiecesState.MovementRules;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Frontend.Menu.LanguageModal;
@@ -79,7 +79,7 @@ class BoardStateTest extends DukeApplicationTest {
   @Test
   void testFindInvalidPieceIDInBoard(){
     String pieceID = "123";
-    EditorPiece piece1 = piecesState.createCustomPiece(1, 1, new Image("images/pieces/black/rook.png"), new MovementRules(), pieceID, "my piece");
+    LibraryPiece piece1 = piecesState.createCustomPiece(1, 1, new Image("images/pieces/black/rook.png"), new MovementRules(), pieceID, "my piece");
     boardState.setPieceStartingLocation(piece1.getPieceID(), 3,4);
     String invalidID = "456";
 
