@@ -46,11 +46,11 @@ class GeneralBoardTest {
 
     board = new ChessBoard(3, 3, turnCriteria, players, List.of());
     pieceOne = new Piece(new PieceData(new Coordinate(0, 0), "test1", 0, 0, false,
-        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), "test1.png"));
+        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), "test1.png"));
     pieceTwo = new Piece(new PieceData(new Coordinate(1, 0), "test2", 0, 1, false,
-        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
+        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(),  ""));
     pieceThree = new Piece(new PieceData(new Coordinate(2, 0), "test3", 0, 2, false,
-        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
+        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
     pieces = List.of(pieceOne, pieceTwo, pieceThree);
     board.setPieces(pieces);
   }

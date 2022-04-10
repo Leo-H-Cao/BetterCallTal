@@ -1,16 +1,18 @@
-package oogasalad.GamePlayer.GameClauses;
+package oogasalad.GamePlayer.Board.EndConditions;
 
-import static oogasalad.GamePlayer.GameClauses.CheckValidator.isInCheck;
-import static oogasalad.GamePlayer.GameClauses.StalemateValidator.isStaleMate;
+import static oogasalad.GamePlayer.Board.EndConditions.Stalemate.isStaleMate;
 
+import java.util.Map;
+import java.util.Optional;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
+import oogasalad.GamePlayer.ValidStateChecker.Check;
 
 /**
  * This class
  * @author Jose Santillan
  */
-public class CheckmateValidator {
+public class Checkmate implements EndCondition{
 
   /**
    * Public method that returns whether the board has reached
@@ -18,12 +20,11 @@ public class CheckmateValidator {
    * @return Whether the board is in checkmate or not
    */
   public static boolean isInMate(ChessBoard board, int id) throws OutsideOfBoardException {
-
-    return CheckValidator.isInCheck(board, id) && StalemateValidator.isStaleMate(board, id);
+    return new Check().isValid(board, id) && Stalemate.isStaleMate(board, id);
   }
 
   public static boolean isInMate2(ChessBoard board, int id) throws OutsideOfBoardException {
-    if (!isInCheck(board, id) || isStaleMate(board, id)) return false;
+    if (!new Check().isValid(board, id) || isStaleMate(board, id)) return false;
 
     boolean mainCanMove = board.getPieces().stream()
         .anyMatch(p -> p.checkTeam(id) && p.isTargetPiece());
@@ -33,4 +34,8 @@ public class CheckmateValidator {
     return true;
   }
 
+  @Override
+  public Optional<Map<Integer, Double>> getScores(ChessBoard board) {
+    return Optional.empty();
+  }
 }

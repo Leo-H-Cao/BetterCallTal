@@ -1,5 +1,6 @@
 package oogasalad.Frontend.Game;
 
+import java.io.IOException;
 import java.util.Optional;
 import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.Controller;
