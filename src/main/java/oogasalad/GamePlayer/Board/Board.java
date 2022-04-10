@@ -2,6 +2,7 @@ package oogasalad.GamePlayer.Board;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,6 +17,7 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
+@Deprecated(since = "4.10.22", forRemoval = false)
 public class Board implements Iterable<ChessTile> {
 
   private final List<List<ChessTile>> board;
@@ -98,7 +100,8 @@ public class Board implements Iterable<ChessTile> {
    * @return set of tiles the piece can move to
    */
   public Set<ChessTile> getMoves(Piece piece, int currentPlayer) {
-    return piece.checkTeam(currentPlayer) ? piece.getMoves(this) : Set.of();
+    //return piece.checkTeam(currentPlayer) ? piece.getMoves(this) : Set.of();
+    return new HashSet<>();
   }
 
   /**
