@@ -228,11 +228,11 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @param piece to get moves from
    * @return set of tiles the piece can move to
    */
-  public Set<ChessTile> getMoves(Piece piece) {
+  public Set<ChessTile> getMoves(Piece piece) throws EngineException, OutsideOfBoardException{
     // TODO: add valid state checker here
     ValidStateChecker check = new Check();
     Set<ChessTile> allPieceMovements = piece.getMoves(this);
-    allPieceMovements.removeIf(entry -> {
+    allPieceMovements.removeIf(entry ->  {
       ChessBoard copy = null;
       try {
         copy = makeHypotheticalMove(this.getTile(piece.getCoordinates()).getPiece().get(), entry.getCoordinates());
@@ -240,7 +240,7 @@ public class ChessBoard implements Iterable<ChessTile> {
           return true;
         }
       } catch (EngineException e) {
-        e.printStackTrace();
+        return false;
       }
       return false;});
     return piece.checkTeam(turnCriteria.getCurrentPlayer()) ? allPieceMovements : Set.of();
