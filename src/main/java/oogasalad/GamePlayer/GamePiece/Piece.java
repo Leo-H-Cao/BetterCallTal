@@ -205,6 +205,17 @@ public class Piece implements Cloneable {
   }
 
   /***
+   * Updates board state based on interaction modifiers and returns set of updated tiles
+   *
+   * @param board that piece is on
+   * @return set of updated tiles based on logic in each interaction modifier
+   */
+  public Set<ChessTile> runInteractionModifiers(ChessBoard board) {
+    return onInteractionModifiers.stream().flatMap((oim) -> oim.updateMovement(this, board).stream()).collect(
+        Collectors.toSet());
+  }
+
+  /***
    * @return complete copy of the piece, including copies of all instance variables
    */
   @Override
