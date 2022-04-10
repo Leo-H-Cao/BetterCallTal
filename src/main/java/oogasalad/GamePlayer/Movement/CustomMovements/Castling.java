@@ -104,7 +104,7 @@ public class Castling implements MovementInterface {
    */
   @Override
   public Set<ChessTile> getCaptures(Piece piece, ChessBoard board) {
-    return new HashSet<>();
+    return Collections.emptySet();
   }
 
   /**
