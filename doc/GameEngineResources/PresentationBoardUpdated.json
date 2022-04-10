@@ -3,10 +3,10 @@
     {
       "rows": 8,
       "columns": 8,
-      "turnCriteria": "linear",
+      "turnCriteria": "Linear",
       "colors": ["black", "white"],
-      "winCondition": ["Checkmate", "Stalemate"],
-      "validStateChecker": ["Check"]
+      "endConditions": ["Checkmate", "Stalemate"],
+      "validStateCheckers": ["Check"]
     }
   ],
   "playerInfo": [
@@ -29,7 +29,7 @@
       "team": 0,
       "basicMovements": ["wPawnMov"],
       "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove"
+      "customMoves": ["DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
@@ -45,7 +45,7 @@
       "team": 0,
       "basicMovements": ["wPawnMov"],
       "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove"
+      "customMoves": ["DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
@@ -61,7 +61,7 @@
       "team": 0,
       "basicMovements": ["wPawnMov"],
       "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove"
+      "customMoves": ["DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
@@ -77,7 +77,7 @@
       "team": 0,
       "basicMovements": ["wPawnMov"],
       "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove"
+      "customMoves": ["DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
@@ -93,7 +93,7 @@
       "team": 0,
       "basicMovements": ["wPawnMov"],
       "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove"
+      "customMoves": ["DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
@@ -109,7 +109,7 @@
       "team": 0,
       "basicMovements": ["wPawnMov"],
       "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove"
+      "customMoves": ["DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
@@ -125,7 +125,7 @@
       "team": 0,
       "basicMovements": ["wPawnMov"],
       "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove"
+      "customMoves": ["DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
@@ -141,7 +141,7 @@
       "team": 0,
       "basicMovements": ["wPawnMov"],
       "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove"
+      "customMoves": ["DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
@@ -269,7 +269,7 @@
       "team": 1,
       "basicMovements": ["bPawnMov"],
       "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove"
+      "customMoves": ["DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
@@ -285,7 +285,7 @@
       "team": 1,
       "basicMovements": ["bPawnMov"],
       "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove"
+      "customMoves": ["DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
@@ -301,7 +301,7 @@
       "team": 1,
       "basicMovements": ["bPawnMov"],
       "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove"
+      "customMoves": ["DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
@@ -317,7 +317,7 @@
       "team": 1,
       "basicMovements": ["bPawnMov"],
       "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove"
+      "customMoves": ["DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
@@ -333,7 +333,7 @@
       "team": 1,
       "basicMovements": ["bPawnMov"],
       "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove"
+      "customMoves": ["DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
@@ -349,7 +349,7 @@
       "team": 1,
       "basicMovements": ["bPawnMov"],
       "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove"
+      "customMoves": ["DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
@@ -365,7 +365,7 @@
       "team": 1,
       "basicMovements": ["bPawnMov"],
       "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove"
+      "customMoves": ["DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
@@ -381,7 +381,7 @@
       "team": 1,
       "basicMovements": ["bPawnMov"],
       "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove"
+      "customMoves": ["DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],

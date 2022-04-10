@@ -266,6 +266,6 @@ public class Movement implements MovementInterface{
    * @return String of all relative coordinates
    */
   public String toString() {
-    return possibleMoves.toString();
+    return possibleMoves.toString() + ": " + infinite;
   }
 }

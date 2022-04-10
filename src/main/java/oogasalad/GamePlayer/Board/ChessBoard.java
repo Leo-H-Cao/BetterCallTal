@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,6 +29,7 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.ValidStateChecker.Check;
 import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,7 +46,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   private List<EndCondition> endConditions;
   private int currentPlayer;
   private Map<Integer, Double> endResult;
-  private List<ChessBoard> history;
+  private List<History> history;
   private List<ValidStateChecker> validStateCheckers;
 
   /**
@@ -87,34 +89,6 @@ public class ChessBoard implements Iterable<ChessTile> {
         });
   }
 
-  //TODO: remove this testing main method
-  public static void main(String[] args) {
-    Player playerOne = new Player(0, null);
-    Player playerTwo = new Player(1, null);
-    Player playerThree = new Player(2, null);
-    Player[] players = new Player[]{playerOne, playerTwo, playerThree};
-
-    TurnCriteria turnCriteria = new Linear(players);
-
-    ChessBoard board = new ChessBoard(3, 3, turnCriteria, players, List.of());
-    Piece pieceOne = new Piece(new PieceData(new Coordinate(0, 0), "test1", 0, 0, false,
-        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
-        Collections.emptyList(), Collections.emptyList(), "test1.png"));
-    Piece pieceTwo = new Piece(new PieceData(new Coordinate(1, 0), "test2", 0, 1, false,
-        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
-        Collections.emptyList(), Collections.emptyList(), ""));
-    Piece pieceThree = new Piece(new PieceData(new Coordinate(2, 0), "test3", 0, 2, false,
-        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
-        Collections.emptyList(), Collections.emptyList(), ""));
-    List<Piece> pieces = List.of(pieceOne, pieceTwo, pieceThree);
-    board.setPieces(pieces);
-    try {
-      LOG.debug("Updated moves: " + board.makeHypotheticalMove(pieceOne, Coordinate.of(0, 1)));
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
   /**
    * @return team nums associated with each player
    */
@@ -132,9 +106,16 @@ public class ChessBoard implements Iterable<ChessTile> {
     if (history.isEmpty()) {
       pieces.forEach(p -> {
         Coordinate coordinate = p.getCoordinates();
-        board.get(coordinate.getRow()).get(coordinate.getCol()).addPiece(p);
+        try {
+          getTile(coordinate).addPiece(p);
+        } catch (OutsideOfBoardException ignored) {
+          LOG.warn("Set pieces has out of bounds coordinate");
+        }
       });
-      history.add(deepCopy());
+      ChessBoard copied = deepCopy();
+      LOG.debug("History updated for first time");
+      history.add(new History(copied, new HashSet<>(pieces), pieces.stream().map((p) -> board.get(p.getCoordinates().getRow()).get(p.getCoordinates().getCol())).collect(
+          Collectors.toSet())));
       return true;
     }
     LOG.warn("Attempted board setting after game start");
@@ -152,9 +133,11 @@ public class ChessBoard implements Iterable<ChessTile> {
     // TODO: valid state checker for person who just moved (redundunt - optional)
     // TODO: check end conditions for other player(s)
     if (!isGameOver() && piece.checkTeam(turnCriteria.getCurrentPlayer())) {
-      history.add(deepCopy());
-      return new TurnUpdate(piece.move(getTileFromCoords(finalSquare), this),
+      TurnUpdate update = new TurnUpdate(piece.move(getTileFromCoords(finalSquare), this),
           turnCriteria.incrementTurn());
+      history.add(new History(deepCopy(), Set.of(piece), update.updatedSquares()));
+      LOG.debug("History updated: " + history.size());
+      return update;
     }
     LOG.warn(isGameOver() ? "Move made after game over" : "Move made by wrong player");
     throw isGameOver() ? new MoveAfterGameEndException("") : new WrongPlayerException(
@@ -168,12 +151,14 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @param finalSquare to move the piece to
    * @return copy of the chessboard after the hypothetical move is made
    */
-  public Set<ChessTile> makeHypotheticalMove(Piece piece, Coordinate finalSquare)
+  public ChessBoard makeHypotheticalMove(Piece piece, Coordinate finalSquare)
       throws EngineException {
     ChessBoard boardCopy = deepCopy();
     Piece copiedPiece = boardCopy.getTile(piece.getCoordinates()).getPiece().orElseThrow(
         () -> new InvalidMoveException("Hypothetical move could not be made"));
-    return copiedPiece.move(boardCopy.getTile(finalSquare), boardCopy);
+    copiedPiece.move(boardCopy.getTile(finalSquare), boardCopy);
+
+    return boardCopy;
   }
 
   /**
@@ -207,7 +192,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   /**
    * @return list of board history
    */
-  public List<ChessBoard> getHistory() {
+  public List<History> getHistory() {
     return history;
   }
 
@@ -225,9 +210,22 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @param piece to get moves from
    * @return set of tiles the piece can move to
    */
-  public Set<ChessTile> getMoves(Piece piece) {
+  public Set<ChessTile> getMoves(Piece piece) throws EngineException, OutsideOfBoardException{
     // TODO: add valid state checker here
-    return piece.checkTeam(turnCriteria.getCurrentPlayer()) ? piece.getMoves(this) : Set.of();
+    ValidStateChecker check = new Check();
+    Set<ChessTile> allPieceMovements = piece.getMoves(this);
+    allPieceMovements.removeIf(entry -> {
+      ChessBoard copy;
+      try {
+        copy = makeHypotheticalMove(this.getTile(piece.getCoordinates()).getPiece().get(), entry.getCoordinates());
+        if(!check.isValid(copy, piece.getTeam())){
+          return true;
+        }
+      } catch (EngineException e) {
+        return false;
+      }
+      return false;});
+    return piece.checkTeam(turnCriteria.getCurrentPlayer()) ? allPieceMovements : Set.of();
   }
 
   /**
