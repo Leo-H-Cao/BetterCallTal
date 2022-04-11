@@ -8,6 +8,7 @@ import java.util.PriorityQueue;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.GamePlayers;
+import oogasalad.GamePlayer.Board.History;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 
 /**
@@ -80,7 +81,7 @@ public class LocalTurnManager implements TurnManager {
    */
   @Override
   public ChessBoard getCurrentBoard() {
-    return history.getCurrentState();
+    return history.getCurrentState().board();
   }
 
   /**
@@ -89,8 +90,18 @@ public class LocalTurnManager implements TurnManager {
    * @param board The new state to add.
    */
   @Override
-  public ChessBoard addToHistory(ChessBoard board) {
-    return history.add(board);
+  public void addToHistory(History board) {
+    history.add(board);
+  }
+
+  /**
+   * Returns the first state of the game.
+   *
+   * @return the first state of the game.
+   */
+  @Override
+  public ChessBoard getFirstBoard() {
+    return history.getFirstState().board();
   }
 
   /**

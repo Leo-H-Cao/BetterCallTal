@@ -4,6 +4,7 @@ import java.util.Map;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.GamePlayers;
+import oogasalad.GamePlayer.Board.History;
 
 /**
  * Interface for managing all turn interactions. it has two implementations: a local and a server
@@ -45,7 +46,14 @@ public interface TurnManager {
    *
    * @param board The new state to add.
    */
-  ChessBoard addToHistory(ChessBoard board);
+  void addToHistory(History board);
+
+  /**
+   * Returns the first state of the game.
+   *
+   * @return the first state of the game.
+   */
+  ChessBoard getFirstBoard();
 
   /**
    * Returns the size of the history.
