@@ -1,9 +1,12 @@
-package oogasalad.EditorBackend;
+package oogasalad.Editor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import oogasalad.Editor.Exceptions.MovementGridException;
 import oogasalad.Editor.ModelState.EditPiece.EditSinglePiece;
 import oogasalad.Editor.ModelState.EditPiece.PieceGridTile;
 import oogasalad.Frontend.Menu.LanguageModal;
@@ -112,6 +115,24 @@ public class EditPieceTest extends DukeApplicationTest {
     editSinglePiece.removeInfiniteTiles(0, 1);
     editSinglePiece.removeInfiniteTiles(-1,0);
     checkBoardAllClosed();
+  }
+
+  @Test
+  void testMovementGridExceptions(){
+    Exception infiniteMovementInvalidDirections = assertThrows(MovementGridException.class, () -> {
+      editSinglePiece.setInfiniteTiles(-3, 1);
+    });
+    String infiniteMovementExpectedMessage = "Directions for infinite movement are invalid";
+    String actualMessage = infiniteMovementInvalidDirections.getMessage();
+    assertTrue(actualMessage.contains(infiniteMovementExpectedMessage));
+
+    Exception finiteMovementInvalidCoordinates = assertThrows(MovementGridException.class, () -> {
+      editSinglePiece.setTileOpen(3, 8);
+    });
+
+    String finiteMovementExpectedMessage = "Coordinates for finite movement are invalid";;
+    actualMessage = finiteMovementInvalidCoordinates.getMessage();
+    assertTrue(actualMessage.contains(finiteMovementExpectedMessage));
   }
 
   private void checkBoardAllClosed(){
