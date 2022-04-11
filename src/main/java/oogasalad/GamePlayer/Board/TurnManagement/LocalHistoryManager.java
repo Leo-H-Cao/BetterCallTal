@@ -150,10 +150,9 @@ public class LocalHistoryManager implements HistoryManager {
    *
    * @return the state that was cleared to.
    */
-  public LocalHistoryManager clearHistory() {
+  public void clearHistory() {
     history.clear();
     currentIndex = 0;
-    return this;
   }
 
   /**

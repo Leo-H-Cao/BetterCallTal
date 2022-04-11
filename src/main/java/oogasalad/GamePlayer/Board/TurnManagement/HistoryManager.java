@@ -70,7 +70,7 @@ interface HistoryManager {
    *
    * @return the state that was cleared to.
    */
-  ChessHistory clearHistory();
+  void clearHistory();
 
   /**
    * Returns whether the history is empty.
