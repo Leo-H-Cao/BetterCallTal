@@ -7,6 +7,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Popup;
 import oogasalad.Frontend.Game.Sections.BoardGrid;
+import oogasalad.Frontend.Game.Sections.GameOverDisplay;
 import oogasalad.Frontend.Game.Sections.TopSection;
 import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.View;
@@ -18,6 +19,7 @@ import oogasalad.GamePlayer.Board.TurnUpdate;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.Stack;
 import java.util.function.Consumer;
 import org.apache.logging.log4j.LogManager;
@@ -113,9 +115,15 @@ public class GameView extends View {
         Turn = tu.nextPlayer();
         myBoardGrid.updateTiles(tu.updatedSquares());
         if (getViewManager().getMyGameBackend().getChessBoard().isGameOver()) {
-            GameOver = true;
-            Popup gameoverpop = new Popup();
+           gameOver();
         }
+    }
+
+    private void gameOver(){
+        GameOver = true;
+        Map<Integer, Double> scores = getViewManager().getMyGameBackend().getChessBoard().getScores();
+        GameOverDisplay godisp = new GameOverDisplay(ViewManager.getLanguage(), scores, removeGOCons);
+        myCenterBoard.getChildren().add(godisp.getDisplay());
     }
 
 

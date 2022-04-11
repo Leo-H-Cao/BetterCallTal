@@ -24,13 +24,26 @@ public class GameOverDisplay {
     }};
     private Consumer<Node> removeCons;
     private static final String OK_BUTTON_ID = "OK";
+    private static Double WINVALUE = 1.0;
 
-    public GameOverDisplay(ResourceBundle rb, int winner, Consumer<Node> remove) {
+    public GameOverDisplay(ResourceBundle rb, Map<Integer, Double> scores, Consumer<Node> remove) {
         removeCons =remove;
         language = rb;
         myDisplay = new Pane();
+        int winner = findWinner(scores);
         VBox vb = setUpDisplay(winner);
         myDisplay.getChildren().add(vb);
+    }
+
+    private Integer findWinner(Map<Integer, Double> scores){
+        int ret = 0;
+        for (int k : scores.keySet()){
+            if (scores.get(k) == WINVALUE) {
+                ret = k;
+                break;
+            }
+        }
+        return ret;
     }
 
     private VBox setUpDisplay(int winner) {
