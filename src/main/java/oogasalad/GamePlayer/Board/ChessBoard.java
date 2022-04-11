@@ -131,7 +131,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     if (/*!isGameOver() &&*/ piece.checkTeam(turnCriteria.getCurrentPlayer())) {
       TurnUpdate update = new TurnUpdate(piece.move(getTileFromCoords(finalSquare), this),
           turnCriteria.incrementTurn());
-      if(!isGameOver()){
+      if(!isGameOver() || true){
         history.add(new History(deepCopy(), Set.of(piece), update.updatedSquares()));
         LOG.debug("History updated: " + history.size());
         return update;
