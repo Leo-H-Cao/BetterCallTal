@@ -1,12 +1,9 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
-import static oogasalad.GamePlayer.Board.EndConditions.Stalemate.isStaleMate;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.ValidStateChecker.Check;
 
 /**
@@ -20,12 +17,12 @@ public class Checkmate implements EndCondition {
    *
    * @return Whether the board is in checkmate or not
    */
-  public static boolean isInMate(ChessBoard board, int id) throws OutsideOfBoardException {
-    return new Check().isValid(board, id) && Stalemate.isStaleMate(board, id);
+  public static boolean isInMate(ChessBoard board, int id) throws EngineException {
+    return new Check().isValid(board, id) && new Stalemate().hasNoLegalMoves(board, id);
   }
 
-  public static boolean isInMate2(ChessBoard board, int id) throws OutsideOfBoardException {
-    if (!new Check().isValid(board, id) || isStaleMate(board, id))
+  public static boolean isInMate2(ChessBoard board, int id) throws EngineException {
+    if (!new Check().isValid(board, id) || new Stalemate().hasNoLegalMoves(board, id))
       return false;
 
     boolean mainCanMove = board.getPieces().stream()

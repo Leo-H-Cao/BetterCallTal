@@ -103,4 +103,15 @@ class GeneralBoardTest {
       fail();
     }
   }
+
+  @Test
+  void tileTest() {
+    ChessTile tile = new ChessTile();
+    assertTrue(tile.getPieces().isEmpty());
+    assertEquals(Coordinate.of(0, 0), tile.getCoordinates());
+
+    tile = new ChessTile(Coordinate.of(0, 0), pieceOne);
+    assertEquals(pieceOne, tile.getPiece().get());
+    assertEquals(Coordinate.of(0, 0), tile.getCoordinates());
+  }
 }

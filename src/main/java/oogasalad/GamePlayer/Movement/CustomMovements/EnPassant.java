@@ -98,6 +98,7 @@ public class EnPassant implements MovementInterface {
   /***
    * Finds tiles that are possible to capture with en passant - there is a piece on the square,
    * it has just moved, it has the same name as the en passant exacter, and it only has moved once
+   * Due ot hypothetical moves, special case for history.size() == 0
    *
    * @param enPassantExacter to get en passant tiles from
    * @param board to search on
