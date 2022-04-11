@@ -1,6 +1,7 @@
 package oogasalad.Frontend.Game;
 
-import java.util.Collection;
+import java.util.*;
+
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
@@ -20,8 +21,6 @@ import oogasalad.GamePlayer.Board.TurnUpdate;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
 import java.util.Collection;
-import java.util.Map;
-import java.util.Stack;
 import java.util.function.Consumer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -154,5 +153,13 @@ public class GameView extends View {
 
     private void flipBoard() {
         myBoardGrid.flip();
+    }
+
+
+    /**
+     * RECEIVED PERMISSION FROM DUVALL TO DO THIS
+     */
+    public static Piece promotionPopUp(List<Piece> possPromotions){
+        return possPromotions.get(0);
     }
 }
