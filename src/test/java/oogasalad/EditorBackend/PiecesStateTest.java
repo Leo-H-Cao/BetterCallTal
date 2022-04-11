@@ -2,12 +2,12 @@ package oogasalad.EditorBackend;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import oogasalad.Editor.ModelState.PiecesState.EditorPiece;
+import oogasalad.Editor.ModelState.EditPiece.EditPieceGrid;
+import oogasalad.Editor.ModelState.PiecesState.LibraryPiece;
 import oogasalad.Editor.ModelState.PiecesState.MovementRules;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Frontend.Menu.LanguageModal;
@@ -39,7 +39,7 @@ public class PiecesStateTest extends DukeApplicationTest {
   @Test
   void testCreatePiece(){
     String pieceID = "123";
-    EditorPiece newPiece = piecesState.createCustomPiece(1, 1, new Image("images/pieces/black/rook.png"), new MovementRules(), pieceID, "my piece");
+    LibraryPiece newPiece = piecesState.createCustomPiece(1, 1, new Image("images/pieces/black/rook.png"), new EditPieceGrid(), pieceID, "my piece");
     assertEquals(pieceID, piecesState.getPiece(pieceID).getPieceID());
   }
 
@@ -47,7 +47,7 @@ public class PiecesStateTest extends DukeApplicationTest {
   void testChangePieceImage(){
     String pieceID = "123";
     Image rookImage = new Image("images/pieces/black/rook.png");
-    piecesState.createCustomPiece(1, 1,rookImage , new MovementRules(), pieceID, "my piece");
+    piecesState.createCustomPiece(1, 1,rookImage , new EditPieceGrid(), pieceID, "my piece");
     assertEquals(rookImage, piecesState.getPiece(pieceID).getImage());
     Image newImage = new Image("images/pieces/black/queen.png");
     piecesState.changePieceImage(pieceID,newImage);
@@ -57,10 +57,10 @@ public class PiecesStateTest extends DukeApplicationTest {
   @Test
   void testGetPieces(){
     String pieceID = "123";
-    piecesState.createCustomPiece(1, 1, new Image("images/pieces/black/rook.png"), new MovementRules(), pieceID, "my piece");
+    piecesState.createCustomPiece(1, 1, new Image("images/pieces/black/rook.png"), new EditPieceGrid(), pieceID, "my piece");
     String pieceID2 = "456";
-    piecesState.createCustomPiece(1, 1, new Image("images/pieces/black/rook.png"), new MovementRules(), pieceID2, "my piece2");
-    List<EditorPiece> pieces = piecesState.getAllPieces();
+    piecesState.createCustomPiece(1, 1, new Image("images/pieces/black/rook.png"), new EditPieceGrid(), pieceID2, "my piece2");
+    List<LibraryPiece> pieces = piecesState.getAllPieces();
     assertEquals(pieceID, pieces.get(0).getPieceID());
     assertEquals(pieceID2, pieces.get(1).getPieceID());
   }

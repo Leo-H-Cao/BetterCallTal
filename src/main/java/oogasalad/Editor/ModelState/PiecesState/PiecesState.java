@@ -3,6 +3,9 @@ package oogasalad.Editor.ModelState.PiecesState;
 
 import java.util.List;
 import javafx.scene.image.Image;
+import oogasalad.Editor.ModelState.EditPiece.EditPieceGrid;
+import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
+import oogasalad.Editor.ModelState.EditPiece.PieceGridTile;
 
 public class PiecesState {
   private PiecesManager piecesManager;
@@ -11,11 +14,11 @@ public class PiecesState {
     piecesManager = new PiecesManager();
   }
 
-  public EditorPiece getPiece(String pieceID) {
+  public LibraryPiece getPiece(String pieceID) {
     return piecesManager.getPiece(pieceID);
   }
 
-  public List<EditorPiece> getAllPieces(){
+  public List<LibraryPiece> getAllPieces(){
     return piecesManager.getAllPieces();
   }
 
@@ -23,12 +26,12 @@ public class PiecesState {
     piecesManager.changePieceImage(pieceID, imageFile);
   }
 
-  public EditorPiece createCustomPiece(int points, int teamNumber, Image image, MovementRules movementRules, String pieceID, String pieceName) {
-    return piecesManager.createPiece(points,movementRules, pieceID, pieceName, teamNumber, image);
+  public LibraryPiece createCustomPiece(int points, int teamNumber, Image image, EditPieceGrid editPieceGrid, String pieceID, String pieceName) {
+    return piecesManager.createPiece(points,editPieceGrid, pieceID, pieceName, teamNumber, image);
   }
 
-  public void changePieceMovement(String pieceID, MovementRules movementRules) {
-    piecesManager.changePieceMovement(pieceID, movementRules);
+  public void changePieceMovement(String pieceID, EditPieceGrid editPieceGrid) {
+    piecesManager.changePieceMovement(pieceID, editPieceGrid);
   }
 
   public void setPiecePointValue(String pieceID, int points){
