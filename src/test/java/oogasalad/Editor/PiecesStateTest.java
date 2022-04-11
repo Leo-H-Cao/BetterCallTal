@@ -55,6 +55,20 @@ public class PiecesStateTest extends DukeApplicationTest {
   }
 
   @Test
+  void testChangePieceAttributes(){
+    String pieceID = "123";
+    Image rookImage = new Image("images/pieces/black/rook.png");
+    piecesState.createCustomPiece(1, 1, rookImage , new EditorPiece(pieceID), "my piece");
+    assertEquals("my piece", piecesState.getPiece(pieceID).getPieceName());
+    assertEquals(1, piecesState.getPiece(pieceID).getPointValue());
+    piecesState.setPiecePointValue(pieceID, 3);
+    piecesState.setPieceName(pieceID, "new name");
+    assertEquals("new name", piecesState.getPiece(pieceID).getPieceName());
+    assertEquals(3, piecesState.getPiece(pieceID).getPointValue());
+
+  }
+
+  @Test
   void testGetPieces(){
     String pieceID = "123";
     piecesState.createCustomPiece(1, 1, new Image("images/pieces/black/rook.png"), new EditorPiece(pieceID), "my piece");

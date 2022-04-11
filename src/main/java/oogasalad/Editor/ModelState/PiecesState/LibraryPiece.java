@@ -65,7 +65,7 @@ public class LibraryPiece {
   }
 
   public void setPieceImage(Image image){
-    image = image;
+    this.image = image;
   }
 
 
