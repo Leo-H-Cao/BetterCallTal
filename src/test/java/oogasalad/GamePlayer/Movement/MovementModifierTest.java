@@ -1,10 +1,11 @@
 package oogasalad.GamePlayer.Movement;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.AtomicEndCondition;
 import oogasalad.GamePlayer.Board.Player;
@@ -50,10 +51,9 @@ class MovementModifierTest {
   void atomicTestHappy() {
     try {
       assertFalse(board.isGameOver());
-      // Uncomment when pieces actually use on interaction modifiers
-//      whiteAttacker.move(board.getTile(Coordinate.of(1, 0)));
-//      assertTrue(board.isGameOver());
-//      assertEquals(Map.of(0, 0.0, 1, 0.0),board.getScores().get());
+      whiteAttacker.move(board.getTile(Coordinate.of(1, 0)), board);
+      assertTrue(board.isGameOver());
+      assertEquals(Map.of(0, 0.0, 1, 0.0), board.getScores());
     } catch(Exception e) {
       fail();
     }
