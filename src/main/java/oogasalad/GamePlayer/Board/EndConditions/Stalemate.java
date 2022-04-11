@@ -1,19 +1,21 @@
-package oogasalad.GamePlayer.GameClauses;
+package oogasalad.GamePlayer.Board.EndConditions;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
-public class StalemateValidator {
+public class Stalemate implements EndCondition{
 
 
   public static boolean isStaleMate(ChessBoard board, int id){
     Set<Piece> friendlyPieces = friendlyPieces(board, id);
     for(Piece p : friendlyPieces){
-      if(!p.getMoves().isEmpty()){
+      if(!p.getMoves(board).isEmpty()){
         return false;
       }
     }
@@ -30,4 +32,8 @@ public class StalemateValidator {
         .collect(Collectors.toSet());
   }
 
+  @Override
+  public Optional<Map<Integer, Double>> getScores(ChessBoard board) {
+    return Optional.empty();
+  }
 }

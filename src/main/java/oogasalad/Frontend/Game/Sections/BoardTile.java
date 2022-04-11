@@ -80,11 +80,12 @@ public class BoardTile {
      */
 
     public void updateTile(ChessTile ct) {
-        if (! myPieces.isEmpty()) {
+        LOG.debug(String.format("Updating tile: (%d, %d)", this.getCoordinate().getRow(), this.getCoordinate().getCol()));
+//        if (! myPieces.isEmpty()) {
             removePieceImages();
             myPieces.clear();
             myImages.clear();
-        }
+//        }
         myPieces.addAll(ct.getPieces());
         for (Piece p : myPieces) {
             ImageView pieceview = CreateImage(p.getName(), p.getTeam());
@@ -151,7 +152,7 @@ public class BoardTile {
      */
     public void LightUp(Boolean b) {
         Lit = b;
-        LOG.debug("Lit up: %d, %d", myCoord.getRow(), myCoord.getCol());
+        LOG.debug(String.format("Lit up: %d, %d", myCoord.getRow(), myCoord.getCol()));
         if (Lit) {
             myStackPane.setBorder(myLitUpBorder);
         } else {

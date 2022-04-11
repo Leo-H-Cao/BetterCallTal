@@ -5,7 +5,8 @@
       "columns": 8,
       "turnCriteria": "linear",
       "colors": ["black", "white"],
-      "winCondition": ["checkmate", "stalemate"]
+      "winCondition": ["Checkmate", "Stalemate"],
+      "validStateChecker": ["Check"]
     }
   ],
   "playerInfo": [
@@ -20,19 +21,19 @@
   ],
   "pieces": [
     {
-      "coordinateY": 6,
-      "coordinateX": 0,
+      "row": 6,
+      "col": 0,
       "pieceName": "Pawn",
       "imgFile": "whitepawn",
       "pointValue": 1,
       "team": 0,
       "unboundedMovements": [],
       "boundedMovements": [
-        [-1, 0]
+        [0, -1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
-        [-1, 1],
+        [1, -1],
         [-1, -1]
       ],
       "movementSetModifiers": [
@@ -43,19 +44,19 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 6,
-      "coordinateX": 1,
+      "row": 6,
+      "col": 1,
       "pieceName": "Pawn",
       "imgFile": "whitepawn",
       "pointValue": 1,
       "team": 0,
       "unboundedMovements": [],
       "boundedMovements": [
-        [-1, 0]
+        [0, -1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
-        [-1, 1],
+        [1, -1],
         [-1, -1]
       ],
       "movementSetModifiers": [
@@ -66,19 +67,19 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 6,
-      "coordinateX": 2,
+      "row": 6,
+      "col": 2,
       "pieceName": "Pawn",
       "imgFile": "whitepawn",
       "pointValue": 1,
       "team": 0,
       "unboundedMovements": [],
       "boundedMovements": [
-        [-1, 0]
+        [0, -1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
-        [-1, 1],
+        [1, -1],
         [-1, -1]
       ],
       "movementSetModifiers": [
@@ -89,19 +90,19 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 6,
-      "coordinateX": 3,
+      "row": 6,
+      "col": 3,
       "pieceName": "Pawn",
       "imgFile": "whitepawn",
       "pointValue": 1,
       "team": 0,
       "unboundedMovements": [],
       "boundedMovements": [
-        [-1, 0]
+        [0, -1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
-        [-1, 1],
+        [1, -1],
         [-1, -1]
       ],
       "movementSetModifiers": [
@@ -112,19 +113,19 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 6,
-      "coordinateX": 4,
+      "row": 6,
+      "col": 4,
       "pieceName": "Pawn",
       "imgFile": "whitepawn",
       "pointValue": 1,
       "team": 0,
       "unboundedMovements": [],
       "boundedMovements": [
-        [-1, 0]
+        [0, -1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
-        [-1, 1],
+        [1, -1],
         [-1, -1]
       ],
       "movementSetModifiers": [
@@ -135,19 +136,19 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 6,
-      "coordinateX": 5,
+      "row": 6,
+      "col": 5,
       "pieceName": "Pawn",
       "imgFile": "whitepawn",
       "pointValue": 1,
       "team": 0,
       "unboundedMovements": [],
       "boundedMovements": [
-        [-1, 0]
+        [0, -1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
-        [-1, 1],
+        [1, -1],
         [-1, -1]
       ],
       "movementSetModifiers": [
@@ -158,19 +159,19 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 6,
-      "coordinateX": 6,
+      "row": 6,
+      "col": 6,
       "pieceName": "Pawn",
       "imgFile": "whitepawn",
       "pointValue": 1,
       "team": 0,
       "unboundedMovements": [],
       "boundedMovements": [
-        [-1, 0]
+        [0, -1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
-        [-1, 1],
+        [1, -1],
         [-1, -1]
       ],
       "movementSetModifiers": [
@@ -181,19 +182,19 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 6,
-      "coordinateX": 7,
+      "row": 6,
+      "col": 7,
       "pieceName": "Pawn",
       "imgFile": "whitepawn",
       "pointValue": 1,
       "team": 0,
       "unboundedMovements": [],
       "boundedMovements": [
-        [-1, 0]
+        [0, -1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
-        [-1, 1],
+        [1, -1],
         [-1, -1]
       ],
       "movementSetModifiers": [
@@ -204,8 +205,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 7,
-      "coordinateX": 0,
+      "row": 7,
+      "col": 0,
       "pieceName": "Rook",
       "imgFile": "whiterook",
       "pointValue": 5,
@@ -230,8 +231,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 7,
-      "coordinateX": 7,
+      "row": 7,
+      "col": 7,
       "pieceName": "Rook",
       "imgFile": "whiterook",
       "pointValue": 5,
@@ -256,8 +257,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 7,
-      "coordinateX": 1,
+      "row": 7,
+      "col": 1,
       "pieceName": "Knight",
       "imgFile": "whiteknight",
       "pointValue": 3,
@@ -290,8 +291,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 7,
-      "coordinateX": 6,
+      "row": 7,
+      "col": 6,
       "pieceName": "Knight",
       "imgFile": "whiteknight",
       "pointValue": 3,
@@ -324,8 +325,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 7,
-      "coordinateX": 2,
+      "row": 7,
+      "col": 2,
       "pieceName": "Bishop",
       "imgFile": "whitebishop",
       "pointValue": 3,
@@ -350,8 +351,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 7,
-      "coordinateX": 5,
+      "row": 7,
+      "col": 5,
       "pieceName": "Bishop",
       "imgFile": "whitebishop",
       "pointValue": 3,
@@ -376,8 +377,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 7,
-      "coordinateX": 3,
+      "row": 7,
+      "col": 3,
       "pieceName": "Queen",
       "imgFile": "whitequeen",
       "pointValue": 9,
@@ -410,8 +411,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 7,
-      "coordinateX": 4,
+      "row": 7,
+      "col": 4,
       "pieceName": "King",
       "imgFile": "whiteking",
       "pointValue": 4,
@@ -444,20 +445,20 @@
       "mainPiece": 1
     },
     {
-      "coordinateY": 1,
-      "coordinateX": 0,
+      "row": 1,
+      "col": 0,
       "pieceName": "Pawn",
       "imgFile": "blackpawn",
       "pointValue": 1,
       "team": 1,
       "unboundedMovements": [],
       "boundedMovements": [
-        [1, 0]
+        [0, 1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
         [1, 1],
-        [1, -1]
+        [-1, 1]
       ],
       "movementSetModifiers": [
       ],
@@ -467,20 +468,20 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 1,
-      "coordinateX": 1,
+      "row": 1,
+      "col": 1,
       "pieceName": "Pawn",
       "imgFile": "blackpawn",
       "pointValue": 1,
       "team": 1,
       "unboundedMovements": [],
       "boundedMovements": [
-        [1, 0]
+        [0, 1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
         [1, 1],
-        [1, -1]
+        [-1, 1]
       ],
       "movementSetModifiers": [
       ],
@@ -490,20 +491,20 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 1,
-      "coordinateX": 2,
+      "row": 1,
+      "col": 2,
       "pieceName": "Pawn",
       "imgFile": "blackpawn",
       "pointValue": 1,
       "team": 1,
       "unboundedMovements": [],
       "boundedMovements": [
-        [1, 0]
+        [0, 1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
         [1, 1],
-        [1, -1]
+        [-1, 1]
       ],
       "movementSetModifiers": [
       ],
@@ -513,20 +514,20 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 1,
-      "coordinateX": 3,
+      "row": 1,
+      "col": 3,
       "pieceName": "Pawn",
       "imgFile": "blackpawn",
       "pointValue": 1,
       "team": 1,
       "unboundedMovements": [],
       "boundedMovements": [
-        [1, 0]
+        [0, 1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
         [1, 1],
-        [1, -1]
+        [-1, 1]
       ],
       "movementSetModifiers": [
       ],
@@ -536,20 +537,20 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 1,
-      "coordinateX": 4,
+      "row": 1,
+      "col": 4,
       "pieceName": "Pawn",
       "imgFile": "blackpawn",
       "pointValue": 1,
       "team": 1,
       "unboundedMovements": [],
       "boundedMovements": [
-        [1, 0]
+        [0, 1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
         [1, 1],
-        [1, -1]
+        [-1, 1]
       ],
       "movementSetModifiers": [
       ],
@@ -559,20 +560,20 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 1,
-      "coordinateX": 5,
+      "row": 1,
+      "col": 5,
       "pieceName": "Pawn",
       "imgFile": "blackpawn",
       "pointValue": 1,
       "team": 1,
       "unboundedMovements": [],
       "boundedMovements": [
-        [1, 0]
+        [0, 1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
         [1, 1],
-        [1, -1]
+        [-1, 1]
       ],
       "movementSetModifiers": [
       ],
@@ -582,20 +583,20 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 1,
-      "coordinateX": 6,
+      "row": 1,
+      "col": 6,
       "pieceName": "Pawn",
       "imgFile": "blackpawn",
       "pointValue": 1,
       "team": 1,
       "unboundedMovements": [],
       "boundedMovements": [
-        [1, 0]
+        [0, 1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
         [1, 1],
-        [1, -1]
+        [-1, 1]
       ],
       "movementSetModifiers": [
       ],
@@ -605,20 +606,20 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 1,
-      "coordinateX": 7,
+      "row": 1,
+      "col": 7,
       "pieceName": "Pawn",
       "imgFile": "blackpawn",
       "pointValue": 1,
       "team": 1,
       "unboundedMovements": [],
       "boundedMovements": [
-        [1, 0]
+        [0, 1]
       ],
       "unboundedCaptures": [],
       "boundedCaptures": [
         [1, 1],
-        [1, -1]
+        [-1, 1]
       ],
       "movementSetModifiers": [
       ],
@@ -628,8 +629,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 0,
-      "coordinateX": 0,
+      "row": 0,
+      "col": 0,
       "pieceName": "Rook",
       "imgFile": "blackrook",
       "pointValue": 5,
@@ -654,8 +655,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 0,
-      "coordinateX": 7,
+      "row": 0,
+      "col": 7,
       "pieceName": "Rook",
       "imgFile": "blackrook",
       "pointValue": 5,
@@ -680,8 +681,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 0,
-      "coordinateX": 1,
+      "row": 0,
+      "col": 1,
       "pieceName": "Knight",
       "imgFile": "blackknight",
       "pointValue": 3,
@@ -714,8 +715,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 0,
-      "coordinateX": 6,
+      "row": 0,
+      "col": 6,
       "pieceName": "Knight",
       "imgFile": "blackknight",
       "pointValue": 3,
@@ -748,8 +749,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 0,
-      "coordinateX": 2,
+      "row": 0,
+      "col": 2,
       "pieceName": "Bishop",
       "imgFile": "blackbishop",
       "pointValue": 3,
@@ -774,8 +775,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 0,
-      "coordinateX": 5,
+      "row": 0,
+      "col": 5,
       "pieceName": "Bishop",
       "imgFile": "blackbishop",
       "pointValue": 3,
@@ -800,8 +801,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 0,
-      "coordinateX": 3,
+      "row": 0,
+      "col": 3,
       "pieceName": "Queen",
       "imgFile": "blackqueen",
       "pointValue": 9,
@@ -834,8 +835,8 @@
       "mainPiece": 0
     },
     {
-      "coordinateY": 0,
-      "coordinateX": 4,
+      "row": 0,
+      "col": 4,
       "pieceName": "King",
       "imgFile": "blackking",
       "pointValue": 4,

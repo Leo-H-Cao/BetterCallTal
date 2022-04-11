@@ -3,11 +3,14 @@ package oogasalad.Editor.ModelState.BoardState;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import oogasalad.Editor.ModelState.PiecesState.EditorPiece;
+import oogasalad.Editor.Exceptions.InavlidPieceIDException;
+import oogasalad.Editor.ModelState.PiecesState.EditorCoordinate;
+import oogasalad.Editor.ModelState.PiecesState.LibraryPiece;
 
 public class EditorBoard {
 
   private final int DEFAULT_BOARD_SIZE = 8;
+  private final String PIECE_ID_ERROR = "Invalid pieceID, piece does not exist in board";
   private List<List<EditorTile>> board;
 
   public EditorBoard(){
@@ -58,12 +61,20 @@ public class EditorBoard {
     board.get(y).get(x).deleteTileEffect();
   }
 
-  public void addPieceStartingLocation(EditorPiece piece, int x, int y){
-    board.get(y).get(x).addPiece(piece);
+  public void addPieceStartingLocation(LibraryPiece piece, int x, int y){
+    try{
+      EditorCoordinate pieceLocation = findPieceLocation(piece.getPieceID());
+      board.get(pieceLocation.getY()).get(pieceLocation.getX()).removePiece();
+      board.get(y).get(x).addPiece(piece);
+    }
+    catch(InavlidPieceIDException pieceIDException){
+      board.get(y).get(x).addPiece(piece);
+    }
   }
 
-  public void removePieceStartingLocation(int x, int y){
-    board.get(y).get(x).removePiece();
+  public void removePieceStartingLocation(String pieceID){
+    EditorCoordinate pieceLocation = findPieceLocation(pieceID);
+    board.get(pieceLocation.getY()).get(pieceLocation.getX()).removePiece();
   }
 
   public int getBoardWidth(){
@@ -74,6 +85,23 @@ public class EditorBoard {
     return board.size();
   }
 
+  public EditorCoordinate getPieceLocation(String pieceID){
+    return findPieceLocation(pieceID);
+  }
+
+  private EditorCoordinate findPieceLocation(String pieceID) throws InavlidPieceIDException {
+    for(int i = 0; i < board.size(); i++){
+      for(int j = 0; j < board.get(0).size(); j++){
+        if(!board.get(i).get(j).hasPiece()){
+          continue;
+        }
+        if(board.get(i).get(j).getPiece().getPieceID().equals(pieceID)){
+          return new EditorCoordinate(j, i);
+        }
+      }
+    }
+    throw new InavlidPieceIDException(PIECE_ID_ERROR);
+  }
 
   private void initializeBoard(int boardSize){
     for(int i = 0; i < boardSize; i++){

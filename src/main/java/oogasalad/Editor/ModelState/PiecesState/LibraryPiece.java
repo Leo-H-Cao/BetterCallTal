@@ -1,16 +1,21 @@
 package oogasalad.Editor.ModelState.PiecesState;
 
-public class EditorPiece {
+import javafx.scene.image.Image;
+import oogasalad.Editor.ModelState.EditPiece.EditPieceGrid;
+import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
+import oogasalad.Editor.ModelState.EditPiece.PieceGridTile;
 
-  private MovementRules myMovementRules;
+public class LibraryPiece {
+
+  private EditPieceGrid editPieceGrid;
   private int pointValue;
   private String myPieceID;
   private String myPieceName;
   private int myTeamNumber;
-  private String myImage;
+  private Image myImage;
 
-  public EditorPiece(int points, MovementRules movementRules, String pieceID, String pieceName, int teamNumber, String image ){
-    myMovementRules = movementRules;
+  public LibraryPiece(int points, EditPieceGrid editPieceGrid, String pieceID, String pieceName, int teamNumber, Image image ){
+    this.editPieceGrid = editPieceGrid;
     pointValue = points;
     myPieceID = pieceID;
     myPieceName = pieceName;
@@ -22,12 +27,12 @@ public class EditorPiece {
     return myPieceID;
   }
 
-  public String getImage(){
+  public Image getImage(){
     return myImage;
   }
 
-  public MovementRules getMovementRules() {
-    return myMovementRules;
+  public EditPieceGrid getPieceMovement() {
+    return editPieceGrid;
   }
 
   public int getPointValue() {
@@ -46,8 +51,8 @@ public class EditorPiece {
     this.myTeamNumber = myTeamNumber;
   }
 
-  public void setPieceMovement(MovementRules movementRules){
-    myMovementRules = movementRules;
+  public void setPieceMovement(EditPieceGrid editPieceGrid){
+    this.editPieceGrid = editPieceGrid;
   }
 
   public void setPointValue(int points){
@@ -58,7 +63,7 @@ public class EditorPiece {
     myPieceName = name;
   }
 
-  public void setPieceImage(String image){
+  public void setPieceImage(Image image){
     myImage = image;
   }
 

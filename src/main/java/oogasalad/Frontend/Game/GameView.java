@@ -66,11 +66,13 @@ public class GameView extends View {
 
     private void makeMove(Coordinate c) {
         LOG.debug("makeMove in GameView reached\n");
+        LOG.debug(String.format("Current player: %d", Turn));
         try {
             TurnUpdate tu = getViewManager().getMyGameBackend().getChessBoard().move(myBoardGrid.getSelectedPiece(), c);
             updateBoard(tu);
         } catch (Exception e) {
-            return;
+            e.printStackTrace();
+            LOG.warn("Move failed");
         }
     }
 
@@ -92,6 +94,7 @@ public class GameView extends View {
      */
 
     private void updateBoard(TurnUpdate tu) {
+        LOG.debug("Updating board");
         Turn = tu.nextPlayer();
         myBoardGrid.updateTiles(tu.updatedSquares());
     }
