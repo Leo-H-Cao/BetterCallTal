@@ -15,7 +15,7 @@ import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
-import oogasalad.GamePlayer.Board.TurnManagement.LocalHistoryManager;
+import oogasalad.GamePlayer.Board.History.LocalHistoryManager;
 import org.junit.jupiter.api.Test;
 
 class LocalHistoryManagerTest {

@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer.Board.TurnManagement;
+package oogasalad.GamePlayer.Board.History;
 
 import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;

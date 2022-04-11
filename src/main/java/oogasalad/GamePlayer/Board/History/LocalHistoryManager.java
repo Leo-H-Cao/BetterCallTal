@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer.Board.TurnManagement;
+package oogasalad.GamePlayer.Board.History;
 
 import java.util.ArrayList;
 import java.util.Collection;
