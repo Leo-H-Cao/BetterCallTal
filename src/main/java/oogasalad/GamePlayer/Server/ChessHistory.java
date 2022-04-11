@@ -6,7 +6,7 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.History;
 
 /**
  * This class is used to store prior states of the game, allowing for checking complex game
@@ -14,8 +14,8 @@ import oogasalad.GamePlayer.Board.ChessBoard;
  */
 public class ChessHistory {
 
-  private Deque<ChessBoard> historyDeque;
-  private List<ChessBoard> historyList;
+  private Deque<History> historyDeque;
+  private List<History> historyList;
   private int currentIndex;
 
 
@@ -32,7 +32,7 @@ public class ChessHistory {
    *
    * @param history array of chess boards to store in the history
    */
-  public ChessHistory(ChessBoard[] history) {
+  public ChessHistory(History[] history) {
     setUpHistory(List.of(history));
   }
 
@@ -41,7 +41,7 @@ public class ChessHistory {
    *
    * @param history the collection of states to store.
    */
-  public ChessHistory(Collection<ChessBoard> history) {
+  public ChessHistory(Collection<History> history) {
     setUpHistory(history);
   }
 
@@ -50,7 +50,7 @@ public class ChessHistory {
    *
    * @param history collection of states to store.
    */
-  private void setUpHistory(Collection<ChessBoard> history) {
+  private void setUpHistory(Collection<History> history) {
     this.historyDeque = new LinkedList<>(history);
     this.historyList = new LinkedList<>(history);
     this.currentIndex = history.size() - 1;
@@ -61,7 +61,7 @@ public class ChessHistory {
    *
    * @param newState The new state to add.
    */
-  public ChessBoard add(ChessBoard newState) {
+  public History add(History newState) {
     historyDeque.addLast(newState);
     currentIndex++;
     return newState;
@@ -82,7 +82,7 @@ public class ChessHistory {
    * @param index The index of the state to return.
    * @return the state at a given index.
    */
-  public ChessBoard getState(int index) {
+  public History getState(int index) {
     if (index < 0) {
       return getFirstState();
     } else if (index > historyList.size()) {
@@ -97,7 +97,7 @@ public class ChessHistory {
    *
    * @return the starting board configuration.
    */
-  public ChessBoard getFirstState() {
+  public History getFirstState() {
     return historyDeque.getFirst();
   }
 
@@ -107,7 +107,7 @@ public class ChessHistory {
    *
    * @return the current state of the game.
    */
-  public ChessBoard getCurrentState() {
+  public History getCurrentState() {
     return historyList.get(currentIndex);
   }
 
@@ -116,7 +116,7 @@ public class ChessHistory {
    *
    * @return the most recent state.
    */
-  public ChessBoard getLastState() {
+  public History getLastState() {
     return historyDeque.getLast();
   }
 
@@ -135,7 +135,7 @@ public class ChessHistory {
    * @param amount The number of states to rewind.
    * @return the state that was rewound to.
    */
-  public ChessBoard rewindBackStates(int amount) {
+  public History rewindBackStates(int amount) {
     int difference = currentIndex - amount;
     if (difference < 0) {
       return getFirstState();
@@ -153,7 +153,7 @@ public class ChessHistory {
    * @param amount The number of states to advance.
    * @return the state that was advanced to.
    */
-  public ChessBoard advanceForwardStates(int amount) {
+  public History advanceForwardStates(int amount) {
     int sum = currentIndex + amount;
     if (sum > historyList.size()) {
       return getLastState();
@@ -169,7 +169,7 @@ public class ChessHistory {
    * @param index The index to rewind to.
    * @return the state that was rewound to.
    */
-  public ChessBoard goToState(int index) {
+  public History goToState(int index) {
     currentIndex = index;
     return getCurrentState();
   }
@@ -194,6 +194,12 @@ public class ChessHistory {
     return historyDeque.isEmpty();
   }
 
+  /**
+   * Checks if two histories are equal.
+   *
+   * @param o the object to compare to.
+   * @return true if the two histories are equal, false otherwise.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -202,12 +208,16 @@ public class ChessHistory {
     if (!(o instanceof ChessHistory that)) {
       return false;
     }
-    return currentIndex == that.currentIndex && Objects.equals(historyDeque,
-        that.historyDeque) && Objects.equals(historyList, that.historyList);
+    return currentIndex == that.currentIndex && historyList.equals(that.historyList);
   }
 
+  /**
+   * Hashes the history.
+   *
+   * @return the hashcode of the history.
+   */
   @Override
   public int hashCode() {
-    return Objects.hash(historyDeque, historyList, currentIndex);
+    return Objects.hash(historyList, currentIndex);
   }
 }
