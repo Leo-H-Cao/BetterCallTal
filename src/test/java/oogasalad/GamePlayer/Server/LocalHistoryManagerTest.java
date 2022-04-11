@@ -15,17 +15,17 @@ import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
-import oogasalad.GamePlayer.Board.TurnManagement.ChessHistory;
+import oogasalad.GamePlayer.Board.TurnManagement.LocalHistoryManager;
 import org.junit.jupiter.api.Test;
 
-class ChessHistoryTest {
+class LocalHistoryManagerTest {
 
 
-  private Map<Integer, ChessHistory> createHistory() {
-    ChessHistory emptyHistory = new ChessHistory();
-    ChessHistory singleHistory = new ChessHistory(List.of(createBoard(0)));
-    ChessHistory twoHistory = new ChessHistory(List.of(createBoard(0), createBoard(1)));
-    ChessHistory fiveHistory = new ChessHistory(
+  private Map<Integer, LocalHistoryManager> createHistory() {
+    LocalHistoryManager emptyHistory = new LocalHistoryManager();
+    LocalHistoryManager singleHistory = new LocalHistoryManager(List.of(createBoard(0)));
+    LocalHistoryManager twoHistory = new LocalHistoryManager(List.of(createBoard(0), createBoard(1)));
+    LocalHistoryManager fiveHistory = new LocalHistoryManager(
         List.of(createBoard(0), createBoard(1), createBoard(2), createBoard(3), createBoard(4)));
     return Map.of(0, emptyHistory, 1, singleHistory, 2, twoHistory, 5,
         fiveHistory);
@@ -63,7 +63,7 @@ class ChessHistoryTest {
 
   @Test
   void addToHistory() {
-    Map<Integer, ChessHistory> historySamples = createHistory();
+    Map<Integer, LocalHistoryManager> historySamples = createHistory();
 
     // Check for normal addition
     ChessBoard toAdd = createBoard(0);
@@ -77,7 +77,7 @@ class ChessHistoryTest {
 
   @Test
   void getHistorySize() {
-    Map<Integer, ChessHistory> historySamples = createHistory();
+    Map<Integer, LocalHistoryManager> historySamples = createHistory();
     historySamples.forEach((key, value) -> assertEquals(value.size(), key));
   }
 
@@ -117,7 +117,7 @@ class ChessHistoryTest {
 
   @Test
   void clearHistory() {
-    Map<Integer, ChessHistory> historySamples = createHistory();
-    historySamples.forEach((key, value) -> assertEquals(value.clearHistory(), new ChessHistory()));
+    Map<Integer, LocalHistoryManager> historySamples = createHistory();
+    historySamples.forEach((key, value) -> assertEquals(value.clearHistory(), new LocalHistoryManager()));
   }
 }

@@ -1,23 +1,47 @@
 package oogasalad.GamePlayer.Board.TurnManagement;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
+/**
+ * This class is used to store prior states of the game, allowing for checking complex game
+ * interactions and rollback to previous states.
+ */
 public class LocalHistoryManager implements HistoryManager {
 
-  private final ChessHistory history;
+  private final List<History> history;
+  private int currentIndex;
 
+
+  /**
+   * Creates a chess history object, which can be used to store the past game states. Overloaded
+   * constructor used to create an empty history.
+   */
   public LocalHistoryManager() {
-    history = new ChessHistory();
+    this(Collections.emptyList());
   }
 
   /**
-   * Gets the current chess board state of the game.
+   * Creates a chess history object, which can be used to store the past game states.
    *
-   * @return the current chess board state of the game.
+   * @param history array of chess boards to store in the history
    */
-  @Override
-  public ChessBoard getCurrentBoard() {
-    return history.getCurrentBoard();
+  public LocalHistoryManager(History[] history) {
+    this(List.of(history));
+  }
+
+  /**
+   * Creates a chess history object, which can be used to store the past game states.
+   *
+   * @param history the collection of states to store.
+   */
+  public LocalHistoryManager(Collection<History> history) {
+    this.history = new ArrayList<>(history);
+    this.currentIndex = history.size() - 1;
   }
 
   /**
@@ -25,9 +49,15 @@ public class LocalHistoryManager implements HistoryManager {
    *
    * @param newState The new state to add.
    */
-  @Override
   public History add(History newState) {
-    return history.add(newState);
+    if (currentIndex < size() - 1) {
+      history.set(currentIndex + 1, newState);
+    } else {
+      history.add(newState);
+    }
+    history.add(newState);
+    currentIndex++;
+    return newState;
   }
 
   /**
@@ -38,7 +68,6 @@ public class LocalHistoryManager implements HistoryManager {
    *
    * @return the size of the history.
    */
-  @Override
   public int size() {
     return history.size();
   }
@@ -49,9 +78,14 @@ public class LocalHistoryManager implements HistoryManager {
    * @param index The index of the state to return.
    * @return the state at a given index.
    */
-  @Override
   public History get(int index) {
-    return history.get(index);
+    if (index < 0) {
+      return getFirst();
+    } else if (index > history.size()) {
+      return getLast();
+    } else {
+      return history.get(index);
+    }
   }
 
   /**
@@ -59,19 +93,36 @@ public class LocalHistoryManager implements HistoryManager {
    *
    * @return the starting board configuration.
    */
-  @Override
   public History getFirst() {
-    return history.getFirst();
+    return history.get(0);
   }
+
 
   /**
    * Returns the current state of the game.
    *
    * @return the current state of the game.
    */
-  @Override
   public History getCurrent() {
-    return history.getCurrent();
+    return history.get(currentIndex);
+  }
+
+  /**
+   * Gets the current chess board state of the game.
+   *
+   * @return the current chess board state of the game.
+   */
+  public ChessBoard getCurrentBoard() {
+    return getCurrent().board();
+  }
+
+  /**
+   * Returns the most recent state.
+   *
+   * @return the most recent state.
+   */
+  public History getLast() {
+    return history.get(size() - 1);
   }
 
   /**
@@ -79,9 +130,8 @@ public class LocalHistoryManager implements HistoryManager {
    *
    * @return the index of the most recent state.
    */
-  @Override
   public int getCurrentIndex() {
-    return history.getCurrentIndex();
+    return currentIndex;
   }
 
   /**
@@ -90,9 +140,9 @@ public class LocalHistoryManager implements HistoryManager {
    * @param index The index to rewind to.
    * @return the state that was rewound to.
    */
-  @Override
   public History goToState(int index) {
-    return history.goToState(index);
+    currentIndex = index;
+    return getCurrent();
   }
 
   /**
@@ -100,9 +150,10 @@ public class LocalHistoryManager implements HistoryManager {
    *
    * @return the state that was cleared to.
    */
-  @Override
-  public ChessHistory clearHistory() {
-    return history.clearHistory();
+  public LocalHistoryManager clearHistory() {
+    history.clear();
+    currentIndex = 0;
+    return this;
   }
 
   /**
@@ -110,8 +161,34 @@ public class LocalHistoryManager implements HistoryManager {
    *
    * @return true if the history is empty, false otherwise.
    */
-  @Override
   public boolean isEmpty() {
     return history.isEmpty();
+  }
+
+  /**
+   * Checks if two histories are equal.
+   *
+   * @param o the object to compare to.
+   * @return true if the two histories are equal, false otherwise.
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof LocalHistoryManager that)) {
+      return false;
+    }
+    return currentIndex == that.currentIndex && history.equals(that.history);
+  }
+
+  /**
+   * Hashes the history.
+   *
+   * @return the hashcode of the history.
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(history, currentIndex);
   }
 }
