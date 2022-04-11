@@ -7,8 +7,17 @@ import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 
 public class Anarchy implements EndCondition {
 
+
+
   @Override
   public Optional<Map<Integer, Double>> getScores(ChessBoard board) {
     return Optional.empty();
+  }
+
+  @Override
+  public boolean hasGameEnded(ChessBoard board) {
+    board.getPieces()
+        .stream();
+    return false;
   }
 }

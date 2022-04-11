@@ -40,6 +40,11 @@ public class AtomicEndCondition implements EndCondition {
     return Optional.of(scores);
   }
 
+  @Override
+  public boolean hasGameEnded(ChessBoard board) {
+    return false;
+  }
+
   /***
    * @return if the given team has its main piece on the given board
    */

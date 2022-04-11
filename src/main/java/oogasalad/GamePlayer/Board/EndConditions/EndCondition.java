@@ -16,4 +16,6 @@ public interface EndCondition {
    * @return the point values awarded to every team if a game is over, else empty
    */
   Optional<Map<Integer, Double>> getScores(ChessBoard board);
+
+  public boolean hasGameEnded(ChessBoard board);
 }

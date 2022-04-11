@@ -21,6 +21,11 @@ public class TwoMoves implements EndCondition {
     return board.getHistory().size() == getHistoryLength(board.getPlayers().length) ? Optional.of(generatePoints(board.getPlayers())): Optional.empty();
   }
 
+  @Override
+  public boolean hasGameEnded(ChessBoard board) {
+    return false;
+  }
+
   /***
    * @param numPlayers in the current game
    * @return length of history needed to match 3 moves for the current player size

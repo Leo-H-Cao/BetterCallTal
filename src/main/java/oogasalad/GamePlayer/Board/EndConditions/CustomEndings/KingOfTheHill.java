@@ -11,4 +11,9 @@ public class KingOfTheHill implements EndCondition {
   public Optional<Map<Integer, Double>> getScores(ChessBoard board) {
     return Optional.empty();
   }
+
+  @Override
+  public boolean hasGameEnded(ChessBoard board) {
+    return false;
+  }
 }

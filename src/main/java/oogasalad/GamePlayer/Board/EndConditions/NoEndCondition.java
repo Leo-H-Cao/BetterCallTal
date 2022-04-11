@@ -1,11 +1,8 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Player;
 
 public class NoEndCondition implements EndCondition {
 
@@ -20,5 +17,10 @@ public class NoEndCondition implements EndCondition {
   @Override
   public Optional<Map<Integer, Double>> getScores(ChessBoard board) {
     return Optional.empty();
+  }
+
+  @Override
+  public boolean hasGameEnded(ChessBoard board) {
+    return false;
   }
 }
