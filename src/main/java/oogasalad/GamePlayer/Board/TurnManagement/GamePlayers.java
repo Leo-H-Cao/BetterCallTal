@@ -1,7 +1,6 @@
 package oogasalad.GamePlayer.Board.TurnManagement;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import oogasalad.GamePlayer.Board.Player;
 
@@ -36,28 +35,6 @@ public record GamePlayers(List<Player> players, List<Integer> teamNumbers) {
     this(List.of(players));
   }
 
-  /**
-   * This class is used to hold the players in the game and their information. Has methods to access
-   * different information about the players. Overloaded constructor to create a GamePlayers with an
-   * iterable of players.
-   *
-   * @param players The players in the game
-   */
-  public GamePlayers(Iterable<Player> players) {
-    this(iterableToList(players));
-  }
-
-  /**
-   * Converts an iterable to a list for the purpose of creating a GamePlayers.
-   *
-   * @param players The iterable containing the players to convert.
-   * @return A list containing the players.
-   */
-  private static List<Player> iterableToList(Iterable<Player> players) {
-    List<Player> playerList = new ArrayList<>();
-    players.forEach(playerList::add);
-    return playerList;
-  }
 
   /**
    * Convert players to team numbers
@@ -83,7 +60,7 @@ public record GamePlayers(List<Player> players, List<Integer> teamNumbers) {
    *
    * @return players list
    */
-  public Player[] getPlayers() {
+  public Player[] getPlayersArr() {
     return players.toArray(new Player[0]);
   }
 

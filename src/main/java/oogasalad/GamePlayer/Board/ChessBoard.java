@@ -293,7 +293,7 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @return players list
    */
   public Player[] getPlayers() {
-    return players.getPlayers();
+    return players.getPlayersArr();
   }
 
   /**
