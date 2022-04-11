@@ -1,32 +1,35 @@
 package oogasalad.Editor.ModelState.PiecesState;
 
 import javafx.scene.image.Image;
+import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 
 public class LibraryPiece {
 
   private MovementGrid movementGrid;
   private int pointValue;
-  private String myPieceID;
-  private String myPieceName;
-  private int myTeamNumber;
-  private Image myImage;
+  private String pieceID;
+  private String pieceName;
+  private int teamNumber;
+  private Image image;
+  private boolean mainPiece;
 
-  public LibraryPiece(int points, MovementGrid movementGrid, String pieceID, String pieceName, int teamNumber, Image image ){
-    this.movementGrid = movementGrid;
-    pointValue = points;
-    myPieceID = pieceID;
-    myPieceName = pieceName;
-    myTeamNumber = teamNumber;
-    myImage = image;
+  public LibraryPiece(int points, EditorPiece editorPiece, String pieceName, int teamNumber, Image image){
+    this.movementGrid = editorPiece.getMovementGrid();
+    this.pointValue = points;
+    this.pieceID = editorPiece.getPieceID();
+    this.pieceName = pieceName;
+    this.teamNumber = teamNumber;
+    this.image = image;
+    this.mainPiece = editorPiece.getMainPiece();
   }
 
   public String getPieceID(){
-    return myPieceID;
+    return pieceID;
   }
 
   public Image getImage(){
-    return myImage;
+    return image;
   }
 
   public MovementGrid getPieceMovement() {
@@ -38,15 +41,15 @@ public class LibraryPiece {
   }
 
   public String getPieceName() {
-    return myPieceName;
+    return pieceName;
   }
 
   public int getTeamNumber() {
-    return myTeamNumber;
+    return teamNumber;
   }
 
-  public void setTeamNumber(int myTeamNumber) {
-    this.myTeamNumber = myTeamNumber;
+  public void setTeamNumber(int teamNumber) {
+    this.teamNumber = teamNumber;
   }
 
   public void setPieceMovement(MovementGrid movementGrid){
@@ -58,11 +61,11 @@ public class LibraryPiece {
   }
 
   public void setPieceName(String name){
-    myPieceName = name;
+    pieceName = name;
   }
 
   public void setPieceImage(Image image){
-    myImage = image;
+    image = image;
   }
 
 

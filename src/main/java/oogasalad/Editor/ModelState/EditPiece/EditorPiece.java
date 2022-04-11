@@ -7,14 +7,24 @@ public class EditorPiece {
   private Image image0;
   private Image image1;
   private String pieceID;
+  private boolean mainPiece;
 
   public EditorPiece(String pieceID){
     this.pieceID = pieceID;
     movementGrid = new MovementGrid();
+    mainPiece = false;
   }
 
   public MovementGrid getMovementGrid() {
     return movementGrid;
+  }
+
+  public void setMainPiece(boolean main){
+    mainPiece = main;
+  }
+
+  public boolean getMainPiece(){
+    return mainPiece;
   }
 
   public String getPieceID() {
