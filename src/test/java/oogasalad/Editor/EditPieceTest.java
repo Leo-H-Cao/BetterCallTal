@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import oogasalad.Editor.Exceptions.MovementGridException;
-import oogasalad.Editor.ModelState.EditPiece.EditSinglePiece;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 import oogasalad.Editor.ModelState.EditPiece.PieceGridTile;
 import oogasalad.Frontend.Menu.LanguageModal;
