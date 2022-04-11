@@ -2,14 +2,12 @@ package oogasalad.GamePlayer.Board;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -17,8 +15,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
+import oogasalad.GamePlayer.Board.EndConditions.Stalemate;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
@@ -26,9 +24,7 @@ import oogasalad.GamePlayer.EngineExceptions.MoveAfterGameEndException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
 import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.ValidStateChecker.Check;
 import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 import org.apache.logging.log4j.LogManager;
@@ -132,12 +128,14 @@ public class ChessBoard implements Iterable<ChessTile> {
   public TurnUpdate move(Piece piece, Coordinate finalSquare) throws EngineException {
     // TODO: valid state checker for person who just moved (redundunt - optional)
     // TODO: check end conditions for other player(s)
-    if (!isGameOver() && piece.checkTeam(turnCriteria.getCurrentPlayer())) {
+    if (/*!isGameOver() &&*/ piece.checkTeam(turnCriteria.getCurrentPlayer())) {
       TurnUpdate update = new TurnUpdate(piece.move(getTileFromCoords(finalSquare), this),
           turnCriteria.incrementTurn());
-      history.add(new History(deepCopy(), Set.of(piece), update.updatedSquares()));
-      LOG.debug("History updated: " + history.size());
-      return update;
+      if(!isGameOver() || true){
+        history.add(new History(deepCopy(), Set.of(piece), update.updatedSquares()));
+        LOG.debug("History updated: " + history.size());
+        return update;
+      }
     }
     LOG.warn(isGameOver() ? "Move made after game over" : "Move made by wrong player");
     throw isGameOver() ? new MoveAfterGameEndException("") : new WrongPlayerException(
@@ -232,6 +230,24 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @return if the game is over
    */
   public boolean isGameOver() {
+    /*If there are no more legal moves, either stalemate or checkmate has been reached*/
+    boolean classicalGameEnd = false;
+    Stalemate classic = new Stalemate();
+    try {
+      for(int i : getTeams()){
+        if(classic.hasNoLegalMoves(this, i)){
+          classicalGameEnd = true;
+        }
+      }
+    } catch (EngineException e) {
+      LOG.error("unexpected error");
+    }
+    if(classicalGameEnd){
+      //int a = 0/0; //crash and print stack trace if the game is over TODO: change this later
+      return true;
+    }
+
+
     for (EndCondition ec : endConditions) {
       Map<Integer, Double> endResultRet = ec.getScores(this);
       if (!endResultRet.isEmpty()) {

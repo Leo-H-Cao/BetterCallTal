@@ -9,6 +9,7 @@ import java.util.List;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.TwoMoves;
 import oogasalad.GamePlayer.Board.Player;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
@@ -95,7 +96,7 @@ public class CheckmateTests {
   }
 
   @Test
-  void playerInMate2() throws OutsideOfBoardException {
+  void playerInMate2() throws EngineException {
     pieces.addAll(List.of(makeKing(0, 0, TEAM_2),
         makePawn(1, 0, TEAM_1),
         makePawn(2, 1, TEAM_1),
@@ -109,7 +110,7 @@ public class CheckmateTests {
   }
 
   @Test
-  void boardNotInCheckmate() throws OutsideOfBoardException {
+  void boardNotInCheckmate() throws EngineException {
     pieces.addAll(List.of(
         makeKing(0, 0, TEAM_1),
         makePawn(3, 0, TEAM_2)));
@@ -119,7 +120,7 @@ public class CheckmateTests {
   }
 
   @Test
-  void playerCanBlockCheckThusNotInMate() throws OutsideOfBoardException {
+  void playerCanBlockCheckThusNotInMate() throws EngineException {
     pieces.addAll(List.of(
         makeKing(0, 0, TEAM_1),
         makeRook(1, 5, TEAM_1),
@@ -132,7 +133,7 @@ public class CheckmateTests {
   }
 
   @Test
-  void playerBlocksMateThenEntersMateNextTurn() throws OutsideOfBoardException, InvalidMoveException {
+  void playerBlocksMateThenEntersMateNextTurn() throws EngineException {
     Piece rook1 = makeRook(1, 5, TEAM_1);
     Piece rook2 = makeRook(4, 0, TEAM_2);
     Piece king1 = makeKing(0, 0, TEAM_1);

@@ -3,9 +3,7 @@ package oogasalad.Editor.ModelState.PiecesState;
 
 import java.util.List;
 import javafx.scene.image.Image;
-import oogasalad.Editor.ModelState.EditPiece.EditPieceGrid;
-import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
-import oogasalad.Editor.ModelState.EditPiece.PieceGridTile;
+import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 
 public class PiecesState {
   private PiecesManager piecesManager;
@@ -26,12 +24,12 @@ public class PiecesState {
     piecesManager.changePieceImage(pieceID, imageFile);
   }
 
-  public LibraryPiece createCustomPiece(int points, int teamNumber, Image image, EditPieceGrid editPieceGrid, String pieceID, String pieceName) {
-    return piecesManager.createPiece(points,editPieceGrid, pieceID, pieceName, teamNumber, image);
+  public LibraryPiece createCustomPiece(int points, int teamNumber, Image image, MovementGrid movementGrid, String pieceID, String pieceName) {
+    return piecesManager.createPiece(points, movementGrid, pieceID, pieceName, teamNumber, image);
   }
 
-  public void changePieceMovement(String pieceID, EditPieceGrid editPieceGrid) {
-    piecesManager.changePieceMovement(pieceID, editPieceGrid);
+  public void changePieceMovement(String pieceID, MovementGrid movementGrid) {
+    piecesManager.changePieceMovement(pieceID, movementGrid);
   }
 
   public void setPiecePointValue(String pieceID, int points){
