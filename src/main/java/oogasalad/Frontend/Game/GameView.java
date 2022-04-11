@@ -118,7 +118,7 @@ public class GameView extends View {
         LOG.debug("Updating board");
         Turn = tu.nextPlayer();
         myBoardGrid.updateTiles(tu.updatedSquares());
-        if (! getViewManager().getMyGameBackend().getChessBoard().isGameOver()) {
+        if (getViewManager().getMyGameBackend().getChessBoard().isGameOver()) {
            gameOver();
         }
     }
