@@ -10,19 +10,19 @@ public class EditSinglePiece {
   }
 
   public void setTileOpen(int x, int y){
-    editorPiece.getEditPieceGrid().setTileOpen(x, y);
+    editorPiece.getMovementGrid().setTileOpen(x, y);
   }
 
   public void setTileClosed(int x, int y){
-    editorPiece.getEditPieceGrid().setTileClosed(x, y);
+    editorPiece.getMovementGrid().setTileClosed(x, y);
   }
 
   public void setInfiniteTiles(int dirX, int dirY){
-    editorPiece.getEditPieceGrid().setTileInfinite(dirX, dirY);
+    editorPiece.getMovementGrid().setTileInfinite(dirX, dirY);
   }
 
   public void removeInfiniteTiles(int dirX, int dirY){
-    editorPiece.getEditPieceGrid().removeTileInfinite(dirX, dirY);
+    editorPiece.getMovementGrid().removeTileInfinite(dirX, dirY);
   }
 
   public Image getImage(int team){
@@ -34,7 +34,7 @@ public class EditSinglePiece {
   }
 
   public MovementGrid getPieceGrid(){
-    return editorPiece.getEditPieceGrid();
+    return editorPiece.getMovementGrid();
   }
 
   //TODO

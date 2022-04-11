@@ -1,4 +1,4 @@
-package oogasalad.EditorBackend;
+package oogasalad.Editor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

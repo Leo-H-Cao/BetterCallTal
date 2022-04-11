@@ -13,7 +13,7 @@ public class EditorPiece {
     movementGrid = new MovementGrid();
   }
 
-  public MovementGrid getEditPieceGrid() {
+  public MovementGrid getMovementGrid() {
     return movementGrid;
   }
 
