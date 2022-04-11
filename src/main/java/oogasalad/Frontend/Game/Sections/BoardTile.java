@@ -1,5 +1,6 @@
 package oogasalad.Frontend.Game.Sections;
 
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -41,6 +42,9 @@ public class BoardTile {
     private Double BORDER_WIDTH = 5.0;
     private Boolean Lit;
     private String Image_Path = "src/main/resources/images/pieces/";
+    private Color BlackSquare = Color.GREEN;
+    private Color WhiteSquare = Color.GRAY;
+    private Color myColor;
 
     public BoardTile(Coordinate c, int rows, int cols, Consumer<Piece> lightupCons, Runnable clearlitrun, Consumer<Piece> setSelPiece, Consumer<Coordinate> MoveCons) {
         myCoord = c;
@@ -81,11 +85,10 @@ public class BoardTile {
 
     public void updateTile(ChessTile ct) {
         LOG.debug(String.format("Updating tile: (%d, %d)", this.getCoordinate().getRow(), this.getCoordinate().getCol()));
-//        if (! myPieces.isEmpty()) {
-            removePieceImages();
-            myPieces.clear();
-            myImages.clear();
-//        }
+        removePieceImages();
+        myPieces.clear();
+        myImages.clear();
+
         myPieces.addAll(ct.getPieces());
         for (Piece p : myPieces) {
             ImageView pieceview = CreateImage(p.getName(), p.getTeam());
@@ -139,9 +142,11 @@ public class BoardTile {
      */
     private void ColorRect(int x, int y) {
         if ((x + y) % 2 == 1) {
-            myRectangle.setFill(Color.GREEN);
+            myRectangle.setFill(BlackSquare);
+            myColor = BlackSquare;
         } else {
-            myRectangle.setFill(Color.GRAY);
+            myRectangle.setFill(WhiteSquare);
+            myColor = WhiteSquare;
         }
         myStackPane.getChildren().add(myRectangle);
     }
@@ -164,13 +169,14 @@ public class BoardTile {
         myStackPane.getChildren().removeAll(myImages);
     }
 
+    //TODO: fix the border edge minor glitch.
     private Border makeLitUpBorder() {
         BorderStroke bordstroke = new BorderStroke(Color.CYAN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(BORDER_WIDTH));
         Border bord = new Border(bordstroke);
         return bord;
     }
     private Border makeClearBorder() {
-        BorderStroke bordstroke = new BorderStroke(Color.TRANSPARENT, BorderStrokeStyle.NONE, CornerRadii.EMPTY, new BorderWidths(BORDER_WIDTH));
+        BorderStroke bordstroke = new BorderStroke(Color.CORAL, BorderStrokeStyle.NONE, CornerRadii.EMPTY, new BorderWidths(BORDER_WIDTH));
         Border bord = new Border(bordstroke);
         return bord;
     }

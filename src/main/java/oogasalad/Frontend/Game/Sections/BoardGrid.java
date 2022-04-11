@@ -1,6 +1,7 @@
 package oogasalad.Frontend.Game.Sections;
 
 import javafx.scene.layout.*;
+import oogasalad.GamePlayer.Board.Board;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
@@ -37,7 +38,7 @@ public class BoardGrid {
         myBoard = new GridPane();
         makeRunAndCons();
         setUpGP(myBoard, cb.getBoardHeight(), cb.getBoardLength());
-        makeBoard(myBoard, cb, PlayerID, lightupCons, MoveCons);
+        makeBoard(cb, PlayerID, lightupCons, MoveCons);
         myID = PlayerID;
     }
 
@@ -50,7 +51,7 @@ public class BoardGrid {
         }
     }
 
-    private void makeBoard(GridPane gp, ChessBoard cb, int id, Consumer<Piece> lightupCons, Consumer<Coordinate> MoveCons) {
+    private void makeBoard(ChessBoard cb, int id, Consumer<Piece> lightupCons, Consumer<Coordinate> MoveCons) {
         myBoardTiles = new ArrayList<>();
         for (ChessTile ct : cb) {
             int grid_x = ct.getCoordinates().getCol();
@@ -65,7 +66,7 @@ public class BoardGrid {
                 grid_x = cb.getBoardLength() - grid_x;
                 grid_y = cb.getBoardHeight() - grid_y;
             }
-            gp.add(tile.getMyStackPane(), grid_x, grid_y);
+            myBoard.add(tile.getMyStackPane(), grid_x, grid_y);
         }
     }
 
@@ -139,6 +140,16 @@ public class BoardGrid {
 //        if (p.getTeam() == myID) {
             mySelectedPiece = p;
 //        }
+    }
+
+    /**
+     * flip method called from GameView to flip the board for the player.
+     */
+    public void flip(){
+        myBoard.setRotate(myBoard.getRotate() + 180.0);
+        for (BoardTile bt : myBoardTiles) {
+            bt.getMyStackPane().setRotate(bt.getMyStackPane().getRotate() + 180.0);
+        }
     }
 
     /**
