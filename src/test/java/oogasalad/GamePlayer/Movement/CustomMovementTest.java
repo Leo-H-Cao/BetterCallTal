@@ -76,6 +76,7 @@ class CustomMovementTest {
       assertEquals(List.of(), new DoubleFirstMove().getRelativeCoords());
 
       assertThrows(InvalidMoveException.class, () -> new DoubleFirstMove().capturePiece(whiteBlockerTwo, null, board));
+      assertThrows(InvalidMoveException.class, () -> new DoubleFirstMove().movePiece(whiteBlockerTwo, Coordinate.of(0, 2), board));
     } catch(Exception e) {
       e.printStackTrace();
       fail();
@@ -133,6 +134,18 @@ class CustomMovementTest {
     } catch (Exception e) {
       fail();
     }
+  }
+
+  @Test
+  void castleTestSad() {
+    whiteKing = new Piece(new PieceData(new Coordinate(0, 4), "whiteKing", 0, 0, true,
+        List.of(new Castling()), Collections.emptyList(), Collections.emptyList(),
+        Collections.emptyList(), ""));
+    whiteRookR = new Piece(new PieceData(new Coordinate(0, 7), "whiteRookR", 0, 0, true,
+        List.of(new Castling()), Collections.emptyList(), Collections.emptyList(),
+        Collections.emptyList(), ""));
+    assertEquals(Set.of(), new Castling().getCaptures(null, null));
+    assertThrows(InvalidMoveException.class, () -> new Castling().movePiece(whiteKing, Coordinate.of(0, 2), board));
   }
 
   @Test
