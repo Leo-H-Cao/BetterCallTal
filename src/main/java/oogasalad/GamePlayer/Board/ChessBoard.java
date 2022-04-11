@@ -243,7 +243,7 @@ public class ChessBoard implements Iterable<ChessTile> {
       LOG.error("unexpected error");
     }
     if(classicalGameEnd){
-      int a = 0/0; //crash and print stack trace if the game is over TODO: change this later
+      //int a = 0/0; //crash and print stack trace if the game is over TODO: change this later
       return true;
     }
 
