@@ -17,26 +17,41 @@ public class EditorPiece {
     return movementGrid;
   }
 
-  public void setImage(int team, Image image) {
-    if(team == 0){
-      this.image0 = image;
-    }
-    else{
-      this.image1 = image;
-    }
+  public String getPieceID() {
+    return pieceID;
+  }
 
+  public void setTileOpen(int x, int y){
+    movementGrid.setTileOpen(x, y);
+  }
+
+  public void setTileClosed(int x, int y){
+    movementGrid.setTileClosed(x, y);
+  }
+
+  public void setInfiniteTiles(int dirX, int dirY){
+    movementGrid.setTileInfinite(dirX, dirY);
+  }
+
+  public void removeInfiniteTiles(int dirX, int dirY) {
+    movementGrid.removeTileInfinite(dirX, dirY);
+  }
+
+  public PieceGridTile getTileStatus(int x, int y){
+    return movementGrid.getTileStatus(x, y);
+  }
+
+  public void setImage(int team, Image image) {
+    if(team == 0){this.image0 = image;}
+    else{this.image1 = image;}
   }
 
   public Image getImage(int team){
-    if(team == 0){
-      return image0;
-    }
-    else{
-      return image1;
-    }
+    if(team == 0){return image0;}
+    else{return image1;}
   }
 
-  public String getPieceID() {
-    return pieceID;
+  //TODO
+  public void setPieceModifier(){
   }
 }
