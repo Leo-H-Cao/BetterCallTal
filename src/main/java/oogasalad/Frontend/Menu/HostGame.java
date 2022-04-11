@@ -45,10 +45,10 @@ public class HostGame extends View {
         Node prompt = makeLabelGroup(getLanguageResource(PROMPT), PROMPT_SIZE);
         Node load = makeFileUploadGroup(sp);
 
-        sp.setAlignment(exit, Pos.TOP_LEFT);
-        sp.setAlignment(title, Pos.TOP_CENTER);
-        sp.setAlignment(prompt, Pos.CENTER);
-        sp.setAlignment(load, Pos.CENTER_RIGHT);
+        StackPane.setAlignment(exit, Pos.TOP_LEFT);
+        StackPane.setAlignment(title, Pos.TOP_CENTER);
+        StackPane.setAlignment(prompt, Pos.CENTER);
+        StackPane.setAlignment(load, Pos.CENTER_RIGHT);
 
         sp.getChildren().addAll(exit, title, prompt, load);
         return sp;
@@ -56,34 +56,27 @@ public class HostGame extends View {
 
     private Node makeStartGroup() {
         Button start = ButtonFactory.makeButton(ButtonType.TEXT, ViewManager.getLanguage().getString("Start"), "start",
-                (e) -> getViewManager().getViews().stream().filter((c) -> c.getClass() == GameView.class).forEach((c) ->
-                        getViewManager().changeScene(c)));
+                (e) -> getView(GameView.class).ifPresent(getViewManager()::changeScene));
         start.setPrefWidth(150);
         start.setPrefHeight(50);
         return new Group(start);
     }
 
     private Node makeExitGroup() {
-        Button Exit = makeExitButton();
-        return new Group(Exit);
+        return new Group(makeExitButton());
     }
 
     private Node makeFileUploadGroup(StackPane sp) {
         Button load = ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource(LOAD), Load_Button_ID,
                 (e) -> {
                     File f = getViewManager().chooseLoadFile();
-                    Optional<ChessBoard> cbOp = getViewManager().getMyGameBackend().initalizeChessBoard(f);
-                    if(cbOp.isPresent()) {
-                        getViewManager().getViews().stream()
-                            .filter(d -> d.getClass() == GameView.class)
-                            .forEach(c -> ((GameView) c).SetUpBoard(cbOp.get(),
-                                0)); //TODO: Figure out player ID stuff
-                        // Make the start button
+                    ChessBoard cb = getViewManager().getMyGameBackend().initalizeChessBoard(f);
+                    getView(GameView.class).ifPresent(c -> ((GameView) c).SetUpBoard(cb, 0)); //TODO: Figure out player ID stuff
 
-                        Node start = makeStartGroup();
-                        sp.setAlignment(start, Pos.CENTER_LEFT);
-                        sp.getChildren().add(start);
-                    }
+                    // Make the start button
+                    Node start = makeStartGroup();
+                    StackPane.setAlignment(start, Pos.CENTER_LEFT);
+                    sp.getChildren().add(start);
                 });
         load.setPrefWidth(150);
         load.setPrefHeight(50);

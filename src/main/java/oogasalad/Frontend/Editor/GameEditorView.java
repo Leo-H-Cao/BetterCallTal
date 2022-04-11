@@ -7,7 +7,6 @@ import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import oogasalad.Editor.ModelState.EditPiece.EditPieceGrid;
 import oogasalad.Editor.ModelState.PiecesState.MovementRules;
 import oogasalad.Frontend.Editor.Board.BoardEditor;
 import oogasalad.Frontend.Editor.Piece.PieceEditor;

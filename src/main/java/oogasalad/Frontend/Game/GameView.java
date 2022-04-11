@@ -83,8 +83,8 @@ public class GameView extends View {
 
     public void lightUpSquares(Piece p) {
         LOG.debug("I made it to lightUpSquares method in GameView\n");
-        Collection<ChessTile> possibletiles = getViewManager().getMyGameBackend().getChessBoard().getMoves(p);
-        myBoardGrid.lightSquares(possibletiles);
+        Collection<ChessTile> possibleTiles = getViewManager().getMyGameBackend().getChessBoard().getMoves(p);
+        myBoardGrid.lightSquares(possibleTiles);
     }
 
     /**
