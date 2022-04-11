@@ -10,6 +10,7 @@ import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Board.TurnUpdate;
 import oogasalad.GamePlayer.Movement.Coordinate;
@@ -81,10 +82,16 @@ public class GameView extends View {
      * Only when a square is lit up and clicked will a move be made.
      */
 
-    public void lightUpSquares(Piece p) {
+    public void lightUpSquares(Piece p)  {
         LOG.debug("I made it to lightUpSquares method in GameView\n");
-        Collection<ChessTile> possibletiles = getViewManager().getMyGameBackend().getChessBoard().getMoves(p);
-        myBoardGrid.lightSquares(possibletiles);
+        try{
+            Collection<ChessTile> possibletiles = getViewManager().getMyGameBackend().getChessBoard().getMoves(p);
+            myBoardGrid.lightSquares(possibletiles);
+        }
+        catch (EngineException e){
+          LOG.error("unexpected error"); //TODO: remove this and handle the exception in the call stack
+        }
+
     }
 
     /**

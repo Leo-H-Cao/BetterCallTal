@@ -1,6 +1,7 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,7 +19,7 @@ public class NoEndCondition implements EndCondition {
    * @return nothing, as the game never ends
    */
   @Override
-  public Optional<Map<Integer, Double>> getScores(ChessBoard board) {
-    return Optional.empty();
+  public Map<Integer, Double> getScores(ChessBoard board) {
+    return new HashMap<>();
   }
 }
