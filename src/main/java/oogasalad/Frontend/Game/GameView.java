@@ -4,6 +4,8 @@ import java.util.Collection;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Popup;
 import oogasalad.Frontend.Game.Sections.BoardGrid;
 import oogasalad.Frontend.Game.Sections.TopSection;
 import oogasalad.Frontend.ViewManager;
@@ -16,6 +18,7 @@ import oogasalad.GamePlayer.Board.TurnUpdate;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
 import java.util.Collection;
+import java.util.Stack;
 import java.util.function.Consumer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,10 +38,14 @@ public class GameView extends View {
     private BorderPane myBP;
     private Consumer<Piece> lightUpCons;
     private Consumer<Coordinate> MoveCons;
+    private Consumer<Node> removeGOCons;
+    private Boolean GameOver;
+    private StackPane myCenterBoard;
 
 
     public GameView(ViewManager viewManager) {
         super(viewManager);
+        GameOver = false;
     }
 
     /**
@@ -61,6 +68,7 @@ public class GameView extends View {
     private void makeConsumers() {
         lightUpCons = piece -> lightUpSquares(piece);
         MoveCons = coor -> makeMove(coor);
+        removeGOCons = node -> removeGameOverNode(node);
     }
 
 
@@ -104,6 +112,10 @@ public class GameView extends View {
         LOG.debug("Updating board");
         Turn = tu.nextPlayer();
         myBoardGrid.updateTiles(tu.updatedSquares());
+        if (getViewManager().getMyGameBackend().getChessBoard().isGameOver()) {
+            GameOver = true;
+            Popup gameoverpop = new Popup();
+        }
     }
 
 
@@ -112,8 +124,15 @@ public class GameView extends View {
         BorderPane bp = new BorderPane();
         myBP = bp;
         bp.setTop(new TopSection().getGP());
-        bp.setCenter(myBoardGrid.getBoard());
+
+        myCenterBoard = new StackPane();
+        myCenterBoard.getChildren().add(myBoardGrid.getBoard());
+        bp.setCenter(myCenterBoard);
 
         return bp;
+    }
+
+    private void removeGameOverNode(Node n) {
+        myCenterBoard.getChildren().remove(n);
     }
 }
