@@ -251,6 +251,7 @@ public class ChessBoard implements Iterable<ChessTile> {
       Map<Integer, Double> endResultRet = ec.getScores(this);
       if (!endResultRet.isEmpty()) {
         endResult = endResultRet;
+        LOG.debug("End result: " + endResult);
         return true;
       }
     }

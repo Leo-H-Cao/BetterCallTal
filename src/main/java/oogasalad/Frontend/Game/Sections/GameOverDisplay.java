@@ -39,7 +39,7 @@ public class GameOverDisplay {
     private Integer findWinner(Map<Integer, Double> scores){
         int ret = 0;
         for (int k : scores.keySet()){
-            if (scores.get(k) == WINVALUE) {
+            if (scores.get(k).equals(WINVALUE)) {
                 ret = k;
                 break;
             }
