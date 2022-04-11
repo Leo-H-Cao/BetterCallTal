@@ -2,7 +2,7 @@ package oogasalad.GamePlayer.Board.TurnManagement;
 
 import oogasalad.GamePlayer.Board.ChessBoard;
 
-interface HistoryManager {
+public interface HistoryManager {
 
   /**
    * Gets the current chess board state of the game.

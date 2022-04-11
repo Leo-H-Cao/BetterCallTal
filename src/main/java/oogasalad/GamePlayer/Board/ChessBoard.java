@@ -16,9 +16,10 @@ import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
-import oogasalad.GamePlayer.Board.TurnManagement.ChessHistory;
 import oogasalad.GamePlayer.Board.TurnManagement.GamePlayers;
 import oogasalad.GamePlayer.Board.TurnManagement.History;
+import oogasalad.GamePlayer.Board.TurnManagement.HistoryManager;
+import oogasalad.GamePlayer.Board.TurnManagement.LocalHistoryManager;
 import oogasalad.GamePlayer.Board.TurnManagement.LocalTurnManager;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
@@ -41,6 +42,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   private final GamePlayers players;
   private final List<ValidStateChecker> validStateCheckers;
   private final TurnManager turnManager;
+  private final HistoryManager history;
   private List<List<ChessTile>> board;
 
   /**
@@ -49,18 +51,20 @@ public class ChessBoard implements Iterable<ChessTile> {
   public ChessBoard(List<List<ChessTile>> board, TurnCriteria turnCriteria, Player[] players,
       List<ValidStateChecker> validStateCheckers, List<EndCondition> endConditions) {
     this.players = new GamePlayers(players);
-    this.turnManager = new LocalTurnManager(new ChessHistory(), this.players, turnCriteria,
+    this.turnManager = new LocalTurnManager(this.players, turnCriteria,
         endConditions);
     this.board = board;
     this.validStateCheckers = validStateCheckers;
+    this.history = new LocalHistoryManager();
   }
 
   public ChessBoard(List<List<ChessTile>> board, TurnManager turnManager, GamePlayers players,
-      List<ValidStateChecker> validStateCheckers) {
+      List<ValidStateChecker> validStateCheckers, HistoryManager history) {
     this.players = players;
     this.turnManager = turnManager;
     this.board = board;
     this.validStateCheckers = validStateCheckers;
+    this.history = history;
   }
 
   /**
@@ -93,7 +97,7 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @return if the pieces are set
    */
   public boolean setPieces(List<Piece> pieces) {
-    if (turnManager.isHistoryEmpty()) {
+    if (history.isEmpty()) {
       pieces.forEach(p -> {
         Coordinate coordinate = p.getCoordinates();
         try {
@@ -104,7 +108,7 @@ public class ChessBoard implements Iterable<ChessTile> {
       });
       ChessBoard copied = deepCopy();
       LOG.debug("History updated for first time");
-      turnManager.addToHistory(new History(copied, new HashSet<>(pieces), pieces.stream()
+      history.add(new History(copied, new HashSet<>(pieces), pieces.stream()
           .map(p -> board.get(p.getCoordinates().getRow()).get(p.getCoordinates().getCol()))
           .collect(Collectors.toSet())));
       return true;
@@ -126,8 +130,8 @@ public class ChessBoard implements Iterable<ChessTile> {
     if (!isGameOver() && piece.checkTeam(turnManager.getCurrentPlayer())) {
       TurnUpdate update = new TurnUpdate(piece.move(getTileFromCoords(finalSquare), this),
           turnManager.incrementTurn());
-      turnManager.addToHistory(new History(deepCopy(), Set.of(piece), update.updatedSquares()));
-      LOG.debug("History updated: " + turnManager.getHistorySize());
+      history.add(new History(deepCopy(), Set.of(piece), update.updatedSquares()));
+      LOG.debug("History updated: " + history.size());
       return update;
     }
     LOG.warn(isGameOver() ? "Move made after game over" : "Move made by wrong player");
@@ -175,7 +179,8 @@ public class ChessBoard implements Iterable<ChessTile> {
       boardCopy.add(new ArrayList<>());
       boardCopy.get(i).addAll(this.board.get(i).stream().map(ChessTile::clone).toList());
     });
-    return new ChessBoard(boardCopy, this.turnManager, this.players, this.validStateCheckers);
+    return new ChessBoard(boardCopy, this.turnManager, this.players, this.validStateCheckers,
+        this.history);
   }
 
   /**
@@ -345,6 +350,15 @@ public class ChessBoard implements Iterable<ChessTile> {
   public List<Piece> getPieces() {
     return board.stream().flatMap(List::stream).toList().stream().map(ChessTile::getPieces)
         .flatMap(List::stream).toList();
+  }
+
+  /**
+   * Gets the history of moves made
+   *
+   * @return history of moves
+   */
+  public HistoryManager getHistory() {
+    return history;
   }
 
   /**
