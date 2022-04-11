@@ -25,6 +25,7 @@ public class PieceEditor extends NodeContainer {
 	private Node makeLayout() {
 		BorderPane ret = new BorderPane();
 		ret.setPrefWidth(myScreenSize.getWidth());
+
 		return ret;
 	}
 }
