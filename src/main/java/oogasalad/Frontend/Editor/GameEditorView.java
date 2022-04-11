@@ -7,16 +7,13 @@ import javafx.scene.control.TabPane;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import oogasalad.Editor.ModelState.EditPiece.EditPieceGrid;
 import javafx.stage.Stage;
-import oogasalad.Editor.ModelState.PiecesState.MovementRules;
+import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 import oogasalad.Frontend.Editor.Board.BoardEditor;
 import oogasalad.Frontend.Editor.Piece.PieceEditor;
-import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.View;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
-
 import java.util.*;
 
 
@@ -96,7 +93,7 @@ public class GameEditorView extends View {
 
 	private void createDefaultPieces() {
 		// Rook
-		EditPieceGrid rookMovement = new EditPieceGrid();
+		MovementGrid rookMovement = new MovementGrid();
 		myController.getPiecesState().createCustomPiece(5, 0, new Image("images/pieces/black/rook.png"), rookMovement, "default_rook", "Rook");
 		myController.getPiecesState().createCustomPiece(5, 1, new Image("images/pieces/black/rook.png"), rookMovement, "default_rook", "Rook");
 	}

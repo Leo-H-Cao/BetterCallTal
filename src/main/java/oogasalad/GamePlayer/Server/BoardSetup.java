@@ -1,4 +1,4 @@
-package oogasalad.Server;
+package oogasalad.GamePlayer.Server;
 
 
 import java.io.IOException;

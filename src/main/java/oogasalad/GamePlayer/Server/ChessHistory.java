@@ -1,4 +1,4 @@
-package oogasalad.Server;
+package oogasalad.GamePlayer.Server;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -57,11 +57,11 @@ public class ChessHistory {
   }
 
   /**
-   * Adds a new state to the history.
+   * Adds a new state to the history. Makes copy of state passed in to prevent mutation.
    *
    * @param newState The new state to add.
    */
-  public ChessBoard addToHistory(ChessBoard newState) {
+  public ChessBoard add(ChessBoard newState) {
     historyDeque.addLast(newState);
     currentIndex++;
     return newState;
@@ -72,7 +72,7 @@ public class ChessHistory {
    *
    * @return the size of the history.
    */
-  public int getHistorySize() {
+  public int size() {
     return historyList.size();
   }
 
@@ -185,15 +185,23 @@ public class ChessHistory {
     return this;
   }
 
+  /**
+   * Returns whether the history is empty.
+   *
+   * @return true if the history is empty, false otherwise.
+   */
+  public boolean isEmpty() {
+    return historyDeque.isEmpty();
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof ChessHistory)) {
+    if (!(o instanceof ChessHistory that)) {
       return false;
     }
-    ChessHistory that = (ChessHistory) o;
     return currentIndex == that.currentIndex && Objects.equals(historyDeque,
         that.historyDeque) && Objects.equals(historyList, that.historyList);
   }

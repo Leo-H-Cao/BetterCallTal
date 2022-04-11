@@ -6,18 +6,16 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Game.Sections.BoardGrid;
 import oogasalad.Frontend.Game.Sections.TopSection;
-import oogasalad.Frontend.util.Controller;
 import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Board.TurnUpdate;
 import oogasalad.GamePlayer.Movement.Coordinate;
-
+import java.util.Collection;
 import java.util.Optional;
 import java.util.function.Consumer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * This class will handle the View for the game being played.
@@ -52,17 +50,23 @@ public class GameView extends View {
      */
 
     public void SetUpBoard(ChessBoard chessboard, int id) {
-        myBoardGrid = new BoardGrid(chessboard, id, lightUpCons, MoveCons); //TODO: Figure out player ID stuff
         Turn = 0;   // give white player first turn
         myID = id;
         makeConsumers();
+        myBoardGrid = new BoardGrid(chessboard, id, lightUpCons, MoveCons); //TODO: Figure out player ID stuff
         //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
 
     }
 
     private void makeConsumers() {
-        lightUpCons = piece -> lightUpSquares(piece);
+        lightUpCons = piece -> {
+            try {
+                lightUpSquares(piece);
+            } catch (EngineException e) {
+                e.printStackTrace();
+            }
+        };
         MoveCons = coor -> makeMove(coor);
     }
 
@@ -82,9 +86,16 @@ public class GameView extends View {
      * Only when a square is lit up and clicked will a move be made.
      */
 
-    public void lightUpSquares(Piece p) {
+    public void lightUpSquares(Piece p) throws EngineException {
         LOG.debug("I made it to lightUpSquares method in GameView\n");
         myBoardGrid.lightSquares(myBackend.getChessBoard().getMoves(p));
+        getBackend().ifPresent((e) -> {
+            try {
+                myBoardGrid.lightSquares(e.getChessBoard().getMoves(p));
+            } catch (EngineException ex) {
+                ex.printStackTrace();
+            }
+        });
     }
 
     /**

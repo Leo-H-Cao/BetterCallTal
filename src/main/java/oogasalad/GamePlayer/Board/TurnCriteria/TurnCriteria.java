@@ -12,7 +12,7 @@ public abstract class TurnCriteria {
     this.index = 0;
   }
 
-  /***
+  /**
    * @param i index in array
    * @return player id at specified index, adjusting if i is out of bounds
    */
@@ -21,7 +21,7 @@ public abstract class TurnCriteria {
     return players[i].teamID();
   }
 
-  /***
+  /**
    * Adds i to the current index
    * @param i to increment by
    */
@@ -32,7 +32,7 @@ public abstract class TurnCriteria {
     }
   }
 
-  /***
+  /**
    * @return last index in players array
    */
   protected final int maxIndex() {
@@ -40,7 +40,7 @@ public abstract class TurnCriteria {
   }
 
 
-  /***
+  /**
    * Determines which player is currently playing
    *
    * @return int player id
@@ -49,7 +49,7 @@ public abstract class TurnCriteria {
     return getPlayerIDAtIndex(index);
   }
 
-  /***
+  /**
    * Increments turn
    *
    * @return int player id after turn is made
