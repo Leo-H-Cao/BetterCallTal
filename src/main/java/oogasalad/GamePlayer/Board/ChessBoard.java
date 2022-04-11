@@ -19,6 +19,8 @@ import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.Board.TurnManagement.ChessHistory;
 import oogasalad.GamePlayer.Board.TurnManagement.GamePlayers;
 import oogasalad.GamePlayer.Board.TurnManagement.History;
+import oogasalad.GamePlayer.Board.TurnManagement.LocalTurnManager;
+import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
@@ -27,8 +29,6 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.Board.TurnManagement.LocalTurnManager;
-import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
 import oogasalad.GamePlayer.ValidStateChecker.Check;
 import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 import org.apache.logging.log4j.LogManager;
@@ -165,6 +165,8 @@ public class ChessBoard implements Iterable<ChessTile> {
   }
 
   /**
+   * Makes a deep copy of the board
+   *
    * @return copy of Board object to store in history
    */
   public ChessBoard deepCopy() {
@@ -177,6 +179,8 @@ public class ChessBoard implements Iterable<ChessTile> {
   }
 
   /**
+   * Gets the tile at the specified coordinate
+   *
    * @param coordinates to get in board
    * @return corresponding tile in board
    */
@@ -212,14 +216,19 @@ public class ChessBoard implements Iterable<ChessTile> {
   }
 
   /**
-   * @return if the game is over
+   * Checks all endConditions and returns true if the game is over
+   *
+   * @return true if the game is over, false otherwise
    */
   public boolean isGameOver() {
     return turnManager.isGameOver(this);
   }
 
   /**
-   * @return scores of all teams after game over. If game isn't over, an empty optional is returned.
+   * Gets an immutable map of scores of all players after game over. If game isn't over, an empty
+   * map is returned.
+   *
+   * @return scores of all players after game over.
    */
   public Map<Integer, Double> getScores() {
     return turnManager.getScores();

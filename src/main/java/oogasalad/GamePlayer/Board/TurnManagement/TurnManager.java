@@ -21,7 +21,7 @@ public interface TurnManager {
   /**
    * Updates the turn manager with the current board.
    *
-   * @return the incre
+   * @return the current player
    */
   int incrementTurn();
 
@@ -68,10 +68,10 @@ public interface TurnManager {
   boolean isHistoryEmpty();
 
   /**
-   * Checks all endConditions and
+   * Checks all endConditions and returns true if the game is over.
    *
    * @param board the board to check
-   * @return if the game is over
+   * @return true if the game is over, false otherwise
    */
   boolean isGameOver(ChessBoard board);
 
