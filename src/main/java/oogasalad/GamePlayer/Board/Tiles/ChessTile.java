@@ -3,6 +3,7 @@ package oogasalad.GamePlayer.Board.Tiles;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.CustomTiles.TileAction;
@@ -99,8 +100,8 @@ public class ChessTile implements Tile, Cloneable {
     return pieces.remove(piece);
   }
 
-  public void executeActions(ChessBoard board) throws OutsideOfBoardException {
-    specialActions.forEach(t -> t.executeAction(this, board));
+  public Set<ChessTile> executeActions(ChessBoard board) throws OutsideOfBoardException {
+    return specialActions.stream().flatMap(t -> t.executeAction(this, board).stream()).collect(Collectors.toSet());
   }
 
   /**

@@ -73,13 +73,15 @@ public class Piece implements Cloneable {
    * new piece
    *
    * @param tile to put piece on
+   * @return updated actions based on tile actions
    */
-  public void updateCoordinates(ChessTile tile, ChessBoard board) throws OutsideOfBoardException {
+  public Set<ChessTile> updateCoordinates(ChessTile tile, ChessBoard board) throws OutsideOfBoardException {
     try {
       board.getTile(coordinates).removePiece(this);
       coordinates = tile.getCoordinates();
       tile.appendPiece(this);
       history.add(tile.getCoordinates());
+      return tile.executeActions(board);
     } catch(OutsideOfBoardException e) {
       LOG.warn("Couldn't update piece coordinates");
       throw new OutsideOfBoardException(coordinates.toString());
