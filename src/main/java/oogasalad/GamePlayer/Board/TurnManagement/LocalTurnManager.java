@@ -21,18 +21,16 @@ public class LocalTurnManager implements TurnManager {
   private final PriorityQueue<EndCondition> endConditions;
   private final TurnCriteria turn;
   private final GamePlayers players;
-  private final ChessHistory history;
   private Map<Integer, Double> endResult;
 
   //TO-DO: implement a builder pattern for this class once class finalization is complete
-  public LocalTurnManager(ChessHistory history, GamePlayers players, TurnCriteria turn,
+  public LocalTurnManager(GamePlayers players, TurnCriteria turn,
       EndCondition... conditions) {
-    this(history, players, turn, Arrays.asList(conditions));
+    this(players, turn, Arrays.asList(conditions));
   }
 
-  public LocalTurnManager(ChessHistory history, GamePlayers players, TurnCriteria turn,
+  public LocalTurnManager(GamePlayers players, TurnCriteria turn,
       Iterable<EndCondition> conditions) {
-    this.history = history;
     this.players = players;
     this.turn = turn;
     endConditions = new PriorityQueue<>();
@@ -40,16 +38,6 @@ public class LocalTurnManager implements TurnManager {
       endConditions.add(condition);
     }
     endResult = new HashMap<>();
-  }
-
-  /**
-   * Adds a new EndCondition to the end of the priority of EndConditions to check.
-   *
-   * @param condition the EndCondition to add
-   */
-  @Override
-  public void addEndCondition(EndCondition condition) {
-    endConditions.add(condition);
   }
 
   /**
@@ -72,55 +60,6 @@ public class LocalTurnManager implements TurnManager {
     return turn.getCurrentPlayer();
   }
 
-  /**
-   * Returns the current state of the game.
-   *
-   * @return the current state of the game.
-   */
-  @Override
-  public ChessBoard getCurrentBoard() {
-    return history.getCurrentState().board();
-  }
-
-  /**
-   * Adds a new state to the history.
-   *
-   * @param board The new state to add.
-   */
-  @Override
-  public void addToHistory(History board) {
-    history.add(board);
-  }
-
-  /**
-   * Returns the first state of the game.
-   *
-   * @return the first state of the game.
-   */
-  @Override
-  public ChessBoard getFirstBoard() {
-    return history.getFirstState().board();
-  }
-
-  /**
-   * Returns the size of the history.
-   *
-   * @return the size of the history.
-   */
-  @Override
-  public int getHistorySize() {
-    return history.size();
-  }
-
-  /**
-   * Returns whether the history is empty.
-   *
-   * @return true if the history is empty, false otherwise.
-   */
-  @Override
-  public boolean isHistoryEmpty() {
-    return history.isEmpty();
-  }
 
   /**
    * Checks all endConditions and

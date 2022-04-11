@@ -2,7 +2,6 @@ package oogasalad.GamePlayer.Board.TurnManagement;
 
 import java.util.Map;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 
 /**
  * Interface for managing all turn interactions. it has two implementations: a local and a server
@@ -10,13 +9,6 @@ import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
  * used for networked games.
  */
 public interface TurnManager {
-
-  /**
-   * Adds a new EndCondition to the end of the priority of EndConditions to check.
-   *
-   * @param condition the EndCondition to add
-   */
-  void addEndCondition(EndCondition condition);
 
   /**
    * Updates the turn manager with the current board.
@@ -31,41 +23,6 @@ public interface TurnManager {
    * @return int player id
    */
   int getCurrentPlayer();
-
-  /**
-   * Returns the current state of the game.
-   *
-   * @return the current state of the game.
-   */
-  ChessBoard getCurrentBoard();
-
-  /**
-   * Adds a new state to the history.
-   *
-   * @param board The new state to add.
-   */
-  void addToHistory(History board);
-
-  /**
-   * Returns the first state of the game.
-   *
-   * @return the first state of the game.
-   */
-  ChessBoard getFirstBoard();
-
-  /**
-   * Returns the size of the history.
-   *
-   * @return the size of the history.
-   */
-  int getHistorySize();
-
-  /**
-   * Returns whether the history is empty.
-   *
-   * @return true if the history is empty, false otherwise.
-   */
-  boolean isHistoryEmpty();
 
   /**
    * Checks all endConditions and returns true if the game is over.
