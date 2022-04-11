@@ -1,10 +1,8 @@
-package oogasalad.GamePlayer.Server;
+package oogasalad.GamePlayer.Board.TurnManagement;
 
 import java.util.Map;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
-import oogasalad.GamePlayer.Board.GamePlayers;
-import oogasalad.GamePlayer.Board.History;
 
 /**
  * Interface for managing all turn interactions. it has two implementations: a local and a server

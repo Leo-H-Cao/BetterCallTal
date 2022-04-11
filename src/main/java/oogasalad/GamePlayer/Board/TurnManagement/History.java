@@ -1,6 +1,7 @@
-package oogasalad.GamePlayer.Board;
+package oogasalad.GamePlayer.Board.TurnManagement;
 
 import java.util.Set;
+import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
 

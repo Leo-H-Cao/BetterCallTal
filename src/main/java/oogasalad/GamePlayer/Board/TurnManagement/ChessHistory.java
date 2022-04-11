@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer.Server;
+package oogasalad.GamePlayer.Board.TurnManagement;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -6,7 +6,6 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import oogasalad.GamePlayer.Board.History;
 
 /**
  * This class is used to store prior states of the game, allowing for checking complex game

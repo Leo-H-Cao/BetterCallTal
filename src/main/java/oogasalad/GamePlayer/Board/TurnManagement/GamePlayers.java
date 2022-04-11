@@ -1,8 +1,9 @@
-package oogasalad.GamePlayer.Board;
+package oogasalad.GamePlayer.Board.TurnManagement;
 
 
 import java.util.ArrayList;
 import java.util.List;
+import oogasalad.GamePlayer.Board.Player;
 
 /**
  * This class is used to hold the players in the game and their information. Has methods to access

@@ -16,7 +16,7 @@ import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.Movement.CustomMovements.Castling;
 import oogasalad.GamePlayer.Movement.CustomMovements.DoubleFirstMove;
 import oogasalad.GamePlayer.Movement.CustomMovements.EnPassant;
-import oogasalad.GamePlayer.Server.BoardSetup;
+import oogasalad.GamePlayer.Board.BoardSetup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

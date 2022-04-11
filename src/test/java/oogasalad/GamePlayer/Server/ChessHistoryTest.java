@@ -1,4 +1,4 @@
-package oogasalad.Server;
+package oogasalad.GamePlayer.Server;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -15,7 +15,7 @@ import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
-import oogasalad.GamePlayer.Server.ChessHistory;
+import oogasalad.GamePlayer.Board.TurnManagement.ChessHistory;
 import org.junit.jupiter.api.Test;
 
 class ChessHistoryTest {

@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer.Server;
+package oogasalad.GamePlayer.Board.TurnManagement;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
-import oogasalad.GamePlayer.Board.GamePlayers;
-import oogasalad.GamePlayer.Board.History;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 
 /**
