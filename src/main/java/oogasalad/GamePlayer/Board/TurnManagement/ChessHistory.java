@@ -1,11 +1,11 @@
 package oogasalad.GamePlayer.Board.TurnManagement;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import oogasalad.GamePlayer.Board.ChessBoard;
 
 /**
  * This class is used to store prior states of the game, allowing for checking complex game
@@ -13,8 +13,7 @@ import java.util.Objects;
  */
 public class ChessHistory {
 
-  private Deque<History> historyDeque;
-  private List<History> historyList;
+  private final List<History> history;
   private int currentIndex;
 
 
@@ -23,7 +22,7 @@ public class ChessHistory {
    * constructor used to create an empty history.
    */
   public ChessHistory() {
-    setUpHistory(Collections.emptyList());
+    this(Collections.emptyList());
   }
 
   /**
@@ -32,7 +31,7 @@ public class ChessHistory {
    * @param history array of chess boards to store in the history
    */
   public ChessHistory(History[] history) {
-    setUpHistory(List.of(history));
+    this(List.of(history));
   }
 
   /**
@@ -41,17 +40,7 @@ public class ChessHistory {
    * @param history the collection of states to store.
    */
   public ChessHistory(Collection<History> history) {
-    setUpHistory(history);
-  }
-
-  /**
-   * Private set the datastructures used to store the history.
-   *
-   * @param history collection of states to store.
-   */
-  private void setUpHistory(Collection<History> history) {
-    this.historyDeque = new LinkedList<>(history);
-    this.historyList = new LinkedList<>(history);
+    this.history = new ArrayList<>(history);
     this.currentIndex = history.size() - 1;
   }
 
@@ -61,18 +50,26 @@ public class ChessHistory {
    * @param newState The new state to add.
    */
   public History add(History newState) {
-    historyDeque.addLast(newState);
+    if (currentIndex < size() - 1) {
+      history.set(currentIndex + 1, newState);
+    } else {
+      history.add(newState);
+    }
+    history.add(newState);
     currentIndex++;
     return newState;
   }
 
   /**
    * Returns the size of the history.
+   * <p>NOTE: Do not simply use the size of the history list to determine the current index of the
+   * history. Assuming that an undo operation is performed, the current index will be less than the
+   * last index of the history.
    *
    * @return the size of the history.
    */
   public int size() {
-    return historyList.size();
+    return history.size();
   }
 
   /**
@@ -81,13 +78,13 @@ public class ChessHistory {
    * @param index The index of the state to return.
    * @return the state at a given index.
    */
-  public History getState(int index) {
+  public History get(int index) {
     if (index < 0) {
-      return getFirstState();
-    } else if (index > historyList.size()) {
-      return getLastState();
+      return getFirst();
+    } else if (index > history.size()) {
+      return getLast();
     } else {
-      return historyList.get(index);
+      return history.get(index);
     }
   }
 
@@ -96,8 +93,8 @@ public class ChessHistory {
    *
    * @return the starting board configuration.
    */
-  public History getFirstState() {
-    return historyDeque.getFirst();
+  public History getFirst() {
+    return history.get(0);
   }
 
 
@@ -106,8 +103,17 @@ public class ChessHistory {
    *
    * @return the current state of the game.
    */
-  public History getCurrentState() {
-    return historyList.get(currentIndex);
+  public History getCurrent() {
+    return history.get(currentIndex);
+  }
+
+  /**
+   * Gets the current chess board state of the game.
+   *
+   * @return the current chess board state of the game.
+   */
+  public ChessBoard getCurrentBoard() {
+    return getCurrent().board();
   }
 
   /**
@@ -115,8 +121,8 @@ public class ChessHistory {
    *
    * @return the most recent state.
    */
-  public History getLastState() {
-    return historyDeque.getLast();
+  public History getLast() {
+    return history.get(size() - 1);
   }
 
   /**
@@ -129,40 +135,6 @@ public class ChessHistory {
   }
 
   /**
-   * Rewinds the history by amount of states.
-   *
-   * @param amount The number of states to rewind.
-   * @return the state that was rewound to.
-   */
-  public History rewindBackStates(int amount) {
-    int difference = currentIndex - amount;
-    if (difference < 0) {
-      return getFirstState();
-    } else {
-      for (int i = 0; i < amount; i++) {
-        historyDeque.removeLast();
-      }
-    }
-    return historyDeque.getLast();
-  }
-
-  /**
-   * Advances the history by amount of states.
-   *
-   * @param amount The number of states to advance.
-   * @return the state that was advanced to.
-   */
-  public History advanceForwardStates(int amount) {
-    int sum = currentIndex + amount;
-    if (sum > historyList.size()) {
-      return getLastState();
-    } else {
-      currentIndex = sum;
-      return getCurrentState();
-    }
-  }
-
-  /**
    * Rewinds the history to a certain index.
    *
    * @param index The index to rewind to.
@@ -170,7 +142,7 @@ public class ChessHistory {
    */
   public History goToState(int index) {
     currentIndex = index;
-    return getCurrentState();
+    return getCurrent();
   }
 
   /**
@@ -179,7 +151,7 @@ public class ChessHistory {
    * @return the state that was cleared to.
    */
   public ChessHistory clearHistory() {
-    historyDeque.clear();
+    history.clear();
     currentIndex = 0;
     return this;
   }
@@ -190,7 +162,7 @@ public class ChessHistory {
    * @return true if the history is empty, false otherwise.
    */
   public boolean isEmpty() {
-    return historyDeque.isEmpty();
+    return history.isEmpty();
   }
 
   /**
@@ -207,7 +179,7 @@ public class ChessHistory {
     if (!(o instanceof ChessHistory that)) {
       return false;
     }
-    return currentIndex == that.currentIndex && historyList.equals(that.historyList);
+    return currentIndex == that.currentIndex && history.equals(that.history);
   }
 
   /**
@@ -217,6 +189,6 @@ public class ChessHistory {
    */
   @Override
   public int hashCode() {
-    return Objects.hash(historyList, currentIndex);
+    return Objects.hash(history, currentIndex);
   }
 }
