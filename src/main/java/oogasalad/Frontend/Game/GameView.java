@@ -114,7 +114,7 @@ public class GameView extends View {
         LOG.debug("Updating board");
         Turn = tu.nextPlayer();
         myBoardGrid.updateTiles(tu.updatedSquares());
-        if (getViewManager().getMyGameBackend().getChessBoard().isGameOver()) {
+        if (! getViewManager().getMyGameBackend().getChessBoard().isGameOver()) {
            gameOver();
         }
     }
@@ -123,6 +123,7 @@ public class GameView extends View {
         GameOver = true;
         Map<Integer, Double> scores = getViewManager().getMyGameBackend().getChessBoard().getScores();
         GameOverDisplay godisp = new GameOverDisplay(ViewManager.getLanguage(), scores, removeGOCons);
+        StackPane.setAlignment(godisp.getDisplay(), Pos.CENTER);
         myCenterBoard.getChildren().add(godisp.getDisplay());
     }
 

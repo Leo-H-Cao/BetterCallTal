@@ -4,6 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import oogasalad.Frontend.util.ButtonFactory;
@@ -16,7 +17,7 @@ import java.util.function.Consumer;
 
 public class GameOverDisplay {
 
-    private Pane myDisplay;
+    private VBox myDisplay;
     private ResourceBundle language;
     private Map<Integer, String> myTeams = new HashMap<>() {{
         put(0, "White");
@@ -25,14 +26,14 @@ public class GameOverDisplay {
     private Consumer<Node> removeCons;
     private static final String OK_BUTTON_ID = "OK";
     private static Double WINVALUE = 1.0;
+    private static Double WIDTH = 500.0;
+    private static Double HEIGHT = 500.0;
 
     public GameOverDisplay(ResourceBundle rb, Map<Integer, Double> scores, Consumer<Node> remove) {
         removeCons =remove;
         language = rb;
-        myDisplay = new Pane();
         int winner = findWinner(scores);
-        VBox vb = setUpDisplay(winner);
-        myDisplay.getChildren().add(vb);
+        myDisplay = setUpDisplay(winner);
     }
 
     private Integer findWinner(Map<Integer, Double> scores){
@@ -48,11 +49,14 @@ public class GameOverDisplay {
 
     private VBox setUpDisplay(int winner) {
         VBox vb = new VBox();
-        Text GameOver = new Text(getClass().getSimpleName() + "GameOver");
-        GameOver.setFont(new Font(64));
+        vb.setMaxSize(WIDTH, HEIGHT);
+        Text GameOver = new Text(language.getString(getClass().getSimpleName() + "GameOver"));
+        GameOver.setFont(new Font("Times New Roman",64));
+        GameOver.setFill(Color.WHITE);
 
         Text win = new Text(language.getString(getClass().getSimpleName() + myTeams.get(winner)));
-        win.setFont(new Font(64));
+        win.setFont(new Font("Times New Roman",64));
+        win.setFill(Color.CORAL);
 
         Button OK = ButtonFactory.makeButton(ButtonType.TEXT, language.getString(getClass().getSimpleName() + "Ok"), OK_BUTTON_ID,
                 (e) -> {
@@ -62,5 +66,5 @@ public class GameOverDisplay {
         return vb;
     }
 
-    public Pane getDisplay() {return myDisplay;}
+    public VBox getDisplay() {return myDisplay;}
 }
