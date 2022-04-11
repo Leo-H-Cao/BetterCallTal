@@ -5,12 +5,14 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.stage.Screen;
 import oogasalad.Frontend.Editor.Board.PieceLibrary;
-import oogasalad.Frontend.util.Controller;
+import oogasalad.Frontend.Editor.EditorController;
+import oogasalad.Frontend.Game.GameBackend;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.MissingResourceException;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.concurrent.Callable;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public abstract class NodeContainer {
@@ -18,10 +20,10 @@ public abstract class NodeContainer {
 	protected Rectangle2D myScreenSize;
 	protected Optional<ResourceBundle> myResources;
 	private Node myNode;
-	private final Controller myBackend;
+	private final Callable getBackend;
 
-	public NodeContainer(Controller controller) {
-		myBackend = controller;
+	public <V> NodeContainer(Callable<V> backendConsumer) {
+		getBackend = backendConsumer;
 		myScreenSize = Screen.getPrimary().getVisualBounds();
 		try {
 			myResources = Optional.of(ResourceBundle.getBundle(getClass().getName()));
@@ -37,9 +39,19 @@ public abstract class NodeContainer {
 		return myNode;
 	}
 
-	protected <T> Optional<T> getBackend(Class<T> type) {
-		if(myBackend.getClass() == type) {
-			return (Optional<T>)Optional.of(myBackend);
+	protected Optional<EditorController> getEditorBackend() throws Exception {
+		Object backend = getBackend.call();
+		if(backend.getClass() == EditorController.class) {
+			return Optional.of((EditorController)backend);
+		} else {
+			return Optional.empty();
+		}
+	}
+
+	protected Optional<GameBackend> getGameBackend() throws Exception {
+		Object backend = getBackend.call();
+		if(backend.getClass() == EditorController.class) {
+			return Optional.of((GameBackend) backend);
 		} else {
 			return Optional.empty();
 		}
