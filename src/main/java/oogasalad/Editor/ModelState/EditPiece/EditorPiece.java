@@ -3,18 +3,18 @@ package oogasalad.Editor.ModelState.EditPiece;
 import javafx.scene.image.Image;
 
 public class EditorPiece {
-  private EditPieceGrid editPieceGrid;
+  private MovementGrid movementGrid;
   private Image image0;
   private Image image1;
   private String pieceID;
 
   public EditorPiece(String pieceID){
     this.pieceID = pieceID;
-    editPieceGrid = new EditPieceGrid();
+    movementGrid = new MovementGrid();
   }
 
-  public EditPieceGrid getEditPieceGrid() {
-    return editPieceGrid;
+  public MovementGrid getEditPieceGrid() {
+    return movementGrid;
   }
 
   public void setImage(int team, Image image) {
