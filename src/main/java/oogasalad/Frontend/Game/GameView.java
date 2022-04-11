@@ -8,6 +8,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Popup;
 import oogasalad.Frontend.Game.Sections.BoardGrid;
 import oogasalad.Frontend.Game.Sections.GameOverDisplay;
+import oogasalad.Frontend.Game.Sections.RightSideSection;
 import oogasalad.Frontend.Game.Sections.TopSection;
 import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.View;
@@ -43,6 +44,8 @@ public class GameView extends View {
     private Consumer<Node> removeGOCons;
     private Boolean GameOver;
     private StackPane myCenterBoard;
+    private Runnable flipRun;
+    private RightSideSection myRightSide;
 
 
     public GameView(ViewManager viewManager) {
@@ -60,17 +63,18 @@ public class GameView extends View {
     public void SetUpBoard(ChessBoard chessboard, int id) {
         Turn = 0;   // give white player first turn
         myID = id;
-        makeConsumers();
+        makeConsandRuns();
         myBoardGrid = new BoardGrid(chessboard, id, lightUpCons, MoveCons); //TODO: Figure out player ID stuff
         //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
 
     }
 
-    private void makeConsumers() {
+    private void makeConsandRuns() {
         lightUpCons = piece -> lightUpSquares(piece);
         MoveCons = coor -> makeMove(coor);
         removeGOCons = node -> removeGameOverNode(node);
+        flipRun = () -> flipBoard();
     }
 
 
@@ -138,10 +142,17 @@ public class GameView extends View {
         myCenterBoard.getChildren().add(myBoardGrid.getBoard());
         bp.setCenter(myCenterBoard);
 
+        myRightSide = new RightSideSection(flipRun);
+        bp.setRight(myRightSide.getVbox());
+
         return bp;
     }
 
     private void removeGameOverNode(Node n) {
         myCenterBoard.getChildren().remove(n);
+    }
+
+    private void flipBoard() {
+        myBoardGrid.flip();
     }
 }
