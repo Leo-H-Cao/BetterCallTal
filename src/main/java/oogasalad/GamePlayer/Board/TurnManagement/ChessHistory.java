@@ -11,7 +11,7 @@ import oogasalad.GamePlayer.Board.ChessBoard;
  * This class is used to store prior states of the game, allowing for checking complex game
  * interactions and rollback to previous states.
  */
-public class ChessHistory {
+public class ChessHistory implements HistoryManager {
 
   private final List<History> history;
   private int currentIndex;
