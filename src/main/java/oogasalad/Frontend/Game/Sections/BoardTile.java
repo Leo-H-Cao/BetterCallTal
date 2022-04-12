@@ -124,7 +124,7 @@ public class BoardTile {
             Image image = new Image(new FileInputStream(Image_Path + TEAM + name.toLowerCase() + ".png"));
             ImageView PieceView = new ImageView(image);
             PieceView.setFitHeight(myTileHeight - 10);
-            PieceView.setFitHeight(myTileWidth - 10);
+            PieceView.setFitWidth(myTileWidth - 10);
             PieceView.setPreserveRatio(true);
             PieceView.setSmooth(true);
             PieceView.setCache(true);

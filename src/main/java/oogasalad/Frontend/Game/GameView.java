@@ -4,13 +4,11 @@ import java.util.*;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Popup;
-import oogasalad.Frontend.Game.Sections.BoardGrid;
-import oogasalad.Frontend.Game.Sections.GameOverDisplay;
-import oogasalad.Frontend.Game.Sections.RightSideSection;
-import oogasalad.Frontend.Game.Sections.TopSection;
+import oogasalad.Frontend.Game.Sections.*;
 import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -158,8 +156,12 @@ public class GameView extends View {
 
     /**
      * RECEIVED PERMISSION FROM DUVALL TO DO THIS
+     *
+     * This method will be called by backend when a promotion occurs.
      */
     public static Piece promotionPopUp(List<Piece> possPromotions){
-        return possPromotions.get(0);
+        ChoiceDialog<Piece> d = new ChoiceDialog(possPromotions.get(0), possPromotions);
+        Optional<Piece> piece = d.showAndWait();
+        return piece.orElse(possPromotions.get(0));
     }
 }
