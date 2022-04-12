@@ -12,7 +12,17 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.ValidStateChecker.Check;
 
 public class Stalemate implements EndCondition{
+  private Check check = new Check();
 
+  public boolean isStalemate(ChessBoard board) throws EngineException{
+    //for all teams, check if there are legal moves left
+    for(int i : board.getTeams()){
+      if(hasNoLegalMoves(board, i) && check.isValid(board, i)){
+        return true;
+      }
+    }
+    return false;
+  }
 
   public boolean hasNoLegalMoves(ChessBoard board, int id) throws EngineException {
     Set<Piece> friendlyPieces = friendlyPieces(board, id);
@@ -40,6 +50,17 @@ public class Stalemate implements EndCondition{
 
   @Override
   public Map<Integer, Double> getScores(ChessBoard board) {
+    HashMap<Integer, Double> scores = new HashMap<>();
+    try {
+      if(isStalemate(board)){
+        scores.put(0, 0.5);
+        scores.put(1, 0.5);
+        return scores;
+      }
+    } catch (EngineException e) {
+      e.printStackTrace();
+    }
+
     return new HashMap<>();
   }
 }

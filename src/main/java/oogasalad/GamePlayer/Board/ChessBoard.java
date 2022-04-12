@@ -233,10 +233,8 @@ public class ChessBoard implements Iterable<ChessTile> {
     boolean classicalGameEnd = false;
     Stalemate classic = new Stalemate();
     try {
-      for(int i : getTeams()){
-        if(classic.hasNoLegalMoves(this, i)){
-          classicalGameEnd = true;
-        }
+      if(classic.isStalemate(this)){
+        return true;
       }
     } catch (EngineException e) {
       LOG.error("unexpected error");
