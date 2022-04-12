@@ -20,7 +20,6 @@ public class PieceLibrary extends LabelledContainer {
   @Override
   protected Collection<Node> fillContent() {
     Collection<Node> ret = new ArrayList();
-    System.out.println(getEditorBackend());
     getEditorBackend().getPiecesState().getAllPieces().forEach((piece) -> ret.add(createPiece(piece.getPieceID())));
     return ret;
   }

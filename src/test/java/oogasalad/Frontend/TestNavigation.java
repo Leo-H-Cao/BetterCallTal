@@ -30,19 +30,10 @@ public class TestNavigation extends DukeApplicationTest {
 		assertEquals(myStage.getTitle(), myResources.getString("GameEditorViewTitle"));
 	}
 
-	// Temporary, eventually will be replaced with tests for the join and host screens
-	@Test
-	void testGame() {
-		clickOn(lookup("#joinButton").query());
-		assertEquals(myStage.getTitle(), myResources.getString("GameViewTitle"));
-	}
 
 	@Test
 	void testExit() {
 		testEditor();
-		clickOn(lookup("#exit").query());
-		assertEquals(myStage.getTitle(), myResources.getString("HomeViewTitle"));
-		testGame();
 		clickOn(lookup("#exit").query());
 		assertEquals(myStage.getTitle(), myResources.getString("HomeViewTitle"));
 	}

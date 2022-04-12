@@ -38,7 +38,6 @@ public class HomeView extends View {
         MovementGrid rookMovement = new MovementGrid();
         getEditorBackend().getPiecesState().createCustomPiece(5, 0, new Image("images/pieces/black/rook.png"), rookMovement, "default_rook", "Rook");
         getEditorBackend().getPiecesState().createCustomPiece(5, 1, new Image("images/pieces/black/rook.png"), rookMovement, "default_rook", "Rook");
-        System.out.println("TEST");
     }
 
     @Override

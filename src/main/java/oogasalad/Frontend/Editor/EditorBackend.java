@@ -11,7 +11,6 @@ public class EditorBackend extends Controller {
 	public EditorBackend(){
 		myPiecesState = new PiecesState();
 		myBoardState = new BoardState(myPiecesState.getPiecesManager());
-		System.out.println(this);
 	}
 
 	public PiecesState getPiecesState(){
