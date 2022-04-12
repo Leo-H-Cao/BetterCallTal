@@ -1,19 +1,16 @@
 package oogasalad.Frontend.Game;
 
-import java.io.IOException;
-import java.util.Optional;
-import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.Controller;
 import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Server.BoardSetup;
 
 import java.io.File;
-import oogasalad.GamePlayer.Server.BoardSetup;
+import java.util.Optional;
 
 /**
  * This class will hold the Game View Backend object instances that the
  * FrontEnd needs to make the game work.
  */
-
 public class GameBackend extends Controller {
 
     private ChessBoard myChessBoard;

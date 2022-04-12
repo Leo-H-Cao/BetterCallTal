@@ -5,6 +5,7 @@ import oogasalad.Frontend.Editor.GameEditorView;
 import oogasalad.Frontend.Game.GameView;
 import oogasalad.Frontend.Menu.HomeView;
 import oogasalad.Frontend.Menu.HostGame;
+import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.Frontend.util.View;
 import java.util.ResourceBundle;
 
@@ -14,6 +15,7 @@ public class ViewManager {
 	private final Stage myStage;
 
 	public ViewManager(Stage stage, ResourceBundle rb) {
+		BackendConnector.initBackend();
 		myStage = stage;
 		langBundle = rb;
 		View homeView = new HomeView(myStage);

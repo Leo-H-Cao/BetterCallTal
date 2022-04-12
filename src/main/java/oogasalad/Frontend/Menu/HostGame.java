@@ -1,6 +1,5 @@
 package oogasalad.Frontend.Menu;
 
-import java.util.Optional;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -10,14 +9,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import oogasalad.Frontend.Game.GameBackend;
 import oogasalad.Frontend.Game.GameView;
 import oogasalad.Frontend.ViewManager;
-import oogasalad.Frontend.util.View;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import java.io.File;
+import java.util.Optional;
 
 
 public class HostGame extends GameView {
@@ -73,16 +71,14 @@ public class HostGame extends GameView {
         Button load = ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource(LOAD), Load_Button_ID,
                 (e) -> {
                     File f = chooseLoadFile();
-                    getBackend().ifPresent((a) -> {
-                        Optional<ChessBoard> cbOp = a.initalizeChessBoard(f);
-                        if(cbOp.isPresent()) {
-                            getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cbOp.get(), 0));
-                            // Make the start button
-                            Node start = makeStartGroup();
-                            StackPane.setAlignment(start, Pos.CENTER_LEFT);
-                            sp.getChildren().add(start);
-                        }
-                    });
+                    Optional<ChessBoard> cbOp = getGameBackend().initalizeChessBoard(f);
+                    if(cbOp.isPresent()) {
+                        getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cbOp.get(), 0));
+                        // Make the start button
+                        Node start = makeStartGroup();
+                        StackPane.setAlignment(start, Pos.CENTER_LEFT);
+                        sp.getChildren().add(start);
+                    }
                 });
         load.setPrefWidth(150);
         load.setPrefHeight(50);

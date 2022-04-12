@@ -5,11 +5,13 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 import oogasalad.Frontend.Editor.GameEditorView;
 import oogasalad.Frontend.Game.GameView;
 import oogasalad.Frontend.util.View;
@@ -27,8 +29,16 @@ public class HomeView extends View {
         // Changes the current scene to the home page on app initialization
         getView(HomeView.class).ifPresent((e) -> {
             changeScene(e);
-            System.out.println("test");
         });
+        createDefaultPieces();
+    }
+
+    private void createDefaultPieces() {
+        // Rook
+        MovementGrid rookMovement = new MovementGrid();
+        getEditorBackend().getPiecesState().createCustomPiece(5, 0, new Image("images/pieces/black/rook.png"), rookMovement, "default_rook", "Rook");
+        getEditorBackend().getPiecesState().createCustomPiece(5, 1, new Image("images/pieces/black/rook.png"), rookMovement, "default_rook", "Rook");
+        System.out.println("TEST");
     }
 
     @Override

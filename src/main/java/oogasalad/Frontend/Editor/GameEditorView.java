@@ -11,10 +11,11 @@ import javafx.stage.Stage;
 import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 import oogasalad.Frontend.Editor.Board.BoardEditor;
 import oogasalad.Frontend.Editor.Piece.PieceEditor;
-import oogasalad.Frontend.util.View;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
-import java.util.*;
+import oogasalad.Frontend.util.View;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class GameEditorView extends View {
@@ -23,14 +24,11 @@ public class GameEditorView extends View {
 	private final Map<String, PieceEditor> myPieceEditors;
 	private final TabPane myTabs;
 	private int pieceEditorCount = 0;
-	private final EditorController myController;
 
 	public GameEditorView(Stage stage) {
 		super(stage);
-		myController = new EditorController();
-		createDefaultPieces();
 		selectedPieceId = "default_pawn";
-		myBoardEditor = new BoardEditor(myController);
+		myBoardEditor = new BoardEditor();
 		myPieceEditors = new HashMap<>();
 		Tab boardTab = makeTab(getLanguageResource("Board"), myBoardEditor.getNode());
 		boardTab.setClosable(false);
@@ -60,7 +58,7 @@ public class GameEditorView extends View {
 
 	private void newCustomPiece() {
 		pieceEditorCount++;
-		PieceEditor newPieceEditor = new PieceEditor(myController, String.valueOf(pieceEditorCount));
+		PieceEditor newPieceEditor = new PieceEditor(String.valueOf(pieceEditorCount));
 		myPieceEditors.put("custom" + pieceEditorCount, newPieceEditor);
 		Tab newTab = makeTab(getTabTitle(), newPieceEditor.getNode());
 		newTab.setOnClosed((e) -> myPieceEditors.remove(newPieceEditor.getId()));
@@ -89,12 +87,5 @@ public class GameEditorView extends View {
 		ret.add(buttons, 0, 0);
 		ret.add(myTabs, 0, 1);
 		return ret;
-	}
-
-	private void createDefaultPieces() {
-		// Rook
-		MovementGrid rookMovement = new MovementGrid();
-		myController.getPiecesState().createCustomPiece(5, 0, new Image("images/pieces/black/rook.png"), rookMovement, "default_rook", "Rook");
-		myController.getPiecesState().createCustomPiece(5, 1, new Image("images/pieces/black/rook.png"), rookMovement, "default_rook", "Rook");
 	}
 }

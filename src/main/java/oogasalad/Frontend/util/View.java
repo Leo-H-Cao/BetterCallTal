@@ -10,13 +10,13 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Menu.HomeView;
 import oogasalad.Frontend.ViewManager;
-import java.io.File;
-import java.util.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.io.File;
+import java.util.*;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
-public abstract class View {
+public abstract class View extends BackendConnector {
 	private static Collection<View> myViews;
 	private static boolean fullscreen = false;
 	protected Scene myScene;
@@ -45,6 +45,7 @@ public abstract class View {
 	public static void addView(View v) {
 		myViews.add(v);
 	}
+
 
 	/**
 	 * @return The stored scene in myScene
