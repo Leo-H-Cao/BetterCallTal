@@ -8,6 +8,7 @@ open module oogasalad {
     requires org.json;
     requires org.apache.logging.log4j;
     requires java.scripting;
+  requires com.fasterxml.jackson.databind;
 
   // allow other classes to access listed packages in your project
     exports oogasalad;

@@ -28,9 +28,7 @@ public class LibraryPiece {
     return pieceID;
   }
 
-  public Image getImage(){
-    return image;
-  }
+  public Image getImage(){return image; }
 
   public MovementGrid getPieceMovement() {
     return movementGrid;
