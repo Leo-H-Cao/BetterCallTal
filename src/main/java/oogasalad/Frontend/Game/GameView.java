@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Popup;
+import javafx.stage.Stage;
 import oogasalad.Frontend.Game.Sections.BoardGrid;
 import oogasalad.Frontend.Game.Sections.GameOverDisplay;
 import oogasalad.Frontend.Game.Sections.RightSideSection;
@@ -19,8 +20,6 @@ import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Board.TurnUpdate;
 import oogasalad.GamePlayer.Movement.Coordinate;
-
-import java.util.Collection;
 import java.util.function.Consumer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -47,8 +46,8 @@ public class GameView extends View {
     private RightSideSection myRightSide;
 
 
-    public GameView(ViewManager viewManager) {
-        super(viewManager);
+    public GameView(Stage stage) {
+        super(stage);
         GameOver = false;
     }
 
@@ -82,7 +81,7 @@ public class GameView extends View {
         LOG.debug("makeMove in GameView reached\n");
         LOG.debug(String.format("Current player: %d", Turn));
         try {
-            TurnUpdate tu = getViewManager().getMyGameBackend().getChessBoard().move(myBoardGrid.getSelectedPiece(), c);
+            TurnUpdate tu = getGameBackend().getChessBoard().move(myBoardGrid.getSelectedPiece(), c);
             updateBoard(tu);
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,7 +97,7 @@ public class GameView extends View {
     public void lightUpSquares(Piece p)  {
         LOG.debug("I made it to lightUpSquares method in GameView\n");
         try{
-            Collection<ChessTile> possibletiles = getViewManager().getMyGameBackend().getChessBoard().getMoves(p);
+            Collection<ChessTile> possibletiles = getGameBackend().getChessBoard().getMoves(p);
             myBoardGrid.lightSquares(possibletiles);
         }
         catch (EngineException e){
@@ -117,14 +116,14 @@ public class GameView extends View {
         LOG.debug("Updating board");
         Turn = tu.nextPlayer();
         myBoardGrid.updateTiles(tu.updatedSquares());
-        if (getViewManager().getMyGameBackend().getChessBoard().isGameOver()) {
+        if (getGameBackend().getChessBoard().isGameOver()) {
            gameOver();
         }
     }
 
     private void gameOver(){
         GameOver = true;
-        Map<Integer, Double> scores = getViewManager().getMyGameBackend().getChessBoard().getScores();
+        Map<Integer, Double> scores = getGameBackend().getChessBoard().getScores();
         GameOverDisplay godisp = new GameOverDisplay(ViewManager.getLanguage(), scores, removeGOCons);
         StackPane.setAlignment(godisp.getDisplay(), Pos.CENTER);
         myCenterBoard.getChildren().add(godisp.getDisplay());
