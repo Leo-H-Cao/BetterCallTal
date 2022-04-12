@@ -16,7 +16,7 @@ public class TestNavigation extends DukeApplicationTest {
 	@Override
 	public void start (Stage stage) {
 		LanguageModal myLanguageModal = new LanguageModal(stage);
-		Scene myScene = myLanguageModal.makeScene();
+		Scene myScene = myLanguageModal.getScene();
 		myStage = stage;
 		myStage.setScene(myScene);
 		myStage.show();
