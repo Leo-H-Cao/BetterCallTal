@@ -240,4 +240,13 @@ public class Piece implements Cloneable {
   public void setMovement(MovementHandler moves) {
     movementHandler = moves;
   }
+
+  public void clearActions() {
+
+  }
+
+  @Override
+  public String toString() {
+    return suppPieceData.name();
+  }
 }
