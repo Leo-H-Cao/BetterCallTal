@@ -127,6 +127,8 @@ class MovementTest {
     assertThrows(
         InvalidMoveException.class, () -> movementOne.movePiece(pieceOne, new Coordinate(2, 0),board));
     assertThrows(InvalidMoveException.class, () -> captureOne.capturePiece(pieceOne, new Coordinate(2, 0),board));
+    assertThrows(InvalidMoveException.class, () -> pieceOne.move(board.getTile(Coordinate.of(1, 2)), board));
+    assertThrows(OutsideOfBoardException.class, () -> pieceTwo.updateCoordinates(board.getTile(Coordinate.of(5, 5)), board));
   }
 
   @Test

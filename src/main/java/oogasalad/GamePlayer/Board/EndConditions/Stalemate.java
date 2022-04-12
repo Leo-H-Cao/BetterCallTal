@@ -3,28 +3,33 @@ package oogasalad.GamePlayer.Board.EndConditions;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.ValidStateChecker.Check;
 
 public class Stalemate implements EndCondition{
 
 
-  public static boolean isStaleMate(ChessBoard board, int id){
+  public boolean hasNoLegalMoves(ChessBoard board, int id) throws EngineException {
     Set<Piece> friendlyPieces = friendlyPieces(board, id);
     for(Piece p : friendlyPieces){
-      if(!p.getMoves(board).isEmpty()){
-        return false;
+      for(ChessTile t : p.getMoves(board)){
+        ChessBoard newPosition = board.makeHypotheticalMove(p, t.getCoordinates());
+        if((new Check().isValid(newPosition, p.getTeam()))){
+          return false;
+        }
       }
+
     }
     return true;
   }
 
 
-  public static Set<Piece> friendlyPieces(ChessBoard board, int id) {
+  public Set<Piece> friendlyPieces(ChessBoard board, int id) {
     return board.stream()
         .flatMap(List::stream).toList().stream()
         .map(ChessTile::getPieces)

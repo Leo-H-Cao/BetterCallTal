@@ -60,7 +60,8 @@ public class Coordinate{
    * @param other coordinate to compare to
    * @return if the coordinates have the same row, col
    */
-  public boolean equals(Coordinate other) {
-    return this.row == other.getRow() && this.col == other.getCol();
+  public boolean equals(Object other) {
+    Coordinate otherCord = (Coordinate) other;
+    return this.row == otherCord.getRow() && this.col == otherCord.getCol();
   }
 }
