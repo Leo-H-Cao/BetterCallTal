@@ -85,8 +85,6 @@ public class CheckmateTests {
         List.of(rookMovement),
         List.of(rookMovement), Collections.emptyList(),
         Collections.emptyList(), ""));
-
-
   }
 
 

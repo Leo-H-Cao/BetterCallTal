@@ -233,4 +233,11 @@ public class Piece implements Cloneable {
     );
     return new Piece(clonedData, movementHandler);
   }
+
+  /**
+   *
+   */
+  public void setMovement(MovementHandler moves) {
+    movementHandler = moves;
+  }
 }
