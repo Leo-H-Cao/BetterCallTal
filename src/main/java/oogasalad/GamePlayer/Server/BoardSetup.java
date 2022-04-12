@@ -11,7 +11,10 @@ import java.util.List;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.Player;
+import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.Board.Tiles.CustomTiles.TileAction;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
+import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 import oogasalad.GamePlayer.GamePiece.Piece;
@@ -31,6 +34,7 @@ public class BoardSetup {
   private static final String BASIC_MOVEMENT_PACKAGE = "doc/GameEngineResources/BasicMovements/";
   private static final String JSON_EXTENSION = ".json";
 
+  private static final String TILE_ACTION_PACKAGE = "oogasalad.GamePlayer.Board.Tiles.CustomTiles.";
   private static final String CUSTOM_MOVE_PACKAGE = "oogasalad.GamePlayer.Movement.CustomMovements.";
   private static final String TURN_CRITERIA_PACKAGE = "oogasalad.GamePlayer.Board.TurnCriteria.";
   private static final String END_CONDITION_PACKAGE = "oogasalad.GamePlayer.Board.EndConditions.";
@@ -58,8 +62,45 @@ public class BoardSetup {
     Player[] players = getPlayers();
     myBoard = new ChessBoard(rows, columns, getTurnCriteria(players), players,
         getValidStateCheckers(), getEndConditions());
+    setTileActions();
     setStartingPosition(myBoard);
     return myBoard;
+  }
+
+  /***
+   * Sets tile actions, if applicable
+   */
+  private void setTileActions() throws IOException {
+    JSONArray customTiles;
+    try {
+      customTiles = myJSONObject.getJSONArray("tiles");
+    } catch (Exception e) {
+      LOG.debug("No custom tile entry found");
+      return;
+    }
+
+    for(int i=0; i<customTiles.length(); i++) {
+      JSONObject rawTileData = customTiles.getJSONObject(i);
+      int row = rawTileData.getInt("row");
+      int col = rawTileData.getInt("col");
+      String img = rawTileData.getString("img");
+
+      List<TileAction> tileActions = new ArrayList<>();
+      JSONArray tileActionArray = rawTileData.getJSONArray("tileActions");
+      for (int j = 0; j < tileActionArray.length(); j++) {
+        tileActions.add(
+            (TileAction) createInstance(TILE_ACTION_PACKAGE + tileActionArray.getString(j),
+                new Class[]{}, new Object[]{}));
+      }
+      LOG.debug(String.format("Tile actions for (%d, %d): ", row, col) + tileActions);
+      try {
+        ChessTile tile = myBoard.getTile(Coordinate.of(row, col));
+        tile.setSpecialActions(tileActions);
+        tile.setCustomImg(img);
+      } catch (OutsideOfBoardException e) {
+        LOG.debug("Tile action setting failed, out of bounds");
+      }
+    }
   }
 
   /***
