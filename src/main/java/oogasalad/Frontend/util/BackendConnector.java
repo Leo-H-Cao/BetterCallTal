@@ -1,6 +1,6 @@
 package oogasalad.Frontend.util;
 
-import oogasalad.Frontend.Editor.EditorBackend;
+import oogasalad.Editor.ModelState.EditorBackend;
 import oogasalad.Frontend.Game.GameBackend;
 
 public class BackendConnector {

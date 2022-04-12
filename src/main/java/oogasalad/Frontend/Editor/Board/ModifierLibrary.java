@@ -3,7 +3,6 @@ package oogasalad.Frontend.Editor.Board;
 import javafx.scene.Node;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
-import oogasalad.Frontend.Editor.EditorBackend;
 import oogasalad.Frontend.util.LabelledContainer;
 import java.util.ArrayList;
 import java.util.Collection;

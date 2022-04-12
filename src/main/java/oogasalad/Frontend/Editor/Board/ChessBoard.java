@@ -2,7 +2,6 @@ package oogasalad.Frontend.Editor.Board;
 
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
-import oogasalad.Frontend.Editor.EditorBackend;
 import oogasalad.Frontend.util.NodeContainer;
 import java.util.concurrent.atomic.AtomicInteger;
 
