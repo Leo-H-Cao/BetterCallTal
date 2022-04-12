@@ -30,14 +30,7 @@ public class HomeView extends View {
         getView(HomeView.class).ifPresent((e) -> {
             changeScene(e);
         });
-        createDefaultPieces();
-    }
 
-    private void createDefaultPieces() {
-        // Rook
-        MovementGrid rookMovement = new MovementGrid();
-        getEditorBackend().getPiecesState().createCustomPiece(5, 0, new Image("images/pieces/black/rook.png"), rookMovement, "default_rook", "Rook");
-        getEditorBackend().getPiecesState().createCustomPiece(5, 1, new Image("images/pieces/black/rook.png"), rookMovement, "default_rook", "Rook");
     }
 
     @Override
