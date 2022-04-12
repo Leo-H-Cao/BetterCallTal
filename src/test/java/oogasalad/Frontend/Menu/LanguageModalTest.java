@@ -20,7 +20,7 @@ public class LanguageModalTest extends DukeApplicationTest {
 	@Override
 	public void start (Stage stage) {
 		myLanguageModal = new LanguageModal(stage);
-		myScene = myLanguageModal.makeScene();
+		myScene = myLanguageModal.getScene();
 		myStage = stage;
 		myStage.setScene(myScene);
 		myStage.show();

@@ -1,15 +1,22 @@
 package oogasalad.Frontend.Game;
 
-import java.util.Collection;
+import java.util.*;
+
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 import oogasalad.Frontend.Game.Sections.BoardGrid;
+import oogasalad.Frontend.Game.Sections.GameOverDisplay;
+import oogasalad.Frontend.Game.Sections.RightSideSection;
 import oogasalad.Frontend.Game.Sections.TopSection;
 import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Board.TurnUpdate;
 import oogasalad.GamePlayer.Movement.Coordinate;
@@ -32,10 +39,16 @@ public class GameView extends View {
     private BorderPane myBP;
     private Consumer<Piece> lightUpCons;
     private Consumer<Coordinate> MoveCons;
+    private Consumer<Node> removeGOCons;
+    private Boolean GameOver;
+    private StackPane myCenterBoard;
+    private Runnable flipRun;
+    private RightSideSection myRightSide;
 
 
-    public GameView(ViewManager viewManager) {
-        super(viewManager);
+    public GameView(Stage stage) {
+        super(stage);
+        GameOver = false;
     }
 
     /**
@@ -46,18 +59,20 @@ public class GameView extends View {
      */
 
     public void SetUpBoard(ChessBoard chessboard, int id) {
-        myBoardGrid = new BoardGrid(chessboard, id, lightUpCons, MoveCons); //TODO: Figure out player ID stuff
         Turn = 0;   // give white player first turn
         myID = id;
-        makeConsumers();
+        makeConsandRuns();
+        myBoardGrid = new BoardGrid(chessboard, id, lightUpCons, MoveCons); //TODO: Figure out player ID stuff
         //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
 
     }
 
-    private void makeConsumers() {
+    private void makeConsandRuns() {
         lightUpCons = piece -> lightUpSquares(piece);
         MoveCons = coor -> makeMove(coor);
+        removeGOCons = node -> removeGameOverNode(node);
+        flipRun = () -> flipBoard();
     }
 
 
@@ -66,7 +81,7 @@ public class GameView extends View {
         LOG.debug("makeMove in GameView reached\n");
         LOG.debug(String.format("Current player: %d", Turn));
         try {
-            TurnUpdate tu = getViewManager().getMyGameBackend().getChessBoard().move(myBoardGrid.getSelectedPiece(), c);
+            TurnUpdate tu = getGameBackend().getChessBoard().move(myBoardGrid.getSelectedPiece(), c);
             updateBoard(tu);
         } catch (Exception e) {
             e.printStackTrace();
@@ -79,10 +94,16 @@ public class GameView extends View {
      * Only when a square is lit up and clicked will a move be made.
      */
 
-    public void lightUpSquares(Piece p) {
+    public void lightUpSquares(Piece p)  {
         LOG.debug("I made it to lightUpSquares method in GameView\n");
-        Collection<ChessTile> possibletiles = getViewManager().getMyGameBackend().getChessBoard().getMoves(p);
-        myBoardGrid.lightSquares(possibletiles);
+        try{
+            Collection<ChessTile> possibletiles = getGameBackend().getChessBoard().getMoves(p);
+            myBoardGrid.lightSquares(possibletiles);
+        }
+        catch (EngineException e){
+          LOG.error("unexpected error"); //TODO: remove this and handle the exception in the call stack
+        }
+
     }
 
     /**
@@ -95,6 +116,17 @@ public class GameView extends View {
         LOG.debug("Updating board");
         Turn = tu.nextPlayer();
         myBoardGrid.updateTiles(tu.updatedSquares());
+        if (getGameBackend().getChessBoard().isGameOver()) {
+           gameOver();
+        }
+    }
+
+    private void gameOver(){
+        GameOver = true;
+        Map<Integer, Double> scores = getGameBackend().getChessBoard().getScores();
+        GameOverDisplay godisp = new GameOverDisplay(ViewManager.getLanguage(), scores, removeGOCons);
+        StackPane.setAlignment(godisp.getDisplay(), Pos.CENTER);
+        myCenterBoard.getChildren().add(godisp.getDisplay());
     }
 
 
@@ -103,8 +135,30 @@ public class GameView extends View {
         BorderPane bp = new BorderPane();
         myBP = bp;
         bp.setTop(new TopSection().getGP());
-        bp.setCenter(myBoardGrid.getBoard());
+
+        myCenterBoard = new StackPane();
+        myCenterBoard.getChildren().add(myBoardGrid.getBoard());
+        bp.setCenter(myCenterBoard);
+
+        myRightSide = new RightSideSection(flipRun);
+        bp.setRight(myRightSide.getVbox());
 
         return bp;
+    }
+
+    private void removeGameOverNode(Node n) {
+        myCenterBoard.getChildren().remove(n);
+    }
+
+    private void flipBoard() {
+        myBoardGrid.flip();
+    }
+
+
+    /**
+     * RECEIVED PERMISSION FROM DUVALL TO DO THIS
+     */
+    public static Piece promotionPopUp(List<Piece> possPromotions){
+        return possPromotions.get(0);
     }
 }

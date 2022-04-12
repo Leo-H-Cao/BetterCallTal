@@ -9,13 +9,14 @@ import java.util.List;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.TwoMoves;
 import oogasalad.GamePlayer.Board.Player;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.GameClauses.CheckValidator;
-import oogasalad.GamePlayer.GameClauses.CheckmateValidator;
+import oogasalad.GamePlayer.ValidStateChecker.Check;
+import oogasalad.GamePlayer.Board.EndConditions.Checkmate;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import org.apache.logging.log4j.LogManager;
@@ -54,15 +55,13 @@ public class CheckmateTests {
   Piece makeKing(int row, int col, int team) {
     return new Piece(new PieceData(new Coordinate(row, col),
         "king" + team, 0, team, true,
-        List.of(new Movement(List.of(new Coordinate(1, 0)), false)),
-        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
+        List.of(new Movement(List.of(new Coordinate(1, 0)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
   }
 
   Piece makePawn(int row, int col, int team) {
     return new Piece(new PieceData(new Coordinate(row, col),
         "pawn" + team, 0, team, false,
-        List.of(new Movement(List.of(new Coordinate(-1, 0)), false)),
-        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
+        List.of(new Movement(List.of(new Coordinate(-1, 0)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
   }
 
   Piece makeRook(int row, int col, int team) {
@@ -75,8 +74,7 @@ public class CheckmateTests {
 
     return new Piece(new PieceData(new Coordinate(row, col),
         "rook" + team, 0, team, false,
-        List.of(rookMovement),
-        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
+        List.of(rookMovement), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
   }
 
   /**
@@ -93,12 +91,12 @@ public class CheckmateTests {
 
     board.setPieces(pieces);
     LOG.debug(board);
-    assertTrue(CheckValidator.isInCheck(board, TEAM_1));
+    assertTrue(new Check().isValid(board, TEAM_1));
 //    assertTrue(CheckmateValidator.isInMate(board, TEAM_1));
   }
 
   @Test
-  void playerInMate2() throws OutsideOfBoardException {
+  void playerInMate2() throws EngineException {
     pieces.addAll(List.of(makeKing(0, 0, TEAM_2),
         makePawn(1, 0, TEAM_1),
         makePawn(2, 1, TEAM_1),
@@ -108,21 +106,21 @@ public class CheckmateTests {
     board.setPieces(pieces);
     LOG.debug(board);
 
-    assertTrue(CheckmateValidator.isInMate(board, TEAM_2));
+    assertTrue(Checkmate.isInMate(board, TEAM_2));
   }
 
   @Test
-  void boardNotInCheckmate() throws OutsideOfBoardException {
+  void boardNotInCheckmate() throws EngineException {
     pieces.addAll(List.of(
         makeKing(0, 0, TEAM_1),
         makePawn(3, 0, TEAM_2)));
 
     board.setPieces(pieces);
-    assertFalse(CheckmateValidator.isInMate(board, TEAM_1));
+    assertFalse(Checkmate.isInMate(board, TEAM_1));
   }
 
   @Test
-  void playerCanBlockCheckThusNotInMate() throws OutsideOfBoardException {
+  void playerCanBlockCheckThusNotInMate() throws EngineException {
     pieces.addAll(List.of(
         makeKing(0, 0, TEAM_1),
         makeRook(1, 5, TEAM_1),
@@ -131,11 +129,11 @@ public class CheckmateTests {
     ));
 
     board.setPieces(pieces);
-    assertFalse(CheckmateValidator.isInMate(board, TEAM_1));
+    assertFalse(Checkmate.isInMate(board, TEAM_1));
   }
 
   @Test
-  void playerBlocksMateThenEntersMateNextTurn() throws OutsideOfBoardException, InvalidMoveException {
+  void playerBlocksMateThenEntersMateNextTurn() throws EngineException {
     Piece rook1 = makeRook(1, 5, TEAM_1);
     Piece rook2 = makeRook(4, 0, TEAM_2);
     Piece king1 = makeKing(0, 0, TEAM_1);
@@ -143,13 +141,13 @@ public class CheckmateTests {
         rook2));
     board.setPieces(pieces);
     LOG.debug(board);
-    assertFalse(CheckmateValidator.isInMate(board, TEAM_1));
+    assertFalse(Checkmate.isInMate(board, TEAM_1));
 
     //Some Movement
     rook1.move(board.getTile(new Coordinate(1, 0)), board);
     rook2.move(board.getTile(new Coordinate(1, 0)), board);
     king1.move(board.getTile(new Coordinate(1, 0)), board);
 
-    assertTrue(CheckmateValidator.isInMate(board, TEAM_2));
+    assertTrue(Checkmate.isInMate(board, TEAM_2));
   }
 }
