@@ -128,14 +128,12 @@ public class ChessBoard implements Iterable<ChessTile> {
   public TurnUpdate move(Piece piece, Coordinate finalSquare) throws EngineException {
     // TODO: valid state checker for person who just moved (redundunt - optional)
     // TODO: check end conditions for other player(s)
-    if (/*!isGameOver() &&*/ piece.checkTeam(turnCriteria.getCurrentPlayer())) {
+    if (!isGameOver() && piece.checkTeam(turnCriteria.getCurrentPlayer())) {
       TurnUpdate update = new TurnUpdate(piece.move(getTileFromCoords(finalSquare), this),
           turnCriteria.incrementTurn());
-      if(!isGameOver() || true){
-        history.add(new History(deepCopy(), Set.of(piece), update.updatedSquares()));
-        LOG.debug("History updated: " + history.size());
-        return update;
-      }
+      history.add(new History(deepCopy(), Set.of(piece), update.updatedSquares()));
+      LOG.debug("History updated: " + history.size());
+      return update;
     }
     LOG.warn(isGameOver() ? "Move made after game over" : "Move made by wrong player");
     throw isGameOver() ? new MoveAfterGameEndException("") : new WrongPlayerException(
@@ -210,19 +208,20 @@ public class ChessBoard implements Iterable<ChessTile> {
    */
   public Set<ChessTile> getMoves(Piece piece) throws EngineException, OutsideOfBoardException{
     // TODO: add valid state checker here
-    ValidStateChecker check = new Check();
+    if(isGameOver()) return Set.of();
     Set<ChessTile> allPieceMovements = piece.getMoves(this);
+    validStateCheckers.forEach( (v) ->
     allPieceMovements.removeIf(entry -> {
       ChessBoard copy;
       try {
         copy = makeHypotheticalMove(this.getTile(piece.getCoordinates()).getPiece().get(), entry.getCoordinates());
-        if(!check.isValid(copy, piece.getTeam())){
+        if(!v.isValid(copy, piece.getTeam())){
           return true;
         }
       } catch (EngineException e) {
         return false;
       }
-      return false;});
+      return false;}));
     return piece.checkTeam(turnCriteria.getCurrentPlayer()) ? allPieceMovements : Set.of();
   }
 
@@ -252,6 +251,7 @@ public class ChessBoard implements Iterable<ChessTile> {
       Map<Integer, Double> endResultRet = ec.getScores(this);
       if (!endResultRet.isEmpty()) {
         endResult = endResultRet;
+        LOG.debug("End result: " + endResult);
         return true;
       }
     }
