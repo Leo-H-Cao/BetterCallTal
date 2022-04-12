@@ -15,6 +15,7 @@ import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.Server.ChessHistory;
 import org.junit.jupiter.api.Test;
 
 class ChessHistoryTest {
@@ -41,10 +42,10 @@ class ChessHistoryTest {
 
     Piece pieceOne = new Piece(new PieceData(new Coordinate(0, index), "test1", 0, 0, false,
         List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
-        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
+        Collections.emptyList(), Collections.emptyList(), ""));
     Piece pieceTwo = new Piece(new PieceData(new Coordinate(1, index), "test2", 0, 1, false,
         List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
-        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
+        Collections.emptyList(), Collections.emptyList(), ""));
     List<Piece> pieces = List.of(pieceOne, pieceTwo);
 
     board = new ChessBoard(8, 8, turnCriteria, players, List.of(new TwoMoves()));
@@ -66,18 +67,18 @@ class ChessHistoryTest {
 
     // Check for normal addition
     ChessBoard toAdd = createBoard(0);
-    historySamples.forEach((key, value) -> value.addToHistory(toAdd));
+    historySamples.forEach((key, value) -> value.add(toAdd));
     historySamples.forEach((key, value) -> assertEquals(value.getLastState(), toAdd));
 
     // Check for null addition
-    historySamples.forEach((key, value) -> value.addToHistory(null));
+    historySamples.forEach((key, value) -> value.add(null));
     historySamples.forEach((key, value) -> assertNull(value.getLastState()));
   }
 
   @Test
   void getHistorySize() {
     Map<Integer, ChessHistory> historySamples = createHistory();
-    historySamples.forEach((key, value) -> assertEquals(value.getHistorySize(), key));
+    historySamples.forEach((key, value) -> assertEquals(value.size(), key));
   }
 
   @Test

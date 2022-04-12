@@ -8,12 +8,8 @@ import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 public class KingOfTheHill implements EndCondition {
 
   @Override
-  public Optional<Map<Integer, Double>> getScores(ChessBoard board) {
-    return Optional.empty();
+  public Map<Integer, Double> getScores(ChessBoard board) {
+    return null;
   }
 
-  @Override
-  public boolean hasGameEnded(ChessBoard board) {
-    return false;
-  }
 }

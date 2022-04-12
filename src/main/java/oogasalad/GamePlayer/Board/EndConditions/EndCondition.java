@@ -10,12 +10,11 @@ public interface EndCondition {
   double DRAW = 0.5;
   double LOSS = 0.0;
 
-  /***
+  /**
    * Determines if the game is over, and if so, returns the points awarded to each team
    *
    * @return the point values awarded to every team if a game is over, else empty
    */
-  Optional<Map<Integer, Double>> getScores(ChessBoard board);
+  Map<Integer, Double> getScores(ChessBoard board);
 
-  public boolean hasGameEnded(ChessBoard board);
 }

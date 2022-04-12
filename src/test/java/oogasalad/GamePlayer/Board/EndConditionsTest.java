@@ -10,6 +10,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
+import oogasalad.GamePlayer.Board.EndConditions.NoEndCondition;
+import oogasalad.GamePlayer.Board.EndConditions.PawnReachesEnd;
 import oogasalad.GamePlayer.Board.EndConditions.TwoMoves;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
@@ -49,12 +51,12 @@ class EndConditionsTest {
   }
 
   private void setBoard() {
-    board = new ChessBoard(8, 8, turnCriteria, players, List.of(endCondition));
+    board = new ChessBoard(8, 3, turnCriteria, players, List.of(endCondition));
 
-    pieceOne = new Piece(new PieceData(new Coordinate(0, 0), "test1", 0, 0, false,
-        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
-    pieceTwo = new Piece(new PieceData(new Coordinate(1, 0), "test2", 0, 1, false,
-        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
+    pieceOne = new Piece(new PieceData(new Coordinate(0, 0), "Pawn", 0, 0, false,
+        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
+    pieceTwo = new Piece(new PieceData(new Coordinate(1, 0), "Pawn", 0, 1, false,
+        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
     pieces = List.of(pieceOne, pieceTwo);
 
     board.setPieces(pieces);
@@ -74,7 +76,7 @@ class EndConditionsTest {
       assertFalse(board.isGameOver());
       board.move(pieceTwo, new Coordinate(1, 2));
       assertTrue(board.isGameOver());
-      assertEquals(board.getScores().get(), scores);
+      assertEquals(board.getScores(), scores);
     } catch(Exception e) {
       e.printStackTrace();
       fail();
@@ -92,6 +94,32 @@ class EndConditionsTest {
       board.move(pieceTwo, new Coordinate(1, 2));
       assertThrows(MoveAfterGameEndException.class, () -> board.move(pieceOne, new Coordinate(0, 3)));
     } catch(Exception e) {
+      fail();
+    }
+  }
+
+  @Test
+  void testPawnReachesEnd() {
+    endCondition = new PawnReachesEnd();
+    setBoard();
+    try {
+      assertTrue(board.isGameOver());
+      assertEquals(board.getScores(), Map.of(0, 1.0, 1, 0.0));
+      assertThrows(MoveAfterGameEndException.class, () -> board.move(pieceTwo, new Coordinate(1, 2)));
+    } catch (Exception e) {
+      e.printStackTrace();
+      fail();
+    }
+  }
+
+  @Test
+  void testNoEndCondition() {
+    endCondition = new NoEndCondition();
+    setBoard();
+    try {
+      assertFalse(board.isGameOver());
+      assertEquals(Map.of(), board.getScores());
+    } catch (Exception e) {
       fail();
     }
   }

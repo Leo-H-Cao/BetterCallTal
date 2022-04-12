@@ -7,17 +7,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.EndConditions.Checkmate;
+import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.EndConditions.TwoMoves;
 import oogasalad.GamePlayer.Board.Player;
-import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.GameClauses.CheckValidator;
-import oogasalad.GamePlayer.GameClauses.CheckmateValidator;
+import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.ValidStateChecker.Check;
+import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,6 +35,9 @@ public class CheckmateTests {
 
   private static final int TEAM_1 = 1;
   private static final int TEAM_2 = 0;
+
+  ValidStateChecker Check = new Check();
+  Checkmate Checkmate = new Checkmate();
 
   private ChessBoard board;
   private List<Piece> pieces;
@@ -54,16 +59,17 @@ public class CheckmateTests {
   Piece makeKing(int row, int col, int team) {
     return new Piece(new PieceData(new Coordinate(row, col),
         "king" + team, 0, team, true,
-        List.of(new Movement(List.of(new Coordinate(1, 0)), false)),
-        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
+        List.of(new Movement(List.of(new Coordinate(1, 0)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
   }
 
   Piece makePawn(int row, int col, int team) {
     return new Piece(new PieceData(new Coordinate(row, col),
         "pawn" + team, 0, team, false,
+
         List.of(new Movement(List.of(new Coordinate(-1, 0), new Coordinate(1, 0)), false)),
         List.of(new Movement(List.of(new Coordinate(-1, 0), new Coordinate(1, 0)), false)),
-        Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""), board);
+        Collections.emptyList(), Collections.emptyList(), ""));
+
   }
 
   Piece makeRook(int row, int col, int team) {
@@ -77,8 +83,10 @@ public class CheckmateTests {
     return new Piece(new PieceData(new Coordinate(row, col),
         "rook" + team, 0, team, false,
         List.of(rookMovement),
-        List.of(rookMovement), Collections.emptyList(), Collections.emptyList(),
-        Collections.emptyList(), ""), board);
+        List.of(rookMovement), Collections.emptyList(),
+        Collections.emptyList(), ""));
+
+
   }
 
 
@@ -96,8 +104,8 @@ public class CheckmateTests {
     board.setPieces(pieces);
     LOG.debug(board);
 
-    assertTrue(CheckValidator.isInCheck(board, TEAM_1));
-    assertTrue(CheckmateValidator.isInMate(board, TEAM_1));
+    assertTrue(Check.isValid(board, TEAM_1));
+    assertTrue(Checkmate.isInMate(board, TEAM_1));
 
   }
 
@@ -109,10 +117,25 @@ public class CheckmateTests {
         makePawn(1, 1, TEAM_2),
         makePawn(2, 0, TEAM_2)));
 
+    assertTrue(new Check().isValid(board, TEAM_1));
+//    assertTrue(CheckmateValidator.isInMate(board, TEAM_1));
+  }
+
+  @Test
+  void playerInMate2() throws EngineException {
+    pieces.addAll(List.of(makeKing(0, 0, TEAM_2),
+        makePawn(1, 0, TEAM_1),
+        makePawn(2, 1, TEAM_1),
+        makePawn(1, 1, TEAM_1),
+        makePawn(2, 0, TEAM_1)));
+
     board.setPieces(pieces);
     LOG.debug(board);
 
-    assertFalse(CheckmateValidator.isInMate(board, TEAM_1));
+    assertFalse(Checkmate.isInMate(board, TEAM_1));
+
+    assertTrue(Checkmate.isInMate(board, TEAM_2));
+
   }
 
   @Test
@@ -122,7 +145,7 @@ public class CheckmateTests {
         makePawn(3, 0, TEAM_2)));
 
     board.setPieces(pieces);
-    assertFalse(CheckmateValidator.isInMate(board, TEAM_1));
+    assertFalse(Checkmate.isInMate(board, TEAM_1));
   }
 
   @Test
@@ -135,7 +158,7 @@ public class CheckmateTests {
     ));
 
     board.setPieces(pieces);
-    assertFalse(CheckmateValidator.isInMate(board, TEAM_1));
+    assertFalse(Checkmate.isInMate(board, TEAM_1));
   }
 
   @Test
@@ -147,13 +170,18 @@ public class CheckmateTests {
         rook2));
     board.setPieces(pieces);
     LOG.debug(board);
+
     //assertFalse(CheckmateValidator.isInMate(board, TEAM_1));
+    assertFalse(Checkmate.isInMate(board, TEAM_1));
 
     //Some Movement
-    rook1.move(board.getTile(new Coordinate(1, 0)));
-    rook2.move(board.getTile(new Coordinate(1, 0)));
-    king1.move(board.getTile(new Coordinate(1, 0)));
+    rook1.move(board.getTile(new Coordinate(1, 0)), board);
+    rook2.move(board.getTile(new Coordinate(1, 0)), board);
+    king1.move(board.getTile(new Coordinate(1, 0)), board);
 
     //assertTrue(CheckmateValidator.isInMate(board, TEAM_1));
+
+    assertTrue(Checkmate.isInMate(board, TEAM_2));
+
   }
 }

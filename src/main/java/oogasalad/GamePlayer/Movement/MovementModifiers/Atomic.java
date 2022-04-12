@@ -1,6 +1,12 @@
 package oogasalad.GamePlayer.Movement.MovementModifiers;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.IntStream;
 
@@ -14,26 +20,63 @@ import org.apache.logging.log4j.Logger;
 
 public class Atomic implements MovementModifier{
 
+  private static final String ATOMIC_IMMUNE_FILE_PATH = "doc/GameEngineResources/Other/AtomicImmune";
   private static final Logger LOG = LogManager.getLogger(Atomic.class);
 
+  private static List<String> EXPLOSION_IMMUNE_NAMES;
   private static final int surroundDistance = 1;
+
+  /***
+   * Creates an movement modifier that explodes pieces around it
+   */
+  public Atomic() {
+    if(EXPLOSION_IMMUNE_NAMES == null) {
+      assignImmune();
+    }
+    LOG.debug("Immune pieces: " + EXPLOSION_IMMUNE_NAMES);
+  }
+
+  /***
+   * Assigns piece immune to explosions, default is just pawn
+   */
+  private void assignImmune() {
+    EXPLOSION_IMMUNE_NAMES = new ArrayList<>();
+    try {
+      File immuneFile = new File(ATOMIC_IMMUNE_FILE_PATH);
+      Scanner reader = new Scanner(immuneFile);
+      while (reader.hasNext()) {
+        EXPLOSION_IMMUNE_NAMES.add(reader.next().trim());
+      }
+      reader.close();
+    } catch (Exception e) {
+      LOG.warn("Could not find file: " + ATOMIC_IMMUNE_FILE_PATH);
+      EXPLOSION_IMMUNE_NAMES = List.of("Pawn");
+    }
+  }
+
   /***
    * Explodes all pieces if a capture happens
    *
    * @param piece that is referenced
-   * @param finalTile the tile the piece is moving to
    * @param board that piece is on
    * @return set of updated tiles after explosion
    */
   @Override
-  public Set<ChessTile> updateMovement(Piece piece, ChessTile finalTile, ChessBoard board) {
+  public Set<ChessTile> updateMovement(Piece piece, ChessBoard board) {
     Set<ChessTile> explodedSquares = new HashSet<>();
-    getSurroundingTiles(finalTile, board).stream().filter((t) -> !t.getPieces().isEmpty()).forEach((t) -> {
-      LOG.debug(t.getCoordinates());
-      t.clearPieces();
-      explodedSquares.add(t);
-    });
-    return explodedSquares;
+    try {
+      getSurroundingTiles(board.getTile(piece.getCoordinates()), board).stream().filter(
+          (t) -> t.getPiece().isPresent()).filter((t) -> EXPLOSION_IMMUNE_NAMES.stream().noneMatch(
+              (n) -> t.getPiece().get().getName().equalsIgnoreCase(n) && !t.getCoordinates().equals(piece.getCoordinates())
+          )).forEach((t) -> {
+            LOG.debug("Exploded piece name: " + t.getPiece().get().getName());
+            t.clearPieces();
+            explodedSquares.add(t);
+          });
+      return explodedSquares;
+    } catch (OutsideOfBoardException e) {
+     return Collections.emptySet();
+    }
   }
 
   /***
@@ -43,14 +86,15 @@ public class Atomic implements MovementModifier{
    */
   private Set<ChessTile> getSurroundingTiles(ChessTile center, ChessBoard board) {
     Set<ChessTile> surroundingTiles = new HashSet<>();
-    IntStream.range(-surroundDistance, surroundDistance).forEach((i) -> {
-      IntStream.range(-surroundDistance, surroundDistance).forEach((j) -> {
-        try {
-          surroundingTiles.add(board.getTile(
-              Coordinate.of(center.getCoordinates().getRow()+i, center.getCoordinates().getCol()+j)));
-        } catch(OutsideOfBoardException ignored) {}
-      });
-    });
+    IntStream.range(-surroundDistance, surroundDistance+1).forEach((i) -> IntStream.range(-surroundDistance, surroundDistance+1).forEach((j) -> {
+      try {
+        surroundingTiles.add(board.getTile(
+            Coordinate.of(center.getCoordinates().getRow()+i, center.getCoordinates().getCol()+j)));
+      } catch(OutsideOfBoardException ignored) {
+        LOG.debug(String.format("Invalid coordinate detected: (%d, %d)", center.getCoordinates().getRow()+i, center.getCoordinates().getCol()+j));
+      }
+    }));
+    LOG.debug("Surrounding tiles: " + surroundingTiles);
     return surroundingTiles;
   }
 }

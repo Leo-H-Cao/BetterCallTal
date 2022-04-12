@@ -1,10 +1,9 @@
 package oogasalad.GamePlayer.Movement;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
@@ -54,4 +53,8 @@ public interface MovementInterface {
    */
   Set<ChessTile> getMoves(Piece piece, ChessBoard board);
 
+  /***
+   * @return relative coordinates if applicable
+   */
+  List<Coordinate> getRelativeCoords();
 }

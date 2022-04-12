@@ -1,10 +1,11 @@
 package oogasalad.Frontend.Game;
 
-import oogasalad.Frontend.ViewManager;
+import java.io.IOException;
+import java.util.Optional;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.Server.BoardSetup;
 
 import java.io.File;
+import oogasalad.GamePlayer.Server.BoardSetup;
 
 /**
  * This class will hold the Game View Backend object instances that the
@@ -16,14 +17,14 @@ public class GameBackend {
     private ChessBoard myChessBoard;
 
 
-    public ChessBoard initalizeChessBoard(File JSON) {
+    public Optional<ChessBoard> initalizeChessBoard(File JSON) {
         try {
             BoardSetup bs = new BoardSetup(JSON.getPath());
             myChessBoard = bs.createBoard();
-            return myChessBoard;
+            return Optional.of(myChessBoard);
         } catch (Exception e){
             // myMainView.showError();
-            return null;
+            return Optional.empty();
         }
     }
 

@@ -12,7 +12,7 @@ import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.GameClauses.CheckValidator;
+import oogasalad.GamePlayer.ValidStateChecker.Check;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -59,7 +59,7 @@ public class Movement implements MovementInterface{
 
     if(getMoves(piece, board).contains(finalTile)) {
       Set<ChessTile> updatedSquares = new HashSet<>(Set.of(board.getTile(piece.getCoordinates()), finalTile));
-      piece.updateCoordinates(finalTile);
+      piece.updateCoordinates(finalTile, board);
       return updatedSquares;
     }
 
@@ -84,7 +84,7 @@ public class Movement implements MovementInterface{
     if(getCaptures(piece, board).contains(captureTile)) {
       Set<ChessTile> updatedSquares = new HashSet<>(Set.of(board.getTile(piece.getCoordinates()), board.getTile(captureSquare)));
       captureTile.clearPieces();
-      piece.updateCoordinates(board.getTile(captureSquare));
+      piece.updateCoordinates(board.getTile(captureSquare), board);
       return updatedSquares;
     }
     LOG.warn(String.format("Invalid move made: (%d, %d)", captureSquare.getRow(), captureSquare.getCol()));
@@ -130,7 +130,7 @@ public class Movement implements MovementInterface{
               : Optional.of(moveStack.peek()));
       LOG.debug(capTile);
       capTile.ifPresent((t) -> {
-        if (piece.isOpposing(t.getPieces())) {
+        if (piece.isOpposing(t.getPieces(), board)) {
           allMoves.get(CAPTURE_KEY).add(t);
         }
       });
@@ -145,7 +145,7 @@ public class Movement implements MovementInterface{
       for(ChessTile move : allMoves.get(moveType)){
         ChessBoard deepCopy = board.deepCopy();
         deepCopy.move(piece, move.getCoordinates());
-        if(CheckValidator.isInCheck(board, piece.getTeam())){
+        if(new Check().isValid(board, piece.getTeam())){
           allMoves.get(moveType).remove(move);
         }
       }
@@ -174,7 +174,15 @@ public class Movement implements MovementInterface{
   public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
     return getFromMovesMap(piece, board, MOVE_KEY);
   }
-  
+
+  /***
+   * @return relative coordinates
+   */
+  @Override
+  public List<Coordinate> getRelativeCoords() {
+    return possibleMoves;
+  }
+
   /***
    * Helper method for getting set from moves map
    * @param key in map
@@ -258,6 +266,6 @@ public class Movement implements MovementInterface{
    * @return String of all relative coordinates
    */
   public String toString() {
-    return possibleMoves.toString();
+    return possibleMoves.toString() + ": " + infinite;
   }
 }
