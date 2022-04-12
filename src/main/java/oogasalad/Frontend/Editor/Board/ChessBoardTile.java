@@ -7,13 +7,14 @@ import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.NodeContainer;
 
 public class ChessBoardTile extends NodeContainer {
-	private final double myWidth;
-	private final double myHeight;
+	public static final int SIZE = 80;
+	private final int myX;
+	private final int myY;
 	private final boolean alt;
 
-	public ChessBoardTile(double w, double h, boolean toggled) {
-		myWidth = w;
-		myHeight = h;
+	public ChessBoardTile(int x, int y, boolean toggled) {
+		myX = x;
+		myY = y;
 		alt = toggled;
 	}
 
@@ -23,13 +24,13 @@ public class ChessBoardTile extends NodeContainer {
 	}
 
 	private Node makeGridTile() {
-		Rectangle ret = new Rectangle(myWidth, myHeight);
+		Rectangle ret = new Rectangle(SIZE, SIZE);
 		if (alt) {
-			ret.setFill(Paint.valueOf("green"));
+			ret.setFill(Paint.valueOf("#bbb"));
 		} else {
 			ret.setFill(Paint.valueOf("gray"));
 		}
-		ButtonFactory.addAction(ret, System.out::println);
+		ButtonFactory.addAction(ret, (e) -> System.out.printf("X: %d, Y: %d\n", myX, myY));
 
 		return ret;
 	}

@@ -6,9 +6,11 @@ import oogasalad.Frontend.util.NodeContainer;
 
 public class PieceEditor extends NodeContainer {
 	private final String ID;
+	private final PieceBoard myPieceBoard;
 
 	public PieceEditor(String id) {
 		ID = id;
+		myPieceBoard = new PieceBoard();
 	}
 
 	public String getId() {
@@ -23,7 +25,7 @@ public class PieceEditor extends NodeContainer {
 	private Node makeLayout() {
 		BorderPane ret = new BorderPane();
 		ret.setPrefWidth(myScreenSize.getWidth());
-
+		ret.setCenter(myPieceBoard.getNode());
 		return ret;
 	}
 }

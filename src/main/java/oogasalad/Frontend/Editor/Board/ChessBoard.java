@@ -21,7 +21,7 @@ public class ChessBoard extends NodeContainer {
 		boolean alt = false;
 		for(int i = 0; i < width.get(); i++) {
 			for(int j = 0; j < height.get(); j++) {
-				ChessBoardTile newTile = new ChessBoardTile(50, 50, alt);
+				ChessBoardTile newTile = new ChessBoardTile(j, i, alt);
 				grid.add(newTile.getNode(), j, i);
 				alt = !alt;
 			}

@@ -3,7 +3,7 @@ package oogasalad.Editor.ModelState.EditPiece;
 import oogasalad.Editor.Exceptions.MovementGridException;
 
 public class MovementGrid {
-  private final int PIECE_GRID_SIZE = 7;
+  public static final int PIECE_GRID_SIZE = 7;
   private final int PIECE_LOC_X = 3;
   private final int PIECE_LOC_Y = 3;
   private final String INVALID_INFINITE_MOVEMENT_ERR = "Directions for infinite movement are invalid";
