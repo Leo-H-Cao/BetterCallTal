@@ -2,6 +2,7 @@ package oogasalad.GamePlayer.Movement.CustomMovements;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -53,12 +54,14 @@ public class EnPassant implements MovementInterface {
       LOG.warn("Illegal en passant move attempted");
       throw new InvalidMoveException(captureSquare.toString());
     }
-    ChessTile originalSquare = board.getTile(piece.getCoordinates());
+    Set<ChessTile> updatedSquares = new HashSet<>(List.of(board.getTile(piece.getCoordinates())));
     ChessTile removalSquare = board.getTile(Coordinate.of(piece.getCoordinates().getRow(),
         captureSquare.getCol()));
-    piece.updateCoordinates(board.getTile(captureSquare), board);
+    updatedSquares.add(removalSquare);
+    updatedSquares.addAll(piece.updateCoordinates(board.getTile(captureSquare), board));
+    updatedSquares.add(board.getTile(piece.getCoordinates()));
     removalSquare.clearPieces();
-    return Set.of(originalSquare, removalSquare, board.getTile(piece.getCoordinates()));
+    return updatedSquares;
   }
 
   /***

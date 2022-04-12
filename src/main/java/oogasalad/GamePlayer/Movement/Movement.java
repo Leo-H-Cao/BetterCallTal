@@ -59,7 +59,7 @@ public class Movement implements MovementInterface{
 
     if(getMoves(piece, board).contains(finalTile)) {
       Set<ChessTile> updatedSquares = new HashSet<>(Set.of(board.getTile(piece.getCoordinates()), finalTile));
-      piece.updateCoordinates(finalTile, board);
+      updatedSquares.addAll(piece.updateCoordinates(finalTile, board));
       return updatedSquares;
     }
 
@@ -84,7 +84,7 @@ public class Movement implements MovementInterface{
     if(getCaptures(piece, board).contains(captureTile)) {
       Set<ChessTile> updatedSquares = new HashSet<>(Set.of(board.getTile(piece.getCoordinates()), board.getTile(captureSquare)));
       captureTile.clearPieces();
-      piece.updateCoordinates(board.getTile(captureSquare), board);
+      updatedSquares.addAll(piece.updateCoordinates(board.getTile(captureSquare), board));
       return updatedSquares;
     }
     LOG.warn(String.format("Invalid move made: (%d, %d)", captureSquare.getRow(), captureSquare.getCol()));
