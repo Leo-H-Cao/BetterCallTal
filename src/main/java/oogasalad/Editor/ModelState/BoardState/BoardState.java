@@ -1,15 +1,15 @@
 package oogasalad.Editor.ModelState.BoardState;
 
 import oogasalad.Editor.ModelState.PiecesState.EditorCoordinate;
-import oogasalad.Editor.ModelState.PiecesState.PiecesManager;
+import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 
 public class BoardState {
   private EditorBoard myEditorBoard;
-  private PiecesManager piecesManager;
+  private PiecesState piecesState;
 
-  public BoardState(PiecesManager statePiecesManager){
+  public BoardState(PiecesState piecesState){
     myEditorBoard = new EditorBoard();
-    piecesManager = statePiecesManager;
+    this.piecesState = piecesState;
   }
 
   public void changeBoardSize(int width, int height) {
@@ -33,7 +33,7 @@ public class BoardState {
   }
 
   public void setPieceStartingLocation(String pieceID, int x, int y) {
-    myEditorBoard.addPieceStartingLocation(piecesManager.getPiece(pieceID), x, y);
+    myEditorBoard.addPieceStartingLocation(piecesState.getPiece(pieceID), x, y);
   }
 
   public void removePiece(String pieceID) {

@@ -8,6 +8,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
+import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.LabelledContainer;
@@ -48,7 +49,7 @@ public class PieceLibrary extends LabelledContainer {
 	private void createDefaultPieces() {
 		// Rook
 		MovementGrid rookMovement = new MovementGrid();
-		getEditorBackend().getPiecesState().createCustomPiece(5, 0, new Image("images/pieces/black/rook.png"), rookMovement, "default_rook", "Rook");
-		getEditorBackend().getPiecesState().createCustomPiece(5, 1, new Image("images/pieces/black/rook.png"), rookMovement, "default_rook", "Rook");
+		getEditorBackend().getPiecesState().createCustomPiece(5, 0, new Image("images/pieces/black/rook.png"), new EditorPiece("pieceID"), "default_rook");
+		getEditorBackend().getPiecesState().createCustomPiece(5, 1, new Image("images/pieces/black/rook.png"), new EditorPiece("pieceID"), "Rook");
 	}
 }
