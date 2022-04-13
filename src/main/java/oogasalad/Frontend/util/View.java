@@ -79,7 +79,7 @@ public abstract class View extends BackendConnector {
 	 * @return Stage title for this screen
 	 */
 	public String getTitle() {
-		return ViewManager.getLanguage().getString(this.getClass().getSimpleName() + "Title");
+		return BackendConnector.getFrontendWord("Title", getClass());
 	}
 
 	/**
@@ -88,7 +88,7 @@ public abstract class View extends BackendConnector {
 	protected abstract Node makeNode();
 
 	protected Button makeExitButton() {
-		Button b = ButtonFactory.makeButton(ButtonType.TEXT, ViewManager.getLanguage().getString("exit"), "exit",
+		Button b = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("exit"), "exit",
 				(e) -> getView(HomeView.class).ifPresent(this::changeScene));
 		b.setPrefWidth(150);
 		b.setPrefHeight(50);
@@ -99,10 +99,6 @@ public abstract class View extends BackendConnector {
 		myStage.setScene(viewClass.getScene());
 		myStage.setTitle(viewClass.getTitle());
 		myStage.setFullScreen(fullscreen);
-	}
-
-	protected <T> String getLanguageResource(String s, Class<T> className) {
-		return ViewManager.getLanguage().getString(className.getSimpleName() + s);
 	}
 
 	/**

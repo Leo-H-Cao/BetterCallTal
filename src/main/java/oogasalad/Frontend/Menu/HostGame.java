@@ -11,6 +11,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Game.GameView;
 import oogasalad.Frontend.ViewManager;
+import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -40,8 +41,8 @@ public class HostGame extends GameView {
         StackPane sp = new StackPane();
         sp.setPrefSize(myScreenSize.getWidth(), myScreenSize.getHeight());
         Node exit = makeExitGroup();
-        Node title = makeLabelGroup(getLanguageResource(TITLE, getClass()), TITLE_SIZE);
-        Node prompt = makeLabelGroup(getLanguageResource(PROMPT, getClass()), PROMPT_SIZE);
+        Node title = makeLabelGroup(BackendConnector.getFrontendWord(TITLE, getClass()), TITLE_SIZE);
+        Node prompt = makeLabelGroup(BackendConnector.getFrontendWord(PROMPT, getClass()), PROMPT_SIZE);
         Node load = makeFileUploadGroup(sp);
 
         StackPane.setAlignment(exit, Pos.TOP_LEFT);
@@ -54,7 +55,7 @@ public class HostGame extends GameView {
     }
 
     private Node makeStartGroup() {
-        Button start = ButtonFactory.makeButton(ButtonType.TEXT, ViewManager.getLanguage().getString("Start"), "start",
+        Button start = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("Start"), "start",
                 (e) -> getView(GameView.class).ifPresent(this::changeScene));
         start.setPrefWidth(150);
         start.setPrefHeight(50);
@@ -68,7 +69,7 @@ public class HostGame extends GameView {
 
     private Node makeFileUploadGroup(StackPane sp) {
         // TODO: Fix method to set up the board before the screen switches
-        Button load = ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource(LOAD, getClass()), Load_Button_ID,
+        Button load = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord(LOAD, getClass()), Load_Button_ID,
                 (e) -> {
                     File f = chooseLoadFile();
                     Optional<ChessBoard> cbOp = getGameBackend().initalizeChessBoard(f);
