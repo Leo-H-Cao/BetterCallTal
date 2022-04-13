@@ -17,7 +17,7 @@ public class Checkmate implements EndCondition {
    *
    * @return Whether the board is in checkmate or not
    */
-  public static boolean isInMate(ChessBoard board, int id) throws EngineException {
+  public boolean isInMate(ChessBoard board, int id) throws EngineException {
     return new Check().isValid(board, id) && new Stalemate().hasNoLegalMoves(board, id);
   }
 
