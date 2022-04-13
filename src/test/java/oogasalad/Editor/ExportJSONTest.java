@@ -3,9 +3,9 @@ package oogasalad.Editor;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import oogasalad.Editor.ModelState.BoardAndPieces;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
+import oogasalad.Editor.ModelState.EditorBackend;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Editor.ModelState.RulesState.GameRulesState;
 import oogasalad.Frontend.Menu.LanguageModal;
@@ -21,14 +21,14 @@ public class ExportJSONTest extends DukeApplicationTest {
   private PiecesState piecesState;
   private BoardState boardState;
   private GameRulesState gameRulesState;
-  private BoardAndPieces boardAndPieces;
+  private EditorBackend boardAndPieces;
   private ExportJSON exportJSON;
 
   @Override
   public void start(Stage stage) {
     mylangmod = new LanguageModal(stage);
-    myScene = mylangmod.makeScene();
     myStage = stage;
+    myScene = mylangmod.getScene();
     myStage.setScene(myScene);
     myStage.show();
   }
@@ -36,7 +36,7 @@ public class ExportJSONTest extends DukeApplicationTest {
   @BeforeEach
   void setup() {
    piecesState = new PiecesState();
-   boardAndPieces = new BoardAndPieces();
+   boardAndPieces = new EditorBackend();
    piecesState = boardAndPieces.getPiecesState();
    boardState = boardAndPieces.getBoardState();
    gameRulesState = new GameRulesState();
