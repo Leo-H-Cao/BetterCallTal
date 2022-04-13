@@ -102,7 +102,7 @@ public abstract class View extends BackendConnector {
 	}
 
 	protected <T> String getLanguageResource(String s, Class<T> className) {
-		return ViewManager.getLanguage().getString(className.getClass().getSimpleName() + s);
+		return ViewManager.getLanguage().getString(className.getSimpleName() + s);
 	}
 
 	/**
