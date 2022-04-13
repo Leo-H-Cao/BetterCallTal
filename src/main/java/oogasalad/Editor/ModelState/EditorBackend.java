@@ -8,24 +8,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EditorBackend {
-	private final PiecesState myPiecesState;
-	private final BoardState myBoardState;
+	private final PiecesState piecesState;
+	private final BoardState boardState;
 	private final Map<String, EditorPiece> myEditorPieces;
 	private PieceGridTile selectedPieceEditorType;
 
 	public EditorBackend(){
 		myEditorPieces = new HashMap<>();
-		myPiecesState = new PiecesState();
-		myBoardState = new BoardState(myPiecesState.getPiecesManager());
+		this.piecesState = new PiecesState();
+		this.boardState = new BoardState(piecesState);
 		selectedPieceEditorType = PieceGridTile.OPEN;
 	}
 
 	public PiecesState getPiecesState(){
-		return myPiecesState;
+		return piecesState;
 	}
 
 	public BoardState getBoardState(){
-		return myBoardState;
+		return boardState;
 	}
 
 	public void createEditorPiece(String id) {

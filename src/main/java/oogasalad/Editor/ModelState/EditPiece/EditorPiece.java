@@ -7,26 +7,32 @@ public class EditorPiece {
   private Image image0;
   private Image image1;
   private String pieceID;
+  private boolean mainPiece;
 
   public EditorPiece(String pieceID){
     this.pieceID = pieceID;
     movementGrid = new MovementGrid();
+    mainPiece = false;
   }
 
   public MovementGrid getMovementGrid() {
     return movementGrid;
   }
 
+  public void setMainPiece(boolean main){
+    mainPiece = main;
+  }
+
+  public boolean getMainPiece(){
+    return mainPiece;
+  }
+
   public String getPieceID() {
     return pieceID;
   }
 
-  public void setTileOpen(int x, int y){
-    movementGrid.setTileOpen(x, y);
-  }
-
-  public void setTileClosed(int x, int y){
-    movementGrid.setTileClosed(x, y);
+  public void setTile(int x, int y, PieceGridTile tileStatus){
+    movementGrid.setTile(x, y, tileStatus);
   }
 
   public void setInfiniteTiles(int dirX, int dirY){
