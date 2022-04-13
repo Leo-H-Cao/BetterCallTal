@@ -58,7 +58,7 @@ public class Stalemate implements EndCondition{
         return scores;
       }
     } catch (EngineException e) {
-      e.printStackTrace();
+      e.printStackTrace(); //TODO: handle this exception
     }
 
     return new HashMap<>();

@@ -106,7 +106,7 @@ public class CheckmateTests {
     board.setPieces(pieces);
     LOG.debug(board);
 
-    assertTrue(new Checkmate().isInMate(board));
+    assertTrue(new Checkmate().isInMate(board, TEAM_1));
   }
 
   @Test
@@ -116,7 +116,7 @@ public class CheckmateTests {
         makePawn(3, 0, TEAM_2)));
 
     board.setPieces(pieces);
-    assertFalse(new Checkmate().isInMate(board));
+    assertFalse(new Checkmate().isInMate(board, TEAM_2));
   }
 
   @Test
@@ -129,7 +129,7 @@ public class CheckmateTests {
     ));
 
     board.setPieces(pieces);
-    assertFalse(new Checkmate().isInMate(board));
+    assertFalse(new Checkmate().isInMate(board, TEAM_1));
   }
 
   @Test
@@ -141,13 +141,13 @@ public class CheckmateTests {
         rook2));
     board.setPieces(pieces);
     LOG.debug(board);
-    assertFalse(new Checkmate().isInMate(board));
+    assertFalse(new Checkmate().isInMate(board, TEAM_1));
 
     //Some Movement
     rook1.move(board.getTile(new Coordinate(1, 0)), board);
     rook2.move(board.getTile(new Coordinate(1, 0)), board);
     king1.move(board.getTile(new Coordinate(1, 0)), board);
 
-    assertTrue(new Checkmate().isInMate(board));
+    assertTrue(new Checkmate().isInMate(board, TEAM_2));
   }
 }
