@@ -10,6 +10,7 @@ public class MovementGrid {
   private final int PIECE_LOC_Y = 3;
   private final String INVALID_INFINITE_MOVEMENT_ERR = "Directions for infinite movement are invalid";
   private final String INVALID_FINITE_MOVEMENT_ERR = "Coordinates for finite movement are invalid";
+  private final String INVALID_PIECE_CHANGE = "Piece tile cannot be changed.";
 
   private PieceGridTile[][] pieceGrid;
 
@@ -69,8 +70,10 @@ public class MovementGrid {
   }
 
   private void checkCoordinates(int x, int y){
-    if(x >= PIECE_GRID_SIZE || x < 0 || y >= PIECE_GRID_SIZE || y < 0 || (x==PIECE_LOC_X && y==PIECE_LOC_Y)){
+    if(x >= PIECE_GRID_SIZE || x < 0 || y >= PIECE_GRID_SIZE || y < 0){
       throw new MovementGridException(INVALID_FINITE_MOVEMENT_ERR);
+    } else if((x==PIECE_LOC_X && y==PIECE_LOC_Y)) {
+      throw new MovementGridException(INVALID_PIECE_CHANGE);
     }
   }
 
