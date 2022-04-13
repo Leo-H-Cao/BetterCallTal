@@ -24,7 +24,9 @@ public class PieceBoardTile extends NodeContainer {
 		myY = y;
 		myId = id;
 		status = new SimpleObjectProperty(type);
-		getEditorBackend().getEditorPiece(myId).setImage(0, new Image("images/pieces/black/rook.png"));
+		myResources.ifPresent((e) -> {
+			getEditorBackend().getEditorPiece(myId).setImage(0, new Image(e.getString("DefaultImage")));
+		});
 	}
 
 	@Override
@@ -52,9 +54,10 @@ public class PieceBoardTile extends NodeContainer {
 			status.setValue(type);
 		});
 
+
 		ret.hoverProperty().addListener((ob, ov, nv) -> {
 			if(nv && status.getValue() == PieceGridTile.CLOSED) {
-				rect.setFill(Paint.valueOf("#000"));
+				myResources.ifPresent((e) -> rect.setFill(Paint.valueOf(e.getString("HoverColor"))));
 			} else {
 				rect.setFill(getTileColor(status.getValue()));
 			}
@@ -64,19 +67,24 @@ public class PieceBoardTile extends NodeContainer {
 	}
 
 	private Paint getTileColor(PieceGridTile type) {
-		switch (type) {
-			case CLOSED, PIECE -> {
-				return Paint.valueOf("#ddd");
+		if(myResources.isPresent()) {
+			switch (type) {
+				case CLOSED, PIECE -> {
+					return Paint.valueOf(myResources.get().getString("DefaultColor"));
+				}
+				case OPEN -> {
+					return Paint.valueOf(myResources.get().getString("SelectedColor"));
+				}
+				case INFINITY -> {
+					return Paint.valueOf(myResources.get().getString("InfinityColor"));
+				}
+				default -> {
+					return Paint.valueOf(myResources.get().getString("ErrorColor"));
+				}
 			}
-			case OPEN -> {
-				return Paint.valueOf("#abc");
-			}
-			case INFINITY -> {
-				return Paint.valueOf("yellow");
-			}
-			default -> {
-				return Paint.valueOf("magenta");
-			}
+		}
+		else {
+			return Paint.valueOf("#000");
 		}
 	}
 }
