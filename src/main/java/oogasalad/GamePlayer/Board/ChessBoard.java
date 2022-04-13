@@ -2,14 +2,12 @@ package oogasalad.GamePlayer.Board;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -17,8 +15,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
+import oogasalad.GamePlayer.Board.EndConditions.Stalemate;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
@@ -26,9 +24,7 @@ import oogasalad.GamePlayer.EngineExceptions.MoveAfterGameEndException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
 import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.ValidStateChecker.Check;
 import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 import org.apache.logging.log4j.LogManager;
@@ -212,19 +208,20 @@ public class ChessBoard implements Iterable<ChessTile> {
    */
   public Set<ChessTile> getMoves(Piece piece) throws EngineException, OutsideOfBoardException{
     // TODO: add valid state checker here
-    ValidStateChecker check = new Check();
+    if(isGameOver()) return Set.of();
     Set<ChessTile> allPieceMovements = piece.getMoves(this);
+    validStateCheckers.forEach( (v) ->
     allPieceMovements.removeIf(entry -> {
       ChessBoard copy;
       try {
         copy = makeHypotheticalMove(this.getTile(piece.getCoordinates()).getPiece().get(), entry.getCoordinates());
-        if(!check.isValid(copy, piece.getTeam())){
+        if(!v.isValid(copy, piece.getTeam())){
           return true;
         }
       } catch (EngineException e) {
         return false;
       }
-      return false;});
+      return false;}));
     return piece.checkTeam(turnCriteria.getCurrentPlayer()) ? allPieceMovements : Set.of();
   }
 
@@ -232,10 +229,12 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @return if the game is over
    */
   public boolean isGameOver() {
+
     for (EndCondition ec : endConditions) {
       Map<Integer, Double> endResultRet = ec.getScores(this);
       if (!endResultRet.isEmpty()) {
         endResult = endResultRet;
+        LOG.debug("End result: " + endResult);
         return true;
       }
     }
