@@ -229,21 +229,6 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @return if the game is over
    */
   public boolean isGameOver() {
-    /*If there are no more legal moves, either stalemate or checkmate has been reached*/
-    boolean classicalGameEnd = false;
-    Stalemate classic = new Stalemate();
-    try {
-      if(classic.isStalemate(this)){
-        return true;
-      }
-    } catch (EngineException e) {
-      LOG.error("unexpected error");
-    }
-    if(classicalGameEnd){
-      //int a = 0/0; //crash and print stack trace if the game is over TODO: change this later
-      return true;
-    }
-
 
     for (EndCondition ec : endConditions) {
       Map<Integer, Double> endResultRet = ec.getScores(this);
