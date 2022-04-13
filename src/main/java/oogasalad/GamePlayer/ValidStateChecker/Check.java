@@ -2,11 +2,10 @@ package oogasalad.GamePlayer.ValidStateChecker;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 
 /**
  * @author Jose Santillan
@@ -15,13 +14,9 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 public class Check implements ValidStateChecker {
 
   /**
-   * This method checks if the target piece of the current team is in check
-   * @param board The current board being played
-   * @param id The id of the pieces that are being attacked
-   * @return whether the target-piece is under attack
+   * Old method
    */
-  public boolean isValid(ChessBoard board, int id) throws OutsideOfBoardException {
-
+  public boolean isValid(ChessBoard board, int id) {
     List<Piece> targetPieces = board.targetPiece(id);
 
     List<Piece> allPieces = board.getPieces();
@@ -37,6 +32,21 @@ public class Check implements ValidStateChecker {
       }
     }
     return true;
+  }
+
+  /**
+   * This method checks if the target piece of the current team is in check
+   * @param board The current board being played
+   * @param piece that is moving
+   * @param move that the piece is making
+   * @return whether the target-piece is under attack
+   */
+  public boolean isValid(ChessBoard board, Piece piece,
+      ChessTile move) throws EngineException {
+
+    ChessBoard copy = board.makeHypotheticalMove(board.getTile(piece.getCoordinates()).getPiece().get(), move.getCoordinates());
+
+    return isValid(copy, piece.getTeam());
 
     /*
     return board.stream()
