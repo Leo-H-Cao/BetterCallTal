@@ -19,6 +19,13 @@ public interface HistoryManager {
   History add(History newState);
 
   /**
+   * Returns the most recent state.
+   *
+   * @return the most recent state.
+   */
+  History getLast();
+
+  /**
    * Returns the size of the history.
    * <p>NOTE: Do not simply use the size of the history list to determine the current index of the
    * history. Assuming that an undo operation is performed, the current index will be less than the

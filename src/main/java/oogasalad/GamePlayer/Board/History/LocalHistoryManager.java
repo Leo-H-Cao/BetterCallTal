@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
 /**
@@ -13,7 +12,7 @@ import oogasalad.GamePlayer.Board.ChessBoard;
  */
 public class LocalHistoryManager implements HistoryManager {
 
-  private final List<History> history;
+  private List<History> history;
   private int currentIndex;
 
 
@@ -23,15 +22,6 @@ public class LocalHistoryManager implements HistoryManager {
    */
   public LocalHistoryManager() {
     this(Collections.emptyList());
-  }
-
-  /**
-   * Creates a chess history object, which can be used to store the past game states.
-   *
-   * @param history array of chess boards to store in the history
-   */
-  public LocalHistoryManager(History[] history) {
-    this(List.of(history));
   }
 
   /**
@@ -52,10 +42,10 @@ public class LocalHistoryManager implements HistoryManager {
   public History add(History newState) {
     if (currentIndex < size() - 1) {
       history.set(currentIndex + 1, newState);
+      history = history.subList(0, currentIndex + 2);
     } else {
       history.add(newState);
     }
-    history.add(newState);
     currentIndex++;
     return newState;
   }
@@ -162,32 +152,5 @@ public class LocalHistoryManager implements HistoryManager {
    */
   public boolean isEmpty() {
     return history.isEmpty();
-  }
-
-  /**
-   * Checks if two histories are equal.
-   *
-   * @param o the object to compare to.
-   * @return true if the two histories are equal, false otherwise.
-   */
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof LocalHistoryManager that)) {
-      return false;
-    }
-    return currentIndex == that.currentIndex && history.equals(that.history);
-  }
-
-  /**
-   * Hashes the history.
-   *
-   * @return the hashcode of the history.
-   */
-  @Override
-  public int hashCode() {
-    return Objects.hash(history, currentIndex);
   }
 }

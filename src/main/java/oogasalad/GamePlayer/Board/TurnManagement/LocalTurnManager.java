@@ -1,6 +1,6 @@
 package oogasalad.GamePlayer.Board.TurnManagement;
 
-import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,20 +23,11 @@ public class LocalTurnManager implements TurnManager {
   private final GamePlayers players;
   private Map<Integer, Double> endResult;
 
-  //TO-DO: implement a builder pattern for this class once class finalization is complete
   public LocalTurnManager(GamePlayers players, TurnCriteria turn,
-      EndCondition... conditions) {
-    this(players, turn, Arrays.asList(conditions));
-  }
-
-  public LocalTurnManager(GamePlayers players, TurnCriteria turn,
-      Iterable<EndCondition> conditions) {
+      Collection<EndCondition> conditions) {
     this.players = players;
     this.turn = turn;
-    endConditions = new PriorityQueue<>();
-    for (EndCondition condition : conditions) {
-      endConditions.add(condition);
-    }
+    endConditions = new PriorityQueue<>(conditions);
     endResult = new HashMap<>();
   }
 
