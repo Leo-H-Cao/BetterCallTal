@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.CustomTiles.TileAction;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Coordinate;
@@ -127,8 +128,16 @@ public class ChessTile implements Tile, Cloneable {
   }
 
   public Set<ChessTile> executeActions(ChessBoard board) throws OutsideOfBoardException {
-    return specialActions.stream().flatMap(t -> t.executeAction(this, board).stream()).collect(Collectors.toSet());
+    specialActions.forEach(t -> {
+      try {
+        t.executeAction(this, board);
+      } catch (EngineException e) {
+        e.printStackTrace();
+      }
+    });
+    return null;
   }
+
 
   /**
    * @return coordinates of tile and pieces on it

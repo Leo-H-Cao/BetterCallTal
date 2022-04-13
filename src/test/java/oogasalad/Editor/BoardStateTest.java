@@ -3,12 +3,11 @@ package oogasalad.Editor;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import oogasalad.Editor.Exceptions.InvalidPieceIDException;
-import oogasalad.Editor.ModelState.BoardAndPieces;
+import oogasalad.Editor.ModelState.EditorBackend;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
@@ -22,7 +21,7 @@ import util.DukeApplicationTest;
 class BoardStateTest extends DukeApplicationTest {
   private BoardState boardState;
   private PiecesState piecesState;
-  private BoardAndPieces boardAndPieces;
+  private EditorBackend editorBackend;
 
   private Scene myScene;
   private Stage myStage;
@@ -31,7 +30,7 @@ class BoardStateTest extends DukeApplicationTest {
   @Override
   public void start(Stage stage) {
     mylangmod = new LanguageModal(stage);
-    myScene = mylangmod.makeScene();
+    myScene = mylangmod.getScene();
     myStage = stage;
     myStage.setScene(myScene);
     myStage.show();
@@ -39,9 +38,9 @@ class BoardStateTest extends DukeApplicationTest {
 
   @BeforeEach
   void setup() {
-    boardAndPieces = new BoardAndPieces();
-    piecesState = boardAndPieces.getPiecesState();
-    boardState = boardAndPieces.getBoardState();
+    editorBackend = new EditorBackend();
+    piecesState = editorBackend.getPiecesState();
+    boardState = editorBackend.getBoardState();
 
   }
 
@@ -85,9 +84,8 @@ class BoardStateTest extends DukeApplicationTest {
     String invalidID = "456";
 
     //test piece ID for piece that does not exist
-    Exception noPieceException = assertThrows(InvalidPieceIDException.class, () -> {
-      boardState.removePiece(invalidID);
-    });
+    Exception noPieceException = assertThrows(InvalidPieceIDException.class, () -> boardState.removePiece(invalidID));
+//    Exception noPieceException = assertThrows(InavlidPieceIDException.class, () -> boardState.removePiece(invalidID));
     String noPieceExpected = "Invalid pieceID, piece does not exist in board";
     String actualMessage = noPieceException.getMessage();
     assertTrue(actualMessage.contains(noPieceExpected));
@@ -95,9 +93,7 @@ class BoardStateTest extends DukeApplicationTest {
     boardState.removePiece(pieceID);
 
     //test removed piece from board
-    noPieceException = assertThrows(InvalidPieceIDException.class, () -> {
-      boardState.getPieceLocation(pieceID);
-    });
+    noPieceException = assertThrows(InvalidPieceIDException.class, () -> boardState.getPieceLocation(pieceID));
     actualMessage = noPieceException.getMessage();
     assertTrue(actualMessage.contains(noPieceExpected));
 

@@ -4,7 +4,6 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 public class PieceClassTest {
 
   private ChessBoard board;
