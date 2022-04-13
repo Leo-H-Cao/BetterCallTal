@@ -10,7 +10,7 @@ public class PieceEditor extends NodeContainer {
 
 	public PieceEditor(String id) {
 		ID = id;
-		myPieceBoard = new PieceBoard();
+		myPieceBoard = new PieceBoard(id);
 	}
 
 	public String getId() {

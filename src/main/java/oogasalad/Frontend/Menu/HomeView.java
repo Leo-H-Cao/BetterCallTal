@@ -55,7 +55,7 @@ public class HomeView extends View {
 
 
     private Node makeTitle() {
-        Label t = new Label(getLanguageResource("Title"));
+        Label t = new Label(getLanguageResource("Title", getClass()));
         t.setFont(new Font(64));
         t.setTextAlignment(TextAlignment.CENTER);
         return new Group(t);
@@ -63,11 +63,11 @@ public class HomeView extends View {
 
     private Node makeButtons() {
         GridPane buttonList = new GridPane();
-        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Create"), "createButton",
+        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Create", getClass()), "createButton",
                 (e) -> getView(GameEditorView.class).ifPresent(this::changeScene)), 0, 0);
-        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Join"), "joinButton",
+        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Join", getClass()), "joinButton",
                 (e) -> System.out.println("go to join screen")/*getView(JoinView.class).ifPresent(this::changeScene)*/), 0, 1);
-        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Host"), "hostButton",
+        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Host", getClass()), "hostButton",
                 (e) -> getView(HostGame.class).ifPresent(this::changeScene)), 0, 2);
 
         buttonList.getChildren().forEach((b) -> {

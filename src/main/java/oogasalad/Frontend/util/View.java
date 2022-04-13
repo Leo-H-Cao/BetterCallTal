@@ -101,8 +101,8 @@ public abstract class View extends BackendConnector {
 		myStage.setFullScreen(fullscreen);
 	}
 
-	protected String getLanguageResource(String s) {
-		return ViewManager.getLanguage().getString(getClass().getSimpleName() + s);
+	protected <T> String getLanguageResource(String s, Class<T> className) {
+		return ViewManager.getLanguage().getString(className.getClass().getSimpleName() + s);
 	}
 
 	/**

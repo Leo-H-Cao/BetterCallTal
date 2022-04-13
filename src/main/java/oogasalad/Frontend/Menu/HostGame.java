@@ -40,8 +40,8 @@ public class HostGame extends GameView {
         StackPane sp = new StackPane();
         sp.setPrefSize(myScreenSize.getWidth(), myScreenSize.getHeight());
         Node exit = makeExitGroup();
-        Node title = makeLabelGroup(getLanguageResource(TITLE), TITLE_SIZE);
-        Node prompt = makeLabelGroup(getLanguageResource(PROMPT), PROMPT_SIZE);
+        Node title = makeLabelGroup(getLanguageResource(TITLE, getClass()), TITLE_SIZE);
+        Node prompt = makeLabelGroup(getLanguageResource(PROMPT, getClass()), PROMPT_SIZE);
         Node load = makeFileUploadGroup(sp);
 
         StackPane.setAlignment(exit, Pos.TOP_LEFT);
@@ -68,7 +68,7 @@ public class HostGame extends GameView {
 
     private Node makeFileUploadGroup(StackPane sp) {
         // TODO: Fix method to set up the board before the screen switches
-        Button load = ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource(LOAD), Load_Button_ID,
+        Button load = ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource(LOAD, getClass()), Load_Button_ID,
                 (e) -> {
                     File f = chooseLoadFile();
                     Optional<ChessBoard> cbOp = getGameBackend().initalizeChessBoard(f);

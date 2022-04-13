@@ -6,6 +6,11 @@ import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 import oogasalad.Frontend.util.NodeContainer;
 
 public class PieceBoard extends NodeContainer {
+	private String myId;
+	public PieceBoard(String id) {
+		myId = id;
+	}
+
 	@Override
 	protected Node makeNode() {
 		return makeBoard();
@@ -18,7 +23,7 @@ public class PieceBoard extends NodeContainer {
 		int size = MovementGrid.PIECE_GRID_SIZE;
 		for(int i = 0; i < size; i++) {
 			for(int j = 0; j < size; j++) {
-				PieceBoardTile newTile = new PieceBoardTile();
+				PieceBoardTile newTile = new PieceBoardTile(j, i, getEditorBackend().getEditorPiece(myId).getTileStatus(j, i), myId);
 				ret.add(newTile.getNode(), j, i);
 			}
 		}

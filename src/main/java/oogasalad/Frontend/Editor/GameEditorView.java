@@ -28,7 +28,7 @@ public class GameEditorView extends View {
 		selectedPieceId = "default_pawn";
 		myBoardEditor = new BoardEditor();
 		myPieceEditors = new HashMap<>();
-		Tab boardTab = makeTab(getLanguageResource("Board"), myBoardEditor.getNode());
+		Tab boardTab = makeTab(getLanguageResource("Board", getClass()), myBoardEditor.getNode());
 		boardTab.setClosable(false);
 		myTabs = new TabPane(boardTab);
 		myTabs.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
@@ -56,8 +56,10 @@ public class GameEditorView extends View {
 
 	private void newCustomPiece() {
 		pieceEditorCount++;
-		PieceEditor newPieceEditor = new PieceEditor(String.valueOf(pieceEditorCount));
-		myPieceEditors.put("custom" + pieceEditorCount, newPieceEditor);
+		String newPieceId = "custom" + pieceEditorCount;
+		PieceEditor newPieceEditor = new PieceEditor(newPieceId);
+		myPieceEditors.put(newPieceId, newPieceEditor);
+		getEditorBackend().createEditorPiece(newPieceId);
 		Tab newTab = makeTab(getTabTitle(), newPieceEditor.getNode());
 		newTab.setOnClosed((e) -> myPieceEditors.remove(newPieceEditor.getId()));
 		myTabs.getTabs().add(newTab);
@@ -65,7 +67,7 @@ public class GameEditorView extends View {
 	}
 
 	private String getTabTitle() {
-		return getLanguageResource("CustomPiece") + " " + pieceEditorCount;
+		return getLanguageResource("CustomPiece", getClass()) + " " + pieceEditorCount;
 	}
 
 	private Tab makeTab(String name, Node content) {
@@ -78,7 +80,7 @@ public class GameEditorView extends View {
 		GridPane ret = new GridPane();
 		GridPane buttons = new GridPane();
 		buttons.add(makeExitButton(), 0, 0);
-		Button addCustomPieceButton = ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("NewCustomPiece"), "newCustomPiece",
+		Button addCustomPieceButton = ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("NewCustomPiece", getClass()), "newCustomPiece",
 				(e) -> newCustomPiece());
 		buttons.add(addCustomPieceButton, 1, 0);
 		GridPane.setFillHeight(addCustomPieceButton, true);

@@ -4,6 +4,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.stage.Screen;
+import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Frontend.Editor.Board.PieceLibrary;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

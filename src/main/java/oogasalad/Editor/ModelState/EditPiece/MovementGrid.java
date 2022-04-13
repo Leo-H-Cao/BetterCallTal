@@ -1,6 +1,8 @@
 package oogasalad.Editor.ModelState.EditPiece;
 
+import javafx.geometry.Rectangle2D;
 import oogasalad.Editor.Exceptions.MovementGridException;
+import oogasalad.GamePlayer.Movement.Coordinate;
 
 public class MovementGrid {
   public static final int PIECE_GRID_SIZE = 7;
@@ -60,6 +62,10 @@ public class MovementGrid {
       }
     }
     pieceGrid[PIECE_LOC_X][PIECE_LOC_Y] = PieceGridTile.PIECE;
+  }
+
+  public Coordinate getPieceLocation() {
+    return new Coordinate(PIECE_LOC_X, PIECE_LOC_Y);
   }
 
   private void checkCoordinates(int x, int y){
