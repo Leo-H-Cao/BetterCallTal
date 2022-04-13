@@ -2,11 +2,10 @@ package oogasalad.GamePlayer.ValidStateChecker;
 
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
+import oogasalad.GamePlayer.GamePiece.Piece;
 
 /**
  * @author Jose Santillan
@@ -46,7 +45,14 @@ public class Check implements ValidStateChecker {
         .filter(piece -> !piece.checkTeam(id))
         .anyMatch(piece -> piece.validCapture(targetPieces.stream()
             .map(Piece::getCoordinates)
+<<<<<<< HEAD:src/main/java/oogasalad/GamePlayer/GameClauses/CheckValidator.java
+            .collect(Collectors.toList())));
+
+
+  }
+=======
             .collect(Collectors.toList()), board));
+>>>>>>> 53af6a11edc1f4e0b832ceb5ee55258244d2ff85:src/main/java/oogasalad/GamePlayer/ValidStateChecker/Check.java
 
      */
   }

@@ -16,7 +16,7 @@ public class Main extends Application {
     @Override
     public void start (Stage stage) {
         LanguageModal languageModal = new LanguageModal(stage);
-        stage.setScene(languageModal.makeScene());
+        stage.setScene(languageModal.getScene());
         stage.show();
     }
 }

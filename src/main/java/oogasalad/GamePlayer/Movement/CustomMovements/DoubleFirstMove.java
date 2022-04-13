@@ -3,6 +3,7 @@ package oogasalad.GamePlayer.Movement.CustomMovements;
 import static oogasalad.GamePlayer.Movement.CustomMovements.Castling.NO_MOVEMENT_HISTORY_LENGTH;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,9 +31,10 @@ public class DoubleFirstMove implements MovementInterface {
       LOG.warn("Illegal double move attempted");
       throw new InvalidMoveException(finalSquare.toString());
     }
-    ChessTile oldTile = board.getTile(piece.getCoordinates());
-    piece.updateCoordinates(board.getTile(finalSquare), board);
-    return Set.of(oldTile, board.getTile(piece.getCoordinates()));
+    Set<ChessTile> updatedSquares = new HashSet<>(List.of(board.getTile(piece.getCoordinates())));
+    updatedSquares.addAll(piece.updateCoordinates(board.getTile(finalSquare), board));
+    updatedSquares.add(board.getTile(piece.getCoordinates()));
+    return updatedSquares;
   }
 
   @Override

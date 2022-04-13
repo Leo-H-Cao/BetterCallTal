@@ -29,9 +29,6 @@ public class Piece implements Cloneable {
 
   private static final Logger LOG = LogManager.getLogger(Piece.class);
 
-  private static final boolean VALID_SQUARE = true;
-  private static final boolean INVALID_SQUARE = false;
-
   private Coordinate coordinates;
   private SupplementaryPieceData suppPieceData;
   private MovementHandler movementHandler;
@@ -48,7 +45,7 @@ public class Piece implements Cloneable {
   /***
    * Helper constructor for clone when a movementHandler is directly provided
    */
-  private Piece(PieceData pieceData, MovementHandler movementHandler) {
+  public Piece(PieceData pieceData, MovementHandler movementHandler) {
     this.coordinates = pieceData.startingLocation();
     this.suppPieceData = new SupplementaryPieceData(pieceData.name(), pieceData.pointValue(),
         pieceData.team(), pieceData.mainPiece(), pieceData.img());
@@ -73,13 +70,15 @@ public class Piece implements Cloneable {
    * new piece
    *
    * @param tile to put piece on
+   * @return updated actions based on tile actions
    */
-  public void updateCoordinates(ChessTile tile, ChessBoard board) throws OutsideOfBoardException {
+  public Set<ChessTile> updateCoordinates(ChessTile tile, ChessBoard board) throws OutsideOfBoardException {
     try {
       board.getTile(coordinates).removePiece(this);
       coordinates = tile.getCoordinates();
       tile.appendPiece(this);
       history.add(tile.getCoordinates());
+      return tile.executeActions(board);
     } catch(OutsideOfBoardException e) {
       LOG.warn("Couldn't update piece coordinates");
       throw new OutsideOfBoardException(coordinates.toString());
@@ -233,5 +232,30 @@ public class Piece implements Cloneable {
         suppPieceData.img()
     );
     return new Piece(clonedData, movementHandler);
+  }
+
+  /**
+   * This method is used for the burn tile in order to
+   */
+  public boolean burn() {
+    //TODO NEED TO ADD PIECE HEALTH TO JSON AND CONSTRUCTOR
+    PieceHealth health = new PieceHealth();
+    return health.damage();
+  }
+
+  /**
+   * Updates/sets the movement for a piece
+   */
+  public void setMovement(MovementHandler moves) {
+    movementHandler = moves;
+  }
+
+  public void clearActions() {
+
+  }
+
+  @Override
+  public String toString() {
+    return suppPieceData.name();
   }
 }

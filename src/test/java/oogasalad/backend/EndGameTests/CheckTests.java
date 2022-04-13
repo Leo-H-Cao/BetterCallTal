@@ -55,7 +55,9 @@ public class CheckTests {
 
     pieceOne = new Piece(new PieceData(new Coordinate(row1, col1),
         "test1", 0, 0, false,
-        List.of(new Movement(List.of(new Coordinate(1, 0)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
+        List.of(new Movement(List.of(new Coordinate(1, 0), new Coordinate(-1, 0)), false)),
+        List.of(new Movement(List.of(new Coordinate(1, 0), new Coordinate(-1, 0)), false)), Collections.emptyList(), Collections.emptyList(), ""));
+
 
     pieceTwo = new Piece(new PieceData(new Coordinate(row2, col2),
         "test2", 0, 1, true,
@@ -72,6 +74,7 @@ public class CheckTests {
   void inCheck() throws OutsideOfBoardException {
     pieceLocations(0, 0, 1, 0);
     LOG.debug(board);
+
     //TEAM 1 is in check
     assertTrue(new Check().isValid(board, 1));
     //Team 2 is NOT in check

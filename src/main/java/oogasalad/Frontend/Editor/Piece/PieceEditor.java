@@ -2,16 +2,15 @@ package oogasalad.Frontend.Editor.Piece;
 
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
-import oogasalad.Frontend.Editor.EditorController;
-import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.NodeContainer;
 
 public class PieceEditor extends NodeContainer {
 	private final String ID;
+	private final PieceBoard myPieceBoard;
 
-	public PieceEditor(EditorController controller, String id) {
-		super(controller);
+	public PieceEditor(String id) {
 		ID = id;
+		myPieceBoard = new PieceBoard(id);
 	}
 
 	public String getId() {
@@ -26,6 +25,7 @@ public class PieceEditor extends NodeContainer {
 	private Node makeLayout() {
 		BorderPane ret = new BorderPane();
 		ret.setPrefWidth(myScreenSize.getWidth());
+		ret.setCenter(myPieceBoard.getNode());
 		return ret;
 	}
 }

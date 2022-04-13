@@ -8,9 +8,9 @@ import java.util.Set;
 import java.util.stream.IntStream;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
+import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.MovementInterface;
 import org.apache.logging.log4j.LogManager;
@@ -50,23 +50,22 @@ public class Castling implements MovementInterface {
       throw new InvalidMoveException(finalSquare.toString());
     }
 
-    ChessTile oldPieceSquare = board.getTile(piece.getCoordinates());
+    Set<ChessTile> updatedSquares = new HashSet<>(List.of(board.getTile(piece.getCoordinates())));
 
     Piece supporter = getSupporter(piece, finalSquare, board);
+
     ChessTile oldSupporterSquare = board.getTile(supporter.getCoordinates());
 
     int supporterPieceDelta = piece.getCoordinates().getCol() < supporter.getCoordinates().getCol() ? -SUPPORTER_RELATIVE_SQUARE : SUPPORTER_RELATIVE_SQUARE;
 
-    piece.updateCoordinates(board.getTile(finalSquare), board);
+    updatedSquares.addAll(piece.updateCoordinates(board.getTile(finalSquare), board));
+    updatedSquares.addAll(supporter.updateCoordinates(board.getTile(Coordinate.of(supporter.getCoordinates().getRow(), supporterPieceDelta + piece.getCoordinates().getCol())), board));
 
-//    board.getTile(supporter.getCoordinates()).removePiece(supporter);
-//    board.getTile).addPiece(supporter);
-    supporter.updateCoordinates(board.getTile(Coordinate.of(supporter.getCoordinates().getRow(), supporterPieceDelta + piece.getCoordinates().getCol())), board);
     LOG.debug("Castling new king square: " + board.getTile(piece.getCoordinates()));
     LOG.debug("Castling new rook square: " + board.getTile(supporter.getCoordinates()));
-    LOG.debug("Castling old king square: " + oldPieceSquare);
     LOG.debug("Castling old rook square: " + oldSupporterSquare);
-    return Set.of(oldPieceSquare, oldSupporterSquare, board.getTile(piece.getCoordinates()), board.getTile(supporter.getCoordinates()));
+    updatedSquares.addAll(List.of(oldSupporterSquare, board.getTile(piece.getCoordinates()), board.getTile(supporter.getCoordinates())));
+    return updatedSquares;
   }
 
   /**
