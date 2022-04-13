@@ -28,6 +28,7 @@ public class PieceEditor extends NodeContainer {
 		BorderPane ret = new BorderPane();
 		ret.setPrefWidth(myScreenSize.getWidth());
 		ret.setCenter(myPieceBoard.getNode());
+		ret.setLeft(myTileTypeSelector.getNode());
 		return ret;
 	}
 }
