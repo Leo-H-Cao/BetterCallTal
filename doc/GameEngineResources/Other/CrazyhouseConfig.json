@@ -1,0 +1,14 @@
+{
+	"general": [
+		{
+			"blockerCol": 8
+		}
+	],
+	"pieceRestrictions": [
+		{
+			"piece": "Pawn",
+			"rows": [0, -1],
+			"cols": []
+		}
+	]
+}
