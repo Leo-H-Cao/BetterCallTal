@@ -41,7 +41,6 @@ class BoardStateTest extends DukeApplicationTest {
     editorBackend = new EditorBackend();
     piecesState = editorBackend.getPiecesState();
     boardState = editorBackend.getBoardState();
-
   }
 
   @Test
