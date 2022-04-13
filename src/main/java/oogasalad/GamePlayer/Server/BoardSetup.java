@@ -55,9 +55,9 @@ public class BoardSetup {
    */
   public ChessBoard createBoard() throws IOException {
     int rows = Integer.parseInt(
-        myJSONObject.getJSONArray("general").getJSONObject(0).get("rows").toString());
-    int columns = Integer.parseInt(
         myJSONObject.getJSONArray("general").getJSONObject(0).get("columns").toString());
+    int columns = Integer.parseInt(
+        myJSONObject.getJSONArray("general").getJSONObject(0).get("rows").toString());
 
     Player[] players = getPlayers();
     myBoard = new ChessBoard(rows, columns, getTurnCriteria(players), players,
