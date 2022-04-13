@@ -1,34 +1,26 @@
 package oogasalad.Frontend.Editor.Board;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
-import oogasalad.Frontend.Editor.EditorController;
-import oogasalad.Frontend.Editor.LabelledContainer;
 import oogasalad.Frontend.util.ButtonFactory;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import oogasalad.Frontend.util.LabelledContainer;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class PieceLibrary extends LabelledContainer {
 
-  private static final Logger LOG = LogManager.getLogger(PieceLibrary.class);
-
-  public PieceLibrary(EditorController controller) {
-    super("Piece Library", controller);
-  }
+  public PieceLibrary() {
+		super("Piece Library");
+	}
 
   @Override
   protected Collection<Node> fillContent() {
-    List ret = new ArrayList();
-    myController.getPiecesState()
-        .getAllPieces().stream()
-        .forEach((piece) -> ret.add(createPiece(piece.getPieceID())));
+    Collection<Node> ret = new ArrayList();
+    getEditorBackend().getPiecesState().getAllPieces().forEach((piece) -> ret.add(createPiece(piece.getPieceID())));
     return ret;
   }
 
