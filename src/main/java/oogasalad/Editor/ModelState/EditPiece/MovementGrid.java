@@ -1,6 +1,5 @@
 package oogasalad.Editor.ModelState.EditPiece;
 
-import javafx.geometry.Rectangle2D;
 import oogasalad.Editor.Exceptions.MovementGridException;
 import oogasalad.GamePlayer.Movement.Coordinate;
 

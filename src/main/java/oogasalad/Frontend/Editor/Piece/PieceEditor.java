@@ -7,10 +7,12 @@ import oogasalad.Frontend.util.NodeContainer;
 public class PieceEditor extends NodeContainer {
 	private final String ID;
 	private final PieceBoard myPieceBoard;
+	private final PieceTileTypeSelector myTileTypeSelector;
 
 	public PieceEditor(String id) {
 		ID = id;
 		myPieceBoard = new PieceBoard(id);
+		myTileTypeSelector = new PieceTileTypeSelector(id);
 	}
 
 	public String getId() {

@@ -5,12 +5,16 @@ import oogasalad.Frontend.Editor.EditorView;
 import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.Frontend.util.LabelledContainer;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class PieceTileTypeSelector extends LabelledContainer {
 
-	public PieceTileTypeSelector() {
-		super(BackendConnector.getFrontendWord("PieceManager", EditorView.class));
+	private String myId;
+
+	public PieceTileTypeSelector(String id) {
+		super(BackendConnector.getFrontendWord("TileType", EditorView.class));
+		myId = id;
 	}
 
 	/**
@@ -18,6 +22,10 @@ public class PieceTileTypeSelector extends LabelledContainer {
 	 */
 	@Override
 	protected Collection<Node> fillContent() {
-		return null;
+		Collection<Node> ret = new ArrayList<>();
+//		for()
+
+		return ret;
 	}
+
 }

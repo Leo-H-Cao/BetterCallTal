@@ -45,10 +45,19 @@ public class PieceBoardTile extends NodeContainer {
 		}
 		status.addListener((ob, ov, nv) -> rect.setFill(getTileColor(nv)));
 
+		// Update tile color when clicked
 		ButtonFactory.addAction(ret, (e) -> {
 			PieceGridTile type = getEditorBackend().getSelectedPieceEditorType();
 			getEditorBackend().getEditorPiece(myId).setTileOpen(myX, myY);
 			status.setValue(type);
+		});
+
+		ret.hoverProperty().addListener((ob, ov, nv) -> {
+			if(nv && status.getValue() == PieceGridTile.CLOSED) {
+				rect.setFill(Paint.valueOf("#000"));
+			} else {
+				rect.setFill(getTileColor(status.getValue()));
+			}
 		});
 
 		return ret;
