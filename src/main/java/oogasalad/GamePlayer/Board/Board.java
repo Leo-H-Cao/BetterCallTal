@@ -74,14 +74,6 @@ public class Board implements Iterable<ChessTile> {
   }
 
   /**
-   * @param coordinates to get in board
-   * @return corresponding tile in board
-   */
-  private ChessTile getTileFromCoords(Coordinate coordinates) {
-    return board.get(coordinates.getRow()).get(coordinates.getCol());
-  }
-
-  /**
    * Returns all possible moves a piece can make
    *
    * @param piece         to get moves from

@@ -23,6 +23,7 @@ public class TwoMoves implements EndCondition {
         generatePoints(board.getPlayers()) : new HashMap<>();
   }
 
+  /***
   /**
    * @param numPlayers in the current game
    * @return length of history needed to match 3 moves for the current player size

@@ -127,8 +127,10 @@ public class ChessTile implements Tile, Cloneable {
   }
 
   public Set<ChessTile> executeActions(ChessBoard board) throws OutsideOfBoardException {
-    return specialActions.stream().flatMap(t -> t.executeAction(this, board).stream()).collect(Collectors.toSet());
+    specialActions.forEach(t -> t.executeAction(this, board));
+    return null;
   }
+
 
   /**
    * @return coordinates of tile and pieces on it
