@@ -31,12 +31,8 @@ public class EditorPiece {
     return pieceID;
   }
 
-  public void setTileOpen(int x, int y){
-    movementGrid.setTileOpen(x, y);
-  }
-
-  public void setTileClosed(int x, int y){
-    movementGrid.setTileClosed(x, y);
+  public void setTile(int x, int y, PieceGridTile tileStatus){
+    movementGrid.setTile(x, y, tileStatus);
   }
 
   public void setInfiniteTiles(int dirX, int dirY){

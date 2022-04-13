@@ -16,14 +16,9 @@ public class MovementGrid {
     initializePieceBoard();
   }
 
-  public void setTileOpen(int x, int y){
+  public void setTile(int x, int y, PieceGridTile tileStatus){
     checkCoordinates(x, y);
-    pieceGrid[y][x] = PieceGridTile.OPEN;
-  }
-
-  public void setTileClosed(int x, int y){
-    checkCoordinates(x, y);
-    pieceGrid[y][x] = PieceGridTile.CLOSED;
+    pieceGrid[y][x] = tileStatus;
   }
 
   public void setTileInfinite(int dirX, int dirY){

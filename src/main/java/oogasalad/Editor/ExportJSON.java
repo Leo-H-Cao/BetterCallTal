@@ -31,6 +31,7 @@ public class ExportJSON {
       objectMapper.writeValue(new File("data/piece.json"), piece);
     }
     catch (IOException e){
+      //TODO: display exception
       e.printStackTrace();
     }
   }
