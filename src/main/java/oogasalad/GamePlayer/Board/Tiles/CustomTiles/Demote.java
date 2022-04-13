@@ -6,6 +6,7 @@ import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.MovementHandler;
+import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 
@@ -19,8 +20,10 @@ public class Demote implements TileAction {
   @Override
 
   public Set<ChessTile> executeAction(ChessTile tile, ChessBoard board) {
-    tile.getPieces()
+    tile.getPieces().stream()
+        .filter(Piece::isTargetPiece)
         .forEach(p -> p.setMovement(pawnMoves));
+
     return Set.of(tile);
   }
 }

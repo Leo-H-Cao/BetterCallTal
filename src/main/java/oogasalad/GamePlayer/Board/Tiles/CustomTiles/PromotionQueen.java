@@ -6,6 +6,7 @@ import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.MovementHandler;
+import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementInterface;
@@ -21,7 +22,10 @@ public class PromotionQueen implements TileAction {
 
   @Override
   public Set<ChessTile> executeAction(ChessTile tile, ChessBoard board) {
-    tile.getPieces().forEach(p -> p.setMovement(queenMoves));
+    tile.getPieces().stream()
+        .filter(Piece::isTargetPiece)
+        .forEach(p -> p.setMovement(queenMoves));
+
     return Set.of(tile);
   }
 }

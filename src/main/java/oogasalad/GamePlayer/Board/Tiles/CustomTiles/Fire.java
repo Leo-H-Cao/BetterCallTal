@@ -10,6 +10,7 @@ public class Fire implements TileAction {
 
   public Set<ChessTile> executeAction(ChessTile tile, ChessBoard board) {
     Set<Piece> pieceList = tile.getPieces().stream()
+        .filter(Piece::isTargetPiece)
         .filter(Piece::burn)
         .collect(Collectors.toSet());
 

@@ -16,7 +16,7 @@ public class Promotion implements TileAction {
     List<Piece> pieceList = tile.getPieces().stream()
         .filter(p -> {
           return p.toString().equals("pawn");
-             //p.isPromotable()
+             //p.isPromotable() //This method/attributes needs to be implemented
         })
         .collect(Collectors.toList());
     Piece p = promotionPopUp(pieceList);
