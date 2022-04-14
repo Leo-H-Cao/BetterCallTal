@@ -4,7 +4,7 @@ import java.util.Optional;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
 import java.io.File;
-import oogasalad.GamePlayer.Board.BoardSetup;
+import oogasalad.GamePlayer.Board.Setup.BoardSetup;
 
 /**
  * This class will hold the Game View Backend object instances that the
