@@ -4,6 +4,18 @@
 			"blockerCol": 8
 		}
 	],
+	"bankInfo": [
+		{
+			"team": 0,
+			"row": -1,
+			"dir": -1
+		},
+		{
+			"team": 1,
+			"row": 0,
+			"dir": 1
+		}
+	],
 	"pieceRestrictions": [
 		{
 			"piece": "Pawn",

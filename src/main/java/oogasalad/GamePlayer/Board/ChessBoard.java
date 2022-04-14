@@ -38,7 +38,6 @@ public class ChessBoard implements Iterable<ChessTile> {
   private Player[] players;
   private int[] teamNums;
   private List<EndCondition> endConditions;
-  private int currentPlayer;
   private Map<Integer, Double> endResult;
   private List<History> history;
   private List<ValidStateChecker> validStateCheckers;
@@ -54,7 +53,6 @@ public class ChessBoard implements Iterable<ChessTile> {
     this.teamNums = getTeamNums(players);
     this.validStateCheckers = validStateCheckers;
     this.endConditions = endConditions;
-    currentPlayer = turnCriteria.getCurrentPlayer();
     endResult = new HashMap<>();
     history = new ArrayList<>();
   }
@@ -355,6 +353,13 @@ public class ChessBoard implements Iterable<ChessTile> {
         .flatMap(List::stream).toList().stream()
         .map(ChessTile::getPieces)
         .flatMap(List::stream).toList();
+  }
+
+  /**
+   * @return current player
+   */
+  public int getCurrentPlayer() {
+    return turnCriteria.getCurrentPlayer();
   }
 
   /**
