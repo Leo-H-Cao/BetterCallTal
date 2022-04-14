@@ -1,6 +1,8 @@
 package oogasalad.GamePlayer.Board.Tiles;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -128,14 +130,13 @@ public class ChessTile implements Tile, Cloneable {
   }
 
   public Set<ChessTile> executeActions(ChessBoard board) throws OutsideOfBoardException {
-    specialActions.forEach(t -> {
+    return specialActions.stream().flatMap(t -> {
       try {
-        t.executeAction(this, board);
+        return t.executeAction(this, board).stream();
       } catch (EngineException e) {
-        e.printStackTrace();
+        return new HashSet<ChessTile>().stream();
       }
-    });
-    return null;
+    }).collect(Collectors.toSet());
   }
 
 
