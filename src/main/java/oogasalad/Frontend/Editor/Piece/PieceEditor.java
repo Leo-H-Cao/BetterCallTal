@@ -1,7 +1,10 @@
 package oogasalad.Frontend.Editor.Piece;
 
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
+import oogasalad.Editor.ModelState.EditPiece.PieceGridTile;
 import oogasalad.Frontend.util.NodeContainer;
 
 public class PieceEditor extends NodeContainer {
@@ -13,6 +16,9 @@ public class PieceEditor extends NodeContainer {
 		ID = id;
 		myPieceBoard = new PieceBoard(id);
 		myTileTypeSelector = new PieceTileTypeSelector(id);
+
+		Property<PieceGridTile> selectedPiece = getEditorBackend().getSelectedPieceEditorType();
+
 	}
 
 	public String getId() {
