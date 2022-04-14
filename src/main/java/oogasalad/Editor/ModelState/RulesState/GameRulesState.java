@@ -13,9 +13,10 @@ import java.util.ResourceBundle;
 public class GameRulesState {
   private static final String CONFIGURATION_RESOURCE_PATH = "oogasalad/Editor/GameRules";
 
-  private List<String> winConditions;
+  private ArrayList<String> winConditions;
   private String turnCriteria;
   private ResourceBundle myResources;
+  private ArrayList<String> colors;
 
   public GameRulesState(){
     setResources();
@@ -23,13 +24,16 @@ public class GameRulesState {
     winConditions.add(myResources.getString("defaultConditionsCheckmate"));
     winConditions.add(myResources.getString("defaultConditionsStalemate"));
     turnCriteria = myResources.getString("defaultTurnCriteria");
+    this.colors = new ArrayList<>();
+    this.colors.add(myResources.getString("defaultColor0"));
+    this.colors.add(myResources.getString("defaultColor1"));
   }
 
   /**
    * Tracks win conditions for the game that is being created
    * @param winConditions list of win conditions
    */
-  public void setWinConditions(List<String> winConditions) {
+  public void setWinConditions(ArrayList<String> winConditions) {
     this.winConditions = winConditions;
   }
 
@@ -47,6 +51,18 @@ public class GameRulesState {
    */
   public String getTurnCriteria(){
     return turnCriteria;
+  }
+
+  public ArrayList<String> getWinConditions() {
+    return winConditions;
+  }
+
+  public ArrayList<String> getColors() {
+    return colors;
+  }
+
+  public void setColors(ArrayList<String> colors) {
+    this.colors = colors;
   }
 
   private void setResources() {
