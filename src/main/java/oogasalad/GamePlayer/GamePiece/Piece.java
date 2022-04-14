@@ -3,10 +3,8 @@ package oogasalad.GamePlayer.GamePiece;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -209,8 +207,30 @@ public class Piece implements Cloneable {
   /***
    * @return relative coordinates for all regular moves, not including captures
    */
+  public List<MovementInterface> getMoves() {
+    return movementHandler.getMovements();
+  }
+
+  /***
+   * @return relative coordinates for all regular moves, not including captures
+   */
   public List<Coordinate> getRelativeMoveCoords() {
     return movementHandler.getRelativeMoveCoords();
+  }
+
+  /***
+   * @param newMovements new coordinates for all regular moves to set
+   * @param newCaptures new coordinates for all regular captures to set
+   */
+  public void setAllRelativeMoveCoords(List<MovementInterface> newMovements, List<MovementInterface> newCaptures) {
+    movementHandler.setAllRelativeMoveCoords(newMovements, newCaptures);
+  }
+
+  /***
+   * @return relative coordinates for all regular moves including captures
+   */
+  public List<MovementInterface> getCaptures() {
+    return movementHandler.getCaptures();
   }
 
   /***

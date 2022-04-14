@@ -227,7 +227,6 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @return if the game is over
    */
   public boolean isGameOver() {
-
     for (EndCondition ec : endConditions) {
       Map<Integer, Double> endResultRet = ec.getScores(this);
       if (!endResultRet.isEmpty()) {
