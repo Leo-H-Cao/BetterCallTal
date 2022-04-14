@@ -11,29 +11,39 @@ import org.json.JSONObject;
 
 public class ExportJSON {
 
-  private PiecesState myPiecesState;
-  private GameRulesState myGameRulesState;
-  private BoardState myBoardState;
-  private JSONObject myJSONObject;
+  private PiecesState piecesState;
+  private GameRulesState gameRulesState;
+  private BoardState boardState;
+  private String JSONString;
+  private GeneralExport generalExport;
 
   public ExportJSON(PiecesState piecesState, GameRulesState gameRulesState, BoardState boardState){
-    myPiecesState = piecesState;
-    myGameRulesState = gameRulesState;
-    myBoardState = boardState;
-
-    myJSONObject= new JSONObject();
+    this.piecesState = piecesState;
+    this.gameRulesState = gameRulesState;
+    this.boardState = boardState;
+    JSONString = "";
+    createGeneralExportObject();
   }
 
   public void writeToJSON(){
     ObjectMapper objectMapper = new ObjectMapper();
-    LibraryPiece piece = myPiecesState.getAllPieces().get(0);
     try{
-      objectMapper.writeValue(new File("data/piece.json"), piece);
+      JSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(generalExport);
+      System.out.println(JSONString);
     }
     catch (IOException e){
       //TODO: display exception
       e.printStackTrace();
     }
+  }
+
+  private void createGeneralExportObject(){
+    generalExport = new GeneralExport(boardState.getBoardHeight(),
+        boardState.getBoardWidth());
+    generalExport.setTurnCriteria(gameRulesState.getTurnCriteria());
+    generalExport.setEndConditions(gameRulesState.getWinConditions());
+    generalExport.setColors(gameRulesState.getColors());
+
   }
 
 

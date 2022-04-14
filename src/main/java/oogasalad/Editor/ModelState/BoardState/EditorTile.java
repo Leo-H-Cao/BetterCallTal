@@ -23,10 +23,6 @@ public class EditorTile {
     myTileEffect = effect;
   }
 
-  public void deleteTileEffect(){
-    myTileEffect = TileEffect.NONE;
-  }
-
   public LibraryPiece getPiece(){
     return myLibraryPiece;
   }
@@ -38,5 +34,4 @@ public class EditorTile {
   public void removePiece(){
     myLibraryPiece = null;
   }
-
 }
