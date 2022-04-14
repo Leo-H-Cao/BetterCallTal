@@ -16,12 +16,8 @@ public class BoardState {
     myEditorBoard.changeBoardSize(width, height);
   }
 
-  public void addTileEffect(int x, int y, String effect) {
-    myEditorBoard.addTileEffect(x, y, effect);
-  }
-
-  public void deleteTileEffect(int x, int y) {
-    myEditorBoard.deleteTileEffect(x, y);
+  public void setTileEffect(int x, int y, String effect) {
+    myEditorBoard.setTileEffect(x, y, effect);
   }
 
   public int getBoardWidth(){

@@ -43,10 +43,9 @@ public class ExportJSONTest extends DukeApplicationTest {
    exportJSON = new ExportJSON(piecesState, gameRulesState, boardState);
   }
 
-//  @Test
-//  void initialExportTest(){
-//    piecesState.createCustomPiece(1, 1, new Image("images/pieces/black/rook.png"), new EditorPiece("123"), "piece1");
-//    exportJSON.writeToJSON();
-//  }
+  @Test
+  void initialExportTest(){
+    exportJSON.writeToJSON();
+  }
 
 }
