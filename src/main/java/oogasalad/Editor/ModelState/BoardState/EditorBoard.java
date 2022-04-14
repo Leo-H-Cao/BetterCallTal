@@ -3,9 +3,9 @@ package oogasalad.Editor.ModelState.BoardState;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import oogasalad.Editor.Exceptions.InavlidPieceIDException;
+import oogasalad.Editor.Exceptions.InvalidPieceIDException;
 import oogasalad.Editor.ModelState.PiecesState.EditorCoordinate;
-import oogasalad.Editor.ModelState.PiecesState.EditorPiece;
+import oogasalad.Editor.ModelState.PiecesState.LibraryPiece;
 
 public class EditorBoard {
 
@@ -61,13 +61,13 @@ public class EditorBoard {
     board.get(y).get(x).deleteTileEffect();
   }
 
-  public void addPieceStartingLocation(EditorPiece piece, int x, int y){
+  public void addPieceStartingLocation(LibraryPiece piece, int x, int y){
     try{
       EditorCoordinate pieceLocation = findPieceLocation(piece.getPieceID());
       board.get(pieceLocation.getY()).get(pieceLocation.getX()).removePiece();
       board.get(y).get(x).addPiece(piece);
     }
-    catch(InavlidPieceIDException pieceIDException){
+    catch(InvalidPieceIDException pieceIDException){
       board.get(y).get(x).addPiece(piece);
     }
   }
@@ -89,7 +89,7 @@ public class EditorBoard {
     return findPieceLocation(pieceID);
   }
 
-  private EditorCoordinate findPieceLocation(String pieceID) throws InavlidPieceIDException {
+  private EditorCoordinate findPieceLocation(String pieceID) {
     for(int i = 0; i < board.size(); i++){
       for(int j = 0; j < board.get(0).size(); j++){
         if(!board.get(i).get(j).hasPiece()){
@@ -100,7 +100,7 @@ public class EditorBoard {
         }
       }
     }
-    throw new InavlidPieceIDException(PIECE_ID_ERROR);
+    throw new InvalidPieceIDException(PIECE_ID_ERROR);
   }
 
   private void initializeBoard(int boardSize){

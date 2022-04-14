@@ -1,18 +1,19 @@
 package oogasalad.Editor.ModelState.PiecesState;
 
 import javafx.scene.image.Image;
+import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 
-public class EditorPiece {
+public class LibraryPiece {
 
-  private MovementRules myMovementRules;
+  private MovementGrid movementGrid;
   private int pointValue;
   private String myPieceID;
   private String myPieceName;
   private int myTeamNumber;
   private Image myImage;
 
-  public EditorPiece(int points, MovementRules movementRules, String pieceID, String pieceName, int teamNumber, Image image ){
-    myMovementRules = movementRules;
+  public LibraryPiece(int points, MovementGrid movementGrid, String pieceID, String pieceName, int teamNumber, Image image ){
+    this.movementGrid = movementGrid;
     pointValue = points;
     myPieceID = pieceID;
     myPieceName = pieceName;
@@ -28,8 +29,8 @@ public class EditorPiece {
     return myImage;
   }
 
-  public MovementRules getMovementRules() {
-    return myMovementRules;
+  public MovementGrid getPieceMovement() {
+    return movementGrid;
   }
 
   public int getPointValue() {
@@ -48,8 +49,8 @@ public class EditorPiece {
     this.myTeamNumber = myTeamNumber;
   }
 
-  public void setPieceMovement(MovementRules movementRules){
-    myMovementRules = movementRules;
+  public void setPieceMovement(MovementGrid movementGrid){
+    this.movementGrid = movementGrid;
   }
 
   public void setPointValue(int points){

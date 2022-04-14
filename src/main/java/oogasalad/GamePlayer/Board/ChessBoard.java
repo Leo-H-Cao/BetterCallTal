@@ -14,12 +14,12 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
-import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
-import oogasalad.GamePlayer.Board.TurnManagement.GamePlayers;
 import oogasalad.GamePlayer.Board.History.History;
 import oogasalad.GamePlayer.Board.History.HistoryManager;
 import oogasalad.GamePlayer.Board.History.LocalHistoryManager;
+import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
+import oogasalad.GamePlayer.Board.TurnManagement.GamePlayers;
 import oogasalad.GamePlayer.Board.TurnManagement.LocalTurnManager;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
@@ -30,7 +30,6 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.ValidStateChecker.Check;
 import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -201,22 +200,25 @@ public class ChessBoard implements Iterable<ChessTile> {
    */
   public Set<ChessTile> getMoves(Piece piece) throws EngineException {
     // TODO: add valid state checker here
-    ValidStateChecker check = new Check();
+    if (isGameOver()) {
+      return Set.of();
+    }
     Set<ChessTile> allPieceMovements = piece.getMoves(this);
-    allPieceMovements.removeIf(entry -> {
-      ChessBoard copy;
-      try {
-        // TODO: warning optional.get() without checking isPresent()
-        copy = makeHypotheticalMove(this.getTile(piece.getCoordinates()).getPiece().get(),
-            entry.getCoordinates());
-        if (!check.isValid(copy, piece.getTeam())) {
-          return true;
-        }
-      } catch (EngineException e) {
-        return false;
-      }
-      return false;
-    });
+    validStateCheckers.forEach((v) ->
+        allPieceMovements.removeIf(entry -> {
+          ChessBoard copy;
+          try {
+            // TODO: warning optional.get() without checking isPresent()
+            copy = makeHypotheticalMove(this.getTile(piece.getCoordinates()).getPiece().get(),
+                entry.getCoordinates());
+            if (!v.isValid(copy, piece.getTeam())) {
+              return true;
+            }
+          } catch (EngineException e) {
+            return false;
+          }
+          return false;
+        }));
     return piece.checkTeam(turnManager.getCurrentPlayer()) ? allPieceMovements : Set.of();
   }
 
