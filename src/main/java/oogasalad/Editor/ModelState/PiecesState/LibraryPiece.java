@@ -66,5 +66,8 @@ public class LibraryPiece {
     this.image = image;
   }
 
+  public boolean isMainPiece() {
+    return mainPiece;
+  }
 
 }

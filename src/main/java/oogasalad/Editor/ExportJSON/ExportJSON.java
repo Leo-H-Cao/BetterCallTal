@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
+import oogasalad.Editor.ModelState.PiecesState.EditorCoordinate;
+import oogasalad.Editor.ModelState.PiecesState.LibraryPiece;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Editor.ModelState.RulesState.GameRulesState;
 
@@ -17,6 +19,7 @@ public class ExportJSON {
   private GeneralExport generalExport;
   private ArrayList<PlayerInfoExport> playerInfo;
   private ExportWrapper exportWrapper;
+  private ArrayList<PieceExport> pieces;
 
   public ExportJSON(PiecesState piecesState, GameRulesState gameRulesState, BoardState boardState){
     this.piecesState = piecesState;
@@ -25,17 +28,13 @@ public class ExportJSON {
     JSONString = "";
     createGeneralExportObject();
     createPlayerInfoObject();
-    exportWrapper = new ExportWrapper(generalExport, playerInfo);
+    createPiecesExportObjects();
+    exportWrapper = new ExportWrapper(generalExport, playerInfo, pieces);
   }
 
   public void writeToJSON(){
     ObjectMapper objectMapper = new ObjectMapper();
     try{
-//      JSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(generalExport);
-//      for(PlayerInfoExport player: playerInfo){
-//        JSONString+= objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(player);
-//      }
-//      System.out.println(JSONString);
       JSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(exportWrapper);
       System.out.println(JSONString);
 
@@ -62,5 +61,11 @@ public class ExportJSON {
     }
   }
 
-
+  private void createPiecesExportObjects(){
+    pieces = new ArrayList<>();
+    for(LibraryPiece piece: piecesState.getAllPieces()){
+      EditorCoordinate pieceLocation = boardState.getPieceLocation(piece.getPieceID());
+      pieces.add(new PieceExport(pieceLocation.getY(), pieceLocation.getX(), piece));
+    }
+  }
 }

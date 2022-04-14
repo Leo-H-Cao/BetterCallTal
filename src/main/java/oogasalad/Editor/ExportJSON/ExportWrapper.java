@@ -6,10 +6,16 @@ public class ExportWrapper {
 
   private GeneralExport general;
   private ArrayList<PlayerInfoExport> playerInfo;
+  private ArrayList<PieceExport> pieces;
 
-  public ExportWrapper(GeneralExport generalExport, ArrayList<PlayerInfoExport> playerInfo){
+  public ArrayList<PieceExport> getPieces() {
+    return pieces;
+  }
+
+  public ExportWrapper(GeneralExport generalExport, ArrayList<PlayerInfoExport> playerInfo, ArrayList<PieceExport> pieces){
     general = generalExport;
     this.playerInfo = playerInfo;
+    this.pieces = pieces;
   }
 
   public GeneralExport getGeneral() {
