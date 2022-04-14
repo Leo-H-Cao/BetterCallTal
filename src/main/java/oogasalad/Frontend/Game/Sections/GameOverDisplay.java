@@ -7,6 +7,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
 
@@ -18,7 +19,6 @@ import java.util.function.Consumer;
 public class GameOverDisplay {
 
     private VBox myDisplay;
-    private ResourceBundle language;
     private Map<Integer, String> myTeams = new HashMap<>() {{
         put(0, "White");
         put(1, "Black");
@@ -29,9 +29,8 @@ public class GameOverDisplay {
     private static Double WIDTH = 500.0;
     private static Double HEIGHT = 500.0;
 
-    public GameOverDisplay(ResourceBundle rb, Map<Integer, Double> scores, Consumer<Node> remove) {
+    public GameOverDisplay(Map<Integer, Double> scores, Consumer<Node> remove) {
         removeCons =remove;
-        language = rb;
         int winner = findWinner(scores);
         myDisplay = setUpDisplay(winner);
     }
@@ -50,15 +49,15 @@ public class GameOverDisplay {
     private VBox setUpDisplay(int winner) {
         VBox vb = new VBox();
         vb.setMaxSize(WIDTH, HEIGHT);
-        Text GameOver = new Text(language.getString(getClass().getSimpleName() + "GameOver"));
+        Text GameOver = new Text(BackendConnector.getFrontendWord("GameOver", getClass()));
         GameOver.setFont(new Font("Times New Roman",64));
         GameOver.setFill(Color.WHITE);
 
-        Text win = new Text(language.getString(getClass().getSimpleName() + myTeams.get(winner)));
+        Text win = new Text(BackendConnector.getFrontendWord(myTeams.get(winner), getClass()));
         win.setFont(new Font("Times New Roman",64));
         win.setFill(Color.CORAL);
 
-        Button OK = ButtonFactory.makeButton(ButtonType.TEXT, language.getString(getClass().getSimpleName() + "Ok"), OK_BUTTON_ID,
+        Button OK = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("Ok", getClass()), OK_BUTTON_ID,
                 (e) -> {
                     removeCons.accept(myDisplay);
                 });

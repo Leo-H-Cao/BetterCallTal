@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import oogasalad.Frontend.ViewManager;
+import oogasalad.Frontend.util.BackendConnector;
 
 import java.util.ArrayList;
 
@@ -49,7 +50,7 @@ public class TopSection {
 
         HBox middle = new HBox();
         middle.setAlignment(Pos.CENTER);
-        Text title = new Text(ViewManager.getLanguage().getString(getClass().getSimpleName() + TITLE));
+        Text title = new Text(BackendConnector.getFrontendWord(TITLE, getClass()));
         title.setFont(new Font("Courier New", 30));
         title.setFill(Color.PURPLE);
         middle.getChildren().add(title);

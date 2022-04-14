@@ -124,7 +124,7 @@ public class GameView extends View {
     private void gameOver(){
         GameOver = true;
         Map<Integer, Double> scores = getGameBackend().getChessBoard().getScores();
-        GameOverDisplay godisp = new GameOverDisplay(ViewManager.getLanguage(), scores, removeGOCons);
+        GameOverDisplay godisp = new GameOverDisplay(scores, removeGOCons);
         StackPane.setAlignment(godisp.getDisplay(), Pos.CENTER);
         myCenterBoard.getChildren().add(godisp.getDisplay());
     }
