@@ -1,10 +1,9 @@
 package oogasalad.Editor;
 
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import oogasalad.Editor.ExportJSON.ExportJSON;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
-import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 import oogasalad.Editor.ModelState.EditorBackend;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Editor.ModelState.RulesState.GameRulesState;

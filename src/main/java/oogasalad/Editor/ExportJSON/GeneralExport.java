@@ -1,4 +1,4 @@
-package oogasalad.Editor;
+package oogasalad.Editor.ExportJSON;
 
 import java.util.ArrayList;
 

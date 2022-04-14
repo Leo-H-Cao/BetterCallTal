@@ -1,13 +1,12 @@
-package oogasalad.Editor;
+package oogasalad.Editor.ExportJSON;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
-import oogasalad.Editor.ModelState.PiecesState.LibraryPiece;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Editor.ModelState.RulesState.GameRulesState;
-import org.json.JSONObject;
 
 public class ExportJSON {
 
@@ -16,6 +15,8 @@ public class ExportJSON {
   private BoardState boardState;
   private String JSONString;
   private GeneralExport generalExport;
+  private ArrayList<PlayerInfoExport> playerInfo;
+  private ExportWrapper exportWrapper;
 
   public ExportJSON(PiecesState piecesState, GameRulesState gameRulesState, BoardState boardState){
     this.piecesState = piecesState;
@@ -23,13 +24,21 @@ public class ExportJSON {
     this.boardState = boardState;
     JSONString = "";
     createGeneralExportObject();
+    createPlayerInfoObject();
+    exportWrapper = new ExportWrapper(generalExport, playerInfo);
   }
 
   public void writeToJSON(){
     ObjectMapper objectMapper = new ObjectMapper();
     try{
-      JSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(generalExport);
+//      JSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(generalExport);
+//      for(PlayerInfoExport player: playerInfo){
+//        JSONString+= objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(player);
+//      }
+//      System.out.println(JSONString);
+      JSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(exportWrapper);
       System.out.println(JSONString);
+
     }
     catch (IOException e){
       //TODO: display exception
@@ -43,7 +52,14 @@ public class ExportJSON {
     generalExport.setTurnCriteria(gameRulesState.getTurnCriteria());
     generalExport.setEndConditions(gameRulesState.getWinConditions());
     generalExport.setColors(gameRulesState.getColors());
+  }
 
+  private void createPlayerInfoObject(){
+    playerInfo = new ArrayList<>();
+    HashMap<Integer, ArrayList<Integer>> gameRulesPlayers = gameRulesState.getTeamOpponents();
+    for(Integer team : gameRulesPlayers.keySet()){
+      playerInfo.add(new PlayerInfoExport(team, gameRulesPlayers.get(team)));
+    }
   }
 
 
