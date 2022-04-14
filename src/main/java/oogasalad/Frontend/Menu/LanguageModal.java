@@ -58,8 +58,9 @@ public class LanguageModal extends View {
 		fullscreenCheckBox.setId("fullscreen");
 		startButton = ButtonFactory.makeButton(ButtonType.TEXT, selectedLanguageView.getString("Start"), "start",
 				(e) -> {
-					new ViewManager(stage, selectedLanguageView);
 					View.setFullscreen(fullscreenCheckBox.isSelected());
+					new ViewManager(stage, selectedLanguageView);
+					stage.setFullScreen(fullscreenCheckBox.isSelected());
 				});
 		stage.setTitle(selectedLanguageView.getString("SelectLanguage"));
 	}
