@@ -52,13 +52,9 @@ public class EditorBoard {
     }
   }
 
-  public void addTileEffect(int x, int y, String effectString){
+  public void setTileEffect(int x, int y, String effectString){
     TileEffect effect = TileEffect.valueOf(effectString.toUpperCase(Locale.ROOT));
     board.get(y).get(x).setTileEffect(effect);
-  }
-
-  public void deleteTileEffect(int x, int y){
-    board.get(y).get(x).deleteTileEffect();
   }
 
   public void addPieceStartingLocation(LibraryPiece piece, int x, int y){
