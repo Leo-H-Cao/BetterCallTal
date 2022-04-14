@@ -44,6 +44,7 @@ public class GameView extends View {
     private StackPane myCenterBoard;
     private Runnable flipRun;
     private RightSideSection myRightSide;
+    private Consumer<TurnUpdate> servUpRun;
 
 
     public GameView(Stage stage) {
@@ -73,6 +74,7 @@ public class GameView extends View {
         MoveCons = coor -> makeMove(coor);
         removeGOCons = node -> removeGameOverNode(node);
         flipRun = () -> flipBoard();
+        servUpRun = tu -> updateBoard(tu);
     }
 
 
