@@ -210,10 +210,11 @@ public class ChessBoard implements Iterable<ChessTile> {
     Set<ChessTile> allPieceMovements = piece.getMoves(this);
     validStateCheckers.forEach( (v) ->
     allPieceMovements.removeIf(entry -> {
-      ChessBoard copy;
+//      ChessBoard copy;
       try {
 //        copy = makeHypotheticalMove(this.getTile(piece.getCoordinates()).getPiece().get(), entry.getCoordinates());
 //        LOG.debug(String.format("Copied board history: %s", copy.getHistory()));
+        LOG.debug(String.format("Valid state checker class: %s", v.getClass()));
         if(!v.isValid(this, piece, entry)){
           return true;
         }
