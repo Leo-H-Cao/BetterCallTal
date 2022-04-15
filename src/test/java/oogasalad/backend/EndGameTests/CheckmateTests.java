@@ -40,7 +40,7 @@ public class CheckmateTests {
   private static final int TEAM_1 = 1;
   private static final int TEAM_2 = 0;
 
-  ValidStateChecker Check = new Check();
+  Check Check = new Check();
   Checkmate Checkmate = new Checkmate();
 
   private ChessBoard board;
@@ -107,7 +107,6 @@ public class CheckmateTests {
 
     assertTrue(Check.isValid(board, TEAM_1));
     assertTrue(Checkmate.isInMate(board, TEAM_1));
-
   }
 
   @Test

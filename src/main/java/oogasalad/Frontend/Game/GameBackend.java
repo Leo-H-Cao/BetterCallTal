@@ -2,7 +2,7 @@ package oogasalad.Frontend.Game;
 
 import oogasalad.Frontend.util.Controller;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Server.BoardSetup;
+import oogasalad.GamePlayer.Board.BoardSetup;
 
 import java.io.File;
 import java.util.Optional;
