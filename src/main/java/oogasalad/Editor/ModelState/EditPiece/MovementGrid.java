@@ -1,13 +1,15 @@
 package oogasalad.Editor.ModelState.EditPiece;
 
 import oogasalad.Editor.Exceptions.MovementGridException;
+import oogasalad.GamePlayer.Movement.Coordinate;
 
 public class MovementGrid {
-  private final int PIECE_GRID_SIZE = 7;
+  public static final int PIECE_GRID_SIZE = 7;
   private final int PIECE_LOC_X = 3;
   private final int PIECE_LOC_Y = 3;
   private final String INVALID_INFINITE_MOVEMENT_ERR = "Directions for infinite movement are invalid";
   private final String INVALID_FINITE_MOVEMENT_ERR = "Coordinates for finite movement are invalid";
+  private final String INVALID_PIECE_CHANGE = "Piece tile cannot be changed.";
 
   private PieceGridTile[][] pieceGrid;
 
@@ -16,14 +18,9 @@ public class MovementGrid {
     initializePieceBoard();
   }
 
-  public void setTileOpen(int x, int y){
+  public void setTile(int x, int y, PieceGridTile tileStatus){
     checkCoordinates(x, y);
-    pieceGrid[y][x] = PieceGridTile.OPEN;
-  }
-
-  public void setTileClosed(int x, int y){
-    checkCoordinates(x, y);
-    pieceGrid[y][x] = PieceGridTile.CLOSED;
+    pieceGrid[y][x] = tileStatus;
   }
 
   public void setTileInfinite(int dirX, int dirY){
@@ -62,9 +59,15 @@ public class MovementGrid {
     pieceGrid[PIECE_LOC_X][PIECE_LOC_Y] = PieceGridTile.PIECE;
   }
 
+  public Coordinate getPieceLocation() {
+    return new Coordinate(PIECE_LOC_X, PIECE_LOC_Y);
+  }
+
   private void checkCoordinates(int x, int y){
-    if(x >= PIECE_GRID_SIZE || x < 0 || y >= PIECE_GRID_SIZE || y < 0 || (x==PIECE_LOC_X && y==PIECE_LOC_Y)){
+    if(x >= PIECE_GRID_SIZE || x < 0 || y >= PIECE_GRID_SIZE || y < 0){
       throw new MovementGridException(INVALID_FINITE_MOVEMENT_ERR);
+    } else if((x==PIECE_LOC_X && y==PIECE_LOC_Y)) {
+      throw new MovementGridException(INVALID_PIECE_CHANGE);
     }
   }
 

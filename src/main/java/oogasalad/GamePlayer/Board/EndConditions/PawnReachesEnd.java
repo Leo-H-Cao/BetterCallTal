@@ -6,10 +6,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Scanner;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Movement.MovementModifiers.Atomic;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

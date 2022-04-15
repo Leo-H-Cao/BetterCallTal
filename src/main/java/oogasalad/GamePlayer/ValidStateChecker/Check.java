@@ -2,6 +2,7 @@ package oogasalad.GamePlayer.ValidStateChecker;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
@@ -14,9 +15,13 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 public class Check implements ValidStateChecker {
 
   /**
-   * Old method
+   * This method checks if the target piece of the current team is in check
+   * @param board The current board being played
+   * @param id The id of the pieces that are being attacked
+   * @return whether the target-piece is under attack
    */
   public boolean isValid(ChessBoard board, int id) {
+
     List<Piece> targetPieces = board.targetPiece(id);
 
     List<Piece> allPieces = board.getPieces();

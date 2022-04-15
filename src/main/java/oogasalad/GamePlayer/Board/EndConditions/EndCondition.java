@@ -1,6 +1,7 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
 import java.util.Map;
+import java.util.Optional;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
 public interface EndCondition extends Comparable<EndCondition> {
@@ -15,4 +16,5 @@ public interface EndCondition extends Comparable<EndCondition> {
    * @return the point values awarded to every team if a game is over, else empty
    */
   Map<Integer, Double> getScores(ChessBoard board);
+
 }

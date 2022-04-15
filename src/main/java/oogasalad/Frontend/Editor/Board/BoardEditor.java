@@ -2,17 +2,17 @@ package oogasalad.Frontend.Editor.Board;
 
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
-import oogasalad.Frontend.Editor.EditorController;
 import oogasalad.Frontend.util.NodeContainer;
 
 public class BoardEditor extends NodeContainer {
 	private final ChessBoard myChessBoard;
 	private final PieceLibrary myPieceLibrary;
+	private final ModifierLibrary myModifierLibrary;
 
-	public BoardEditor(EditorController controller) {
-		super(controller);
-		myChessBoard = new ChessBoard(myController);
-		myPieceLibrary = new PieceLibrary(myController);
+	public BoardEditor() {
+		myChessBoard = new ChessBoard();
+		myPieceLibrary = new PieceLibrary();
+		myModifierLibrary = new ModifierLibrary();
 	}
 
 	@Override
@@ -25,6 +25,7 @@ public class BoardEditor extends NodeContainer {
 		ret.setPrefWidth(myScreenSize.getWidth());
 		ret.setCenter(myChessBoard.getNode());
 		ret.setLeft(myPieceLibrary.getNode());
+		ret.setRight(myModifierLibrary.getNode());
 		return ret;
 	}
 }
