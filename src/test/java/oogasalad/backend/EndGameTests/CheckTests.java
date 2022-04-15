@@ -9,6 +9,7 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.EndConditions.TwoMoves;
 import oogasalad.GamePlayer.Board.Player;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
@@ -55,11 +56,11 @@ public class CheckTests {
 
     pieceOne = new Piece(new PieceData(new Coordinate(row1, col1),
         "test1", 0, 0, false,
-        List.of(new Movement(List.of(new Coordinate(1, 0)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
+        List.of(new Movement(List.of(new Coordinate(1, 0)), false)), List.of(new Movement(List.of(new Coordinate(1, 0)), false)), Collections.emptyList(), Collections.emptyList(), ""));
 
     pieceTwo = new Piece(new PieceData(new Coordinate(row2, col2),
         "test2", 0, 1, true,
-        List.of(new Movement(List.of(new Coordinate(1, 0)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
+        List.of(new Movement(List.of(new Coordinate(1, 0)), false)), List.of(new Movement(List.of(new Coordinate(1, 0)), false)), Collections.emptyList(), Collections.emptyList(), ""));
 
     List<Piece> pieces = List.of(pieceOne, pieceTwo);
     board.setPieces(pieces);
@@ -72,10 +73,11 @@ public class CheckTests {
   void inCheck() throws OutsideOfBoardException {
     pieceLocations(0, 0, 1, 0);
     LOG.debug(board);
+
     //TEAM 1 is in check
-    assertTrue(new Check().isValid(board, 1));
+    assertFalse(new Check().isValid(board, 1));
     //Team 2 is NOT in check
-    assertFalse(new Check().isValid(board, 0));
+    assertTrue(new Check().isValid(board, 0));
   }
 
   /**
@@ -84,8 +86,8 @@ public class CheckTests {
   @Test
   void notInCheck() throws OutsideOfBoardException {
     pieceLocations(0, 0, 3, 0);
-    assertFalse(new Check().isValid(board, 0));
-    assertFalse(new Check().isValid(board, 1));
+    assertTrue(new Check().isValid(board, 0));
+    assertTrue(new Check().isValid(board, 1));
   }
 
   /**
@@ -95,24 +97,25 @@ public class CheckTests {
   @Test
   void movesIntoCheck() throws OutsideOfBoardException {
     pieceLocations(0, 0, 3, 0);
-    assertFalse(new Check().isValid(board, 1));
+    assertTrue(new Check().isValid(board, 1));
 
     //Can't actually move into check thanks to InvalidMoveException
     try {
       pieceTwo.move(board.getTile(new Coordinate(1, 0)), board);
+      assertFalse(new Check().isValid(board, 1));
     } catch (InvalidMoveException ignored) {}
 
-    assertFalse(new Check().isValid(board, 1));
+
   }
 
   /**
    * inCheck method should first
    */
   @Test
-  void movesOutOfCheck() throws OutsideOfBoardException, InvalidMoveException {
+  void movesOutOfCheck() throws EngineException {
     pieceLocations(0, 0, 1, 0);
-    assertTrue(new Check().isValid(board, 1));
-    pieceTwo.move(board.getTile(new Coordinate(2, 0)), board);
     assertFalse(new Check().isValid(board, 1));
+    ChessBoard newPosition = board.makeHypotheticalMove(pieceTwo, new Coordinate(2, 0));
+    assertTrue(new Check().isValid(newPosition, 1));
   }
 }

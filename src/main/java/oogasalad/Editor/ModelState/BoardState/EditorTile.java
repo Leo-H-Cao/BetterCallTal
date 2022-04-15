@@ -1,42 +1,37 @@
 package oogasalad.Editor.ModelState.BoardState;
 
-import oogasalad.Editor.ModelState.PiecesState.EditorPiece;
+import oogasalad.Editor.ModelState.PiecesState.LibraryPiece;
 
 public class EditorTile {
   private TileEffect myTileEffect;
-  private EditorPiece myEditorPiece;
+  private String pieceID;
   private int myCoordX;
   private int myCoordY;
 
   public EditorTile(int x, int y){
     myTileEffect = TileEffect.NONE;
-    myEditorPiece = null;
+    pieceID = null;
     myCoordX = x;
     myCoordY = y;
   }
 
   public boolean hasPiece(){
-    return myEditorPiece != null;
+    return pieceID != null;
   }
 
   public void setTileEffect(TileEffect effect){
     myTileEffect = effect;
   }
 
-  public void deleteTileEffect(){
-    myTileEffect = TileEffect.NONE;
+  public String getPieceID(){
+    return pieceID;
   }
 
-  public EditorPiece getPiece(){
-    return myEditorPiece;
-  }
-
-  public void addPiece(EditorPiece piece){
-    myEditorPiece = piece;
+  public void addPiece(String pieceID){
+    this.pieceID = pieceID;
   }
 
   public void removePiece(){
-    myEditorPiece = null;
+    pieceID = null;
   }
-
 }

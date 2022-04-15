@@ -4,7 +4,14 @@ oogasalad
 This project implements an authoring environment and player for multiple related games.
 
 Names:
+Vincent Chen
+Luke McSween
+Jed 
+Ritvik
+Nolan
+Leo
 Jose Santillan
+
 
 
 ### Timeline

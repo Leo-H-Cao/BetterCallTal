@@ -16,7 +16,7 @@ public class HomeViewTest extends DukeApplicationTest{
     @Override
     public void start(Stage stage) {
         mylangmod = new LanguageModal(stage);
-        myScene = mylangmod.makeScene();
+        myScene = mylangmod.getScene();
         myStage = stage;
         myStage.setScene(myScene);
         myStage.show();

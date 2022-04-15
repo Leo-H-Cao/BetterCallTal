@@ -23,6 +23,7 @@ public class TwoMoves implements EndCondition {
         generatePoints(board.getPlayers()) : new HashMap<>();
   }
 
+  /***
   /**
    * @param numPlayers in the current game
    * @return length of history needed to match 3 moves for the current player size
@@ -36,5 +37,13 @@ public class TwoMoves implements EndCondition {
    */
   private Map<Integer, Double> generatePoints(Player[] players) {
     return Arrays.stream(players).collect(Collectors.toMap(Player::teamID, e -> DRAW));
+  }
+
+  /**
+   * @return 0
+   */
+  @Override
+  public int compareTo(EndCondition o) {
+    return 0;
   }
 }

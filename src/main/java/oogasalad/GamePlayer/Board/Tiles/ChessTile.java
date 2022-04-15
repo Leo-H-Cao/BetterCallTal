@@ -1,11 +1,15 @@
 package oogasalad.GamePlayer.Board.Tiles;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.CustomTiles.TileAction;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Coordinate;
@@ -15,6 +19,7 @@ public class ChessTile implements Tile, Cloneable {
   private Coordinate coordinate;
   private List<Piece> pieces;
   private List<TileAction> specialActions;
+  private Optional<String> customImg;
 
   public ChessTile() {
     this(new Coordinate(0, 0), new ArrayList<>());
@@ -25,6 +30,29 @@ public class ChessTile implements Tile, Cloneable {
    */
   public ChessTile(Coordinate coordinate) {
     this(coordinate, new ArrayList<>());
+  }
+
+  /**
+   * Sets up the special actions list
+   *
+   * @param tileActions is this tile's special actions
+   */
+  public void setSpecialActions(List<TileAction> tileActions) {
+    specialActions = tileActions;
+  }
+
+  /***
+   * @param img to set customImg to
+   */
+  public void setCustomImg(String img) {
+    customImg = Optional.of(img);
+  }
+
+  /***
+   * @return custom img
+   */
+  public Optional<String> getCustomImg() {
+    return customImg;
   }
 
   /**
@@ -48,6 +76,8 @@ public class ChessTile implements Tile, Cloneable {
     this.coordinate = coordinate;
     this.pieces = pieces;
     this.specialActions = actions;
+    this.specialActions = new ArrayList<>();
+    this.customImg = Optional.empty();
   }
 
   /**
@@ -99,9 +129,16 @@ public class ChessTile implements Tile, Cloneable {
     return pieces.remove(piece);
   }
 
-  public void executeActions(ChessBoard board) throws OutsideOfBoardException {
-    specialActions.forEach(t -> t.executeAction(this, board));
+  public Set<ChessTile> executeActions(ChessBoard board) throws OutsideOfBoardException {
+    return specialActions.stream().flatMap(t -> {
+      try {
+        return t.executeAction(this, board).stream();
+      } catch (EngineException e) {
+        return new HashSet<ChessTile>().stream();
+      }
+    }).collect(Collectors.toSet());
   }
+
 
   /**
    * @return coordinates of tile and pieces on it

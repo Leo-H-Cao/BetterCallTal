@@ -3,6 +3,7 @@ package oogasalad.GamePlayer.Movement.CustomMovements;
 import static oogasalad.GamePlayer.Movement.CustomMovements.Castling.NO_MOVEMENT_HISTORY_LENGTH;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -30,9 +31,10 @@ public class DoubleFirstMove implements MovementInterface {
       LOG.warn("Illegal double move attempted");
       throw new InvalidMoveException(finalSquare.toString());
     }
-    ChessTile oldTile = board.getTile(piece.getCoordinates());
-    piece.updateCoordinates(board.getTile(finalSquare), board);
-    return Set.of(oldTile, board.getTile(piece.getCoordinates()));
+    Set<ChessTile> updatedSquares = new HashSet<>(List.of(board.getTile(piece.getCoordinates())));
+    updatedSquares.addAll(piece.updateCoordinates(board.getTile(finalSquare), board));
+    updatedSquares.add(board.getTile(piece.getCoordinates()));
+    return updatedSquares;
   }
 
   @Override
@@ -56,10 +58,19 @@ public class DoubleFirstMove implements MovementInterface {
   @Override
   public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
     if(piece.getHistory().size() != NO_MOVEMENT_HISTORY_LENGTH) return Set.of();
-    LOG.debug("Getting double moves: " + piece.getName());
+//    LOG.debug("Getting double moves: " + piece.getName());
     List<MovementInterface> newMovements = new ArrayList<>();
-    piece.getRelativeMoveCoords().forEach((c) -> {
-      LOG.debug("Double move coord: " + Coordinate.of(c.getRow()*MULT, c.getCol()*MULT));
+    piece.getRelativeMoveCoords().stream().filter((c) -> {
+      try {
+//        LOG.debug(String.format("Relative coordinate: (%d, %d)", c.getRow(), c.getCol()));
+//        LOG.debug("Pieces in way: " +  board.getTile(Coordinate.add(c, piece.getCoordinates())).getPieces());
+        return board.getTile(Coordinate.add(c, piece.getCoordinates())).getPieces().isEmpty();
+      } catch (OutsideOfBoardException e) {
+        LOG.debug("Out of bounds");
+        return false;
+      }
+    }).forEach((c) -> {
+//      LOG.debug("Double move coord: " + Coordinate.of(c.getRow()*MULT, c.getCol()*MULT));
       newMovements.add(new Movement(Coordinate.of(c.getRow()*MULT, c.getCol()*MULT), false));
     });
     return newMovements.stream().flatMap((m) -> m.getMoves(piece, board).stream()).collect(Collectors.toSet());

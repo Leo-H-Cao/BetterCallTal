@@ -3,7 +3,6 @@ package oogasalad.GamePlayer.Board.EndConditions;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
@@ -42,6 +41,7 @@ public class AtomicEndCondition implements EndCondition {
     return scores;
   }
 
+  /***
   /**
    * @return if the given team has its main piece on the given board
    */
@@ -49,5 +49,13 @@ public class AtomicEndCondition implements EndCondition {
     return board.stream().anyMatch(l -> l.stream()
         .anyMatch(t -> t.getPieces().stream().filter(p -> p.checkTeam(team)).anyMatch(
             Piece::isTargetPiece)));
+  }
+
+  /**
+   * @return 0
+   */
+  @Override
+  public int compareTo(EndCondition o) {
+    return 0;
   }
 }

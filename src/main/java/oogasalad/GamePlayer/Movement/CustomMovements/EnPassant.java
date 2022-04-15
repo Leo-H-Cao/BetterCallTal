@@ -2,6 +2,7 @@ package oogasalad.GamePlayer.Movement.CustomMovements;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,19 +16,17 @@ import oogasalad.GamePlayer.Movement.MovementInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Creates a movement object that represents en passant: if a piece of the same name has just
+ * moved and only moved once and is on the (height-3) rank relative to the piece doing en passant,
+ * then the piece can capture the other piece by moving diagonally one square behind it
+ */
 public class EnPassant implements MovementInterface {
 
   private static final Logger LOG = LogManager.getLogger(EnPassant.class);
   private static final int EP_DISTANCE = 1;
   private static final int EP_ROW_SUBTRACT = 3;
   private static final int ONE_MOVE_HISTORY_LENGTH = 2;
-
-  /**
-   * Creates a movement object that represents en passant: if a piece of the same name has just
-   * moved and only moved once and is on the (height-3) rank relative to the piece doing en passant,
-   * then the piece can capture the other piece by moving diagonally one square behind it
-   */
-  public EnPassant() { /* Empty constructor */ }
 
   /**
    * No applicable moves
@@ -52,12 +51,14 @@ public class EnPassant implements MovementInterface {
       LOG.warn("Illegal en passant move attempted");
       throw new InvalidMoveException(captureSquare.toString());
     }
-    ChessTile originalSquare = board.getTile(piece.getCoordinates());
+    Set<ChessTile> updatedSquares = new HashSet<>(List.of(board.getTile(piece.getCoordinates())));
     ChessTile removalSquare = board.getTile(Coordinate.of(piece.getCoordinates().getRow(),
         captureSquare.getCol()));
-    piece.updateCoordinates(board.getTile(captureSquare), board);
+    updatedSquares.add(removalSquare);
+    updatedSquares.addAll(piece.updateCoordinates(board.getTile(captureSquare), board));
+    updatedSquares.add(board.getTile(piece.getCoordinates()));
     removalSquare.clearPieces();
-    return Set.of(originalSquare, removalSquare, board.getTile(piece.getCoordinates()));
+    return updatedSquares;
   }
 
   /**
@@ -77,10 +78,10 @@ public class EnPassant implements MovementInterface {
    */
   private int getEpRow(Piece piece, int boardHeight) {
     if (movingUp(piece)) {
-      LOG.debug("En passant row for current piece (1): " + EP_ROW_SUBTRACT);
+//      LOG.debug("En passant row for current piece (1): " + EP_ROW_SUBTRACT);
       return EP_ROW_SUBTRACT;
     } else {
-      LOG.debug("En passant row for current piece (2): " + (boardHeight - EP_ROW_SUBTRACT - 1));
+//      LOG.debug("En passant row for current piece (2): " + (boardHeight - EP_ROW_SUBTRACT - 1));
       return (boardHeight - EP_ROW_SUBTRACT) - 1;
     }
   }
@@ -120,7 +121,7 @@ public class EnPassant implements MovementInterface {
           board.getTile(Coordinate.of(base.getRow(), base.getCol() + EP_DISTANCE)));
     } catch (Exception ignored) {
     }
-    LOG.debug("Preliminary capture squares: " + possibleCaptures);
+//    LOG.debug("Preliminary capture squares: " + possibleCaptures);
     Set<ChessTile> capSquares = possibleCaptures.stream().filter((t) -> t.getPiece().isPresent() &&
             (board.getHistory().isEmpty() || board.getHistory().get(board.getHistory().size() - 1)
                 .movedPieces().contains(t.getPiece().get())) &&
@@ -128,7 +129,7 @@ public class EnPassant implements MovementInterface {
             (board.getHistory().isEmpty()
                 || t.getPiece().get().getHistory().size() == ONE_MOVE_HISTORY_LENGTH))
         .collect(Collectors.toSet());
-    LOG.debug("Actual capture squares: " + capSquares);
+//    LOG.debug("Actual capture squares: " + capSquares);
     return capSquares.stream().map((c) -> {
       try {
         return board.getTile(
