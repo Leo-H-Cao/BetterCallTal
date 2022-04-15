@@ -1,6 +1,7 @@
 package oogasalad.GamePlayer.Board;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -43,6 +44,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   private final TurnManager turnManager;
   private final HistoryManager history;
   private List<List<ChessTile>> board;
+  private Map<Integer, List<Piece>> pieceList;
 
   /**
    * Creates a representation of a chessboard if an array of pieces is already provided
@@ -64,6 +66,8 @@ public class ChessBoard implements Iterable<ChessTile> {
     this.board = board;
     this.validStateCheckers = validStateCheckers;
     this.history = history;
+    this.pieceList = new HashMap<>();
+    generatePieceList();
   }
 
   /**
@@ -87,6 +91,21 @@ public class ChessBoard implements Iterable<ChessTile> {
       IntStream.range(0, length).forEach(j -> list.add(new ChessTile(new Coordinate(i, j))));
       board.add(list);
     });
+  }
+
+  /***
+   * Generates the list of all pieces mapped to each team
+   */
+  private void generatePieceList() {
+    board.forEach((l) -> l.stream().filter((t) -> t.getPiece().isPresent()).forEach((t) ->
+    {
+      Piece piece = t.getPiece().get();
+      pieceList.putIfAbsent(piece.getTeam(), new ArrayList<>());
+      if(pieceList.get(piece.getTeam()).stream().noneMatch(p ->
+          p.getName().equals(piece.getName()))) {
+        pieceList.get(piece.getTeam()).add(piece.clone());
+      }
+    }));
   }
 
   /**
@@ -290,6 +309,8 @@ public class ChessBoard implements Iterable<ChessTile> {
     return getTile(coordinate).getPiece().isEmpty();
   }
 
+
+
   /**
    * Gets the player object with the associated ID
    *
@@ -298,6 +319,13 @@ public class ChessBoard implements Iterable<ChessTile> {
    */
   public Player getPlayer(int id) {
     return players.getPlayer(id);
+  }
+
+  /***
+   * @return list of pieces, with each piece mapped to their team
+   */
+  public Map<Integer, List<Piece>> getPieceList() {
+    return pieceList;
   }
 
   /**

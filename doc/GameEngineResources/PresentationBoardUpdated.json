@@ -500,5 +500,103 @@
       "onInteractionModifier": [],
       "mainPiece": 1
     }
+  ],
+  "tiles": [
+    {
+      "row": 0,
+      "col": 0,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 0,
+      "col": 1,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 0,
+      "col": 2,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 0,
+      "col": 3,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 0,
+      "col": 4,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 0,
+      "col": 5,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 0,
+      "col": 6,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 0,
+      "col": 7,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 7,
+      "col": 0,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 7,
+      "col": 1,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 7,
+      "col": 2,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 7,
+      "col": 3,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 7,
+      "col": 4,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 7,
+      "col": 5,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 7,
+      "col": 6,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 7,
+      "col": 7,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    }
   ]
 }
