@@ -1,5 +1,7 @@
 package oogasalad.Editor.ModelState.PiecesState;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import javafx.scene.image.Image;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
@@ -13,25 +15,32 @@ public class LibraryPiece {
   private int teamNumber;
   private Image image;
   private boolean mainPiece;
+  private EditorPiece editorPiece;
 
   public LibraryPiece(int points, EditorPiece editorPiece, String pieceName, int teamNumber, Image image){
-    this.movementGrid = editorPiece.getMovementGrid();
     this.pointValue = points;
-    this.pieceID = editorPiece.getPieceID();
     this.pieceName = pieceName;
     this.teamNumber = teamNumber;
     this.image = image;
-    this.mainPiece = editorPiece.getMainPiece();
+    this.editorPiece = editorPiece;
+  }
+
+  public LibraryPiece(LibraryPiece piece){
+    this.pointValue = piece.getPointValue();
+    this.pieceName = piece.getPieceName();
+    this.teamNumber = piece.getTeamNumber();
+    this.image = piece.getImage();
+    this.editorPiece = piece.getEditorPiece();
   }
 
   public String getPieceID(){
-    return pieceID;
+    return editorPiece.getPieceID();
   }
 
   public Image getImage(){return image; }
 
   public MovementGrid getPieceMovement() {
-    return movementGrid;
+    return editorPiece.getMovementGrid();
   }
 
   public int getPointValue() {
@@ -46,25 +55,33 @@ public class LibraryPiece {
     return teamNumber;
   }
 
-  public void setTeamNumber(int teamNumber) {
-    this.teamNumber = teamNumber;
+  public boolean isMainPiece() {
+    return editorPiece.getMainPiece();
   }
 
-  public void setPieceMovement(MovementGrid movementGrid){
-    this.movementGrid = movementGrid;
+  public EditorPiece getEditorPiece() {
+    return editorPiece;
   }
 
-  public void setPointValue(int points){
-    pointValue = points;
+  public void setPointValue(int pointValue) {
+    this.pointValue = pointValue;
   }
 
-  public void setPieceName(String name){
-    pieceName = name;
+  public void setPieceName(String pieceName) {
+    this.pieceName = pieceName;
   }
 
-  public void setPieceImage(Image image){
+  public void setPieceImage(Image image) {
     this.image = image;
   }
 
+  public ArrayList<String> getCustomMoves(){
+    return editorPiece.getCustomMoves();
+  }
 
+  public void updatePiece(){
+    this.movementGrid = editorPiece.getMovementGrid();
+    this.pieceID = editorPiece.getPieceID();
+    this.mainPiece = editorPiece.getMainPiece();
+  }
 }
