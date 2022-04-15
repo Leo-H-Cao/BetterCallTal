@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.Image;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
-import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 
 public class PiecesState {
   private ArrayList<LibraryPiece> availablePieces;
@@ -32,10 +31,6 @@ public class PiecesState {
     return newPiece;
   }
 
-  public void changePieceMovement(String pieceID, MovementGrid movementGrid) {
-    findPiece(pieceID).setPieceMovement(movementGrid);
-  }
-
   public void setPiecePointValue(String pieceID, int points){
     findPiece(pieceID).setPointValue(points);
   }
@@ -44,6 +39,9 @@ public class PiecesState {
     findPiece(pieceID).setPieceName(name);
   }
 
+  public EditorPiece getEditorPiece(String pieceID){
+    return findPiece(pieceID).getEditorPiece();
+  }
 
   private LibraryPiece findPiece(String pieceID){
     for(LibraryPiece piece : availablePieces){
