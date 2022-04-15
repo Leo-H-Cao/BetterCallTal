@@ -65,4 +65,12 @@ public class PawnReachesEnd implements EndCondition {
     LOG.debug("Scores: " + scores);
     return scores;
   }
+
+  /**
+   * @return 0
+   */
+  @Override
+  public int compareTo(EndCondition o) {
+    return 0;
+  }
 }

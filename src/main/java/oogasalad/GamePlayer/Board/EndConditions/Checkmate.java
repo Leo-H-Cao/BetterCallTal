@@ -59,6 +59,14 @@ public class Checkmate implements EndCondition {
     return finalScores;
   }
 
+  /**
+   * @return 0
+   */
+  @Override
+  public int compareTo(EndCondition o) {
+    return 0;
+  }
+
 }
 
 

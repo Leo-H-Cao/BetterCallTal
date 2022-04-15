@@ -3,7 +3,7 @@ package oogasalad.GamePlayer.Board.EndConditions;
 import java.util.Map;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
-public interface EndCondition {
+public interface EndCondition extends Comparable<EndCondition> {
 
   double WIN = 1.0;
   double DRAW = 0.5;

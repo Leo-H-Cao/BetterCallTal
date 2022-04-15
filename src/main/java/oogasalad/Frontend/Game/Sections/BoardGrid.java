@@ -1,7 +1,6 @@
 package oogasalad.Frontend.Game.Sections;
 
 import javafx.scene.layout.*;
-import oogasalad.GamePlayer.Board.Board;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
