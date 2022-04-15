@@ -38,4 +38,12 @@ public class TwoMoves implements EndCondition {
   private Map<Integer, Double> generatePoints(Player[] players) {
     return Arrays.stream(players).collect(Collectors.toMap(Player::teamID, e -> DRAW));
   }
+
+  /**
+   * @return 0
+   */
+  @Override
+  public int compareTo(EndCondition o) {
+    return 0;
+  }
 }

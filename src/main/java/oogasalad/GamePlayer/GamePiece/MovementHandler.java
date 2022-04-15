@@ -18,8 +18,8 @@ public class MovementHandler {
 
   private static final Logger LOG = LogManager.getLogger(MovementHandler.class);
 
-  private final List<MovementInterface> movements;
-  private final List<MovementInterface> captures;
+  private List<MovementInterface> movements;
+  private List<MovementInterface> captures;
   private final List<MovementModifier> movementModifiers;
 
   /***
@@ -151,7 +151,30 @@ public class MovementHandler {
   /***
    * @return relative coordinates for all regular moves
    */
+  public List<MovementInterface> getMovements() {
+    return /*getRelativeMoveCoordsFromList(*/movements;
+  }
+
+  /***
+   * @return relative coordinates for a given list
+   */
   public List<Coordinate> getRelativeMoveCoords() {
-    return movements.stream().flatMap((m) -> m.getRelativeCoords().stream()).toList();
+    return movements.stream().flatMap((m) -> m.getRelativeCoords().stream()).collect(Collectors.toList());
+  }
+
+  /***
+   * @return relative coordinates for all regular moves and captures
+   */
+  public List<MovementInterface> getCaptures() {
+    return /*getRelativeMoveCoordsFromList(*/captures;
+  }
+
+  /***
+   * @param newMovements new coordinates for all regular moves to set
+   * @param newCaptures new coordinates for all regular captures to set
+   */
+  public void setAllRelativeMoveCoords(List<MovementInterface> newMovements, List<MovementInterface> newCaptures) {
+    this.movements = newMovements;
+    this.captures = newCaptures;
   }
 }

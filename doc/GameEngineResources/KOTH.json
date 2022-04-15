@@ -5,7 +5,7 @@
       "columns": 8,
       "turnCriteria": "Linear",
       "colors": ["black", "white"],
-      "endConditions": ["Checkmate", "Stalemate", "AtomicEndCondition"],
+      "endConditions": ["Checkmate", "Stalemate", "KingOfTheHill"],
       "validStateCheckers": ["Check"]
     }
   ],
@@ -499,14 +499,6 @@
       "movementModifiers": [],
       "onInteractionModifier": [],
       "mainPiece": 1
-    }
-  ],
-  "tiles": [
-    {
-      "row": 3,
-      "col": 5,
-      "tileActions": ["BlackHoleAction"],
-      "img": "blackhole"
     }
   ]
 }

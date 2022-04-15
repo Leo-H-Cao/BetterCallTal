@@ -262,6 +262,13 @@ public class Movement implements MovementInterface{
     }
   }
 
+  /**
+   * @return if infinite
+   */
+  public boolean isInfinite() {
+    return infinite;
+  }
+
   /***
    * @return String of all relative coordinates
    */

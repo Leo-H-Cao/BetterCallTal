@@ -1,12 +1,12 @@
 {
   "general": [
     {
-      "rows": 8,
-      "columns": 8,
+      "rows": 13,
+      "columns": 13,
       "turnCriteria": "Linear",
       "colors": ["black", "white"],
-      "endConditions": ["Checkmate", "Stalemate", "AtomicEndCondition"],
-      "validStateCheckers": ["Check"]
+      "endConditions": ["Checkmate", "Stalemate"],
+      "validStateCheckers": ["BankBlocker", "Check"]
     }
   ],
   "playerInfo": [
@@ -29,11 +29,11 @@
       "team": 0,
       "basicMovements": ["wPawnMov"],
       "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
+      "customMoves": ["BankLeaver","DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -45,11 +45,11 @@
       "team": 0,
       "basicMovements": ["wPawnMov"],
       "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
+      "customMoves": ["BankLeaver","DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -61,11 +61,11 @@
       "team": 0,
       "basicMovements": ["wPawnMov"],
       "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
+      "customMoves": ["BankLeaver","DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -77,11 +77,11 @@
       "team": 0,
       "basicMovements": ["wPawnMov"],
       "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
+      "customMoves": ["BankLeaver","DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -93,11 +93,11 @@
       "team": 0,
       "basicMovements": ["wPawnMov"],
       "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
+      "customMoves": ["BankLeaver","DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -109,11 +109,11 @@
       "team": 0,
       "basicMovements": ["wPawnMov"],
       "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
+      "customMoves": ["BankLeaver","DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -125,11 +125,11 @@
       "team": 0,
       "basicMovements": ["wPawnMov"],
       "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
+      "customMoves": ["BankLeaver","DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -141,11 +141,11 @@
       "team": 0,
       "basicMovements": ["wPawnMov"],
       "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
+      "customMoves": ["BankLeaver","DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -157,9 +157,9 @@
       "team": 0,
       "basicMovements": ["rook"],
       "basicCaptures": ["rook"],
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -171,9 +171,9 @@
       "team": 0,
       "basicMovements": ["rook"],
       "basicCaptures": ["rook"],
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -185,9 +185,9 @@
       "team": 0,
       "basicMovements": ["knight"],
       "basicCaptures": ["knight"],
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -199,9 +199,9 @@
       "team": 0,
       "basicMovements": ["knight"],
       "basicCaptures": ["knight"],
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -213,9 +213,9 @@
       "team": 0,
       "basicMovements": ["bishop"],
       "basicCaptures": ["bishop"],
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -227,9 +227,9 @@
       "team": 0,
       "basicMovements": ["bishop"],
       "basicCaptures": ["bishop"],
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -241,9 +241,9 @@
       "team": 0,
       "basicMovements": ["bishop", "rook"],
       "basicCaptures": ["bishop", "rook"],
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -255,9 +255,9 @@
       "team": 0,
       "basicMovements": ["king"],
       "basicCaptures": ["king"],
-      "customMoves": ["Castling"],
+      "customMoves": ["BankLeaver","Castling"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 1
     },
     {
@@ -269,11 +269,11 @@
       "team": 1,
       "basicMovements": ["bPawnMov"],
       "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
+      "customMoves": ["BankLeaver","DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -285,11 +285,11 @@
       "team": 1,
       "basicMovements": ["bPawnMov"],
       "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
+      "customMoves": ["BankLeaver","DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -301,11 +301,11 @@
       "team": 1,
       "basicMovements": ["bPawnMov"],
       "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
+      "customMoves": ["BankLeaver","DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -317,11 +317,11 @@
       "team": 1,
       "basicMovements": ["bPawnMov"],
       "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
+      "customMoves": ["BankLeaver","DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -333,11 +333,11 @@
       "team": 1,
       "basicMovements": ["bPawnMov"],
       "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
+      "customMoves": ["BankLeaver","DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -349,11 +349,11 @@
       "team": 1,
       "basicMovements": ["bPawnMov"],
       "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
+      "customMoves": ["BankLeaver","DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -365,11 +365,11 @@
       "team": 1,
       "basicMovements": ["bPawnMov"],
       "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
+      "customMoves": ["BankLeaver","DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -381,11 +381,11 @@
       "team": 1,
       "basicMovements": ["bPawnMov"],
       "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
+      "customMoves": ["BankLeaver","DoubleFirstMove", "EnPassant"
       ],
       "movementModifiers": [
       ],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -397,9 +397,9 @@
       "team": 1,
       "basicMovements": ["rook"],
       "basicCaptures": ["rook"],
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -411,9 +411,9 @@
       "team": 1,
       "basicMovements": ["rook"],
       "basicCaptures": ["rook"],
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -425,9 +425,9 @@
       "team": 1,
       "basicMovements": ["knight"],
       "basicCaptures": ["knight"],
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -439,9 +439,9 @@
       "team": 1,
       "basicMovements": ["knight"],
       "basicCaptures": ["knight"],
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -453,9 +453,9 @@
       "team": 1,
       "basicMovements": ["bishop"],
       "basicCaptures": ["bishop"],
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -467,9 +467,9 @@
       "team": 1,
       "basicMovements": ["bishop"],
       "basicCaptures": ["bishop"],
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -481,9 +481,9 @@
       "team": 1,
       "basicMovements": ["bishop", "rook"],
       "basicCaptures": ["bishop", "rook"],
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -495,18 +495,122 @@
       "team": 1,
       "basicMovements": ["king"],
       "basicCaptures": ["king"],
-      "customMoves": ["Castling"],
+      "customMoves": ["BankLeaver","Castling"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 1
-    }
-  ],
-  "tiles": [
+    },
+    {
+      "row": 0,
+      "col": 8,
+      "pieceName": "blocker",
+      "imgFile": "blocker",
+      "pointValue": 0,
+      "team": -1,
+      "basicMovements": [],
+      "basicCaptures": [],
+      "customMoves": ["BankLeaver"],
+      "movementModifiers": [],
+      "onInteractionModifier": ["BankJoiner"],
+      "mainPiece": 1
+    },
+    {
+      "row": 1,
+      "col": 8,
+      "pieceName": "blocker",
+      "imgFile": "blocker",
+      "pointValue": 0,
+      "team": -1,
+      "basicMovements": [],
+      "basicCaptures": [],
+      "customMoves": ["BankLeaver"],
+      "movementModifiers": [],
+      "onInteractionModifier": ["BankJoiner"],
+      "mainPiece": 0
+    },
+    {
+      "row": 2,
+      "col": 8,
+      "pieceName": "blocker",
+      "imgFile": "blocker",
+      "pointValue": 0,
+      "team": -1,
+      "basicMovements": [],
+      "basicCaptures": [],
+      "customMoves": ["BankLeaver"],
+      "movementModifiers": [],
+      "onInteractionModifier": ["BankJoiner"],
+      "mainPiece": 0
+    },
     {
       "row": 3,
-      "col": 5,
-      "tileActions": ["BlackHoleAction"],
-      "img": "blackhole"
+      "col": 8,
+      "pieceName": "blocker",
+      "imgFile": "blocker",
+      "pointValue": 0,
+      "team": -1,
+      "basicMovements": [],
+      "basicCaptures": [],
+      "customMoves": ["BankLeaver"],
+      "movementModifiers": [],
+      "onInteractionModifier": ["BankJoiner"],
+      "mainPiece": 0
+    },
+    {
+      "row": 4,
+      "col": 8,
+      "pieceName": "blocker",
+      "imgFile": "blocker",
+      "pointValue": 0,
+      "team": -1,
+      "basicMovements": [],
+      "basicCaptures": [],
+      "customMoves": ["BankLeaver"],
+      "movementModifiers": [],
+      "onInteractionModifier": ["BankJoiner"],
+      "mainPiece": 0
+    },
+    {
+      "row": 5,
+      "col": 8,
+      "pieceName": "blocker",
+      "imgFile": "blocker",
+      "pointValue": 0,
+      "team": -1,
+      "basicMovements": [],
+      "basicCaptures": [],
+      "customMoves": ["BankLeaver"],
+      "movementModifiers": [],
+      "onInteractionModifier": ["BankJoiner"],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 8,
+      "pieceName": "blocker",
+      "imgFile": "blocker",
+      "pointValue": 0,
+      "team": -1,
+      "basicMovements": [],
+      "basicCaptures": [],
+      "customMoves": ["BankLeaver"],
+      "movementModifiers": [],
+      "onInteractionModifier": ["BankJoiner"],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 8,
+      "pieceName": "blocker",
+      "imgFile": "blocker",
+      "pointValue": 0,
+      "team": -1,
+      "basicMovements": [],
+      "basicCaptures": [],
+      "customMoves": ["BankLeaver"],
+      "movementModifiers": [],
+      "onInteractionModifier": ["BankJoiner"],
+      "mainPiece": 0
     }
   ]
 }
