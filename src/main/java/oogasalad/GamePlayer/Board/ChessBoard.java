@@ -1,6 +1,7 @@
 package oogasalad.GamePlayer.Board;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -43,6 +44,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   private final TurnManager turnManager;
   private final HistoryManager history;
   private List<List<ChessTile>> board;
+  private Map<Integer, List<Piece>> pieceList;
 
   /**
    * Creates a representation of a chessboard if an array of pieces is already provided
@@ -55,6 +57,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     this.board = board;
     this.validStateCheckers = validStateCheckers;
     this.history = new LocalHistoryManager();
+    this.pieceList = new HashMap<>();
   }
 
   public ChessBoard(List<List<ChessTile>> board, TurnManager turnManager, GamePlayers players,
@@ -64,6 +67,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     this.board = board;
     this.validStateCheckers = validStateCheckers;
     this.history = history;
+    this.pieceList = new HashMap<>();
   }
 
   /**
@@ -89,6 +93,22 @@ public class ChessBoard implements Iterable<ChessTile> {
     });
   }
 
+  /***
+   * Generates the list of all pieces mapped to each team
+   */
+  private void generatePieceList() {
+    board.forEach((l) -> l.stream().filter((t) -> t.getPiece().isPresent()).forEach((t) ->
+    {
+      Piece piece = t.getPiece().get();
+      pieceList.putIfAbsent(piece.getTeam(), new ArrayList<>());
+      if (pieceList.get(piece.getTeam()).stream().noneMatch(p ->
+          p.getName().equals(piece.getName()))) {
+        pieceList.get(piece.getTeam()).add(piece.clone());
+      }
+    }));
+    LOG.debug(String.format("Piece list generated: %s", pieceList));
+  }
+
   /**
    * Sets the pieces on the chess board if at starting position (i.e. history is empty)
    *
@@ -110,6 +130,7 @@ public class ChessBoard implements Iterable<ChessTile> {
       history.add(new History(copied, new HashSet<>(pieces), pieces.stream()
           .map(p -> board.get(p.getCoordinates().getRow()).get(p.getCoordinates().getCol()))
           .collect(Collectors.toSet())));
+      generatePieceList();
       return true;
     }
     LOG.warn("Attempted board setting after game start");
@@ -141,7 +162,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   /**
    * Copies this board and then makes the move
    *
-   * @param piece       to move
+   * @param piece to move
    * @param finalSquare to move the piece to
    * @return copy of the chessboard after the hypothetical move is made
    */
@@ -206,12 +227,9 @@ public class ChessBoard implements Iterable<ChessTile> {
     Set<ChessTile> allPieceMovements = piece.getMoves(this);
     validStateCheckers.forEach((v) ->
         allPieceMovements.removeIf(entry -> {
-          ChessBoard copy;
           try {
-            // TODO: warning optional.get() without checking isPresent()
-            copy = makeHypotheticalMove(this.getTile(piece.getCoordinates()).getPiece().get(),
-                entry.getCoordinates());
-            if (!v.isValid(copy, piece.getTeam())) {
+            LOG.debug(String.format("Valid state checker class: %s", v.getClass()));
+            if(!v.isValid(this, piece, entry)){
               return true;
             }
           } catch (EngineException e) {
@@ -266,6 +284,20 @@ public class ChessBoard implements Iterable<ChessTile> {
   }
 
   /**
+   * starting from the top left, this method returns the tile that corresponds
+   * to the LINEAR position of the tiles. That is, by placing each row behind the previous
+   * return the tile of index
+   * @param index
+   * @return
+   */
+  public ChessTile getTile(int index) {
+    List<ChessTile> linearTiles = board.stream()
+        .flatMap(List::stream).toList();
+
+    return linearTiles.get(index);
+  }
+
+  /**
    * Returns if a tile is empty
    *
    * @param coordinate to check
@@ -279,6 +311,8 @@ public class ChessBoard implements Iterable<ChessTile> {
     return getTile(coordinate).getPiece().isEmpty();
   }
 
+
+
   /**
    * Gets the player object with the associated ID
    *
@@ -287,6 +321,13 @@ public class ChessBoard implements Iterable<ChessTile> {
    */
   public Player getPlayer(int id) {
     return players.getPlayer(id);
+  }
+
+  /***
+   * @return list of pieces, with each piece mapped to their team
+   */
+  public Map<Integer, List<Piece>> getPieceList() {
+    return pieceList;
   }
 
   /**
@@ -352,6 +393,13 @@ public class ChessBoard implements Iterable<ChessTile> {
   public List<Piece> getPieces() {
     return board.stream().flatMap(List::stream).toList().stream().map(ChessTile::getPieces)
         .flatMap(List::stream).toList();
+  }
+
+  /**
+   * @return current player
+   */
+  public int getCurrentPlayer() {
+    return turnManager.getCurrentPlayer();
   }
 
   /**

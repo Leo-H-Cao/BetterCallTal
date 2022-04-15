@@ -1,6 +1,5 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
-import java.nio.charset.IllegalCharsetNameException;
 import java.util.HashMap;
 import java.util.Map;
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -57,6 +56,14 @@ public class Checkmate implements EndCondition {
       }
     }
     return finalScores;
+  }
+
+  /**
+   * @return 0
+   */
+  @Override
+  public int compareTo(EndCondition o) {
+    return 0;
   }
 
 }

@@ -63,4 +63,12 @@ public class Stalemate implements EndCondition{
 
     return new HashMap<>();
   }
+
+  /**
+   * @return 0
+   */
+  @Override
+  public int compareTo(EndCondition o) {
+    return 0;
+  }
 }

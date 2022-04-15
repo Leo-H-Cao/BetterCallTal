@@ -73,6 +73,7 @@ public class CheckTests {
   void inCheck() throws OutsideOfBoardException {
     pieceLocations(0, 0, 1, 0);
     LOG.debug(board);
+
     //TEAM 1 is in check
     assertFalse(new Check().isValid(board, 1));
     //Team 2 is NOT in check

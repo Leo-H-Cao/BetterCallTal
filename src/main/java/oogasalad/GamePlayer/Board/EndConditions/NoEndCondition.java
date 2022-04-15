@@ -22,4 +22,12 @@ public class NoEndCondition implements EndCondition {
   public Map<Integer, Double> getScores(ChessBoard board) {
     return new HashMap<>();
   }
+
+  /**
+   * @return 0
+   */
+  @Override
+  public int compareTo(EndCondition o) {
+    return 0;
+  }
 }

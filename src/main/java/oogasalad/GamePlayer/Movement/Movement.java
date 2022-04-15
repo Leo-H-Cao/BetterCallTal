@@ -55,7 +55,7 @@ public class Movement implements MovementInterface{
   public Set<ChessTile> movePiece(Piece piece, Coordinate finalSquare, ChessBoard board)
       throws InvalidMoveException, OutsideOfBoardException {
     ChessTile finalTile = convertCordToTile(finalSquare, board);
-    LOG.debug("Moves: " + getMoves(piece, board));
+//    LOG.debug("Moves: " + getMoves(piece, board));
 
     if(getMoves(piece, board).contains(finalTile)) {
       Set<ChessTile> updatedSquares = new HashSet<>(Set.of(board.getTile(piece.getCoordinates()), finalTile));
@@ -128,7 +128,6 @@ public class Movement implements MovementInterface{
       Optional<ChessTile> capTile = moveStack.isEmpty() ? getNextTile(baseCoordinates, delta, board)
           : (infinite ? getNextTile(moveStack.peek().getCoordinates(), delta, board)
               : Optional.of(moveStack.peek()));
-      LOG.debug(capTile);
       capTile.ifPresent((t) -> {
         if (piece.isOpposing(t.getPieces(), board)) {
           allMoves.get(CAPTURE_KEY).add(t);
@@ -260,6 +259,13 @@ public class Movement implements MovementInterface{
     } catch (OutsideOfBoardException e) {
       return false;
     }
+  }
+
+  /**
+   * @return if infinite
+   */
+  public boolean isInfinite() {
+    return infinite;
   }
 
   /***

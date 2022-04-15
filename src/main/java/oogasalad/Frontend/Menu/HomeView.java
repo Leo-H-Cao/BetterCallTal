@@ -9,9 +9,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
-import oogasalad.Frontend.Editor.GameEditorView;
-import oogasalad.Frontend.Game.GameView;
-import oogasalad.Frontend.ViewManager;
+import javafx.stage.Stage;
+import oogasalad.Frontend.Editor.EditorView;
+import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.Frontend.util.View;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
@@ -20,11 +20,15 @@ import oogasalad.Frontend.util.ButtonType;
  * HomeView class will handle the navigation of the User from the home screen to the next page they seek.
  * Home Screen is the screen that displays "Build Game," "Join Game," and "Host Game"
  */
-
 public class HomeView extends View {
 
-    public HomeView(ViewManager viewManager) {
-        super(viewManager);
+    public HomeView(Stage stage) {
+        super(stage);
+        // Changes the current scene to the home page on app initialization
+        getView(HomeView.class).ifPresent((e) -> {
+            changeScene(e);
+        });
+
     }
 
     @Override
@@ -49,7 +53,7 @@ public class HomeView extends View {
 
 
     private Node makeTitle() {
-        Label t = new Label(getLanguageResource("Title"));
+        Label t = new Label(BackendConnector.getFrontendWord("Title", getClass()));
         t.setFont(new Font(64));
         t.setTextAlignment(TextAlignment.CENTER);
         return new Group(t);
@@ -57,12 +61,12 @@ public class HomeView extends View {
 
     private Node makeButtons() {
         GridPane buttonList = new GridPane();
-        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Create"), "createButton",
-                (e) -> getView(GameEditorView.class).ifPresent(getViewManager()::changeScene)), 0, 0);
-        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Join"), "joinButton",
-                (e) -> getView(GameView.class).ifPresent(getViewManager()::changeScene)), 0, 1);
-        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Host"), "hostButton",
-                (e) -> getView(HostGame.class).ifPresent(getViewManager()::changeScene)), 0, 2);
+        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("Create", getClass()), "createButton",
+                (e) -> getView(EditorView.class).ifPresent(this::changeScene)), 0, 0);
+        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("Join", getClass()), "joinButton",
+                (e) -> System.out.println("go to join screen")/*getView(JoinView.class).ifPresent(this::changeScene)*/), 0, 1);
+        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("Host", getClass()), "hostButton",
+                (e) -> getView(HostGame.class).ifPresent(this::changeScene)), 0, 2);
 
         buttonList.getChildren().forEach((b) -> {
             if(b instanceof Button) {
