@@ -38,7 +38,7 @@ public class HostGame extends GameView {
     private final Integer PROMPT_SIZE = 40;
     private static final String WHITE = "White";
     private static final String BLACK = "Black";
-    private static final String SELECT= "Select";
+    private static final String ROOM = "Room";
     private Map<String, Integer> piececolors;
     private Integer DEFAULT_COLOR = 1;
     private Integer myTeam;
@@ -47,6 +47,9 @@ public class HostGame extends GameView {
     private static final Double VBOXSPACING = 5.0;
     private ChoiceBox<String> colorchoice;
     private TextArea RoomName;
+    private static final Double TEXTAREAWIDTH = 100.0;
+    private static final Double TEXTAREAHEIGHT = 20.0;
+
 
     public HostGame(Stage stage) {
         super(stage);
@@ -97,17 +100,23 @@ public class HostGame extends GameView {
         VBox vb = new VBox();
         vb.setSpacing(VBOXSPACING);
 
+        Label hostID = new Label(BackendConnector.getFrontendWord(ROOM, getClass()));
+        hostID.setFont(new Font(50.0));
+
         RoomName = new TextArea();
+        vb.setAlignment(Pos.CENTER);
+        RoomName.setPrefHeight(TEXTAREAHEIGHT);
+        RoomName.setPrefWidth(TEXTAREAWIDTH);
 
         Button Confirm = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord(Confirm_Button_ID, getClass()),
                 Confirm_Button_ID, (e) -> {
             if (! RoomName.getText().equals("")) {
                 Node start = makeStartGroup(f);
-                StackPane.setAlignment(start, Pos.BASELINE_CENTER);
+                StackPane.setAlignment(start, Pos.BOTTOM_CENTER);
                 myStackPane.getChildren().add(start);
             }
                 });
-        vb.getChildren().addAll(RoomName, Confirm);
+        vb.getChildren().addAll(hostID, RoomName, Confirm);
         return new Group(vb);
     }
 
