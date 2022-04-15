@@ -1,5 +1,7 @@
 package oogasalad.Editor.ModelState;
 
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 import oogasalad.Editor.ModelState.EditPiece.PieceGridTile;
@@ -7,17 +9,21 @@ import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import java.util.HashMap;
 import java.util.Map;
 
+import static oogasalad.Editor.ModelState.EditPiece.PieceGridTile.OPEN;
+
 public class EditorBackend {
 	private final PiecesState piecesState;
 	private final BoardState boardState;
 	private final Map<String, EditorPiece> myEditorPieces;
-	private PieceGridTile selectedPieceEditorType;
+	private PieceGridTile currentlySelectedType;
+	private Property<PieceGridTile> selectedTypeProperty;
 
 	public EditorBackend(){
 		myEditorPieces = new HashMap<>();
 		this.piecesState = new PiecesState();
 		this.boardState = new BoardState(piecesState);
-		selectedPieceEditorType = PieceGridTile.OPEN;
+		currentlySelectedType = OPEN;
+		selectedTypeProperty = new SimpleObjectProperty<>(currentlySelectedType);
 	}
 
 	public PiecesState getPiecesState(){
@@ -36,11 +42,11 @@ public class EditorBackend {
 		return myEditorPieces.get(id);
 	}
 
-	public PieceGridTile getSelectedPieceEditorType() {
-		return selectedPieceEditorType;
+	public Property<PieceGridTile> getSelectedPieceEditorType() {
+		return selectedTypeProperty;
 	}
 
 	public void setSelectedPieceEditorType(PieceGridTile selectedPieceEditorType) {
-		this.selectedPieceEditorType = selectedPieceEditorType;
+		selectedTypeProperty.setValue(selectedPieceEditorType);
 	}
 }

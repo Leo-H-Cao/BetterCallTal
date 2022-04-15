@@ -49,7 +49,7 @@ public class PieceBoardTile extends NodeContainer {
 
 		// Update tile color when clicked
 		ButtonFactory.addAction(ret, (e) -> {
-			PieceGridTile type = getEditorBackend().getSelectedPieceEditorType();
+			PieceGridTile type = getEditorBackend().getSelectedPieceEditorType().getValue();
 			getEditorBackend().getEditorPiece(myId).setTile(myX, myY, PieceGridTile.OPEN);
 			status.setValue(type);
 		});

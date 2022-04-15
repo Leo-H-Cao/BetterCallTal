@@ -58,19 +58,19 @@ public class DoubleFirstMove implements MovementInterface {
   @Override
   public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
     if(piece.getHistory().size() != NO_MOVEMENT_HISTORY_LENGTH) return Set.of();
-    LOG.debug("Getting double moves: " + piece.getName());
+//    LOG.debug("Getting double moves: " + piece.getName());
     List<MovementInterface> newMovements = new ArrayList<>();
     piece.getRelativeMoveCoords().stream().filter((c) -> {
       try {
-        LOG.debug(String.format("Relative coordinate: (%d, %d)", c.getRow(), c.getCol()));
-        LOG.debug("Pieces in way: " +  board.getTile(Coordinate.add(c, piece.getCoordinates())).getPieces());
+//        LOG.debug(String.format("Relative coordinate: (%d, %d)", c.getRow(), c.getCol()));
+//        LOG.debug("Pieces in way: " +  board.getTile(Coordinate.add(c, piece.getCoordinates())).getPieces());
         return board.getTile(Coordinate.add(c, piece.getCoordinates())).getPieces().isEmpty();
       } catch (OutsideOfBoardException e) {
         LOG.debug("Out of bounds");
         return false;
       }
     }).forEach((c) -> {
-      LOG.debug("Double move coord: " + Coordinate.of(c.getRow()*MULT, c.getCol()*MULT));
+//      LOG.debug("Double move coord: " + Coordinate.of(c.getRow()*MULT, c.getCol()*MULT));
       newMovements.add(new Movement(Coordinate.of(c.getRow()*MULT, c.getCol()*MULT), false));
     });
     return newMovements.stream().flatMap((m) -> m.getMoves(piece, board).stream()).collect(Collectors.toSet());

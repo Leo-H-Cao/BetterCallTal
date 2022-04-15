@@ -4,34 +4,34 @@ import oogasalad.Editor.ModelState.PiecesState.LibraryPiece;
 
 public class EditorTile {
   private TileEffect myTileEffect;
-  private LibraryPiece myLibraryPiece;
+  private String pieceID;
   private int myCoordX;
   private int myCoordY;
 
   public EditorTile(int x, int y){
     myTileEffect = TileEffect.NONE;
-    myLibraryPiece = null;
+    pieceID = null;
     myCoordX = x;
     myCoordY = y;
   }
 
   public boolean hasPiece(){
-    return myLibraryPiece != null;
+    return pieceID != null;
   }
 
   public void setTileEffect(TileEffect effect){
     myTileEffect = effect;
   }
 
-  public LibraryPiece getPiece(){
-    return myLibraryPiece;
+  public String getPieceID(){
+    return pieceID;
   }
 
-  public void addPiece(LibraryPiece piece){
-    myLibraryPiece = piece;
+  public void addPiece(String pieceID){
+    this.pieceID = pieceID;
   }
 
   public void removePiece(){
-    myLibraryPiece = null;
+    pieceID = null;
   }
 }

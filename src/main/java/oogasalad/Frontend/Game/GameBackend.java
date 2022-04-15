@@ -2,7 +2,7 @@ package oogasalad.Frontend.Game;
 
 import oogasalad.Frontend.util.Controller;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Server.BoardSetup;
+import oogasalad.GamePlayer.Board.BoardSetup;
 
 import java.io.File;
 import java.util.Optional;
@@ -19,11 +19,9 @@ public class GameBackend extends Controller {
         try {
             BoardSetup bs = new BoardSetup(JSON.getPath());
             myChessBoard = bs.createBoard();
-            System.out.println("noerror");
             return Optional.of(myChessBoard);
         } catch (Exception e){
             // myMainView.showError();
-            System.out.println("error");
             return Optional.empty();
         }
     }

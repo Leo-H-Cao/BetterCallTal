@@ -1,6 +1,7 @@
 package oogasalad.Editor.ModelState.RulesState;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
@@ -17,16 +18,14 @@ public class GameRulesState {
   private String turnCriteria;
   private ResourceBundle myResources;
   private ArrayList<String> colors;
+  private HashMap<Integer, ArrayList<Integer>> teamOpponents;
 
   public GameRulesState(){
     setResources();
     winConditions = new ArrayList<>();
-    winConditions.add(myResources.getString("defaultConditionsCheckmate"));
-    winConditions.add(myResources.getString("defaultConditionsStalemate"));
-    turnCriteria = myResources.getString("defaultTurnCriteria");
-    this.colors = new ArrayList<>();
-    this.colors.add(myResources.getString("defaultColor0"));
-    this.colors.add(myResources.getString("defaultColor1"));
+    colors = new ArrayList<>();
+    teamOpponents = new HashMap<>();
+    setDefaults();
   }
 
   /**
@@ -65,11 +64,34 @@ public class GameRulesState {
     this.colors = colors;
   }
 
+  public HashMap<Integer, ArrayList<Integer>> getTeamOpponents() {
+    return teamOpponents;
+  }
+
+  public void setTeamOpponents(
+      HashMap<Integer, ArrayList<Integer>> teamOpponents) {
+    this.teamOpponents = teamOpponents;
+  }
+
   private void setResources() {
     try {
       myResources = ResourceBundle.getBundle(CONFIGURATION_RESOURCE_PATH, Locale.ENGLISH);
     } catch (NullPointerException | MissingResourceException e) {
       throw new IllegalArgumentException(String.format("Invalid resource file: %s", "GameRules"));
     }
+  }
+
+  private void setDefaults(){
+    winConditions.add(myResources.getString("defaultConditionsCheckmate"));
+    winConditions.add(myResources.getString("defaultConditionsStalemate"));
+    turnCriteria = myResources.getString("defaultTurnCriteria");
+    colors.add(myResources.getString("defaultColor0"));
+    colors.add(myResources.getString("defaultColor1"));
+    int team0 = Integer.parseInt(myResources.getString("defaultTeam0"));
+    int team1 = Integer.parseInt(myResources.getString("defaultTeam1"));
+    teamOpponents.put(team0, new ArrayList<>());
+    teamOpponents.put(team1, new ArrayList<>());
+    teamOpponents.get(team0).add(team1);
+    teamOpponents.get(team1).add(team0);
   }
 }

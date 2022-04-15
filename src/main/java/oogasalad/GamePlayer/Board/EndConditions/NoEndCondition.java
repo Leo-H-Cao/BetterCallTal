@@ -1,8 +1,12 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.Player;
 
 public class NoEndCondition implements EndCondition {
 
@@ -19,4 +23,11 @@ public class NoEndCondition implements EndCondition {
     return new HashMap<>();
   }
 
+  /**
+   * @return 0
+   */
+  @Override
+  public int compareTo(EndCondition o) {
+    return 0;
+  }
 }

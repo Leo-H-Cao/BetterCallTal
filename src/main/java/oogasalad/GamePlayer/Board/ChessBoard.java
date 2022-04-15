@@ -1,13 +1,13 @@
 package oogasalad.GamePlayer.Board;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Queue;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -15,9 +15,15 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
-import oogasalad.GamePlayer.Board.EndConditions.Stalemate;
+import oogasalad.GamePlayer.Board.History.History;
+import oogasalad.GamePlayer.Board.History.HistoryManager;
+import oogasalad.GamePlayer.Board.History.LocalHistoryManager;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
+import oogasalad.GamePlayer.Board.TurnManagement.GamePlayers;
+import oogasalad.GamePlayer.Board.TurnManagement.LocalTurnManager;
+import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
+import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.MoveAfterGameEndException;
@@ -25,7 +31,6 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.ValidStateChecker.Check;
 import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,35 +39,40 @@ import org.apache.logging.log4j.Logger;
 public class ChessBoard implements Iterable<ChessTile> {
 
   private static final Logger LOG = LogManager.getLogger(ChessBoard.class);
-
+  private final GamePlayers players;
+  private final List<ValidStateChecker> validStateCheckers;
+  private final TurnManager turnManager;
+  private final HistoryManager history;
   private List<List<ChessTile>> board;
-  private TurnCriteria turnCriteria;
-  private Player[] players;
-  private int[] teamNums;
-  private List<EndCondition> endConditions;
-  private int currentPlayer;
-  private Map<Integer, Double> endResult;
-  private List<History> history;
-  private List<ValidStateChecker> validStateCheckers;
+  private Map<Integer, List<Piece>> pieceList;
 
   /**
    * Creates a representation of a chessboard if an array of pieces is already provided
    */
   public ChessBoard(List<List<ChessTile>> board, TurnCriteria turnCriteria, Player[] players,
       List<ValidStateChecker> validStateCheckers, List<EndCondition> endConditions) {
+    this.players = new GamePlayers(players);
+    this.turnManager = new LocalTurnManager(this.players, turnCriteria,
+        endConditions);
     this.board = board;
-    this.turnCriteria = turnCriteria;
-    this.players = players;
-    this.teamNums = getTeamNums(players);
     this.validStateCheckers = validStateCheckers;
-    this.endConditions = endConditions;
-    currentPlayer = turnCriteria.getCurrentPlayer();
-    endResult = new HashMap<>();
-    history = new ArrayList<>();
+    this.history = new LocalHistoryManager();
+    this.pieceList = new HashMap<>();
+  }
+
+  public ChessBoard(List<List<ChessTile>> board, TurnManager turnManager, GamePlayers players,
+      List<ValidStateChecker> validStateCheckers, HistoryManager history) {
+    this.players = players;
+    this.turnManager = turnManager;
+    this.board = board;
+    this.validStateCheckers = validStateCheckers;
+    this.history = history;
+    this.pieceList = new HashMap<>();
   }
 
   /**
-   * Creates a representation of a chessboard with length/height of board given but no valid state checkers given
+   * Creates a representation of a chessboard with length/height of board given but no valid state
+   * checkers given
    */
   public ChessBoard(int length, int height, TurnCriteria turnCriteria, Player[] players,
       List<EndCondition> endConditions) {
@@ -76,20 +86,27 @@ public class ChessBoard implements Iterable<ChessTile> {
       List<ValidStateChecker> validStateCheckers, List<EndCondition> endConditions) {
     this(null, turnCriteria, players, validStateCheckers, endConditions);
     board = new ArrayList<>();
-    IntStream.range(0, height)
-        .forEach(i -> {
-          List<ChessTile> list = new ArrayList<>();
-          IntStream.range(0, length)
-              .forEach(j -> list.add(new ChessTile(new Coordinate(i, j))));
-          board.add(list);
-        });
+    IntStream.range(0, height).forEach(i -> {
+      List<ChessTile> list = new ArrayList<>();
+      IntStream.range(0, length).forEach(j -> list.add(new ChessTile(new Coordinate(i, j))));
+      board.add(list);
+    });
   }
 
-  /**
-   * @return team nums associated with each player
+  /***
+   * Generates the list of all pieces mapped to each team
    */
-  private int[] getTeamNums(Player[] players) {
-    return Arrays.stream(players).mapToInt(Player::teamID).toArray();
+  private void generatePieceList() {
+    board.forEach((l) -> l.stream().filter((t) -> t.getPiece().isPresent()).forEach((t) ->
+    {
+      Piece piece = t.getPiece().get();
+      pieceList.putIfAbsent(piece.getTeam(), new ArrayList<>());
+      if (pieceList.get(piece.getTeam()).stream().noneMatch(p ->
+          p.getName().equals(piece.getName()))) {
+        pieceList.get(piece.getTeam()).add(piece.clone());
+      }
+    }));
+    LOG.debug(String.format("Piece list generated: %s", pieceList));
   }
 
   /**
@@ -110,8 +127,10 @@ public class ChessBoard implements Iterable<ChessTile> {
       });
       ChessBoard copied = deepCopy();
       LOG.debug("History updated for first time");
-      history.add(new History(copied, new HashSet<>(pieces), pieces.stream().map((p) -> board.get(p.getCoordinates().getRow()).get(p.getCoordinates().getCol())).collect(
-          Collectors.toSet())));
+      history.add(new History(copied, new HashSet<>(pieces), pieces.stream()
+          .map(p -> board.get(p.getCoordinates().getRow()).get(p.getCoordinates().getCol()))
+          .collect(Collectors.toSet())));
+      generatePieceList();
       return true;
     }
     LOG.warn("Attempted board setting after game start");
@@ -121,23 +140,23 @@ public class ChessBoard implements Iterable<ChessTile> {
   /**
    * Moves the piece to the finalSquare
    *
-   * @param piece to move
+   * @param piece       to move
    * @param finalSquare end square
    * @return set of updated tiles + next player turn
    */
   public TurnUpdate move(Piece piece, Coordinate finalSquare) throws EngineException {
     // TODO: valid state checker for person who just moved (redundunt - optional)
     // TODO: check end conditions for other player(s)
-    if (!isGameOver() && piece.checkTeam(turnCriteria.getCurrentPlayer())) {
+    if (!isGameOver() && piece.checkTeam(turnManager.getCurrentPlayer())) {
       TurnUpdate update = new TurnUpdate(piece.move(getTileFromCoords(finalSquare), this),
-          turnCriteria.incrementTurn());
+          turnManager.incrementTurn());
       history.add(new History(deepCopy(), Set.of(piece), update.updatedSquares()));
       LOG.debug("History updated: " + history.size());
       return update;
     }
     LOG.warn(isGameOver() ? "Move made after game over" : "Move made by wrong player");
     throw isGameOver() ? new MoveAfterGameEndException("") : new WrongPlayerException(
-        "Expected: " + turnCriteria.getCurrentPlayer() + "\n Actual: " + piece.getTeam());
+        "Expected: " + turnManager.getCurrentPlayer() + "\n Actual: " + piece.getTeam());
   }
 
   /**
@@ -150,8 +169,8 @@ public class ChessBoard implements Iterable<ChessTile> {
   public ChessBoard makeHypotheticalMove(Piece piece, Coordinate finalSquare)
       throws EngineException {
     ChessBoard boardCopy = deepCopy();
-    Piece copiedPiece = boardCopy.getTile(piece.getCoordinates()).getPiece().orElseThrow(
-        () -> new InvalidMoveException("Hypothetical move could not be made"));
+    Piece copiedPiece = boardCopy.getTile(piece.getCoordinates()).getPiece()
+        .orElseThrow(() -> new InvalidMoveException("Hypothetical move could not be made"));
     copiedPiece.move(boardCopy.getTile(finalSquare), boardCopy);
 
     return boardCopy;
@@ -164,35 +183,29 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @return all the Target Pieces this team has
    */
   public List<Piece> targetPiece(int team) {
-    return board.stream()
+    return board.stream().flatMap(List::stream).toList().stream().map(ChessTile::getPieces)
         .flatMap(List::stream).toList().stream()
-        .map(ChessTile::getPieces)
-        .flatMap(List::stream).toList().stream()
-        .filter(piece -> piece.checkTeam(team) && piece.isTargetPiece())
-        .collect(Collectors.toList());
+        .filter(piece -> piece.checkTeam(team) && piece.isTargetPiece()).toList();
   }
 
   /**
+   * Makes a deep copy of the board
+   *
    * @return copy of Board object to store in history
    */
   public ChessBoard deepCopy() {
     List<List<ChessTile>> boardCopy = new ArrayList<>();
-    IntStream.range(0, this.board.size()).forEach((i) -> {
+    IntStream.range(0, this.board.size()).forEach(i -> {
       boardCopy.add(new ArrayList<>());
       boardCopy.get(i).addAll(this.board.get(i).stream().map(ChessTile::clone).toList());
     });
-    return new ChessBoard(boardCopy, this.turnCriteria, this.players, this.validStateCheckers,
-        this.endConditions);
+    return new ChessBoard(boardCopy, this.turnManager, this.players, this.validStateCheckers,
+        this.history);
   }
 
   /**
-   * @return list of board history
-   */
-  public List<History> getHistory() {
-    return history;
-  }
-
-  /**
+   * Gets the tile at the specified coordinate
+   *
    * @param coordinates to get in board
    * @return corresponding tile in board
    */
@@ -206,63 +219,44 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @param piece to get moves from
    * @return set of tiles the piece can move to
    */
-  public Set<ChessTile> getMoves(Piece piece) throws EngineException, OutsideOfBoardException{
+  public Set<ChessTile> getMoves(Piece piece) throws EngineException {
     // TODO: add valid state checker here
-    if(isGameOver()) return Set.of();
+    if (isGameOver()) {
+      return Set.of();
+    }
     Set<ChessTile> allPieceMovements = piece.getMoves(this);
-    validStateCheckers.forEach( (v) ->
-    allPieceMovements.removeIf(entry -> {
-      ChessBoard copy;
-      try {
-        copy = makeHypotheticalMove(this.getTile(piece.getCoordinates()).getPiece().get(), entry.getCoordinates());
-        if(!v.isValid(copy, piece.getTeam())){
-          return true;
-        }
-      } catch (EngineException e) {
-        return false;
-      }
-      return false;}));
-    return piece.checkTeam(turnCriteria.getCurrentPlayer()) ? allPieceMovements : Set.of();
+    validStateCheckers.forEach((v) ->
+        allPieceMovements.removeIf(entry -> {
+          try {
+            LOG.debug(String.format("Valid state checker class: %s", v.getClass()));
+            if(!v.isValid(this, piece, entry)){
+              return true;
+            }
+          } catch (EngineException e) {
+            return false;
+          }
+          return false;
+        }));
+    return piece.checkTeam(turnManager.getCurrentPlayer()) ? allPieceMovements : Set.of();
   }
 
   /**
-   * @return if the game is over
+   * Checks all endConditions and returns true if the game is over
+   *
+   * @return true if the game is over, false otherwise
    */
   public boolean isGameOver() {
-    /*If there are no more legal moves, either stalemate or checkmate has been reached*/
-    boolean classicalGameEnd = false;
-    Stalemate classic = new Stalemate();
-    try {
-      for(int i : getTeams()){
-        if(classic.hasNoLegalMoves(this, i)){
-          classicalGameEnd = true;
-        }
-      }
-    } catch (EngineException e) {
-      LOG.error("unexpected error");
-    }
-    if(classicalGameEnd){
-      //int a = 0/0; //crash and print stack trace if the game is over TODO: change this later
-      return true;
-    }
-
-
-    for (EndCondition ec : endConditions) {
-      Map<Integer, Double> endResultRet = ec.getScores(this);
-      if (!endResultRet.isEmpty()) {
-        endResult = endResultRet;
-        LOG.debug("End result: " + endResult);
-        return true;
-      }
-    }
-    return false;
+    return turnManager.isGameOver(this);
   }
 
   /**
-   * @return scores of all teams after game over. If game isn't over, an empty optional is returned.
+   * Gets an immutable map of scores of all players after game over. If game isn't over, an empty
+   * map is returned.
+   *
+   * @return scores of all players after game over.
    */
   public Map<Integer, Double> getScores() {
-    return endResult;
+    return turnManager.getScores();
   }
 
   /**
@@ -271,8 +265,8 @@ public class ChessBoard implements Iterable<ChessTile> {
    */
   public boolean inBounds(Coordinate coordinates) {
     return coordinates.getRow() >= 0 && coordinates.getCol() >= 0
-        && coordinates.getRow() < board.size()
-        && coordinates.getCol() < board.get(coordinates.getRow()).size();
+        && coordinates.getRow() < board.size() && coordinates.getCol() < board.get(
+        coordinates.getRow()).size();
   }
 
   /**
@@ -317,19 +311,41 @@ public class ChessBoard implements Iterable<ChessTile> {
     return getTile(coordinate).getPiece().isEmpty();
   }
 
+
+
   /**
+   * Gets the player object with the associated ID
+   *
    * @param id of player
    * @return player with given id
    */
   public Player getPlayer(int id) {
-    return players[Math.min(id, players.length - 1)];
+    return players.getPlayer(id);
+  }
+
+  /***
+   * @return list of pieces, with each piece mapped to their team
+   */
+  public Map<Integer, List<Piece>> getPieceList() {
+    return pieceList;
   }
 
   /**
+   * Get array containing all the players
+   *
    * @return players list
    */
   public Player[] getPlayers() {
-    return players;
+    return players.getPlayersArr();
+  }
+
+  /**
+   * Gets all team numbers
+   *
+   * @return team numbers for all players
+   */
+  public int[] getTeams() {
+    return players.getTeams();
   }
 
   /**
@@ -372,24 +388,32 @@ public class ChessBoard implements Iterable<ChessTile> {
   }
 
   /**
-   * @return team numbers for all players
-   */
-  public int[] getTeams() {
-    return teamNums;
-  }
-
-  /**
    * Gets all the pieces on the board
    */
   public List<Piece> getPieces() {
-    return board.stream()
-        .flatMap(List::stream).toList().stream()
-        .map(ChessTile::getPieces)
+    return board.stream().flatMap(List::stream).toList().stream().map(ChessTile::getPieces)
         .flatMap(List::stream).toList();
   }
 
   /**
+   * @return current player
+   */
+  public int getCurrentPlayer() {
+    return turnManager.getCurrentPlayer();
+  }
+
+  /**
+   * Gets the history of moves made
+   *
+   * @return history of moves
+   */
+  public HistoryManager getHistory() {
+    return history;
+  }
+
+  /**
    * Creates foreach loop over board
+   *
    * @param action to do in loop
    */
   @Override
@@ -400,7 +424,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   /**
    * Iterator class over the board list
    */
-  private class ChessBoardIterator implements Iterator<ChessTile> {
+  private static class ChessBoardIterator implements Iterator<ChessTile> {
 
     private final Queue<ChessTile> queue;
 
@@ -424,7 +448,7 @@ public class ChessBoard implements Iterable<ChessTile> {
      * @return next ChessTile
      */
     @Override
-    public ChessTile next() {
+    public ChessTile next() throws NoSuchElementException {
       return queue.poll();
     }
   }
