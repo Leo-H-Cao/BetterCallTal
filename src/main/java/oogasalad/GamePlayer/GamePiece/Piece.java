@@ -3,10 +3,8 @@ package oogasalad.GamePlayer.GamePiece;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,6 +32,8 @@ public class Piece implements Cloneable {
 
   private Coordinate coordinates;
   private SupplementaryPieceData suppPieceData;
+  private int team;
+  private String img;
   private MovementHandler movementHandler;
   private List<MovementModifier> onInteractionModifiers;
   private List<Coordinate> history;
@@ -51,7 +51,9 @@ public class Piece implements Cloneable {
   private Piece(PieceData pieceData, MovementHandler movementHandler) {
     this.coordinates = pieceData.startingLocation();
     this.suppPieceData = new SupplementaryPieceData(pieceData.name(), pieceData.pointValue(),
-        pieceData.team(), pieceData.mainPiece(), pieceData.img());
+        pieceData.mainPiece());
+    this.team = pieceData.team();
+    this.img = pieceData.img();
     this.movementHandler = movementHandler;
     this.onInteractionModifiers = pieceData.onInteractionModifiers();
     this.history = new ArrayList<>(List.of(pieceData.startingLocation()));
@@ -73,15 +75,18 @@ public class Piece implements Cloneable {
    * new piece
    *
    * @param tile to put piece on
-   * @return updated actions based on tile actions
+   * @return updated actions based on tile actions and where piece moved
    */
   public Set<ChessTile> updateCoordinates(ChessTile tile, ChessBoard board) throws OutsideOfBoardException {
     try {
+      Set<ChessTile> updatedSquares = new HashSet<>(List.of(board.getTile(coordinates), tile));
       board.getTile(coordinates).removePiece(this);
       coordinates = tile.getCoordinates();
       tile.appendPiece(this);
       history.add(tile.getCoordinates());
-      return tile.executeActions(board);
+      updatedSquares.addAll(tile.executeActions(board));
+      LOG.debug(String.format("Updated squares: %s", updatedSquares));
+      return updatedSquares;
     } catch(OutsideOfBoardException e) {
       LOG.warn("Couldn't update piece coordinates");
       throw new OutsideOfBoardException(coordinates.toString());
@@ -133,7 +138,7 @@ public class Piece implements Cloneable {
    * @return if a given piece opposes this piece
    */
   private boolean isOpposing(Piece piece, ChessBoard board) {
-    int[] opponentIDs = board.getPlayer(suppPieceData.team()).opponentIDs();
+    int[] opponentIDs = board.getPlayer(team).opponentIDs();
     return Arrays.stream(opponentIDs).anyMatch((o) -> piece.getTeam() == board.getPlayer(o).teamID());
   }
 
@@ -149,7 +154,7 @@ public class Piece implements Cloneable {
    * @return file path to image file representing piece
    */
   public String getImgFile() {
-    return suppPieceData.img();
+    return img;
   }
 
   /***
@@ -167,7 +172,7 @@ public class Piece implements Cloneable {
    * @return team of piece
    */
   public int getTeam(){
-    return suppPieceData.team();
+    return team;
   }
 
   /**
@@ -202,8 +207,46 @@ public class Piece implements Cloneable {
   /***
    * @return relative coordinates for all regular moves, not including captures
    */
+  public List<MovementInterface> getMoves() {
+    return movementHandler.getMovements();
+  }
+
+  /***
+   * @return relative coordinates for all regular moves, not including captures
+   */
   public List<Coordinate> getRelativeMoveCoords() {
     return movementHandler.getRelativeMoveCoords();
+  }
+
+  /***
+   * @param newMovements new coordinates for all regular moves to set
+   * @param newCaptures new coordinates for all regular captures to set
+   */
+  public void setAllRelativeMoveCoords(List<MovementInterface> newMovements, List<MovementInterface> newCaptures) {
+    movementHandler.setAllRelativeMoveCoords(newMovements, newCaptures);
+  }
+
+  /***
+   * @return relative coordinates for all regular moves including captures
+   */
+  public List<MovementInterface> getCaptures() {
+    return movementHandler.getCaptures();
+  }
+
+  /***
+   * Changes team of this piece
+   * @param newTeam is the new team of this piece
+   */
+  public void updateTeam(int newTeam) {
+    this.team = newTeam;
+  }
+
+  /***
+   * Changes team of this piece
+   * @param newImgFile is the new team of this piece
+   */
+  public void updateImgFile(String newImgFile) {
+    this.img = newImgFile;
   }
 
   /***
@@ -213,6 +256,7 @@ public class Piece implements Cloneable {
    * @return set of updated tiles based on logic in each interaction modifier
    */
   public Set<ChessTile> runInteractionModifiers(ChessBoard board) {
+    LOG.debug("Running on interaction modifiers");
     return onInteractionModifiers.stream().flatMap((oim) -> oim.updateMovement(this, board).stream()).collect(
         Collectors.toSet());
   }
@@ -232,7 +276,7 @@ public class Piece implements Cloneable {
         List.of(),
         List.of(),
         new ArrayList<>(onInteractionModifiers),
-        suppPieceData.img()
+        img
     );
     return new Piece(clonedData, movementHandler);
   }

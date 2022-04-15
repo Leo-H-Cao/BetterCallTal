@@ -1,6 +1,5 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
-import java.nio.charset.IllegalCharsetNameException;
 import java.util.HashMap;
 import java.util.Map;
 import oogasalad.GamePlayer.Board.ChessBoard;

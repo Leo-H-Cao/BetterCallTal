@@ -141,7 +141,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   /**
    * Copies this board and then makes the move
    *
-   * @param piece       to move
+   * @param piece to move
    * @param finalSquare to move the piece to
    * @return copy of the chessboard after the hypothetical move is made
    */
@@ -206,12 +206,9 @@ public class ChessBoard implements Iterable<ChessTile> {
     Set<ChessTile> allPieceMovements = piece.getMoves(this);
     validStateCheckers.forEach((v) ->
         allPieceMovements.removeIf(entry -> {
-          ChessBoard copy;
           try {
-            // TODO: warning optional.get() without checking isPresent()
-            copy = makeHypotheticalMove(this.getTile(piece.getCoordinates()).getPiece().get(),
-                entry.getCoordinates());
-            if (!v.isValid(copy, piece.getTeam())) {
+            LOG.debug(String.format("Valid state checker class: %s", v.getClass()));
+            if(!v.isValid(this, piece, entry)){
               return true;
             }
           } catch (EngineException e) {
@@ -352,6 +349,13 @@ public class ChessBoard implements Iterable<ChessTile> {
   public List<Piece> getPieces() {
     return board.stream().flatMap(List::stream).toList().stream().map(ChessTile::getPieces)
         .flatMap(List::stream).toList();
+  }
+
+  /**
+   * @return current player
+   */
+  public int getCurrentPlayer() {
+    return turnManager.getCurrentPlayer();
   }
 
   /**
