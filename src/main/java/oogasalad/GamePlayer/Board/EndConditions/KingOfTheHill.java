@@ -72,4 +72,12 @@ public class KingOfTheHill implements EndCondition {
   private int[] getRange(int max) {
     return max % 2 == 0 ? new int[]{max/2-1, max/2} : new int[]{max/2, max/2};
   }
+
+  /**
+   * @return 0
+   */
+  @Override
+  public int compareTo(EndCondition o) {
+    return 0;
+  }
 }

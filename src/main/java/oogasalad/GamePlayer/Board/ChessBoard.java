@@ -355,7 +355,7 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @return current player
    */
   public int getCurrentPlayer() {
-    return turnCriteria.getCurrentPlayer();
+    return turnManager.getCurrentPlayer();
   }
 
   /**
