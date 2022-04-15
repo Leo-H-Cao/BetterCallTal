@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
+import oogasalad.Editor.ModelState.BoardState.EditorTile;
 import oogasalad.Editor.ModelState.PiecesState.EditorCoordinate;
 import oogasalad.Editor.ModelState.PiecesState.LibraryPiece;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
@@ -63,9 +64,14 @@ public class ExportJSON {
 
   private void createPiecesExportObjects(){
     pieces = new ArrayList<>();
-    for(LibraryPiece piece: piecesState.getAllPieces()){
-      EditorCoordinate pieceLocation = boardState.getPieceLocation(piece.getPieceID());
-      pieces.add(new PieceExport(pieceLocation.getY(), pieceLocation.getX(), piece));
+    for(int y = 0; y < boardState.getBoardHeight(); y++){
+      for(int x = 0; x < boardState.getBoardWidth(); x++){
+        EditorTile tile = boardState.getTile(x, y);
+        if(tile.hasPiece()){
+          LibraryPiece piece = new LibraryPiece(piecesState.getPiece(tile.getPiece().getPieceID()));
+          pieces.add(new PieceExport(x, y, piece));
+        }
+      }
     }
   }
 }

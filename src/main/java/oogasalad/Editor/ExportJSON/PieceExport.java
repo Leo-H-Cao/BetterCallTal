@@ -31,7 +31,7 @@ public class PieceExport {
     team = libraryPiece.getTeamNumber();
     customMoves = new ArrayList<>();
     mainPiece = libraryPiece.isMainPiece() ? 1 : 0;
-    customMoves = new ArrayList<>();
+    customMoves = libraryPiece.getCustomMoves();
     movementModifiers = new ArrayList<>();
     onInteractionModifier = new ArrayList<>();
     movementGrid = libraryPiece.getPieceMovement();

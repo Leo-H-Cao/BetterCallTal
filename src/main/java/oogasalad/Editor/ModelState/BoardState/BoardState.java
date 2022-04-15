@@ -1,6 +1,7 @@
 package oogasalad.Editor.ModelState.BoardState;
 
 import oogasalad.Editor.ModelState.PiecesState.EditorCoordinate;
+import oogasalad.Editor.ModelState.PiecesState.LibraryPiece;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 
 public class BoardState {
@@ -29,7 +30,8 @@ public class BoardState {
   }
 
   public void setPieceStartingLocation(String pieceID, int x, int y) {
-    myEditorBoard.addPieceStartingLocation(piecesState.getPiece(pieceID), x, y);
+    LibraryPiece piece = new LibraryPiece(piecesState.getPiece(pieceID));
+    myEditorBoard.addPieceStartingLocation(piece, x, y);
   }
 
   public void removePiece(String pieceID) {
@@ -38,5 +40,9 @@ public class BoardState {
 
   public EditorCoordinate getPieceLocation(String pieceID){
     return myEditorBoard.getPieceLocation(pieceID);
+  }
+
+  public EditorTile getTile(int x, int y){
+    return myEditorBoard.getTile(x, y);
   }
 }

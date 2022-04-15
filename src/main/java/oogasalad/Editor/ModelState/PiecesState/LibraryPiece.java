@@ -1,5 +1,7 @@
 package oogasalad.Editor.ModelState.PiecesState;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import javafx.scene.image.Image;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
@@ -21,6 +23,14 @@ public class LibraryPiece {
     this.teamNumber = teamNumber;
     this.image = image;
     this.editorPiece = editorPiece;
+  }
+
+  public LibraryPiece(LibraryPiece piece){
+    this.pointValue = piece.getPointValue();
+    this.pieceName = piece.getPieceName();
+    this.teamNumber = piece.getTeamNumber();
+    this.image = piece.getImage();
+    this.editorPiece = piece.getEditorPiece();
   }
 
   public String getPieceID(){
@@ -63,6 +73,10 @@ public class LibraryPiece {
 
   public void setPieceImage(Image image) {
     this.image = image;
+  }
+
+  public ArrayList<String> getCustomMoves(){
+    return editorPiece.getCustomMoves();
   }
 
   public void updatePiece(){

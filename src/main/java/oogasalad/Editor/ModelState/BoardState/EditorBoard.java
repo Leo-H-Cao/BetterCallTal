@@ -58,14 +58,7 @@ public class EditorBoard {
   }
 
   public void addPieceStartingLocation(LibraryPiece piece, int x, int y){
-    try{
-      EditorCoordinate pieceLocation = findPieceLocation(piece.getPieceID());
-      board.get(pieceLocation.getY()).get(pieceLocation.getX()).removePiece();
-      board.get(y).get(x).addPiece(piece);
-    }
-    catch(InvalidPieceIDException pieceIDException){
-      board.get(y).get(x).addPiece(piece);
-    }
+    board.get(y).get(x).addPiece(piece);
   }
 
   public void removePieceStartingLocation(String pieceID){
@@ -83,6 +76,10 @@ public class EditorBoard {
 
   public EditorCoordinate getPieceLocation(String pieceID){
     return findPieceLocation(pieceID);
+  }
+
+  public EditorTile getTile(int x, int y){
+    return board.get(y).get(x);
   }
 
   private EditorCoordinate findPieceLocation(String pieceID) {
