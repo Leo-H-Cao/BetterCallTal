@@ -68,7 +68,7 @@ public class ExportJSON {
       for(int x = 0; x < boardState.getBoardWidth(); x++){
         EditorTile tile = boardState.getTile(x, y);
         if(tile.hasPiece()){
-          LibraryPiece piece = new LibraryPiece(piecesState.getPiece(tile.getPiece().getPieceID()));
+          LibraryPiece piece = new LibraryPiece(piecesState.getPiece(tile.getPieceID()));
           pieces.add(new PieceExport(x, y, piece));
         }
       }

@@ -57,8 +57,8 @@ public class EditorBoard {
     board.get(y).get(x).setTileEffect(effect);
   }
 
-  public void addPieceStartingLocation(LibraryPiece piece, int x, int y){
-    board.get(y).get(x).addPiece(piece);
+  public void addPieceStartingLocation(String pieceID, int x, int y){
+    board.get(y).get(x).addPiece(pieceID);
   }
 
   public void removePieceStartingLocation(String pieceID){
@@ -88,7 +88,7 @@ public class EditorBoard {
         if(!board.get(i).get(j).hasPiece()){
           continue;
         }
-        if(board.get(i).get(j).getPiece().getPieceID().equals(pieceID)){
+        if(board.get(i).get(j).getPieceID().equals(pieceID)){
           return new EditorCoordinate(j, i);
         }
       }

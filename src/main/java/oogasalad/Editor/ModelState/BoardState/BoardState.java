@@ -30,8 +30,7 @@ public class BoardState {
   }
 
   public void setPieceStartingLocation(String pieceID, int x, int y) {
-    LibraryPiece piece = new LibraryPiece(piecesState.getPiece(pieceID));
-    myEditorBoard.addPieceStartingLocation(piece, x, y);
+    myEditorBoard.addPieceStartingLocation(pieceID, x, y);
   }
 
   public void removePiece(String pieceID) {
