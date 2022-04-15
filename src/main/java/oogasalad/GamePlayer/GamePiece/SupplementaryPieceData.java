@@ -7,7 +7,4 @@ import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
 
 public record SupplementaryPieceData(String name,
                                      double pointValue,
-                                     int team,
-                                     boolean mainPiece,
-                                     String img) {
-}
+                                     boolean mainPiece) {}

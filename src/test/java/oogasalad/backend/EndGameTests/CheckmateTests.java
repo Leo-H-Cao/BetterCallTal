@@ -16,6 +16,10 @@ import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
+import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
+import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
+import oogasalad.GamePlayer.ValidStateChecker.Check;
+import oogasalad.GamePlayer.Board.EndConditions.Checkmate;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.ValidStateChecker.Check;
@@ -36,7 +40,7 @@ public class CheckmateTests {
   private static final int TEAM_1 = 1;
   private static final int TEAM_2 = 0;
 
-  ValidStateChecker Check = new Check();
+  Check Check = new Check();
   Checkmate Checkmate = new Checkmate();
 
   private ChessBoard board;
@@ -87,7 +91,6 @@ public class CheckmateTests {
         Collections.emptyList(), ""));
   }
 
-
   /**
    * 2 Rooks pressuring the king (king cannot move nor capture rooks)
    * @throws OutsideOfBoardException
@@ -104,7 +107,6 @@ public class CheckmateTests {
 
     assertTrue(Check.isValid(board, TEAM_1));
     assertTrue(Checkmate.isInMate(board, TEAM_1));
-
   }
 
   @Test
@@ -143,7 +145,7 @@ public class CheckmateTests {
         makePawn(3, 0, TEAM_2)));
 
     board.setPieces(pieces);
-    assertFalse(Checkmate.isInMate(board, TEAM_1));
+    assertFalse(new Checkmate().isInMate(board, TEAM_2));
   }
 
   @Test
@@ -156,7 +158,7 @@ public class CheckmateTests {
     ));
 
     board.setPieces(pieces);
-    assertFalse(Checkmate.isInMate(board, TEAM_1));
+    assertFalse(new Checkmate().isInMate(board, TEAM_1));
   }
 
   @Test

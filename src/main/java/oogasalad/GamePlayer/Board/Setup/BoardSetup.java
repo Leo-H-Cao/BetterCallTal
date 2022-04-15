@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer.Server;
+package oogasalad.GamePlayer.Board.Setup;
 
 
 import java.io.IOException;
@@ -15,13 +15,13 @@ import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.Tiles.CustomTiles.TileAction;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.Movement.Movement;
-import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
+import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementInterface;
 import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
+import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
@@ -50,14 +50,14 @@ public class BoardSetup {
     myJSONObject = new JSONObject(content);
   }
 
-  /***
+  /**
    * @return ChessBoard object constructed from a JSON
    */
-  public ChessBoard createBoard() throws IOException {
+  public ChessBoard createLocalBoard() throws IOException {
     int rows = Integer.parseInt(
-        myJSONObject.getJSONArray("general").getJSONObject(0).get("rows").toString());
-    int columns = Integer.parseInt(
         myJSONObject.getJSONArray("general").getJSONObject(0).get("columns").toString());
+    int columns = Integer.parseInt(
+        myJSONObject.getJSONArray("general").getJSONObject(0).get("rows").toString());
 
     Player[] players = getPlayers();
     myBoard = new ChessBoard(rows, columns, getTurnCriteria(players), players,
@@ -67,7 +67,15 @@ public class BoardSetup {
     return myBoard;
   }
 
-  /***
+  public ChessBoard createRemoteBoard(String key, int thisPlayer) throws IOException {
+    return createLocalBoard();
+  }
+
+  public ChessBoard joinRemoteBoard(String key, int thisPlayer) throws IOException {
+    return createLocalBoard();
+  }
+
+  /**
    * Sets tile actions, if applicable
    */
   private void setTileActions() throws IOException {
@@ -79,7 +87,7 @@ public class BoardSetup {
       return;
     }
 
-    for(int i=0; i<customTiles.length(); i++) {
+    for (int i = 0; i < customTiles.length(); i++) {
       JSONObject rawTileData = customTiles.getJSONObject(i);
       int row = rawTileData.getInt("row");
       int col = rawTileData.getInt("col");
@@ -103,7 +111,7 @@ public class BoardSetup {
     }
   }
 
-  /***
+  /**
    * @return valid state checkers list as defined by the JSON
    */
   private List<ValidStateChecker> getValidStateCheckers() throws IOException {
@@ -111,16 +119,15 @@ public class BoardSetup {
     JSONArray validStateCheckerArray = myJSONObject.getJSONArray("general").getJSONObject(0)
         .getJSONArray("validStateCheckers");
     for (int i = 0; i < validStateCheckerArray.length(); i++) {
-      validStateCheckers.add(
-          (ValidStateChecker) createInstance(
-              VALID_STATE_CHECKER_PACKAGE + validStateCheckerArray.getString(i), new Class[]{},
-              new Object[]{}));
+      validStateCheckers.add((ValidStateChecker) createInstance(
+          VALID_STATE_CHECKER_PACKAGE + validStateCheckerArray.getString(i), new Class[]{},
+          new Object[]{}));
     }
     LOG.debug("Valid state checkers: " + validStateCheckers);
     return validStateCheckers;
   }
 
-  /***
+  /**
    * @return end conditions list as defined by the JSON
    */
   private List<EndCondition> getEndConditions() throws IOException {
@@ -136,18 +143,18 @@ public class BoardSetup {
     return endConditions;
   }
 
-  /***
+  /**
    * @return turn criteria as defined by the JSON
    */
   private TurnCriteria getTurnCriteria(Player[] players) throws IOException {
-    TurnCriteria turnCriteria =  (TurnCriteria) createInstance(
+    TurnCriteria turnCriteria = (TurnCriteria) createInstance(
         TURN_CRITERIA_PACKAGE + myJSONObject.getJSONArray("general").getJSONObject(0)
             .get("turnCriteria"), new Class[]{Player[].class}, new Object[]{players});
     LOG.debug("Turn criteria: " + turnCriteria);
     return turnCriteria;
   }
 
-  /***
+  /**
    * Creates an instance of the given class name
    *
    * @param className to instantiate
@@ -165,7 +172,7 @@ public class BoardSetup {
     }
   }
 
-  /***
+  /**
    * @return players as defined by the JSON
    */
   private Player[] getPlayers() {
@@ -183,7 +190,7 @@ public class BoardSetup {
     return players;
   }
 
-  /***
+  /**
    * @return List of movements defined by the coordinates in a given JSON file
    * @throws IOException if error with reading
    */
@@ -203,7 +210,7 @@ public class BoardSetup {
     return movements;
   }
 
-  /***
+  /**
    * @param rawCoords to get coord object from
    * @return coord object based on JSON array
    */
@@ -211,7 +218,7 @@ public class BoardSetup {
     return new Coordinate(rawCoords.getInt(1), rawCoords.getInt(0));
   }
 
-  /***
+  /**
    * @param JSONKey to get movement files from
    * @return list of movements based on the file names provided by the list corresponding to JSONKey
    */
@@ -223,11 +230,12 @@ public class BoardSetup {
       movements.addAll(
           parseMovementFile(BASIC_MOVEMENT_PACKAGE + movementFiles.getString(i) + JSON_EXTENSION));
     }
-    LOG.debug(String.format("Movement list for piece %d in %s: %s", pieceIndex, JSONKey, movements));
+    LOG.debug(
+        String.format("Movement list for piece %d in %s: %s", pieceIndex, JSONKey, movements));
     return movements;
   }
 
-  /***
+  /**
    * @return custom moves as defined by the JSON
    */
   private List<MovementInterface> getCustomMovements(int pieceIndex) throws IOException {
@@ -243,10 +251,10 @@ public class BoardSetup {
     return customMovements;
   }
 
-  /***
+  /**
    * @param JSONKey to get movement files from
-   * @return list of movements modifiers based on the file names provided by the list
-   * corresponding to JSONKey
+   * @return list of movements modifiers based on the file names provided by the list corresponding
+   * to JSONKey
    */
   private List<MovementModifier> getMovementModifiers(String JSONKey, int pieceIndex)
       throws IOException {
@@ -254,22 +262,23 @@ public class BoardSetup {
     JSONArray movementModifierArray = myJSONObject.getJSONArray("pieces").getJSONObject(pieceIndex)
         .getJSONArray(JSONKey);
     for (int i = 0; i < movementModifierArray.length(); i++) {
-      movementModifiers.add(
-          (MovementModifier) createInstance(
-              MOVEMENT_MODIFIER_PACKAGE + movementModifierArray.getString(i), new Class[]{},
-              new Object[]{}));
+      movementModifiers.add((MovementModifier) createInstance(
+          MOVEMENT_MODIFIER_PACKAGE + movementModifierArray.getString(i), new Class[]{},
+          new Object[]{}));
     }
-    LOG.debug(String.format("Custom movement list for piece %d: %s", pieceIndex, movementModifiers));
+    LOG.debug(
+        String.format("Custom movement list for piece %d: %s", pieceIndex, movementModifiers));
     return movementModifiers;
   }
 
-  /***
+  /**
    * Sets up pieces on the board
    *
    * @param board to set pieces on
    */
   private void setStartingPosition(ChessBoard board) throws IOException {
     JSONArray pieces = myJSONObject.getJSONArray("pieces");
+    List<Piece> pieceList = new ArrayList<>();
     for (int i = 0; i < pieces.length(); i++) {
       JSONObject rawPieceData = pieces.getJSONObject(i);
 
@@ -289,13 +298,16 @@ public class BoardSetup {
       captures.addAll(customMovements);
 
       List<MovementModifier> movementModifiers = getMovementModifiers("movementModifiers", i);
-      List<MovementModifier> onInteractionModifiers = getMovementModifiers("onInteractionModifier", i);
+      List<MovementModifier> onInteractionModifiers = getMovementModifiers("onInteractionModifier",
+          i);
 
       PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, mainPiece,
           movements, captures, movementModifiers, onInteractionModifiers, imageFile);
 
       Piece currentPiece = new Piece(pieceData);
-      myBoard.placePiece(new Coordinate(startRow, startCol), currentPiece);
+      pieceList.add(currentPiece);
+//      myBoard.placePiece(new Coordinate(startRow, startCol), currentPiece);
     }
+    myBoard.setPieces(pieceList);
   }
 }
