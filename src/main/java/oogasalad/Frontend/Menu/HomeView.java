@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 import oogasalad.Frontend.Editor.GameEditorView;
 import oogasalad.Frontend.Game.GameView;
+import oogasalad.Frontend.LocalPlay.LocalGame;
 import oogasalad.Frontend.util.View;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
@@ -27,9 +28,7 @@ public class HomeView extends View {
     public HomeView(Stage stage) {
         super(stage);
         // Changes the current scene to the home page on app initialization
-        getView(HomeView.class).ifPresent((e) -> {
-            changeScene(e);
-        });
+        getView(HomeView.class).ifPresent(this::changeScene);
         createDefaultPieces();
     }
 
@@ -72,10 +71,15 @@ public class HomeView extends View {
         GridPane buttonList = new GridPane();
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Create"), "createButton",
                 (e) -> getView(GameEditorView.class).ifPresent(this::changeScene)), 0, 0);
+
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Join"), "joinButton",
-                (e) -> System.out.println("go to join screen")/*getView(JoinView.class).ifPresent(this::changeScene)*/), 0, 1);
+            (e) -> System.out.println("go to join screen")/*getView(JoinView.class).ifPresent(this::changeScene)*/), 0, 1);
+
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Host"), "hostButton",
                 (e) -> getView(HostGame.class).ifPresent(this::changeScene)), 0, 2);
+
+        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Local"), "localButton",
+                e -> getView(LocalGame.class).ifPresent(this::changeScene)), 0, 3);
 
         buttonList.getChildren().forEach((b) -> {
             if(b instanceof Button) {
