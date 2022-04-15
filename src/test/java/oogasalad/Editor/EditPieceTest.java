@@ -41,12 +41,12 @@ public class EditPieceTest extends DukeApplicationTest {
   void testFiniteMovementChanges(){
     assertEquals(editorPiece.getTileStatus(2,3), PieceGridTile.CLOSED);
     assertEquals(editorPiece.getTileStatus(6, 5), PieceGridTile.CLOSED);
-    editorPiece.setTileOpen(2,3);
-    editorPiece.setTileOpen(6,5);
+    editorPiece.setTile(2,3, PieceGridTile.OPEN);
+    editorPiece.setTile(6,5, PieceGridTile.OPEN);
     assertEquals(PieceGridTile.OPEN, editorPiece.getTileStatus(2,3));
     assertEquals(PieceGridTile.OPEN, editorPiece.getTileStatus(6, 5));
-    editorPiece.setTileClosed(2,3);
-    editorPiece.setTileClosed(6,5);
+    editorPiece.setTile(2,3, PieceGridTile.CLOSED);
+    editorPiece.setTile(6,5, PieceGridTile.CLOSED);
     assertEquals(editorPiece.getTileStatus(2,3), PieceGridTile.CLOSED);
     assertEquals(editorPiece.getTileStatus(6, 5), PieceGridTile.CLOSED);
   }
@@ -129,7 +129,7 @@ public class EditPieceTest extends DukeApplicationTest {
     assertTrue(actualMessage.contains(infiniteMovementExpectedMessage));
 
     Exception finiteMovementInvalidCoordinates = assertThrows(MovementGridException.class, () -> {
-      editorPiece.setTileOpen(3, 8);
+      editorPiece.setTile(3, 8, PieceGridTile.OPEN);
     });
 
     String finiteMovementExpectedMessage = "Coordinates for finite movement are invalid";;

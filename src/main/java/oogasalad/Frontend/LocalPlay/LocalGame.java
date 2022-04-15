@@ -23,6 +23,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Menu.HostGame;
+import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
 import oogasalad.Frontend.util.View;
@@ -40,7 +41,7 @@ public class LocalGame extends View {
   private static final String HARD_AI = "HardAI";
 
   private final Integer TITLE_SIZE = 10;
-  private final Integer PROMPT_SIZE = 10;
+  private final Integer PROMPT_SIZE = 30;
   private BorderPane root;
 
   private GridPane singleplayerButtons;
@@ -71,29 +72,32 @@ public class LocalGame extends View {
   private Node makeGamemodeSelection() {
     VBox box = new VBox();
 
-    box.setPrefSize(200, 200);
 
-    Node prompt = makeLabelGroup(getLanguageResource(PROMPT_GAME), PROMPT_SIZE);
+    Node prompt = makeLabelGroup(BackendConnector.getFrontendWord(PROMPT_GAME, getClass()), PROMPT_SIZE);
     GridPane buttons = makeGameButtonHolder();
     box.getChildren().addAll(prompt, buttons);
 
+    box.setAlignment(Pos.CENTER);
     buttons.setAlignment(Pos.CENTER);
 
+    BorderPane.setAlignment(box, Pos.CENTER);
     box.setBorder(new Border(new BorderStroke(Color.BLACK,
         BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
-
-    BorderPane.setAlignment(box, Pos.CENTER);
     return box;
   }
 
   private Node makeSingleplayerSelection() {
-    StackPane sp = new StackPane();
+    VBox sp = new VBox();
+
+    GridPane buttons = makeSinglePlayerButtons();
+    Node prompt = makeLabelGroup(BackendConnector.getFrontendWord(PROMPT_AI_DIFFICULTY, getClass()), PROMPT_SIZE);
+    sp.setAlignment(Pos.CENTER);
+    buttons.setAlignment(Pos.CENTER);
+    sp.getChildren().addAll(prompt, buttons);
+    sp.setBorder(new Border(new BorderStroke(Color.BLACK,
+        BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 
     BorderPane.setAlignment(sp, Pos.CENTER);
-    GridPane buttons = makeSinglePlayerButtons();
-    StackPane.setAlignment(buttons, Pos.CENTER);
-    sp.getChildren().addAll(buttons);
-
     return sp;
   }
 
@@ -131,6 +135,8 @@ public class LocalGame extends View {
         e -> System.out.println("Hard Mode selected")
         );
     singleplayerButtons = makeButtonHolder(resourceNames, ids, actions);
+    singleplayerButtons.setVisible(false);
+    singleplayerButtons.setAlignment(Pos.CENTER);
     return singleplayerButtons;
   }
 
@@ -141,7 +147,7 @@ public class LocalGame extends View {
     GridPane buttonHolder = new GridPane();
 
     for (int i = 0; i < resourceNames.size(); i++) {
-      Button b = ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource(resourceNames.get(i)), ids.get(i),
+      Button b = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord(resourceNames.get(i), getClass()), ids.get(i),
           actions.get(i));
       b.setPadding(new Insets(5));
       buttonHolder.add(b, 0, i);

@@ -1,5 +1,6 @@
 package oogasalad.Editor.ModelState.EditPiece;
 
+import java.util.ArrayList;
 import javafx.scene.image.Image;
 
 public class EditorPiece {
@@ -7,26 +8,33 @@ public class EditorPiece {
   private Image image0;
   private Image image1;
   private String pieceID;
+  private boolean mainPiece;
+  private ArrayList<String> customMoves;
 
   public EditorPiece(String pieceID){
     this.pieceID = pieceID;
     movementGrid = new MovementGrid();
+    mainPiece = false;
   }
 
   public MovementGrid getMovementGrid() {
     return movementGrid;
   }
 
+  public void setMainPiece(boolean main){
+    mainPiece = main;
+  }
+
+  public boolean getMainPiece(){
+    return mainPiece;
+  }
+
   public String getPieceID() {
     return pieceID;
   }
 
-  public void setTileOpen(int x, int y){
-    movementGrid.setTileOpen(x, y);
-  }
-
-  public void setTileClosed(int x, int y){
-    movementGrid.setTileClosed(x, y);
+  public void setTile(int x, int y, PieceGridTile tileStatus){
+    movementGrid.setTile(x, y, tileStatus);
   }
 
   public void setInfiniteTiles(int dirX, int dirY){
@@ -51,7 +59,11 @@ public class EditorPiece {
     else{return image1;}
   }
 
-  //TODO
-  public void setPieceModifier(){
+  public void setCustomMoves(ArrayList<String> customMoves){
+    this.customMoves = customMoves;
+  }
+
+  public ArrayList<String> getCustomMoves(){
+    return customMoves;
   }
 }

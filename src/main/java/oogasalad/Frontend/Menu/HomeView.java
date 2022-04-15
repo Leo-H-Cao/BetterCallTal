@@ -5,19 +5,17 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
-import oogasalad.Frontend.Editor.GameEditorView;
-import oogasalad.Frontend.Game.GameView;
+import oogasalad.Frontend.Editor.EditorView;
 import oogasalad.Frontend.LocalPlay.LocalGame;
-import oogasalad.Frontend.util.View;
+import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
+import oogasalad.Frontend.util.View;
 
 /**
  * HomeView class will handle the navigation of the User from the home screen to the next page they seek.
@@ -29,14 +27,6 @@ public class HomeView extends View {
         super(stage);
         // Changes the current scene to the home page on app initialization
         getView(HomeView.class).ifPresent(this::changeScene);
-        createDefaultPieces();
-    }
-
-    private void createDefaultPieces() {
-        // Rook
-        MovementGrid rookMovement = new MovementGrid();
-        getEditorBackend().getPiecesState().createCustomPiece(5, 0, new Image("images/pieces/black/rook.png"), rookMovement, "default_rook", "Rook");
-        getEditorBackend().getPiecesState().createCustomPiece(5, 1, new Image("images/pieces/black/rook.png"), rookMovement, "default_rook", "Rook");
     }
 
     @Override
@@ -61,7 +51,7 @@ public class HomeView extends View {
 
 
     private Node makeTitle() {
-        Label t = new Label(getLanguageResource("Title"));
+        Label t = new Label(BackendConnector.getFrontendWord("Title", getClass()));
         t.setFont(new Font(64));
         t.setTextAlignment(TextAlignment.CENTER);
         return new Group(t);
@@ -69,16 +59,17 @@ public class HomeView extends View {
 
     private Node makeButtons() {
         GridPane buttonList = new GridPane();
-        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Create"), "createButton",
-                (e) -> getView(GameEditorView.class).ifPresent(this::changeScene)), 0, 0);
 
-        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Join"), "joinButton",
-            (e) -> System.out.println("go to join screen")/*getView(JoinView.class).ifPresent(this::changeScene)*/), 0, 1);
+        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("Create", getClass()), "createButton",
+                (e) -> getView(EditorView.class).ifPresent(this::changeScene)), 0, 0);
 
-        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Host"), "hostButton",
+        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("Join", getClass()), "joinButton",
+                (e) -> System.out.println("go to join screen")/*getView(JoinView.class).ifPresent(this::changeScene)*/), 0, 1);
+
+        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("Host", getClass()), "hostButton",
                 (e) -> getView(HostGame.class).ifPresent(this::changeScene)), 0, 2);
 
-        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, getLanguageResource("Local"), "localButton",
+        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("Local", getClass()), "localButton",
                 e -> getView(LocalGame.class).ifPresent(this::changeScene)), 0, 3);
 
         buttonList.getChildren().forEach((b) -> {
