@@ -31,7 +31,7 @@ public class PieceTileTypeSelector extends LabelledContainer {
 	@Override
 	protected Collection<Node> fillContent() {
 		Collection<Node> ret = new ArrayList<>();
-		Arrays.stream(PieceGridTile.values()).forEach((type) -> ret.add(makeTile(type)));
+		Arrays.stream(PieceGridTile.values()).filter((e) -> !e.equals(PieceGridTile.PIECE)).forEach((type) -> ret.add(makeTile(type)));
 		return ret;
 	}
 
