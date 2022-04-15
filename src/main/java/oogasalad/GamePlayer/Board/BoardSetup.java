@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer.Server;
+package oogasalad.GamePlayer.Board;
 
 
 import java.io.IOException;
@@ -8,20 +8,18 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
-import oogasalad.GamePlayer.Board.Player;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.Tiles.CustomTiles.TileAction;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.Movement.Movement;
-import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
+import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementInterface;
 import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
+import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
@@ -79,7 +77,7 @@ public class BoardSetup {
       return;
     }
 
-    for(int i=0; i<customTiles.length(); i++) {
+    for (int i = 0; i < customTiles.length(); i++) {
       JSONObject rawTileData = customTiles.getJSONObject(i);
       int row = rawTileData.getInt("row");
       int col = rawTileData.getInt("col");
@@ -140,7 +138,7 @@ public class BoardSetup {
    * @return turn criteria as defined by the JSON
    */
   private TurnCriteria getTurnCriteria(Player[] players) throws IOException {
-    TurnCriteria turnCriteria =  (TurnCriteria) createInstance(
+    TurnCriteria turnCriteria = (TurnCriteria) createInstance(
         TURN_CRITERIA_PACKAGE + myJSONObject.getJSONArray("general").getJSONObject(0)
             .get("turnCriteria"), new Class[]{Player[].class}, new Object[]{players});
     LOG.debug("Turn criteria: " + turnCriteria);
@@ -223,7 +221,8 @@ public class BoardSetup {
       movements.addAll(
           parseMovementFile(BASIC_MOVEMENT_PACKAGE + movementFiles.getString(i) + JSON_EXTENSION));
     }
-    LOG.debug(String.format("Movement list for piece %d in %s: %s", pieceIndex, JSONKey, movements));
+    LOG.debug(
+        String.format("Movement list for piece %d in %s: %s", pieceIndex, JSONKey, movements));
     return movements;
   }
 
@@ -259,7 +258,8 @@ public class BoardSetup {
               MOVEMENT_MODIFIER_PACKAGE + movementModifierArray.getString(i), new Class[]{},
               new Object[]{}));
     }
-    LOG.debug(String.format("Custom movement list for piece %d: %s", pieceIndex, movementModifiers));
+    LOG.debug(
+        String.format("Custom movement list for piece %d: %s", pieceIndex, movementModifiers));
     return movementModifiers;
   }
 
@@ -289,7 +289,8 @@ public class BoardSetup {
       captures.addAll(customMovements);
 
       List<MovementModifier> movementModifiers = getMovementModifiers("movementModifiers", i);
-      List<MovementModifier> onInteractionModifiers = getMovementModifiers("onInteractionModifier", i);
+      List<MovementModifier> onInteractionModifiers = getMovementModifiers("onInteractionModifier",
+          i);
 
       PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, mainPiece,
           movements, captures, movementModifiers, onInteractionModifiers, imageFile);
