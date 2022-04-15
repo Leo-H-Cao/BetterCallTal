@@ -35,8 +35,8 @@ public class Promotion implements TileAction {
   private static List<String> getPromotablePieceNames() {
     ArrayList<String> nameList = new ArrayList<>();
     try {
-      File immuneFile = new File(PROMOTABLE_FILE_PATH);
-      Scanner reader = new Scanner(immuneFile);
+      File promoteFile = new File(PROMOTABLE_FILE_PATH);
+      Scanner reader = new Scanner(promoteFile);
       while (reader.hasNext()) {
         nameList.add(reader.next().trim());
       }
