@@ -7,7 +7,7 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.Board.BoardSetup;
+import oogasalad.GamePlayer.Board.Setup.BoardSetup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -18,7 +18,7 @@ public class BoardSetupTest {
   @BeforeEach
   void setup () throws IOException {
     BoardSetup setup = new BoardSetup(JSON_FILE_PATH);
-    myBoard = setup.createBoard();
+    myBoard = setup.createLocalBoard();
   }
 
 

@@ -162,7 +162,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   /**
    * Copies this board and then makes the move
    *
-   * @param piece to move
+   * @param piece       to move
    * @param finalSquare to move the piece to
    * @return copy of the chessboard after the hypothetical move is made
    */
@@ -229,7 +229,7 @@ public class ChessBoard implements Iterable<ChessTile> {
         allPieceMovements.removeIf(entry -> {
           try {
             LOG.debug(String.format("Valid state checker class: %s", v.getClass()));
-            if(!v.isValid(this, piece, entry)){
+            if (!v.isValid(this, piece, entry)) {
               return true;
             }
           } catch (EngineException e) {
@@ -284,9 +284,10 @@ public class ChessBoard implements Iterable<ChessTile> {
   }
 
   /**
-   * starting from the top left, this method returns the tile that corresponds
-   * to the LINEAR position of the tiles. That is, by placing each row behind the previous
-   * return the tile of index
+   * starting from the top left, this method returns the tile that corresponds to the LINEAR
+   * position of the tiles. That is, by placing each row behind the previous return the tile of
+   * index
+   *
    * @param index
    * @return
    */
@@ -310,7 +311,6 @@ public class ChessBoard implements Iterable<ChessTile> {
     }
     return getTile(coordinate).getPiece().isEmpty();
   }
-
 
 
   /**
