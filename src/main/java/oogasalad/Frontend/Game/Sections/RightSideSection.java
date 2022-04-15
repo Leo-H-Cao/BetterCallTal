@@ -5,6 +5,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import oogasalad.Frontend.ViewManager;
+import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
 
@@ -26,11 +27,8 @@ public class RightSideSection {
         Text t = new Text("Hey I'm here");
         t.setFont(new Font(64));
 
-        Button flipbutton = ButtonFactory.makeButton(ButtonType.TEXT, ViewManager.getLanguage().getString(
-                getClass().getSimpleName() + "Flip"), "flip",
-                (e) -> {
-            Switchrun.run();
-                });
+        Button flipbutton = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("Flip", getClass()), "flip",
+                (e) -> Switchrun.run());
         vb.getChildren().addAll(t, flipbutton);
         return vb;
     }

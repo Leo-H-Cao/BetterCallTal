@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.stage.Screen;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Frontend.Editor.Board.PieceLibrary;
+import oogasalad.Frontend.ViewManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.MissingResourceException;

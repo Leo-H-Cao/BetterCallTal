@@ -24,7 +24,9 @@ public class PieceBoardTile extends NodeContainer {
 		myY = y;
 		myId = id;
 		status = new SimpleObjectProperty(type);
-		getEditorBackend().getEditorPiece(myId).setImage(0, new Image("images/pieces/black/rook.png"));
+		myResources.ifPresent((e) -> {
+			getEditorBackend().getEditorPiece(myId).setImage(0, new Image(e.getString("DefaultImage")));
+		});
 	}
 
 	@Override
@@ -45,29 +47,44 @@ public class PieceBoardTile extends NodeContainer {
 		}
 		status.addListener((ob, ov, nv) -> rect.setFill(getTileColor(nv)));
 
+		// Update tile color when clicked
 		ButtonFactory.addAction(ret, (e) -> {
-			PieceGridTile type = getEditorBackend().getSelectedPieceEditorType();
+			PieceGridTile type = getEditorBackend().getSelectedPieceEditorType().getValue();
 			getEditorBackend().getEditorPiece(myId).setTile(myX, myY, PieceGridTile.OPEN);
 			status.setValue(type);
+		});
+
+
+		ret.hoverProperty().addListener((ob, ov, nv) -> {
+			if(nv && status.getValue() == PieceGridTile.CLOSED) {
+				myResources.ifPresent((e) -> rect.setFill(Paint.valueOf(e.getString("HoverColor"))));
+			} else {
+				rect.setFill(getTileColor(status.getValue()));
+			}
 		});
 
 		return ret;
 	}
 
 	private Paint getTileColor(PieceGridTile type) {
-		switch (type) {
-			case CLOSED, PIECE -> {
-				return Paint.valueOf("#ddd");
+		if(myResources.isPresent()) {
+			switch (type) {
+				case CLOSED, PIECE -> {
+					return Paint.valueOf(myResources.get().getString("DefaultColor"));
+				}
+				case OPEN -> {
+					return Paint.valueOf(myResources.get().getString("SelectedColor"));
+				}
+				case INFINITY -> {
+					return Paint.valueOf(myResources.get().getString("InfinityColor"));
+				}
+				default -> {
+					return Paint.valueOf(myResources.get().getString("ErrorColor"));
+				}
 			}
-			case OPEN -> {
-				return Paint.valueOf("#abc");
-			}
-			case INFINITY -> {
-				return Paint.valueOf("yellow");
-			}
-			default -> {
-				return Paint.valueOf("magenta");
-			}
+		}
+		else {
+			return Paint.valueOf("#000");
 		}
 	}
 }
