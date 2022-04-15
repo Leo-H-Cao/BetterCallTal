@@ -50,10 +50,10 @@ public class BoardSetup {
     myJSONObject = new JSONObject(content);
   }
 
-  /***
+  /**
    * @return ChessBoard object constructed from a JSON
    */
-  public ChessBoard createBoard() throws IOException {
+  public ChessBoard createLocalBoard() throws IOException {
     int rows = Integer.parseInt(
         myJSONObject.getJSONArray("general").getJSONObject(0).get("columns").toString());
     int columns = Integer.parseInt(
@@ -67,7 +67,15 @@ public class BoardSetup {
     return myBoard;
   }
 
-  /***
+  public ChessBoard createRemoteBoard(String key, int thisPlayer) throws IOException {
+    return createLocalBoard();
+  }
+
+  public ChessBoard joinRemoteBoard(String key, int thisPlayer) throws IOException {
+    return createLocalBoard();
+  }
+
+  /**
    * Sets tile actions, if applicable
    */
   private void setTileActions() throws IOException {
@@ -103,7 +111,7 @@ public class BoardSetup {
     }
   }
 
-  /***
+  /**
    * @return valid state checkers list as defined by the JSON
    */
   private List<ValidStateChecker> getValidStateCheckers() throws IOException {
@@ -119,7 +127,7 @@ public class BoardSetup {
     return validStateCheckers;
   }
 
-  /***
+  /**
    * @return end conditions list as defined by the JSON
    */
   private List<EndCondition> getEndConditions() throws IOException {
@@ -135,7 +143,7 @@ public class BoardSetup {
     return endConditions;
   }
 
-  /***
+  /**
    * @return turn criteria as defined by the JSON
    */
   private TurnCriteria getTurnCriteria(Player[] players) throws IOException {
@@ -146,7 +154,7 @@ public class BoardSetup {
     return turnCriteria;
   }
 
-  /***
+  /**
    * Creates an instance of the given class name
    *
    * @param className to instantiate
@@ -164,7 +172,7 @@ public class BoardSetup {
     }
   }
 
-  /***
+  /**
    * @return players as defined by the JSON
    */
   private Player[] getPlayers() {
@@ -182,7 +190,7 @@ public class BoardSetup {
     return players;
   }
 
-  /***
+  /**
    * @return List of movements defined by the coordinates in a given JSON file
    * @throws IOException if error with reading
    */
@@ -202,7 +210,7 @@ public class BoardSetup {
     return movements;
   }
 
-  /***
+  /**
    * @param rawCoords to get coord object from
    * @return coord object based on JSON array
    */
@@ -210,7 +218,7 @@ public class BoardSetup {
     return new Coordinate(rawCoords.getInt(1), rawCoords.getInt(0));
   }
 
-  /***
+  /**
    * @param JSONKey to get movement files from
    * @return list of movements based on the file names provided by the list corresponding to JSONKey
    */
@@ -227,7 +235,7 @@ public class BoardSetup {
     return movements;
   }
 
-  /***
+  /**
    * @return custom moves as defined by the JSON
    */
   private List<MovementInterface> getCustomMovements(int pieceIndex) throws IOException {
@@ -243,10 +251,10 @@ public class BoardSetup {
     return customMovements;
   }
 
-  /***
+  /**
    * @param JSONKey to get movement files from
-   * @return list of movements modifiers based on the file names provided by the list
-   * corresponding to JSONKey
+   * @return list of movements modifiers based on the file names provided by the list corresponding
+   * to JSONKey
    */
   private List<MovementModifier> getMovementModifiers(String JSONKey, int pieceIndex)
       throws IOException {
@@ -263,7 +271,7 @@ public class BoardSetup {
     return movementModifiers;
   }
 
-  /***
+  /**
    * Sets up pieces on the board
    *
    * @param board to set pieces on

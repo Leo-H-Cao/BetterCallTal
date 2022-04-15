@@ -18,7 +18,7 @@ public class GameBackend extends Controller {
   public Optional<ChessBoard> initalizeChessBoard(File JSON) {
     try {
       BoardSetup bs = new BoardSetup(JSON.getPath());
-      myChessBoard = bs.createBoard();
+      myChessBoard = bs.createLocalBoard();
       return Optional.of(myChessBoard);
     } catch (Exception e) {
       // myMainView.showError();
