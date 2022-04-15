@@ -270,6 +270,7 @@ public class BoardSetup {
    */
   private void setStartingPosition(ChessBoard board) throws IOException {
     JSONArray pieces = myJSONObject.getJSONArray("pieces");
+    List<Piece> pieceList = new ArrayList<>();
     for (int i = 0; i < pieces.length(); i++) {
       JSONObject rawPieceData = pieces.getJSONObject(i);
 
@@ -296,7 +297,9 @@ public class BoardSetup {
           movements, captures, movementModifiers, onInteractionModifiers, imageFile);
 
       Piece currentPiece = new Piece(pieceData);
-      myBoard.placePiece(new Coordinate(startRow, startCol), currentPiece);
+      pieceList.add(currentPiece);
+//      myBoard.placePiece(new Coordinate(startRow, startCol), currentPiece);
     }
+    myBoard.setPieces(pieceList);
   }
 }

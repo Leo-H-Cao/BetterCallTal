@@ -57,6 +57,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     this.board = board;
     this.validStateCheckers = validStateCheckers;
     this.history = new LocalHistoryManager();
+    this.pieceList = new HashMap<>();
   }
 
   public ChessBoard(List<List<ChessTile>> board, TurnManager turnManager, GamePlayers players,
@@ -67,7 +68,6 @@ public class ChessBoard implements Iterable<ChessTile> {
     this.validStateCheckers = validStateCheckers;
     this.history = history;
     this.pieceList = new HashMap<>();
-    generatePieceList();
   }
 
   /**
@@ -101,11 +101,12 @@ public class ChessBoard implements Iterable<ChessTile> {
     {
       Piece piece = t.getPiece().get();
       pieceList.putIfAbsent(piece.getTeam(), new ArrayList<>());
-      if(pieceList.get(piece.getTeam()).stream().noneMatch(p ->
+      if (pieceList.get(piece.getTeam()).stream().noneMatch(p ->
           p.getName().equals(piece.getName()))) {
         pieceList.get(piece.getTeam()).add(piece.clone());
       }
     }));
+    LOG.debug(String.format("Piece list generated: %s", pieceList));
   }
 
   /**
@@ -129,6 +130,7 @@ public class ChessBoard implements Iterable<ChessTile> {
       history.add(new History(copied, new HashSet<>(pieces), pieces.stream()
           .map(p -> board.get(p.getCoordinates().getRow()).get(p.getCoordinates().getCol()))
           .collect(Collectors.toSet())));
+      generatePieceList();
       return true;
     }
     LOG.warn("Attempted board setting after game start");

@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.MovementModifiers.Atomic;
 import org.apache.logging.log4j.LogManager;
@@ -55,14 +56,20 @@ public class Promotion implements TileAction {
    */
   @Override
   public Set<ChessTile> executeAction(ChessTile tile, ChessBoard board) {
-    if(tile.getPiece().isPresent()) return Collections.emptySet();
-    if(!PROMOTABLE_PIECE_NAMES.contains(tile.getPiece().get().getName())) return Collections.emptySet();
-
-    LOG.debug("Executing promotion");
-    List<Piece> pieceList = board.getPieceList().get(tile.getPiece().get().getTeam());
+//    LOG.debug(String.format("Promotion pieces: %s", PROMOTABLE_PIECE_NAMES));
+    LOG.debug(String.format("In promotion: %s", tile.getPiece().get().getName()));
+    if(tile.getPiece().isEmpty()) return Collections.emptySet();
+    if(PROMOTABLE_PIECE_NAMES.stream().noneMatch(n ->
+        n.equalsIgnoreCase(tile.getPiece().get().getName()))) return Collections.emptySet();
+    List<Piece> pieceList = board.getPieceList().get(tile.getPiece().get().getTeam()).stream().
+        filter((p) -> !p.isTargetPiece() &&
+            !p.getName().equalsIgnoreCase(tile.getPiece().get().getName())).collect(Collectors.toList());
     Piece p = promotionPopUp(pieceList);
+    Piece clone = p.clone();
     tile.clearPieces();
-    tile.appendPiece(p.clone());
+    
+    try {clone.updateCoordinates(tile, board); }
+    catch (OutsideOfBoardException e) {LOG.warn("Placing piece after promotion failed.");}
 
     return Set.of(tile);
   }

@@ -97,7 +97,7 @@ public class MovementHandler {
     movements.forEach((m) -> allMoves.addAll(m.getMoves(piece, board)));
     captures.forEach((m) -> allMoves.addAll(m.getCaptures(piece, board)));
 
-    LOG.debug(String.format("%s has the following moves: %s", piece.getName(), allMoves));
+//    LOG.debug(String.format("%s has the following moves: %s", piece.getName(), allMoves));
     return allMoves;
   }
 
