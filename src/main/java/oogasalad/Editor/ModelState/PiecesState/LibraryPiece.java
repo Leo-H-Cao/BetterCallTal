@@ -1,10 +1,10 @@
 package oogasalad.Editor.ModelState.PiecesState;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import javafx.scene.image.Image;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
+
+import java.util.ArrayList;
 
 public class LibraryPiece {
 

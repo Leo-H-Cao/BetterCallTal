@@ -13,9 +13,7 @@ public class ModifierLibrary extends LabelledContainer {
 	}
 
 	@Override
-	protected Collection<Node> fillContent() {
-		ArrayList<Node> ret = new ArrayList<>();
-		ret.add(new Circle(50, Paint.valueOf("blue")));
-		return ret;
+	protected Node fillContent() {
+		return new Circle(50, Paint.valueOf("blue"));
 	}
 }
