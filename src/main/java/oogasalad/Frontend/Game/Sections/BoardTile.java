@@ -1,14 +1,14 @@
 package oogasalad.Frontend.Game.Sections;
 
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
 import oogasalad.Frontend.util.ButtonFactory;
-import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
@@ -35,14 +35,14 @@ public class BoardTile {
     private static Double myTileHeight;
     private static Double myTileWidth;
     private  Coordinate myCoord;
-    private Border myLitUpBorder;
-    private Border myClearBorder;
-    private Double BORDER_WIDTH = 5.0;
+    private Double BORDER_WIDTH = 2.0;
+    private Double EMPTY_BORDER = 0.0;
     private Boolean Lit;
     private String Image_Path = "src/main/resources/images/pieces/";
     private Color BlackSquare = Color.GREEN;
     private Color WhiteSquare = Color.GRAY;
     private Color myColor;
+    private String LitColor = "Cyan";
 
     public BoardTile(Coordinate c, double width, double height, Consumer<Piece> lightupCons, Runnable clearlitrun, Consumer<Piece> setSelPiece, Consumer<Coordinate> MoveCons) {
         myCoord = c;
@@ -55,8 +55,6 @@ public class BoardTile {
 
         myPieces = new ArrayList<>();
         myImages = new ArrayList<>();
-        myLitUpBorder = makeLitUpBorder();
-        myClearBorder = makeClearBorder();
         Lit = false;
     }
 
@@ -146,6 +144,9 @@ public class BoardTile {
             myRectangle.setFill(WhiteSquare);
             myColor = WhiteSquare;
         }
+        myRectangle.setStroke(Paint.valueOf(LitColor));
+        myRectangle.setStrokeType(StrokeType.INSIDE);
+        myRectangle.setStrokeWidth(EMPTY_BORDER);
         myStackPane.getChildren().add(myRectangle);
     }
 
@@ -157,26 +158,14 @@ public class BoardTile {
         Lit = b;
         LOG.debug(String.format("Lit up: %d, %d", myCoord.getRow(), myCoord.getCol()));
         if (Lit) {
-            myStackPane.setBorder(myLitUpBorder);
+            myRectangle.setStrokeWidth(BORDER_WIDTH);
         } else {
-            myStackPane.setBorder(myClearBorder);
+            myRectangle.setStrokeWidth(EMPTY_BORDER);
         }
     }
 
     private void removePieceImages() {
         myStackPane.getChildren().removeAll(myImages);
-    }
-
-    //TODO: fix the border edge minor glitch.
-    private Border makeLitUpBorder() {
-        BorderStroke bordstroke = new BorderStroke(Color.CYAN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(BORDER_WIDTH));
-        Border bord = new Border(bordstroke);
-        return bord;
-    }
-    private Border makeClearBorder() {
-        BorderStroke bordstroke = new BorderStroke(Color.CORAL, BorderStrokeStyle.NONE, CornerRadii.EMPTY, new BorderWidths(BORDER_WIDTH));
-        Border bord = new Border(bordstroke);
-        return bord;
     }
 
     public StackPane getMyStackPane() {return myStackPane;}
