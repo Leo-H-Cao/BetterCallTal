@@ -4,7 +4,6 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -52,7 +51,7 @@ public class PieceLibrary extends LabelledContainer {
 	private void createDefaultPieces() {
 		// Rook
 		MovementGrid rookMovement = new MovementGrid();
-		getEditorBackend().getPiecesState().createCustomPiece(5, 0, new Image("images/pieces/black/rook.png"), new EditorPiece("rookW"), "Rook");
-		getEditorBackend().getPiecesState().createCustomPiece(5, 1, new Image("images/pieces/white/rook.png"), new EditorPiece("rookB"), "Rook");
+		getEditorBackend().getPiecesState().createCustomPiece("pieceID");
+		getEditorBackend().getPiecesState().createCustomPiece("pieceID");
 	}
 }

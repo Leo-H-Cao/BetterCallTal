@@ -1,5 +1,6 @@
 package oogasalad.GamePlayer.Board.History;
 
+import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
 public interface HistoryManager {
@@ -86,4 +87,8 @@ public interface HistoryManager {
    */
   boolean isEmpty();
 
+  /**
+   * @return way to stream over the history
+   */
+  Stream<History> stream();
 }
