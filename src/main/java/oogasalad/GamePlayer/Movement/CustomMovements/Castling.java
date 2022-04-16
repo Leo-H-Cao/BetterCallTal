@@ -16,6 +16,9 @@ import oogasalad.GamePlayer.Movement.MovementInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/***
+ * Creates a custom movement that allows the king to castle with a rook
+ */
 public class Castling implements MovementInterface {
 
   public static final int NO_MOVEMENT_HISTORY_LENGTH = 1;
@@ -24,12 +27,6 @@ public class Castling implements MovementInterface {
 
   private static final int MAIN_SQUARE_MOVES = 2;
   private static final int SUPPORTER_RELATIVE_SQUARE = 1;
-
-  /***
-   * Creates a custom movement that allows the king to castle with a rook
-   */
-
-  public Castling() {}
 
   /**
    * @return places i between 0 inclusive and maxSize not inclusive
@@ -89,7 +86,7 @@ public class Castling implements MovementInterface {
   }
 
   /**
-   * @return empty set because no capture possible
+   * @return exception because no capture possible
    */
   @Override
   public Set<ChessTile> capturePiece(Piece piece, Coordinate captureSquare, ChessBoard board)
