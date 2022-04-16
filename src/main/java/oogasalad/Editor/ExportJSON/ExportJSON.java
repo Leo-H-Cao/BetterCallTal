@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
 import oogasalad.Editor.ModelState.BoardState.EditorTile;
-import oogasalad.Editor.ModelState.PiecesState.EditorCoordinate;
-import oogasalad.Editor.ModelState.PiecesState.LibraryPiece;
+import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Editor.ModelState.RulesState.GameRulesState;
 
@@ -75,8 +74,8 @@ public class ExportJSON {
       for(int x = 0; x < boardState.getBoardWidth(); x++){
         EditorTile tile = boardState.getTile(x, y);
         if(tile.hasPiece()){
-          LibraryPiece piece = new LibraryPiece(piecesState.getPiece(tile.getPieceID()));
-          pieces.add(new PieceExport(x, y, piece));
+          EditorPiece piece = new EditorPiece(tile.getPieceID());
+          pieces.add(new PieceExport(x, y, piece, tile.getTeam()));
         }
       }
     }

@@ -1,18 +1,13 @@
 package oogasalad.Editor.ModelState.BoardState;
 
-import oogasalad.Editor.ModelState.PiecesState.LibraryPiece;
-
 public class EditorTile {
   private TileEffect myTileEffect;
   private String pieceID;
-  private int myCoordX;
-  private int myCoordY;
+  private int team;
 
   public EditorTile(int x, int y){
     myTileEffect = TileEffect.NONE;
     pieceID = null;
-    myCoordX = x;
-    myCoordY = y;
   }
 
   public boolean hasPiece(){
@@ -27,8 +22,13 @@ public class EditorTile {
     return pieceID;
   }
 
-  public void addPiece(String pieceID){
+  public int getTeam() {
+    return team;
+  }
+
+  public void addPiece(String pieceID, int team){
     this.pieceID = pieceID;
+    this.team = team;
   }
 
   public void removePiece(){

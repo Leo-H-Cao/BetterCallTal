@@ -57,6 +57,8 @@ public class ExportJSONTest extends DukeApplicationTest {
   @Test
   void testPiecesExport(){
     EditorPiece testPiece= new EditorPiece("123");
+    testPiece.setImage(0, new Image("images/pieces/black/rook.png"));
+
     testPiece.setTile(4, 2, PieceGridTile.OPEN);
     testPiece.setTile(6, 0, PieceGridTile.INFINITY);
     testPiece.setTile(5,1, PieceGridTile.OPEN);
@@ -69,9 +71,8 @@ public class ExportJSONTest extends DukeApplicationTest {
     testPiece.setTile(5, 6, PieceGridTile.OPEN);
     testPiece.setTile(2, 5, PieceGridTile.OPEN);
 
-    piecesState.createCustomPiece(12, 1, new Image("images/pieces/black/rook.png"), testPiece, "testPiece");
-    boardState.setPieceStartingLocation("123", 3, 6);
-    boardState.setPieceStartingLocation("123", 4, 5);
+    boardState.setPieceStartingLocation("123", 3, 6, 0);
+    boardState.setPieceStartingLocation("123", 4, 5, 0);
     exportJSON = new ExportJSON(piecesState, gameRulesState, boardState);
     exportJSON.writeToJSON();
     assertTrue(exportJSON.getJSONTestString().contains(myResources.getString("exportPiecesJSONString")));
