@@ -43,6 +43,7 @@ public class CheckersCapture implements MovementInterface {
    */
   @Override
   public Set<ChessTile> getCaptures(Piece piece, ChessBoard board) {
+    List<Coordinate> directions = piece.getRelativeMoveCoords();
     return Collections.emptySet();
   }
 

@@ -30,6 +30,7 @@ public class Piece implements Cloneable {
   private Coordinate coordinates;
   private SupplementaryPieceData suppPieceData;
   private int team;
+  private String name;
   private String img;
   private MovementHandler movementHandler;
   private List<MovementModifier> onInteractionModifiers;
@@ -47,8 +48,9 @@ public class Piece implements Cloneable {
    */
   public Piece(PieceData pieceData, MovementHandler movementHandler) {
     this.coordinates = pieceData.startingLocation();
-    this.suppPieceData = new SupplementaryPieceData(pieceData.name(), pieceData.pointValue(),
+    this.suppPieceData = new SupplementaryPieceData(pieceData.pointValue(),
         pieceData.mainPiece());
+    this.name = pieceData.name();
     this.team = pieceData.team();
     this.img = pieceData.img();
     this.movementHandler = movementHandler;
@@ -191,7 +193,7 @@ public class Piece implements Cloneable {
    * @return name of piece
    */
   public String getName(){
-    return suppPieceData.name();
+    return name;
   }
 
   /**
@@ -313,12 +315,21 @@ public class Piece implements Cloneable {
 
   }
 
+  /**
+   * Update name with newName
+   *
+   * @param newName to update
+   */
+  public void updateName(String newName) {
+    this.name = newName;
+  }
+
   /***
    * @return piece data
    */
   @Override
   public String toString() {
-    return suppPieceData.name();
+    return name;
   }
 
   /***
