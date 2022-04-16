@@ -1,0 +1,10 @@
+{
+	"drawPieces": [
+		{
+			"pieces": ["Bishop"]
+		},
+		{
+			"pieces": ["Knight"]
+		}
+	]
+}
