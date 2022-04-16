@@ -1,11 +1,13 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.Player;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
@@ -53,9 +55,8 @@ public class Stalemate implements EndCondition{
     HashMap<Integer, Double> scores = new HashMap<>();
     try {
       if(isStalemate(board)){
-        scores.put(0, 0.5);
-        scores.put(1, 0.5);
-        return scores;
+        return Arrays.stream(board.getPlayers()).collect(
+            Collectors.toMap(Player::teamID, p -> DRAW));
       }
     } catch (EngineException e) {
       e.printStackTrace(); //TODO: handle this exception
