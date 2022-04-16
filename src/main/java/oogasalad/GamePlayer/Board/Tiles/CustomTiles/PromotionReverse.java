@@ -23,7 +23,7 @@ public class PromotionReverse implements TileAction{
     if(tile.getPiece().isEmpty()) return Collections.emptySet();
 
     Piece promotedPiece = tile.getPiece().get();
-    promotedPiece.setNewMovements(Movement.invertMovements(promotedPiece.getMoves()),
+    promotedPiece.addNewMovements(Movement.invertMovements(promotedPiece.getMoves()),
         Movement.invertMovements(promotedPiece.getCaptures()));
 
     return Set.of(tile);

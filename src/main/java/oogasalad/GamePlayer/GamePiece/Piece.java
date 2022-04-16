@@ -231,6 +231,14 @@ public class Piece implements Cloneable {
   }
 
   /***
+   * @param newMovements new coordinates for all regular moves to add
+   * @param newCaptures new coordinates for all regular captures to add
+   */
+  public void addNewMovements(List<MovementInterface> newMovements, List<MovementInterface> newCaptures) {
+    movementHandler.addNewMovements(newMovements, newCaptures);
+  }
+
+  /***
    * @return relative coordinates for all regular moves including captures
    */
   public List<MovementInterface> getCaptures() {

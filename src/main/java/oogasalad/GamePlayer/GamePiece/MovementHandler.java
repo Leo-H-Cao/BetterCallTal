@@ -191,4 +191,13 @@ public class MovementHandler {
     this.movements = newMovements;
     this.captures = newCaptures;
   }
+
+  /***
+   * @param newMovements new coordinates for all regular moves to set
+   * @param newCaptures new coordinates for all regular captures to set
+   */
+  public void addNewMovements(List<MovementInterface> newMovements, List<MovementInterface> newCaptures) {
+    this.movements.addAll(newMovements);
+    this.captures.addAll(newCaptures);
+  }
 }
