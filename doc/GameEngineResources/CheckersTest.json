@@ -5,7 +5,7 @@
       "columns": 7,
       "turnCriteria": "Linear",
       "colors": ["black", "white"],
-      "endConditions": ["StalemateWin"],
+      "endConditions": [],
       "validStateCheckers": []
     }
   ],
@@ -173,6 +173,20 @@
       "movementModifiers": [],
       "onInteractionModifier": [],
       "mainPiece": 0
+    },
+    {
+      "row": 3,
+      "col": 6,
+      "pieceName": "Pawn",
+      "imgFile": "blackpawn",
+      "pointValue": 1,
+      "team": 1,
+      "basicMovements": ["bPawnCap"],
+      "basicCaptures": [],
+      "customMoves": ["CheckersCapture"],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
     }
   ],
   "tiles": [
@@ -225,49 +239,49 @@
       "img": "default"
     },
     {
-      "row": 7,
+      "row": 6,
       "col": 0,
       "tileActions": ["PromotionReverse"],
       "img": "default"
     },
     {
-      "row": 7,
+      "row": 6,
       "col": 1,
       "tileActions": ["PromotionReverse"],
       "img": "default"
     },
     {
-      "row": 7,
+      "row": 6,
       "col": 2,
       "tileActions": ["PromotionReverse"],
       "img": "default"
     },
     {
-      "row": 7,
+      "row": 6,
       "col": 3,
       "tileActions": ["PromotionReverse"],
       "img": "default"
     },
     {
-      "row": 7,
+      "row": 6,
       "col": 4,
       "tileActions": ["PromotionReverse"],
       "img": "default"
     },
     {
-      "row": 7,
+      "row": 6,
       "col": 5,
       "tileActions": ["PromotionReverse"],
       "img": "default"
     },
     {
-      "row": 7,
+      "row": 6,
       "col": 6,
       "tileActions": ["PromotionReverse"],
       "img": "default"
     },
     {
-      "row": 7,
+      "row": 6,
       "col": 7,
       "tileActions": ["PromotionReverse"],
       "img": "default"

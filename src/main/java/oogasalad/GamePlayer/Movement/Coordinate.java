@@ -1,5 +1,7 @@
 package oogasalad.GamePlayer.Movement;
 
+import java.util.Objects;
+
 public class Coordinate{
 
   private int row;
@@ -63,5 +65,13 @@ public class Coordinate{
   public boolean equals(Object other) {
     Coordinate otherCord = (Coordinate) other;
     return this.row == otherCord.getRow() && this.col == otherCord.getCol();
+  }
+
+  /**
+   * @return hashcode based on row and col of coordinate
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(row, col);
   }
 }
