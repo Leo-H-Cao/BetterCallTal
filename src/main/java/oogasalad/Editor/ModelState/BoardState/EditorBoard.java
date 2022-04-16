@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Locale;
 import oogasalad.Editor.Exceptions.InvalidPieceIDException;
 import oogasalad.Editor.ModelState.PiecesState.EditorCoordinate;
-import oogasalad.Editor.ModelState.PiecesState.LibraryPiece;
 
 public class EditorBoard {
 
@@ -57,8 +56,8 @@ public class EditorBoard {
     board.get(y).get(x).setTileEffect(effect);
   }
 
-  public void addPieceStartingLocation(String pieceID, int x, int y){
-    board.get(y).get(x).addPiece(pieceID);
+  public void addPieceStartingLocation(String pieceID, int x, int y, int team){
+    board.get(y).get(x).addPiece(pieceID, team);
   }
 
   public void removePieceStartingLocation(String pieceID){
