@@ -46,12 +46,12 @@ public class BoardTile {
     private Color WhiteSquare = Color.GRAY;
     private Color myColor;
 
-    public BoardTile(Coordinate c, int rows, int cols, Consumer<Piece> lightupCons, Runnable clearlitrun, Consumer<Piece> setSelPiece, Consumer<Coordinate> MoveCons) {
+    public BoardTile(Coordinate c, double width, double height, Consumer<Piece> lightupCons, Runnable clearlitrun, Consumer<Piece> setSelPiece, Consumer<Coordinate> MoveCons) {
         myCoord = c;
         myStackPane = new StackPane();
         addActionToSP(lightupCons, clearlitrun, setSelPiece, MoveCons);
-        myTileHeight = HEIGHT_BOARD / cols;
-        myTileWidth = WIDTH_Board / rows;
+        myTileHeight = height;
+        myTileWidth = width;
         myRectangle = new Rectangle(myTileWidth, myTileHeight);
         ColorRect(c.getCol(), c.getRow());
 
