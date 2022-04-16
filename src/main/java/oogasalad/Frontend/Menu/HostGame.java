@@ -27,13 +27,16 @@ import java.util.Optional;
 import java.util.Stack;
 
 
-public class HostGame extends GameView {
+public class HostGame extends View {
     private StackPane myStackPane;
     private static final String TITLE = "Title";
     private static final String Load_Button_ID = "Upload";
-    private static final String Confirm_Button_ID = "Confirm";
+    private static final String Confirm_Button_ID = "HostConfirm";
+    private static final String Start_Button_ID = "HostStart";
+    private static final String CONFIRM = "Confirm";
     private static final String LOAD = "Load";
     private static final String PROMPT = "Prompt";
+    private static final String START = "Start";
     private final Integer TITLE_SIZE = 64;
     private final Integer PROMPT_SIZE = 40;
     private static final String WHITE = "White";
@@ -108,7 +111,7 @@ public class HostGame extends GameView {
         RoomName.setPrefHeight(TEXTAREAHEIGHT);
         RoomName.setPrefWidth(TEXTAREAWIDTH);
 
-        Button Confirm = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord(Confirm_Button_ID, getClass()),
+        Button Confirm = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord(CONFIRM, getClass()),
                 Confirm_Button_ID, (e) -> {
             if (! RoomName.getText().equals("")) {
                 Node start = makeStartGroup(f);
@@ -141,7 +144,7 @@ public class HostGame extends GameView {
     }
 
     private Node makeStartGroup(File f) {
-        Button start = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("Start"), "start",
+        Button start = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord(START), Start_Button_ID,
                 (e) -> {
             Optional<ChessBoard> cbOp = getGameBackend().initalizeChessBoard(f);
             if(cbOp.isPresent()) {
@@ -154,17 +157,5 @@ public class HostGame extends GameView {
         start.setPrefWidth(150);
         start.setPrefHeight(50);
         return new Group(start);
-    }
-
-    private Node makeExitGroup() {
-        Button Exit = makeExitButton();
-        return new Group(Exit);
-    }
-
-    private Node makeLabelGroup(String s, Integer size){
-        Label l = new Label(s);
-        l.setFont(new Font(size));
-        l.setTextAlignment(TextAlignment.CENTER);
-        return new Group(l);
     }
 }

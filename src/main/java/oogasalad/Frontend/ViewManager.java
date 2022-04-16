@@ -5,6 +5,7 @@ import oogasalad.Frontend.Editor.EditorView;
 import oogasalad.Frontend.Game.GameView;
 import oogasalad.Frontend.Menu.HomeView;
 import oogasalad.Frontend.Menu.HostGame;
+import oogasalad.Frontend.Menu.JoinGame;
 import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.Frontend.util.View;
 import java.util.ResourceBundle;
@@ -21,6 +22,7 @@ public class ViewManager {
 		View.addView(new GameView(myStage));
 		View.addView(new EditorView(myStage));
 		View.addView(new HostGame(myStage));
+		View.addView(new JoinGame(myStage));
 		myStage.setScene(homeView.getScene());
 	}
 

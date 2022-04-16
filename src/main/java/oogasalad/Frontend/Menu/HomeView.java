@@ -64,7 +64,7 @@ public class HomeView extends View {
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("Create", getClass()), "createButton",
                 (e) -> getView(EditorView.class).ifPresent(this::changeScene)), 0, 0);
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("Join", getClass()), "joinButton",
-                (e) -> System.out.println("go to join screen")/*getView(JoinView.class).ifPresent(this::changeScene)*/), 0, 1);
+                (e) -> getView(JoinGame.class).ifPresent(this::changeScene)), 0, 1);
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("Host", getClass()), "hostButton",
                 (e) -> getView(HostGame.class).ifPresent(this::changeScene)), 0, 2);
 

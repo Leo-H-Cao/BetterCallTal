@@ -34,8 +34,6 @@ public class BoardTile {
     private ArrayList<Piece> myPieces;
     private static Double myTileHeight;
     private static Double myTileWidth;
-    private static Double HEIGHT_BOARD = 600.0;
-    private static Double WIDTH_Board = 600.0;
     private  Coordinate myCoord;
     private Border myLitUpBorder;
     private Border myClearBorder;
