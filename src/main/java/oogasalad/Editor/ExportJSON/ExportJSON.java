@@ -17,10 +17,12 @@ public class ExportJSON {
   private GameRulesState gameRulesState;
   private BoardState boardState;
   private String JSONString;
+  private String JSONTestString;
   private GeneralExport generalExport;
   private ArrayList<PlayerInfoExport> playerInfo;
   private ExportWrapper exportWrapper;
   private ArrayList<PieceExport> pieces;
+
 
   public ExportJSON(PiecesState piecesState, GameRulesState gameRulesState, BoardState boardState){
     this.piecesState = piecesState;
@@ -33,10 +35,15 @@ public class ExportJSON {
     exportWrapper = new ExportWrapper(generalExport, playerInfo, pieces);
   }
 
+  public String getJSONTestString(){
+    return JSONTestString;
+  }
+
   public void writeToJSON(){
     ObjectMapper objectMapper = new ObjectMapper();
     try{
       JSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(exportWrapper);
+      JSONTestString = objectMapper.writeValueAsString(exportWrapper);
       System.out.println(JSONString);
 
     }
