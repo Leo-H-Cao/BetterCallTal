@@ -15,18 +15,16 @@ import static oogasalad.Editor.ModelState.EditPiece.PieceGridTile.OPEN;
 public class EditorBackend {
 	private final PiecesState piecesState;
 	private final BoardState boardState;
-	private final Map<String, EditorPiece> myEditorPieces;
 	private PieceGridTile currentlySelectedType;
 	private Property<PieceGridTile> selectedTypeProperty;
 	private Property<String> selectedPieceId;
 
 	public EditorBackend(){
-		myEditorPieces = new HashMap<>();
 		this.piecesState = new PiecesState();
 		this.boardState = new BoardState(piecesState);
 		currentlySelectedType = OPEN;
 		selectedTypeProperty = new SimpleObjectProperty<>(currentlySelectedType);
-		selectedPieceId = new SimpleStringProperty("rookB");
+		selectedPieceId = new SimpleStringProperty("rook");
 	}
 
 	public PiecesState getPiecesState(){
@@ -35,14 +33,6 @@ public class EditorBackend {
 
 	public BoardState getBoardState(){
 		return boardState;
-	}
-
-	public void createEditorPiece(String id) {
-		myEditorPieces.put(id, new EditorPiece(id));
-	}
-
-	public EditorPiece getEditorPiece(String id) {
-		return myEditorPieces.get(id);
 	}
 
 	public Property<PieceGridTile> getSelectedPieceEditorType() {

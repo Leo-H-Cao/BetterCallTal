@@ -64,7 +64,7 @@ public class EditorView extends View {
 		String newPieceId = "custom" + pieceEditorCount;
 		PieceEditor newPieceEditor = new PieceEditor(newPieceId);
 		myPieceEditors.put(newPieceId, newPieceEditor);
-		getEditorBackend().createEditorPiece(newPieceId);
+		getEditorBackend().getPiecesState().createCustomPiece(newPieceId);
 		Tab newTab = makeTab(getTabTitle(), newPieceEditor.getNode());
 		newTab.setOnClosed((e) -> myPieceEditors.remove(newPieceEditor.getId()));
 		myTabs.getTabs().add(newTab);

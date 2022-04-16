@@ -26,7 +26,7 @@ public class PieceExport {
     this.row = row;
     this.col = col;
     pieceName = editorPiece.getPieceName();
-    imgFile = editorPiece.getImage(team).getUrl();
+    imgFile = editorPiece.getImage(team).getValue().getUrl();
     pointValue = editorPiece.getPointValue();
     this.team = team;
     customMoves = new ArrayList<>();

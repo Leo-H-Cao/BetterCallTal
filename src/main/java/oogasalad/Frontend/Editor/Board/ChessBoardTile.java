@@ -28,6 +28,10 @@ public class ChessBoardTile extends NodeContainer {
 	private Node makeGridTile() {
 		StackPane ret;
 		ImageView image = new ImageView();
+		image.setFitWidth(SIZE - 5);
+		image.setFitHeight(SIZE - 5);
+		image.setPreserveRatio(true);
+		image.setCache(true);
 		Rectangle rect = new Rectangle(SIZE, SIZE);
 		if (alt) {
 			myResources.ifPresent((e) -> rect.setFill(Paint.valueOf(e.getString("BaseColor"))));
@@ -36,10 +40,9 @@ public class ChessBoardTile extends NodeContainer {
 		}
 		ButtonFactory.addAction(rect, (e) -> {
 			String selectedId = String.valueOf(getEditorBackend().getSelectedPieceId().getValue());
-			LOG.debug(selectedId);
-			getEditorBackend().getBoardState().setPieceStartingLocation(selectedId, myX, myY);
-			image.setImage(getEditorBackend().getEditorPiece(selectedId).getImage(0).getValue());
-			getEditorBackend().getEditorPiece(selectedId).getImage(0).addListener((ob, ov, nv) -> image.setImage(nv));
+			getEditorBackend().getBoardState().setPieceStartingLocation(selectedId, myX, myY, 0);
+			image.setImage(getEditorBackend().getPiecesState().getPiece(selectedId).getImage(0).getValue());
+			getEditorBackend().getPiecesState().getPiece(selectedId).getImage(0).addListener((ob, ov, nv) -> image.setImage(nv));
 		});
 		ret = new StackPane();
 		ret.getChildren().addAll(rect, image);

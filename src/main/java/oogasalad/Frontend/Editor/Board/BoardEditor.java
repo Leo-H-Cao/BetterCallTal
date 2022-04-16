@@ -8,11 +8,13 @@ public class BoardEditor extends NodeContainer {
 	private final ChessBoard myChessBoard;
 	private final PieceLibrary myPieceLibrary;
 	private final ModifierLibrary myModifierLibrary;
+	private final BoardSettings myBoardSettings;
 
 	public BoardEditor() {
 		myChessBoard = new ChessBoard();
 		myPieceLibrary = new PieceLibrary();
 		myModifierLibrary = new ModifierLibrary();
+		myBoardSettings = new BoardSettings();
 	}
 
 	@Override
@@ -26,6 +28,7 @@ public class BoardEditor extends NodeContainer {
 		ret.setCenter(myChessBoard.getNode());
 		ret.setLeft(myPieceLibrary.getNode());
 		ret.setRight(myModifierLibrary.getNode());
+		ret.setBottom(myBoardSettings.getNode());
 		return ret;
 	}
 }

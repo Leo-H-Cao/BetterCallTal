@@ -17,11 +17,13 @@ public class EditorPiece {
   private String pieceName;
 
   public EditorPiece(String pieceID){
+    Image defaultMainPieceImage = new Image("images/pieces/white/rook.png");
+    Image defaultAltPieceImage = new Image("images/pieces/black/rook.png");
     this.pieceID = pieceID;
     movementGrid = new MovementGrid();
     mainPiece = false;
-    image0 = new SimpleObjectProperty<>();
-    image1 = new SimpleObjectProperty<>();
+    image0 = new SimpleObjectProperty<>(defaultMainPieceImage);
+    image1 = new SimpleObjectProperty<>(defaultAltPieceImage);
   }
 
   public MovementGrid getMovementGrid() {

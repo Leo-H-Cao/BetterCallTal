@@ -24,9 +24,8 @@ public class PieceBoardTile extends NodeContainer {
 		myX = x;
 		myY = y;
 		myId = id;
-		myResources.ifPresent((e) -> getEditorBackend().getEditorPiece(myId).setImage(0, new Image(e.getString("DefaultImage"))));
 		status = new SimpleObjectProperty(type);
-		myImage = getEditorBackend().getEditorPiece(myId).getImage(0);
+		myImage = getEditorBackend().getPiecesState().getPiece(myId).getImage(0);
 	}
 
 	@Override
@@ -37,7 +36,7 @@ public class PieceBoardTile extends NodeContainer {
 	private Node makeTile() {
 		Rectangle rect = new Rectangle(SIZE, SIZE, getTileColor(status.getValue()));
 		StackPane ret = new StackPane(rect);
-		Coordinate pieceLocation = getEditorBackend().getEditorPiece(myId).getMovementGrid().getPieceLocation();
+		Coordinate pieceLocation = getEditorBackend().getPiecesState().getPiece(myId).getMovementGrid().getPieceLocation();
 		ImageView pieceImage = new ImageView();
 		if(pieceLocation.getRow() == myX && pieceLocation.getCol() == myY) {
 			pieceImage.setImage(myImage.getValue());
@@ -51,11 +50,13 @@ public class PieceBoardTile extends NodeContainer {
 		myImage.addListener((ob, ov, nv) -> pieceImage.setImage(nv));
 
 		// Update tile color when clicked
-		ButtonFactory.addAction(ret, (e) -> {
-			PieceGridTile type = getEditorBackend().getSelectedPieceEditorType().getValue();
-			getEditorBackend().getEditorPiece(myId).setTile(myX, myY, type);
-			status.setValue(type);
-		});
+		if(status.getValue() != PieceGridTile.PIECE) {
+			ButtonFactory.addAction(ret, (e) -> {
+				PieceGridTile type = getEditorBackend().getSelectedPieceEditorType().getValue();
+				getEditorBackend().getPiecesState().getPiece(myId).setTile(myX, myY, type);
+				status.setValue(type);
+			});
+		}
 
 
 		ret.hoverProperty().addListener((ob, ov, nv) -> {

@@ -2,13 +2,12 @@ package oogasalad.Frontend.Editor.Board;
 
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
-import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.LabelledContainer;
@@ -38,7 +37,7 @@ public class PieceLibrary extends LabelledContainer {
 		rect.setStroke(Paint.valueOf("blue"));
 		rect.setStrokeWidth(2);
 		rect.setStrokeType(StrokeType.INSIDE);
-		ImageView image = new ImageView(getEditorBackend().getPiecesState().getPiece(id).getImage());
+		ImageView image = new ImageView(getEditorBackend().getPiecesState().getPiece(id).getImage(0).getValue());
 		image.setFitHeight(size - 5);
 		image.setPreserveRatio(true);
 		image.setSmooth(true);
@@ -51,7 +50,6 @@ public class PieceLibrary extends LabelledContainer {
 	private void createDefaultPieces() {
 		// Rook
 		MovementGrid rookMovement = new MovementGrid();
-		getEditorBackend().getPiecesState().createCustomPiece("pieceID");
-		getEditorBackend().getPiecesState().createCustomPiece("pieceID");
+		getEditorBackend().getPiecesState().createCustomPiece("rook");
 	}
 }
