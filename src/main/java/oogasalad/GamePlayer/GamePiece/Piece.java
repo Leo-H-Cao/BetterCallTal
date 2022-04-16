@@ -216,11 +216,18 @@ public class Piece implements Cloneable {
   }
 
   /***
+   * @return relative coordinates for all regular moves, including captures
+   */
+  public List<Coordinate> getRelativeCapCoords() {
+    return movementHandler.getRelativeCapCoords();
+  }
+
+  /***
    * @param newMovements new coordinates for all regular moves to set
    * @param newCaptures new coordinates for all regular captures to set
    */
-  public void setAllRelativeMoveCoords(List<MovementInterface> newMovements, List<MovementInterface> newCaptures) {
-    movementHandler.setAllRelativeMoveCoords(newMovements, newCaptures);
+  public void setNewMovements(List<MovementInterface> newMovements, List<MovementInterface> newCaptures) {
+    movementHandler.setNewMovements(newMovements, newCaptures);
   }
 
   /***

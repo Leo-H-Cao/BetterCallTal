@@ -156,10 +156,24 @@ public class MovementHandler {
   }
 
   /***
-   * @return relative coordinates for a given list
+   * @return relative coordinates for movements
    */
   public List<Coordinate> getRelativeMoveCoords() {
-    return movements.stream().flatMap((m) -> m.getRelativeCoords().stream()).collect(Collectors.toList());
+    return getRelativeMoveCoordsFromList(movements);
+  }
+
+  /**
+   * @return relative coordinates list for given movementList
+   */
+  private List<Coordinate> getRelativeMoveCoordsFromList(List<MovementInterface> movementList) {
+    return movementList.stream().flatMap((m) -> m.getRelativeCoords().stream()).collect(Collectors.toList());
+  }
+
+  /***
+   * @return relative coordinates for captures
+   */
+  public List<Coordinate> getRelativeCapCoords() {
+    return getRelativeMoveCoordsFromList(captures);
   }
 
   /***
@@ -173,7 +187,7 @@ public class MovementHandler {
    * @param newMovements new coordinates for all regular moves to set
    * @param newCaptures new coordinates for all regular captures to set
    */
-  public void setAllRelativeMoveCoords(List<MovementInterface> newMovements, List<MovementInterface> newCaptures) {
+  public void setNewMovements(List<MovementInterface> newMovements, List<MovementInterface> newCaptures) {
     this.movements = newMovements;
     this.captures = newCaptures;
   }
