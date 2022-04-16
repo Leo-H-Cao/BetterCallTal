@@ -298,8 +298,27 @@ public class Piece implements Cloneable {
 
   }
 
+  /***
+   * @return piece data
+   */
   @Override
   public String toString() {
     return suppPieceData.name();
+  }
+
+  /***
+   * Checks if name, team, and coordinates are the same
+   *
+   * @param o other piece to compare to
+   * @return if name, team, and coordinates are the same
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Piece otherPiece = (Piece) o;
+    return this.getName().equals(otherPiece.getName()) && this.getTeam() == otherPiece.getTeam() &&
+    this.getCoordinates().equals(otherPiece.getCoordinates());
   }
 }

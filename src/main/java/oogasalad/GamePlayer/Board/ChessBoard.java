@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -409,6 +410,26 @@ public class ChessBoard implements Iterable<ChessTile> {
    */
   public HistoryManager getHistory() {
     return history;
+  }
+
+  /***
+   * Checks if all the pieces are the same
+   *
+   * @param o to compare to
+   * @return if all the pieces on this and o are the same
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ChessBoard otherBoard = (ChessBoard) o;
+    return getPieces().equals(otherBoard.getPieces());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(pieceList);
   }
 
   /**
