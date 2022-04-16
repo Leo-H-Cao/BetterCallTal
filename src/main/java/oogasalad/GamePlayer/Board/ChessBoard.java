@@ -427,6 +427,9 @@ public class ChessBoard implements Iterable<ChessTile> {
     return getPieces().equals(otherBoard.getPieces());
   }
 
+  /***
+   * @return hash of piece list
+   */
   @Override
   public int hashCode() {
     return Objects.hash(pieceList);

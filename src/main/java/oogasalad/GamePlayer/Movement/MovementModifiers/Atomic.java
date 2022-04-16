@@ -18,39 +18,34 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/***
+ * Creates an movement modifier that explodes pieces around it
+ */
 public class Atomic implements MovementModifier{
 
   private static final String ATOMIC_IMMUNE_FILE_PATH = "doc/GameEngineResources/Other/AtomicImmune";
   private static final Logger LOG = LogManager.getLogger(Atomic.class);
 
-  private static List<String> EXPLOSION_IMMUNE_NAMES;
+  private final static List<String> EXPLOSION_IMMUNE_NAMES = assignImmune();
   private static final int surroundDistance = 1;
-
-  /***
-   * Creates an movement modifier that explodes pieces around it
-   */
-  public Atomic() {
-    if(EXPLOSION_IMMUNE_NAMES == null) {
-      assignImmune();
-    }
-    LOG.debug("Immune pieces: " + EXPLOSION_IMMUNE_NAMES);
-  }
 
   /***
    * Assigns piece immune to explosions, default is just pawn
    */
-  private void assignImmune() {
-    EXPLOSION_IMMUNE_NAMES = new ArrayList<>();
+  private static List<String> assignImmune() {
+
     try {
+      List<String> immuneNames = new ArrayList<>();
       File immuneFile = new File(ATOMIC_IMMUNE_FILE_PATH);
       Scanner reader = new Scanner(immuneFile);
       while (reader.hasNext()) {
-        EXPLOSION_IMMUNE_NAMES.add(reader.next().trim());
+        immuneNames.add(reader.next().trim());
       }
       reader.close();
+      return immuneNames;
     } catch (Exception e) {
-      LOG.warn("Could not find file: " + ATOMIC_IMMUNE_FILE_PATH);
-      EXPLOSION_IMMUNE_NAMES = List.of("Pawn");
+      LOG.warn("Could not find atomic file");
+      return List.of("Pawn");
     }
   }
 

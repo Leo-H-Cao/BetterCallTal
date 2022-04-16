@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 
 /**
  * This class is used to store prior states of the game, allowing for checking complex game
@@ -152,5 +154,13 @@ public class LocalHistoryManager implements HistoryManager {
    */
   public boolean isEmpty() {
     return history.isEmpty();
+  }
+
+  /***
+   * @return stream over history list
+   */
+  @Override
+  public Stream<History> stream() {
+    return history.stream();
   }
 }
