@@ -1,5 +1,6 @@
 package oogasalad.Editor;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Locale;
@@ -56,8 +57,9 @@ public class ExportJSONTest extends DukeApplicationTest {
 
   @Test
   void testPiecesExport(){
-    EditorPiece testPiece= new EditorPiece("123");
-    testPiece.setImage(0, new Image("images/pieces/black/rook.png"));
+    piecesState.createCustomPiece("123");
+    piecesState.changePieceImage("123", new Image("images/pieces/black/rook.png"), 0);
+    EditorPiece testPiece = piecesState.getPiece("123");
 
     testPiece.setTile(4, 2, PieceGridTile.OPEN);
     testPiece.setTile(6, 0, PieceGridTile.INFINITY);
@@ -75,7 +77,7 @@ public class ExportJSONTest extends DukeApplicationTest {
     boardState.setPieceStartingLocation("123", 4, 5, 0);
     exportJSON = new ExportJSON(piecesState, gameRulesState, boardState);
     exportJSON.writeToJSON();
-    assertTrue(exportJSON.getJSONTestString().contains(myResources.getString("exportPiecesJSONString")));
+    assertEquals(exportJSON.getJSONTestString(), myResources.getString("exportPiecesJSONString"));
   }
 
   private void setResources() {
