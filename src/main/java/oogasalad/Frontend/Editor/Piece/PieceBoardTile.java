@@ -14,7 +14,7 @@ import oogasalad.Frontend.util.NodeContainer;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
 public class PieceBoardTile extends NodeContainer {
-	public static int SIZE = 80;
+	public static int SIZE = 85;
 	private Property<PieceGridTile> status;
 	private Property<Image> myImage;
 	private int myX, myY;
@@ -42,6 +42,7 @@ public class PieceBoardTile extends NodeContainer {
 		if(pieceLocation.getRow() == myX && pieceLocation.getCol() == myY) {
 			pieceImage.setImage(myImage.getValue());
 			pieceImage.setFitHeight(SIZE - 5);
+			pieceImage.setFitWidth(SIZE - 5);
 			pieceImage.setCache(true);
 			pieceImage.setPreserveRatio(true);
 			ret.getChildren().add(pieceImage);

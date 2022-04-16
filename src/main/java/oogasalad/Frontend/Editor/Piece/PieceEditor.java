@@ -31,7 +31,7 @@ public class PieceEditor extends NodeContainer {
 		ret.setPrefWidth(myScreenSize.getWidth());
 		ret.setCenter(myPieceBoard.getNode());
 		ret.setLeft(myTileTypeSelector.getNode());
-		ret.setBottom(myPieceSettings.getNode());
+		ret.setRight(myPieceSettings.getNode());
 		return ret;
 	}
 }

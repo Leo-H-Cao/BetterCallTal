@@ -10,12 +10,9 @@ import oogasalad.Frontend.util.View;
 import java.util.ResourceBundle;
 
 public class ViewManager {
-	// Bundle made static so all classes can easily access the language
-	private final Stage myStage;
-
 	public ViewManager(Stage stage, ResourceBundle rb) {
 		BackendConnector.initBackend(rb);
-		myStage = stage;
+		Stage myStage = stage;
 		View homeView = new HomeView(myStage);
 		View.addView(homeView);
 		View.addView(new GameView(myStage));
@@ -23,5 +20,4 @@ public class ViewManager {
 		View.addView(new HostGame(myStage));
 		myStage.setScene(homeView.getScene());
 	}
-
 }

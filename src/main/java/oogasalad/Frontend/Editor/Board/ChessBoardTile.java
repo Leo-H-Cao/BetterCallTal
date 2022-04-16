@@ -1,6 +1,8 @@
 package oogasalad.Frontend.Editor.Board;
 
 import javafx.scene.Node;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import oogasalad.Frontend.util.ButtonFactory;
@@ -24,14 +26,23 @@ public class ChessBoardTile extends NodeContainer {
 	}
 
 	private Node makeGridTile() {
-		Rectangle ret = new Rectangle(SIZE, SIZE);
+		StackPane ret;
+		ImageView image = new ImageView();
+		Rectangle rect = new Rectangle(SIZE, SIZE);
 		if (alt) {
-			ret.setFill(Paint.valueOf("#bbb"));
+			myResources.ifPresent((e) -> rect.setFill(Paint.valueOf(e.getString("BaseColor"))));
 		} else {
-			ret.setFill(Paint.valueOf("gray"));
+			myResources.ifPresent((e) -> rect.setFill(Paint.valueOf(e.getString("AltColor"))));
 		}
-		ButtonFactory.addAction(ret, (e) -> System.out.printf("X: %d, Y: %d\n", myX, myY));
-
+		ButtonFactory.addAction(rect, (e) -> {
+			String selectedId = String.valueOf(getEditorBackend().getSelectedPieceId().getValue());
+			LOG.debug(selectedId);
+			getEditorBackend().getBoardState().setPieceStartingLocation(selectedId, myX, myY);
+			image.setImage(getEditorBackend().getEditorPiece(selectedId).getImage(0).getValue());
+			getEditorBackend().getEditorPiece(selectedId).getImage(0).addListener((ob, ov, nv) -> image.setImage(nv));
+		});
+		ret = new StackPane();
+		ret.getChildren().addAll(rect, image);
 		return ret;
 	}
 }

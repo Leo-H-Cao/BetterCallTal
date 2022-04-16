@@ -3,6 +3,9 @@ package oogasalad.Editor.ModelState.BoardState;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleIntegerProperty;
 import oogasalad.Editor.Exceptions.InvalidPieceIDException;
 import oogasalad.Editor.ModelState.PiecesState.EditorCoordinate;
 import oogasalad.Editor.ModelState.PiecesState.LibraryPiece;
@@ -12,40 +15,44 @@ public class EditorBoard {
   private final int DEFAULT_BOARD_SIZE = 8;
   private final String PIECE_ID_ERROR = "Invalid pieceID, piece does not exist in board";
   private List<List<EditorTile>> board;
+  private SimpleIntegerProperty myWidth;
+  private SimpleIntegerProperty myHeight;
 
   public EditorBoard(){
+    myWidth = new SimpleIntegerProperty(DEFAULT_BOARD_SIZE);
+    myHeight = new SimpleIntegerProperty(DEFAULT_BOARD_SIZE);
     board = new ArrayList<>(DEFAULT_BOARD_SIZE);
     initializeBoard(DEFAULT_BOARD_SIZE);
   }
 
-  public void changeBoardSize(int width, int height){
-    int curWidth  = board.get(0).size();
-    int curHeight = board.size();
+  public void changeBoardSize(int width, int height) {
+    myWidth.setValue(width);
+    myHeight.setValue(height);
 
     //adjusting height
-    if(height < curHeight){
-      for(int i = 0; i < curHeight - height; i++){
+    if(height < myHeight.get()){
+      for(int i = 0; i < myHeight.get() - height; i++){
         board.remove(board.size()-1);
       }
     }
     else{
-      for(int i = curHeight; i < height; i++){
-        board.add(new ArrayList<EditorTile>());
-        addDefaultRow(curWidth, curHeight);
+      for(int i = myHeight.get(); i < height; i++){
+        board.add(new ArrayList<>());
+        addDefaultRow(myWidth.get(), myHeight.get());
       }
     }
 
     //adjusting width
-    if(width < curWidth){
+    if(width < myWidth.get()){
       for(int i = 0; i < height; i++){
-        for(int j = curWidth-1; j >= width; j--){
+        for(int j = myWidth.get()-1; j >= width; j--){
           board.get(i).remove(j);
         }
       }
     }
     else{
       for(int i = 0; i< height; i++){
-        for(int j = curWidth; j < width; j++){
+        for(int j = myWidth.get(); j < width; j++){
           board.get(i).add(new EditorTile(i, j));
         }
       }
@@ -66,12 +73,12 @@ public class EditorBoard {
     board.get(pieceLocation.getY()).get(pieceLocation.getX()).removePiece();
   }
 
-  public int getBoardWidth(){
-    return board.get(0).size();
+  public SimpleIntegerProperty getBoardWidth(){
+    return myWidth;
   }
 
-  public int getBoardHeight(){
-    return board.size();
+  public SimpleIntegerProperty getBoardHeight(){
+    return myHeight;
   }
 
   public EditorCoordinate getPieceLocation(String pieceID){

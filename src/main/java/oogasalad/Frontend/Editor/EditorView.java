@@ -16,7 +16,6 @@ import oogasalad.Frontend.util.View;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class EditorView extends View {
 	private static String selectedPieceId;
 	private final BoardEditor myBoardEditor;
@@ -32,7 +31,12 @@ public class EditorView extends View {
 		Tab boardTab = makeTab(BackendConnector.getFrontendWord("Board", getClass()), myBoardEditor.getNode());
 		boardTab.setClosable(false);
 		myTabs = new TabPane(boardTab);
+		myTabs.setId("EditorTabPane");
 		myTabs.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
+	}
+
+	public TabPane getMyTabs() {
+		return myTabs;
 	}
 
 	@Override
