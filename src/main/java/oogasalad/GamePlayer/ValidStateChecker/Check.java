@@ -27,6 +27,9 @@ public class Check implements ValidStateChecker {
     List<Piece> allPieces = board.getPieces();
 
     for(Piece p : allPieces){
+      if(p.getTeam()==id){
+        continue;
+      }
       Set<ChessTile> enemyMoves = p.getMoves(board);
       for(ChessTile t : enemyMoves){
         for(Piece target : targetPieces){
