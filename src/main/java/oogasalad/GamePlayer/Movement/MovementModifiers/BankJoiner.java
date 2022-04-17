@@ -38,9 +38,9 @@ public class BankJoiner implements MovementModifier{
   public Set<ChessTile> updateMovement(Piece piece, ChessBoard board) {
     LOG.debug("Bank join started");
     try {
-      Piece justTaken = board.getHistory().get(board.getHistory().size() - 1).board().getTile(
+      Piece justTaken = board.getHistory().get(board.getHistory().size() - 2).board().getTile(
           piece.getCoordinates()).getPiece().orElse(
-              findTakenPiece(board, board.getHistory().get(board.getHistory().size() - 1).board(),
+              findTakenPiece(board, board.getHistory().get(board.getHistory().size() - 2).board(),
                   piece.getTeam()));
       LOG.debug(String.format("Just taken: %s", justTaken));
       justTaken.updateTeam(board.getCurrentPlayer());
