@@ -11,10 +11,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Editor.EditorView;
+import oogasalad.Frontend.LocalPlay.LocalGame;
 import oogasalad.Frontend.util.BackendConnector;
-import oogasalad.Frontend.util.View;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
+import oogasalad.Frontend.util.View;
 
 /**
  * HomeView class will handle the navigation of the User from the home screen to the next page they seek.
@@ -25,10 +26,8 @@ public class HomeView extends View {
     public HomeView(Stage stage) {
         super(stage);
         // Changes the current scene to the home page on app initialization
-        getView(HomeView.class).ifPresent((e) -> {
-            changeScene(e);
-        });
-
+        getView(HomeView.class).ifPresent(this::changeScene);
+        //createDefaultPieces();
     }
 
     @Override
@@ -61,12 +60,18 @@ public class HomeView extends View {
 
     private Node makeButtons() {
         GridPane buttonList = new GridPane();
+
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("Create", getClass()), "createButton",
                 (e) -> getView(EditorView.class).ifPresent(this::changeScene)), 0, 0);
+
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("Join", getClass()), "joinButton",
                 (e) -> System.out.println("go to join screen")/*getView(JoinView.class).ifPresent(this::changeScene)*/), 0, 1);
+
         buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("Host", getClass()), "hostButton",
                 (e) -> getView(HostGame.class).ifPresent(this::changeScene)), 0, 2);
+
+        buttonList.add(ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("Local", getClass()), "localButton",
+                e -> getView(LocalGame.class).ifPresent(this::changeScene)), 0, 3);
 
         buttonList.getChildren().forEach((b) -> {
             if(b instanceof Button) {

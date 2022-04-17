@@ -106,11 +106,6 @@ public abstract class View extends BackendConnector {
 	 * @return Optional View if it is found in myViews, Optional.empty otherwise
 	 */
 	protected <T> Optional<View> getView(Class<T> className) {
-		Optional<View> v = myViews.stream().filter((e) -> className == e.getClass()).findFirst();
-		if(v.isPresent()) {
-			return v;
-		} else {
-			return Optional.empty();
-		}
+		return myViews.stream().filter((e) -> className == e.getClass()).findFirst();
 	}
 }

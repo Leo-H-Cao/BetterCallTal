@@ -23,8 +23,7 @@ public class Swap implements TileAction {
   @Override
   public Set<ChessTile> executeAction(ChessTile tile, ChessBoard board) throws EngineException {
     List<Piece> nonTargetPiece = tile.getPieces().stream()
-        .filter(Piece::isTargetPiece)
-        .collect(Collectors.toList());
+        .filter(Piece::isTargetPiece).toList();
 
     Set<ChessTile> updatedTiles = new HashSet<>();
     updatedTiles.add(tile);
