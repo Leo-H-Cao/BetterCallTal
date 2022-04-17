@@ -291,6 +291,7 @@ public class Movement implements MovementInterface{
         movement.getRelativeCoords().forEach((c) -> {
           Coordinate invertedCoord = Coordinate.of(-c.getRow(), -c.getCol());
           invertedCoords.add(invertedCoord);
+          LOG.debug(String.format("Movement inverted: %s", invertedCoord));
         });
         inverted.add(new Movement(invertedCoords, movement.isInfinite()));
       } else {
