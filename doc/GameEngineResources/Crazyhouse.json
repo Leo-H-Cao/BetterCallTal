@@ -5,7 +5,7 @@
       "columns": 13,
       "turnCriteria": "Linear",
       "colors": ["black", "white"],
-      "endConditions": ["AtomicEndCondition"],
+      "endConditions": ["AtomicEndCondition", "Checkmate", "Stalemate"],
       "validStateCheckers": ["BankBlocker"]
     }
   ],
