@@ -1,20 +1,29 @@
 package oogasalad.Editor.ModelState.EditPiece;
 
 import java.util.ArrayList;
+
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.image.Image;
 
 public class EditorPiece {
   private MovementGrid movementGrid;
-  private Image image0;
-  private Image image1;
-  private String pieceID;
+  private Property<Image> image0;
+  private Property<Image> image1;
+  private final String pieceID;
   private boolean mainPiece;
   private ArrayList<String> customMoves;
+  private int pointValue;
+  private String pieceName;
 
   public EditorPiece(String pieceID){
+    Image defaultMainPieceImage = new Image("images/pieces/white/rook.png");
+    Image defaultAltPieceImage = new Image("images/pieces/black/rook.png");
     this.pieceID = pieceID;
     movementGrid = new MovementGrid();
     mainPiece = false;
+    image0 = new SimpleObjectProperty<>(defaultMainPieceImage);
+    image1 = new SimpleObjectProperty<>(defaultAltPieceImage);
   }
 
   public MovementGrid getMovementGrid() {
@@ -50,11 +59,11 @@ public class EditorPiece {
   }
 
   public void setImage(int team, Image image) {
-    if(team == 0){this.image0 = image;}
-    else{this.image1 = image;}
+    if(team == 0){image0.setValue(image);}
+    else{image1.setValue(image);}
   }
 
-  public Image getImage(int team){
+  public Property<Image> getImage(int team){
     if(team == 0){return image0;}
     else{return image1;}
   }
@@ -65,5 +74,34 @@ public class EditorPiece {
 
   public ArrayList<String> getCustomMoves(){
     return customMoves;
+  }
+
+  public void setMovementGrid(MovementGrid movementGrid) {
+    this.movementGrid = movementGrid;
+  }
+
+  public boolean isMainPiece() {
+    return mainPiece;
+  }
+
+  public int getPointValue() {
+    return pointValue;
+  }
+
+  public void setPointValue(int pointValue) {
+    this.pointValue = pointValue;
+  }
+
+  public String getPieceName() {
+    return pieceName;
+  }
+
+  public void setPieceName(String pieceName) {
+    this.pieceName = pieceName;
+  }
+
+  @Override
+  public String toString() {
+    return pieceID;
   }
 }

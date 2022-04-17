@@ -13,6 +13,7 @@ import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Coordinate;
+import org.apache.logging.log4j.Logger;
 
 public class ChessTile implements Tile, Cloneable {
 
@@ -66,7 +67,7 @@ public class ChessTile implements Tile, Cloneable {
    * Creates a chess tile with multiple pieces on it and a given coordinate
    */
   public ChessTile(Coordinate coordinate, List<Piece> pieces) {
-    this(coordinate, pieces, new ArrayList<TileAction>());
+    this(coordinate, pieces, new ArrayList<>());
   }
 
   /**
@@ -76,7 +77,6 @@ public class ChessTile implements Tile, Cloneable {
     this.coordinate = coordinate;
     this.pieces = pieces;
     this.specialActions = actions;
-    this.specialActions = new ArrayList<>();
     this.customImg = Optional.empty();
   }
 
@@ -129,7 +129,14 @@ public class ChessTile implements Tile, Cloneable {
     return pieces.remove(piece);
   }
 
+  /**
+   * Executes tile actions
+   *
+   * @param board to execute actions on
+   * @return set of updated tiles
+   */
   public Set<ChessTile> executeActions(ChessBoard board) throws OutsideOfBoardException {
+
     return specialActions.stream().flatMap(t -> {
       try {
         return t.executeAction(this, board).stream();

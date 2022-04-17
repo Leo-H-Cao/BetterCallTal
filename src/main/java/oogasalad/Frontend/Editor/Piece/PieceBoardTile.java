@@ -14,8 +14,9 @@ import oogasalad.Frontend.util.NodeContainer;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
 public class PieceBoardTile extends NodeContainer {
-	public static int SIZE = 80;
+	public static int SIZE = 85;
 	private Property<PieceGridTile> status;
+	private Property<Image> myImage;
 	private int myX, myY;
 	private String myId;
 
@@ -24,9 +25,7 @@ public class PieceBoardTile extends NodeContainer {
 		myY = y;
 		myId = id;
 		status = new SimpleObjectProperty(type);
-		myResources.ifPresent((e) -> {
-			getEditorBackend().getEditorPiece(myId).setImage(0, new Image(e.getString("DefaultImage")));
-		});
+		myImage = getEditorBackend().getPiecesState().getPiece(myId).getImage(0);
 	}
 
 	@Override
@@ -37,22 +36,27 @@ public class PieceBoardTile extends NodeContainer {
 	private Node makeTile() {
 		Rectangle rect = new Rectangle(SIZE, SIZE, getTileColor(status.getValue()));
 		StackPane ret = new StackPane(rect);
-		Coordinate pieceLocation = getEditorBackend().getEditorPiece(myId).getMovementGrid().getPieceLocation();
+		Coordinate pieceLocation = getEditorBackend().getPiecesState().getPiece(myId).getMovementGrid().getPieceLocation();
+		ImageView pieceImage = new ImageView();
 		if(pieceLocation.getRow() == myX && pieceLocation.getCol() == myY) {
-			ImageView pieceImage = new ImageView(getEditorBackend().getEditorPiece(myId).getImage(0));
+			pieceImage.setImage(myImage.getValue());
 			pieceImage.setFitHeight(SIZE - 5);
+			pieceImage.setFitWidth(SIZE - 5);
 			pieceImage.setCache(true);
 			pieceImage.setPreserveRatio(true);
 			ret.getChildren().add(pieceImage);
 		}
 		status.addListener((ob, ov, nv) -> rect.setFill(getTileColor(nv)));
+		myImage.addListener((ob, ov, nv) -> pieceImage.setImage(nv));
 
 		// Update tile color when clicked
-		ButtonFactory.addAction(ret, (e) -> {
-			PieceGridTile type = getEditorBackend().getSelectedPieceEditorType().getValue();
-			getEditorBackend().getEditorPiece(myId).setTile(myX, myY, PieceGridTile.OPEN);
-			status.setValue(type);
-		});
+		if(status.getValue() != PieceGridTile.PIECE) {
+			ButtonFactory.addAction(ret, (e) -> {
+				PieceGridTile type = getEditorBackend().getSelectedPieceEditorType().getValue();
+				getEditorBackend().getPiecesState().getPiece(myId).setTile(myX, myY, type);
+				status.setValue(type);
+			});
+		}
 
 
 		ret.hoverProperty().addListener((ob, ov, nv) -> {

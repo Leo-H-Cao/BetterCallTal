@@ -1,33 +1,33 @@
 package oogasalad.Editor.ModelState.PiecesState;
 
-
-import java.util.ArrayList;
-import java.util.List;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
 import javafx.scene.image.Image;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
+import java.util.Objects;
 
 public class PiecesState {
-  private ArrayList<LibraryPiece> availablePieces;
+  private SimpleListProperty<EditorPiece> availablePieces;
 
   public PiecesState(){
-    availablePieces = new ArrayList<>();
+    availablePieces = new SimpleListProperty<>(FXCollections.observableArrayList());
   }
 
-  public LibraryPiece getPiece(String pieceID) {
+  public EditorPiece getPiece(String pieceID) {
     return findPiece(pieceID);
   }
 
-  public List<LibraryPiece> getAllPieces(){
+  public SimpleListProperty<EditorPiece> getAllPieces(){
     return availablePieces;
   }
 
-  public void changePieceImage(String pieceID, Image imageFile) {
-    findPiece(pieceID).setPieceImage(imageFile);
+  public void changePieceImage(String pieceID, Image imageFile, int team) {
+    Objects.requireNonNull(findPiece(pieceID)).setImage(team, imageFile);
   }
 
-  public LibraryPiece createCustomPiece(int points, int teamNumber, Image image, EditorPiece editorPiece, String pieceName) {
-    LibraryPiece newPiece = new LibraryPiece(points, editorPiece, pieceName, teamNumber, image);
-    availablePieces.add(newPiece);
+  public EditorPiece createCustomPiece(String pieceID) {
+    EditorPiece newPiece = new EditorPiece(pieceID);
+    availablePieces.getValue().add(newPiece);
     return newPiece;
   }
 
@@ -39,12 +39,8 @@ public class PiecesState {
     findPiece(pieceID).setPieceName(name);
   }
 
-  public EditorPiece getEditorPiece(String pieceID){
-    return findPiece(pieceID).getEditorPiece();
-  }
-
-  private LibraryPiece findPiece(String pieceID){
-    for(LibraryPiece piece : availablePieces){
+  private EditorPiece findPiece(String pieceID){
+    for(EditorPiece piece : availablePieces.getValue()){
       if(piece.getPieceID().equals(pieceID)){
         return piece;
       }

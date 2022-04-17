@@ -16,7 +16,7 @@ import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.Movement.CustomMovements.Castling;
 import oogasalad.GamePlayer.Movement.CustomMovements.DoubleFirstMove;
 import oogasalad.GamePlayer.Movement.CustomMovements.EnPassant;
-import oogasalad.GamePlayer.Board.BoardSetup;
+import oogasalad.GamePlayer.Board.Setup.BoardSetup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -238,7 +238,7 @@ class CustomMovementTest {
   void enPassantTestHappy() {
     try {
       BoardSetup setup = new BoardSetup("doc/GameEngineResources/PresentationBoardUpdated.json");
-      ChessBoard chessBoard = setup.createBoard();
+      ChessBoard chessBoard = setup.createLocalBoard();
       Piece whiteReference = chessBoard.getTile(Coordinate.of(6, 6)).getPiece().get();
       chessBoard.move(chessBoard.getTile(Coordinate.of(6, 6)).getPiece().get(), Coordinate.of(4, 6));
       chessBoard.move(chessBoard.getTile(Coordinate.of(1, 1)).getPiece().get(), Coordinate.of(3, 1));
@@ -275,7 +275,7 @@ class CustomMovementTest {
       assertThrows(InvalidMoveException.class, () -> new EnPassant().movePiece(null, null, null));
       assertEquals(Collections.emptySet(), new EnPassant().getMoves(null, null));
       BoardSetup setup = new BoardSetup("doc/GameEngineResources/PresentationBoardUpdated.json");
-      ChessBoard chessBoard = setup.createBoard();
+      ChessBoard chessBoard = setup.createLocalBoard();
       Piece whiteReference = chessBoard.getTile(Coordinate.of(6, 6)).getPiece().get();
       chessBoard.move(chessBoard.getTile(Coordinate.of(6, 6)).getPiece().get(), Coordinate.of(4, 6));
       assertThrows(InvalidMoveException.class, () -> new EnPassant().capturePiece(whiteReference, Coordinate.of(2, 2), chessBoard));

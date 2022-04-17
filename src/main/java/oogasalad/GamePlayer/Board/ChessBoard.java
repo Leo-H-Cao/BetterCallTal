@@ -1,6 +1,7 @@
 package oogasalad.GamePlayer.Board;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -8,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -162,7 +164,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   /**
    * Copies this board and then makes the move
    *
-   * @param piece to move
+   * @param piece       to move
    * @param finalSquare to move the piece to
    * @return copy of the chessboard after the hypothetical move is made
    */
@@ -229,7 +231,7 @@ public class ChessBoard implements Iterable<ChessTile> {
         allPieceMovements.removeIf(entry -> {
           try {
             LOG.debug(String.format("Valid state checker class: %s", v.getClass()));
-            if(!v.isValid(this, piece, entry)){
+            if (!v.isValid(this, piece, entry)) {
               return true;
             }
           } catch (EngineException e) {
@@ -283,10 +285,23 @@ public class ChessBoard implements Iterable<ChessTile> {
     return board.get(coordinate.getRow()).get(coordinate.getCol());
   }
 
+  /***
+   * Finds if a chess tile contains an opposing team to a given team
+   *
+   * @param team to check for
+   * @param tile to check for
+   * @return if team opposes piece on tile
+   */
+  public boolean isOpposing(ChessTile tile, int team) {
+    return Arrays.stream(this.getPlayer(team).opponentIDs()).anyMatch(o ->
+       tile.getPiece().isPresent() && o == tile.getPiece().get().getTeam());
+  }
+
   /**
-   * starting from the top left, this method returns the tile that corresponds
-   * to the LINEAR position of the tiles. That is, by placing each row behind the previous
-   * return the tile of index
+   * starting from the top left, this method returns the tile that corresponds to the LINEAR
+   * position of the tiles. That is, by placing each row behind the previous return the tile of
+   * index
+   *
    * @param index
    * @return
    */
@@ -310,7 +325,6 @@ public class ChessBoard implements Iterable<ChessTile> {
     }
     return getTile(coordinate).getPiece().isEmpty();
   }
-
 
 
   /**
@@ -409,6 +423,29 @@ public class ChessBoard implements Iterable<ChessTile> {
    */
   public HistoryManager getHistory() {
     return history;
+  }
+
+  /***
+   * Checks if all the pieces are the same
+   *
+   * @param o to compare to
+   * @return if all the pieces on this and o are the same
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ChessBoard otherBoard = (ChessBoard) o;
+    return getPieces().equals(otherBoard.getPieces());
+  }
+
+  /***
+   * @return hash of piece list
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(pieceList);
   }
 
   /**

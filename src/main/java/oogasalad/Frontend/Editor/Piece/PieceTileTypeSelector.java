@@ -1,7 +1,9 @@
 package oogasalad.Frontend.Editor.Piece;
 
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -29,10 +31,12 @@ public class PieceTileTypeSelector extends LabelledContainer {
 	 * @return Collection of Nodes to be set as children of the flow pane
 	 */
 	@Override
-	protected Collection<Node> fillContent() {
+	protected Node fillContent() {
 		Collection<Node> ret = new ArrayList<>();
-		Arrays.stream(PieceGridTile.values()).forEach((type) -> ret.add(makeTile(type)));
-		return ret;
+		Arrays.stream(PieceGridTile.values()).filter((e) -> !e.equals(PieceGridTile.PIECE)).forEach((type) -> ret.add(makeTile(type)));
+		FlowPane fp = new FlowPane();
+		fp.getChildren().addAll(ret);
+		return fp;
 	}
 
 	private Node makeTile(PieceGridTile type) {
