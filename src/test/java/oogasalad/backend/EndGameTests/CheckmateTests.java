@@ -118,7 +118,7 @@ public class CheckmateTests {
         makePawn(2, 0, TEAM_2)));
 
     assertTrue(new Check().isValid(board, TEAM_1));
-//    assertTrue(CheckmateValidator.isInMate(board, TEAM_1));
+    assertFalse(new Checkmate().isInMate(board, TEAM_1));
   }
 
   @Test
