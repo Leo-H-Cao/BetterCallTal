@@ -134,18 +134,6 @@ public class LocalGame extends View {
     return orderSelector;
   }
 
-  private Node makeLabelGroup(String s, Integer size){
-    Label l = new Label(s);
-    l.setFont(new Font(size));
-    l.setTextAlignment(TextAlignment.CENTER);
-    return new Group(l);
-  }
-
-  private Node makeExitGroup() {
-    Button Exit = makeExitButton();
-    return new Group(Exit);
-  }
-
   private GridPane makeGameButtonHolder() {
     List<String> resourceNames = List.of("Multiplayer", "Singleplayer");
     List<String> ids = List.of("multiplayerButton", "singleplayerButton");
