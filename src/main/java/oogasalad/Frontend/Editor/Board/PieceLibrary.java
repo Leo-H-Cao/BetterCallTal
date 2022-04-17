@@ -18,7 +18,6 @@ public class PieceLibrary extends LabelledContainer {
 
 	public PieceLibrary() {
 		super("Piece Library");
-		createDefaultPieces();
 	}
 
 	@Override
@@ -35,8 +34,23 @@ public class PieceLibrary extends LabelledContainer {
 		Rectangle rect = new Rectangle(size, size);
 		rect.setFill(Paint.valueOf("#ccc"));
 		rect.setStroke(Paint.valueOf("blue"));
-		rect.setStrokeWidth(2);
+		rect.setStrokeWidth(0);
 		rect.setStrokeType(StrokeType.INSIDE);
+
+		// Set initial outline
+		if(id.equals(getEditorBackend().getSelectedPieceId().getValue())) {
+			rect.setStrokeWidth(2);
+		}
+
+		getEditorBackend().getSelectedPieceId().addListener((e) -> {
+			if(id.equals(getEditorBackend().getSelectedPieceId().getValue())) {
+				rect.setStrokeWidth(2);
+			} else {
+				rect.setStrokeWidth(0);
+			}
+		});
+
+
 		ImageView image = new ImageView(getEditorBackend().getPiecesState().getPiece(id).getImage(0).getValue());
 		image.setFitHeight(size - 5);
 		image.setPreserveRatio(true);
@@ -46,11 +60,5 @@ public class PieceLibrary extends LabelledContainer {
 		StackPane ret = new StackPane(rect, image);
 		ButtonFactory.addAction(ret, (e) -> getEditorBackend().setSelectedPieceId(id));
 		return new Group(ret);
-	}
-
-	private void createDefaultPieces() {
-		// Rook
-		MovementGrid rookMovement = new MovementGrid();
-		getEditorBackend().getPiecesState().createCustomPiece("rook");
 	}
 }
