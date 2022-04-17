@@ -45,18 +45,18 @@ class BoardStateTest extends DukeApplicationTest {
 
   @Test
   void testChangeBoardSize(){
-    assertEquals(boardState.getBoardHeight(), 8);
-    assertEquals(boardState.getBoardWidth(), 8);
+    assertEquals(boardState.getBoardHeight().getValue(), 8);
+    assertEquals(boardState.getBoardWidth().getValue(), 8);
     int newHeight = 5;
     int newWidth = 10;
     boardState.changeBoardSize(newWidth,newHeight);
-    assertEquals(newHeight, boardState.getBoardHeight());
-    assertEquals(newWidth, boardState.getBoardWidth());
+    assertEquals(newHeight, boardState.getBoardHeight().getValue());
+    assertEquals(newWidth, boardState.getBoardWidth().getValue());
     newHeight = 12;
     newWidth = 3;
     boardState.changeBoardSize(newWidth, newHeight);
-    assertEquals(newHeight, boardState.getBoardHeight());
-    assertEquals(newWidth, boardState.getBoardWidth());
+    assertEquals(newHeight, boardState.getBoardHeight().getValue());
+    assertEquals(newWidth, boardState.getBoardWidth().getValue());
   }
 
   @Test

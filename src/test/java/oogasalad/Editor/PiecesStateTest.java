@@ -48,10 +48,10 @@ public class PiecesStateTest extends DukeApplicationTest {
     Image rookImage = new Image("images/pieces/black/rook.png");
     piecesState.createCustomPiece(pieceID);
     piecesState.changePieceImage(pieceID, rookImage, 0);
-    assertEquals(rookImage, piecesState.getPiece(pieceID).getImage(0));
+    assertEquals(rookImage, piecesState.getPiece(pieceID).getImage(0).getValue());
     Image newImage = new Image("images/pieces/black/queen.png");
     piecesState.changePieceImage(pieceID,newImage, 0);
-    assertEquals(newImage, piecesState.getPiece(pieceID).getImage(0));
+    assertEquals(newImage, piecesState.getPiece(pieceID).getImage(0).getValue());
   }
 
   @Test
