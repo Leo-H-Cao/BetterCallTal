@@ -1,6 +1,7 @@
 package oogasalad.GamePlayer.Board;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -8,6 +9,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -283,6 +285,18 @@ public class ChessBoard implements Iterable<ChessTile> {
     return board.get(coordinate.getRow()).get(coordinate.getCol());
   }
 
+  /***
+   * Finds if a chess tile contains an opposing team to a given team
+   *
+   * @param team to check for
+   * @param tile to check for
+   * @return if team opposes piece on tile
+   */
+  public boolean isOpposing(ChessTile tile, int team) {
+    return Arrays.stream(this.getPlayer(team).opponentIDs()).anyMatch(o ->
+       tile.getPiece().isPresent() && o == tile.getPiece().get().getTeam());
+  }
+
   /**
    * starting from the top left, this method returns the tile that corresponds to the LINEAR
    * position of the tiles. That is, by placing each row behind the previous return the tile of
@@ -395,6 +409,19 @@ public class ChessBoard implements Iterable<ChessTile> {
         .flatMap(List::stream).toList();
   }
 
+  /***
+   * Gets list of all opponent pieces for a given board
+   *
+   * @param team to get opponents for
+   * @return list of opponent pieces
+   */
+  public List<Piece> getOpponentPieces(int team) {
+    return board.stream().flatMap(List::stream).toList().stream().map(ChessTile::getPieces)
+        .flatMap(List::stream).toList().stream()
+        .filter(p -> Arrays.stream(this.getPlayer(team).opponentIDs()).anyMatch(
+            oid -> oid == p.getTeam())).toList();
+  }
+
   /**
    * @return current player
    */
@@ -409,6 +436,29 @@ public class ChessBoard implements Iterable<ChessTile> {
    */
   public HistoryManager getHistory() {
     return history;
+  }
+
+  /***
+   * Checks if all the pieces are the same
+   *
+   * @param o to compare to
+   * @return if all the pieces on this and o are the same
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ChessBoard otherBoard = (ChessBoard) o;
+    return getPieces().equals(otherBoard.getPieces());
+  }
+
+  /***
+   * @return hash of piece list
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(pieceList);
   }
 
   /**

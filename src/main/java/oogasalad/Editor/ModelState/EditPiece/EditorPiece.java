@@ -10,6 +10,8 @@ public class EditorPiece {
   private String pieceID;
   private boolean mainPiece;
   private ArrayList<String> customMoves;
+  private int pointValue;
+  private String pieceName;
 
   public EditorPiece(String pieceID){
     this.pieceID = pieceID;
@@ -65,5 +67,33 @@ public class EditorPiece {
 
   public ArrayList<String> getCustomMoves(){
     return customMoves;
+  }
+
+  public void setMovementGrid(MovementGrid movementGrid) {
+    this.movementGrid = movementGrid;
+  }
+
+  public void setPieceID(String pieceID) {
+    this.pieceID = pieceID;
+  }
+
+  public boolean isMainPiece() {
+    return mainPiece;
+  }
+
+  public int getPointValue() {
+    return pointValue;
+  }
+
+  public void setPointValue(int pointValue) {
+    this.pointValue = pointValue;
+  }
+
+  public String getPieceName() {
+    return pieceName;
+  }
+
+  public void setPieceName(String pieceName) {
+    this.pieceName = pieceName;
   }
 }

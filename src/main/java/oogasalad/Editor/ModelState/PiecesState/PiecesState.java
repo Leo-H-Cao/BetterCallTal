@@ -7,26 +7,26 @@ import javafx.scene.image.Image;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 
 public class PiecesState {
-  private ArrayList<LibraryPiece> availablePieces;
+  private ArrayList<EditorPiece> availablePieces;
 
   public PiecesState(){
     availablePieces = new ArrayList<>();
   }
 
-  public LibraryPiece getPiece(String pieceID) {
+  public EditorPiece getPiece(String pieceID) {
     return findPiece(pieceID);
   }
 
-  public List<LibraryPiece> getAllPieces(){
+  public List<EditorPiece> getAllPieces(){
     return availablePieces;
   }
 
-  public void changePieceImage(String pieceID, Image imageFile) {
-    findPiece(pieceID).setPieceImage(imageFile);
+  public void changePieceImage(String pieceID, Image imageFile, int team) {
+    findPiece(pieceID).setImage(team, imageFile);
   }
 
-  public LibraryPiece createCustomPiece(int points, int teamNumber, Image image, EditorPiece editorPiece, String pieceName) {
-    LibraryPiece newPiece = new LibraryPiece(points, editorPiece, pieceName, teamNumber, image);
+  public EditorPiece createCustomPiece(String pieceID) {
+    EditorPiece newPiece = new EditorPiece(pieceID);
     availablePieces.add(newPiece);
     return newPiece;
   }
@@ -39,12 +39,8 @@ public class PiecesState {
     findPiece(pieceID).setPieceName(name);
   }
 
-  public EditorPiece getEditorPiece(String pieceID){
-    return findPiece(pieceID).getEditorPiece();
-  }
-
-  private LibraryPiece findPiece(String pieceID){
-    for(LibraryPiece piece : availablePieces){
+  private EditorPiece findPiece(String pieceID){
+    for(EditorPiece piece : availablePieces){
       if(piece.getPieceID().equals(pieceID)){
         return piece;
       }

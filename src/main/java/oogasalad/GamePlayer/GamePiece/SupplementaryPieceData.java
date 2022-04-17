@@ -5,6 +5,5 @@ import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.MovementInterface;
 import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
 
-public record SupplementaryPieceData(String name,
-                                     double pointValue,
+public record SupplementaryPieceData(double pointValue,
                                      boolean mainPiece) {}

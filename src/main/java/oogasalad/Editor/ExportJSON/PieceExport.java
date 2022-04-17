@@ -1,9 +1,9 @@
 package oogasalad.Editor.ExportJSON;
 
 import java.util.ArrayList;
+import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 import oogasalad.Editor.ModelState.EditPiece.PieceGridTile;
-import oogasalad.Editor.ModelState.PiecesState.LibraryPiece;
 
 public class PieceExport {
   private final int PIECE_LOCATION = 3;
@@ -22,19 +22,19 @@ public class PieceExport {
   private ArrayList<BasicMovementExport> basicMovements;
   private ArrayList<BasicMovementExport> basicCaptures;
 
-  public PieceExport(int row, int col, LibraryPiece libraryPiece){
+  public PieceExport(int row, int col, EditorPiece editorPiece, int team){
     this.row = row;
     this.col = col;
-    pieceName = libraryPiece.getPieceName();
-    imgFile = libraryPiece.getImage().getUrl();
-    pointValue = libraryPiece.getPointValue();
-    team = libraryPiece.getTeamNumber();
+    pieceName = editorPiece.getPieceName();
+    imgFile = editorPiece.getImage(team).getUrl();
+    pointValue = editorPiece.getPointValue();
+    this.team = team;
     customMoves = new ArrayList<>();
-    mainPiece = libraryPiece.isMainPiece() ? 1 : 0;
-    customMoves = libraryPiece.getCustomMoves();
+    mainPiece = editorPiece.isMainPiece() ? 1 : 0;
+    customMoves = editorPiece.getCustomMoves();
     movementModifiers = new ArrayList<>();
     onInteractionModifier = new ArrayList<>();
-    movementGrid = libraryPiece.getPieceMovement();
+    movementGrid = editorPiece.getMovementGrid();
     basicMovements = new ArrayList<>();
     basicCaptures = basicMovements;
     createBasicMovements();
