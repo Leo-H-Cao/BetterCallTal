@@ -1,15 +1,9 @@
 package oogasalad.Editor.ModelState;
 
-import javafx.beans.property.Property;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
-import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 import oogasalad.Editor.ModelState.EditPiece.PieceGridTile;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
-import java.util.HashMap;
-import java.util.Map;
-
 import static oogasalad.Editor.ModelState.EditPiece.PieceGridTile.OPEN;
 
 public class EditorBackend {
@@ -18,6 +12,7 @@ public class EditorBackend {
 	private PieceGridTile currentlySelectedType;
 	private Property<PieceGridTile> selectedTypeProperty;
 	private Property<String> selectedPieceId;
+	private SimpleIntegerProperty alternatePiece;
 
 	public EditorBackend(){
 		this.piecesState = new PiecesState();
@@ -25,6 +20,7 @@ public class EditorBackend {
 		currentlySelectedType = OPEN;
 		selectedTypeProperty = new SimpleObjectProperty<>(currentlySelectedType);
 		selectedPieceId = new SimpleStringProperty("rook");
+		alternatePiece = new SimpleIntegerProperty(0);
 	}
 
 	public PiecesState getPiecesState(){
@@ -49,5 +45,13 @@ public class EditorBackend {
 
 	public void setSelectedPieceId(String id) {
 		selectedPieceId.setValue(id);
+	}
+
+	public SimpleIntegerProperty getAlternatePiece() {
+		return alternatePiece;
+	}
+
+	public void setAlternatePiece(int i) {
+		alternatePiece.setValue(i);
 	}
 }

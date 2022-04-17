@@ -1,6 +1,7 @@
 package oogasalad.Frontend.Editor.Board;
 
 import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
@@ -13,6 +14,7 @@ public class ChessBoardTile extends NodeContainer {
 	private final int myX;
 	private final int myY;
 	private final boolean alt;
+	private boolean filled = false;
 
 	public ChessBoardTile(int x, int y, boolean toggled) {
 		myX = x;
@@ -38,14 +40,34 @@ public class ChessBoardTile extends NodeContainer {
 		} else {
 			myResources.ifPresent((e) -> rect.setFill(Paint.valueOf(e.getString("AltColor"))));
 		}
-		ButtonFactory.addAction(rect, (e) -> {
-			String selectedId = String.valueOf(getEditorBackend().getSelectedPieceId().getValue());
-			getEditorBackend().getBoardState().setPieceStartingLocation(selectedId, myX, myY, 0);
-			image.setImage(getEditorBackend().getPiecesState().getPiece(selectedId).getImage(0).getValue());
-			getEditorBackend().getPiecesState().getPiece(selectedId).getImage(0).addListener((ob, ov, nv) -> image.setImage(nv));
-		});
 		ret = new StackPane();
 		ret.getChildren().addAll(rect, image);
+		ButtonFactory.addAction(ret, (e) -> {
+			if(filled) {
+				removePieceImage(image);
+			} else {
+				setPieceImage(image);
+			}
+		});
 		return ret;
+	}
+
+	private void setPieceImage(ImageView image) {
+		String selectedId = String.valueOf(getEditorBackend().getSelectedPieceId().getValue());
+		int selectedTeam = getEditorBackend().getAlternatePiece().getValue();
+
+		getEditorBackend().getBoardState().setPieceStartingLocation(selectedId, myX, myY, selectedTeam);
+
+		image.setImage(getEditorBackend().getPiecesState().getPiece(selectedId).getImage(selectedTeam).getValue());
+
+		getEditorBackend().getPiecesState().getPiece(selectedId).getImage(selectedTeam).addListener((ob, ov, nv) -> image.setImage(nv));
+		filled = true;
+	}
+
+	private void removePieceImage(ImageView image) {
+		filled = false;
+		image.setImage(null);
+		// TODO: add backend functionality to removing pieces
+//		getEditorBackend().getBoardState().removePiece();
 	}
 }

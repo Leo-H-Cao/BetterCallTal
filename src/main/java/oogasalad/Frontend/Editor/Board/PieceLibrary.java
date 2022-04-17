@@ -42,8 +42,9 @@ public class PieceLibrary extends LabelledContainer {
 		image.setPreserveRatio(true);
 		image.setSmooth(true);
 		image.setCache(true);
+		getEditorBackend().getAlternatePiece().addListener((ob, ov, nv) -> image.setImage(getEditorBackend().getPiecesState().getPiece(id).getImage((Integer) nv).getValue()));
 		StackPane ret = new StackPane(rect, image);
-		ButtonFactory.addAction(ret, (e) -> LOG.debug("clicked " + id));
+		ButtonFactory.addAction(ret, (e) -> getEditorBackend().setSelectedPieceId(id));
 		return new Group(ret);
 	}
 

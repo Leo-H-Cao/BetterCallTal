@@ -18,6 +18,13 @@ public class BoardSettings extends LabelledContainer {
 	protected Node fillContent() {
 		FlowPane ret;
 		CheckBox checkBox = new CheckBox("Place alternate color");
+		checkBox.selectedProperty().addListener((ob, ov, nv) -> {
+			if(nv) {
+				getEditorBackend().setAlternatePiece(1);
+			} else {
+				getEditorBackend().setAlternatePiece(0);
+			}
+		});
 		Button b = ButtonFactory.makeButton(ButtonType.TEXT, "", "", (e) -> {
 
 		});
