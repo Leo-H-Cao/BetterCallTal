@@ -99,4 +99,9 @@ public class EditorPiece {
   public void setPieceName(String pieceName) {
     this.pieceName = pieceName;
   }
+
+  @Override
+  public String toString() {
+    return pieceID;
+  }
 }
