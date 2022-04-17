@@ -52,6 +52,7 @@ public class HostGame extends View {
     private TextArea RoomName;
     private static final Double TEXTAREAWIDTH = 100.0;
     private static final Double TEXTAREAHEIGHT = 20.0;
+    private String RoomID;
 
 
     public HostGame(Stage stage) {
@@ -114,6 +115,7 @@ public class HostGame extends View {
         Button Confirm = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord(CONFIRM, getClass()),
                 Confirm_Button_ID, (e) -> {
             if (! RoomName.getText().equals("")) {
+                RoomID = RoomName.getText(); // TODO: hook RoomID up w server
                 Node start = makeStartGroup(f);
                 StackPane.setAlignment(start, Pos.BOTTOM_CENTER);
                 myStackPane.getChildren().add(start);
