@@ -44,4 +44,8 @@ public class BoardState {
   public EditorTile getTile(int x, int y){
     return myEditorBoard.getTile(x, y);
   }
+
+  public void clearTile(int x, int y){
+    myEditorBoard.clearTile(x, y);
+  }
 }
