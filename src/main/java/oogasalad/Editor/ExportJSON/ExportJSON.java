@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
 import oogasalad.Editor.ModelState.BoardState.EditorTile;
-import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Editor.ModelState.RulesState.GameRulesState;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ExportJSON {
+  private static final Logger LOG = LogManager.getLogger(ExportJSON.class);
 
   private PiecesState piecesState;
   private GameRulesState gameRulesState;
@@ -44,11 +46,11 @@ public class ExportJSON {
       JSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(exportWrapper);
       JSONTestString = objectMapper.writeValueAsString(exportWrapper);
       System.out.println(JSONString);
+      System.out.println(JSONTestString);
 
     }
     catch (IOException e){
-      //TODO: display exception
-      e.printStackTrace();
+      LOG.warn("JSON object mapper exception");
     }
   }
 
@@ -74,8 +76,7 @@ public class ExportJSON {
       for(int x = 0; x < boardState.getBoardWidth(); x++){
         EditorTile tile = boardState.getTile(x, y);
         if(tile.hasPiece()){
-          EditorPiece piece = new EditorPiece(tile.getPieceID());
-          pieces.add(new PieceExport(x, y, piece, tile.getTeam()));
+          pieces.add(new PieceExport(x, y, piecesState.getPiece(tile.getPieceID()), tile.getTeam()));
         }
       }
     }
