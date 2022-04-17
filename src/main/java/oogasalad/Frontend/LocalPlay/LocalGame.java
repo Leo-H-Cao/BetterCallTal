@@ -269,8 +269,13 @@ public class LocalGame extends View {
   }
 
   private int player() {
-    if (playerSelectionLabel.getText().equals(FIRST)) return 0;
-    return 1;
+    try {
+      if (playerSelectionLabel.getText().equals(FIRST)) return 0;
+      return 1;
+    } catch (NullPointerException error) {
+      LOG.warn(error.getMessage());
+    }
+    return 0;
   }
 
 }
