@@ -45,6 +45,7 @@ public class BankLeaver implements MovementInterface {
       LOG.warn("Illegal bank leaving move attempted");
       throw new InvalidMoveException(finalSquare.toString());
     }
+    board.getTile(finalSquare).clearPieces();
     Set<ChessTile> updatedSquares = new HashSet<>(
         Arrays.asList(board.getTile(piece.getCoordinates()), board.getTile(finalSquare)));
     updatedSquares.addAll(piece.updateCoordinates(board.getTile(finalSquare), board));
