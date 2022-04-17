@@ -41,6 +41,8 @@ public class LocalGame extends View {
   private static final String DONE = "Done";
   private static final String PLAYER_SELECTED = "PlayerSelected";
   private static final String DIFF_SELECTED = "DiffSelected";
+  private static final String MULTIPLAYER = "multiplayer";
+  private static final String SINGLEPLAYER = "singleplayer";
 
   private final Integer TITLE_SIZE = 70;
   private final Integer PROMPT_SIZE = 30;
@@ -56,9 +58,9 @@ public class LocalGame extends View {
   private Label diffSelectionLabel;
   private Label playerSelectionLabel;
 
-  private GridPane multiplayerButtons;
-  private String playerSelection;
-  private String diffSelection;
+  private Button doneButton;
+
+  private String mode;
 
   public LocalGame(Stage stage) {
     super(stage);
@@ -123,8 +125,8 @@ public class LocalGame extends View {
     GridPane buttons = makeButtonHolder(
         List.of(FIRST, SECOND),
         List.of("first", "second"),
-        List.of(e -> makePlayerSelectionLabel("First Player"),
-            e -> makePlayerSelectionLabel("Second Player"))
+        List.of(e -> makePlayerSelectionLabel(FIRST),
+            e -> makePlayerSelectionLabel(SECOND))
     );
     buttons.setAlignment(Pos.CENTER);
     orderSelector.getChildren().addAll(prompt, buttons);
@@ -138,8 +140,8 @@ public class LocalGame extends View {
     List<String> resourceNames = List.of("Multiplayer", "Singleplayer");
     List<String> ids = List.of("multiplayerButton", "singleplayerButton");
     List<EventHandler<ActionEvent>> actions = List.of(
-        e -> toggleButtons(false, true),//getView(HostGame.class).ifPresent(this::changeScene),
-        e -> toggleButtons(true, true) //e -> getView(SinglePlayerGame.class).ifPresent(this::changeScene)
+        e -> {toggleButtons(false, true); mode = MULTIPLAYER; doneButton.setOnAction(makeDoneAction());},//getView(HostGame.class).ifPresent(this::changeScene),
+        e -> {toggleButtons(true, true); mode = SINGLEPLAYER; doneButton.setOnAction(makeDoneAction());} //e -> getView(SinglePlayerGame.class).ifPresent(this::changeScene)
     );
 
     return makeButtonHolder(resourceNames, ids, actions);
@@ -153,7 +155,7 @@ public class LocalGame extends View {
         e -> makeDiffSelectionLabel("Easy"),
         e -> makeDiffSelectionLabel("Medium"),
         e -> makeDiffSelectionLabel("Hard")
-        );
+    );
     GridPane singleplayerButtons = makeButtonHolder(resourceNames, ids, actions);
     singleplayerButtons.setAlignment(Pos.CENTER);
 
@@ -171,6 +173,9 @@ public class LocalGame extends View {
           actions.get(i));
       b.setPadding(new Insets(5));
       buttonHolder.add(b, 0, i);
+      if (ids.get(i).equals("done")) {
+        doneButton = b;
+      }
     }
     buttonHolder.setVgap(50);
 
@@ -190,22 +195,12 @@ public class LocalGame extends View {
               File f = chooseLoadFile();
               Optional<ChessBoard> cb = getGameBackend().initalizeChessBoard(f);
               if (cb.isPresent()) {
-                getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), 0)); // hardcoded 0 here for white
+                getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), player())); // hardcoded 0 here for white
               } else {
-                View.LOG.debug("INVALID JSON");
+                View.LOG.debug("INVALID JSON OR INVALID PLAYER SELECTION");
               }
             },
-            e -> {
-              try {
-                String player = ((Label) diffHolder.getChildren().get(1)).getText();
-                String diff = ((Label) playerHolder.getChildren().get(1)).getText();
-                System.out.printf("%s, %s", player, diff);
-
-              } catch (IndexOutOfBoundsException error) {
-                View.LOG.warn(error.getMessage());
-                System.out.println("ERROR");
-              }
-            }
+            e -> LOG.warn("SELECTION HAS GONE AWRY")
         ));
 
     donePanel.getChildren().addAll(buttons);
@@ -246,6 +241,29 @@ public class LocalGame extends View {
     diffHolder.getChildren().add(diffLabel);
 
     donePanel.getChildren().addAll(playerHolder, diffHolder);
+  }
+
+  private EventHandler<ActionEvent> makeDoneAction() {
+    try {
+      if (mode.equals(MULTIPLAYER)) {
+        return (e) -> getView(GameView.class).ifPresent(this::changeScene);
+      }
+
+      return e -> System.out.println("WAITING ON SINGLEPLAYER API");
+
+    } catch (NullPointerException error) {
+      return e -> View.LOG.warn(error.getMessage());
+    }
+  }
+
+  private int player() {
+    try {
+      if (playerSelectionLabel.getText().equals(FIRST)) return 0;
+      return 1;
+    } catch (NullPointerException error) {
+      LOG.warn(error.getMessage());
+    }
+    return 0;
   }
 
 }
