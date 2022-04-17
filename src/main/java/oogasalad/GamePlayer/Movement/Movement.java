@@ -1,5 +1,6 @@
 package oogasalad.GamePlayer.Movement;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -273,5 +274,29 @@ public class Movement implements MovementInterface{
    */
   public String toString() {
     return possibleMoves.toString() + ": " + infinite;
+  }
+
+  /**
+   * Utility function for inverting movements
+   *
+   * @param movements to invert
+   * @return inverted movements
+   */
+  public static List<MovementInterface> invertMovements(List<MovementInterface> movements) {
+    List<MovementInterface> inverted = new ArrayList<>();
+    movements.forEach((mi) -> {
+      if(mi.getClass().equals(Movement.class)) {
+        Movement movement = (Movement) mi;
+        List<Coordinate> invertedCoords = new ArrayList<>();
+        movement.getRelativeCoords().forEach((c) -> {
+          Coordinate invertedCoord = Coordinate.of(-c.getRow(), -c.getCol());
+          invertedCoords.add(invertedCoord);
+        });
+        inverted.add(new Movement(invertedCoords, movement.isInfinite()));
+      } else {
+        inverted.add(mi);
+      }
+    });
+    return inverted;
   }
 }
