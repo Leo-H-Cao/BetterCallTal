@@ -27,6 +27,7 @@ public class HomeView extends View {
         super(stage);
         // Changes the current scene to the home page on app initialization
         getView(HomeView.class).ifPresent(this::changeScene);
+        //createDefaultPieces();
     }
 
     @Override
