@@ -1,6 +1,7 @@
 package oogasalad.GamePlayer.Board;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -282,6 +283,18 @@ public class ChessBoard implements Iterable<ChessTile> {
       throw new OutsideOfBoardException(coordinate.toString());
     }
     return board.get(coordinate.getRow()).get(coordinate.getCol());
+  }
+
+  /***
+   * Finds if a chess tile contains an opposing team to a given team
+   *
+   * @param team to check for
+   * @param tile to check for
+   * @return if team opposes piece on tile
+   */
+  public boolean isOpposing(ChessTile tile, int team) {
+    return Arrays.stream(this.getPlayer(team).opponentIDs()).anyMatch(o ->
+       tile.getPiece().isPresent() && o == tile.getPiece().get().getTeam());
   }
 
   /**

@@ -6,9 +6,7 @@ import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_CONFIG_FILE;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -17,7 +15,6 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
-import oogasalad.GamePlayer.Movement.MovementInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
@@ -44,8 +41,8 @@ public class BankJoiner implements MovementModifier{
       justTaken.updateTeam(board.getCurrentPlayer());
       //TODO: this does not need to be fixed with the current frontend implementation, but should be
       justTaken.updateImgFile(piece.getImgFile());
-      justTaken.setAllRelativeMoveCoords(invertMovements(justTaken.getMoves()),
-          invertMovements(justTaken.getCaptures()));
+      justTaken.setNewMovements(Movement.invertMovements(justTaken.getMoves()),
+          Movement.invertMovements(justTaken.getCaptures()));
       Set<ChessTile> updatedCoords = justTaken.updateCoordinates(findOpenSpot(justTaken.getTeam(), board), board);
       LOG.debug(String.format("Updated coords: %s", updatedCoords));
       return updatedCoords;
@@ -53,28 +50,6 @@ public class BankJoiner implements MovementModifier{
       LOG.warn("Bank joining failed");
       return Set.of();
     }
-  }
-
-  /**
-   * @param movements to invert
-   * @return inverted movements
-   */
-  private List<MovementInterface> invertMovements(List<MovementInterface> movements) {
-    List<MovementInterface> inverted = new ArrayList<>();
-    movements.forEach((mi) -> {
-      if(mi.getClass().equals(Movement.class)) {
-        Movement movement = (Movement) mi;
-        List<Coordinate> invertedCoords = new ArrayList<>();
-        movement.getRelativeCoords().forEach((c) -> {
-          Coordinate invertedCoord = Coordinate.of(-c.getRow(), -c.getCol());
-          invertedCoords.add(invertedCoord);
-        });
-        inverted.add(new Movement(invertedCoords, movement.isInfinite()));
-      } else {
-        inverted.add(mi);
-      }
-    });
-    return inverted;
   }
 
   /***
