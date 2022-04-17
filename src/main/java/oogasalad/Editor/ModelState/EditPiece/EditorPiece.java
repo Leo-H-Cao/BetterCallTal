@@ -10,7 +10,7 @@ public class EditorPiece {
   private MovementGrid movementGrid;
   private Property<Image> image0;
   private Property<Image> image1;
-  private String pieceID;
+  private final String pieceID;
   private boolean mainPiece;
   private ArrayList<String> customMoves;
   private int pointValue;
@@ -78,10 +78,6 @@ public class EditorPiece {
 
   public void setMovementGrid(MovementGrid movementGrid) {
     this.movementGrid = movementGrid;
-  }
-
-  public void setPieceID(String pieceID) {
-    this.pieceID = pieceID;
   }
 
   public boolean isMainPiece() {
