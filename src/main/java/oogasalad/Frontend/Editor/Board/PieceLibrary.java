@@ -36,7 +36,7 @@ public class PieceLibrary extends LabelledContainer {
 		rect.setStroke(Paint.valueOf("blue"));
 		rect.setStrokeWidth(3);
 		rect.setStrokeType(StrokeType.INSIDE);
-		ImageView image = new ImageView(getEditorBackend().getPiecesState().getPiece(id).getImage());
+		ImageView image = new ImageView(getEditorBackend().getPiecesState().getPiece(id).getImage(0));
 		image.setFitHeight(size);
 		image.setPreserveRatio(true);
 		image.setSmooth(true);
@@ -49,7 +49,7 @@ public class PieceLibrary extends LabelledContainer {
 	private void createDefaultPieces() {
 		// Rook
 		MovementGrid rookMovement = new MovementGrid();
-		getEditorBackend().getPiecesState().createCustomPiece(5, 0, new Image("images/pieces/black/rook.png"), new EditorPiece("pieceID"), "default_rook");
-		getEditorBackend().getPiecesState().createCustomPiece(5, 1, new Image("images/pieces/black/rook.png"), new EditorPiece("pieceID"), "Rook");
+		getEditorBackend().getPiecesState().createCustomPiece("pieceID");
+		getEditorBackend().getPiecesState().createCustomPiece("pieceID");
 	}
 }

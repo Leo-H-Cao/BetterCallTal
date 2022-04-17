@@ -1,5 +1,6 @@
 package oogasalad.GamePlayer.Movement;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -55,7 +56,7 @@ public class Movement implements MovementInterface{
   public Set<ChessTile> movePiece(Piece piece, Coordinate finalSquare, ChessBoard board)
       throws InvalidMoveException, OutsideOfBoardException {
     ChessTile finalTile = convertCordToTile(finalSquare, board);
-    LOG.debug("Moves: " + getMoves(piece, board));
+//    LOG.debug("Moves: " + getMoves(piece, board));
 
     if(getMoves(piece, board).contains(finalTile)) {
       Set<ChessTile> updatedSquares = new HashSet<>(Set.of(board.getTile(piece.getCoordinates()), finalTile));
@@ -128,7 +129,6 @@ public class Movement implements MovementInterface{
       Optional<ChessTile> capTile = moveStack.isEmpty() ? getNextTile(baseCoordinates, delta, board)
           : (infinite ? getNextTile(moveStack.peek().getCoordinates(), delta, board)
               : Optional.of(moveStack.peek()));
-      LOG.debug(capTile);
       capTile.ifPresent((t) -> {
         if (piece.isOpposing(t.getPieces(), board)) {
           allMoves.get(CAPTURE_KEY).add(t);
@@ -262,10 +262,41 @@ public class Movement implements MovementInterface{
     }
   }
 
+  /**
+   * @return if infinite
+   */
+  public boolean isInfinite() {
+    return infinite;
+  }
+
   /***
    * @return String of all relative coordinates
    */
   public String toString() {
     return possibleMoves.toString() + ": " + infinite;
+  }
+
+  /**
+   * Utility function for inverting movements
+   *
+   * @param movements to invert
+   * @return inverted movements
+   */
+  public static List<MovementInterface> invertMovements(List<MovementInterface> movements) {
+    List<MovementInterface> inverted = new ArrayList<>();
+    movements.forEach((mi) -> {
+      if(mi.getClass().equals(Movement.class)) {
+        Movement movement = (Movement) mi;
+        List<Coordinate> invertedCoords = new ArrayList<>();
+        movement.getRelativeCoords().forEach((c) -> {
+          Coordinate invertedCoord = Coordinate.of(-c.getRow(), -c.getCol());
+          invertedCoords.add(invertedCoord);
+        });
+        inverted.add(new Movement(invertedCoords, movement.isInfinite()));
+      } else {
+        inverted.add(mi);
+      }
+    });
+    return inverted;
   }
 }

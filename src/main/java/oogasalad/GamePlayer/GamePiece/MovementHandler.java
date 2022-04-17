@@ -18,8 +18,8 @@ public class MovementHandler {
 
   private static final Logger LOG = LogManager.getLogger(MovementHandler.class);
 
-  private final List<MovementInterface> movements;
-  private final List<MovementInterface> captures;
+  private List<MovementInterface> movements;
+  private List<MovementInterface> captures;
   private final List<MovementModifier> movementModifiers;
 
   /***
@@ -97,7 +97,7 @@ public class MovementHandler {
     movements.forEach((m) -> allMoves.addAll(m.getMoves(piece, board)));
     captures.forEach((m) -> allMoves.addAll(m.getCaptures(piece, board)));
 
-    LOG.debug(String.format("%s has the following moves: %s", piece.getName(), allMoves));
+//    LOG.debug(String.format("%s has the following moves: %s", piece.getName(), allMoves));
     return allMoves;
   }
 
@@ -151,7 +151,53 @@ public class MovementHandler {
   /***
    * @return relative coordinates for all regular moves
    */
+  public List<MovementInterface> getMovements() {
+    return /*getRelativeMoveCoordsFromList(*/movements;
+  }
+
+  /***
+   * @return relative coordinates for movements
+   */
   public List<Coordinate> getRelativeMoveCoords() {
-    return movements.stream().flatMap((m) -> m.getRelativeCoords().stream()).toList();
+    return getRelativeMoveCoordsFromList(movements);
+  }
+
+  /**
+   * @return relative coordinates list for given movementList
+   */
+  private List<Coordinate> getRelativeMoveCoordsFromList(List<MovementInterface> movementList) {
+    return movementList.stream().flatMap((m) -> m.getRelativeCoords().stream()).collect(Collectors.toList());
+  }
+
+  /***
+   * @return relative coordinates for captures
+   */
+  public List<Coordinate> getRelativeCapCoords() {
+    return getRelativeMoveCoordsFromList(captures);
+  }
+
+  /***
+   * @return relative coordinates for all regular moves and captures
+   */
+  public List<MovementInterface> getCaptures() {
+    return /*getRelativeMoveCoordsFromList(*/captures;
+  }
+
+  /***
+   * @param newMovements new coordinates for all regular moves to set
+   * @param newCaptures new coordinates for all regular captures to set
+   */
+  public void setNewMovements(List<MovementInterface> newMovements, List<MovementInterface> newCaptures) {
+    this.movements = newMovements;
+    this.captures = newCaptures;
+  }
+
+  /***
+   * @param newMovements new coordinates for all regular moves to set
+   * @param newCaptures new coordinates for all regular captures to set
+   */
+  public void addNewMovements(List<MovementInterface> newMovements, List<MovementInterface> newCaptures) {
+    this.movements.addAll(newMovements);
+    this.captures.addAll(newCaptures);
   }
 }

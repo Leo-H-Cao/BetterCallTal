@@ -50,4 +50,12 @@ public class AtomicEndCondition implements EndCondition {
         .anyMatch(t -> t.getPieces().stream().filter(p -> p.checkTeam(team)).anyMatch(
             Piece::isTargetPiece)));
   }
+
+  /**
+   * @return 0
+   */
+  @Override
+  public int compareTo(EndCondition o) {
+    return 0;
+  }
 }
