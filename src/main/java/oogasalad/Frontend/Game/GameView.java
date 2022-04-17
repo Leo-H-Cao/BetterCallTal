@@ -55,7 +55,7 @@ public class GameView extends View {
     /**
      * setUpBoard method will be called when the user hosts a game and uploads a JSon game file.
      * The back-end will parse the information and call this method with objects that contain
-     * where the starting pieces, power ups, etc. go, and any other information relavant to
+     * where the starting pieces, power ups, etc. go, and any other information relevant to
      * setting up the board.
      */
 
