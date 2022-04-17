@@ -8,6 +8,7 @@ public class EditorTile {
   public EditorTile(int x, int y){
     myTileEffect = TileEffect.NONE;
     pieceID = null;
+    team = -1;
   }
 
   public boolean hasPiece(){
@@ -33,5 +34,6 @@ public class EditorTile {
 
   public void removePiece(){
     pieceID = null;
+    team = -1;
   }
 }

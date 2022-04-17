@@ -2,7 +2,6 @@ package oogasalad.Frontend.util;
 
 import oogasalad.Editor.ModelState.EditorBackend;
 import oogasalad.Frontend.Game.GameBackend;
-
 import java.util.ResourceBundle;
 
 public class BackendConnector {
@@ -34,18 +33,10 @@ public class BackendConnector {
 	}
 
 	protected EditorBackend getEditorBackend() {
-		if(myEditorBackend != null) {
-			return myEditorBackend;
-		} else {
-			return null;
-		}
+		return myEditorBackend;
 	}
 
 	protected GameBackend getGameBackend() {
-		if(myGameBackend != null) {
-			return myGameBackend;
-		} else {
-			return null;
-		}
+		return myGameBackend;
 	}
 }

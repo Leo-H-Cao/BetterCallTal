@@ -44,10 +44,10 @@ public class BoardGrid {
 
     private void setUpGP(GridPane gp, int rows, int cols) {
         for (int i=0; i < rows; i++) {
-            gp.getRowConstraints().add(new RowConstraints(WIDTH_Board / rows));
+            gp.getRowConstraints().add(new RowConstraints(HEIGHT_BOARD / rows));
         }
         for (int k=0; k < cols; k ++) {
-            gp.getColumnConstraints().add(new ColumnConstraints(HEIGHT_BOARD / cols));
+            gp.getColumnConstraints().add(new ColumnConstraints(WIDTH_Board / cols));
         }
     }
 
@@ -56,7 +56,7 @@ public class BoardGrid {
         for (ChessTile ct : cb) {
             int grid_x = ct.getCoordinates().getCol();
             int grid_y = ct.getCoordinates().getRow();
-            BoardTile tile = new BoardTile(ct.getCoordinates(), cb.getBoardHeight(), cb.getBoardLength(), lightupCons, ClearLitTilesRun, setSelPiece, MoveCons);
+            BoardTile tile = new BoardTile(ct.getCoordinates(),WIDTH_Board / cb.getBoardLength(), HEIGHT_BOARD / cb.getBoardHeight(), lightupCons, ClearLitTilesRun, setSelPiece, MoveCons);
             if (! ct.getPieces().isEmpty()) {
                 for (Piece p : ct.getPieces()) {
                     tile.givePiece(p);}}

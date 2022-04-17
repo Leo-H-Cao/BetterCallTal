@@ -1,12 +1,12 @@
 {
   "general": [
     {
-      "rows": 13,
+      "rows": 8,
       "columns": 13,
       "turnCriteria": "Linear",
       "colors": ["black", "white"],
-      "endConditions": ["Checkmate", "Stalemate"],
-      "validStateCheckers": ["BankBlocker", "Check"]
+      "endConditions": ["AtomicEndCondition", "Checkmate", "Stalemate"],
+      "validStateCheckers": ["BankBlocker"]
     }
   ],
   "playerInfo": [

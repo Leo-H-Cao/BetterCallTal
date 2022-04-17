@@ -5,6 +5,9 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -107,5 +110,17 @@ public abstract class View extends BackendConnector {
 	 */
 	protected <T> Optional<View> getView(Class<T> className) {
 		return myViews.stream().filter((e) -> className == e.getClass()).findFirst();
+	}
+
+	protected Node makeLabelGroup(String s, Integer size) {
+		Label l = new Label(s);
+		l.setFont(new Font(size));
+		l.setTextAlignment(TextAlignment.CENTER);
+		return new Group(l);
+	}
+
+	protected Node makeExitGroup() {
+		Button Exit = makeExitButton();
+		return new Group(Exit);
 	}
 }

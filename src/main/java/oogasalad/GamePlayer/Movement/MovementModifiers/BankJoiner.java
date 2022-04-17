@@ -7,11 +7,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
+import oogasalad.GamePlayer.EngineExceptions.PieceNotFoundException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
@@ -36,20 +39,50 @@ public class BankJoiner implements MovementModifier{
     LOG.debug("Bank join started");
     try {
       Piece justTaken = board.getHistory().get(board.getHistory().size() - 1).board().getTile(
-          piece.getCoordinates()).getPiece().get();
+          piece.getCoordinates()).getPiece().orElse(
+          findTakenPiece(board, board.getHistory().get(board.getHistory().size() - 1).board(),
+              piece.getTeam()));
+      LOG.debug(String.format("Just taken: %s", justTaken));
+
+      ChessTile bankTile = findOpenSpot(board.getCurrentPlayer(), board);
+      justTaken.updateCoordinates(bankTile, board);
 
       justTaken.updateTeam(board.getCurrentPlayer());
       //TODO: this does not need to be fixed with the current frontend implementation, but should be
       justTaken.updateImgFile(piece.getImgFile());
       justTaken.setNewMovements(Movement.invertMovements(justTaken.getMoves()),
           Movement.invertMovements(justTaken.getCaptures()));
-      Set<ChessTile> updatedCoords = justTaken.updateCoordinates(findOpenSpot(justTaken.getTeam(), board), board);
+
+      Set<ChessTile> updatedCoords = Set.of(bankTile);
       LOG.debug(String.format("Updated coords: %s", updatedCoords));
       return updatedCoords;
-    } catch(OutsideOfBoardException | NoSuchElementException e) {
+    } catch(OutsideOfBoardException | NullPointerException /*| PieceNotFoundException*/ e) {
       LOG.warn("Bank joining failed");
       return Set.of();
     }
+  }
+
+  /**
+   * If finding the captured piece by looking at the square covered by the current piece one move
+   * back (e.g. in en passant, the captured piece is on a different square), this function looks
+   * at the piece list for both states to find the captured piece
+   *
+   * @param presentBoard is the present state
+   * @param pastBoard is the board one move ago
+   * @param team is the team of the player
+   * @return piece in pastBoard that's missing from present board that is an opponent of team
+   */
+  private Piece findTakenPiece(ChessBoard presentBoard, ChessBoard pastBoard, int team)
+      /*throws PieceNotFoundException*/ {
+    List<Piece> pastPieces = pastBoard.getOpponentPieces(team);
+    List<Piece> presentPieces = presentBoard.getOpponentPieces(team);
+
+    LOG.debug(String.format("Past pieces: %s", pastPieces));
+    LOG.debug(String.format("Present pieces: %s", presentPieces));
+
+    return pastPieces.stream().filter(p -> !presentPieces.contains(p)).findFirst().orElse(null);
+    /* orElseThrow(
+        () -> new PieceNotFoundException("Taken piece cannot be found for crazyhouse"));*/
   }
 
   /***
@@ -64,7 +97,7 @@ public class BankJoiner implements MovementModifier{
 
     ChessTile currentTile = board.getTile(Coordinate.of(row, col));
     while(!currentTile.getPieces().isEmpty()) {
-      if(col >= board.getBoardLength()) {
+      if(col >= board.getBoardLength() - 1) {
         col = BLOCK_COL + 1;
         row = row + direction;
         LOG.debug(String.format("Updating open spot row, col: (%d, %d)", row, col));
