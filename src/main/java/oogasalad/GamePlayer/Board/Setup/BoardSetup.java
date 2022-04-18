@@ -34,7 +34,7 @@ public class BoardSetup {
 
   private static final String BASIC_MOVEMENT_PACKAGE = "doc/GameEngineResources/BasicMovements/";
   private static final String PIECE_JSON_PACKAGE = "doc/GameEngineResources/Pieces/";
-  private static final String JSON_EXTENSION = ".json";
+  public static final String JSON_EXTENSION = ".json";
 
   private static final String TILE_ACTION_PACKAGE = "oogasalad.GamePlayer.Board.Tiles.CustomTiles.";
   private static final String CUSTOM_MOVE_PACKAGE = "oogasalad.GamePlayer.Movement.CustomMovements.";

@@ -16,20 +16,37 @@ import org.apache.logging.log4j.Logger;
 
 public class Repetition implements EndCondition {
 
-  private static final String REP_NUM_FILE_PATH = "doc/GameEngineResources/Other/Repetition";
+  private static final String REP_NUM_FILE_PATH_HEADER = "doc/GameEngineResources/Other/";
+  private static final String DEFAULT_REP_FILE = "Repetition";
   private static final Logger LOG = LogManager.getLogger(Repetition.class);
   private static final int DEFAULT_REP_NUM = 3;
 
-  private static final int NUM_REP = getRepNum();
+  private int numRep;
+
+  /***
+   * Creates Repetition with default config file
+   */
+  public Repetition() {
+    this(DEFAULT_REP_FILE);
+  }
+
+  /***
+   * Creates Repetition with given config file
+   *
+   * @param configFile to read
+   */
+  public Repetition(String configFile) {
+    numRep = getRepNum(REP_NUM_FILE_PATH_HEADER + configFile);
+  }
 
   /***
    * Reads in file to get number of repetitions before draw
    *
    * @return number of repetitions needed based on file read
    */
-  private static int getRepNum() {
+  private int getRepNum(String configFile) {
     try {
-      File repFile = new File(REP_NUM_FILE_PATH);
+      File repFile = new File(configFile);
       Scanner reader = new Scanner(repFile);
       int repNum = reader.nextInt();
       reader.close();
@@ -48,7 +65,7 @@ public class Repetition implements EndCondition {
    */
   @Override
   public Map<Integer, Double> getScores(ChessBoard board) {
-    return NUM_REP == board.getHistory().stream().filter(h -> h.board().equals(board)).count() ?
+    return numRep == board.getHistory().stream().filter(h -> h.board().equals(board)).count() ?
         Arrays.stream(board.getPlayers()).collect(Collectors.toMap(Player::teamID, p -> DRAW)) :
         Collections.emptyMap();
   }

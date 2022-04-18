@@ -8,36 +8,33 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.util.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class PawnReachesEnd implements EndCondition {
 
-  private static final String ENDZONE_FILE_PATH = "doc/GameEngineResources/Other/FootballEndzonePieces";
+  private static final String ENDZONE_FILE_PATH_HEADER = "doc/GameEngineResources/Other/";
+  private static final String DEFAULT_ENDZONE_FILE = "FootballEndzonePieces";
   private static final Logger LOG = LogManager.getLogger(PawnReachesEnd.class);
+  private static final List<String> DEFAULT_ENDZONE_PIECES = List.of("Pawn");
 
-  private static List<String> ENDZONE_PIECES;
+  private List<String> endzonePieces;
 
+  /***
+   * Creates PawnReachesEnd with default config file
+   */
   public PawnReachesEnd() {
-    if(ENDZONE_PIECES == null) {
-      assignEndzonePieceNames();
-    }
-    LOG.debug("Endzone pieces: " + ENDZONE_PIECES);
+    this(DEFAULT_ENDZONE_FILE);
   }
 
-  private void assignEndzonePieceNames() {
-    ENDZONE_PIECES = new ArrayList<>();
-    try {
-      File immuneFile = new File(ENDZONE_FILE_PATH);
-      Scanner reader = new Scanner(immuneFile);
-      while (reader.hasNext()) {
-        ENDZONE_PIECES.add(reader.next().trim());
-      }
-      reader.close();
-    } catch (Exception e) {
-      LOG.warn("Could not find file: " + ENDZONE_FILE_PATH);
-      ENDZONE_PIECES = List.of("Pawn");
-    }
+  /***
+   * Creates PawnReachesEnd with given config file
+   *
+   * @param configFile to read
+   */
+  public PawnReachesEnd(String configFile) {
+    endzonePieces = FileReader.read(ENDZONE_FILE_PATH_HEADER + configFile, DEFAULT_ENDZONE_PIECES);
   }
 
   /***
@@ -52,7 +49,7 @@ public class PawnReachesEnd implements EndCondition {
     board.stream().filter((l) -> l.get(0).getCoordinates().getRow() == 0 ||
         l.get(0).getCoordinates().getRow() == board.getBoardHeight() - 1).forEach((l) ->
         l.stream().filter((t) -> t.getPiece().isPresent() &&
-            ENDZONE_PIECES.contains(t.getPiece().get().getName())).findFirst().ifPresent(
+            endzonePieces.contains(t.getPiece().get().getName())).findFirst().ifPresent(
             (t) -> {
               scores.put(t.getPiece().get().getTeam(), WIN);
               Arrays.stream(teams).filter((team) -> team != t.getPiece().get().getTeam()).forEach(

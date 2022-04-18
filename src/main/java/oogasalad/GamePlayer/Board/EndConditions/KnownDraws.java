@@ -1,5 +1,7 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
+import static oogasalad.GamePlayer.Board.Setup.BoardSetup.JSON_EXTENSION;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,17 +22,34 @@ import org.json.JSONObject;
 
 public class KnownDraws implements EndCondition {
 
-  private static final String KD_CONFIG_FILE = "doc/GameEngineResources/Other/KnownDraws.json";
+  private static final String KD_CONFIG_FILE_HEADER = "doc/GameEngineResources/Other/";
+  private static final String DEFAULT_KD_CONFIG = "KnownDraws";
   private static final Logger LOG = LogManager.getLogger(KnownDraws.class);
 
-  private static final List<List<String>> DRAW_CONFIGS = getDrawConfigs();
+  private List<List<String>> drawConfigs;
+
+  /***
+   * Creates KnownDraws with default config file
+   */
+  public KnownDraws() {
+    this(DEFAULT_KD_CONFIG);
+  }
+
+  /***
+   * Creates KnownDraws with given config file
+   *
+   * @param configFile to read
+   */
+  public KnownDraws(String configFile) {
+    drawConfigs = getDrawConfigs(KD_CONFIG_FILE_HEADER + configFile + JSON_EXTENSION);
+  }
 
   /**
    * @return list of piece names that represent a draw situation
    */
-  private static List<List<String>> getDrawConfigs() {
+  private List<List<String>> getDrawConfigs(String configFile) {
     try {
-      String content = new String(Files.readAllBytes(Path.of(KD_CONFIG_FILE)));
+      String content = new String(Files.readAllBytes(Path.of(configFile)));
       JSONArray JSONConfigs = new JSONObject(content).getJSONArray("drawPieces");
       List<List<String>> allConfigs = new ArrayList<>();
 
@@ -56,7 +75,7 @@ public class KnownDraws implements EndCondition {
    */
   @Override
   public Map<Integer, Double> getScores(ChessBoard board) {
-    return DRAW_CONFIGS.contains(board.getPieces().stream().filter(p -> !p.isTargetPiece()).map(
+    return drawConfigs.contains(board.getPieces().stream().filter(p -> !p.isTargetPiece()).map(
         p -> p.getName().toLowerCase()).toList()) ? Arrays.stream(board.getPlayers()).collect(
         Collectors.toMap(Player::teamID, p -> DRAW)) : Collections.emptyMap();
   }

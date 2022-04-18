@@ -1,5 +1,7 @@
 package oogasalad.GamePlayer.Board.Tiles.CustomTiles;
 
+import static oogasalad.GamePlayer.Board.Setup.BoardSetup.JSON_EXTENSION;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -47,8 +49,8 @@ public class PromotionReverse implements TileAction{
    * @param configFile to read
    */
   public PromotionReverse(String configFile) {
-    promotionImage = getPromotionImage(PROMOTION_IMAGE_FILE_PATH_HEADER + configFile);
-    promotablePieceNames = getPromotablePieceNames(PROMOTION_IMAGE_FILE_PATH_HEADER + configFile);
+    promotionImage = getPromotionImage(PROMOTION_IMAGE_FILE_PATH_HEADER + configFile + JSON_EXTENSION);
+    promotablePieceNames = getPromotablePieceNames(PROMOTION_IMAGE_FILE_PATH_HEADER + configFile + JSON_EXTENSION);
   }
 
   /**

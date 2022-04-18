@@ -1,5 +1,6 @@
 package oogasalad.GamePlayer.Movement.CustomMovements;
 
+import static oogasalad.GamePlayer.Board.Setup.BoardSetup.JSON_EXTENSION;
 import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_CONFIG_FILE_HEADER;
 import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_DEFAULT_FILE;
 
@@ -50,7 +51,7 @@ public class BankLeaver implements MovementInterface {
    * @param configFile to read
    */
   public BankLeaver(String configFile) {
-    this.configFile = CH_CONFIG_FILE_HEADER + configFile;
+    this.configFile = CH_CONFIG_FILE_HEADER + configFile + JSON_EXTENSION;
     try {
       blockCol = new JSONObject(Files.readAllBytes(Path.of(configFile))).
           getJSONArray("general").getJSONObject(0).getInt("blockerCol");

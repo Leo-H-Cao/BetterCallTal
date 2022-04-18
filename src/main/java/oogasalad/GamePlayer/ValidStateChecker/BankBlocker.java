@@ -1,5 +1,7 @@
 package oogasalad.GamePlayer.ValidStateChecker;
 
+import static oogasalad.GamePlayer.Board.Setup.BoardSetup.JSON_EXTENSION;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -20,7 +22,7 @@ import org.json.JSONObject;
 public class BankBlocker implements ValidStateChecker {
 
   public static final String CH_CONFIG_FILE_HEADER = "doc/GameEngineResources/Other/";
-  public static final String CH_DEFAULT_FILE = "CrazyhouseConfig.json";
+  public static final String CH_DEFAULT_FILE = "CrazyhouseConfig";
   public static final String BLOCKER_NAME = "blocker";
 
   private static final Logger LOG = LogManager.getLogger(BankBlocker.class);
@@ -41,7 +43,7 @@ public class BankBlocker implements ValidStateChecker {
    * @param configFile to read
    */
   public BankBlocker(String configFile) {
-    blockCol = getBlockerColumn(CH_CONFIG_FILE_HEADER + configFile);
+    blockCol = getBlockerColumn(CH_CONFIG_FILE_HEADER + configFile + JSON_EXTENSION);
   }
 
   /**
