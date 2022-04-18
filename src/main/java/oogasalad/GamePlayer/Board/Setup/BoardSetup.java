@@ -25,6 +25,7 @@ import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class BoardSetup {
@@ -92,7 +93,6 @@ public class BoardSetup {
       JSONObject rawTileData = customTiles.getJSONObject(i);
       int row = rawTileData.getInt("row");
       int col = rawTileData.getInt("col");
-      String img = rawTileData.getString("img");
 
       List<TileAction> tileActions = new ArrayList<>();
       JSONArray tileActionArray = rawTileData.getJSONArray("tileActions");
@@ -105,7 +105,9 @@ public class BoardSetup {
       try {
         ChessTile tile = myBoard.getTile(Coordinate.of(row, col));
         tile.setSpecialActions(tileActions);
-        tile.setCustomImg(img);
+        try {
+          tile.setCustomImg(rawTileData.getString("img"));
+        } catch (JSONException ignored){}
       } catch (OutsideOfBoardException e) {
         LOG.debug("Tile action setting failed, out of bounds");
       }
