@@ -2,7 +2,6 @@ package oogasalad.GamePlayer.Movement.MovementModifiers;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -23,20 +22,34 @@ import org.apache.logging.log4j.Logger;
  */
 public class Atomic implements MovementModifier{
 
-  private static final String ATOMIC_IMMUNE_FILE_PATH = "doc/GameEngineResources/Other/AtomicImmune";
+  private static final String ATOMIC_IMMUNE_FILE_PATH_HEADER = "doc/GameEngineResources/Other/";
+  private static final String ATOMIC_IMMUNE_DEFAULT_FILE = "AtomicImmune";
   private static final Logger LOG = LogManager.getLogger(Atomic.class);
-
-  private final static List<String> EXPLOSION_IMMUNE_NAMES = assignImmune();
   private static final int surroundDistance = 1;
+
+  private List<String> explosionImmuneNames;
+
+  /**
+   * Atomic end condition with default config file
+   */
+  public Atomic() {
+    this(ATOMIC_IMMUNE_DEFAULT_FILE);
+  }
+
+  /**
+   * Atomic end condition with provided config file
+   */
+  public Atomic(String immuneFilePath) {
+    explosionImmuneNames = assignImmune(ATOMIC_IMMUNE_FILE_PATH_HEADER + immuneFilePath);
+  }
 
   /***
    * Assigns piece immune to explosions, default is just pawn
    */
-  private static List<String> assignImmune() {
-
+  private List<String> assignImmune(String atomicImmuneFile) {
     try {
       List<String> immuneNames = new ArrayList<>();
-      File immuneFile = new File(ATOMIC_IMMUNE_FILE_PATH);
+      File immuneFile = new File(atomicImmuneFile);
       Scanner reader = new Scanner(immuneFile);
       while (reader.hasNext()) {
         immuneNames.add(reader.next().trim());
@@ -61,7 +74,7 @@ public class Atomic implements MovementModifier{
     Set<ChessTile> explodedSquares = new HashSet<>();
     try {
       getSurroundingTiles(board.getTile(piece.getCoordinates()), board).stream().filter(
-          (t) -> t.getPiece().isPresent()).filter((t) -> EXPLOSION_IMMUNE_NAMES.stream().noneMatch(
+          (t) -> t.getPiece().isPresent()).filter((t) -> explosionImmuneNames.stream().noneMatch(
               (n) -> t.getPiece().get().getName().equalsIgnoreCase(n) && !t.getCoordinates().equals(piece.getCoordinates())
           )).forEach((t) -> {
             LOG.debug("Exploded piece name: " + t.getPiece().get().getName());

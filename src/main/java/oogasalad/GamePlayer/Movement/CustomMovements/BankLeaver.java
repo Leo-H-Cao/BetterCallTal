@@ -34,7 +34,6 @@ public class BankLeaver implements MovementInterface {
 
   private static final Logger LOG = LogManager.getLogger(BankLeaver.class);
 
-
   /**
    * @return updated squares when a piece leaves the bank
    */
