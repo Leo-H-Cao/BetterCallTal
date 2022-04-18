@@ -13,6 +13,7 @@ import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Coordinate;
+import org.apache.logging.log4j.Logger;
 
 public class ChessTile implements Tile, Cloneable {
 
@@ -135,6 +136,7 @@ public class ChessTile implements Tile, Cloneable {
    * @return set of updated tiles
    */
   public Set<ChessTile> executeActions(ChessBoard board) throws OutsideOfBoardException {
+
     return specialActions.stream().flatMap(t -> {
       try {
         return t.executeAction(this, board).stream();

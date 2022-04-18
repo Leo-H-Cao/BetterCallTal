@@ -27,7 +27,7 @@ public class TestNavigation extends DukeApplicationTest {
 	@Test
 	void testEditor() {
 		clickOn(lookup("#createButton").query());
-		assertEquals(myStage.getTitle(), myResources.getString("GameEditorViewTitle"));
+		assertEquals(myStage.getTitle(), myResources.getString("EditorViewTitle"));
 	}
 
 

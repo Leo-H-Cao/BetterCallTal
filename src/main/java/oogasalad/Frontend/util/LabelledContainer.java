@@ -31,12 +31,9 @@ public abstract class LabelledContainer extends NodeContainer {
 	private Node makeLayout() {
 		GridPane ret = new GridPane();
 		ret.add(makeTitle(), 0, 0);
-		FlowPane flowPane = new FlowPane();
-		ret.add(flowPane, 0, 1);
-		flowPane.setOrientation(Orientation.HORIZONTAL);
-		flowPane.getChildren().addAll(fillContent());
-		flowPane.setHgap(5);
-		flowPane.setVgap(5);
+		Group g = new Group();
+		ret.add(g, 0, 1);
+		g.getChildren().add(fillContent());
 		ScrollPane scrollPane = new ScrollPane();
 		scrollPane.setContent(ret);
 		scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
@@ -54,5 +51,5 @@ public abstract class LabelledContainer extends NodeContainer {
 	/**
 	 * @return Collection of Nodes to be set as children of the flow pane
 	 */
-	protected abstract Collection<Node> fillContent();
+	protected abstract Node fillContent();
 }

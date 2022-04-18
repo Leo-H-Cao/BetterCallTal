@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer.Board;
+package oogasalad.GamePlayer.Board.EndConditions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -9,10 +9,12 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.EndConditions.NoEndCondition;
 import oogasalad.GamePlayer.Board.EndConditions.PawnReachesEnd;
 import oogasalad.GamePlayer.Board.EndConditions.TwoMoves;
+import oogasalad.GamePlayer.Board.Player;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;

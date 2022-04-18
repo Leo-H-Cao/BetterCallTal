@@ -4,6 +4,7 @@ import java.util.*;
 
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Popup;
@@ -22,6 +23,8 @@ import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,6 +48,7 @@ public class GameView extends View {
     private StackPane myCenterBoard;
     private Runnable flipRun;
     private RightSideSection myRightSide;
+    private Consumer<TurnUpdate> servUpRun;
 
 
     public GameView(Stage stage) {
@@ -74,6 +78,7 @@ public class GameView extends View {
         MoveCons = coor -> makeMove(coor);
         removeGOCons = node -> removeGameOverNode(node);
         flipRun = () -> flipBoard();
+        servUpRun = tu -> updateBoard(tu);
     }
 
 
@@ -160,6 +165,12 @@ public class GameView extends View {
      * RECEIVED PERMISSION FROM DUVALL TO DO THIS
      */
     public static Piece promotionPopUp(List<Piece> possPromotions){
-        return possPromotions.get(0);
+        ChoiceDialog cd = new ChoiceDialog(possPromotions.get(0), possPromotions);
+        Optional<Piece> p = cd.showAndWait();
+        if (p.isPresent()) {
+            return p.get();
+        } else {
+           return null;
+        }
     }
 }

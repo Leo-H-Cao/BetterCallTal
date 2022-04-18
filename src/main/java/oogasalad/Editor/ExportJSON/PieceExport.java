@@ -25,13 +25,12 @@ public class PieceExport {
   public PieceExport(int row, int col, EditorPiece editorPiece, int team){
     this.row = row;
     this.col = col;
-    pieceName = editorPiece.getPieceName();
-    imgFile = editorPiece.getImage(team).getUrl();
-    pointValue = editorPiece.getPointValue();
     this.team = team;
-    customMoves = new ArrayList<>();
+    pieceName = editorPiece.getPieceName();
+    imgFile = editorPiece.getImage(team).getValue().getUrl();
+    pointValue = editorPiece.getPointValue();
     mainPiece = editorPiece.isMainPiece() ? 1 : 0;
-    customMoves = editorPiece.getCustomMoves();
+    customMoves = editorPiece.getCustomMoves() == null ? new ArrayList<>() :editorPiece.getCustomMoves();
     movementModifiers = new ArrayList<>();
     onInteractionModifier = new ArrayList<>();
     movementGrid = editorPiece.getMovementGrid();
