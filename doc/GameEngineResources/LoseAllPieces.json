@@ -5,8 +5,8 @@
       "columns": 8,
       "turnCriteria": "Linear",
       "colors": ["black", "white"],
-      "endConditions": ["Checkmate", "Stalemate", "KnownDraws", "Repetition"],
-      "validStateCheckers": ["Check"]
+      "endConditions": ["LoseAllPieces", "Stalemate"],
+      "validStateCheckers": []
     }
   ],
   "playerInfo": [

@@ -5,8 +5,8 @@
       "columns": 8,
       "turnCriteria": "Linear",
       "colors": ["black", "white"],
-      "endConditions": ["Checkmate", "Stalemate", "KnownDraws", "Repetition"],
-      "validStateCheckers": ["Check"]
+      "endConditions": ["Antichess", "Stalemate"],
+      "validStateCheckers": ["ForcedCapture"]
     }
   ],
   "playerInfo": [

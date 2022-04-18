@@ -1,7 +1,9 @@
 package oogasalad.GamePlayer.Board.TurnManagement;
 
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import oogasalad.GamePlayer.Board.Player;
 
 /**
@@ -46,13 +48,14 @@ public record GamePlayers(List<Player> players, List<Integer> teamNumbers) {
   }
 
   /**
-   * Gets the player object with the associated ID
+   * Gets the player object with the associated ID, or index if id cannot be found
    *
    * @param id of player
    * @return player with given id
    */
   public Player getPlayer(int id) {
-    return players.get(Math.min(id, players.size() - 1));
+    return players.stream().filter(p -> p.teamID() == id).findFirst().orElse(
+        players.get(Math.max(id, players.size()-1)));
   }
 
   /**

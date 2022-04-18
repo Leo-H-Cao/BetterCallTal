@@ -9,7 +9,12 @@ open module oogasalad {
     requires org.apache.logging.log4j;
     requires java.scripting;
     requires com.fasterxml.jackson.databind;
+  requires spring.boot;
+    requires spring.boot.autoconfigure;
+  requires spring.web;
+  requires spring.context;
+  requires spring.beans;
 
-    // allow other classes to access listed packages in your project
+  // allow other classes to access listed packages in your project
     exports oogasalad;
 }

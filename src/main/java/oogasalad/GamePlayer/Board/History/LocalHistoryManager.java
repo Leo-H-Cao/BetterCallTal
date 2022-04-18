@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 
 /**
  * This class is used to store prior states of the game, allowing for checking complex game
@@ -34,6 +33,16 @@ public class LocalHistoryManager implements HistoryManager {
   public LocalHistoryManager(Collection<History> history) {
     this.history = new ArrayList<>(history);
     this.currentIndex = history.size() - 1;
+  }
+
+  /**
+   * Creates a chess history object from a past history object, which can be used to store the past
+   * game states.
+   *
+   * @param history the past history object to create a new history object from.
+   */
+  public LocalHistoryManager(HistoryManager history) {
+    this(history.stream().toList());
   }
 
   /**
@@ -156,7 +165,7 @@ public class LocalHistoryManager implements HistoryManager {
     return history.isEmpty();
   }
 
-  /***
+  /**
    * @return stream over history list
    */
   @Override

@@ -1,5 +1,6 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class KingOfTheHillTest {
     System.out.println(new KingOfTheHill().getScores(board).get(0));
     System.out.println(new KingOfTheHill().getScores(board).get(1));
 
-    assertTrue(new KingOfTheHill().getScores(board).get(TEAM_1) == 1.0);
+    assertEquals(1.0, new KingOfTheHill().getScores(board).get(TEAM_1));
   }
 
   @Test
