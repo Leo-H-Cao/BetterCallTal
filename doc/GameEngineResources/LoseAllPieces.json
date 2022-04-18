@@ -1,0 +1,426 @@
+{
+  "general": [
+    {
+      "rows": 8,
+      "columns": 8,
+      "turnCriteria": "Linear",
+      "colors": ["black", "white"],
+      "endConditions": ["LoseAllPieces", "StalemateWin"],
+      "validStateCheckers": []
+    }
+  ],
+  "playerInfo": [
+    {
+      "team": 0,
+      "opponents": [1]
+    },
+    {
+      "team": 1,
+      "opponents": [0]
+    }
+  ],
+  "pieces": [
+    {
+      "row": 6,
+      "col": 0,
+      "pieceFile": "WhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 1,
+      "pieceFile": "WhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 2,
+      "pieceFile": "WhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 3,
+      "pieceFile": "WhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 4,
+      "pieceFile": "WhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 5,
+      "pieceFile": "WhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 6,
+      "pieceFile": "WhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 7,
+      "pieceFile": "WhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 0,
+      "pieceFile": "Rook",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 7,
+      "pieceFile": "Rook",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 1,
+      "pieceFile": "Knight",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 6,
+      "pieceFile": "Knight",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 2,
+      "pieceFile": "Bishop",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 5,
+      "pieceFile": "Bishop",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 3,
+      "pieceFile": "Queen",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 4,
+      "pieceFile": "King",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 1
+    },
+    {
+      "row": 1,
+      "col": 0,
+      "pieceFile": "BlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 1,
+      "pieceFile": "BlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 2,
+      "pieceFile": "BlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 3,
+      "pieceFile": "BlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 4,
+      "pieceFile": "BlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 5,
+      "pieceFile": "BlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 6,
+      "pieceFile": "BlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 7,
+      "pieceFile": "BlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 0,
+      "pieceFile": "Rook",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 7,
+      "pieceFile": "Rook",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 1,
+      "pieceFile": "Knight",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 6,
+      "pieceFile": "Knight",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 2,
+      "pieceFile": "Bishop",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 5,
+      "pieceFile": "Bishop",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 3,
+      "pieceFile": "Queen",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 4,
+      "pieceFile": "King",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 1
+    }
+  ],
+  "tiles": [
+    {
+      "row": 0,
+      "col": 0,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 0,
+      "col": 1,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 0,
+      "col": 2,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 0,
+      "col": 3,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 0,
+      "col": 4,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 0,
+      "col": 5,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 0,
+      "col": 6,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 0,
+      "col": 7,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 7,
+      "col": 0,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 7,
+      "col": 1,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 7,
+      "col": 2,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 7,
+      "col": 3,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 7,
+      "col": 4,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 7,
+      "col": 5,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 7,
+      "col": 6,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 7,
+      "col": 7,
+      "tileActions": ["Promotion"]
+    }
+  ]
+}
