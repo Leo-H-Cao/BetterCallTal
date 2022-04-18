@@ -8,7 +8,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
-import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.LabelledContainer;
 import java.util.ArrayList;
@@ -53,6 +52,7 @@ public class PieceLibrary extends LabelledContainer {
 
 		ImageView image = new ImageView(getEditorBackend().getPiecesState().getPiece(id).getImage(0).getValue());
 		image.setFitHeight(size - 5);
+		image.setFitWidth(size - 5);
 		image.setPreserveRatio(true);
 		image.setSmooth(true);
 		image.setCache(true);
