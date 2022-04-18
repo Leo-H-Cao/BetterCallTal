@@ -2,7 +2,10 @@ package oogasalad.Editor.ModelState.BoardState;
 
 public enum TileEffect {
   NONE,
-  CLOSED,
   BLACKHOLE,
-  PROMOTION
+  PROMOTION,
+  SWAP,
+  PROMOTIONREVERSE,
+  DEMOTE,
+  FIRE,
 }

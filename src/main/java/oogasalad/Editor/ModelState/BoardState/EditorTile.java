@@ -1,9 +1,12 @@
 package oogasalad.Editor.ModelState.BoardState;
 
+import javafx.scene.image.Image;
+
 public class EditorTile {
   private TileEffect myTileEffect;
   private String pieceID;
   private int team;
+  private Image img;
 
   public EditorTile(int x, int y){
     myTileEffect = TileEffect.NONE;
@@ -36,4 +39,17 @@ public class EditorTile {
     pieceID = null;
     team = -1;
   }
+
+  public TileEffect getTileEffect() {
+    return myTileEffect;
+  }
+
+  public Image getImg() {
+    return img;
+  }
+
+  public void setImg(Image img) {
+    this.img = img;
+  }
+
 }

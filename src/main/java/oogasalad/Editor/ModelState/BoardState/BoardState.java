@@ -17,7 +17,7 @@ public class BoardState {
     myEditorBoard.changeBoardSize(width, height);
   }
 
-  public void setTileEffect(int x, int y, String effect) {
+  public void setTileEffect(int x, int y, TileEffect effect) {
     myEditorBoard.setTileEffect(x, y, effect);
   }
 
