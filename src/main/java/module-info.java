@@ -13,6 +13,7 @@ open module oogasalad {
     requires spring.boot.autoconfigure;
   requires spring.web;
   requires spring.context;
+  requires spring.beans;
 
   // allow other classes to access listed packages in your project
     exports oogasalad;
