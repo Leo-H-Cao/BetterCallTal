@@ -6,7 +6,7 @@
       "turnCriteria": "Linear",
       "colors": ["black", "white"],
       "endConditions": ["Antichess"],
-      "validStateCheckers": []
+      "validStateCheckers": ["ForcedCapture"]
     }
   ],
   "playerInfo": [
