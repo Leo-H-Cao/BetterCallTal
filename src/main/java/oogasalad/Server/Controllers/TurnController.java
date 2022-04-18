@@ -18,7 +18,7 @@ public class TurnController {
   private final GameSessionService activeSessions;
 
   /**
-   * Constructor called by Spring to create a new HistoryController. Constructor initializes the
+   * Constructor called by Spring to create a new TurnController. Constructor initializes the
    * autowired
    *
    * @param activeSessions the game session service that is used to get the active game sessions.
