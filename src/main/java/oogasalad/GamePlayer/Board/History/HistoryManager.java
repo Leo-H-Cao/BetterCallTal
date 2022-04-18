@@ -88,6 +88,8 @@ public interface HistoryManager {
   boolean isEmpty();
 
   /**
+   * Gets a stream of the history.
+   *
    * @return way to stream over the history
    */
   Stream<History> stream();
