@@ -70,11 +70,6 @@ public class EditorBoard {
     board.get(y).get(x).addPiece(pieceID, team);
   }
 
-  public void removePieceStartingLocation(String pieceID){
-    EditorCoordinate pieceLocation = findPieceLocation(pieceID);
-    board.get(pieceLocation.getY()).get(pieceLocation.getX()).removePiece();
-  }
-
   public SimpleIntegerProperty getBoardWidth(){
     return myWidth;
   }

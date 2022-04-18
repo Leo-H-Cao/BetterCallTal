@@ -18,7 +18,7 @@ public class EditorBackend {
 
 	public EditorBackend(){
 		this.piecesState = new PiecesState();
-		this.boardState = new BoardState(piecesState);
+		this.boardState = new BoardState();
 		currentlySelectedType = OPEN;
 		selectedTypeProperty = new SimpleObjectProperty<>(currentlySelectedType);
 		selectedPieceId = new SimpleStringProperty("rook");

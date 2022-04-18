@@ -80,20 +80,13 @@ class BoardStateTest extends DukeApplicationTest {
     String pieceID = "123";
     EditorPiece piece1 = piecesState.createCustomPiece(pieceID);
     boardState.setPieceStartingLocation(piece1.getPieceID(), 3,4, 0);
-    String invalidID = "456";
 
-    //test piece ID for piece that does not exist
-    Exception noPieceException = assertThrows(InvalidPieceIDException.class, () -> boardState.removePiece(invalidID));
-//    Exception noPieceException = assertThrows(InavlidPieceIDException.class, () -> boardState.removePiece(invalidID));
-    String noPieceExpected = "Invalid pieceID, piece does not exist in board";
-    String actualMessage = noPieceException.getMessage();
-    assertTrue(actualMessage.contains(noPieceExpected));
-
-    boardState.removePiece(pieceID);
+    boardState.clearTile(3,4);
 
     //test removed piece from board
-    noPieceException = assertThrows(InvalidPieceIDException.class, () -> boardState.getPieceLocation(pieceID));
-    actualMessage = noPieceException.getMessage();
+    Exception noPieceException = assertThrows(InvalidPieceIDException.class, () -> boardState.getPieceLocation(pieceID));
+    String actualMessage = noPieceException.getMessage();
+    String noPieceExpected = "Invalid pieceID, piece does not exist in board";
     assertTrue(actualMessage.contains(noPieceExpected));
   }
 
