@@ -2,10 +2,10 @@ package oogasalad.Server;
 
 import java.util.Objects;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.Server.Managers.HistoryManager;
+import oogasalad.GamePlayer.Board.History.HistoryManager;
 import oogasalad.GamePlayer.Board.History.LocalHistoryManager;
 import oogasalad.GamePlayer.Board.TurnManagement.LocalTurnManager;
-import oogasalad.Server.Managers.TurnManager;
+import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
 
 public record GameSession(String gameSessionId, TurnManager turns, HistoryManager history) {
 
