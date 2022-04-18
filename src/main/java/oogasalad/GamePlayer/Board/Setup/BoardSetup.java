@@ -32,6 +32,7 @@ public class BoardSetup {
   private static final Logger LOG = LogManager.getLogger(BoardSetup.class);
 
   private static final String BASIC_MOVEMENT_PACKAGE = "doc/GameEngineResources/BasicMovements/";
+  private static final String PIECE_JSON_PACKAGE = "doc/GameEngineResources/Pieces/";
   private static final String JSON_EXTENSION = ".json";
 
   private static final String TILE_ACTION_PACKAGE = "oogasalad.GamePlayer.Board.Tiles.CustomTiles.";
@@ -219,56 +220,74 @@ public class BoardSetup {
   }
 
   /**
-   * @param JSONKey to get movement files from
+   * Gets basic movements from given file
+   *
+   * @param data file to get data from
+   * @param key to get movement files from
    * @return list of movements based on the file names provided by the list corresponding to JSONKey
    */
-  private List<MovementInterface> getMoveList(String JSONKey, int pieceIndex) throws IOException {
-    JSONArray movementFiles = myJSONObject.getJSONArray("pieces").getJSONObject(pieceIndex)
-        .getJSONArray(JSONKey);
+  private List<MovementInterface> getMoveList(JSONObject data, String key) throws IOException {
+    JSONArray movementFiles = data.getJSONArray(key);
     List<MovementInterface> movements = new ArrayList<>();
     for (int i = 0; i < movementFiles.length(); i++) {
       movements.addAll(
           parseMovementFile(BASIC_MOVEMENT_PACKAGE + movementFiles.getString(i) + JSON_EXTENSION));
     }
-    LOG.debug(
-        String.format("Movement list for piece %d in %s: %s", pieceIndex, JSONKey, movements));
     return movements;
   }
 
   /**
-   * @return custom moves as defined by the JSON
-   */
-  private List<MovementInterface> getCustomMovements(int pieceIndex) throws IOException {
-    List<MovementInterface> customMovements = new ArrayList<>();
-    JSONArray customMoveArray = myJSONObject.getJSONArray("pieces").getJSONObject(pieceIndex)
-        .getJSONArray("customMoves");
-    for (int i = 0; i < customMoveArray.length(); i++) {
-      customMovements.add(
-          (MovementInterface) createInstance(CUSTOM_MOVE_PACKAGE + customMoveArray.getString(i),
-              new Class[]{}, new Object[]{}));
-    }
-    LOG.debug(String.format("Custom movement list for piece %d: %s", pieceIndex, customMovements));
-    return customMovements;
-  }
-
-  /**
-   * @param JSONKey to get movement files from
+   * Gets movement modifiers from data
+   *
+   * @param data to get data from
+   * @param key to get movement modifiers from
    * @return list of movements modifiers based on the file names provided by the list corresponding
    * to JSONKey
    */
-  private List<MovementModifier> getMovementModifiers(String JSONKey, int pieceIndex)
+  private List<MovementModifier> getMovementModifiers(JSONObject data, String key)
       throws IOException {
     List<MovementModifier> movementModifiers = new ArrayList<>();
-    JSONArray movementModifierArray = myJSONObject.getJSONArray("pieces").getJSONObject(pieceIndex)
-        .getJSONArray(JSONKey);
+    JSONArray movementModifierArray = data.getJSONArray(key);
     for (int i = 0; i < movementModifierArray.length(); i++) {
       movementModifiers.add((MovementModifier) createInstance(
           MOVEMENT_MODIFIER_PACKAGE + movementModifierArray.getString(i), new Class[]{},
           new Object[]{}));
     }
-    LOG.debug(
-        String.format("Custom movement list for piece %d: %s", pieceIndex, movementModifiers));
     return movementModifiers;
+  }
+
+  /***
+   * @param file to get piece data from
+   * @return piece json data based on file
+   */
+  private PieceJSONData getPieceJSONData(String file) throws IOException {
+    String content = new String(Files.readAllBytes(Path.of(file)));
+    JSONObject data = new JSONObject(content);
+
+    return new PieceJSONData(data.getString("pieceName"), data.getString("imgFile"),
+        data.getInt("pointValue"), getMoveList(data, "basicMovements"),
+        getMoveList(data, "basicCaptures"), getCustomMovements(data, "customMoves"),
+        getMovementModifiers(data, "movementModifiers"), getMovementModifiers(data,
+        "onInteractionModifier"));
+  }
+
+  /***
+   * Instantiates movements objects from data based on key
+   *
+   * @param data to get Strings from
+   * @param key to get Strings form
+   * @return list of custom movements
+   */
+  private List<MovementInterface> getCustomMovements(JSONObject data, String key)
+      throws IOException {
+    List<MovementInterface> movements = new ArrayList<>();
+    JSONArray moveArray = data.getJSONArray(key);
+    for (int i = 0; i < moveArray.length(); i++) {
+      movements.add(
+          (MovementInterface) createInstance(CUSTOM_MOVE_PACKAGE + moveArray.getString(i),
+              new Class[]{}, new Object[]{}));
+    }
+    return movements;
   }
 
   /**
@@ -280,26 +299,36 @@ public class BoardSetup {
     JSONArray pieces = myJSONObject.getJSONArray("pieces");
     List<Piece> pieceList = new ArrayList<>();
     for (int i = 0; i < pieces.length(); i++) {
+
       JSONObject rawPieceData = pieces.getJSONObject(i);
+      String pieceFile = PIECE_JSON_PACKAGE + rawPieceData.getString("pieceFile") + JSON_EXTENSION;
+      PieceJSONData pieceJSONData = getPieceJSONData(pieceFile);
 
       int startRow = rawPieceData.getInt("row");
       int startCol = rawPieceData.getInt("col");
-      String name = rawPieceData.getString("pieceName");
-      String imageFile = rawPieceData.getString("imgFile");
       Coordinate startingCoordinate = new Coordinate(startRow, startCol);
+
+      String name = pieceJSONData.pieceName();
+      String imageFile = pieceJSONData.imgFile();
       int team = rawPieceData.getInt("team");
-      int pointValue = rawPieceData.getInt("pointValue");
+      int pointValue = pieceJSONData.pointValue();
       boolean mainPiece = rawPieceData.getInt("mainPiece") == 1;
 
-      List<MovementInterface> movements = getMoveList("basicMovements", i);
-      List<MovementInterface> captures = getMoveList("basicCaptures", i);
-      List<MovementInterface> customMovements = getCustomMovements(i);
+      List<MovementInterface> movements = pieceJSONData.basicMovements();
+      List<MovementInterface> captures = pieceJSONData.basicCaptures();
+      List<MovementInterface> customMovements = getCustomMovements(
+          rawPieceData, "customMoves");
       movements.addAll(customMovements);
+      movements.addAll(pieceJSONData.customMoves());
       captures.addAll(customMovements);
+      captures.addAll(pieceJSONData.customMoves());
 
-      List<MovementModifier> movementModifiers = getMovementModifiers("movementModifiers", i);
-      List<MovementModifier> onInteractionModifiers = getMovementModifiers("onInteractionModifier",
-          i);
+      List<MovementModifier> movementModifiers = getMovementModifiers(
+          rawPieceData, "movementModifiers");
+      movementModifiers.addAll(pieceJSONData.movementModifiers());
+      List<MovementModifier> onInteractionModifiers = getMovementModifiers(
+          rawPieceData, "onInteractionModifier");
+      onInteractionModifiers.addAll(pieceJSONData.onInteractionModifiers());
 
       PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, mainPiece,
           movements, captures, movementModifiers, onInteractionModifiers, imageFile);
