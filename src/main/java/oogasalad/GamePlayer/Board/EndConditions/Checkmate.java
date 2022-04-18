@@ -40,7 +40,7 @@ public class Checkmate implements EndCondition {
       }
 
     } catch (EngineException e) {
-      e.printStackTrace();//TODO: handle the exception
+      return new HashMap<>();
     }
     return new HashMap<>();
   }
