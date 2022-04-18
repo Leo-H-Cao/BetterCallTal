@@ -1,6 +1,7 @@
 package oogasalad.Editor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import javafx.scene.Scene;
@@ -94,7 +95,16 @@ class BoardStateTest extends DukeApplicationTest {
     noPieceException = assertThrows(InvalidPieceIDException.class, () -> boardState.getPieceLocation(pieceID));
     actualMessage = noPieceException.getMessage();
     assertTrue(actualMessage.contains(noPieceExpected));
+  }
 
+  @Test
+  void testClearTile(){
+    String pieceID = "123";
+    EditorPiece piece1 = piecesState.createCustomPiece(pieceID);
+    boardState.setPieceStartingLocation(piece1.getPieceID(), 3,4, 0);
+    assertEquals(pieceID, boardState.getTile(3,4).getPieceID());
+    boardState.clearTile(3,4);
+    assertNull(boardState.getTile(3,4).getPieceID());
   }
 
 }

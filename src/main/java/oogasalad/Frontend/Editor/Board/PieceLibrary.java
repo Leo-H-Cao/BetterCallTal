@@ -8,8 +8,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
+import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
+import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.LabelledContainer;
+import oogasalad.GamePlayer.GamePiece.Piece;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -21,10 +25,18 @@ public class PieceLibrary extends LabelledContainer {
 
 	@Override
 	protected Node fillContent() {
-		Collection<Node> ret = new ArrayList();
-		getEditorBackend().getPiecesState().getAllPieces().forEach((piece) -> ret.add(createPiece(piece.getPieceID())));
+		Collection<Node> listOfNodes = new ArrayList();
+		getEditorBackend().getPiecesState().getAllPieces().getValue().forEach((piece) -> listOfNodes.add(createPiece(piece.getPieceID())));
 		FlowPane fp = new FlowPane();
-		fp.getChildren().addAll(ret);
+		fp.getChildren().addAll(listOfNodes);
+
+		// Listen for updates to the piece library
+		getEditorBackend().getPiecesState().getAllPieces().addListener((ob, ov, nv) -> {
+			listOfNodes.clear();
+			fp.getChildren().clear();
+			nv.forEach((piece) -> listOfNodes.add(createPiece(piece.getPieceID())));
+			fp.getChildren().addAll(listOfNodes);
+		});
 		return fp;
 	}
 
@@ -35,6 +47,8 @@ public class PieceLibrary extends LabelledContainer {
 		rect.setStroke(Paint.valueOf("blue"));
 		rect.setStrokeWidth(0);
 		rect.setStrokeType(StrokeType.INSIDE);
+
+		EditorPiece piece = getEditorBackend().getPiecesState().getPiece(id);
 
 		// Set initial outline
 		if(id.equals(getEditorBackend().getSelectedPieceId().getValue())) {
@@ -49,14 +63,19 @@ public class PieceLibrary extends LabelledContainer {
 			}
 		});
 
-
-		ImageView image = new ImageView(getEditorBackend().getPiecesState().getPiece(id).getImage(0).getValue());
+		ImageView image = new ImageView(piece.getImage(0).getValue());
 		image.setFitHeight(size - 5);
 		image.setFitWidth(size - 5);
 		image.setPreserveRatio(true);
 		image.setSmooth(true);
 		image.setCache(true);
-		getEditorBackend().getAlternatePiece().addListener((ob, ov, nv) -> image.setImage(getEditorBackend().getPiecesState().getPiece(id).getImage((Integer) nv).getValue()));
+
+		// Listen for changes to the custom piece images
+		piece.getImage(0).addListener((ob, ov, nv) -> image.setImage(nv));
+		piece.getImage(1).addListener((ob, ov, nv) -> image.setImage(nv));
+
+		// Listen for changing to alternate pieces
+		getEditorBackend().getAlternatePiece().addListener((ob, ov, nv) -> image.setImage(piece.getImage((Integer) nv).getValue()));
 		StackPane ret = new StackPane(rect, image);
 		ButtonFactory.addAction(ret, (e) -> getEditorBackend().setSelectedPieceId(id));
 		return new Group(ret);

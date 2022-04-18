@@ -58,6 +58,10 @@ public class EditorBoard {
     }
   }
 
+  public void clearTile(int x, int y){
+    board.get(y).get(x).removePiece();
+  }
+
   public void setTileEffect(int x, int y, String effectString){
     TileEffect effect = TileEffect.valueOf(effectString.toUpperCase(Locale.ROOT));
     board.get(y).get(x).setTileEffect(effect);

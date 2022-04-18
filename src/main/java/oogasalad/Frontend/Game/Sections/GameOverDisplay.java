@@ -19,9 +19,10 @@ import java.util.function.Consumer;
 public class GameOverDisplay {
 
     private VBox myDisplay;
-    private Map<Integer, String> myTeams = new HashMap<>() {{
-        put(0, "White");
-        put(1, "Black");
+    private Map<Double, String> myTeams = new HashMap<>() {{
+        put(0.0, "White");
+        put(1.0, "Black");
+        put(.5, "Draw");
     }};
     private Consumer<Node> removeCons;
     private static final String OK_BUTTON_ID = "OK";
@@ -31,12 +32,12 @@ public class GameOverDisplay {
 
     public GameOverDisplay(Map<Integer, Double> scores, Consumer<Node> remove) {
         removeCons =remove;
-        int winner = findWinner(scores);
+        Double winner = findWinner(scores);
         myDisplay = setUpDisplay(winner);
     }
 
-    private Integer findWinner(Map<Integer, Double> scores){
-        int ret = 0;
+    private Double findWinner(Map<Integer, Double> scores){
+        double ret = .5;
         for (int k : scores.keySet()){
             if (scores.get(k).equals(WINVALUE)) {
                 ret = k;
@@ -46,7 +47,7 @@ public class GameOverDisplay {
         return ret;
     }
 
-    private VBox setUpDisplay(int winner) {
+    private VBox setUpDisplay(Double winner) {
         VBox vb = new VBox();
         vb.setMaxSize(WIDTH, HEIGHT);
         Text GameOver = new Text(BackendConnector.getFrontendWord("GameOver", getClass()));

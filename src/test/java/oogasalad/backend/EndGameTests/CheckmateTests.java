@@ -105,7 +105,7 @@ public class CheckmateTests {
     board.setPieces(pieces);
     LOG.debug(board);
 
-    assertTrue(Check.isValid(board, TEAM_1));
+    assertTrue(!Check.isValid(board, TEAM_1));
     assertTrue(Checkmate.isInMate(board, TEAM_1));
   }
 
@@ -118,7 +118,7 @@ public class CheckmateTests {
         makePawn(2, 0, TEAM_2)));
 
     assertTrue(new Check().isValid(board, TEAM_1));
-//    assertTrue(CheckmateValidator.isInMate(board, TEAM_1));
+    assertFalse(new Checkmate().isInMate(board, TEAM_1));
   }
 
   @Test
@@ -162,11 +162,13 @@ public class CheckmateTests {
   }
 
   @Test
-  void playerBlocksMateThenEntersMateNextTurn() throws EngineException {
+  void playerBlocksMate() throws EngineException {
     Piece rook1 = makeRook(1, 5, TEAM_1);
     Piece rook2 = makeRook(1, 0, TEAM_2);
+    Piece rook3 = makeRook(2, 0, TEAM_2);
     Piece king1 = makeKing(0, 0, TEAM_1);
-    pieces.addAll(List.of(king1, rook1, makeRook(2, 0, TEAM_2), makeRook(2, 1, TEAM_2),
+    Piece king2 = makeKing(7, 7, TEAM_2);
+    pieces.addAll(List.of(king2, king1, rook1, rook3, makeRook(2, 1, TEAM_2),
         rook2));
     board.setPieces(pieces);
     LOG.debug(board);
@@ -175,13 +177,15 @@ public class CheckmateTests {
     assertFalse(Checkmate.isInMate(board, TEAM_1));
 
     //Some Movement
-    rook1.move(board.getTile(new Coordinate(1, 0)), board);
-    rook2.move(board.getTile(new Coordinate(1, 0)), board);
-    king1.move(board.getTile(new Coordinate(1, 0)), board);
+    ChessBoard copy = board.deepCopy();
+
+    copy = board.makeHypotheticalMove(rook1, new Coordinate(1, 0));
+    copy = copy.makeHypotheticalMove(rook3, new Coordinate(1, 0));
+    //copy = copy.makeHypotheticalMove(king1, new Coordinate(1, 0));
 
     //assertTrue(CheckmateValidator.isInMate(board, TEAM_1));
 
-    assertTrue(Checkmate.isInMate(board, TEAM_2));
+    assertFalse(Checkmate.isInMate(board, TEAM_2));
 
   }
 }

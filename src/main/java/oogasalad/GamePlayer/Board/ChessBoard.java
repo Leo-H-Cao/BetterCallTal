@@ -409,6 +409,19 @@ public class ChessBoard implements Iterable<ChessTile> {
         .flatMap(List::stream).toList();
   }
 
+  /***
+   * Gets list of all opponent pieces for a given board
+   *
+   * @param team to get opponents for
+   * @return list of opponent pieces
+   */
+  public List<Piece> getOpponentPieces(int team) {
+    return board.stream().flatMap(List::stream).toList().stream().map(ChessTile::getPieces)
+        .flatMap(List::stream).toList().stream()
+        .filter(p -> Arrays.stream(this.getPlayer(team).opponentIDs()).anyMatch(
+            oid -> oid == p.getTeam())).toList();
+  }
+
   /**
    * @return current player
    */
