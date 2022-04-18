@@ -1,4 +1,4 @@
-package oogasalad.backend.PieceTests;
+package oogasalad.GamePlayer.GamePiece;
 
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.GamePiece.Piece;

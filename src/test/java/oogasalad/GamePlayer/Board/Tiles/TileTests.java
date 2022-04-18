@@ -1,4 +1,4 @@
-package oogasalad.backend;
+package oogasalad.GamePlayer.Board.Tiles;
 
 import oogasalad.Main;
 import org.junit.jupiter.api.BeforeEach;

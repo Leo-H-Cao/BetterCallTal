@@ -31,6 +31,10 @@ public class LocalTurnManager implements TurnManager {
     endResult = new HashMap<>();
   }
 
+  public LocalTurnManager(TurnManagerData turnManagerData) {
+    this(turnManagerData.players(), turnManagerData.turn(), turnManagerData.conditions());
+  }
+
   /**
    * Updates the turn manager with the current board.
    *

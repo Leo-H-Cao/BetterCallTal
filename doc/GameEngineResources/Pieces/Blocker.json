@@ -1,0 +1,10 @@
+{
+  "pieceName": "Blocker",
+  "imgFile": "blocker",
+  "pointValue": 0,
+  "basicMovements": [],
+  "basicCaptures": [],
+  "customMoves": [],
+  "movementModifiers": [],
+  "onInteractionModifier": []
+}
