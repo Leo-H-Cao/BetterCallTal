@@ -12,6 +12,8 @@ public final class GameSession {
   private final String gameSessionId;
   private final TurnManager turns;
   private final HistoryManager history;
+  private final int host;
+  private final int opponent;
   private boolean isPaused;
 
   /**
@@ -21,8 +23,10 @@ public final class GameSession {
    * @param initialBoard  the initial board of the game, which includes the initial state and rules
    *                      of the game.
    */
-  public GameSession(String gameSessionId, ChessBoard initialBoard) {
+  public GameSession(String gameSessionId, int host, int opponent, ChessBoard initialBoard) {
     this.gameSessionId = gameSessionId;
+    this.host = host;
+    this.opponent = opponent;
     this.turns = new LocalTurnManager(initialBoard.getTurnManagerData());
     this.history = new LocalHistoryManager();
     this.isPaused = false;
@@ -102,17 +106,21 @@ public final class GameSession {
   }
 
   /**
-   * Gets the string representation of the game session.
+   * Gets the host of the game session.
    *
-   * @return the string representation of the game session.
+   * @return the host of the game session.
    */
-  @Override
-  public String toString() {
-    return "GameSession[" +
-        "gameSessionId=" + gameSessionId + ", " +
-        "turns=" + turns + ", " +
-        "history=" + history + ", " +
-        "isActive=" + isPaused + ']';
+  public int getHost() {
+    return host;
+  }
+
+  /**
+   * Gets the opponent of the game session.
+   *
+   * @return the opponent of the game session.
+   */
+  public int getOpponent() {
+    return opponent;
   }
 
 }

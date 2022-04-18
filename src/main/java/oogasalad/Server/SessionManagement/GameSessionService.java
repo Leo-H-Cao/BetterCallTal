@@ -2,6 +2,7 @@ package oogasalad.Server.SessionManagement;
 
 import java.util.HashMap;
 import java.util.Map;
+import oogasalad.GamePlayer.Board.ChessBoard;
 import org.springframework.stereotype.Component;
 
 @Component("activeSessions")
@@ -23,11 +24,11 @@ public class GameSessionService {
   /**
    * Adds a session to the active sessions.
    *
-   * @param sessionId the session id to add
-   * @param session   the session to add
+   * @param sessionId    the session id to add
+   * @param initialBoard the initial board for the session
    */
-  public void addSession(String sessionId, GameSession session) {
-    activeSessions.put(sessionId, session);
+  public void addSession(String sessionId, int host, int opponent, ChessBoard initialBoard) {
+    activeSessions.put(sessionId, new GameSession(sessionId, host, opponent, initialBoard));
   }
 
   /**
