@@ -14,14 +14,14 @@ import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.ValidStateChecker.Check;
 import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
-import oogasalad.backend.EndGameTests.CheckmateTests;
+import oogasalad.GamePlayer.Board.EndConditions.CheckmateTest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class DemoteTests {
-  private static final Logger LOG = LogManager.getLogger(CheckmateTests.class);
+  private static final Logger LOG = LogManager.getLogger(CheckmateTest.class);
 
   private static final int TEAM_1 = 1;
   private static final int TEAM_2 = 0;

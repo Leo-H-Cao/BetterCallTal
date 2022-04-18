@@ -15,10 +15,32 @@ public class GameBackend extends Controller {
 
   private ChessBoard myChessBoard;
 
-  public Optional<ChessBoard> initalizeChessBoard(File JSON) {
+  public Optional<ChessBoard> initalizeLocalChessBoard(File JSON) {
     try {
       BoardSetup bs = new BoardSetup(JSON.getPath());
       myChessBoard = bs.createLocalBoard();
+      return Optional.of(myChessBoard);
+    } catch (Exception e) {
+      // myMainView.showError();
+      return Optional.empty();
+    }
+  }
+
+  public Optional<ChessBoard> initalizeHostServerChessBoard(File JSON) {
+    try {
+      BoardSetup bs = new BoardSetup(JSON.getPath());
+      myChessBoard = bs.createRemoteBoard("h" , 0);
+      return Optional.of(myChessBoard);
+    } catch (Exception e) {
+      // myMainView.showError();
+      return Optional.empty();
+    }
+  }
+
+  public Optional<ChessBoard> initalizeJoinServerChessBoard(File JSON) {
+    try {
+      BoardSetup bs = new BoardSetup(JSON.getPath());
+      myChessBoard = bs.joinRemoteBoard("key");
       return Optional.of(myChessBoard);
     } catch (Exception e) {
       // myMainView.showError();

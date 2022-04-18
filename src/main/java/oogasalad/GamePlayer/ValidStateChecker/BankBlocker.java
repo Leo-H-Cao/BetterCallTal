@@ -1,9 +1,12 @@
 package oogasalad.GamePlayer.ValidStateChecker;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.Player;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.InvalidBoardSizeException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
@@ -45,13 +48,22 @@ public class BankBlocker implements ValidStateChecker {
   @Override
   public boolean isValid(ChessBoard board, Piece piece,
       ChessTile move) throws OutsideOfBoardException, InvalidBoardSizeException {
-    if(getBankHeight(board) * getBankWidth(board) < board.getPieces().stream().filter((p) -> !p.getName().equals(BLOCKER_NAME)).toList().size()) {
+    if(getBankHeight(board) * getBankWidth(board) < board.getPieces().stream().filter(p ->
+        !p.getName().equalsIgnoreCase(BLOCKER_NAME) && isPlayerPiece(p, board.getPlayers())).toList().size()) {
       LOG.warn(String.format("Invalid size: expected is %d, actual is %d", board.getPieces().size(), getBankHeight(board) * getBankWidth(board)));
       throw new InvalidBoardSizeException(String.format("Current size: %d; needed size: %d",
           getBankHeight(board) * getBankWidth(board), board.getPieces().size()));
     }
     LOG.debug(String.format("Move coords: (%d, %d); BLOCK_COL: %d", move.getCoordinates().getRow(), move.getCoordinates().getCol(), BLOCK_COL));
     return move.getCoordinates().getCol() < BLOCK_COL;
+  }
+
+  /***
+   * @return if a given piece can be played by a player
+   */
+  private boolean isPlayerPiece(Piece piece, Player[] players) {
+    LOG.debug(String.format("Piece team, players: %d, %s", piece.getTeam(), Arrays.toString(players)));
+    return Arrays.stream(players).anyMatch(p -> p.teamID() == piece.getTeam());
   }
 
   /**

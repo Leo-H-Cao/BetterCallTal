@@ -13,7 +13,7 @@ import oogasalad.Frontend.util.LabelledContainer;
 import java.io.File;
 
 public class PieceSettings extends LabelledContainer {
-	private String myId;
+	private final String myId;
 
 	public PieceSettings(String id) {
 		super("Piece Settings");
@@ -38,6 +38,8 @@ public class PieceSettings extends LabelledContainer {
 		fileChooser.setTitle("Open piece image");
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg"));
 		File selectedFile = fileChooser.showOpenDialog(stage);
-		getEditorBackend().getPiecesState().getPiece(myId).setImage(team, new Image(selectedFile.getAbsolutePath()));
+		if(selectedFile != null) {
+			getEditorBackend().getPiecesState().getPiece(myId).setImage(team, new Image(selectedFile.getAbsolutePath()));
+		}
 	}
 }
