@@ -25,6 +25,7 @@ import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.Board.TurnManagement.GamePlayers;
 import oogasalad.GamePlayer.Board.TurnManagement.LocalTurnManager;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
+import oogasalad.GamePlayer.Board.TurnManagement.TurnManagerData;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
@@ -45,6 +46,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   private final List<ValidStateChecker> validStateCheckers;
   private final TurnManager turnManager;
   private final HistoryManager history;
+  private final TurnManagerData turnManagerData;
   private List<List<ChessTile>> board;
   private Map<Integer, List<Piece>> pieceList;
 
@@ -54,18 +56,20 @@ public class ChessBoard implements Iterable<ChessTile> {
   public ChessBoard(List<List<ChessTile>> board, TurnCriteria turnCriteria, Player[] players,
       List<ValidStateChecker> validStateCheckers, List<EndCondition> endConditions) {
     this.players = new GamePlayers(players);
-    this.turnManager = new LocalTurnManager(this.players, turnCriteria,
-        endConditions);
+    this.turnManagerData = new TurnManagerData(this.players, turnCriteria, endConditions);
+    this.turnManager = new LocalTurnManager(this.turnManagerData);
     this.board = board;
     this.validStateCheckers = validStateCheckers;
     this.history = new LocalHistoryManager();
     this.pieceList = new HashMap<>();
   }
 
-  public ChessBoard(List<List<ChessTile>> board, TurnManager turnManager, GamePlayers players,
+  public ChessBoard(List<List<ChessTile>> board, TurnManagerData turnManagerData,
+      GamePlayers players,
       List<ValidStateChecker> validStateCheckers, HistoryManager history) {
     this.players = players;
-    this.turnManager = turnManager;
+    this.turnManagerData = turnManagerData;
+    this.turnManager = new LocalTurnManager(this.turnManagerData);
     this.board = board;
     this.validStateCheckers = validStateCheckers;
     this.history = history;
@@ -93,6 +97,15 @@ public class ChessBoard implements Iterable<ChessTile> {
       IntStream.range(0, length).forEach(j -> list.add(new ChessTile(new Coordinate(i, j))));
       board.add(list);
     });
+  }
+
+  /**
+   * Gets the data required to set up a new turn manager
+   *
+   * @return the data required to set up a new turn manager
+   */
+  public TurnManagerData getTurnManagerData() {
+    return turnManagerData;
   }
 
   /***
@@ -201,7 +214,7 @@ public class ChessBoard implements Iterable<ChessTile> {
       boardCopy.add(new ArrayList<>());
       boardCopy.get(i).addAll(this.board.get(i).stream().map(ChessTile::clone).toList());
     });
-    return new ChessBoard(boardCopy, this.turnManager, this.players, this.validStateCheckers,
+    return new ChessBoard(boardCopy, this.turnManagerData, this.players, this.validStateCheckers,
         this.history);
   }
 
@@ -294,7 +307,7 @@ public class ChessBoard implements Iterable<ChessTile> {
    */
   public boolean isOpposing(ChessTile tile, int team) {
     return Arrays.stream(this.getPlayer(team).opponentIDs()).anyMatch(o ->
-       tile.getPiece().isPresent() && o == tile.getPiece().get().getTeam());
+        tile.getPiece().isPresent() && o == tile.getPiece().get().getTeam());
   }
 
   /**

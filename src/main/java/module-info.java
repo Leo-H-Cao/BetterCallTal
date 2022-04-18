@@ -11,7 +11,8 @@ open module oogasalad {
     requires com.fasterxml.jackson.databind;
   requires spring.boot;
     requires spring.boot.autoconfigure;
+  requires spring.web;
 
-    // allow other classes to access listed packages in your project
+  // allow other classes to access listed packages in your project
     exports oogasalad;
 }
