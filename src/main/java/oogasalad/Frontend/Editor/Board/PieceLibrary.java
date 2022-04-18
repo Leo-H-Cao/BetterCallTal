@@ -9,11 +9,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
-import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.LabelledContainer;
-import oogasalad.GamePlayer.GamePiece.Piece;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
