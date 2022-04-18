@@ -51,7 +51,7 @@ public class EditorBackend {
 		selectedPieceId.setValue(id);
 	}
 
-	public SimpleIntegerProperty getAlternatePiece() {
+	public SimpleIntegerProperty getSelectedTeam() {
 		return alternatePiece;
 	}
 
