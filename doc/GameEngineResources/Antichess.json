@@ -5,7 +5,7 @@
       "columns": 8,
       "turnCriteria": "Linear",
       "colors": ["black", "white"],
-      "endConditions": ["Antichess"],
+      "endConditions": ["Antichess", "Stalemate"],
       "validStateCheckers": ["ForcedCapture"]
     }
   ],
