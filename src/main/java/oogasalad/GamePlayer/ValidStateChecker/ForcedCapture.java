@@ -5,8 +5,12 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class ForcedCapture implements ValidStateChecker {
+
+  private static final Logger LOG = LogManager.getLogger(ForcedCapture.class);
 
   /***
    * If a capture exists on the board, only other captures are valid.
@@ -18,9 +22,11 @@ public class ForcedCapture implements ValidStateChecker {
    */
   @Override
   public boolean isValid(ChessBoard board, Piece piece, ChessTile move) throws EngineException {
-    if(move.getPiece().isPresent()) return true;
+    if(piece.getCaptures().stream().anyMatch(m ->
+        m.getCaptures(piece, board).contains(move))) return true;
 
-    return captureExists(piece.getTeam(), board);
+    LOG.debug(String.format("Capture exists: %s", captureExists(piece.getTeam(), board)));
+    return !captureExists(piece.getTeam(), board);
   }
 
   /***
@@ -31,9 +37,7 @@ public class ForcedCapture implements ValidStateChecker {
    * @return read above
    */
   public boolean captureExists(int team, ChessBoard board) {
-    return board.getPieces().stream().filter(p -> p.getTeam() == team).anyMatch(p -> {
-      Set<ChessTile> moves = p.getMoves(board);
-      return moves.stream().anyMatch(t -> t.getPiece().isPresent());
-    });
+    return board.getPieces().stream().filter(p -> p.getTeam() == team).anyMatch(p ->
+      p.getCaptures().stream().anyMatch(m -> !m.getCaptures(p, board).isEmpty()));
   }
 }
