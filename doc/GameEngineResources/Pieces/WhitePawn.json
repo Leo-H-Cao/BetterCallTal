@@ -1,0 +1,10 @@
+{
+  "pieceName": "Pawn",
+  "imgFile": "whitepawn",
+  "pointValue": 1,
+  "basicMovements": ["wPawnMov"],
+  "basicCaptures": ["wPawnCap"],
+  "customMoves": ["DoubleFirstMove", "EnPassant"],
+  "movementModifiers": [],
+  "onInteractionModifier": []
+}

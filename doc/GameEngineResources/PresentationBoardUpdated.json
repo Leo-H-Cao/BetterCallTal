@@ -55,16 +55,10 @@
     {
       "row": 6,
       "col": 2,
-      "pieceName": "Pawn",
-      "imgFile": "whitepawn",
-      "pointValue": 1,
+      "pieceFile": "WhitePawn",
       "team": 0,
-      "basicMovements": ["wPawnMov"],
-      "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
-      ],
-      "movementModifiers": [
-      ],
+      "customMoves": [],
+      "movementModifiers": [],
       "onInteractionModifier": [],
       "mainPiece": 0
     },
