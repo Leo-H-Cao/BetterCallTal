@@ -1,6 +1,6 @@
 package oogasalad.Server.Services;
 
-public interface GameSessionService {
+public interface GameSessionManager {
 
   /**
    * Creates a new game session with the given id.
