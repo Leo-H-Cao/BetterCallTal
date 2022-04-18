@@ -40,15 +40,20 @@ public class BankJoiner implements MovementModifier{
     try {
       Piece justTaken = board.getHistory().get(board.getHistory().size() - 1).board().getTile(
           piece.getCoordinates()).getPiece().orElse(
-              findTakenPiece(board, board.getHistory().get(board.getHistory().size() - 1).board(),
-                  piece.getTeam()));
+          findTakenPiece(board, board.getHistory().get(board.getHistory().size() - 1).board(),
+              piece.getTeam()));
       LOG.debug(String.format("Just taken: %s", justTaken));
+
+      ChessTile bankTile = findOpenSpot(board.getCurrentPlayer(), board);
+      justTaken.updateCoordinates(bankTile, board);
+
       justTaken.updateTeam(board.getCurrentPlayer());
       //TODO: this does not need to be fixed with the current frontend implementation, but should be
       justTaken.updateImgFile(piece.getImgFile());
       justTaken.setNewMovements(Movement.invertMovements(justTaken.getMoves()),
           Movement.invertMovements(justTaken.getCaptures()));
-      Set<ChessTile> updatedCoords = justTaken.updateCoordinates(findOpenSpot(justTaken.getTeam(), board), board);
+
+      Set<ChessTile> updatedCoords = Set.of(bankTile);
       LOG.debug(String.format("Updated coords: %s", updatedCoords));
       return updatedCoords;
     } catch(OutsideOfBoardException | NullPointerException /*| PieceNotFoundException*/ e) {
@@ -92,7 +97,7 @@ public class BankJoiner implements MovementModifier{
 
     ChessTile currentTile = board.getTile(Coordinate.of(row, col));
     while(!currentTile.getPieces().isEmpty()) {
-      if(col >= board.getBoardLength()) {
+      if(col >= board.getBoardLength() - 1) {
         col = BLOCK_COL + 1;
         row = row + direction;
         LOG.debug(String.format("Updating open spot row, col: (%d, %d)", row, col));
