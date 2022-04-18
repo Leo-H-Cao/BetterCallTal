@@ -23,140 +23,88 @@
     {
       "row": 6,
       "col": 0,
-      "pieceName": "Pawn",
-      "imgFile": "whitepawn",
-      "pointValue": 1,
+      "pieceFile": "WhitePawn",
       "team": 0,
-      "basicMovements": ["wPawnMov"],
-      "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
-      ],
-      "movementModifiers": [
-      ],
+      "customMoves": [],
+      "movementModifiers": [],
       "onInteractionModifier": [],
       "mainPiece": 0
     },
     {
       "row": 6,
       "col": 1,
-      "pieceName": "Pawn",
-      "imgFile": "whitepawn",
-      "pointValue": 1,
+      "pieceFile": "WhitePawn",
       "team": 0,
-      "basicMovements": ["wPawnMov"],
-      "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
-      ],
-      "movementModifiers": [
-      ],
+      "customMoves": [],
+      "movementModifiers": [],
       "onInteractionModifier": [],
       "mainPiece": 0
     },
     {
       "row": 6,
       "col": 2,
-      "pieceName": "Pawn",
-      "imgFile": "whitepawn",
-      "pointValue": 1,
+      "pieceFile": "WhitePawn",
       "team": 0,
-      "basicMovements": ["wPawnMov"],
-      "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
-      ],
-      "movementModifiers": [
-      ],
+      "customMoves": [],
+      "movementModifiers": [],
       "onInteractionModifier": [],
       "mainPiece": 0
     },
     {
       "row": 6,
       "col": 3,
-      "pieceName": "Pawn",
-      "imgFile": "whitepawn",
-      "pointValue": 1,
+      "pieceFile": "WhitePawn",
       "team": 0,
-      "basicMovements": ["wPawnMov"],
-      "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
-      ],
-      "movementModifiers": [
-      ],
+      "customMoves": [],
+      "movementModifiers": [],
       "onInteractionModifier": [],
       "mainPiece": 0
     },
     {
       "row": 6,
       "col": 4,
-      "pieceName": "Pawn",
-      "imgFile": "whitepawn",
-      "pointValue": 1,
+      "pieceFile": "WhitePawn",
       "team": 0,
-      "basicMovements": ["wPawnMov"],
-      "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
-      ],
-      "movementModifiers": [
-      ],
+      "customMoves": [],
+      "movementModifiers": [],
       "onInteractionModifier": [],
       "mainPiece": 0
     },
     {
       "row": 6,
       "col": 5,
-      "pieceName": "Pawn",
-      "imgFile": "whitepawn",
-      "pointValue": 1,
+      "pieceFile": "WhitePawn",
       "team": 0,
-      "basicMovements": ["wPawnMov"],
-      "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
-      ],
-      "movementModifiers": [
-      ],
+      "customMoves": [],
+      "movementModifiers": [],
       "onInteractionModifier": [],
       "mainPiece": 0
     },
     {
       "row": 6,
       "col": 6,
-      "pieceName": "Pawn",
-      "imgFile": "whitepawn",
-      "pointValue": 1,
+      "pieceFile": "WhitePawn",
       "team": 0,
-      "basicMovements": ["wPawnMov"],
-      "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
-      ],
-      "movementModifiers": [
-      ],
+      "customMoves": [],
+      "movementModifiers": [],
       "onInteractionModifier": [],
       "mainPiece": 0
     },
     {
       "row": 6,
       "col": 7,
-      "pieceName": "Pawn",
-      "imgFile": "whitepawn",
-      "pointValue": 1,
+      "pieceFile": "WhitePawn",
       "team": 0,
-      "basicMovements": ["wPawnMov"],
-      "basicCaptures": ["wPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
-      ],
-      "movementModifiers": [
-      ],
+      "customMoves": [],
+      "movementModifiers": [],
       "onInteractionModifier": [],
       "mainPiece": 0
     },
     {
       "row": 7,
       "col": 0,
-      "pieceName": "Rook",
-      "imgFile": "whiterook",
-      "pointValue": 5,
+      "pieceFile": "Rook",
       "team": 0,
-      "basicMovements": ["rook"],
-      "basicCaptures": ["rook"],
       "customMoves": [],
       "movementModifiers": [],
       "onInteractionModifier": [],
@@ -165,12 +113,8 @@
     {
       "row": 7,
       "col": 7,
-      "pieceName": "Rook",
-      "imgFile": "whiterook",
-      "pointValue": 5,
+      "pieceFile": "Rook",
       "team": 0,
-      "basicMovements": ["rook"],
-      "basicCaptures": ["rook"],
       "customMoves": [],
       "movementModifiers": [],
       "onInteractionModifier": [],
@@ -179,12 +123,8 @@
     {
       "row": 7,
       "col": 1,
-      "pieceName": "Knight",
-      "imgFile": "whiteknight",
-      "pointValue": 3,
+      "pieceFile": "Knight",
       "team": 0,
-      "basicMovements": ["knight"],
-      "basicCaptures": ["knight"],
       "customMoves": [],
       "movementModifiers": [],
       "onInteractionModifier": [],
@@ -193,12 +133,8 @@
     {
       "row": 7,
       "col": 6,
-      "pieceName": "Knight",
-      "imgFile": "whiteknight",
-      "pointValue": 3,
+      "pieceFile": "Knight",
       "team": 0,
-      "basicMovements": ["knight"],
-      "basicCaptures": ["knight"],
       "customMoves": [],
       "movementModifiers": [],
       "onInteractionModifier": [],
@@ -207,12 +143,8 @@
     {
       "row": 7,
       "col": 2,
-      "pieceName": "Bishop",
-      "imgFile": "whitebishop",
-      "pointValue": 3,
+      "pieceFile": "Bishop",
       "team": 0,
-      "basicMovements": ["bishop"],
-      "basicCaptures": ["bishop"],
       "customMoves": [],
       "movementModifiers": [],
       "onInteractionModifier": [],
@@ -221,12 +153,8 @@
     {
       "row": 7,
       "col": 5,
-      "pieceName": "Bishop",
-      "imgFile": "whitebishop",
-      "pointValue": 3,
+      "pieceFile": "Bishop",
       "team": 0,
-      "basicMovements": ["bishop"],
-      "basicCaptures": ["bishop"],
       "customMoves": [],
       "movementModifiers": [],
       "onInteractionModifier": [],
@@ -235,12 +163,8 @@
     {
       "row": 7,
       "col": 3,
-      "pieceName": "Queen",
-      "imgFile": "whitequeen",
-      "pointValue": 9,
+      "pieceFile": "Queen",
       "team": 0,
-      "basicMovements": ["bishop", "rook"],
-      "basicCaptures": ["bishop", "rook"],
       "customMoves": [],
       "movementModifiers": [],
       "onInteractionModifier": [],
@@ -249,13 +173,9 @@
     {
       "row": 7,
       "col": 4,
-      "pieceName": "King",
-      "imgFile": "whiteking",
-      "pointValue": 4,
+      "pieceFile": "King",
       "team": 0,
-      "basicMovements": ["king"],
-      "basicCaptures": ["king"],
-      "customMoves": ["Castling"],
+      "customMoves": [],
       "movementModifiers": [],
       "onInteractionModifier": [],
       "mainPiece": 1
@@ -263,140 +183,88 @@
     {
       "row": 1,
       "col": 0,
-      "pieceName": "Pawn",
-      "imgFile": "blackpawn",
-      "pointValue": 1,
+      "pieceFile": "BlackPawn",
       "team": 1,
-      "basicMovements": ["bPawnMov"],
-      "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
-      ],
-      "movementModifiers": [
-      ],
+      "customMoves": [],
+      "movementModifiers": [],
       "onInteractionModifier": [],
       "mainPiece": 0
     },
     {
       "row": 1,
       "col": 1,
-      "pieceName": "Pawn",
-      "imgFile": "blackpawn",
-      "pointValue": 1,
+      "pieceFile": "BlackPawn",
       "team": 1,
-      "basicMovements": ["bPawnMov"],
-      "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
-      ],
-      "movementModifiers": [
-      ],
+      "customMoves": [],
+      "movementModifiers": [],
       "onInteractionModifier": [],
       "mainPiece": 0
     },
     {
       "row": 1,
       "col": 2,
-      "pieceName": "Pawn",
-      "imgFile": "blackpawn",
-      "pointValue": 1,
+      "pieceFile": "BlackPawn",
       "team": 1,
-      "basicMovements": ["bPawnMov"],
-      "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
-      ],
-      "movementModifiers": [
-      ],
+      "customMoves": [],
+      "movementModifiers": [],
       "onInteractionModifier": [],
       "mainPiece": 0
     },
     {
       "row": 1,
       "col": 3,
-      "pieceName": "Pawn",
-      "imgFile": "blackpawn",
-      "pointValue": 1,
+      "pieceFile": "BlackPawn",
       "team": 1,
-      "basicMovements": ["bPawnMov"],
-      "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
-      ],
-      "movementModifiers": [
-      ],
+      "customMoves": [],
+      "movementModifiers": [],
       "onInteractionModifier": [],
       "mainPiece": 0
     },
     {
       "row": 1,
       "col": 4,
-      "pieceName": "Pawn",
-      "imgFile": "blackpawn",
-      "pointValue": 1,
+      "pieceFile": "BlackPawn",
       "team": 1,
-      "basicMovements": ["bPawnMov"],
-      "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
-      ],
-      "movementModifiers": [
-      ],
+      "customMoves": [],
+      "movementModifiers": [],
       "onInteractionModifier": [],
       "mainPiece": 0
     },
     {
       "row": 1,
       "col": 5,
-      "pieceName": "Pawn",
-      "imgFile": "blackpawn",
-      "pointValue": 1,
+      "pieceFile": "BlackPawn",
       "team": 1,
-      "basicMovements": ["bPawnMov"],
-      "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
-      ],
-      "movementModifiers": [
-      ],
+      "customMoves": [],
+      "movementModifiers": [],
       "onInteractionModifier": [],
       "mainPiece": 0
     },
     {
       "row": 1,
       "col": 6,
-      "pieceName": "Pawn",
-      "imgFile": "blackpawn",
-      "pointValue": 1,
+      "pieceFile": "BlackPawn",
       "team": 1,
-      "basicMovements": ["bPawnMov"],
-      "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
-      ],
-      "movementModifiers": [
-      ],
+      "customMoves": [],
+      "movementModifiers": [],
       "onInteractionModifier": [],
       "mainPiece": 0
     },
     {
       "row": 1,
       "col": 7,
-      "pieceName": "Pawn",
-      "imgFile": "blackpawn",
-      "pointValue": 1,
+      "pieceFile": "BlackPawn",
       "team": 1,
-      "basicMovements": ["bPawnMov"],
-      "basicCaptures": ["bPawnCap"],
-      "customMoves": ["DoubleFirstMove", "EnPassant"
-      ],
-      "movementModifiers": [
-      ],
+      "customMoves": [],
+      "movementModifiers": [],
       "onInteractionModifier": [],
       "mainPiece": 0
     },
     {
       "row": 0,
       "col": 0,
-      "pieceName": "Rook",
-      "imgFile": "blackrook",
-      "pointValue": 5,
+      "pieceFile": "Rook",
       "team": 1,
-      "basicMovements": ["rook"],
-      "basicCaptures": ["rook"],
       "customMoves": [],
       "movementModifiers": [],
       "onInteractionModifier": [],
@@ -405,12 +273,8 @@
     {
       "row": 0,
       "col": 7,
-      "pieceName": "Rook",
-      "imgFile": "blackrook",
-      "pointValue": 5,
+      "pieceFile": "Rook",
       "team": 1,
-      "basicMovements": ["rook"],
-      "basicCaptures": ["rook"],
       "customMoves": [],
       "movementModifiers": [],
       "onInteractionModifier": [],
@@ -419,12 +283,8 @@
     {
       "row": 0,
       "col": 1,
-      "pieceName": "Knight",
-      "imgFile": "blackknight",
-      "pointValue": 3,
+      "pieceFile": "Knight",
       "team": 1,
-      "basicMovements": ["knight"],
-      "basicCaptures": ["knight"],
       "customMoves": [],
       "movementModifiers": [],
       "onInteractionModifier": [],
@@ -433,12 +293,8 @@
     {
       "row": 0,
       "col": 6,
-      "pieceName": "Knight",
-      "imgFile": "blackknight",
-      "pointValue": 3,
+      "pieceFile": "Knight",
       "team": 1,
-      "basicMovements": ["knight"],
-      "basicCaptures": ["knight"],
       "customMoves": [],
       "movementModifiers": [],
       "onInteractionModifier": [],
@@ -447,12 +303,8 @@
     {
       "row": 0,
       "col": 2,
-      "pieceName": "Bishop",
-      "imgFile": "blackbishop",
-      "pointValue": 3,
+      "pieceFile": "Bishop",
       "team": 1,
-      "basicMovements": ["bishop"],
-      "basicCaptures": ["bishop"],
       "customMoves": [],
       "movementModifiers": [],
       "onInteractionModifier": [],
@@ -461,12 +313,8 @@
     {
       "row": 0,
       "col": 5,
-      "pieceName": "Bishop",
-      "imgFile": "blackbishop",
-      "pointValue": 3,
+      "pieceFile": "Bishop",
       "team": 1,
-      "basicMovements": ["bishop"],
-      "basicCaptures": ["bishop"],
       "customMoves": [],
       "movementModifiers": [],
       "onInteractionModifier": [],
@@ -475,12 +323,8 @@
     {
       "row": 0,
       "col": 3,
-      "pieceName": "Queen",
-      "imgFile": "blackqueen",
-      "pointValue": 9,
+      "pieceFile": "Queen",
       "team": 1,
-      "basicMovements": ["bishop", "rook"],
-      "basicCaptures": ["bishop", "rook"],
       "customMoves": [],
       "movementModifiers": [],
       "onInteractionModifier": [],
@@ -489,16 +333,110 @@
     {
       "row": 0,
       "col": 4,
-      "pieceName": "King",
-      "imgFile": "blackking",
-      "pointValue": 4,
+      "pieceFile": "King",
       "team": 1,
-      "basicMovements": ["king"],
-      "basicCaptures": ["king"],
-      "customMoves": ["Castling"],
+      "customMoves": [],
       "movementModifiers": [],
       "onInteractionModifier": [],
       "mainPiece": 1
+    }
+  ],
+  "tiles": [
+    {
+      "row": 0,
+      "col": 0,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 0,
+      "col": 1,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 0,
+      "col": 2,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 0,
+      "col": 3,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 0,
+      "col": 4,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 0,
+      "col": 5,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 0,
+      "col": 6,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 0,
+      "col": 7,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 7,
+      "col": 0,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 7,
+      "col": 1,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 7,
+      "col": 2,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 7,
+      "col": 3,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 7,
+      "col": 4,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 7,
+      "col": 5,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 7,
+      "col": 6,
+      "tileActions": ["Promotion"],
+      "img": "default"
+    },
+    {
+      "row": 7,
+      "col": 7,
+      "tileActions": ["Promotion"],
+      "img": "default"
     }
   ]
 }

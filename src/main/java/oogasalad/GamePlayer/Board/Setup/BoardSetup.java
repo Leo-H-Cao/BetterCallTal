@@ -43,28 +43,28 @@ public class BoardSetup {
   private static final String MOVEMENT_MODIFIER_PACKAGE = "oogasalad.GamePlayer.Movement.MovementModifiers.";
 
   private ChessBoard myBoard;
-  private JSONObject myJSONObject;
+  private JSONObject mainGameFile;
 
   //TODO: create custom exception for handling IOException
   public BoardSetup(String JSONFileName) throws IOException {
     String content = new String(Files.readAllBytes(Path.of(JSONFileName)));
-    myJSONObject = new JSONObject(content);
+    mainGameFile = new JSONObject(content);
   }
 
   /**
    * @return ChessBoard object constructed from a JSON
    */
-  public ChessBoard createLocalBoard() throws IOException {
+  public ChessBoard createLocalBoard() throws IOException{
     int rows = Integer.parseInt(
-        myJSONObject.getJSONArray("general").getJSONObject(0).get("columns").toString());
+        mainGameFile.getJSONArray("general").getJSONObject(0).get("columns").toString());
     int columns = Integer.parseInt(
-        myJSONObject.getJSONArray("general").getJSONObject(0).get("rows").toString());
+        mainGameFile.getJSONArray("general").getJSONObject(0).get("rows").toString());
 
     Player[] players = getPlayers();
     myBoard = new ChessBoard(rows, columns, getTurnCriteria(players), players,
         getValidStateCheckers(), getEndConditions());
     setTileActions();
-    setStartingPosition(myBoard);
+    setStartingPosition();
     return myBoard;
   }
 
@@ -82,7 +82,7 @@ public class BoardSetup {
   private void setTileActions() throws IOException {
     JSONArray customTiles;
     try {
-      customTiles = myJSONObject.getJSONArray("tiles");
+      customTiles = mainGameFile.getJSONArray("tiles");
     } catch (Exception e) {
       LOG.debug("No custom tile entry found");
       return;
@@ -117,7 +117,7 @@ public class BoardSetup {
    */
   private List<ValidStateChecker> getValidStateCheckers() throws IOException {
     List<ValidStateChecker> validStateCheckers = new ArrayList<>();
-    JSONArray validStateCheckerArray = myJSONObject.getJSONArray("general").getJSONObject(0)
+    JSONArray validStateCheckerArray = mainGameFile.getJSONArray("general").getJSONObject(0)
         .getJSONArray("validStateCheckers");
     for (int i = 0; i < validStateCheckerArray.length(); i++) {
       validStateCheckers.add((ValidStateChecker) createInstance(
@@ -133,7 +133,7 @@ public class BoardSetup {
    */
   private List<EndCondition> getEndConditions() throws IOException {
     List<EndCondition> endConditions = new ArrayList<>();
-    JSONArray endConditionArray = myJSONObject.getJSONArray("general").getJSONObject(0)
+    JSONArray endConditionArray = mainGameFile.getJSONArray("general").getJSONObject(0)
         .getJSONArray("endConditions");
     for (int i = 0; i < endConditionArray.length(); i++) {
       endConditions.add(
@@ -149,7 +149,7 @@ public class BoardSetup {
    */
   private TurnCriteria getTurnCriteria(Player[] players) throws IOException {
     TurnCriteria turnCriteria = (TurnCriteria) createInstance(
-        TURN_CRITERIA_PACKAGE + myJSONObject.getJSONArray("general").getJSONObject(0)
+        TURN_CRITERIA_PACKAGE + mainGameFile.getJSONArray("general").getJSONObject(0)
             .get("turnCriteria"), new Class[]{Player[].class}, new Object[]{players});
     LOG.debug("Turn criteria: " + turnCriteria);
     return turnCriteria;
@@ -177,7 +177,7 @@ public class BoardSetup {
    * @return players as defined by the JSON
    */
   private Player[] getPlayers() {
-    JSONArray rawData = myJSONObject.getJSONArray("playerInfo");
+    JSONArray rawData = mainGameFile.getJSONArray("playerInfo");
     Player[] players = new Player[rawData.length()];
     for (int i = 0; i < players.length; i++) {
       JSONArray opponents = rawData.getJSONObject(i).getJSONArray("opponents");
@@ -292,11 +292,9 @@ public class BoardSetup {
 
   /**
    * Sets up pieces on the board
-   *
-   * @param board to set pieces on
    */
-  private void setStartingPosition(ChessBoard board) throws IOException {
-    JSONArray pieces = myJSONObject.getJSONArray("pieces");
+  private void setStartingPosition() throws IOException {
+    JSONArray pieces = mainGameFile.getJSONArray("pieces");
     List<Piece> pieceList = new ArrayList<>();
     for (int i = 0; i < pieces.length(); i++) {
 
@@ -329,13 +327,14 @@ public class BoardSetup {
       List<MovementModifier> onInteractionModifiers = getMovementModifiers(
           rawPieceData, "onInteractionModifier");
       onInteractionModifiers.addAll(pieceJSONData.onInteractionModifiers());
-
+      LOG.debug(String.format("MMs: %s", movementModifiers));
       PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, mainPiece,
           movements, captures, movementModifiers, onInteractionModifiers, imageFile);
 
       Piece currentPiece = new Piece(pieceData);
       pieceList.add(currentPiece);
 //      myBoard.placePiece(new Coordinate(startRow, startCol), currentPiece);
+      LOG.debug("Piece placed");
     }
     myBoard.setPieces(pieceList);
   }
