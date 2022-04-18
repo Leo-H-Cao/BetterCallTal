@@ -1,13 +1,8 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Player;
 
 public class Antichess extends LoseAllPieces {
 
