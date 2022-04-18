@@ -67,14 +67,24 @@ public class PieceLibrary extends LabelledContainer {
 		image.setSmooth(true);
 		image.setCache(true);
 
+
+
 		// Listen for changes to the custom piece images
-		piece.getImage(0).addListener((ob, ov, nv) -> image.setImage(nv));
-		piece.getImage(1).addListener((ob, ov, nv) -> image.setImage(nv));
+		addPieceImageListener(piece, 0, image);
+		addPieceImageListener(piece, 1, image);
 
 		// Listen for changing to alternate pieces
 		getEditorBackend().getAlternatePiece().addListener((ob, ov, nv) -> image.setImage(piece.getImage((Integer) nv).getValue()));
 		StackPane ret = new StackPane(rect, image);
 		ButtonFactory.addAction(ret, (e) -> getEditorBackend().setSelectedPieceId(id));
 		return new Group(ret);
+	}
+
+	private void addPieceImageListener(EditorPiece p, int team, ImageView image) {
+		p.getImage(team).addListener((ob, ov, nv) -> {
+			if(getEditorBackend().getAlternatePiece().getValue() == team) {
+				image.setImage(nv);
+			}
+		});
 	}
 }
