@@ -14,9 +14,10 @@ import org.apache.logging.log4j.Logger;
 
 public class PawnReachesEnd implements EndCondition {
 
+  private static final Logger LOG = LogManager.getLogger(PawnReachesEnd.class);
+
   private static final String ENDZONE_FILE_PATH_HEADER = "doc/GameEngineResources/Other/";
   private static final String DEFAULT_ENDZONE_FILE = "FootballEndzonePieces";
-  private static final Logger LOG = LogManager.getLogger(PawnReachesEnd.class);
   private static final List<String> DEFAULT_ENDZONE_PIECES = List.of("Pawn");
 
   private List<String> endzonePieces;

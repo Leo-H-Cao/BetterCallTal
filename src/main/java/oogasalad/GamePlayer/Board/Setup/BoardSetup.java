@@ -251,9 +251,16 @@ public class BoardSetup {
     List<MovementModifier> movementModifiers = new ArrayList<>();
     JSONArray movementModifierArray = data.getJSONArray(key);
     for (int i = 0; i < movementModifierArray.length(); i++) {
-      movementModifiers.add((MovementModifier) createInstance(
-          MOVEMENT_MODIFIER_PACKAGE + movementModifierArray.getString(i), new Class[]{},
-          new Object[]{}));
+      try {
+        JSONArray currentMovementModifier = movementModifierArray.getJSONArray(i);
+        movementModifiers.add((MovementModifier) createInstance(
+            MOVEMENT_MODIFIER_PACKAGE + currentMovementModifier.getString(0),
+            new Class[]{String.class}, new Object[]{currentMovementModifier.getString(1)}));
+      } catch (JSONException | IOException e) {
+        movementModifiers.add((MovementModifier) createInstance(
+            MOVEMENT_MODIFIER_PACKAGE + movementModifierArray.getString(i), new Class[]{},
+            new Object[]{}));
+      }
     }
     return movementModifiers;
   }
