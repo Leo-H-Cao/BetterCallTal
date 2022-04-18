@@ -49,8 +49,8 @@ public class KingOfTheHillTest {
 
   @Test
   void Player1Wins(){
-    Piece wking = util.makeKing(4, 4, TEAM_2);
-    Piece bking = util.makeKing(1, 1, TEAM_1);
+    Piece wking = util.makeKing(4, 4, TEAM_1);
+    Piece bking = util.makeKing(1, 1, TEAM_2);
 
     pieces.addAll(List.of(wking, bking));
     board.setPieces(pieces);
