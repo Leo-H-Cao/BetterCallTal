@@ -28,10 +28,18 @@ public class BankBlocker implements ValidStateChecker {
 
   public int blockCol;
 
+  /***
+   * Create BankBlocker with default file path
+   */
   public BankBlocker() {
     this(CH_DEFAULT_FILE);
   }
 
+  /***
+   * Create BankBlocker with given config file
+   *
+   * @param configFile to read
+   */
   public BankBlocker(String configFile) {
     blockCol = getBlockerColumn(CH_CONFIG_FILE_HEADER + configFile);
   }

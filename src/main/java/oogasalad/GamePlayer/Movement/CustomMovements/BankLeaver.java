@@ -37,10 +37,18 @@ public class BankLeaver implements MovementInterface {
   private int blockCol;
   private String configFile;
 
+  /***
+   * Create BankLeaver with default config file
+   */
   public BankLeaver() {
     this(CH_DEFAULT_FILE);
   }
 
+  /***
+   * Create BankLeave with given config file
+   *
+   * @param configFile to read
+   */
   public BankLeaver(String configFile) {
     this.configFile = CH_CONFIG_FILE_HEADER + configFile;
     try {

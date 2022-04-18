@@ -24,18 +24,36 @@ import org.apache.logging.log4j.Logger;
 public class Promotion implements TileAction {
 
   private static final Logger LOG = LogManager.getLogger(Promotion.class);
-  private static final String PROMOTABLE_FILE_PATH = "doc/GameEngineResources/Other/Promotable";
-  private static final List<String> PROMOTABLE_PIECE_NAMES = getPromotablePieceNames();
+  private static final String PROMOTABLE_FILE_PATH_HEADER = "doc/GameEngineResources/Other/";
+  private static final String DEFAULT_PROMOTABLE_FILE_PATH = "Promotable";
+
+  private List<String> promotablePieceNames;
+
+  /***
+   * Creates Promotion with default config file
+   */
+  public Promotion() {
+    this(DEFAULT_PROMOTABLE_FILE_PATH);
+  }
+
+  /***
+   * Creates Promotion with given config file
+   *
+   * @param configFile to read
+   */
+  public Promotion(String configFile) {
+    promotablePieceNames = getPromotablePieceNames(PROMOTABLE_FILE_PATH_HEADER + configFile);
+  }
 
   /**
    * Reads in promotable piece names from a text file
    *
    * @return promotable piece list
    */
-  private static List<String> getPromotablePieceNames() {
+  private List<String> getPromotablePieceNames(String configFile) {
     ArrayList<String> nameList = new ArrayList<>();
     try {
-      File promoteFile = new File(PROMOTABLE_FILE_PATH);
+      File promoteFile = new File(configFile);
       Scanner reader = new Scanner(promoteFile);
       while (reader.hasNext()) {
         nameList.add(reader.next().trim());
@@ -59,7 +77,7 @@ public class Promotion implements TileAction {
 //    LOG.debug(String.format("Promotion pieces: %s", PROMOTABLE_PIECE_NAMES));
     LOG.debug(String.format("In promotion: %s", tile.getPiece().get().getName()));
     if(tile.getPiece().isEmpty()) return Collections.emptySet();
-    if(PROMOTABLE_PIECE_NAMES.stream().noneMatch(n ->
+    if(promotablePieceNames.stream().noneMatch(n ->
         n.equalsIgnoreCase(tile.getPiece().get().getName()))) return Collections.emptySet();
     List<Piece> pieceList = board.getPieceList().get(tile.getPiece().get().getTeam()).stream().
         filter((p) -> !p.isTargetPiece() &&
