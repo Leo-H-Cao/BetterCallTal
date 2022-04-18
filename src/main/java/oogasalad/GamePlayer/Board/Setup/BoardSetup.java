@@ -34,7 +34,7 @@ public class BoardSetup {
 
   private static final String BASIC_MOVEMENT_PACKAGE = "doc/GameEngineResources/BasicMovements/";
   private static final String PIECE_JSON_PACKAGE = "doc/GameEngineResources/Pieces/";
-  private static final String JSON_EXTENSION = ".json";
+  public static final String JSON_EXTENSION = ".json";
 
   private static final String TILE_ACTION_PACKAGE = "oogasalad.GamePlayer.Board.Tiles.CustomTiles.";
   private static final String CUSTOM_MOVE_PACKAGE = "oogasalad.GamePlayer.Movement.CustomMovements.";
@@ -55,7 +55,7 @@ public class BoardSetup {
   /**
    * @return ChessBoard object constructed from a JSON
    */
-  public ChessBoard createLocalBoard() throws IOException{
+  public ChessBoard createLocalBoard() throws IOException {
     int rows = Integer.parseInt(
         mainGameFile.getJSONArray("general").getJSONObject(0).get("columns").toString());
     int columns = Integer.parseInt(
@@ -97,9 +97,8 @@ public class BoardSetup {
       List<TileAction> tileActions = new ArrayList<>();
       JSONArray tileActionArray = rawTileData.getJSONArray("tileActions");
       for (int j = 0; j < tileActionArray.length(); j++) {
-        tileActions.add(
-            (TileAction) createInstance(TILE_ACTION_PACKAGE + tileActionArray.getString(j),
-                new Class[]{}, new Object[]{}));
+        tileActions.add((TileAction)
+            parseArrayOrString(TILE_ACTION_PACKAGE, tileActionArray, j));
       }
       LOG.debug(String.format("Tile actions for (%d, %d): ", row, col) + tileActions);
       try {
@@ -122,9 +121,8 @@ public class BoardSetup {
     JSONArray validStateCheckerArray = mainGameFile.getJSONArray("general").getJSONObject(0)
         .getJSONArray("validStateCheckers");
     for (int i = 0; i < validStateCheckerArray.length(); i++) {
-      validStateCheckers.add((ValidStateChecker) createInstance(
-          VALID_STATE_CHECKER_PACKAGE + validStateCheckerArray.getString(i), new Class[]{},
-          new Object[]{}));
+      validStateCheckers.add((ValidStateChecker)
+          parseArrayOrString(VALID_STATE_CHECKER_PACKAGE, validStateCheckerArray, i));
     }
     LOG.debug("Valid state checkers: " + validStateCheckers);
     return validStateCheckers;
@@ -138,9 +136,8 @@ public class BoardSetup {
     JSONArray endConditionArray = mainGameFile.getJSONArray("general").getJSONObject(0)
         .getJSONArray("endConditions");
     for (int i = 0; i < endConditionArray.length(); i++) {
-      endConditions.add(
-          (EndCondition) createInstance(END_CONDITION_PACKAGE + endConditionArray.getString(i),
-              new Class[]{}, new Object[]{}));
+      endConditions.add((EndCondition)
+          parseArrayOrString(END_CONDITION_PACKAGE, endConditionArray, i));
     }
     LOG.debug("End conditions: " + endConditions);
     return endConditions;
@@ -251,11 +248,31 @@ public class BoardSetup {
     List<MovementModifier> movementModifiers = new ArrayList<>();
     JSONArray movementModifierArray = data.getJSONArray(key);
     for (int i = 0; i < movementModifierArray.length(); i++) {
-      movementModifiers.add((MovementModifier) createInstance(
-          MOVEMENT_MODIFIER_PACKAGE + movementModifierArray.getString(i), new Class[]{},
-          new Object[]{}));
+      movementModifiers.add((MovementModifier)
+          parseArrayOrString(MOVEMENT_MODIFIER_PACKAGE, movementModifierArray, i));
     }
     return movementModifiers;
+  }
+
+  /***
+   * Parses a JSON object as either an array or String
+   *
+   * @param packagePath to get class from
+   * @param array to get object from
+   * @param index in array
+   * @return Object from parsed JSON object
+   */
+  private Object parseArrayOrString(String packagePath, JSONArray array, int index) throws IOException {
+    try {
+      JSONArray currentObj = array.getJSONArray(index);
+      return createInstance(
+          packagePath + currentObj.getString(0),
+          new Class[]{String.class}, new Object[]{currentObj.getString(1)});
+    } catch (JSONException | IOException e) {
+      return createInstance(
+          packagePath + array.getString(index), new Class[]{},
+          new Object[]{});
+    }
   }
 
   /***
@@ -285,9 +302,8 @@ public class BoardSetup {
     List<MovementInterface> movements = new ArrayList<>();
     JSONArray moveArray = data.getJSONArray(key);
     for (int i = 0; i < moveArray.length(); i++) {
-      movements.add(
-          (MovementInterface) createInstance(CUSTOM_MOVE_PACKAGE + moveArray.getString(i),
-              new Class[]{}, new Object[]{}));
+      movements.add((MovementInterface)
+          parseArrayOrString(CUSTOM_MOVE_PACKAGE, moveArray, i));
     }
     return movements;
   }

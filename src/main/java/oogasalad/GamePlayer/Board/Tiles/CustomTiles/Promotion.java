@@ -15,6 +15,7 @@ import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.MovementModifiers.Atomic;
+import oogasalad.GamePlayer.util.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,27 +25,26 @@ import org.apache.logging.log4j.Logger;
 public class Promotion implements TileAction {
 
   private static final Logger LOG = LogManager.getLogger(Promotion.class);
-  private static final String PROMOTABLE_FILE_PATH = "doc/GameEngineResources/Other/Promotable";
-  private static final List<String> PROMOTABLE_PIECE_NAMES = getPromotablePieceNames();
+  private static final String PROMOTABLE_FILE_PATH_HEADER = "doc/GameEngineResources/Other/";
+  private static final String DEFAULT_PROMOTABLE_FILE_PATH = "Promotable";
+  private static final List<String> DEFAULT_PROMOTABLE = List.of("Pawn");
 
-  /**
-   * Reads in promotable piece names from a text file
-   *
-   * @return promotable piece list
+  private List<String> promotablePieceNames;
+
+  /***
+   * Creates Promotion with default config file
    */
-  private static List<String> getPromotablePieceNames() {
-    ArrayList<String> nameList = new ArrayList<>();
-    try {
-      File promoteFile = new File(PROMOTABLE_FILE_PATH);
-      Scanner reader = new Scanner(promoteFile);
-      while (reader.hasNext()) {
-        nameList.add(reader.next().trim());
-      }
-      reader.close();
-      return nameList;
-    } catch (Exception e) {
-      return List.of("Pawn");
-    }
+  public Promotion() {
+    this(DEFAULT_PROMOTABLE_FILE_PATH);
+  }
+
+  /***
+   * Creates Promotion with given config file
+   *
+   * @param configFile to read
+   */
+  public Promotion(String configFile) {
+    promotablePieceNames = FileReader.read(PROMOTABLE_FILE_PATH_HEADER + configFile, DEFAULT_PROMOTABLE);
   }
 
   /**
@@ -59,7 +59,7 @@ public class Promotion implements TileAction {
 //    LOG.debug(String.format("Promotion pieces: %s", PROMOTABLE_PIECE_NAMES));
     LOG.debug(String.format("In promotion: %s", tile.getPiece().get().getName()));
     if(tile.getPiece().isEmpty()) return Collections.emptySet();
-    if(PROMOTABLE_PIECE_NAMES.stream().noneMatch(n ->
+    if(promotablePieceNames.stream().noneMatch(n ->
         n.equalsIgnoreCase(tile.getPiece().get().getName()))) return Collections.emptySet();
     List<Piece> pieceList = board.getPieceList().get(tile.getPiece().get().getTeam()).stream().
         filter((p) -> !p.isTargetPiece() &&

@@ -1,7 +1,8 @@
 package oogasalad.GamePlayer.ValidStateChecker;
 
+import static oogasalad.GamePlayer.Board.Setup.BoardSetup.JSON_EXTENSION;
+
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
@@ -11,7 +12,6 @@ import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.InvalidBoardSizeException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.Movement.Movement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
@@ -21,19 +21,37 @@ import org.json.JSONObject;
  */
 public class BankBlocker implements ValidStateChecker {
 
-  public static final String CH_CONFIG_FILE = "doc/GameEngineResources/Other/CrazyhouseConfig.json";
-  public static final int BLOCK_COL = getBlockerColumn();
+  public static final String CH_CONFIG_FILE_HEADER = "doc/GameEngineResources/Other/";
+  public static final String CH_DEFAULT_FILE = "CrazyhouseConfig";
   public static final String BLOCKER_NAME = "blocker";
 
   private static final Logger LOG = LogManager.getLogger(BankBlocker.class);
-  private static final int DEFAULT_VALUE = 8;
+  public static final int DEFAULT_VALUE = 8;
+
+  public int blockCol;
+
+  /***
+   * Create BankBlocker with default file path
+   */
+  public BankBlocker() {
+    this(CH_DEFAULT_FILE);
+  }
+
+  /***
+   * Create BankBlocker with given config file
+   *
+   * @param configFile to read
+   */
+  public BankBlocker(String configFile) {
+    blockCol = getBlockerColumn(CH_CONFIG_FILE_HEADER + configFile + JSON_EXTENSION);
+  }
 
   /**
    * @return blocker column for bank separation
    */
-  private static int getBlockerColumn() {
+  private int getBlockerColumn(String configFile) {
     try {
-      String content = new String(Files.readAllBytes(Path.of(CH_CONFIG_FILE)));
+      String content = new String(Files.readAllBytes(Path.of(configFile)));
       JSONObject JSONContent = new JSONObject(content);
 
       return JSONContent.getJSONArray("general").getJSONObject(0).getInt("blockerCol");
@@ -54,8 +72,9 @@ public class BankBlocker implements ValidStateChecker {
       throw new InvalidBoardSizeException(String.format("Current size: %d; needed size: %d",
           getBankHeight(board) * getBankWidth(board), board.getPieces().size()));
     }
-    LOG.debug(String.format("Move coords: (%d, %d); BLOCK_COL: %d", move.getCoordinates().getRow(), move.getCoordinates().getCol(), BLOCK_COL));
-    return move.getCoordinates().getCol() < BLOCK_COL;
+    LOG.debug(String.format("Move coords: (%d, %d); BLOCK_COL: %d", move.getCoordinates().getRow(), move.getCoordinates().getCol(),
+        blockCol));
+    return move.getCoordinates().getCol() < blockCol;
   }
 
   /***
@@ -70,7 +89,7 @@ public class BankBlocker implements ValidStateChecker {
    * @return width of bank
    */
   private int getBankWidth(ChessBoard board) {
-    return (board.getBoardLength() - BLOCK_COL - 1);
+    return (board.getBoardLength() - blockCol - 1);
   }
 
   /***
