@@ -1,7 +1,7 @@
 package oogasalad.GamePlayer.Movement.CustomMovements;
 
-import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.BLOCK_COL;
-import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_CONFIG_FILE;
+import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_CONFIG_FILE_HEADER;
+import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_DEFAULT_FILE;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -33,6 +33,23 @@ import org.json.JSONObject;
 public class BankLeaver implements MovementInterface {
 
   private static final Logger LOG = LogManager.getLogger(BankLeaver.class);
+
+  private int blockCol;
+  private String configFile;
+
+  public BankLeaver() {
+    this(CH_DEFAULT_FILE);
+  }
+
+  public BankLeaver(String configFile) {
+    this.configFile = CH_CONFIG_FILE_HEADER + configFile;
+    try {
+      blockCol = new JSONObject(Files.readAllBytes(Path.of(configFile))).
+          getJSONArray("general").getJSONObject(0).getInt("blockerCol");
+    } catch (IOException e) {
+      blockCol = BankBlocker.DEFAULT_VALUE;
+    }
+  }
 
   /**
    * @return updated squares when a piece leaves the bank
@@ -71,9 +88,9 @@ public class BankLeaver implements MovementInterface {
    */
   @Override
   public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
-    if(piece.getCoordinates().getCol() < BLOCK_COL) return Set.of();
+    if(piece.getCoordinates().getCol() < blockCol) return Set.of();
     return board.stream().flatMap(Collection::stream).toList().stream().filter(t ->
-        t.getCoordinates().getCol() < BLOCK_COL && t.getPieces().isEmpty() &&
+        t.getCoordinates().getCol() < blockCol && t.getPieces().isEmpty() &&
         !isBlockedSquare(piece.getName(), t.getCoordinates(), board.getBoardHeight()))
         .collect(Collectors.toSet());
   }
@@ -83,13 +100,13 @@ public class BankLeaver implements MovementInterface {
    */
   private boolean isBlockedSquare(String pieceName, Coordinate possibleCoordinate, int boardHeight) {
     try {
-      String content = new String(Files.readAllBytes(Path.of(CH_CONFIG_FILE)));
+      String content = new String(Files.readAllBytes(Path.of(configFile)));
       JSONArray pieceRestrictionsArray = new JSONObject(content).getJSONArray("pieceRestrictions");
       for(int i=0; i<pieceRestrictionsArray.length(); i++) {
         JSONObject currentPR = pieceRestrictionsArray.getJSONObject(i);
         if(currentPR.getString("piece").equals(pieceName)) {
           List<Integer> restrictedRows = convertToPosInts(currentPR.getJSONArray("rows"), boardHeight);
-          List<Integer> restrictedCols = convertToPosInts(currentPR.getJSONArray("cols"), BLOCK_COL);
+          List<Integer> restrictedCols = convertToPosInts(currentPR.getJSONArray("cols"), blockCol);
           return restrictedRows.contains(possibleCoordinate.getRow()) || restrictedCols.contains(possibleCoordinate.getCol());
         }
       }

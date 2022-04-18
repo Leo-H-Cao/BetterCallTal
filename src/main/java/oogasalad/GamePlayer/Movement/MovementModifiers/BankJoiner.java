@@ -1,6 +1,5 @@
 package oogasalad.GamePlayer.Movement.MovementModifiers;
 
-import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.BLOCK_COL;
 import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_CONFIG_FILE_HEADER;
 import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_DEFAULT_FILE;
 
@@ -19,6 +18,7 @@ import oogasalad.GamePlayer.EngineExceptions.PieceNotFoundException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.ValidStateChecker.BankBlocker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
@@ -30,6 +30,7 @@ public class BankJoiner implements MovementModifier{
   private static final int[] DEFAULT_VALUE = new int[]{0, 1};
 
   private String configFile;
+  private int blockCol;
 
   /***
    * BankJoiner with default crazyhouse config file
@@ -45,6 +46,12 @@ public class BankJoiner implements MovementModifier{
    */
   public BankJoiner(String configFile) {
     this.configFile = CH_CONFIG_FILE_HEADER + configFile;
+    try {
+      blockCol = new JSONObject(Files.readAllBytes(Path.of(configFile))).
+          getJSONArray("general").getJSONObject(0).getInt("blockerCol");
+    } catch (IOException e) {
+      blockCol = BankBlocker.DEFAULT_VALUE;
+    }
   }
 
   /**
@@ -109,7 +116,7 @@ public class BankJoiner implements MovementModifier{
    */
   private ChessTile findOpenSpot(int teamID, ChessBoard board) throws OutsideOfBoardException {
     LOG.debug("Finding open spot");
-    int col = BLOCK_COL + 1;
+    int col = blockCol + 1;
     int[] rowInfo = getStartRow(teamID, board.getBoardHeight());
     int row = rowInfo[0];
     int direction = rowInfo[1];
@@ -117,7 +124,7 @@ public class BankJoiner implements MovementModifier{
     ChessTile currentTile = board.getTile(Coordinate.of(row, col));
     while(!currentTile.getPieces().isEmpty()) {
       if(col >= board.getBoardLength() - 1) {
-        col = BLOCK_COL + 1;
+        col = blockCol + 1;
         row = row + direction;
         LOG.debug(String.format("Updating open spot row, col: (%d, %d)", row, col));
       }
