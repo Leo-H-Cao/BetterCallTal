@@ -21,12 +21,18 @@ import org.json.JSONObject;
  */
 public class BankBlocker implements ValidStateChecker {
 
-  public static final String CH_CONFIG_FILE = "doc/GameEngineResources/Other/CrazyhouseConfig.json";
+  public static final String CH_CONFIG_FILE_HEADER = "doc/GameEngineResources/Other/";
+  public static final String CH_DEFAULT_FILE = "CrazyhouseConfig.json";
   public static final int BLOCK_COL = getBlockerColumn();
   public static final String BLOCKER_NAME = "blocker";
 
   private static final Logger LOG = LogManager.getLogger(BankBlocker.class);
   private static final int DEFAULT_VALUE = 8;
+
+  public BankBlocker() {
+
+  }
+
 
   /**
    * @return blocker column for bank separation

@@ -38,6 +38,7 @@ public class Atomic implements MovementModifier{
 
   /**
    * Atomic end condition with provided config file
+   * @param immuneFilePath is the config file
    */
   public Atomic(String immuneFilePath) {
     explosionImmuneNames = assignImmune(ATOMIC_IMMUNE_FILE_PATH_HEADER + immuneFilePath);
