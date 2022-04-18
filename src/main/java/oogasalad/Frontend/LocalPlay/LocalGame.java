@@ -7,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,11 +14,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Game.GameView;
-import oogasalad.Frontend.Menu.HostGame;
 import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
@@ -193,7 +189,7 @@ public class LocalGame extends View {
     GridPane buttons = makeButtonHolder(List.of(UPLOAD, DONE), List.of("upload", "done"),
         List.of((e) -> {
               File f = chooseLoadFile();
-              Optional<ChessBoard> cb = getGameBackend().initalizeChessBoard(f);
+              Optional<ChessBoard> cb = getGameBackend().initalizeLocalChessBoard(f);
               if (cb.isPresent()) {
                 getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), player())); // hardcoded 0 here for white
               } else {

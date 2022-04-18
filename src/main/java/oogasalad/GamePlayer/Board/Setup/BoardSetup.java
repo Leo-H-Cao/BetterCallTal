@@ -71,7 +71,7 @@ public class BoardSetup {
     return createLocalBoard();
   }
 
-  public ChessBoard joinRemoteBoard(String key, int thisPlayer) throws IOException {
+  public ChessBoard joinRemoteBoard(String key) throws IOException {
     return createLocalBoard();
   }
 
