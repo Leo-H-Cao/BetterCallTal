@@ -7,11 +7,7 @@ import oogasalad.GamePlayer.Board.History.LocalHistoryManager;
 import oogasalad.GamePlayer.Board.TurnManagement.LocalTurnManager;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
 
-public class GameSession {
-
-  private final String gameSessionId;
-  private final TurnManager turns;
-  private final HistoryManager history;
+public record GameSession(String gameSessionId, TurnManager turns, HistoryManager history) {
 
   /**
    * Creates the game session with the given id and the given initial board. Manages all of the
@@ -21,36 +17,8 @@ public class GameSession {
    *                      of the game.
    */
   public GameSession(String gameSessionId, ChessBoard initialBoard) {
-    this.gameSessionId = gameSessionId;
-    history = new LocalHistoryManager();
-    turns = new LocalTurnManager(initialBoard.getTurnManagerData());
-  }
-
-  /**
-   * Gets the id of the game session.
-   *
-   * @return the id of the game session.
-   */
-  public String getGameSessionId() {
-    return gameSessionId;
-  }
-
-  /**
-   * Gets the turn manager of the game session.
-   *
-   * @return the turn manager of the game session.
-   */
-  public TurnManager getTurns() {
-    return turns;
-  }
-
-  /**
-   * Gets the history manager of the game session.
-   *
-   * @return the history manager of the game session.
-   */
-  public HistoryManager getHistory() {
-    return history;
+    this(gameSessionId, new LocalTurnManager(initialBoard.getTurnManagerData()),
+        new LocalHistoryManager());
   }
 
   /**
