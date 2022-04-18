@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.Server.Managers.HistoryManager;
 
 /**
  * This class is used to store prior states of the game, allowing for checking complex game

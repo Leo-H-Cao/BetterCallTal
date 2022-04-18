@@ -8,6 +8,7 @@ import java.util.PriorityQueue;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
+import oogasalad.Server.Managers.TurnManager;
 
 /**
  * Manages all turn interactions in a local game. To implement the same interact regardless whether

@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import oogasalad.GamePlayer.Board.History.History;
-import oogasalad.GamePlayer.Board.History.HistoryManager;
+import oogasalad.Server.Managers.HistoryManager;
 import oogasalad.GamePlayer.Board.History.LocalHistoryManager;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
