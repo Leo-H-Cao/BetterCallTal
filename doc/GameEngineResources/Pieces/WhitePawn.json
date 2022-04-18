@@ -1,6 +1,6 @@
 {
   "pieceName": "Pawn",
-  "imgFile": "whitepawn",
+  "imgFile": "pawn",
   "pointValue": 1,
   "basicMovements": ["wPawnMov"],
   "basicCaptures": ["wPawnCap"],
