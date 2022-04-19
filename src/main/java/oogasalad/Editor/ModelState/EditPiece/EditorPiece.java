@@ -1,6 +1,7 @@
 package oogasalad.Editor.ModelState.EditPiece;
 
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
@@ -18,14 +19,16 @@ public class EditorPiece {
   private final SimpleStringProperty pieceName;
 
   public EditorPiece(String pieceID){
-    Image defaultMainPieceImage = new Image("images/pieces/white/rook.png");
-    Image defaultAltPieceImage = new Image("images/pieces/black/rook.png");
     this.pieceID = pieceID;
+    ResourceBundle resourceBundle = ResourceBundle.getBundle(getClass().getName());
+    String image0Path = String.format("images/pieces/white/%s.png", resourceBundle.getString("DefaultImage0"));
+    String image1Path = String.format("images/pieces/black/%s.png", resourceBundle.getString("DefaultImage1"));
+
     movementGrid = new MovementGrid();
     mainPiece = false;
     pieceName = new SimpleStringProperty(pieceID);
-    image0 = new SimpleObjectProperty<>(defaultMainPieceImage);
-    image1 = new SimpleObjectProperty<>(defaultAltPieceImage);
+    image0 = new SimpleObjectProperty<>(new Image(image0Path));
+    image1 = new SimpleObjectProperty<>(new Image(image1Path));
   }
 
   public MovementGrid getMovementGrid() {
