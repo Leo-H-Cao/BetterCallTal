@@ -133,7 +133,7 @@ public class BoardSetup {
             (TileAction) createInstance(TILE_ACTION_PACKAGE + tileActionArray.getString(j),
                 new Class[]{}, new Object[]{}));
       }
-      LOG.debug(String.format("Tile actions for (%d, %d): ", row, col) + tileActions);
+      LOG.debug(String.format("Tile actions for (%d, %d): %s", row, col, tileActions));
       try {
         ChessTile tile = myBoard.getTile(Coordinate.of(row, col));
         tile.setSpecialActions(tileActions);
@@ -161,7 +161,7 @@ public class BoardSetup {
           VALID_STATE_CHECKER_PACKAGE + validStateCheckerArray.getString(i), new Class[]{},
           new Object[]{}));
     }
-    LOG.debug("Valid state checkers: " + validStateCheckers);
+    LOG.debug(String.format("Valid state checkers: %s", validStateCheckers));
     return validStateCheckers;
   }
 
@@ -181,7 +181,7 @@ public class BoardSetup {
           (EndCondition) createInstance(END_CONDITION_PACKAGE + endConditionArray.getString(i),
               new Class[]{}, new Object[]{}));
     }
-    LOG.debug("End conditions: " + endConditions);
+    LOG.debug(String.format("End conditions: %s", endConditions));
     return endConditions;
   }
 
@@ -197,7 +197,7 @@ public class BoardSetup {
     TurnCriteria turnCriteria = (TurnCriteria) createInstance(
         TURN_CRITERIA_PACKAGE + myJSONObject.getJSONArray("general").getJSONObject(0)
             .get("turnCriteria"), new Class[]{Player[].class}, new Object[]{players});
-    LOG.debug("Turn criteria: " + turnCriteria);
+    LOG.debug(String.format("Turn criteria: %s", turnCriteria));
     return turnCriteria;
   }
 
@@ -214,7 +214,7 @@ public class BoardSetup {
       Constructor<?> constructor = clazz.getConstructor(parameterTypes);
       return constructor.newInstance(parameters);
     } catch (Error | Exception e) {
-      LOG.debug("Class creation failed: " + className);
+      LOG.debug(String.format("Class creation failed: %s", className));
       throw new IOException(String.format("Class parsing failed: %s", className));
     }
   }
@@ -236,15 +236,14 @@ public class BoardSetup {
       }
       players[i] = new Player(i, opponentArray);
     }
-    LOG.debug("Players: " + Arrays.toString(players));
+    LOG.debug(String.format("Players: %s", Arrays.toString(players)));
     return players;
   }
 
   /**
    * Parses the JSON to get the game movement file
    *
-   * @param jsonFileName
-   *name of the JSON file
+   * @param jsonFileName name of the JSON file
    * @return List of movements defined by the coordinates in a given JSON file
    * @throws IOException if error with reading
    */
@@ -260,7 +259,7 @@ public class BoardSetup {
           moves.getJSONObject(i).getJSONArray("relativeCoords"));
       movements.add(new Movement(currentCoordinate, currentMove.getBoolean("infinite")));
     }
-    LOG.debug("Movements in " + jsonFileName + ": " + movements);
+    LOG.debug(String.format("Movements in %s: %s", jsonFileName, movements));
     return movements;
   }
 
