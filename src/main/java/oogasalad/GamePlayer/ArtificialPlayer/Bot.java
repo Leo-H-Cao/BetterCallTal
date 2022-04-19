@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
@@ -13,7 +14,13 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
 public class Bot {
-  private TurnManager turnManager;
+  private TurnCriteria turnCriteria;
+  private int team;
+
+  public Bot(int team, TurnCriteria tc){
+    this.team = team;
+    turnCriteria = tc;
+  }
 
   public TurnUpdate getBotMove(ChessBoard board, int currentPlayer)
       throws OutsideOfBoardException, InvalidMoveException {
@@ -36,7 +43,7 @@ public class Bot {
       finalSquare = t;
       break;
     }
-    return new TurnUpdate(movingPiece.move(finalSquare, board), turnManager.incrementTurn());
+    return new TurnUpdate(movingPiece.move(finalSquare, board), turnCriteria.incrementTurn());
   }
 
 }
