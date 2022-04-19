@@ -4,7 +4,7 @@
   "pointValue": 1,
   "basicMovements": [],
   "basicCaptures": [],
-  "customMoves": [["BankLeaver", "TicTacToeConfig"]],
+  "customMoves": [["BankLeaverNoRemove", "TicTacToeConfig"]],
   "movementModifiers": [],
   "onInteractionModifier": []
 }

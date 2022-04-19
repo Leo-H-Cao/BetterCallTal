@@ -77,6 +77,9 @@ public class BankLeaver implements MovementInterface {
     return updatedSquares;
   }
 
+  /***
+   * @throws InvalidMoveException not a valid move
+   */
   @Override
   public Set<ChessTile> capturePiece(Piece piece, Coordinate captureSquare, ChessBoard board)
       throws InvalidMoveException, OutsideOfBoardException {
