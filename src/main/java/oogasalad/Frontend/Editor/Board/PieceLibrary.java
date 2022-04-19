@@ -9,11 +9,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
-import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.LabelledContainer;
-import oogasalad.GamePlayer.GamePiece.Piece;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -65,18 +62,29 @@ public class PieceLibrary extends LabelledContainer {
 
 		ImageView image = new ImageView(piece.getImage(0).getValue());
 		image.setFitHeight(size - 5);
+		image.setFitWidth(size - 5);
 		image.setPreserveRatio(true);
 		image.setSmooth(true);
 		image.setCache(true);
 
+
+
 		// Listen for changes to the custom piece images
-		piece.getImage(0).addListener((ob, ov, nv) -> image.setImage(nv));
-		piece.getImage(1).addListener((ob, ov, nv) -> image.setImage(nv));
+		addPieceImageListener(piece, 0, image);
+		addPieceImageListener(piece, 1, image);
 
 		// Listen for changing to alternate pieces
 		getEditorBackend().getAlternatePiece().addListener((ob, ov, nv) -> image.setImage(piece.getImage((Integer) nv).getValue()));
 		StackPane ret = new StackPane(rect, image);
 		ButtonFactory.addAction(ret, (e) -> getEditorBackend().setSelectedPieceId(id));
 		return new Group(ret);
+	}
+
+	private void addPieceImageListener(EditorPiece p, int team, ImageView image) {
+		p.getImage(team).addListener((ob, ov, nv) -> {
+			if(getEditorBackend().getAlternatePiece().getValue() == team) {
+				image.setImage(nv);
+			}
+		});
 	}
 }

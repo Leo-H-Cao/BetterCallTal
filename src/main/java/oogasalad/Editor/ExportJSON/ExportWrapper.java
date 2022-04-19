@@ -22,15 +22,7 @@ public class ExportWrapper {
     return general;
   }
 
-  public void setGeneral(GeneralExport generalExport) {
-    general = generalExport;
-  }
-
   public ArrayList<PlayerInfoExport> getPlayerInfo() {
     return playerInfo;
-  }
-
-  public void setPlayerInfo(ArrayList<PlayerInfoExport> playerInfo) {
-    this.playerInfo = playerInfo;
   }
 }

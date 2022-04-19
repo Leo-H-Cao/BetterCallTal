@@ -139,13 +139,14 @@ public class EditPieceTest extends DukeApplicationTest {
 
   @Test
   void testEditorPieceImageChange(){
-    assertNull(editorPiece.getImage(0));
-    assertNull(editorPiece.getImage(1));
+    Image defaultMainPieceImage = new Image("images/pieces/white/rook.png");
+    Image defaultAltPieceImage = new Image("images/pieces/black/rook.png");
+    assertEquals(defaultMainPieceImage.getUrl(), editorPiece.getImage(0).getValue().getUrl());
+    assertEquals(defaultAltPieceImage.getUrl(), editorPiece.getImage(1).getValue().getUrl());
     Image newImage = new Image("images/pieces/black/rook.png");
     editorPiece.setImage(0, newImage);
-    assertEquals(newImage, editorPiece.getImage(0));
-    assertNull(editorPiece.getImage(1));
-
+    assertEquals(newImage, editorPiece.getImage(0).getValue());
+    assertEquals(defaultAltPieceImage.getUrl(), editorPiece.getImage(1).getValue().getUrl());
   }
 
   private void checkBoardAllClosed(){

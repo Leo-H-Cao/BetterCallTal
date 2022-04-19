@@ -11,15 +11,7 @@ public abstract class Utility {
     this.board = board;
   }
 
-  public double getUtility(int player){
-    double totalValue = 0;
-    List<Piece> teamPieces = board.getPieces();
-    for(Piece p : board.getPieces()){
-      if(p.getTeam()==player){
-        totalValue += 0;
-      }
-    }
-    return 0;
-  }
+  public abstract double getUtility(int player);
+
 
 }

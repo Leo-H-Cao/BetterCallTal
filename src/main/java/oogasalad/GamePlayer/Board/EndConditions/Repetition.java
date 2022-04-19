@@ -11,33 +11,33 @@ import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Player;
 import oogasalad.GamePlayer.Movement.MovementModifiers.Atomic;
+import oogasalad.GamePlayer.util.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Repetition implements EndCondition {
 
-  private static final String REP_NUM_FILE_PATH = "doc/GameEngineResources/Other/Repetition";
+  private static final String REP_NUM_FILE_PATH_HEADER = "doc/GameEngineResources/Other/";
+  private static final String DEFAULT_REP_FILE = "Repetition";
   private static final Logger LOG = LogManager.getLogger(Repetition.class);
   private static final int DEFAULT_REP_NUM = 3;
 
-  private static final int NUM_REP = getRepNum();
+  private int numRep;
 
   /***
-   * Reads in file to get number of repetitions before draw
-   *
-   * @return number of repetitions needed based on file read
+   * Creates Repetition with default config file
    */
-  private static int getRepNum() {
-    try {
-      File repFile = new File(REP_NUM_FILE_PATH);
-      Scanner reader = new Scanner(repFile);
-      int repNum = reader.nextInt();
-      reader.close();
-      return repNum;
-    } catch (Exception e) {
-      LOG.warn("Could not find repetition file");
-      return DEFAULT_REP_NUM;
-    }
+  public Repetition() {
+    this(DEFAULT_REP_FILE);
+  }
+
+  /***
+   * Creates Repetition with given config file
+   *
+   * @param configFile to read
+   */
+  public Repetition(String configFile) {
+    numRep = FileReader.readOneInt(REP_NUM_FILE_PATH_HEADER + configFile, DEFAULT_REP_NUM);
   }
 
   /***
@@ -48,7 +48,7 @@ public class Repetition implements EndCondition {
    */
   @Override
   public Map<Integer, Double> getScores(ChessBoard board) {
-    return NUM_REP == board.getHistory().stream().filter(h -> h.board().equals(board)).count() ?
+    return numRep == board.getHistory().stream().filter(h -> h.board().equals(board)).count() ?
         Arrays.stream(board.getPlayers()).collect(Collectors.toMap(Player::teamID, p -> DRAW)) :
         Collections.emptyMap();
   }
