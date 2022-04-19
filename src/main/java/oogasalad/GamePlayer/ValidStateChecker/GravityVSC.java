@@ -75,7 +75,7 @@ public class GravityVSC implements ValidStateChecker {
   @Override
   public boolean isValid(ChessBoard board, Piece piece, ChessTile move) throws EngineException {
     return relativeCoordinates.stream().anyMatch(c -> {
-      try { return board.getTile(Coordinate.add(c, move.getCoordinates())).getPiece().isEmpty();}
+      try { return board.getTile(Coordinate.add(c, move.getCoordinates())).getPiece().isPresent();}
       catch (OutsideOfBoardException e) {return true;}});
   }
 }
