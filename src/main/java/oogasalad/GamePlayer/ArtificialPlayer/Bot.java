@@ -24,6 +24,10 @@ public class Bot {
   public TurnUpdate getBotMove(ChessBoard board, int currentPlayer)
       throws EngineException {
 
+    if(board.isGameOver()){
+      return new TurnUpdate(null, -1);
+    }
+
     List<Piece> playerPieces = new ArrayList<>();
 
     for(Piece p : board.getPieces()){
@@ -33,10 +37,17 @@ public class Bot {
     }
 
 
-    Collections.shuffle(playerPieces);
+    Set<ChessTile> tileSet = board.getMoves(playerPieces.get(0));
     Piece movingPiece = playerPieces.get(0);
+    Collections.shuffle(playerPieces);
+    for(Piece p : playerPieces){
+      if(!board.getMoves(p).isEmpty()){
+        tileSet = board.getMoves(p);
+        movingPiece = p;
+      }
 
-    Set<ChessTile> tileSet = playerPieces.get(0).getMoves(board);
+    }
+
     ChessTile finalSquare = null;
     for(ChessTile t : tileSet){
       finalSquare = t;

@@ -167,6 +167,7 @@ public class ChessBoard implements Iterable<ChessTile> {
       LOG.debug("History updated: " + history.size());
       return update;
     }
+
     LOG.warn(isGameOver() ? "Move made after game over" : "Move made by wrong player");
     throw isGameOver() ? new MoveAfterGameEndException("") : new WrongPlayerException(
         "Expected: " + turnManager.getCurrentPlayer() + "\n Actual: " + piece.getTeam());
