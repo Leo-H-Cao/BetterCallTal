@@ -11,10 +11,16 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
@@ -44,6 +50,7 @@ public class LocalGame extends View {
   private static final String MULTIPLAYER = "multiplayer";
   private static final String SINGLEPLAYER = "singleplayer";
 
+  private static final int PADDING = 25;
   private final Integer TITLE_SIZE = 70;
   private final Integer PROMPT_SIZE = 30;
   private BorderPane root;
@@ -78,6 +85,7 @@ public class LocalGame extends View {
     Node title = makeLabelGroup(BackendConnector.getFrontendWord(TITLE, getClass()), TITLE_SIZE);
     BorderPane.setAlignment(exit, Pos.TOP_LEFT);
     HBox top = new HBox(exit, title);
+    top.setSpacing(400);
 
     root.setTop(top);
     root.setLeft(makeGamemodeSelection());
@@ -93,14 +101,15 @@ public class LocalGame extends View {
   private Node makeGamemodeSelection() {
     VBox box = new VBox();
 
-    Node prompt = makeLabelGroup(BackendConnector.getFrontendWord(PROMPT_GAME, getClass()), PROMPT_SIZE);
+    Label prompt = new Label(BackendConnector.getFrontendWord(PROMPT_GAME, getClass()));
+    prompt.setFont(new Font(PROMPT_SIZE));
+    prompt.setAlignment(Pos.TOP_CENTER);
+
     GridPane buttons = makeGameButtonHolder();
     box.getChildren().addAll(prompt, buttons);
 
-    box.setAlignment(Pos.CENTER);
     buttons.setAlignment(Pos.CENTER);
-
-    BorderPane.setAlignment(box, Pos.CENTER);
+    //box.setPadding(new Insets(PADDING));
 
     return box;
   }
@@ -109,30 +118,37 @@ public class LocalGame extends View {
     singleplayerMenu = new VBox();
 
     GridPane buttons = makeSinglePlayerButtons();
-    Node prompt = makeLabelGroup(BackendConnector.getFrontendWord(PROMPT_AI_DIFFICULTY, getClass()), PROMPT_SIZE);
-    singleplayerMenu.setAlignment(Pos.CENTER);
+
+    Label prompt = new Label(BackendConnector.getFrontendWord(PROMPT_AI_DIFFICULTY, getClass()));
+    prompt.setFont(new Font(PROMPT_SIZE));
+    prompt.setAlignment(Pos.TOP_CENTER);
+
     buttons.setAlignment(Pos.CENTER);
     singleplayerMenu.getChildren().addAll(prompt, buttons);
 
-    BorderPane.setAlignment(singleplayerMenu, Pos.CENTER);
     singleplayerMenu.setVisible(false);
     return singleplayerMenu;
   }
 
   private Node makePlayerSelection() {
     orderSelector = new VBox();
-    Node prompt = makeLabelGroup(BackendConnector.getFrontendWord(PROMPT_ORDER, getClass()), PROMPT_SIZE);
+    Label prompt = new Label(BackendConnector.getFrontendWord(PROMPT_ORDER, getClass()));
+    prompt.setFont(new Font(PROMPT_SIZE));
+    prompt.setAlignment(Pos.TOP_CENTER);
+
     GridPane buttons = makeButtonHolder(
         List.of(FIRST, SECOND),
         List.of("first", "second"),
         List.of(e -> makePlayerSelectionLabel(FIRST),
             e -> makePlayerSelectionLabel(SECOND))
     );
+
     buttons.setAlignment(Pos.CENTER);
     orderSelector.getChildren().addAll(prompt, buttons);
     orderSelector.setVisible(false);
-    BorderPane.setAlignment(orderSelector, Pos.CENTER);
-    orderSelector.setPadding(new Insets(10));
+
+    //orderSelector.setPadding(new Insets(PADDING));
+    BorderPane.setAlignment(orderSelector, Pos.TOP_RIGHT);
     return orderSelector;
   }
 
@@ -190,18 +206,23 @@ public class LocalGame extends View {
 
   private Node makeDonePanel() {
     donePanel = new HBox();
-    GridPane buttons = makeButtonHolder(List.of(UPLOAD, DONE), List.of("upload", "done"),
-        List.of((e) -> {
-              File f = chooseLoadFile();
-              Optional<ChessBoard> cb = getGameBackend().initalizeChessBoard(f);
-              if (cb.isPresent()) {
-                getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), player())); // hardcoded 0 here for white
-              } else {
-                View.LOG.debug("INVALID JSON OR INVALID PLAYER SELECTION");
-              }
-            },
-            e -> LOG.warn("SELECTION HAS GONE AWRY")
-        ));
+
+    EventHandler<ActionEvent> upload = (e) -> {
+      File f = chooseLoadFile();
+      Optional<ChessBoard> cb = getGameBackend().initalizeChessBoard(f);
+      if (cb.isPresent()) {
+        getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), player())); // hardcoded 0 here for white
+      } else {
+        View.LOG.debug("INVALID JSON OR INVALID PLAYER SELECTION");
+      }
+    };
+
+    EventHandler<ActionEvent> done = e -> LOG.warn("SELECTION HAS GONE AWRY");
+
+    GridPane buttons = makeButtonHolder(
+        List.of(UPLOAD, DONE),
+        List.of("upload", "done"),
+        List.of(upload, done));
 
     donePanel.getChildren().addAll(buttons);
     donePanel.setPadding(new Insets(25));

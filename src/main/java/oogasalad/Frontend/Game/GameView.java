@@ -1,30 +1,28 @@
 package oogasalad.Frontend.Game;
 
-import java.util.*;
-
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Consumer;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Game.Sections.BoardGrid;
 import oogasalad.Frontend.Game.Sections.GameOverDisplay;
 import oogasalad.Frontend.Game.Sections.RightSideSection;
 import oogasalad.Frontend.Game.Sections.TopSection;
-import oogasalad.Frontend.ViewManager;
+import oogasalad.Frontend.Menu.HomeView;
 import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
 import oogasalad.GamePlayer.Movement.Coordinate;
-
-import java.util.function.Consumer;
-import java.util.stream.Collectors;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -140,7 +138,13 @@ public class GameView extends View {
     protected Node makeNode() {
         BorderPane bp = new BorderPane();
         myBP = bp;
-        bp.setTop(new TopSection().getGP());
+        TopSection top = new TopSection();
+
+        top.setExitButton(e -> {
+            getView(HomeView.class).ifPresent(this::changeScene);
+        });
+
+        bp.setTop(top.getGP());
 
         myCenterBoard = new StackPane();
         myCenterBoard.getChildren().add(myBoardGrid.getBoard());
@@ -148,6 +152,8 @@ public class GameView extends View {
 
         myRightSide = new RightSideSection(flipRun);
         bp.setRight(myRightSide.getVbox());
+
+
 
         return bp;
     }
@@ -167,10 +173,6 @@ public class GameView extends View {
     public static Piece promotionPopUp(List<Piece> possPromotions){
         ChoiceDialog cd = new ChoiceDialog(possPromotions.get(0), possPromotions);
         Optional<Piece> p = cd.showAndWait();
-        if (p.isPresent()) {
-            return p.get();
-        } else {
-           return null;
-        }
+        return p.orElse(null);
     }
 }

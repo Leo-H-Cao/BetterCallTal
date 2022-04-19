@@ -1,5 +1,7 @@
 package oogasalad.Frontend.Game.Sections;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.ColumnConstraints;
@@ -8,10 +10,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import oogasalad.Frontend.Menu.HomeView;
 import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.BackendConnector;
 
 import java.util.ArrayList;
+import oogasalad.Frontend.util.ButtonFactory;
+import oogasalad.Frontend.util.ButtonType;
 
 /**
  * This class will handle the top section of the Game View's borderpane.
@@ -19,8 +24,10 @@ import java.util.ArrayList;
  */
 
 public class TopSection {
+
     private final GridPane myGP;
     private static final String TITLE = "Title";
+    private Button exit;
 
     public TopSection() {
 
@@ -28,6 +35,7 @@ public class TopSection {
         setTopColConstraints();
 
         ArrayList<HBox> Hboxes = createTopHBoxes();
+
         myGP.add(Hboxes.get(0), 0, 0);
         myGP.add(Hboxes.get(1), 1, 0);
         myGP.add(Hboxes.get(2), 2, 0);
@@ -44,8 +52,8 @@ public class TopSection {
         ArrayList<HBox> hboxes = new ArrayList<>();
         HBox left = new HBox();
         left.setAlignment(Pos.CENTER_LEFT);
-        Button Exit = new Button("Exit");
-        left.getChildren().add(Exit);
+        exit = new Button("exit");
+        left.getChildren().add(exit);
         hboxes.add(left);
 
         HBox middle = new HBox();
@@ -67,4 +75,8 @@ public class TopSection {
      * @return Top Section Gridpane
      */
     public GridPane getGP() {return myGP;}
+
+    public void setExitButton(EventHandler<ActionEvent> e) {
+        exit.setOnAction(e);
+    }
 }
