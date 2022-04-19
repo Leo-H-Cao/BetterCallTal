@@ -1,0 +1,10 @@
+{
+  "pieceName": "Checker",
+  "imgFile": "checker",
+  "pointValue": 1,
+  "basicMovements": [],
+  "basicCaptures": [],
+  "customMoves": [["BankLeaver", "TicTacToeConfig"]],
+  "movementModifiers": [],
+  "onInteractionModifier": []
+}
