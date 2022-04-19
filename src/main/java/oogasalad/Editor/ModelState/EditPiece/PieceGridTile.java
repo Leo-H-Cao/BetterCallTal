@@ -4,5 +4,6 @@ public enum PieceGridTile {
   CLOSED,
   OPEN,
   INFINITY,
-  PIECE
+  PIECE,
+  CAPTURE
 }

@@ -1,7 +1,6 @@
 package oogasalad.Editor.ExportJSON;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class PlayerInfoExport {
   private int team;
@@ -16,15 +15,7 @@ public class PlayerInfoExport {
     return team;
   }
 
-  public void setTeam(int team) {
-    this.team = team;
-  }
-
   public ArrayList<Integer> getOpponents() {
     return opponents;
-  }
-
-  public void setOpponents(ArrayList<Integer> opponents) {
-    this.opponents = opponents;
   }
 }

@@ -13,6 +13,7 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.MovementInterface;
+import oogasalad.GamePlayer.util.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,9 +25,32 @@ import org.apache.logging.log4j.Logger;
 public class EnPassant implements MovementInterface {
 
   private static final Logger LOG = LogManager.getLogger(EnPassant.class);
+
+  public static final String EP_CONFIG_FILE_HEADER = "doc/GameEngineResources/Other/";
+  public static final String EP_DEFAULT_FILE = "EnPassantRowVal";
+
+  private static final int EP_DEFAULT_VAL = 3;
   private static final int EP_DISTANCE = 1;
-  private static final int EP_ROW_SUBTRACT = 3;
   private static final int ONE_MOVE_HISTORY_LENGTH = 2;
+
+  private int epRowSubtract;
+
+  /***
+   * Constructs EnPassant with default file
+   */
+  public EnPassant() {
+    this(EP_DEFAULT_FILE);
+  }
+
+  /***
+   * Constructs EnPassant with provided config file
+   *
+   * @param configFile to read
+   */
+  public EnPassant(String configFile) {
+    epRowSubtract = FileReader.readOneInt(EP_CONFIG_FILE_HEADER + configFile,
+        EP_DEFAULT_VAL);
+  }
 
   /**
    * No applicable moves
@@ -79,10 +103,10 @@ public class EnPassant implements MovementInterface {
   private int getEpRow(Piece piece, int boardHeight) {
     if (movingUp(piece)) {
 //      LOG.debug("En passant row for current piece (1): " + EP_ROW_SUBTRACT);
-      return EP_ROW_SUBTRACT;
+      return epRowSubtract;
     } else {
 //      LOG.debug("En passant row for current piece (2): " + (boardHeight - EP_ROW_SUBTRACT - 1));
-      return (boardHeight - EP_ROW_SUBTRACT) - 1;
+      return (boardHeight - epRowSubtract) - 1;
     }
   }
 

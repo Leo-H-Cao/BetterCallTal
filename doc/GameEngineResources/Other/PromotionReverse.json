@@ -1,0 +1,4 @@
+{
+	"image": "checkerKing",
+	"promotable": ["Checker", "Pawn"]
+}

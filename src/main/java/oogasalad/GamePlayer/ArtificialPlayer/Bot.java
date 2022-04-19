@@ -16,10 +16,17 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 public class Bot {
   private TurnCriteria turnCriteria;
   private int team;
+  private TurnManager turnManager;
 
   public Bot(int team, TurnCriteria tc){
     this.team = team;
     turnCriteria = tc;
+  }
+
+
+
+  public Bot(TurnManager turnManager) {
+    this.turnManager = turnManager;
   }
 
   public TurnUpdate getBotMove(ChessBoard board, int currentPlayer)

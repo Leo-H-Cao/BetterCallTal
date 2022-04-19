@@ -1,7 +1,8 @@
 package oogasalad.GamePlayer.Movement.CustomMovements;
 
-import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.BLOCK_COL;
-import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_CONFIG_FILE;
+import static oogasalad.GamePlayer.Board.Setup.BoardSetup.JSON_EXTENSION;
+import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_CONFIG_FILE_HEADER;
+import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_DEFAULT_FILE;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -34,6 +35,37 @@ public class BankLeaver implements MovementInterface {
 
   private static final Logger LOG = LogManager.getLogger(BankLeaver.class);
 
+  private int blockCol;
+  private String configFile;
+
+  /***
+   * Create BankLeaver with default config file
+   */
+  public BankLeaver() {
+    this(CH_DEFAULT_FILE);
+  }
+
+  /***
+   * Create BankLeave with given config file
+   *
+   * @param configFile to read
+   */
+  public BankLeaver(String configFile) {
+    this.configFile = CH_CONFIG_FILE_HEADER + configFile + JSON_EXTENSION;
+    LOG.debug(String.format("Config file: %s", this.configFile));
+    try {
+      String content = new String(Files.readAllBytes(Path.of(this.configFile)));
+      JSONObject data = new JSONObject(content);
+      blockCol = data.
+          getJSONArray("general").getJSONObject(0).getInt("blockerCol");
+    } catch (IOException e) {
+      blockCol = BankBlocker.DEFAULT_VALUE;
+    } catch (Exception e) {
+      LOG.debug(1);
+      e.printStackTrace();
+    }
+    LOG.debug(String.format("Block col: %d", blockCol));
+  }
 
   /**
    * @return updated squares when a piece leaves the bank
@@ -52,6 +84,9 @@ public class BankLeaver implements MovementInterface {
     return updatedSquares;
   }
 
+  /***
+   * @throws InvalidMoveException not a valid move
+   */
   @Override
   public Set<ChessTile> capturePiece(Piece piece, Coordinate captureSquare, ChessBoard board)
       throws InvalidMoveException, OutsideOfBoardException {
@@ -72,9 +107,9 @@ public class BankLeaver implements MovementInterface {
    */
   @Override
   public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
-    if(piece.getCoordinates().getCol() < BLOCK_COL) return Set.of();
+    if(piece.getCoordinates().getCol() < blockCol) return Set.of();
     return board.stream().flatMap(Collection::stream).toList().stream().filter(t ->
-        t.getCoordinates().getCol() < BLOCK_COL && t.getPieces().isEmpty() &&
+        t.getCoordinates().getCol() < blockCol && t.getPieces().isEmpty() &&
         !isBlockedSquare(piece.getName(), t.getCoordinates(), board.getBoardHeight()))
         .collect(Collectors.toSet());
   }
@@ -84,13 +119,13 @@ public class BankLeaver implements MovementInterface {
    */
   private boolean isBlockedSquare(String pieceName, Coordinate possibleCoordinate, int boardHeight) {
     try {
-      String content = new String(Files.readAllBytes(Path.of(CH_CONFIG_FILE)));
+      String content = new String(Files.readAllBytes(Path.of(configFile)));
       JSONArray pieceRestrictionsArray = new JSONObject(content).getJSONArray("pieceRestrictions");
       for(int i=0; i<pieceRestrictionsArray.length(); i++) {
         JSONObject currentPR = pieceRestrictionsArray.getJSONObject(i);
         if(currentPR.getString("piece").equals(pieceName)) {
           List<Integer> restrictedRows = convertToPosInts(currentPR.getJSONArray("rows"), boardHeight);
-          List<Integer> restrictedCols = convertToPosInts(currentPR.getJSONArray("cols"), BLOCK_COL);
+          List<Integer> restrictedCols = convertToPosInts(currentPR.getJSONArray("cols"), blockCol);
           return restrictedRows.contains(possibleCoordinate.getRow()) || restrictedCols.contains(possibleCoordinate.getCol());
         }
       }
