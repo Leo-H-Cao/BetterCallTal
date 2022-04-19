@@ -81,9 +81,11 @@ public class ExportJSON {
         if(tile.hasPiece()){
           pieces.add(new PieceExport(x, y, piecesState.getPiece(tile.getPieceID()), tile.getTeam()));
         }
-        if(tile.getTileEffect() != TileEffect.NONE){
+        if(tile.getTileEffect() != TileEffect.NONE || tile.getImg() != null){
           TileExport tileExport = new TileExport(x, y, tile.getImg());
-          tileExport.addTileAction(tile.getTileEffect().toString());
+          if(tile.getTileEffect() != TileEffect.NONE){
+            tileExport.addTileAction(tile.getTileEffect().toString());
+          }
           tiles.add(tileExport);
         }
       }

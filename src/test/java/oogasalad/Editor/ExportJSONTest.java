@@ -86,7 +86,6 @@ public class ExportJSONTest extends DukeApplicationTest {
     boardState.setTileEffect(1,2,TileEffect.FIRE);
     boardState.setTileEffect(6,5, TileEffect.SWAP);
     boardState.setTileEffect(2,6, TileEffect.BLACKHOLE);
-    boardState.setTileEffect(3,4, TileEffect.PROMOTIONREVERSE);
     boardState.setTileImage(3,4, new Image("images/pieces/black/rook.png"));
     exportJSON = new ExportJSON(piecesState, gameRulesState, boardState);
     exportJSON.writeToJSON();
