@@ -34,6 +34,7 @@ public class EditorView extends View {
 		myTabs = new TabPane(boardTab);
 		myTabs.setId("EditorTabPane");
 		myTabs.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
+		getEditorBackend().getOpenCustomPieceProperty().addListener((ob, ov, nv) -> openCustomPiece(nv));
 	}
 
 	public TabPane getMyTabs() {
@@ -54,20 +55,22 @@ public class EditorView extends View {
 
 	private void newCustomPiece() {
 		pieceEditorCount++;
-		String newPieceId = "custom" + pieceEditorCount;
-		PieceEditor newPieceEditor = new PieceEditor(newPieceId);
-		myPieceEditors.put(newPieceId, newPieceEditor);
-		getEditorBackend().getPiecesState().createCustomPiece(newPieceId);
-		EditorPiece piece = getEditorBackend().getPiecesState().getPiece(newPieceId);
-		piece.setPieceName(getPieceName());
+		String pieceId = "custom" + pieceEditorCount;
+		getEditorBackend().getPiecesState().createCustomPiece(pieceId);
+		EditorPiece piece = getEditorBackend().getPiecesState().getPiece(pieceId);
+		piece.setPieceName("custom piece " + pieceEditorCount);
+		openCustomPiece(pieceId);
+	}
+
+	private void openCustomPiece(String pieceId) {
+		PieceEditor newPieceEditor = new PieceEditor(pieceId);
+		myPieceEditors.put(pieceId, newPieceEditor);
+
+		EditorPiece piece = getEditorBackend().getPiecesState().getPiece(pieceId);
 		Tab newTab = makeTab(piece.getPieceName(), newPieceEditor.getNode());
 		newTab.setOnClosed((e) -> myPieceEditors.remove(newPieceEditor.getId()));
 		myTabs.getTabs().add(newTab);
 		myTabs.getSelectionModel().select(newTab);
-	}
-
-	private String getPieceName() {
-		return BackendConnector.getFrontendWord("CustomPiece", getClass()) + " " + pieceEditorCount;
 	}
 
 	private Tab makeTab(Property<String> name, Node content) {

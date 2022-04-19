@@ -78,7 +78,7 @@ public class PieceLibrary extends LabelledContainer {
 			if (e.getButton() == MouseButton.PRIMARY) {
 				getEditorBackend().setSelectedPieceId(id);
 			} else if(e.getButton() == MouseButton.SECONDARY) {
-				System.out.println("right clicked");
+				getEditorBackend().setOpenCustomPieceProperty(id);
 			}
 		});
 		return new Group(ret);

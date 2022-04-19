@@ -12,18 +12,18 @@ import static oogasalad.Editor.ModelState.EditPiece.PieceGridTile.OPEN;
 public class EditorBackend {
 	private final PiecesState piecesState;
 	private final BoardState boardState;
-	private PieceGridTile currentlySelectedType;
-	private Property<PieceGridTile> selectedTypeProperty;
-	private Property<String> selectedPieceId;
-	private SimpleIntegerProperty alternatePiece;
+	private final Property<PieceGridTile> selectedTypeProperty;
+	private final SimpleStringProperty selectedPieceId;
+	private final SimpleIntegerProperty alternatePiece;
+	private final SimpleStringProperty customPieceOpenId;
 
 	public EditorBackend(){
 		this.piecesState = new PiecesState();
 		this.boardState = new BoardState();
-		currentlySelectedType = OPEN;
-		selectedTypeProperty = new SimpleObjectProperty<>(currentlySelectedType);
+		selectedTypeProperty = new SimpleObjectProperty<>(OPEN);
 		selectedPieceId = new SimpleStringProperty("rook");
 		alternatePiece = new SimpleIntegerProperty(0);
+		customPieceOpenId = new SimpleStringProperty();
 		createDefaultPieces();
 	}
 
@@ -59,9 +59,16 @@ public class EditorBackend {
 		alternatePiece.setValue(i);
 	}
 
+	public void setOpenCustomPieceProperty(String id) {
+		customPieceOpenId.setValue(id);
+	}
+
+	public SimpleStringProperty getOpenCustomPieceProperty() {
+		return customPieceOpenId;
+	}
+
 	private void createDefaultPieces() {
 		MovementGrid moves = new MovementGrid();
-
 
 		createDefaultPiece("pawn", 1, moves);
 		createDefaultPiece("knight", 3, moves);
