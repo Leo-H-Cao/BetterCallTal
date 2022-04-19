@@ -16,6 +16,8 @@ import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
 import oogasalad.Frontend.util.View;
+
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,7 +36,14 @@ public class EditorView extends View {
 		myTabs = new TabPane(boardTab);
 		myTabs.setId("EditorTabPane");
 		myTabs.setTabClosingPolicy(TabPane.TabClosingPolicy.ALL_TABS);
-		getEditorBackend().getOpenCustomPieceProperty().addListener((ob, ov, nv) -> openCustomPiece(nv));
+		getEditorBackend().getOpenCustomPieceProperty().addListener((ob, ov, nv) -> {
+			// Prevent running openCustomPiece when the changes value is an empty string
+			// REQUIRES piece name to not be empty
+			if(nv.equals("")) return;
+			openCustomPiece(nv);
+			// Reset watched value after action occurs
+			getEditorBackend().setOpenCustomPieceProperty("");
+		});
 	}
 
 	public TabPane getMyTabs() {
@@ -63,12 +72,22 @@ public class EditorView extends View {
 	}
 
 	private void openCustomPiece(String pieceId) {
-		PieceEditor newPieceEditor = new PieceEditor(pieceId);
-		myPieceEditors.put(pieceId, newPieceEditor);
-
 		EditorPiece piece = getEditorBackend().getPiecesState().getPiece(pieceId);
+		if(myPieceEditors.containsKey(pieceId)) {
+			String pieceName = piece.getPieceName().getValue();
+			myTabs.getTabs().stream().filter(e -> e.getText().equals(pieceName)).findFirst().ifPresent(e -> myTabs.getSelectionModel().select(e));
+			return;
+		}
+		PieceEditor newPieceEditor = new PieceEditor(pieceId);
+
+		myPieceEditors.put(pieceId, newPieceEditor);
 		Tab newTab = makeTab(piece.getPieceName(), newPieceEditor.getNode());
-		newTab.setOnClosed((e) -> myPieceEditors.remove(newPieceEditor.getId()));
+
+		newTab.setOnClosed((e) -> myPieceEditors.remove(pieceId));
+
+		// Listen for updates to the piece name
+		piece.getPieceName().addListener((ob, ov, nv) -> newTab.setText(nv));
+
 		myTabs.getTabs().add(newTab);
 		myTabs.getSelectionModel().select(newTab);
 	}

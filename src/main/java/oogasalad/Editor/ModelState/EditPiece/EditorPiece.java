@@ -9,13 +9,13 @@ import javafx.scene.image.Image;
 
 public class EditorPiece {
   private MovementGrid movementGrid;
-  private Property<Image> image0;
-  private Property<Image> image1;
+  private final Property<Image> image0;
+  private final Property<Image> image1;
   private final String pieceID;
   private boolean mainPiece;
   private ArrayList<String> customMoves;
   private int pointValue;
-  private Property<String> pieceName;
+  private final SimpleStringProperty pieceName;
 
   public EditorPiece(String pieceID){
     Image defaultMainPieceImage = new Image("images/pieces/white/rook.png");
@@ -23,7 +23,7 @@ public class EditorPiece {
     this.pieceID = pieceID;
     movementGrid = new MovementGrid();
     mainPiece = false;
-    pieceName = new SimpleStringProperty();
+    pieceName = new SimpleStringProperty(pieceID);
     image0 = new SimpleObjectProperty<>(defaultMainPieceImage);
     image1 = new SimpleObjectProperty<>(defaultAltPieceImage);
   }
@@ -99,6 +99,8 @@ public class EditorPiece {
   }
 
   public void setPieceName(String pieceName) {
+    // Ensure that the piece name cannot be empty
+    if(pieceName.equals("")) return;
     this.pieceName.setValue(pieceName);
   }
 
