@@ -1,0 +1,10 @@
+{
+  "pieceName": "Bishop",
+  "imgFile": "bishop",
+  "pointValue": 3,
+  "basicMovements": ["bishop"],
+  "basicCaptures": ["bishop"],
+  "customMoves": [],
+  "movementModifiers": [],
+  "onInteractionModifier": []
+}

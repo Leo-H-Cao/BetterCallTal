@@ -10,11 +10,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Game.GameView;
-import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
@@ -24,7 +21,6 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Stack;
 
 
 public class HostGame extends View {
@@ -148,7 +144,7 @@ public class HostGame extends View {
     private Node makeStartGroup(File f) {
         Button start = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord(START), Start_Button_ID,
                 (e) -> {
-            Optional<ChessBoard> cbOp = getGameBackend().initalizeChessBoard(f);
+            Optional<ChessBoard> cbOp = getGameBackend().initalizeHostServerChessBoard(f);
             if(cbOp.isPresent()) {
                 getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cbOp.get(), piececolors.get(colorchoice.getValue()), false));
             } else {

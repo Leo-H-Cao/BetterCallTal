@@ -16,17 +16,35 @@ import org.apache.logging.log4j.Logger;
 public class Demote implements TileAction {
 
   private static final Logger LOG = LogManager.getLogger(Demote.class);
-  private static final String DEMOTE_FILE_PATH = "doc/GameEngineResources/Other/DemotionPiece";
-  private static final String DEMOTE_PIECE_NAME = getDemotablePieceName();
+  private static final String DEMOTE_FILE_PATH_HEADER = "doc/GameEngineResources/Other/";
+  private static final String DEFAULT_DEMOTE_FILE = "DemotionPiece";
+
+  private String demotePieceName;
+
+  /***
+   * Create Demote with default config file
+   */
+  public Demote() {
+    this(DEFAULT_DEMOTE_FILE);
+  }
+
+  /***
+   * Create Demote with given config file
+   *
+   * @param demoteFilePath to read
+   */
+  public Demote(String demoteFilePath) {
+    demotePieceName = getDemotablePieceName(DEMOTE_FILE_PATH_HEADER + demoteFilePath);
+  }
 
   /**
    * Reads in promotable piece names from a text file
    *
    * @return promotable piece list
    */
-  private static String getDemotablePieceName() {
+  private String getDemotablePieceName(String filePath) {
     try {
-      File demoteFile = new File(DEMOTE_FILE_PATH);
+      File demoteFile = new File(filePath);
       Scanner reader = new Scanner(demoteFile);
       String demoteName = reader.next();
       reader.close();
@@ -45,7 +63,7 @@ public class Demote implements TileAction {
   public Set<ChessTile> executeAction(ChessTile tile, ChessBoard board) {
     if(tile.getPiece().isEmpty()) return Collections.emptySet();
     Piece demotePiece = board.getPieceList().get(tile.getPiece().get().getTeam()).stream().filter(
-        p -> p.getName().equals(DEMOTE_PIECE_NAME)).findFirst().orElse(tile.getPiece().get());
+        p -> p.getName().equals(demotePieceName)).findFirst().orElse(tile.getPiece().get());
     Piece clone = demotePiece.clone();
     tile.clearPieces();
 

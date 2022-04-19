@@ -20,7 +20,7 @@ public class ChessTile implements Tile, Cloneable {
   private Coordinate coordinate;
   private List<Piece> pieces;
   private List<TileAction> specialActions;
-  private Optional<String> customImg;
+  private String customImg;
 
   public ChessTile() {
     this(new Coordinate(0, 0), new ArrayList<>());
@@ -46,14 +46,14 @@ public class ChessTile implements Tile, Cloneable {
    * @param img to set customImg to
    */
   public void setCustomImg(String img) {
-    customImg = Optional.of(img);
+    customImg = img;
   }
 
   /***
    * @return custom img
    */
   public Optional<String> getCustomImg() {
-    return customImg;
+    return customImg == null ? Optional.empty() : Optional.of(customImg);
   }
 
   /**
@@ -77,7 +77,7 @@ public class ChessTile implements Tile, Cloneable {
     this.coordinate = coordinate;
     this.pieces = pieces;
     this.specialActions = actions;
-    this.customImg = Optional.empty();
+    this.customImg = null;
   }
 
   /**

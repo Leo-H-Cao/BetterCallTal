@@ -7,25 +7,16 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Game.GameView;
-import oogasalad.Frontend.Menu.HostGame;
 import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
@@ -209,7 +200,7 @@ public class LocalGame extends View {
 
     EventHandler<ActionEvent> upload = (e) -> {
       File f = chooseLoadFile();
-      Optional<ChessBoard> cb = getGameBackend().initalizeChessBoard(f);
+      Optional<ChessBoard> cb = getGameBackend().initalizeLocalChessBoard(f);
       if (cb.isPresent()) {
         getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), player(), mode.equals(SINGLEPLAYER))); // hardcoded 0 here for white
       } else {

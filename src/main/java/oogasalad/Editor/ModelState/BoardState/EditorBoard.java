@@ -62,18 +62,12 @@ public class EditorBoard {
     board.get(y).get(x).removePiece();
   }
 
-  public void setTileEffect(int x, int y, String effectString){
-    TileEffect effect = TileEffect.valueOf(effectString.toUpperCase(Locale.ROOT));
-    board.get(y).get(x).setTileEffect(effect);
+  public void setTileEffect(int x, int y, TileEffect tileEffect){
+    board.get(y).get(x).setTileEffect(tileEffect);
   }
 
   public void addPieceStartingLocation(String pieceID, int x, int y, int team){
     board.get(y).get(x).addPiece(pieceID, team);
-  }
-
-  public void removePieceStartingLocation(String pieceID){
-    EditorCoordinate pieceLocation = findPieceLocation(pieceID);
-    board.get(pieceLocation.getY()).get(pieceLocation.getX()).removePiece();
   }
 
   public SimpleIntegerProperty getBoardWidth(){

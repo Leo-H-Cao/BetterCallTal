@@ -1,4 +1,4 @@
-package oogasalad.backend.EndGameTests;
+package oogasalad.GamePlayer.Board.EndConditions;
 
 import org.junit.jupiter.api.Test;
 
