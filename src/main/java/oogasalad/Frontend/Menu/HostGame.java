@@ -150,7 +150,7 @@ public class HostGame extends View {
                 (e) -> {
             Optional<ChessBoard> cbOp = getGameBackend().initalizeChessBoard(f);
             if(cbOp.isPresent()) {
-                getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cbOp.get(), piececolors.get(colorchoice.getValue())));
+                getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cbOp.get(), piececolors.get(colorchoice.getValue()), false));
             } else {
                 View.LOG.debug("Invalid JSON");
             }

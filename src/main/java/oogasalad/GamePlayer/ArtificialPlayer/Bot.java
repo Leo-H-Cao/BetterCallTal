@@ -13,7 +13,12 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
 public class Bot {
+
   private TurnManager turnManager;
+
+  public Bot(TurnManager turnManager) {
+    this.turnManager = turnManager;
+  }
 
   public TurnUpdate getBotMove(ChessBoard board, int currentPlayer)
       throws OutsideOfBoardException, InvalidMoveException {
