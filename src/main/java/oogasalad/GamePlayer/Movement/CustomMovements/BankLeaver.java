@@ -52,12 +52,19 @@ public class BankLeaver implements MovementInterface {
    */
   public BankLeaver(String configFile) {
     this.configFile = CH_CONFIG_FILE_HEADER + configFile + JSON_EXTENSION;
+    LOG.debug(String.format("Config file: %s", this.configFile));
     try {
-      blockCol = new JSONObject(Files.readAllBytes(Path.of(configFile))).
+      String content = new String(Files.readAllBytes(Path.of(this.configFile)));
+      JSONObject data = new JSONObject(content);
+      blockCol = data.
           getJSONArray("general").getJSONObject(0).getInt("blockerCol");
     } catch (IOException e) {
       blockCol = BankBlocker.DEFAULT_VALUE;
+    } catch (Exception e) {
+      LOG.debug(1);
+      e.printStackTrace();
     }
+    LOG.debug(String.format("Block col: %d", blockCol));
   }
 
   /**
@@ -77,6 +84,9 @@ public class BankLeaver implements MovementInterface {
     return updatedSquares;
   }
 
+  /***
+   * @throws InvalidMoveException not a valid move
+   */
   @Override
   public Set<ChessTile> capturePiece(Piece piece, Coordinate captureSquare, ChessBoard board)
       throws InvalidMoveException, OutsideOfBoardException {

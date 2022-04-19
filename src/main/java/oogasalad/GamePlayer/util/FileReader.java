@@ -10,7 +10,7 @@ public class FileReader {
   /***
    * Reads in given file and returns List of Strings in file
    */
-  public static List<String> read(String filePath, List<String> defaultValue) {
+  public static List<String> readManyStrings(String filePath, List<String> defaultValue) {
     List<String> list = new ArrayList<>();
     try {
       File endZoneFile = new File(filePath);
@@ -22,6 +22,23 @@ public class FileReader {
       return list;
     } catch (Exception e) {
       return defaultValue;
+    }
+  }
+
+  /***
+   * Reads in file and gets the first int
+   *
+   * @return int from file
+   */
+  public static int readOneInt(String configFile, int defaultVal) {
+    try {
+      File file = new File(configFile);
+      Scanner reader = new Scanner(file);
+      int num = reader.nextInt();
+      reader.close();
+      return num;
+    } catch (Exception e) {
+      return defaultVal;
     }
   }
 }

@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Player;
 import oogasalad.GamePlayer.Movement.MovementModifiers.Atomic;
+import oogasalad.GamePlayer.util.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -36,25 +37,7 @@ public class Repetition implements EndCondition {
    * @param configFile to read
    */
   public Repetition(String configFile) {
-    numRep = getRepNum(REP_NUM_FILE_PATH_HEADER + configFile);
-  }
-
-  /***
-   * Reads in file to get number of repetitions before draw
-   *
-   * @return number of repetitions needed based on file read
-   */
-  private int getRepNum(String configFile) {
-    try {
-      File repFile = new File(configFile);
-      Scanner reader = new Scanner(repFile);
-      int repNum = reader.nextInt();
-      reader.close();
-      return repNum;
-    } catch (Exception e) {
-      LOG.warn("Could not find repetition file");
-      return DEFAULT_REP_NUM;
-    }
+    numRep = FileReader.readOneInt(REP_NUM_FILE_PATH_HEADER + configFile, DEFAULT_REP_NUM);
   }
 
   /***

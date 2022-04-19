@@ -56,17 +56,22 @@ public class BoardSetup {
    * @return ChessBoard object constructed from a JSON
    */
   public ChessBoard createLocalBoard() throws IOException {
-    int rows = Integer.parseInt(
-        mainGameFile.getJSONArray("general").getJSONObject(0).get("columns").toString());
-    int columns = Integer.parseInt(
-        mainGameFile.getJSONArray("general").getJSONObject(0).get("rows").toString());
+//    try {
+      int rows = Integer.parseInt(
+          mainGameFile.getJSONArray("general").getJSONObject(0).get("columns").toString());
+      int columns = Integer.parseInt(
+          mainGameFile.getJSONArray("general").getJSONObject(0).get("rows").toString());
 
-    Player[] players = getPlayers();
-    myBoard = new ChessBoard(rows, columns, getTurnCriteria(players), players,
-        getValidStateCheckers(), getEndConditions());
-    setTileActions();
-    setStartingPosition();
-    return myBoard;
+      Player[] players = getPlayers();
+      myBoard = new ChessBoard(rows, columns, getTurnCriteria(players), players,
+          getValidStateCheckers(), getEndConditions());
+      setTileActions();
+      setStartingPosition();
+      return myBoard;
+//    } catch (Exception e) {
+//      e.printStackTrace();
+//      return null;
+//    }
   }
 
   public ChessBoard createRemoteBoard(String key, int thisPlayer) throws IOException {
@@ -265,10 +270,14 @@ public class BoardSetup {
   private Object parseArrayOrString(String packagePath, JSONArray array, int index) throws IOException {
     try {
       JSONArray currentObj = array.getJSONArray(index);
+      LOG.debug(String.format("String class: %s", currentObj.getString(0)));
+      LOG.debug(String.format("Parameter: %s", currentObj.getString(1)));
       return createInstance(
           packagePath + currentObj.getString(0),
           new Class[]{String.class}, new Object[]{currentObj.getString(1)});
     } catch (JSONException | IOException e) {
+//      e.printStackTrace();
+      LOG.debug(String.format("String class: %s", array.getString(index)));
       return createInstance(
           packagePath + array.getString(index), new Class[]{},
           new Object[]{});

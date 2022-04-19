@@ -1,12 +1,9 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.util.FileReader;
 import org.apache.logging.log4j.LogManager;
@@ -35,7 +32,7 @@ public class PawnReachesEnd implements EndCondition {
    * @param configFile to read
    */
   public PawnReachesEnd(String configFile) {
-    endzonePieces = FileReader.read(ENDZONE_FILE_PATH_HEADER + configFile, DEFAULT_ENDZONE_PIECES);
+    endzonePieces = FileReader.readManyStrings(ENDZONE_FILE_PATH_HEADER + configFile, DEFAULT_ENDZONE_PIECES);
   }
 
   /***

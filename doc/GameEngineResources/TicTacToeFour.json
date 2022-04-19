@@ -1,0 +1,104 @@
+{
+  "general": [
+    {
+      "rows": 4,
+      "columns": 6,
+      "turnCriteria": "Linear",
+      "colors": ["black", "white"],
+      "endConditions": [["InARow", "InARowFour"], "Stalemate"],
+      "validStateCheckers": []
+    }
+  ],
+  "playerInfo": [
+    {
+      "team": 0,
+      "opponents": [1]
+    },
+    {
+      "team": 1,
+      "opponents": [0]
+    }
+  ],
+  "pieces": [
+    {
+      "row": 3,
+      "col": 5,
+      "pieceFile": "TicTacToeFour",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 5,
+      "pieceFile": "TicTacToeFour",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 4,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 4,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 2,
+      "col": 4,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 3,
+      "col": 4,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 5,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 2,
+      "col": 5,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    }
+  ]
+}

@@ -1,7 +1,10 @@
 package oogasalad.GamePlayer.Movement.MovementModifiers;
 
+import static oogasalad.GamePlayer.Board.EndConditions.InARow.DIRECTIONS;
+
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -25,7 +28,6 @@ public class Atomic implements MovementModifier{
   private static final String ATOMIC_IMMUNE_FILE_PATH_HEADER = "doc/GameEngineResources/Other/";
   private static final String ATOMIC_IMMUNE_DEFAULT_FILE = "AtomicImmune";
   private static final Logger LOG = LogManager.getLogger(Atomic.class);
-  private static final int surroundDistance = 1;
 
   private List<String> explosionImmuneNames;
 
@@ -95,7 +97,7 @@ public class Atomic implements MovementModifier{
    */
   private Set<ChessTile> getSurroundingTiles(ChessTile center, ChessBoard board) {
     Set<ChessTile> surroundingTiles = new HashSet<>();
-    IntStream.range(-surroundDistance, surroundDistance+1).forEach((i) -> IntStream.range(-surroundDistance, surroundDistance+1).forEach((j) -> {
+    Arrays.stream(DIRECTIONS).forEach((i) -> Arrays.stream(DIRECTIONS).forEach((j) -> {
       try {
         surroundingTiles.add(board.getTile(
             Coordinate.of(center.getCoordinates().getRow()+i, center.getCoordinates().getCol()+j)));
