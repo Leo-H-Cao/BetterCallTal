@@ -25,9 +25,9 @@ public class GameBackend extends Controller {
     }
   }
 
-  public Optional<ChessBoard> initalizeHostServerChessBoard(File JSON) {
+  public Optional<ChessBoard> initalizeHostServerChessBoard(File JSON, String RoomName, int player) {
     try {
-      myChessBoard = BoardSetup.createRemoteBoard(JSON.getPath(), "h", 0);
+      myChessBoard = BoardSetup.createRemoteBoard(JSON.getPath(), RoomName, player);
       return Optional.of(myChessBoard);
     } catch (Exception e) {
       // myMainView.showError();
@@ -35,12 +35,12 @@ public class GameBackend extends Controller {
     }
   }
 
-  public Optional<ChessBoard> initalizeJoinServerChessBoard(File JSON) {
+  public Optional<ChessBoard> initalizeJoinServerChessBoard(String RoomName) {
     try {
-      myChessBoard = BoardSetup.joinRemoteBoard("h");
-      int myColor = myChessBoard.getThisPlayer();
+      myChessBoard = BoardSetup.joinRemoteBoard(RoomName);
       return Optional.of(myChessBoard);
     } catch (Exception e) {
+      e.printStackTrace();
       // myMainView.showError();
       return Optional.empty();
     }
