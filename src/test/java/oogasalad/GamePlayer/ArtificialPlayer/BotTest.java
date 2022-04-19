@@ -14,8 +14,7 @@ public class BotTest {
   @BeforeEach
   void setup() throws IOException {
     String JSONPath = "doc/AI_Testing/QueenBlunder.json";
-    BoardSetup bs = new BoardSetup(JSONPath);
-    board = bs.createLocalBoard();
+    board = BoardSetup.createLocalBoard(JSONPath);
 
   }
 
