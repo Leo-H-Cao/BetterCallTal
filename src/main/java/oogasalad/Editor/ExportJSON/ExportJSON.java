@@ -48,7 +48,7 @@ public class ExportJSON {
       JSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(exportWrapper);
       JSONTestString = objectMapper.writeValueAsString(exportWrapper);
       System.out.println(JSONString);
-      System.out.println(JSONTestString);
+//      System.out.println(JSONTestString);
 
     }
     catch (IOException e){
