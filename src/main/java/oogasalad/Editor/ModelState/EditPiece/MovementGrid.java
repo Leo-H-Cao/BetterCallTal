@@ -7,8 +7,7 @@ public class MovementGrid {
   public static final int PIECE_GRID_SIZE = 7;
   private final int PIECE_LOC_X = 3;
   private final int PIECE_LOC_Y = 3;
-  private final String INVALID_INFINITE_MOVEMENT_ERR = "Directions for infinite movement are invalid";
-  private final String INVALID_FINITE_MOVEMENT_ERR = "Coordinates for finite movement are invalid";
+  private final String INVALID_MOVEMENT_ERR = "Coordinates for movement are invalid";
   private final String INVALID_PIECE_CHANGE = "Piece tile cannot be changed.";
 
   private PieceGridTile[][] pieceGrid;
@@ -21,29 +20,6 @@ public class MovementGrid {
   public void setTile(int x, int y, PieceGridTile tileStatus){
     checkCoordinates(x, y);
     pieceGrid[y][x] = tileStatus;
-  }
-
-  public void setTileInfinite(int dirX, int dirY){
-    checkInfiniteDirections(dirX, dirY);
-    int row = PIECE_LOC_X-dirY;
-    int col = PIECE_LOC_Y+dirX;
-    while(row > 0 && row < PIECE_GRID_SIZE-1 && col > 0 && col < PIECE_GRID_SIZE-1){
-      pieceGrid[row][col] = PieceGridTile.OPEN;
-      row -= dirY;
-      col += dirX;
-    }
-    pieceGrid[row][col] = PieceGridTile.INFINITY;
-  }
-
-  public void removeTileInfinite(int dirX, int dirY){
-    checkInfiniteDirections(dirX, dirY);
-    int row = PIECE_LOC_X-dirY;
-    int col = PIECE_LOC_Y+dirX;
-    while(row >= 0 && row < PIECE_GRID_SIZE && col >= 0 && col < PIECE_GRID_SIZE){
-      pieceGrid[row][col] = PieceGridTile.CLOSED;
-      row -= dirY;
-      col += dirX;
-    }
   }
 
   public PieceGridTile getTileStatus(int x, int y){
@@ -65,15 +41,9 @@ public class MovementGrid {
 
   private void checkCoordinates(int x, int y){
     if(x >= PIECE_GRID_SIZE || x < 0 || y >= PIECE_GRID_SIZE || y < 0){
-      throw new MovementGridException(INVALID_FINITE_MOVEMENT_ERR);
+      throw new MovementGridException(INVALID_MOVEMENT_ERR);
     } else if((x==PIECE_LOC_X && y==PIECE_LOC_Y)) {
       throw new MovementGridException(INVALID_PIECE_CHANGE);
-    }
-  }
-
-  private void checkInfiniteDirections(int dirX, int dirY){
-    if((dirX != 0 && dirX != 1 && dirX !=-1) || (dirY != 0 && dirY != 1 && dirY !=-1)){
-      throw new MovementGridException(INVALID_INFINITE_MOVEMENT_ERR);
     }
   }
 
