@@ -17,8 +17,7 @@ public class BoardSetupTest {
 
   @BeforeEach
   void setup () throws IOException {
-    BoardSetup setup = new BoardSetup(JSON_FILE_PATH);
-    myBoard = setup.createLocalBoard();
+    myBoard = BoardSetup.createLocalBoard(JSON_FILE_PATH);
   }
 
 
