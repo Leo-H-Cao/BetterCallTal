@@ -26,7 +26,7 @@ public class PieceExport {
     this.row = row;
     this.col = col;
     this.team = team;
-    pieceName = editorPiece.getPieceName();
+    pieceName = editorPiece.getPieceName().getValue();
     imgFile = editorPiece.getImage(team).getValue().getUrl();
     pointValue = editorPiece.getPointValue();
     mainPiece = editorPiece.isMainPiece() ? 1 : 0;

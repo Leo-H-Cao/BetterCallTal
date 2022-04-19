@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 
 public class EditorPiece {
@@ -14,7 +15,7 @@ public class EditorPiece {
   private boolean mainPiece;
   private ArrayList<String> customMoves;
   private int pointValue;
-  private String pieceName;
+  private Property<String> pieceName;
 
   public EditorPiece(String pieceID){
     Image defaultMainPieceImage = new Image("images/pieces/white/rook.png");
@@ -22,6 +23,7 @@ public class EditorPiece {
     this.pieceID = pieceID;
     movementGrid = new MovementGrid();
     mainPiece = false;
+    pieceName = new SimpleStringProperty();
     image0 = new SimpleObjectProperty<>(defaultMainPieceImage);
     image1 = new SimpleObjectProperty<>(defaultAltPieceImage);
   }
@@ -92,12 +94,12 @@ public class EditorPiece {
     this.pointValue = pointValue;
   }
 
-  public String getPieceName() {
+  public Property<String> getPieceName() {
     return pieceName;
   }
 
   public void setPieceName(String pieceName) {
-    this.pieceName = pieceName;
+    this.pieceName.setValue(pieceName);
   }
 
   @Override
