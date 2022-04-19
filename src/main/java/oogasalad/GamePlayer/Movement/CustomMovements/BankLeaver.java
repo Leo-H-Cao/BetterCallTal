@@ -60,9 +60,6 @@ public class BankLeaver implements MovementInterface {
           getJSONArray("general").getJSONObject(0).getInt("blockerCol");
     } catch (IOException e) {
       blockCol = BankBlocker.DEFAULT_VALUE;
-    } catch (Exception e) {
-      LOG.debug(1);
-      e.printStackTrace();
     }
     LOG.debug(String.format("Block col: %d", blockCol));
   }
