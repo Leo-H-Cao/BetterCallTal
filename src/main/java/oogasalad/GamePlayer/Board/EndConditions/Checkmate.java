@@ -22,10 +22,7 @@ public class Checkmate implements EndCondition {
   private Stalemate stalemate = new Stalemate();
 
   public boolean isInMate(ChessBoard board, int team) throws EngineException {
-    if(stalemate.hasNoLegalMoves(board, team) && !check.isValid(board, team)){
-      return true;
-    }
-    return false;
+    return stalemate.hasNoLegalMoves(board, team) && !check.isValid(board, team);
   }
 
 
