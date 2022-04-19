@@ -2,19 +2,14 @@ package oogasalad.GamePlayer.Board.Tiles.CustomTiles;
 
 import static oogasalad.Frontend.Game.GameView.promotionPopUp;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.Movement.MovementModifiers.Atomic;
 import oogasalad.GamePlayer.util.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,7 +39,7 @@ public class Promotion implements TileAction {
    * @param configFile to read
    */
   public Promotion(String configFile) {
-    promotablePieceNames = FileReader.read(PROMOTABLE_FILE_PATH_HEADER + configFile, DEFAULT_PROMOTABLE);
+    promotablePieceNames = FileReader.readManyStrings(PROMOTABLE_FILE_PATH_HEADER + configFile, DEFAULT_PROMOTABLE);
   }
 
   /**
