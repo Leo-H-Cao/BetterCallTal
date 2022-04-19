@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -15,6 +16,7 @@ import oogasalad.GamePlayer.util.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class InARow implements EndCondition {
@@ -43,9 +45,11 @@ public class InARow implements EndCondition {
    * @param configFile to read
    */
   public InARow(String configFile) {
+    LOG.debug(String.format("Config file: %s", configFile));
     try {
-      JSONObject data = new JSONObject(Files.readAllBytes(Path.of(
-          IAR_CONFIG_FILE_HEADER + configFile + JSON_EXTENSION)));
+      String content = new String(Files.readAllBytes(
+          Path.of(IAR_CONFIG_FILE_HEADER + configFile + JSON_EXTENSION)));
+      JSONObject data = new JSONObject(content);
 
       numInARow = data.getInt("num");
       pieceNames = new ArrayList<>();
@@ -67,9 +71,12 @@ public class InARow implements EndCondition {
    */
   @Override
   public Map<Integer, Double> getScores(ChessBoard board) {
-    return null;
+    return new HashMap<>();
   }
 
+  /***
+   * @return 0
+   */
   @Override
   public int compareTo(EndCondition o) {
     return 0;

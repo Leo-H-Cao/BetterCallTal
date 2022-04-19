@@ -48,7 +48,10 @@ public class BankJoiner implements MovementModifier{
   public BankJoiner(String configFile) {
     this.configFile = CH_CONFIG_FILE_HEADER + configFile + JSON_EXTENSION;
     try {
-      blockCol = new JSONObject(Files.readAllBytes(Path.of(configFile))).
+      String content = new String(Files.readAllBytes(
+          Path.of(this.configFile)));
+      JSONObject data = new JSONObject(content);
+      blockCol = data.
           getJSONArray("general").getJSONObject(0).getInt("blockerCol");
     } catch (IOException e) {
       blockCol = BankBlocker.DEFAULT_VALUE;

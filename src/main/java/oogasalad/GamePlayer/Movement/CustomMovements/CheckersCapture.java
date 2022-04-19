@@ -58,7 +58,7 @@ public class CheckersCapture implements MovementInterface {
         updatedSquares.add(t);
       });
     } catch (Exception e) {
-      e.printStackTrace();
+      LOG.debug("Exception");
     }
     piece.updateCoordinates(board.getTile(captureSquare), board);
     LOG.debug(String.format("Updated squares: %s", updatedSquares));
