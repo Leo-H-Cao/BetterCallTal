@@ -6,18 +6,16 @@ import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 
 public class BoardState {
   private EditorBoard myEditorBoard;
-  private PiecesState piecesState;
 
-  public BoardState(PiecesState piecesState){
+  public BoardState(){
     myEditorBoard = new EditorBoard();
-    this.piecesState = piecesState;
   }
 
   public void changeBoardSize(int width, int height) {
     myEditorBoard.changeBoardSize(width, height);
   }
 
-  public void setTileEffect(int x, int y, String effect) {
+  public void setTileEffect(int x, int y, TileEffect effect) {
     myEditorBoard.setTileEffect(x, y, effect);
   }
 
@@ -31,10 +29,6 @@ public class BoardState {
 
   public void setPieceStartingLocation(String pieceID, int x, int y, int team) {
     myEditorBoard.addPieceStartingLocation(pieceID, x, y, team);
-  }
-
-  public void removePiece(String pieceID) {
-    myEditorBoard.removePieceStartingLocation(pieceID);
   }
 
   public EditorCoordinate getPieceLocation(String pieceID){
