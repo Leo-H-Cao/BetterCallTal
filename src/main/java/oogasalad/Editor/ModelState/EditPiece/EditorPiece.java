@@ -46,14 +46,6 @@ public class EditorPiece {
     movementGrid.setTile(x, y, tileStatus);
   }
 
-  public void setInfiniteTiles(int dirX, int dirY){
-    movementGrid.setTileInfinite(dirX, dirY);
-  }
-
-  public void removeInfiniteTiles(int dirX, int dirY) {
-    movementGrid.removeTileInfinite(dirX, dirY);
-  }
-
   public PieceGridTile getTileStatus(int x, int y){
     return movementGrid.getTileStatus(x, y);
   }

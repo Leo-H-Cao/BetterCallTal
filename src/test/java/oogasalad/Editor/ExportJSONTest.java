@@ -55,30 +55,30 @@ public class ExportJSONTest extends DukeApplicationTest {
 //   exportJSON = new ExportJSON(piecesState, gameRulesState, boardState);
   }
 
-  @Test
-  void testPiecesExport(){
-    piecesState.createCustomPiece("123");
-    piecesState.changePieceImage("123", new Image("images/pieces/black/rook.png"), 0);
-    EditorPiece testPiece = piecesState.getPiece("123");
-
-    testPiece.setTile(4, 2, PieceGridTile.OPEN);
-    testPiece.setTile(6, 0, PieceGridTile.INFINITY);
-    testPiece.setTile(5,1, PieceGridTile.OPEN);
-
-    testPiece.setTile(0, 3, PieceGridTile.INFINITY);
-    testPiece.setTile(1,3, PieceGridTile.OPEN);
-    testPiece.setTile(2, 3, PieceGridTile.OPEN);
-
-    testPiece.setTile(1,2, PieceGridTile.OPEN);
-    testPiece.setTile(5, 6, PieceGridTile.OPEN);
-    testPiece.setTile(2, 5, PieceGridTile.OPEN);
-
-    boardState.setPieceStartingLocation("123", 3, 6, 0);
-    boardState.setPieceStartingLocation("123", 4, 5, 0);
-    exportJSON = new ExportJSON(piecesState, gameRulesState, boardState);
-    exportJSON.writeToJSON();
-    assertEquals(exportJSON.getJSONTestString(), myResources.getString("exportPiecesJSONString"));
-  }
+//  @Test
+//  void testPiecesExport(){
+//    piecesState.createCustomPiece("123");
+//    piecesState.changePieceImage("123", new Image("images/pieces/black/rook.png"), 0);
+//    EditorPiece testPiece = piecesState.getPiece("123");
+//
+//    testPiece.setTile(4, 2, PieceGridTile.OPEN);
+//    testPiece.setTile(6, 0, PieceGridTile.INFINITY);
+//    testPiece.setTile(5,1, PieceGridTile.OPEN);
+//
+//    testPiece.setTile(0, 3, PieceGridTile.INFINITY);
+//    testPiece.setTile(1,3, PieceGridTile.OPEN);
+//    testPiece.setTile(2, 3, PieceGridTile.OPEN);
+//
+//    testPiece.setTile(1,2, PieceGridTile.OPEN);
+//    testPiece.setTile(5, 6, PieceGridTile.OPEN);
+//    testPiece.setTile(2, 5, PieceGridTile.OPEN);
+//
+//    boardState.setPieceStartingLocation("123", 3, 6, 0);
+//    boardState.setPieceStartingLocation("123", 4, 5, 0);
+//    exportJSON = new ExportJSON(piecesState, gameRulesState, boardState);
+//    exportJSON.writeToJSON();
+//    assertEquals(exportJSON.getJSONTestString(), myResources.getString("exportPiecesJSONString"));
+//  }
 
   private void setResources() {
     try {
