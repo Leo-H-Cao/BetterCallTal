@@ -37,6 +37,7 @@ public class BoardTile {
     private  Coordinate myCoord;
     private Double BORDER_WIDTH = 2.0;
     private Double EMPTY_BORDER = 0.0;
+    private int TILEMOD= -2;
     private Boolean Lit;
     private String Image_Path = "src/main/resources/images/pieces/";
     private Color BlackSquare = Color.GREEN;
@@ -44,18 +45,19 @@ public class BoardTile {
     private Color myColor;
     private String LitColor = "Cyan";
 
-    public BoardTile(Coordinate c, double width, double height, Consumer<Piece> lightupCons, Runnable clearlitrun, Consumer<Piece> setSelPiece, Consumer<Coordinate> MoveCons) {
-        myCoord = c;
+    public BoardTile(ChessTile ct, double width, double height, Consumer<Piece> lightupCons, Runnable clearlitrun, Consumer<Piece> setSelPiece, Consumer<Coordinate> MoveCons) {
+        myCoord = ct.getCoordinates();
         myStackPane = new StackPane();
         addActionToSP(lightupCons, clearlitrun, setSelPiece, MoveCons);
         myTileHeight = height;
         myTileWidth = width;
         myRectangle = new Rectangle(myTileWidth, myTileHeight);
-        ColorRect(c.getCol(), c.getRow());
+        ColorRect(myCoord.getCol(), myCoord.getRow());
 
         myPieces = new ArrayList<>();
         myImages = new ArrayList<>();
         Lit = false;
+        updateTile(ct);
     }
 
     private void addActionToSP(Consumer<Piece> lightupCons, Runnable clearlitrun, Consumer<Piece> setSelPiece, Consumer<Coordinate> MoveCons) {
@@ -85,21 +87,24 @@ public class BoardTile {
         myPieces.clear();
         myImages.clear();
 
-        myPieces.addAll(ct.getPieces());
-        for (Piece p : myPieces) {
-            ImageView pieceview = CreateImage(p.getName(), p.getTeam());
-            myImages.add(pieceview);
-            myStackPane.getChildren().add(pieceview);
+        if (ct.getCustomImg().isPresent()) {
+            ImageView tilemod = CreateImage(ct.getCustomImg().get(), TILEMOD);
+            myImages.add(tilemod);
+            placeUnderRectangle(tilemod);
+        }
+        for (Piece p : ct.getPieces()) {
+            givePiece(p);
         }
     }
 
-    /**
-     * Used in BoardGrid to give Board tile the correct piece.
-     * @param p Piece object to be held by BoardTile
-     */
-    public void givePiece(Piece p) {
+    private void placeUnderRectangle(Node n) {
+        myStackPane.getChildren().remove(myRectangle);
+        myRectangle.setFill(Color.TRANSPARENT);
+        myStackPane.getChildren().addAll(n, myRectangle);
+    }
+
+    private void givePiece(Piece p) {
         myPieces.add(p);
-        //LOG.debug(p.getImgFile());
         ImageView pieceview = CreateImage(p.getName(), p.getTeam());
         myImages.add(pieceview);
         myStackPane.getChildren().add(pieceview);
@@ -108,19 +113,19 @@ public class BoardTile {
     private ImageView CreateImage(String name, int team) {
         try {
             String TEAM;
-            if (team == 0) {
-                TEAM = "white/";
-            }
-            else if (team == 1){
-                TEAM = "black/";
-            } else {
-                TEAM = "modifiers/";
-            }
-
+            if (team == 0) {TEAM = "white/";
+            } else if (team == 1){TEAM = "black/";
+            } else if (team == -1){TEAM = "piecemodifiers/";
+            } else {TEAM = "tilemodifiers/";}
             Image image = new Image(new FileInputStream(Image_Path + TEAM + name.toLowerCase() + ".png"));
             ImageView PieceView = new ImageView(image);
-            PieceView.setFitHeight(myTileHeight - 10);
-            PieceView.setFitWidth(myTileWidth - 10);
+            if (team == -2) {
+                PieceView.setFitHeight(myTileHeight);
+                PieceView.setFitWidth(myTileWidth);
+            } else {
+                PieceView.setFitHeight(myTileHeight - 10);
+                PieceView.setFitWidth(myTileWidth - 10);
+            }
             PieceView.setPreserveRatio(true);
             PieceView.setSmooth(true);
             PieceView.setCache(true);
