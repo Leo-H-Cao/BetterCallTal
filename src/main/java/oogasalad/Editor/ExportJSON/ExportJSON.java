@@ -34,8 +34,8 @@ public class ExportJSON {
     JSONString = "";
     createGeneralExportObject();
     createPlayerInfoObject();
-    createPiecesExportObjects();
-    exportWrapper = new ExportWrapper(generalExport, playerInfo, pieces);
+    createPiecesAndTilesExportObjects();
+    exportWrapper = new ExportWrapper(generalExport, playerInfo, pieces, tiles);
   }
 
   public String getJSONTestString(){
@@ -72,8 +72,9 @@ public class ExportJSON {
     }
   }
 
-  private void createPiecesExportObjects(){
+  private void createPiecesAndTilesExportObjects(){
     pieces = new ArrayList<>();
+    tiles = new ArrayList<>();
     for(int y = 0; y < boardState.getBoardHeight().get(); y++){
       for(int x = 0; x < boardState.getBoardWidth().get(); x++){
         EditorTile tile = boardState.getTile(x, y);
@@ -81,10 +82,9 @@ public class ExportJSON {
           pieces.add(new PieceExport(x, y, piecesState.getPiece(tile.getPieceID()), tile.getTeam()));
         }
         if(tile.getTileEffect() != TileEffect.NONE){
-          TileExport tileExport = new TileExport(x, y, tile.getImg().getUrl());
+          TileExport tileExport = new TileExport(x, y, tile.getImg());
           tileExport.addTileAction(tile.getTileEffect().toString());
           tiles.add(tileExport);
-          //TODO
         }
       }
     }

@@ -1,6 +1,7 @@
 package oogasalad.Editor.ExportJSON;
 
 import java.util.ArrayList;
+import javafx.scene.image.Image;
 
 public class TileExport {
   private int row;
@@ -8,11 +9,11 @@ public class TileExport {
   private ArrayList<String> tileActions;
   private String img;
 
-  public TileExport(int row, int col, String img){
+  public TileExport(int row, int col, Image img){
     this.row = row;
     this.col = col;
     tileActions = new ArrayList<>();
-    this.img = img;
+    this.img = img != null ? img.getUrl().split("/classes/")[1] : null;
   }
 
   public void addTileAction(String tileAction){
