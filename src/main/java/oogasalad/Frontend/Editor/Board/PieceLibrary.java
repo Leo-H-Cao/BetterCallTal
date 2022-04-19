@@ -81,7 +81,8 @@ public class PieceLibrary extends LabelledContainer {
 				getEditorBackend().setOpenCustomPieceProperty(id);
 			}
 		});
-		return new Group(ret);
+		ret.setId(id);
+		return ret;
 	}
 
 	private void addPieceImageListener(EditorPiece p, int team, ImageView image) {
