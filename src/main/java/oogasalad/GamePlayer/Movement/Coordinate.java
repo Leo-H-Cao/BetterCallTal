@@ -63,6 +63,13 @@ public class Coordinate{
    * @return if the coordinates have the same row, col
    */
   public boolean equals(Object other) {
+    if (this == other) {
+      return true;
+    }
+    if (other == null || getClass() != other.getClass()) {
+      return false;
+    }
+
     Coordinate otherCord = (Coordinate) other;
     return this.row == otherCord.getRow() && this.col == otherCord.getCol();
   }

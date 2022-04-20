@@ -29,10 +29,18 @@ public class Teleport implements TileAction {
 
   private Coordinate teleportLocation;
 
+  /***
+   * Creates Teleport with default config file
+   */
   public Teleport() {
     this(DEFAULT_TP_FILE);
   }
 
+  /***
+   * Creates Teleport with given config file
+   *
+   * @param configFile to read
+   */
   public Teleport(String configFile) {
     configFile = TP_FILE_PATH_HEADER + configFile + JSON_EXTENSION;
     try {
