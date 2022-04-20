@@ -5,6 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/***
+ * Utility class for reading files structures that are used often
+ *
+ * @author Vincent Chen
+ */
 public class FileReader {
 
   /***

@@ -23,6 +23,8 @@ import org.json.JSONObject;
 
 /***
  * VSC that only allows moves that don't have an empty square in the given direction
+ *
+ * @author Vincent Chen
  */
 public class GravityVSC implements ValidStateChecker {
 

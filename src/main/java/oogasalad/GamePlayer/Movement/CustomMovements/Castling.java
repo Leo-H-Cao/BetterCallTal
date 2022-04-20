@@ -18,6 +18,8 @@ import org.apache.logging.log4j.Logger;
 
 /***
  * Creates a custom movement that allows the king to castle with a rook
+ *
+ * @author Vincent Chen
  */
 public class Castling implements MovementInterface {
 

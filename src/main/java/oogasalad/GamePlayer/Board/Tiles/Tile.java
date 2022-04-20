@@ -3,9 +3,7 @@ package oogasalad.GamePlayer.Board.Tiles;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
-/**
- *
- */
+@Deprecated
 public interface Tile {
 
   /**

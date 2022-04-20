@@ -8,6 +8,8 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 
 /**
  * Creates an end condition that ends the game if the king is exploded
+ *
+ * @author Vincent Chen
  */
 public class AtomicEndCondition implements EndCondition {
 

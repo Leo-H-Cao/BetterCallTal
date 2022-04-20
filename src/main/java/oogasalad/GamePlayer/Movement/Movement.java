@@ -18,6 +18,11 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/***
+ * Basic piece movement given relative coordinates
+ *
+ * @author Vincent Chen
+ */
 public class Movement implements MovementInterface{
 
   private static final Logger LOG = LogManager.getLogger(Movement.class);

@@ -16,6 +16,11 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import org.apache.logging.log4j.Logger;
 
+/***
+ * Class representing a tile on a chessboard
+ *
+ * @author Vincent Chen
+ */
 public class ChessTile implements Tile, Cloneable {
 
   private Coordinate coordinate;

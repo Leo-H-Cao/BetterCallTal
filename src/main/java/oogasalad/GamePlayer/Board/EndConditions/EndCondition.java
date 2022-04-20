@@ -4,6 +4,11 @@ import java.util.Map;
 import java.util.Optional;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
+/***
+ * Interface for custom game end results
+ *
+ * @author Vincent Chen
+ */
 public interface EndCondition extends Comparable<EndCondition> {
 
   double WIN = 1.0;

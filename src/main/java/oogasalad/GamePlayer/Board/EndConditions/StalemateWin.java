@@ -13,6 +13,8 @@ import org.apache.logging.log4j.Logger;
 
 /***
  * Like stalemate but the person who stalemates the other wins instead of being a draw
+ *
+ * @author Vincent Chen
  */
 public class StalemateWin extends Stalemate {
 

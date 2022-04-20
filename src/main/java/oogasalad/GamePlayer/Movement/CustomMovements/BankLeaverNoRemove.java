@@ -23,7 +23,9 @@ import oogasalad.GamePlayer.ValidStateChecker.BankBlocker;
 import org.json.JSONObject;
 
 /***
- * BankLeaver
+ * BankLeaver where the piece is not removed from the bank
+ *
+ * @author Vincent Chen
  */
 public class BankLeaverNoRemove extends BankLeaver {
 

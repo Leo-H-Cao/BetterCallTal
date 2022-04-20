@@ -22,6 +22,8 @@ import org.apache.logging.log4j.Logger;
 
 /***
  * Creates an movement modifier that explodes pieces around it
+ *
+ * @author Vincent Chen
  */
 public class Atomic implements MovementModifier{
 

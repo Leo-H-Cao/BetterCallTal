@@ -1,5 +1,10 @@
 package oogasalad.GamePlayer.EngineExceptions;
 
+/***
+ * Exception due to a piece not being found
+ *
+ * @author Vincent Chen
+ */
 public class PieceNotFoundException extends EngineException {
 
   /***

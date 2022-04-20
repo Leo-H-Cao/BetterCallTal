@@ -38,7 +38,11 @@ import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
+/***
+ * Class representing the chess board
+ *
+ * @author Jed, Jose, Vincent, Ritvik
+ */
 public class ChessBoard implements Iterable<ChessTile> {
 
   private static final Logger LOG = LogManager.getLogger(ChessBoard.class);

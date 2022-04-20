@@ -1,5 +1,10 @@
 package oogasalad.GamePlayer.EngineExceptions;
 
+/***
+ * Generic exception with the game engine
+ *
+ * @author Vincent Chen
+ */
 public abstract class EngineException extends Exception {
 
   /***

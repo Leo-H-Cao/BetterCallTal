@@ -30,6 +30,8 @@ import org.json.JSONObject;
 
 /***
  * Creates a custom movement that allows pieces to leave the bank
+ *
+ * @author Vincent Chen
  */
 public class BankLeaver implements MovementInterface {
 

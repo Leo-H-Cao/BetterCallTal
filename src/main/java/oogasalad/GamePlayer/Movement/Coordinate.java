@@ -2,6 +2,11 @@ package oogasalad.GamePlayer.Movement;
 
 import java.util.Objects;
 
+/***
+ * Representation of coordinate on a chessboard
+ *
+ * @author Vincent Chen
+ */
 public class Coordinate{
 
   private int row;

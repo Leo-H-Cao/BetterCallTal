@@ -19,6 +19,11 @@ import oogasalad.GamePlayer.Movement.MovementInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/***
+ * Checkers style capturing
+ *
+ * @author Vincent Chen
+ */
 public class CheckersCapture implements MovementInterface {
 
   private static final Logger LOG = LogManager.getLogger(CheckersCapture.class);
