@@ -86,7 +86,7 @@ public class Castling implements MovementInterface {
   }
 
   /**
-   * @return exception because no capture possible
+   * @throws InvalidMoveException because no capture possible
    */
   @Override
   public Set<ChessTile> capturePiece(Piece piece, Coordinate captureSquare, ChessBoard board)

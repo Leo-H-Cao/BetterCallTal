@@ -129,16 +129,23 @@ public class GameView extends View {
      * board will be displayed.
      */
 
-    private void updateBoard(TurnUpdate tu) {
+    private boolean updateBoard(TurnUpdate tu) {
         LOG.debug("Updating board");
         myBoardGrid.updateTiles(tu.updatedSquares());
         if (getGameBackend().getChessBoard().isGameOver()) {
            gameOver();
+           return false;
         }
+        return true;
     }
 
     private void updateBoard(Collection<TurnUpdate> tu) {
-        tu.forEach(this::updateBoard);
+        //tu.forEach(this::updateBoard);
+        for(TurnUpdate t : tu){
+            if(!updateBoard(t)){
+                break;
+            }
+        }
     }
 
     private void gameOver(){

@@ -1,0 +1,11 @@
+{
+  "pieceName": "Checker",
+  "imgFile": "checker",
+  "pointValue": 1,
+  "basicMovements": [],
+  "basicCaptures": [],
+  "customMoves": [["LoopAround", "MoveUpLoop1"], ["LoopAround", "MoveUpLoop2"], ["LoopAround", "MoveUpLoop3"],
+    ["LoopAround", "MoveUpLoop4"], ["LoopAround", "MoveUpLoop5"], ["LoopAround", "MoveUpLoop6"]],
+  "movementModifiers": [],
+  "onInteractionModifier": []
+}
