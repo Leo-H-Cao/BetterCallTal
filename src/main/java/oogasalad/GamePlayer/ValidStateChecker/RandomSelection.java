@@ -2,8 +2,10 @@ package oogasalad.GamePlayer.ValidStateChecker;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
@@ -26,9 +28,7 @@ public class RandomSelection implements ValidStateChecker {
   private static final int DEFAULT_RS_NUM = 1;
 
   private int numRandom;
-  private Piece currentPiece;
-  private Set<ChessTile> currentAllMoves;
-  private Set<ChessTile> currentAcceptedMoves;
+  private Map<Piece, RandomGenerationInfo> currentRandomGenerations;
 
   /***
    * Creates RandomSelection with default config file
@@ -44,8 +44,7 @@ public class RandomSelection implements ValidStateChecker {
    */
   public RandomSelection(String configFile) {
     numRandom = FileReader.readOneInt(RS_NUM_FILE_PATH_HEADER + configFile, DEFAULT_RS_NUM);
-    currentAcceptedMoves = new HashSet<>();
-    currentPiece = null;
+    currentRandomGenerations = new HashMap<>();
   }
 
   /***
@@ -56,13 +55,13 @@ public class RandomSelection implements ValidStateChecker {
     Set<ChessTile> allMoves = piece.getMoves(board);
     if(allMoves.size() <= numRandom) return true;
 
-    if(currentPiece != piece || !currentAllMoves.equals(allMoves)) {
-      currentPiece = piece;
-      currentAllMoves = allMoves;
-      currentAcceptedMoves = generateAllowedMoves(currentAllMoves);
+    if(!currentRandomGenerations.containsKey(piece) ||
+        !currentRandomGenerations.get(piece).allMoves().equals(allMoves)) {
+      currentRandomGenerations.put(piece,
+          RandomGenerationInfo.of(allMoves, generateAllowedMoves(allMoves)));
     }
 
-    return currentAcceptedMoves.contains(move);
+    return currentRandomGenerations.get(piece).acceptedMoves().contains(move);
   }
 
   /***
