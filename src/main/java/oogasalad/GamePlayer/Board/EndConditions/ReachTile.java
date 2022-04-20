@@ -84,7 +84,7 @@ public class ReachTile implements EndCondition {
 
         board.getTile(goal).getPieces().stream().filter(p ->
             eligiblePieces.contains(p.getName().toLowerCase())).forEach(p -> scores.put(p.getTeam(), WIN));
-        scores.keySet().forEach(t -> Arrays.stream(board.getPlayer(t).opponentIDs())
+        scores.keySet().stream().toList().forEach(t -> Arrays.stream(board.getPlayer(t).opponentIDs())
             .filter(o -> !scores.containsKey(o)).forEach(o -> scores.put(o, LOSS)));
         Arrays.stream(board.getPlayers()).filter(t -> !scores.containsKey(t.teamID())).forEach(t ->
             scores.put(t.teamID(), DRAW));
