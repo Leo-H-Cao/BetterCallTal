@@ -7,15 +7,14 @@ import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Player;
 
+/***
+ * Creates an EndCondition object that always ends the game after three moves
+ *
+ * @author Vincent Chen
+ */
 public class TwoMoves implements EndCondition {
 
   private static final int MULTIPLIER = 2;
-
-  /**
-   * Creates an EndCondition object that always ends the game after three moves
-   */
-  public TwoMoves() {
-  }
 
   @Override
   public Map<Integer, Double> getScores(ChessBoard board) {

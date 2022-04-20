@@ -25,6 +25,11 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/***
+ * Movement modifier where a captured piece joins the piece bank
+ *
+ * @author Vincent Chen
+ */
 public class BankJoiner implements MovementModifier{
 
   private static final Logger LOG = LogManager.getLogger(BankJoiner.class);

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
@@ -14,8 +15,16 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
 public class Bot {
-
+  private TurnCriteria turnCriteria;
+  private int team;
   private TurnManager turnManager;
+
+  public Bot(int team, TurnCriteria tc){
+    this.team = team;
+    turnCriteria = tc;
+  }
+
+
 
   public Bot(TurnManager turnManager) {
     this.turnManager = turnManager;
@@ -53,8 +62,7 @@ public class Bot {
       finalSquare = t;
       break;
     }
-    return board.move(movingPiece, finalSquare.getCoordinates());
-    //return new TurnUpdate(movingPiece.move(finalSquare, board), turnManager.incrementTurn());
+    return new TurnUpdate(movingPiece.move(finalSquare, board), turnCriteria.incrementTurn());
   }
 
 }

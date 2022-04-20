@@ -1,5 +1,10 @@
 package oogasalad.GamePlayer.EngineExceptions;
 
+/***
+ * Exception due to move after a game finishes
+ *
+ * @author Vincent Chen
+ */
 public class MoveAfterGameEndException extends EngineException {
 
   /***

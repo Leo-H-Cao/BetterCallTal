@@ -1,5 +1,10 @@
 package oogasalad.GamePlayer.EngineExceptions;
 
+/***
+ * Exception due to invalid board size
+ *
+ * @author Vincent Chen
+ */
 public class InvalidBoardSizeException extends EngineException {
 
   /***

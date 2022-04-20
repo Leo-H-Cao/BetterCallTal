@@ -21,6 +21,8 @@ import org.apache.logging.log4j.Logger;
  * Creates a movement object that represents en passant: if a piece of the same name has just
  * moved and only moved once and is on the (height-3) rank relative to the piece doing en passant,
  * then the piece can capture the other piece by moving diagonally one square behind it
+ *
+ * @author Vincent Chen
  */
 public class EnPassant implements MovementInterface {
 

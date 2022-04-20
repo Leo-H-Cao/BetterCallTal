@@ -5,6 +5,7 @@ import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 
+@Deprecated
 public interface UnboundedMovement extends BoundedMovement{
 
   void setUnboundedMovementPattern(Coordinate direction);

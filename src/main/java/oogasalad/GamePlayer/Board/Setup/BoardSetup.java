@@ -28,6 +28,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/***
+ * Sets up a board given a JSON file
+ *
+ * @author Jed, Vincent, Ritvik
+ */
 public class BoardSetup {
 
   private static final Logger LOG = LogManager.getLogger(BoardSetup.class);
@@ -292,27 +297,6 @@ public class BoardSetup {
     }
     return movements;
 
-  }
-
-  /**
-   * Parses the JSON to get the pieces
-   *
-   * @param myJSONObject JSONObject of the file
-   * @param pieceIndex   index of the piece
-   * @return custom moves as defined by the JSON
-   */
-  private static List<MovementInterface> getCustomMovements(JSONObject myJSONObject, int pieceIndex)
-      throws IOException {
-    List<MovementInterface> customMovements = new ArrayList<>();
-    JSONArray customMoveArray = myJSONObject.getJSONArray("pieces").getJSONObject(pieceIndex)
-        .getJSONArray("customMoves");
-    for (int i = 0; i < customMoveArray.length(); i++) {
-      customMovements.add(
-          (MovementInterface) createInstance(CUSTOM_MOVE_PACKAGE + customMoveArray.getString(i),
-              new Class[]{}, new Object[]{}));
-    }
-    LOG.debug(String.format("Custom movement list for piece %d: %s", pieceIndex, customMovements));
-    return customMovements;
   }
 
   /**

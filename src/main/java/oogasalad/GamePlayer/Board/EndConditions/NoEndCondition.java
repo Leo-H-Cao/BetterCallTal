@@ -8,12 +8,12 @@ import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Player;
 
+/***
+ * Creates an end condition where the game never ends
+ *
+ * @author Vincent Chen
+ */
 public class NoEndCondition implements EndCondition {
-
-  /***
-   * Creates an EndCondition object where the game never ends
-   */
-  public NoEndCondition() {}
 
   /***
    * @return nothing, as the game never ends

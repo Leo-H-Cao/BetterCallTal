@@ -1,5 +1,10 @@
 package oogasalad.GamePlayer.EngineExceptions;
 
+/***
+ * Exception due to the wrong player attempting to play a move
+ *
+ * @author Vincent Chen
+ */
 public class WrongPlayerException extends EngineException {
 
   /***

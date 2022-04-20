@@ -30,6 +30,8 @@ import org.json.JSONObject;
 
 /***
  * Creates a custom movement that allows pieces to leave the bank
+ *
+ * @author Vincent Chen
  */
 public class BankLeaver implements MovementInterface {
 
@@ -60,9 +62,6 @@ public class BankLeaver implements MovementInterface {
           getJSONArray("general").getJSONObject(0).getInt("blockerCol");
     } catch (IOException e) {
       blockCol = BankBlocker.DEFAULT_VALUE;
-    } catch (Exception e) {
-      LOG.debug(1);
-      e.printStackTrace();
     }
     LOG.debug(String.format("Block col: %d", blockCol));
   }

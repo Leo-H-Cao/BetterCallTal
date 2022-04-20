@@ -6,13 +6,12 @@ import java.util.Map;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
+/**
+ * Creates an end condition that ends the game if the king is exploded
+ *
+ * @author Vincent Chen
+ */
 public class AtomicEndCondition implements EndCondition {
-
-  /**
-   * Creates an end condition that ends the game if the king is exploded
-   */
-  public AtomicEndCondition() {
-  }
 
   /**
    * @param board to check

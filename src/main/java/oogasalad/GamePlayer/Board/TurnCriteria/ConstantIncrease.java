@@ -2,6 +2,11 @@ package oogasalad.GamePlayer.Board.TurnCriteria;
 
 import oogasalad.GamePlayer.Board.Player;
 
+/***
+ * Creates TurnCriteria where each player gets one more move than the last
+ *
+ * @author Vincent Chen
+ */
 public class ConstantIncrease extends TurnCriteria {
 
   public static final int TURN_INCREMENT_NUM = 1;

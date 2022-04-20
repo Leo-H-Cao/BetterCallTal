@@ -2,6 +2,11 @@ package oogasalad.GamePlayer.Board.TurnCriteria;
 
 import oogasalad.GamePlayer.Board.Player;
 
+/***
+ * Abstraction of turn determination
+ *
+ * @author Vincent Chen
+ */
 public abstract class TurnCriteria {
 
   private Player[] players;

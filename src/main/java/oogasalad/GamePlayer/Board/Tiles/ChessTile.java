@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -15,6 +16,11 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import org.apache.logging.log4j.Logger;
 
+/***
+ * Class representing a tile on a chessboard
+ *
+ * @author Vincent Chen
+ */
 public class ChessTile implements Tile, Cloneable {
 
   private Coordinate coordinate;
@@ -175,5 +181,23 @@ public class ChessTile implements Tile, Cloneable {
    */
   public void clearPieces() {
     pieces = new ArrayList<>();
+  }
+
+  /***
+   * Compare chess tiles
+   *
+   * @param o to compare
+   * @return if both chess tiles have the same coordinates
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ChessTile chessTile = (ChessTile) o;
+    return coordinate.equals(chessTile.coordinate);
   }
 }

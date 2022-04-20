@@ -18,6 +18,11 @@ import oogasalad.GamePlayer.Movement.MovementInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/***
+ * First move(s) are doubled
+ *
+ * @author Vincent Chen
+ */
 public class DoubleFirstMove implements MovementInterface {
 
   private static final int MULT = 2;

@@ -14,6 +14,11 @@ import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/***
+ * Class that handles a piece's movements
+ *
+ * @author Vincent Chen
+ */
 public class MovementHandler {
 
   private static final Logger LOG = LogManager.getLogger(MovementHandler.class);

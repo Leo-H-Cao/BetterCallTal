@@ -19,6 +19,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
+ * Class representing a piece
+ *
  * @author Vincent Chen
  * @author Jed Yang
  * @author Jose Santillan

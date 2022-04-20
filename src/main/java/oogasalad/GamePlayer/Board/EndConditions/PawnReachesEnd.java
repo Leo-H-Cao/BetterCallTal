@@ -9,6 +9,11 @@ import oogasalad.GamePlayer.util.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/***
+ * Creates an end condition where a given piece reaching the end results in a win
+ *
+ * @author Vincent Chen
+ */
 public class PawnReachesEnd implements EndCondition {
 
   private static final Logger LOG = LogManager.getLogger(PawnReachesEnd.class);

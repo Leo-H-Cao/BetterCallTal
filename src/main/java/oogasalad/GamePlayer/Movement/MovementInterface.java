@@ -8,6 +8,11 @@ import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
+/***
+ * Abstraction of different movement types
+ *
+ * @author Vincent Chen
+ */
 public interface MovementInterface {
 
   /**

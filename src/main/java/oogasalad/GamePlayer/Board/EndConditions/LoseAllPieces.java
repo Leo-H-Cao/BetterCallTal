@@ -10,6 +10,11 @@ import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Player;
 
+/***
+ * Creates end condition where losing all pieces is a loss
+ *
+ * @author Vincent Chen
+ */
 public class LoseAllPieces implements EndCondition {
 
   /***

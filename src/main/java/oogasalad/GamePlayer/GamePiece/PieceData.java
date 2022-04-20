@@ -5,6 +5,11 @@ import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.MovementInterface;
 import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
 
+/***
+ * Data used to instantiate a piece
+ *
+ * @author Vincent Chen
+ */
 public record PieceData(Coordinate startingLocation,
                         String name,
                         double pointValue,
