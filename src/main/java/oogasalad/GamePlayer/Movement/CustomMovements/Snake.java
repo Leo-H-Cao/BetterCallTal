@@ -1,5 +1,11 @@
 package oogasalad.GamePlayer.Movement.CustomMovements;
 
+import static oogasalad.GamePlayer.Board.Setup.BoardSetup.JSON_EXTENSION;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -12,18 +18,69 @@ import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.MovementInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /***
  * Custom move that snakes around the board based on given directions
+ *
+ * @author Vincent Chen
  */
 public class Snake implements MovementInterface {
 
   private static final Logger LOG = LogManager.getLogger(Snake.class);
+  private static final String SNAKE_FILE_PATH_HEADER = "doc/GameEngineResources/Other/snakeFiles";
+  private static final String DEFAULT_SNAKE_FILE = "MoveUpSnake1";
+
+  private static final Coordinate DEFAULT_PMD = Coordinate.of(0, 1);
+  private static final Coordinate DEFAULT_SMD = Coordinate.of(-1, 0);
+  private static final Coordinate DEFAULT_PM = Coordinate.of(1, -1);
 
   private Coordinate primaryMoveDirection;
   private Coordinate secondaryMoveDirection;
   private Coordinate primaryMultiplier;
   private boolean enactedSecondaryMove;
+
+  /***
+   * Creates Snake with default config file
+   */
+  public Snake() {
+    this(DEFAULT_SNAKE_FILE);
+  }
+
+  /***
+   * Creates Snake with given config file
+   *
+   * @param configFile to read
+   */
+  public Snake(String configFile) {
+    configFile = SNAKE_FILE_PATH_HEADER + configFile + JSON_EXTENSION;
+    try {
+      String content = new String(Files.readAllBytes(
+          Path.of(configFile)));
+      JSONObject data = new JSONObject(content);
+
+      primaryMoveDirection = getCoordinateFromJSONArray(data.getJSONArray("primary"));
+      secondaryMoveDirection = getCoordinateFromJSONArray(data.getJSONArray("secondary"));
+      primaryMultiplier = getCoordinateFromJSONArray(data.getJSONArray("multiplier"));
+
+    } catch (IOException e) {
+      LOG.debug(String.format("Snake file read failed: %s", configFile));
+      primaryMoveDirection = DEFAULT_PMD;
+      secondaryMoveDirection = DEFAULT_SMD;
+      primaryMultiplier = DEFAULT_PM;
+    }
+  }
+
+  /***
+   * Converts a JSON array into a Coordinate object
+   *
+   * @param coordinateArray to read
+   * @return Coordinate based on JSON array
+   */
+  private Coordinate getCoordinateFromJSONArray(JSONArray coordinateArray) {
+    return Coordinate.of(coordinateArray.getInt(0), coordinateArray.getInt(1));
+  }
 
   /***
    * @return original tile and tile moved to
