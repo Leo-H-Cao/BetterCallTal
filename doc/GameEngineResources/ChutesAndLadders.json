@@ -1,0 +1,51 @@
+{
+  "general": [
+    {
+      "rows": 8,
+      "columns": 8,
+      "turnCriteria": "Linear",
+      "colors": ["black", "white"],
+      "endConditions": [["ReachTile", "ReachTile07"]],
+      "validStateCheckers": []
+    }
+  ],
+  "playerInfo": [
+    {
+      "team": 0,
+      "opponents": [1]
+    },
+    {
+      "team": 1,
+      "opponents": [0]
+    }
+  ],
+  "pieces": [
+    {
+      "row": 7,
+      "col": 6,
+      "pieceFile": "CALDefault",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 1
+    },
+    {
+      "row": 5,
+      "col": 5,
+      "pieceFile": "CALDefault",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 1
+    }
+  ],
+  "tiles": [
+    {
+      "row": 1,
+      "col": 7,
+      "tileActions": []
+    }
+  ]
+}

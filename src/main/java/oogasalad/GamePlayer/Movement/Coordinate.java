@@ -35,7 +35,7 @@ public class Coordinate{
    * @return A new Coordinate Object
    */
   public static Coordinate add(Coordinate one, Coordinate two) {
-    return new Coordinate(one.row + two.row, one.col + two.col);
+    return Coordinate.of(one.row + two.row, one.col + two.col);
   }
 
   /**

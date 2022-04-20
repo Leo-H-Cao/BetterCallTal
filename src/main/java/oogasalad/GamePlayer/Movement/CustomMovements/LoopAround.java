@@ -5,7 +5,6 @@ import static oogasalad.GamePlayer.Board.Setup.BoardSetup.JSON_EXTENSION;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -26,11 +25,11 @@ import org.json.JSONObject;
  *
  * @author Vincent Chen
  */
-public class Snake implements MovementInterface {
+public class LoopAround implements MovementInterface {
 
-  private static final Logger LOG = LogManager.getLogger(Snake.class);
-  private static final String SNAKE_FILE_PATH_HEADER = "doc/GameEngineResources/Other/snakeFiles";
-  private static final String DEFAULT_SNAKE_FILE = "MoveUpSnake1";
+  private static final Logger LOG = LogManager.getLogger(LoopAround.class);
+  private static final String SNAKE_FILE_PATH_HEADER = "doc/GameEngineResources/Other/loopFiles/";
+  private static final String DEFAULT_SNAKE_FILE = "MoveUpLoop1";
 
   private static final Coordinate DEFAULT_PMD = Coordinate.of(0, 1);
   private static final Coordinate DEFAULT_SMD = Coordinate.of(-1, 0);
@@ -38,13 +37,13 @@ public class Snake implements MovementInterface {
 
   private Coordinate primaryMoveDirection;
   private Coordinate secondaryMoveDirection;
-  private Coordinate primaryMultiplier;
-  private boolean enactedSecondaryMove;
+//  private Coordinate primaryMultiplier;
+//  private boolean enactedSecondaryMove;
 
   /***
    * Creates Snake with default config file
    */
-  public Snake() {
+  public LoopAround() {
     this(DEFAULT_SNAKE_FILE);
   }
 
@@ -53,7 +52,7 @@ public class Snake implements MovementInterface {
    *
    * @param configFile to read
    */
-  public Snake(String configFile) {
+  public LoopAround(String configFile) {
     configFile = SNAKE_FILE_PATH_HEADER + configFile + JSON_EXTENSION;
     try {
       String content = new String(Files.readAllBytes(
@@ -62,13 +61,13 @@ public class Snake implements MovementInterface {
 
       primaryMoveDirection = getCoordinateFromJSONArray(data.getJSONArray("primary"));
       secondaryMoveDirection = getCoordinateFromJSONArray(data.getJSONArray("secondary"));
-      primaryMultiplier = getCoordinateFromJSONArray(data.getJSONArray("multiplier"));
+//      primaryMultiplier = getCoordinateFromJSONArray(data.getJSONArray("multiplier"));
 
     } catch (IOException e) {
       LOG.debug(String.format("Snake file read failed: %s", configFile));
       primaryMoveDirection = DEFAULT_PMD;
       secondaryMoveDirection = DEFAULT_SMD;
-      primaryMultiplier = DEFAULT_PM;
+//      primaryMultiplier = DEFAULT_PM;
     }
   }
 
@@ -93,9 +92,11 @@ public class Snake implements MovementInterface {
       throw new InvalidMoveException(finalSquare.toString());
     }
 
-    if(enactedSecondaryMove) {
-      primaryMoveDirection = Coordinate.multiply(primaryMoveDirection, primaryMultiplier);
-    }
+//    if(enactedSecondaryMove) {
+//      LOG.debug(String.format("Secondary move enacted: %s", finalSquare));
+//      primaryMoveDirection = Coordinate.multiply(primaryMoveDirection, primaryMultiplier);
+//      enactedSecondaryMove = false;
+//    }
 
     ChessTile oldTile = board.getTile(piece.getCoordinates());
     piece.updateCoordinates(board.getTile(finalSquare), board);
@@ -127,29 +128,32 @@ public class Snake implements MovementInterface {
   public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
     Coordinate currentCoordinate = piece.getCoordinates();
     Coordinate newCoordinate = Coordinate.add(currentCoordinate, primaryMoveDirection);
-    enactedSecondaryMove = false;
+//    enactedSecondaryMove = false;
 
     if(!board.inBounds(newCoordinate)) {
-      Coordinate delta = Coordinate.of(
-          findDelta(0, board.getBoardHeight(), newCoordinate.getRow()),
-          findDelta(0, board.getBoardLength(), newCoordinate.getCol()));
-      newCoordinate = Coordinate.add(Coordinate.add(newCoordinate, secondaryMoveDirection), delta);
-      enactedSecondaryMove = true;
+      Coordinate loopAroundVal = Coordinate.of(
+          findLoopAroundVal(0, board.getBoardHeight(), newCoordinate.getRow()),
+          findLoopAroundVal(0, board.getBoardLength(), newCoordinate.getCol()));
+      LOG.debug(String.format("Loop around val: %s", loopAroundVal));
+      newCoordinate = Coordinate.add(loopAroundVal, secondaryMoveDirection);
+//      enactedSecondaryMove = true;
+      LOG.debug(String.format("Secondary move enabled: %s", newCoordinate));
     }
     try {
-      return Set.of(board.getTile(newCoordinate));
+      return board.getTile(newCoordinate).getPieces().isEmpty() ?
+          Set.of(board.getTile(newCoordinate)) : Collections.emptySet();
     } catch (OutsideOfBoardException e) {
       return Collections.emptySet();
     }
   }
 
   /***
-   * Given a range min to max, find the difference needed to scale target into [min, max)
+   * Given a range min to max, find the loop around value for target [min, max)
    *
    * @return above
    */
-  private int findDelta(int min, int max, int target) {
-    return target < min ? min - target : (target >= max ? max - target - 1 : 0);
+  private int findLoopAroundVal(int min, int max, int target) {
+    return target < min ? target + (max - min) : (target >= max ? target - (max - min) : target);
   }
 
   /***
