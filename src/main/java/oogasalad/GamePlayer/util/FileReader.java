@@ -36,10 +36,19 @@ public class FileReader {
    * @return int from file
    */
   public static int readOneInt(String configFile, int defaultVal) {
+    return (int) readOneDouble(configFile, defaultVal);
+  }
+
+  /***
+   * Reads in file and gets the next double
+   *
+   * @return double from file
+   */
+  public static double readOneDouble(String configFile, double defaultVal) {
     try {
       File file = new File(configFile);
       Scanner reader = new Scanner(file);
-      int num = reader.nextInt();
+      double num = reader.nextDouble();
       reader.close();
       return num;
     } catch (Exception e) {
