@@ -35,7 +35,10 @@ public class PieceExport {
     onInteractionModifier = new ArrayList<>();
     movementGrid = editorPiece.getMovementGrid();
     basicMovements = new ArrayList<>();
+
+    //change for customized captures
     basicCaptures = basicMovements;
+
     createBasicMovements();
   }
 
@@ -88,37 +91,15 @@ public class PieceExport {
   }
 
   private void createBasicMovements(){
-    handleInfiniteMovement();
     for(int y = 0; y < MovementGrid.PIECE_GRID_SIZE; y++){
       for(int x = 0; x < MovementGrid.PIECE_GRID_SIZE; x++){
-        if(movementGrid.getTileStatus(x, y) == PieceGridTile.OPEN){
+        PieceGridTile curTile = movementGrid.getTileStatus(x, y);
+        if(curTile == PieceGridTile.OPEN || curTile == PieceGridTile.INFINITY){
           int relX = x-PIECE_LOCATION;
           int relY = PIECE_LOCATION-y;
-          basicMovements.add(new BasicMovementExport(relX, relY, false));
+          basicMovements.add(new BasicMovementExport(relX, relY, curTile == PieceGridTile.INFINITY));
         }
       }
-    }
-  }
-  private void handleInfiniteMovement(){
-    for(int y = 0; y < MovementGrid.PIECE_GRID_SIZE; y+=3){
-      for(int x = 0; x < MovementGrid.PIECE_GRID_SIZE; x += 3){
-        if(movementGrid.getTileStatus(x, y) == PieceGridTile.INFINITY){
-          int relX = (x-PIECE_LOCATION)/PIECE_LOCATION;
-          int relY = (PIECE_LOCATION-y)/PIECE_LOCATION;
-          setLineClosed(relX, relY);
-          basicMovements.add(new BasicMovementExport(relX, relY, true));
-        }
-      }
-    }
-  }
-
-  private void setLineClosed(int relX, int relY){
-    int row = PIECE_LOCATION-relY;
-    int col = PIECE_LOCATION+relX;
-    while(row >= 0 && row < MovementGrid.PIECE_GRID_SIZE && col >= 0 && col < MovementGrid.PIECE_GRID_SIZE){
-      movementGrid.setTile(col, row, PieceGridTile.CLOSED);
-      row -= relY;
-      col += relX;
     }
   }
 }

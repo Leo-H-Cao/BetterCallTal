@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import oogasalad.Frontend.Game.GameBackend;
 import oogasalad.Frontend.Game.GameView;
 import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.Frontend.util.ButtonFactory;
@@ -27,6 +28,7 @@ public class JoinGame extends View {
     private static final String START= "Start";
     private final Integer TITLE_SIZE = 64;
     private TextArea RoomName;
+    private String ROOMID;
     private static final Double TEXTAREAWIDTH = 100.0;
     private static final Double TEXTAREAHEIGHT = 20.0;
     private static final Double VBOXSPACING = 5.0;
@@ -34,6 +36,7 @@ public class JoinGame extends View {
     private static final String ROOM = "Room";
     private static final String CONFIRM = "Confirm";
     private static final String Start_Button_ID = "JoinStart";
+    private boolean StartShowing;
 
     public JoinGame(Stage stage) {super(stage);}
 
@@ -43,6 +46,7 @@ public class JoinGame extends View {
     }
 
     private StackPane MakeStackPane() {
+        StartShowing = false;
         myStackPane = new StackPane();
         myStackPane.setPrefSize(myScreenSize.getWidth(), myScreenSize.getHeight());
         Node exit = makeExitGroup();
@@ -72,11 +76,15 @@ public class JoinGame extends View {
 
         Button Confirm = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord(CONFIRM, getClass()),
                 Confirm_Button_ID, (e) -> {
-                    if (! RoomName.getText().equals("")) {
-                        Node start = makeStartGroup();
-                        StackPane.setAlignment(start, Pos.BOTTOM_CENTER);
-                        myStackPane.getChildren().add(start);
-                    }
+            if (! RoomName.getText().equals("") && ! StartShowing) {
+                ROOMID = RoomName.getText();
+                Node start = makeStartGroup();
+                StackPane.setAlignment(start, Pos.BOTTOM_CENTER);
+                myStackPane.getChildren().add(start);
+                StartShowing = true;
+            } else if (! RoomName.getText().equals("")){
+                ROOMID = RoomName.getText();
+            }
                 });
         vb.getChildren().addAll(hostID, RoomName, Confirm);
         return new Group(vb);
@@ -85,11 +93,13 @@ public class JoinGame extends View {
     private Node makeStartGroup() {
         Button start = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord(START), Start_Button_ID,
                 (e) -> {
-                    /**
-                     * getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cbOp, piececolors.get(colorchoice.getValue())));
-                     * getView(GameView.class).ifPresent(this::changeScene);
-                     */
-
+                    Optional<ChessBoard> cb = getGameBackend().initalizeJoinServerChessBoard(ROOMID);
+                    if(cb.isPresent()) {
+                        getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), cb.get().getThisPlayer(), false));
+                    } else {
+                        View.LOG.debug("Invalid JSON");
+                    }
+            getView(GameView.class).ifPresent(this::changeScene);
                 });
         start.setPrefWidth(150);
         start.setPrefHeight(50);

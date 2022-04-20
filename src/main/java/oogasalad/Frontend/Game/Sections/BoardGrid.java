@@ -43,10 +43,10 @@ public class BoardGrid {
     }
 
     private void setUpGP(GridPane gp, int rows, int cols) {
-        for (int i=0; i < rows; i++) {
+        for (int i = 0; i < rows; i++) {
             gp.getRowConstraints().add(new RowConstraints(HEIGHT_BOARD / Math.max(rows, cols)));
         }
-        for (int k=0; k < cols; k ++) {
+        for (int k = 0; k < cols; k++) {
             gp.getColumnConstraints().add(new ColumnConstraints(WIDTH_Board / Math.max(rows, cols)));
         }
     }
@@ -56,13 +56,10 @@ public class BoardGrid {
         for (ChessTile ct : cb) {
             int grid_x = ct.getCoordinates().getCol();
             int grid_y = ct.getCoordinates().getRow();
-            BoardTile tile = new BoardTile(ct.getCoordinates(),
+            BoardTile tile = new BoardTile(ct,
                     WIDTH_Board / Math.max(cb.getBoardLength(), cb.getBoardHeight()),
                     HEIGHT_BOARD / Math.max(cb.getBoardLength(), cb.getBoardHeight()),
                     lightupCons, ClearLitTilesRun, setSelPiece, MoveCons);
-            if (! ct.getPieces().isEmpty()) {
-                for (Piece p : ct.getPieces()) {
-                    tile.givePiece(p);}}
             myBoardTiles.add(tile);
 
             if (id == 1) {
@@ -94,6 +91,7 @@ public class BoardGrid {
 
     /**
      * Method to be called by Game View to tell the correct tiles to light up.
+     *
      * @param cts
      */
     public void lightSquares(Collection<ChessTile> cts) {
@@ -111,7 +109,7 @@ public class BoardGrid {
      */
     private void turnOffTiles() {
         LOG.debug("CLEARED LIT TILES!\n");
-        if (! myLitTiles.isEmpty()) {
+        if (!myLitTiles.isEmpty()) {
             for (BoardTile bt : myLitTiles) {
                 bt.LightUp(false);
             }
@@ -121,11 +119,16 @@ public class BoardGrid {
 
     /**
      * method for GameView to use to retrieve GridPane of Board
+     *
      * @return GridPane myBoard
      */
-    public GridPane getBoard() {return myBoard;}
+    public GridPane getBoard() {
+        return myBoard;
+    }
 
-    public Piece getSelectedPiece(){return mySelectedPiece;}
+    public Piece getSelectedPiece() {
+        return mySelectedPiece;
+    }
 
     private void makeRunAndCons() {
         ClearLitTilesRun = () -> turnOffTiles();
@@ -135,44 +138,24 @@ public class BoardGrid {
     /**
      * used in boardtile action setter. If the tile is not set up and there's a piece present, make it the selected piece.
      * selected piece must be tracked in order to complete move.
+     *
      * @param p piece to be made selected piece.
      */
     public void setSelectedPiece(Piece p) {
         LOG.debug(String.format("SELECTED PIECE IS NOW: %s (%d, %d)\n", p.getName(), p.getCoordinates().getRow(), p.getCoordinates().getCol()));
 //        LOG.debug("SELECTED PIECE MOVES: " + myModelBoard.getMoves(p));
 //        if (p.getTeam() == myID) {
-            mySelectedPiece = p;
+        mySelectedPiece = p;
 //        }
     }
 
     /**
      * flip method called from GameView to flip the board for the player.
      */
-    public void flip(){
+    public void flip() {
         myBoard.setRotate(myBoard.getRotate() + 180.0);
         for (BoardTile bt : myBoardTiles) {
             bt.getMyStackPane().setRotate(bt.getMyStackPane().getRotate() + 180.0);
         }
     }
-
-    /**
-     * TESTING FROM HERE DOWNWARD
-     */
-
-    /**
-     * creates a standard 8x8 board. Used for testing.
-     */
-    public BoardGrid(Consumer<Piece> lightupCons, int id, Consumer<Coordinate> MoveCons) {
-        myLitTiles = new ArrayList<>();
-        myBoard = new GridPane();
-        makeRunAndCons();
-        setUpGP(myBoard, 8, 8);
-        makeBoard2(myBoard, 8, 8, lightupCons, MoveCons);
-        myID = id;
-    }
-    private void makeBoard2(GridPane gp, int rows, int cols, Consumer<Piece> lightupCons, Consumer<Coordinate> MoveCons) {
-        for (int r =0; r < rows; r++) {
-            for (int c=0; c < cols; c++) {
-                BoardTile tile = new BoardTile(new Coordinate(c,r), rows, cols, lightupCons, ClearLitTilesRun, setSelPiece, MoveCons);
-                tile.LightUp(Boolean.FALSE);
-                gp.add(tile.getMyStackPane(), r, c);}}}}
+}
