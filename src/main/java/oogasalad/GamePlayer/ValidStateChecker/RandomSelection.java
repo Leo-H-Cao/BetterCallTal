@@ -56,9 +56,10 @@ public class RandomSelection implements ValidStateChecker {
     Set<ChessTile> allMoves = piece.getMoves(board);
     if(allMoves.size() <= numRandom) return true;
 
-    if(piece != currentPiece || currentAllMoves.equals(allMoves)) {
+    if(currentPiece != piece || !currentAllMoves.equals(allMoves)) {
       currentPiece = piece;
-      currentAcceptedMoves = generateAllowedMoves(allMoves);
+      currentAllMoves = allMoves;
+      currentAcceptedMoves = generateAllowedMoves(currentAllMoves);
     }
 
     return currentAcceptedMoves.contains(move);
