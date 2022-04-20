@@ -65,8 +65,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   }
 
   public ChessBoard(List<List<ChessTile>> board, TurnManagerData turnManagerData,
-      GamePlayers players,
-      List<ValidStateChecker> validStateCheckers, HistoryManager history) {
+      GamePlayers players, List<ValidStateChecker> validStateCheckers, HistoryManager history) {
     this.players = players;
     this.turnManagerData = turnManagerData;
     this.turnManager = new LocalTurnManager(this.turnManagerData);
@@ -112,12 +111,11 @@ public class ChessBoard implements Iterable<ChessTile> {
    * Generates the list of all pieces mapped to each team
    */
   private void generatePieceList() {
-    board.forEach((l) -> l.stream().filter((t) -> t.getPiece().isPresent()).forEach((t) ->
-    {
+    board.forEach((l) -> l.stream().filter((t) -> t.getPiece().isPresent()).forEach((t) -> {
       Piece piece = t.getPiece().get();
       pieceList.putIfAbsent(piece.getTeam(), new ArrayList<>());
-      if (pieceList.get(piece.getTeam()).stream().noneMatch(p ->
-          p.getName().equals(piece.getName()))) {
+      if (pieceList.get(piece.getTeam()).stream()
+          .noneMatch(p -> p.getName().equals(piece.getName()))) {
         pieceList.get(piece.getTeam()).add(piece.clone());
       }
     }));
@@ -169,6 +167,7 @@ public class ChessBoard implements Iterable<ChessTile> {
       LOG.debug("History updated: " + history.size());
       return update;
     }
+
     LOG.warn(isGameOver() ? "Move made after game over" : "Move made by wrong player");
     throw isGameOver() ? new MoveAfterGameEndException("") : new WrongPlayerException(
         "Expected: " + turnManager.getCurrentPlayer() + "\n Actual: " + piece.getTeam());
@@ -240,18 +239,17 @@ public class ChessBoard implements Iterable<ChessTile> {
       return Set.of();
     }
     Set<ChessTile> allPieceMovements = piece.getMoves(this);
-    validStateCheckers.forEach((v) ->
-        allPieceMovements.removeIf(entry -> {
-          try {
-            LOG.debug(String.format("Valid state checker class: %s", v.getClass()));
-            if (!v.isValid(this, piece, entry)) {
-              return true;
-            }
-          } catch (EngineException e) {
-            return false;
-          }
-          return false;
-        }));
+    validStateCheckers.forEach((v) -> allPieceMovements.removeIf(entry -> {
+      try {
+        LOG.debug(String.format("Valid state checker class: %s", v.getClass()));
+        if (!v.isValid(this, piece, entry)) {
+          return true;
+        }
+      } catch (EngineException e) {
+        return false;
+      }
+      return false;
+    }));
     return piece.checkTeam(turnManager.getCurrentPlayer()) ? allPieceMovements : Set.of();
   }
 
@@ -306,8 +304,8 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @return if team opposes piece on tile
    */
   public boolean isOpposing(ChessTile tile, int team) {
-    return Arrays.stream(this.getPlayer(team).opponentIDs()).anyMatch(o ->
-        tile.getPiece().isPresent() && o == tile.getPiece().get().getTeam());
+    return Arrays.stream(this.getPlayer(team).opponentIDs())
+        .anyMatch(o -> tile.getPiece().isPresent() && o == tile.getPiece().get().getTeam());
   }
 
   /**
@@ -319,8 +317,7 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @return
    */
   public ChessTile getTile(int index) {
-    List<ChessTile> linearTiles = board.stream()
-        .flatMap(List::stream).toList();
+    List<ChessTile> linearTiles = board.stream().flatMap(List::stream).toList();
 
     return linearTiles.get(index);
   }
@@ -430,9 +427,9 @@ public class ChessBoard implements Iterable<ChessTile> {
    */
   public List<Piece> getOpponentPieces(int team) {
     return board.stream().flatMap(List::stream).toList().stream().map(ChessTile::getPieces)
-        .flatMap(List::stream).toList().stream()
-        .filter(p -> Arrays.stream(this.getPlayer(team).opponentIDs()).anyMatch(
-            oid -> oid == p.getTeam())).toList();
+        .flatMap(List::stream).toList().stream().filter(
+            p -> Arrays.stream(this.getPlayer(team).opponentIDs())
+                .anyMatch(oid -> oid == p.getTeam())).toList();
   }
 
   /**
@@ -482,6 +479,10 @@ public class ChessBoard implements Iterable<ChessTile> {
   @Override
   public void forEach(Consumer<? super ChessTile> action) {
     Iterable.super.forEach(action);
+  }
+
+  public int getThisPlayer() {
+    return -1;
   }
 
   /**

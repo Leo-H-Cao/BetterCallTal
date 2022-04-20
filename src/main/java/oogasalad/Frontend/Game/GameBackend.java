@@ -17,8 +17,7 @@ public class GameBackend extends Controller {
 
   public Optional<ChessBoard> initalizeLocalChessBoard(File JSON) {
     try {
-      BoardSetup bs = new BoardSetup(JSON.getPath());
-      myChessBoard = bs.createLocalBoard();
+      myChessBoard = BoardSetup.createLocalBoard(JSON.getPath());
       return Optional.of(myChessBoard);
     } catch (Exception e) {
       // myMainView.showError();
@@ -26,10 +25,9 @@ public class GameBackend extends Controller {
     }
   }
 
-  public Optional<ChessBoard> initalizeHostServerChessBoard(File JSON) {
+  public Optional<ChessBoard> initalizeHostServerChessBoard(File JSON, String RoomName, int player) {
     try {
-      BoardSetup bs = new BoardSetup(JSON.getPath());
-      myChessBoard = bs.createRemoteBoard("h" , 0);
+      myChessBoard = BoardSetup.createRemoteBoard(JSON.getPath(), RoomName, player);
       return Optional.of(myChessBoard);
     } catch (Exception e) {
       // myMainView.showError();
@@ -37,12 +35,12 @@ public class GameBackend extends Controller {
     }
   }
 
-  public Optional<ChessBoard> initalizeJoinServerChessBoard(File JSON) {
+  public Optional<ChessBoard> initalizeJoinServerChessBoard(String RoomName) {
     try {
-      BoardSetup bs = new BoardSetup(JSON.getPath());
-      myChessBoard = bs.joinRemoteBoard("key");
+      myChessBoard = BoardSetup.joinRemoteBoard(RoomName);
       return Optional.of(myChessBoard);
     } catch (Exception e) {
+      e.printStackTrace();
       // myMainView.showError();
       return Optional.empty();
     }

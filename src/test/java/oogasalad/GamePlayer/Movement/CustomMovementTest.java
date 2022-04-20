@@ -237,8 +237,8 @@ class CustomMovementTest {
   @Test
   void enPassantTestHappy() {
     try {
-      BoardSetup setup = new BoardSetup("doc/GameEngineResources/PresentationBoardUpdated.json");
-      ChessBoard chessBoard = setup.createLocalBoard();
+      ChessBoard chessBoard = BoardSetup.createLocalBoard(
+          "doc/GameEngineResources/PresentationBoardUpdated.json");
       Piece whiteReference = chessBoard.getTile(Coordinate.of(6, 6)).getPiece().get();
       chessBoard.move(chessBoard.getTile(Coordinate.of(6, 6)).getPiece().get(), Coordinate.of(4, 6));
       chessBoard.move(chessBoard.getTile(Coordinate.of(1, 1)).getPiece().get(), Coordinate.of(3, 1));
@@ -274,8 +274,8 @@ class CustomMovementTest {
     try {
       assertThrows(InvalidMoveException.class, () -> new EnPassant().movePiece(null, null, null));
       assertEquals(Collections.emptySet(), new EnPassant().getMoves(null, null));
-      BoardSetup setup = new BoardSetup("doc/GameEngineResources/PresentationBoardUpdated.json");
-      ChessBoard chessBoard = setup.createLocalBoard();
+      ChessBoard chessBoard = BoardSetup.createLocalBoard(
+          "doc/GameEngineResources/PresentationBoardUpdated.json");
       Piece whiteReference = chessBoard.getTile(Coordinate.of(6, 6)).getPiece().get();
       chessBoard.move(chessBoard.getTile(Coordinate.of(6, 6)).getPiece().get(), Coordinate.of(4, 6));
       assertThrows(InvalidMoveException.class, () -> new EnPassant().capturePiece(whiteReference, Coordinate.of(2, 2), chessBoard));

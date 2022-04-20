@@ -1,6 +1,7 @@
 package oogasalad.Editor.ModelState.BoardState;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.image.Image;
 import oogasalad.Editor.ModelState.PiecesState.EditorCoordinate;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 
@@ -17,6 +18,10 @@ public class BoardState {
 
   public void setTileEffect(int x, int y, TileEffect effect) {
     myEditorBoard.setTileEffect(x, y, effect);
+  }
+
+  public void setTileImage(int x, int y, Image img){
+    myEditorBoard.setTileImage(x,y,img);
   }
 
   public SimpleIntegerProperty getBoardWidth(){

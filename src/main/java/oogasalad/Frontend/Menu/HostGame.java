@@ -49,11 +49,11 @@ public class HostGame extends View {
     private static final Double TEXTAREAWIDTH = 100.0;
     private static final Double TEXTAREAHEIGHT = 20.0;
     private String RoomID;
+    private Boolean StartShowing;
 
 
     public HostGame(Stage stage) {
-        super(stage);
-    }
+        super(stage);}
 
     @Override
     protected Node makeNode() {
@@ -61,6 +61,7 @@ public class HostGame extends View {
     }
 
     private StackPane MakeStackPane() {
+        StartShowing = false;
         piececolors = new HashMap<>();
         myStackPane = new StackPane();
         myStackPane.setPrefSize(myScreenSize.getWidth(), myScreenSize.getHeight());
@@ -110,11 +111,14 @@ public class HostGame extends View {
 
         Button Confirm = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord(CONFIRM, getClass()),
                 Confirm_Button_ID, (e) -> {
-            if (! RoomName.getText().equals("")) {
-                RoomID = RoomName.getText(); // TODO: hook RoomID up w server
+            if (! RoomName.getText().equals("") && ! StartShowing) {
+                RoomID = RoomName.getText();
                 Node start = makeStartGroup(f);
                 StackPane.setAlignment(start, Pos.BOTTOM_CENTER);
                 myStackPane.getChildren().add(start);
+                StartShowing = true;
+            } else if (! RoomName.getText().equals("")){
+                RoomID = RoomName.getText();
             }
                 });
         vb.getChildren().addAll(hostID, RoomName, Confirm);
@@ -144,9 +148,9 @@ public class HostGame extends View {
     private Node makeStartGroup(File f) {
         Button start = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord(START), Start_Button_ID,
                 (e) -> {
-            Optional<ChessBoard> cbOp = getGameBackend().initalizeHostServerChessBoard(f);
+            Optional<ChessBoard> cbOp = getGameBackend().initalizeHostServerChessBoard(f, RoomID, piececolors.get(colorchoice.getValue()));
             if(cbOp.isPresent()) {
-                getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cbOp.get(), piececolors.get(colorchoice.getValue()), false));
+                getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cbOp.get(), cbOp.get().getThisPlayer(), false));
             } else {
                 View.LOG.debug("Invalid JSON");
             }
