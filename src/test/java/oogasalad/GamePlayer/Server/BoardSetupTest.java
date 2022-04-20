@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 
 public class BoardSetupTest {
   ChessBoard myBoard;
-  String JSON_FILE_PATH = "doc/GameEngineResources/PresentationBoardUpdated.json";
+  String JSON_FILE_PATH = "doc/games/PresentationBoardUpdated.json";
 
   @BeforeEach
   void setup () throws IOException {
