@@ -50,7 +50,7 @@ class AtomicTest {
   }
 
   @Test
-  void atomicTestHappy() {
+  void atomicTest() {
     try {
       assertFalse(board.isGameOver());
       whiteAttacker.move(board.getTile(Coordinate.of(1, 0)), board);
