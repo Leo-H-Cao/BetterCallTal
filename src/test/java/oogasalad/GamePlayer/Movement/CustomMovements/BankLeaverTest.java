@@ -80,6 +80,8 @@ public class BankLeaverTest {
       assertEquals(8, test.getBlockCol());
       test = new BankLeaver("badFile");
       assertEquals(8, test.getBlockCol());
+      test = new BankLeaverNoRemove();
+      assertEquals(3, test.getBlockCol());
     } catch (Exception e) {
       fail();
     }
