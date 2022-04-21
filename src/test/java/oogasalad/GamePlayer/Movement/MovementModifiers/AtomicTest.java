@@ -62,7 +62,8 @@ class AtomicTest {
   }
 
   @Test
-  void testConfigFiles() {
-
+  void testBadConfigFiles() {
+      Atomic test = new Atomic("jisufd5878");
+      assertEquals(List.of("Pawn"), test.getExplosionImmuneNames());
   }
 }
