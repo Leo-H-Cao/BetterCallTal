@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer.Movement;
+package oogasalad.GamePlayer.Movement.MovementModifiers;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -12,11 +12,13 @@ import oogasalad.GamePlayer.Board.Player;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
+import oogasalad.GamePlayer.Movement.Coordinate;
+import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementModifiers.Atomic;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class MovementModifierTest {
+class AtomicTest {
 
 
   private ChessBoard board;
@@ -57,5 +59,10 @@ class MovementModifierTest {
     } catch(Exception e) {
       fail();
     }
+  }
+
+  @Test
+  void testConfigFiles() {
+
   }
 }

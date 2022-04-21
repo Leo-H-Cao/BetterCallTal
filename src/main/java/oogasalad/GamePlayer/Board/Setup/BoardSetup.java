@@ -70,7 +70,6 @@ public class BoardSetup {
   public static ChessBoard createRemoteBoard(String path, String key, int thisPlayer)
       throws IOException {
     return createLocalBoard(path);
-
   }
 
   /**
@@ -123,6 +122,7 @@ public class BoardSetup {
     JSONArray customTiles;
     try {
       customTiles = mainGameFile.getJSONArray("tiles");
+      LOG.debug("Got custom tiles array");
     } catch (Exception e) {
       LOG.debug("No custom tile entry found");
       return;
@@ -145,8 +145,7 @@ public class BoardSetup {
         tile.setSpecialActions(tileActions);
         try {
           tile.setCustomImg(rawTileData.getString("img"));
-        } catch (JSONException ignored) {
-        }
+        } catch (JSONException ignored) {}
       } catch (OutsideOfBoardException e) {
         LOG.debug("Tile action setting failed, out of bounds");
       }

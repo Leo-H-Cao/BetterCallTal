@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer.Movement;
+package oogasalad.GamePlayer.Movement.CustomMovements;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -13,14 +13,13 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
-import oogasalad.GamePlayer.Movement.CustomMovements.Castling;
-import oogasalad.GamePlayer.Movement.CustomMovements.DoubleFirstMove;
-import oogasalad.GamePlayer.Movement.CustomMovements.EnPassant;
+import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Board.Setup.BoardSetup;
+import oogasalad.GamePlayer.Movement.Movement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class CustomMovementTest {
+class BasicCustomMovementTest {
 
   private ChessBoard board;
 
