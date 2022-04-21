@@ -145,98 +145,82 @@
     {
       "row": 0,
       "col": 0,
-      "tileActions": ["PromotionReverse"],
-      "img": "default"
+      "tileActions": ["PromotionReverse"]
     },
     {
       "row": 0,
       "col": 1,
-      "tileActions": ["PromotionReverse"],
-      "img": "default"
+      "tileActions": ["PromotionReverse"]
     },
     {
       "row": 0,
       "col": 2,
-      "tileActions": ["PromotionReverse"],
-      "img": "default"
+      "tileActions": ["PromotionReverse"]
     },
     {
       "row": 0,
       "col": 3,
-      "tileActions": ["PromotionReverse"],
-      "img": "default"
+      "tileActions": ["PromotionReverse"]
     },
     {
       "row": 0,
       "col": 4,
-      "tileActions": ["PromotionReverse"],
-      "img": "default"
+      "tileActions": ["PromotionReverse"]
     },
     {
       "row": 0,
       "col": 5,
-      "tileActions": ["PromotionReverse"],
-      "img": "default"
+      "tileActions": ["PromotionReverse"]
     },
     {
       "row": 0,
       "col": 6,
-      "tileActions": ["PromotionReverse"],
-      "img": "default"
+      "tileActions": ["PromotionReverse"]
     },
     {
       "row": 0,
       "col": 7,
-      "tileActions": ["PromotionReverse"],
-      "img": "default"
+      "tileActions": ["PromotionReverse"]
     },
     {
       "row": 6,
       "col": 0,
-      "tileActions": ["PromotionReverse"],
-      "img": "default"
+      "tileActions": ["PromotionReverse"]
     },
     {
       "row": 6,
       "col": 1,
-      "tileActions": ["PromotionReverse"],
-      "img": "default"
+      "tileActions": ["PromotionReverse"]
     },
     {
       "row": 6,
       "col": 2,
-      "tileActions": ["PromotionReverse"],
-      "img": "default"
+      "tileActions": ["PromotionReverse"]
     },
     {
       "row": 6,
       "col": 3,
-      "tileActions": ["PromotionReverse"],
-      "img": "default"
+      "tileActions": ["PromotionReverse"]
     },
     {
       "row": 6,
       "col": 4,
-      "tileActions": ["PromotionReverse"],
-      "img": "default"
+      "tileActions": ["PromotionReverse"]
     },
     {
       "row": 6,
       "col": 5,
-      "tileActions": ["PromotionReverse"],
-      "img": "default"
+      "tileActions": ["PromotionReverse"]
     },
     {
       "row": 6,
       "col": 6,
-      "tileActions": ["PromotionReverse"],
-      "img": "default"
+      "tileActions": ["PromotionReverse"]
     },
     {
       "row": 6,
       "col": 7,
-      "tileActions": ["PromotionReverse"],
-      "img": "default"
+      "tileActions": ["PromotionReverse"]
     }
   ]
 }
