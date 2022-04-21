@@ -62,7 +62,8 @@ public class Bot {
       finalSquare = t;
       break;
     }
-    return new TurnUpdate(movingPiece.move(finalSquare, board), turnCriteria.incrementTurn());
+    return board.move(movingPiece, finalSquare.getCoordinates());
+    //return new TurnUpdate(movingPiece.move(finalSquare, board), turnManager.incrementTurn());
   }
 
 }
