@@ -145,8 +145,7 @@ public class EnPassant implements MovementInterface {
     try {
       possibleCaptures.add(
           board.getTile(Coordinate.of(base.getRow(), base.getCol() + EP_DISTANCE)));
-    } catch (Exception ignored) {
-    }
+    } catch (Exception ignored) {}
 //    LOG.debug("Preliminary capture squares: " + possibleCaptures);
     Set<ChessTile> capSquares = possibleCaptures.stream().filter((t) -> t.getPiece().isPresent() &&
             (board.getHistory().isEmpty() || board.getHistory().get(board.getHistory().size() - 1)
@@ -161,9 +160,7 @@ public class EnPassant implements MovementInterface {
         return board.getTile(
             Coordinate.of(c.getCoordinates().getRow() + (movingUp(enPassantExacter) ? -1 : 1),
                 c.getCoordinates().getCol()));
-      } catch (OutsideOfBoardException ignored) {
-        return null;
-      }
+      } catch (OutsideOfBoardException e) {return null;}
     }).collect(Collectors.toSet());
   }
 

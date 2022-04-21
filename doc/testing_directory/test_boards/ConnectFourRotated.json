@@ -1,0 +1,144 @@
+{
+  "general": [
+    {
+      "rows": 6,
+      "columns": 9,
+      "turnCriteria": "Linear",
+      "colors": ["black", "white"],
+      "endConditions": [["InARow", "InARowFour"], "Stalemate"],
+      "validStateCheckers": [["GravityVSC", "GravityC4Rotated"]]
+    }
+  ],
+  "playerInfo": [
+    {
+      "team": 0,
+      "opponents": [1]
+    },
+    {
+      "team": 1,
+      "opponents": [0]
+    }
+  ],
+  "pieces": [
+    {
+      "row": 5,
+      "col": 8,
+      "pieceFile": "ConnectFour",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 8,
+      "pieceFile": "ConnectFour",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 7,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 7,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 2,
+      "col": 7,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 3,
+      "col": 7,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 4,
+      "col": 7,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 5,
+      "col": 7,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 8,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 2,
+      "col": 8,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 3,
+      "col": 8,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 4,
+      "col": 8,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    }
+  ]
+}

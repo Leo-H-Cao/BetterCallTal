@@ -59,7 +59,7 @@ class TurnTest {
   }
 
   @Test
-  void testLinearHappy() {
+  void testLinear() {
     turnCriteria = new Linear(gamePlayers.getPlayersArr());
     setBoard();
 
@@ -73,7 +73,7 @@ class TurnTest {
   }
 
   @Test
-  void testIncrHappy() {
+  void testIncreasing() {
     turnCriteria = new ConstantIncrease(gamePlayers.getPlayersArr());
     setBoard();
 
@@ -90,7 +90,7 @@ class TurnTest {
   }
 
   @Test
-  void testLinearSad() {
+  void testLinearExceptions() {
     turnCriteria = new Linear(gamePlayers.getPlayersArr());
     setBoard();
     assertThrows(WrongPlayerException.class, () -> board.move(pieceTwo, new Coordinate(0, 1)));
@@ -104,7 +104,7 @@ class TurnTest {
   }
 
   @Test
-  void testIncrSad() {
+  void testIncrExceptions() {
     turnCriteria = new ConstantIncrease(gamePlayers.getPlayersArr());
     setBoard();
     assertThrows(WrongPlayerException.class, () -> board.move(pieceTwo, new Coordinate(0, 1)));
