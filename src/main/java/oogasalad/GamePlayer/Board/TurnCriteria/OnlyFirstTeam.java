@@ -25,4 +25,9 @@ public class OnlyFirstTeam extends TurnCriteria {
   public int incrementTurn() {
     return getCurrentPlayer();
   }
+
+  @Override
+  public TurnCriteria copy() {
+    return new OnlyFirstTeam(players);
+  }
 }
