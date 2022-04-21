@@ -1,0 +1,184 @@
+{
+  "general": [
+    {
+      "rows": 8,
+      "columns": 13,
+      "turnCriteria": "Linear",
+      "colors": ["black", "white"],
+      "endConditions": [],
+      "validStateCheckers": ["BankBlocker"]
+    }
+  ],
+  "playerInfo": [
+    {
+      "team": 0,
+      "opponents": [1]
+    },
+    {
+      "team": 1,
+      "opponents": [0]
+    }
+  ],
+  "pieces": [
+    {
+      "row": 4,
+      "col": 4,
+      "pieceFile": "WhitePawn",
+      "team": 0,
+      "customMoves": ["BankLeaver"],
+      "movementModifiers": [],
+      "onInteractionModifier": ["BankJoiner"],
+      "mainPiece": 0
+    },
+    {
+      "row": 3,
+      "col": 3,
+      "pieceFile": "BlackPawn",
+      "team": 1,
+      "customMoves": ["BankLeaver"],
+      "movementModifiers": [],
+      "onInteractionModifier": ["BankJoiner"],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 0,
+      "pieceFile": "BlackPawn",
+      "team": 1,
+      "customMoves": ["BankLeaver"],
+      "movementModifiers": [],
+      "onInteractionModifier": ["BankJoiner"],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 8,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 8,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 2,
+      "col": 8,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 3,
+      "col": 8,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 4,
+      "col": 8,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 5,
+      "col": 8,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 8,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 8,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    }
+  ],
+  "tiles": [
+    {
+      "row": 0,
+      "col": 8,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 1,
+      "col": 8,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 2,
+      "col": 8,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 3,
+      "col": 8,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 4,
+      "col": 8,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 5,
+      "col": 8,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 6,
+      "col": 8,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 7,
+      "col": 8,
+      "tileActions": [],
+      "img": "blocker"
+    }
+  ]
+}

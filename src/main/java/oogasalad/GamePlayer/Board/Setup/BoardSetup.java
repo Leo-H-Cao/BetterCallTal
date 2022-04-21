@@ -332,9 +332,11 @@ public class BoardSetup {
       JSONArray currentObj = array.getJSONArray(index);
       LOG.debug(String.format("String class: %s", currentObj.getString(0)));
       LOG.debug(String.format("Parameter: %s", currentObj.getString(1)));
-      return createInstance(
+      return currentObj.length() >= 2 ? createInstance(
           packagePath + currentObj.getString(0),
-          new Class[]{String.class}, new Object[]{currentObj.getString(1)});
+          new Class[]{String.class}, new Object[]{currentObj.getString(1)}) :
+          createInstance(packagePath + currentObj.getString(0), new Class[]{},
+              new Object[]{});
     } catch (JSONException | IOException e) {
 //      e.printStackTrace();
       LOG.debug(String.format("String class: %s", array.getString(index)));
