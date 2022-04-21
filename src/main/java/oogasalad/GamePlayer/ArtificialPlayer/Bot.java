@@ -36,7 +36,7 @@ public class Bot {
   public Bot(TurnManager turnManager) {
     this.turnManager = turnManager;
     objectives = new ArrayList<>();
-    objectives.add(new Checkmate());
+    //objectives.add(new Checkmate());
     objectives.add(new PieceValue());
   }
 
@@ -47,7 +47,40 @@ public class Bot {
       return new TurnUpdate(null, -1);
     }
 
-    return getRandomMove(board, currentPlayer);
+
+    return getMinimaxMove(board, currentPlayer, 1);
+    //return getRandomMove(board, currentPlayer);
+  }
+
+  private TurnUpdate getMinimaxMove(ChessBoard board, int currentPlayer, int depth)
+      throws EngineException {
+    List<Piece> playerPieces = new ArrayList<>();
+
+    for(Piece p : board.getPieces()){
+      if(p.getTeam()==currentPlayer && !p.getMoves(board).isEmpty()){
+        playerPieces.add(p);
+      }
+    }
+
+    //maximize utility. TODO: move logic to DecisionTree class
+    double maxUtility = Integer.MIN_VALUE;
+    Piece movingPiece = null;
+    ChessTile finalSquare = null;
+    for(Piece p : playerPieces){
+      for(ChessTile t : board.getMoves(p)){
+        ChessBoard copy = board.makeHypotheticalMove(p, t.getCoordinates());
+        DecisionNode childNode = new DecisionNode(copy, turnCriteria);
+        double util = childNode.calculateUtility(objectives, depth);
+        if(util > maxUtility){
+          maxUtility = util;
+          movingPiece = p;
+          finalSquare = t;
+
+        }
+      }
+    }
+
+    return board.move(movingPiece, finalSquare.getCoordinates());
   }
 
 

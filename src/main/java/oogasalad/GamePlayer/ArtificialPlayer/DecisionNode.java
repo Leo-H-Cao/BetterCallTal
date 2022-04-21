@@ -12,15 +12,14 @@ public class DecisionNode {
   private List<DecisionNode> children;
   private TurnCriteria turnCriteria;
 
-  public DecisionNode(ChessBoard board, List<DecisionNode> children, TurnCriteria tc){
+  public DecisionNode(ChessBoard board, TurnCriteria tc){
     this.board = board;
-    this.children = children;
     this.turnCriteria = tc;
     this.turnCriteria = board.getTurnManagerData().turn();
   }
 
-  public double calculateUtility(List<Utility> objectives){
-    if(children.isEmpty()){
+  public double calculateUtility(List<Utility> objectives, int remainingDepth){
+    if(remainingDepth == 1){
       //calculate current utility, which is the minimum of all objective utilities
       double minUtility = Double.MAX_VALUE;
       for(Utility u : objectives){
