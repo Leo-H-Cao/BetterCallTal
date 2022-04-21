@@ -67,8 +67,7 @@ public class DoubleFirstMove implements MovementInterface {
     List<MovementInterface> newMovements = new ArrayList<>();
     piece.getRelativeMoveCoords().stream().filter((c) -> {
       try {
-//        LOG.debug(String.format("Relative coordinate: (%d, %d)", c.getRow(), c.getCol()));
-//        LOG.debug("Pieces in way: " +  board.getTile(Coordinate.add(c, piece.getCoordinates())).getPieces());
+        LOG.debug(String.format("Relative coordinate: (%d, %d)", c.getRow(), c.getCol()));
         return board.getTile(Coordinate.add(c, piece.getCoordinates())).getPieces().isEmpty();
       } catch (OutsideOfBoardException e) {
         LOG.debug("Out of bounds");
