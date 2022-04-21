@@ -28,4 +28,10 @@ public class Linear extends TurnCriteria {
     incrementIndex(TURN_INCREMENT_NUM);
     return getCurrentPlayer();
   }
+
+
+
+  public TurnCriteria copy(){
+    return new Linear(players);
+  }
 }

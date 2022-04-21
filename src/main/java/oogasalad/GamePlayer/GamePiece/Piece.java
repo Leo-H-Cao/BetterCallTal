@@ -317,6 +317,12 @@ public class Piece implements Cloneable {
 
   }
 
+
+
+  public double getPieceValue(){
+    return suppPieceData.pointValue();
+  }
+
   /**
    * Update name with newName
    *

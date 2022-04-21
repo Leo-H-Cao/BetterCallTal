@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.Checkmate;
+import oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.PieceValue;
+import oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.Utility;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
@@ -18,6 +22,9 @@ public class Bot {
   private TurnCriteria turnCriteria;
   private int team;
   private TurnManager turnManager;
+  private DecisionTree decisionTree;
+  private List<Utility> objectives;
+
 
   public Bot(int team, TurnCriteria tc){
     this.team = team;
@@ -28,6 +35,9 @@ public class Bot {
 
   public Bot(TurnManager turnManager) {
     this.turnManager = turnManager;
+    objectives = new ArrayList<>();
+    objectives.add(new Checkmate());
+    objectives.add(new PieceValue());
   }
 
   public TurnUpdate getBotMove(ChessBoard board, int currentPlayer)
@@ -37,6 +47,12 @@ public class Bot {
       return new TurnUpdate(null, -1);
     }
 
+    return getRandomMove(board, currentPlayer);
+  }
+
+
+
+  private TurnUpdate getRandomMove(ChessBoard board, int currentPlayer) throws EngineException {
     List<Piece> playerPieces = new ArrayList<>();
 
     for(Piece p : board.getPieces()){
@@ -62,7 +78,8 @@ public class Bot {
       finalSquare = t;
       break;
     }
-    return new TurnUpdate(movingPiece.move(finalSquare, board), turnCriteria.incrementTurn());
+    return board.move(movingPiece, finalSquare.getCoordinates());
+    //return new TurnUpdate(movingPiece.move(finalSquare, board), turnManager.incrementTurn());
   }
 
 }

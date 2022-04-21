@@ -13,7 +13,7 @@ public class BotTest {
 
   @BeforeEach
   void setup() throws IOException {
-    String JSONPath = "doc/AI_Testing/QueenBlunder.json";
+    String JSONPath = "doc/testing_directory/AI_Testing/QueenBlunder.json";
     board = BoardSetup.createLocalBoard(JSONPath);
 
   }

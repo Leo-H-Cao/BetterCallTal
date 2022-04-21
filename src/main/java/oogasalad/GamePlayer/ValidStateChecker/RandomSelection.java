@@ -56,9 +56,11 @@ public class RandomSelection implements ValidStateChecker {
     if(allMoves.size() <= numRandom) return true;
 
     if(!currentRandomGenerations.containsKey(piece) ||
-        !currentRandomGenerations.get(piece).allMoves().equals(allMoves)) {
+        !currentRandomGenerations.get(piece).allMoves().equals(allMoves) ||
+            currentRandomGenerations.get(piece).boardLength() != board.getHistory().size()) {
       currentRandomGenerations.put(piece,
-          RandomGenerationInfo.of(allMoves, generateAllowedMoves(allMoves)));
+          RandomGenerationInfo.of(allMoves, generateAllowedMoves(allMoves),
+              board.getHistory().size()));
     }
 
     return currentRandomGenerations.get(piece).acceptedMoves().contains(move);

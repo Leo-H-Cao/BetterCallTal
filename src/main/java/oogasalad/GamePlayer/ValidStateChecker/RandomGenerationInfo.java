@@ -10,7 +10,7 @@ import oogasalad.GamePlayer.GamePiece.Piece;
  * @author Vincent Chen
  */
 public record RandomGenerationInfo(Set<ChessTile> allMoves,
-                                   Set<ChessTile> acceptedMoves) {
+                                   Set<ChessTile> acceptedMoves, int boardLength) {
 
   /***
    * Constructor with of notation
@@ -18,7 +18,7 @@ public record RandomGenerationInfo(Set<ChessTile> allMoves,
    * @return new RandomGenerationInfo object with given parameters
    */
   public static RandomGenerationInfo of(Set<ChessTile> allMoves,
-      Set<ChessTile> acceptedMoves) {
-    return new RandomGenerationInfo(allMoves, acceptedMoves);
+      Set<ChessTile> acceptedMoves, int boardLength) {
+    return new RandomGenerationInfo(allMoves, acceptedMoves, boardLength);
   }
 }
