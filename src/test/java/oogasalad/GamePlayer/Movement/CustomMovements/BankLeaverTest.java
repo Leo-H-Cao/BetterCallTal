@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 public class BankLeaverTest {
 
-  static final String BOARD_TEST_FILES_HEADER = "doc/testing_directory/test_boards/";
+  public static final String BOARD_TEST_FILES_HEADER = "doc/testing_directory/test_boards/";
   public static final String BANK_TEST_FILE = BOARD_TEST_FILES_HEADER + "Crazyhouse.json";
 
   @BeforeEach
