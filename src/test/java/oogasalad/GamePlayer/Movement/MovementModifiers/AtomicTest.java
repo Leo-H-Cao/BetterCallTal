@@ -50,7 +50,7 @@ class AtomicTest {
   }
 
   @Test
-  void atomicTestHappy() {
+  void atomicTest() {
     try {
       assertFalse(board.isGameOver());
       whiteAttacker.move(board.getTile(Coordinate.of(1, 0)), board);
@@ -62,7 +62,8 @@ class AtomicTest {
   }
 
   @Test
-  void testConfigFiles() {
-
+  void testBadConfigFiles() {
+      Atomic test = new Atomic("jisufd5878");
+      assertEquals(List.of("Pawn"), test.getExplosionImmuneNames());
   }
 }
