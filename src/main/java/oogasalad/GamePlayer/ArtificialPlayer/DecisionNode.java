@@ -16,6 +16,7 @@ public class DecisionNode {
     this.board = board;
     this.children = children;
     this.turnCriteria = tc;
+    this.turnCriteria = board.getTurnManagerData().turn();
   }
 
   public double calculateUtility(List<Utility> objectives){

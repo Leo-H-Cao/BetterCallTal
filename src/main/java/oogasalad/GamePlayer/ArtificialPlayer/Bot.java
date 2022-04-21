@@ -9,6 +9,7 @@ import oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.PieceValue;
 import oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.Utility;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
