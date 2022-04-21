@@ -59,7 +59,15 @@ public class BankJoiner implements MovementModifier{
           getJSONArray("general").getJSONObject(0).getInt("blockerCol");
     } catch (IOException e) {
       blockCol = BankBlocker.DEFAULT_VALUE;
+      this.configFile = CH_CONFIG_FILE_HEADER + CH_DEFAULT_FILE + JSON_EXTENSION;
     }
+  }
+
+  /***
+   * @return blockCol for testing purposes
+   */
+  int getBlockCol() {
+    return blockCol;
   }
 
   /**
@@ -91,7 +99,6 @@ public class BankJoiner implements MovementModifier{
       LOG.debug(String.format("Updated coords: %s", updatedCoords));
       return updatedCoords;
     } catch(OutsideOfBoardException | NullPointerException /*| PieceNotFoundException*/ e) {
-      LOG.warn("Bank joining failed");
       return Set.of();
     }
   }
@@ -163,11 +170,7 @@ public class BankJoiner implements MovementModifier{
           return startRow;
         }
       }
-      LOG.warn("Default value used for bank start row");
       return DEFAULT_VALUE;
-    } catch (IOException e) {
-      LOG.warn("Default value used for bank start row");
-      return DEFAULT_VALUE;
-    }
+    } catch (IOException e) { return DEFAULT_VALUE;}
   }
 }
