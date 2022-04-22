@@ -55,17 +55,5 @@ public class Check implements ValidStateChecker {
     ChessBoard copy = board.makeHypotheticalMove(board.getTile(piece.getCoordinates()).getPiece().get(), move.getCoordinates());
 
     return isValid(copy, piece.getTeam());
-
-    /*
-    return board.stream()
-        .flatMap(List::stream).toList().stream()
-        .map(ChessTile::getPieces)
-        .flatMap(List::stream).toList().stream()
-        .filter(piece -> !piece.checkTeam(id))
-        .anyMatch(piece -> piece.validCapture(targetPieces.stream()
-            .map(Piece::getCoordinates)
-            .collect(Collectors.toList()), board));
-
-     */
   }
 }
