@@ -2,6 +2,8 @@ package oogasalad.Frontend.Editor.Board;
 
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
+import oogasalad.Frontend.util.ButtonFactory;
+import oogasalad.Frontend.util.ButtonType;
 import oogasalad.Frontend.util.NodeContainer;
 
 public class BoardEditor extends NodeContainer {
@@ -28,7 +30,7 @@ public class BoardEditor extends NodeContainer {
 		ret.setCenter(myChessBoard.getNode());
 		ret.setLeft(myPieceLibrary.getNode());
 		ret.setRight(myModifierLibrary.getNode());
-		ret.setBottom(myBoardSettings.getNode());
+		ret.setBottom(ButtonFactory.makeButton(ButtonType.TEXT, "Export", "export", e -> getEditorBackend().exportState()));
 		return ret;
 	}
 }

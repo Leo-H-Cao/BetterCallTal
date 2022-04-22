@@ -2,24 +2,29 @@ package oogasalad.Editor.ModelState;
 
 import javafx.beans.property.*;
 import javafx.scene.image.Image;
+import oogasalad.Editor.ExportJSON.ExportJSON;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 import oogasalad.Editor.ModelState.EditPiece.PieceGridTile;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
+import oogasalad.Editor.ModelState.RulesState.GameRulesState;
+
 import static oogasalad.Editor.ModelState.EditPiece.PieceGridTile.OPEN;
 
 public class EditorBackend {
 	private final PiecesState piecesState;
 	private final BoardState boardState;
+	private final GameRulesState gameRulesState;
 	private final Property<PieceGridTile> selectedTypeProperty;
 	private final SimpleStringProperty selectedPieceId;
 	private final SimpleIntegerProperty alternatePiece;
 	private final SimpleStringProperty customPieceOpenId;
 
 	public EditorBackend(){
-		this.piecesState = new PiecesState();
-		this.boardState = new BoardState();
+		piecesState = new PiecesState();
+		boardState = new BoardState();
+		gameRulesState = new GameRulesState();
 		selectedTypeProperty = new SimpleObjectProperty<>(OPEN);
 		selectedPieceId = new SimpleStringProperty("rook");
 		alternatePiece = new SimpleIntegerProperty(0);
@@ -65,6 +70,11 @@ public class EditorBackend {
 
 	public SimpleStringProperty getOpenCustomPieceProperty() {
 		return customPieceOpenId;
+	}
+
+	public void exportState() {
+		ExportJSON exporter = new ExportJSON(piecesState, gameRulesState, boardState);
+		exporter.writeToJSON();
 	}
 
 	private void createDefaultPieces() {
