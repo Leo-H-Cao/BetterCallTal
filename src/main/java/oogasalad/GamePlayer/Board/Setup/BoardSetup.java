@@ -70,7 +70,6 @@ public class BoardSetup {
   public static ChessBoard createRemoteBoard(String path, String key, int thisPlayer)
       throws IOException {
     return createLocalBoard(path);
-
   }
 
   /**
@@ -123,6 +122,7 @@ public class BoardSetup {
     JSONArray customTiles;
     try {
       customTiles = mainGameFile.getJSONArray("tiles");
+      LOG.debug("Got custom tiles array");
     } catch (Exception e) {
       LOG.debug("No custom tile entry found");
       return;
@@ -145,8 +145,7 @@ public class BoardSetup {
         tile.setSpecialActions(tileActions);
         try {
           tile.setCustomImg(rawTileData.getString("img"));
-        } catch (JSONException ignored) {
-        }
+        } catch (JSONException ignored) {}
       } catch (OutsideOfBoardException e) {
         LOG.debug("Tile action setting failed, out of bounds");
       }
@@ -332,10 +331,12 @@ public class BoardSetup {
     try {
       JSONArray currentObj = array.getJSONArray(index);
       LOG.debug(String.format("String class: %s", currentObj.getString(0)));
-      LOG.debug(String.format("Parameter: %s", currentObj.getString(1)));
-      return createInstance(
+      if(currentObj.length() > 1) LOG.debug(String.format("Parameter: %s", currentObj.getString(1)));
+      return currentObj.length() >= 2 ? createInstance(
           packagePath + currentObj.getString(0),
-          new Class[]{String.class}, new Object[]{currentObj.getString(1)});
+          new Class[]{String.class}, new Object[]{currentObj.getString(1)}) :
+          createInstance(packagePath + currentObj.getString(0), new Class[]{},
+              new Object[]{});
     } catch (JSONException | IOException e) {
 //      e.printStackTrace();
       LOG.debug(String.format("String class: %s", array.getString(index)));

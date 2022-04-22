@@ -56,7 +56,7 @@ class GeneralBoardTest {
   }
 
   @Test
-  void generalBoardTestHappy() {
+  void boardAttributeTest() {
     try {
       assertEquals(3, board.getBoardLength());
       assertEquals(3, board.getBoardHeight());
@@ -74,7 +74,7 @@ class GeneralBoardTest {
   }
 
   @Test
-  void boardIteratorTestHS() {
+  void boardIteratorTest() {
     try {
       Iterator<ChessTile> iterator = board.iterator();
       for(int i=0; i<3; i++) {
@@ -95,7 +95,7 @@ class GeneralBoardTest {
   }
 
   @Test
-  void testPieceGeneralHS() {
+  void pieceAttributeTest() {
     try {
       assertEquals("test1", pieceOne.getName());
       assertEquals("test1.png", pieceOne.getImgFile());
@@ -105,7 +105,7 @@ class GeneralBoardTest {
   }
 
   @Test
-  void tileTest() {
+  void tileAttributeTest() {
     ChessTile tile = new ChessTile();
     assertTrue(tile.getPieces().isEmpty());
     assertEquals(Coordinate.of(0, 0), tile.getCoordinates());
