@@ -276,6 +276,7 @@ public class Piece implements Cloneable {
   /**
    * This method is used for the burn tile in order to
    */
+  @Deprecated
   public boolean burn() {
     //TODO NEED TO ADD PIECE HEALTH TO JSON AND CONSTRUCTOR
     PieceHealth health = new PieceHealth();
