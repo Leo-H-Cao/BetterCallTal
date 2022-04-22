@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -35,6 +37,7 @@ public class TurnController {
    * @return the current player
    */
   @PutMapping("/increment/{id}")
+  @ResponseBody
   public int incrementTurn(@PathVariable String id) {
     return activeSessions.getSession(id).turns().incrementTurn();
   }
@@ -46,6 +49,7 @@ public class TurnController {
    * @return int player id
    */
   @GetMapping("/current/{id}")
+  @ResponseBody
   public int getCurrentPlayer(@PathVariable String id) {
     return activeSessions.getSession(id).turns().getCurrentPlayer();
   }
@@ -58,7 +62,8 @@ public class TurnController {
    * @return true if the game is over, false otherwise
    */
   @GetMapping("/isGameOver/{id}")
-  public boolean isGameOver(@PathVariable String id, ChessBoard board) {
+  @ResponseBody
+  public boolean isGameOver(@PathVariable String id, @RequestBody ChessBoard board) {
     return activeSessions.getSession(id).turns().isGameOver(board);
   }
 
@@ -70,6 +75,7 @@ public class TurnController {
    * @return scores of all players after game over.
    */
   @GetMapping("/getScores/{id}")
+  @ResponseBody
   public Map<Integer, Double> getScores(@PathVariable String id) {
     return activeSessions.getSession(id).turns().getScores();
   }
@@ -81,6 +87,7 @@ public class TurnController {
    * @return all players playing in the game
    */
   @GetMapping("/getPlayers/{id}")
+  @ResponseBody
   public GamePlayers getGamePlayers(@PathVariable String id) {
     return activeSessions.getSession(id).turns().getGamePlayers();
   }

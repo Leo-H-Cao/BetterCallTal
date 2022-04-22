@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -37,6 +39,7 @@ public class HistoryController {
    * @return the current chess board state of the game.
    */
   @GetMapping("/current-board/{id}")
+  @ResponseBody
   public ChessBoard getCurrentBoard(@PathVariable String id) {
     return activeSessions.getSession(id).history().getCurrentBoard();
   }
@@ -48,7 +51,8 @@ public class HistoryController {
    * @param newState The new state to add.
    */
   @PostMapping("/add/{id}")
-  public History add(@PathVariable String id, History newState) {
+  @ResponseBody
+  public History add(@PathVariable String id, @RequestBody History newState) {
     return activeSessions.getSession(id).history().add(newState);
   }
 
@@ -59,6 +63,7 @@ public class HistoryController {
    * @return the most recent state.
    */
   @GetMapping("/last/{id}")
+  @ResponseBody
   public History getLast(@PathVariable String id) {
     return activeSessions.getSession(id).history().getLast();
   }
@@ -73,6 +78,7 @@ public class HistoryController {
    * @return the size of the history.
    */
   @GetMapping("/size/{id}")
+  @ResponseBody
   public int size(@PathVariable String id) {
     return activeSessions.getSession(id).history().size();
   }
@@ -85,6 +91,7 @@ public class HistoryController {
    * @return the state at a given index.
    */
   @GetMapping("/index/{id}/{index}")
+  @ResponseBody
   public History get(@PathVariable String id, @PathVariable int index) {
     return activeSessions.getSession(id).history().get(index);
   }
@@ -96,6 +103,7 @@ public class HistoryController {
    * @return the starting board configuration.
    */
   @GetMapping("/first/{id}")
+  @ResponseBody
   public History getFirst(@PathVariable String id) {
     return activeSessions.getSession(id).history().getFirst();
   }
@@ -107,6 +115,7 @@ public class HistoryController {
    * @return the current state of the game.
    */
   @GetMapping("/current/{id}")
+  @ResponseBody
   public History getCurrent(@PathVariable String id) {
     return activeSessions.getSession(id).history().getCurrent();
   }
@@ -118,6 +127,7 @@ public class HistoryController {
    * @return the index of the most recent state.
    */
   @GetMapping("/current-index/{id}")
+  @ResponseBody
   public int getCurrentIndex(@PathVariable String id) {
     return activeSessions.getSession(id).history().getCurrentIndex();
   }
@@ -130,6 +140,7 @@ public class HistoryController {
    * @return the state that was rewound to.
    */
   @PutMapping("/rewind/{id}/{index}")
+  @ResponseBody
   public History goToState(@PathVariable String id, @PathVariable int index) {
     return activeSessions.getSession(id).history().goToState(index);
   }
@@ -140,6 +151,7 @@ public class HistoryController {
    * @param id The id of the game.
    */
   @DeleteMapping("/clear/{id}")
+  @ResponseBody
   public void clearHistory(@PathVariable String id) {
     activeSessions.getSession(id).history().clearHistory();
   }
@@ -151,6 +163,7 @@ public class HistoryController {
    * @return true if the history is empty, false otherwise.
    */
   @GetMapping("/empty/{id}")
+  @ResponseBody
   public boolean isEmpty(@PathVariable String id) {
     return activeSessions.getSession(id).history().isEmpty();
   }
@@ -162,6 +175,7 @@ public class HistoryController {
    * @return way to stream over the history
    */
   @GetMapping("/stream/{id}")
+  @ResponseBody
   public Stream<History> stream(@PathVariable String id) {
     return activeSessions.getSession(id).history().stream();
   }
