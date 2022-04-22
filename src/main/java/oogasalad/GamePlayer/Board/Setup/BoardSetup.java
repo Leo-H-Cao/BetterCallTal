@@ -331,7 +331,7 @@ public class BoardSetup {
     try {
       JSONArray currentObj = array.getJSONArray(index);
       LOG.debug(String.format("String class: %s", currentObj.getString(0)));
-      LOG.debug(String.format("Parameter: %s", currentObj.getString(1)));
+      if(currentObj.length() > 1) LOG.debug(String.format("Parameter: %s", currentObj.getString(1)));
       return currentObj.length() >= 2 ? createInstance(
           packagePath + currentObj.getString(0),
           new Class[]{String.class}, new Object[]{currentObj.getString(1)}) :
