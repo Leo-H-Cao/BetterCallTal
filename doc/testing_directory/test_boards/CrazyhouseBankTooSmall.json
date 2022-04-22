@@ -2,11 +2,11 @@
   "general": [
     {
       "rows": 8,
-      "columns": 8,
+      "columns": 11,
       "turnCriteria": "Linear",
       "colors": ["black", "white"],
-      "endConditions": ["Antichess", "Stalemate"],
-      "validStateCheckers": ["ForcedCapture"]
+      "endConditions": ["AtomicEndCondition", "Checkmate", "Stalemate"],
+      "validStateCheckers": ["BankBlocker"]
     }
   ],
   "playerInfo": [
@@ -25,9 +25,9 @@
       "col": 0,
       "pieceFile": "WhitePawn",
       "team": 0,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -35,9 +35,9 @@
       "col": 1,
       "pieceFile": "WhitePawn",
       "team": 0,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -45,9 +45,9 @@
       "col": 2,
       "pieceFile": "WhitePawn",
       "team": 0,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -55,9 +55,9 @@
       "col": 3,
       "pieceFile": "WhitePawn",
       "team": 0,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -65,9 +65,9 @@
       "col": 4,
       "pieceFile": "WhitePawn",
       "team": 0,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -75,9 +75,9 @@
       "col": 5,
       "pieceFile": "WhitePawn",
       "team": 0,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -85,9 +85,9 @@
       "col": 6,
       "pieceFile": "WhitePawn",
       "team": 0,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -95,9 +95,9 @@
       "col": 7,
       "pieceFile": "WhitePawn",
       "team": 0,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -105,9 +105,9 @@
       "col": 0,
       "pieceFile": "Rook",
       "team": 0,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -115,9 +115,9 @@
       "col": 7,
       "pieceFile": "Rook",
       "team": 0,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -125,9 +125,9 @@
       "col": 1,
       "pieceFile": "Knight",
       "team": 0,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -135,9 +135,9 @@
       "col": 6,
       "pieceFile": "Knight",
       "team": 0,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -145,9 +145,9 @@
       "col": 2,
       "pieceFile": "Bishop",
       "team": 0,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -155,9 +155,9 @@
       "col": 5,
       "pieceFile": "Bishop",
       "team": 0,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -165,9 +165,9 @@
       "col": 3,
       "pieceFile": "Queen",
       "team": 0,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -175,9 +175,9 @@
       "col": 4,
       "pieceFile": "King",
       "team": 0,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 1
     },
     {
@@ -185,9 +185,9 @@
       "col": 0,
       "pieceFile": "BlackPawn",
       "team": 1,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -195,9 +195,9 @@
       "col": 1,
       "pieceFile": "BlackPawn",
       "team": 1,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -205,9 +205,9 @@
       "col": 2,
       "pieceFile": "BlackPawn",
       "team": 1,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -215,9 +215,9 @@
       "col": 3,
       "pieceFile": "BlackPawn",
       "team": 1,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -225,9 +225,9 @@
       "col": 4,
       "pieceFile": "BlackPawn",
       "team": 1,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -235,9 +235,9 @@
       "col": 5,
       "pieceFile": "BlackPawn",
       "team": 1,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -245,9 +245,9 @@
       "col": 6,
       "pieceFile": "BlackPawn",
       "team": 1,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -255,9 +255,9 @@
       "col": 7,
       "pieceFile": "BlackPawn",
       "team": 1,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -265,9 +265,9 @@
       "col": 0,
       "pieceFile": "Rook",
       "team": 1,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -275,9 +275,9 @@
       "col": 7,
       "pieceFile": "Rook",
       "team": 1,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -285,9 +285,9 @@
       "col": 1,
       "pieceFile": "Knight",
       "team": 1,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -295,9 +295,9 @@
       "col": 6,
       "pieceFile": "Knight",
       "team": 1,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -305,9 +305,9 @@
       "col": 2,
       "pieceFile": "Bishop",
       "team": 1,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -315,9 +315,9 @@
       "col": 5,
       "pieceFile": "Bishop",
       "team": 1,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -325,9 +325,9 @@
       "col": 3,
       "pieceFile": "Queen",
       "team": 1,
-      "customMoves": [],
+      "customMoves": ["BankLeaver"],
       "movementModifiers": [],
-      "onInteractionModifier": [],
+      "onInteractionModifier": ["BankJoiner"],
       "mainPiece": 0
     },
     {
@@ -335,13 +335,141 @@
       "col": 4,
       "pieceFile": "King",
       "team": 1,
+      "customMoves": ["BankLeaver"],
+      "movementModifiers": [],
+      "onInteractionModifier": ["BankJoiner"],
+      "mainPiece": 1
+    },
+    {
+      "row": 0,
+      "col": 8,
+      "pieceFile": "Blocker",
+      "team": -1,
       "customMoves": [],
       "movementModifiers": [],
       "onInteractionModifier": [],
-      "mainPiece": 1
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 8,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 2,
+      "col": 8,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 3,
+      "col": 8,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 4,
+      "col": 8,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 5,
+      "col": 8,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 8,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 8,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
     }
   ],
   "tiles": [
+    {
+      "row": 0,
+      "col": 8,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 1,
+      "col": 8,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 2,
+      "col": 8,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 3,
+      "col": 8,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 4,
+      "col": 8,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 5,
+      "col": 8,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 6,
+      "col": 8,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 7,
+      "col": 8,
+      "tileActions": [],
+      "img": "blocker"
+    },
     {
       "row": 0,
       "col": 0,

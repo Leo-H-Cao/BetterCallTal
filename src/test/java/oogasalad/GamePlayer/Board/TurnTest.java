@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import oogasalad.GamePlayer.Board.TurnCriteria.ConstantIncrease;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
+import oogasalad.GamePlayer.Board.TurnCriteria.OnlyFirstTeam;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.Board.TurnManagement.GamePlayers;
 import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
@@ -60,7 +61,7 @@ class TurnTest {
 
   @Test
   void testLinear() {
-    turnCriteria = new Linear(gamePlayers.getPlayersArr());
+    turnCriteria = new Linear(gamePlayers.getPlayersArr()).copy();
     setBoard();
 
     try {
@@ -74,7 +75,7 @@ class TurnTest {
 
   @Test
   void testIncreasing() {
-    turnCriteria = new ConstantIncrease(gamePlayers.getPlayersArr());
+    turnCriteria = new ConstantIncrease(gamePlayers.getPlayersArr()).copy();
     setBoard();
 
     try {
@@ -91,7 +92,7 @@ class TurnTest {
 
   @Test
   void testLinearExceptions() {
-    turnCriteria = new Linear(gamePlayers.getPlayersArr());
+    turnCriteria = new Linear(gamePlayers.getPlayersArr()).copy();
     setBoard();
     assertThrows(WrongPlayerException.class, () -> board.move(pieceTwo, new Coordinate(0, 1)));
     try {
@@ -105,7 +106,7 @@ class TurnTest {
 
   @Test
   void testIncrExceptions() {
-    turnCriteria = new ConstantIncrease(gamePlayers.getPlayersArr());
+    turnCriteria = new ConstantIncrease(gamePlayers.getPlayersArr()).copy();
     setBoard();
     assertThrows(WrongPlayerException.class, () -> board.move(pieceTwo, new Coordinate(0, 1)));
 
@@ -117,5 +118,20 @@ class TurnTest {
     }
 
     assertThrows(WrongPlayerException.class, () -> board.move(pieceOne, new Coordinate(0, 2)));
+  }
+
+  @Test
+  void testOnlyFirstTeam() {
+    turnCriteria = new OnlyFirstTeam(gamePlayers.getPlayersArr()).copy();
+    setBoard();
+    assertThrows(WrongPlayerException.class, () -> board.move(pieceTwo, new Coordinate(0, 1)));
+
+    try {
+      board.move(pieceOne, new Coordinate(0, 1));
+      board.move(pieceOne, new Coordinate(0, 2));
+    } catch (Exception e) {
+      e.printStackTrace();
+      fail();
+    }
   }
 }
