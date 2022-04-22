@@ -13,7 +13,7 @@ public class PieceClassTest {
   @BeforeEach
   void setup() {
     
-//    PieceData data = new PieceData();
+//    PieceJSONData data = new PieceJSONData();
 //    board = new ChessBoard(SIZE, SIZE, );
 //    piece = new Piece(data, board);
 
