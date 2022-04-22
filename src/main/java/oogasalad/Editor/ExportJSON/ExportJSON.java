@@ -79,10 +79,10 @@ public class ExportJSON {
       for(int x = 0; x < boardState.getBoardWidth().get(); x++){
         EditorTile tile = boardState.getTile(x, y);
         if(tile.hasPiece()){
-          pieces.add(new PieceExport(x, y, piecesState.getPiece(tile.getPieceID()), tile.getTeam()));
+          pieces.add(new PieceExport(y, x, piecesState.getPiece(tile.getPieceID()), tile.getTeam()));
         }
         if(tile.getTileEffect() != TileEffect.NONE || tile.getImg() != null){
-          TileExport tileExport = new TileExport(x, y, tile.getImg());
+          TileExport tileExport = new TileExport(y, x, tile.getImg());
           if(tile.getTileEffect() != TileEffect.NONE){
             tileExport.addTileAction(tile.getTileEffect().toString());
           }
