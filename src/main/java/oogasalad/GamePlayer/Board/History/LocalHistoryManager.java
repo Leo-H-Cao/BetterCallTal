@@ -25,6 +25,10 @@ public class LocalHistoryManager implements HistoryManager {
     this(Collections.emptyList());
   }
 
+  public LocalHistoryManager(HistoryManagerData data) {
+    this();
+  }
+
   /**
    * Creates a chess history object, which can be used to store the past game states.
    *

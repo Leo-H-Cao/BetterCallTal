@@ -31,6 +31,11 @@ public class LocalTurnManager implements TurnManager {
     endResult = new HashMap<>();
   }
 
+  /**
+   * Creates a new turn manager with the same data as the turn manager passed in.
+   *
+   * @param turnManagerData the turn manager data to copy
+   */
   public LocalTurnManager(TurnManagerData turnManagerData) {
     this(turnManagerData.players(), turnManagerData.turn(), turnManagerData.conditions());
   }

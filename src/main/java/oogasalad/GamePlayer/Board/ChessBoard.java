@@ -19,14 +19,14 @@ import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.History.History;
 import oogasalad.GamePlayer.Board.History.HistoryManager;
-import oogasalad.GamePlayer.Board.History.LocalHistoryManager;
 import oogasalad.GamePlayer.Board.History.HistoryManagerData;
-import oogasalad.GamePlayer.Board.TurnManagement.TurnManagerData;
+import oogasalad.GamePlayer.Board.History.LocalHistoryManager;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.Board.TurnManagement.GamePlayers;
 import oogasalad.GamePlayer.Board.TurnManagement.LocalTurnManager;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
+import oogasalad.GamePlayer.Board.TurnManagement.TurnManagerData;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
@@ -102,6 +102,15 @@ public class ChessBoard implements Iterable<ChessTile> {
       IntStream.range(0, length).forEach(j -> list.add(new ChessTile(new Coordinate(i, j))));
       board.add(list);
     });
+  }
+
+  public ChessBoard(ChessBoardData boardData) {
+    this.players = boardData.players();
+    this.turnManagerData = boardData.turnManagerData();
+    this.turnManager = new LocalTurnManager(this.turnManagerData);
+    this.board = boardData.board();
+    this.validStateCheckers = boardData.validStateCheckers();
+    this.history = new LocalHistoryManager(boardData.history());
   }
 
   /**
