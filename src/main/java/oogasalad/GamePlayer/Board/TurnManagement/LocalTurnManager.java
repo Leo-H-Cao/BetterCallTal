@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
-import oogasalad.GamePlayer.Board.Setup.TurnManagerData;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 
 /**

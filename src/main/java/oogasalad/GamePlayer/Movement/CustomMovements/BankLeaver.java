@@ -1,9 +1,8 @@
 package oogasalad.GamePlayer.Movement.CustomMovements;
 
-import static oogasalad.GamePlayer.Board.Setup.BoardSetup.JSON_EXTENSION;
+import static oogasalad.GamePlayer.Board.BoardSetup.JSON_EXTENSION;
 import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_CONFIG_FILE_HEADER;
 import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_DEFAULT_FILE;
-import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.DEFAULT_VALUE;
 
 import java.io.IOException;
 import java.nio.file.Files;

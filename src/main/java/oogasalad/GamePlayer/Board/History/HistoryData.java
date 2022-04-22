@@ -1,6 +1,7 @@
-package oogasalad.GamePlayer.Board.Setup;
+package oogasalad.GamePlayer.Board.History;
 
 import java.util.Set;
+import oogasalad.GamePlayer.Board.ChessBoard.ChessBoardData;
 import oogasalad.GamePlayer.Board.History.History;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;

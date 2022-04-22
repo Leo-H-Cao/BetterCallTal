@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer.Board.Setup;
+package oogasalad.GamePlayer.Board;
 
 
 import java.io.IOException;
@@ -8,14 +8,13 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
-import oogasalad.GamePlayer.Board.Player;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.Tiles.CustomTiles.TileAction;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.GamePiece.PieceJSONData;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementInterface;
@@ -349,11 +348,11 @@ public class BoardSetup {
    * @param file to get piece data from
    * @return piece json data based on file
    */
-  private static PieceData getPieceJSONData(String file) throws IOException {
+  private static PieceJSONData getPieceJSONData(String file) throws IOException {
     String content = new String(Files.readAllBytes(Path.of(file)));
     JSONObject data = new JSONObject(content);
 
-    return new PieceData(data.getString("pieceName"), data.getString("imgFile"),
+    return new PieceJSONData(data.getString("pieceName"), data.getString("imgFile"),
         data.getInt("pointValue"), getMoveList(data, "basicMovements"),
         getMoveList(data, "basicCaptures"), getCustomMovements(data, "customMoves"),
         getMovementModifiers(data, "movementModifiers"), getMovementModifiers(data,
@@ -391,7 +390,7 @@ public class BoardSetup {
 
       JSONObject rawPieceData = pieces.getJSONObject(i);
       String pieceFile = PIECE_JSON_PACKAGE + rawPieceData.getString("pieceFile") + JSON_EXTENSION;
-      PieceData pieceJSONData = getPieceJSONData(pieceFile);
+      PieceJSONData pieceJSONData = getPieceJSONData(pieceFile);
 
       int startRow = rawPieceData.getInt("row");
       int startCol = rawPieceData.getInt("col");

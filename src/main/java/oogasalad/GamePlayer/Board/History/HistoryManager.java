@@ -2,7 +2,6 @@ package oogasalad.GamePlayer.Board.History;
 
 import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Setup.HistoryManagerData;
 
 public interface HistoryManager {
 

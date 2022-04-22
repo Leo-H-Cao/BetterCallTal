@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer.Board.Setup;
+package oogasalad.GamePlayer.Board.History;
 
 import oogasalad.GamePlayer.Board.History.HistoryManager;
 

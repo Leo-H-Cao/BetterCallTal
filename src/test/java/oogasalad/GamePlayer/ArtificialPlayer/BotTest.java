@@ -2,7 +2,7 @@ package oogasalad.GamePlayer.ArtificialPlayer;
 
 import java.io.IOException;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Setup.BoardSetup;
+import oogasalad.GamePlayer.Board.BoardSetup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

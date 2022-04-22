@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.Optional;
 import oogasalad.Frontend.util.Controller;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Setup.BoardSetup;
+import oogasalad.GamePlayer.Board.BoardSetup;
 
 
 /**

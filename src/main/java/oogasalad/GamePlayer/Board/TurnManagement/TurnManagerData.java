@@ -1,4 +1,4 @@
-package oogasalad.GamePlayer.Board.Setup;
+package oogasalad.GamePlayer.Board.TurnManagement;
 
 import java.util.Collection;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
