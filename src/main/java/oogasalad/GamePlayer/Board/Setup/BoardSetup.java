@@ -16,7 +16,6 @@ import oogasalad.GamePlayer.Board.Tiles.CustomTiles.TileAction;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementInterface;
@@ -350,11 +349,11 @@ public class BoardSetup {
    * @param file to get piece data from
    * @return piece json data based on file
    */
-  private static PieceJSONData getPieceJSONData(String file) throws IOException {
+  private static PieceData getPieceJSONData(String file) throws IOException {
     String content = new String(Files.readAllBytes(Path.of(file)));
     JSONObject data = new JSONObject(content);
 
-    return new PieceJSONData(data.getString("pieceName"), data.getString("imgFile"),
+    return new PieceData(data.getString("pieceName"), data.getString("imgFile"),
         data.getInt("pointValue"), getMoveList(data, "basicMovements"),
         getMoveList(data, "basicCaptures"), getCustomMovements(data, "customMoves"),
         getMovementModifiers(data, "movementModifiers"), getMovementModifiers(data,
@@ -392,7 +391,7 @@ public class BoardSetup {
 
       JSONObject rawPieceData = pieces.getJSONObject(i);
       String pieceFile = PIECE_JSON_PACKAGE + rawPieceData.getString("pieceFile") + JSON_EXTENSION;
-      PieceJSONData pieceJSONData = getPieceJSONData(pieceFile);
+      PieceData pieceJSONData = getPieceJSONData(pieceFile);
 
       int startRow = rawPieceData.getInt("row");
       int startCol = rawPieceData.getInt("col");
@@ -420,7 +419,7 @@ public class BoardSetup {
           rawPieceData, "onInteractionModifier");
       onInteractionModifiers.addAll(pieceJSONData.onInteractionModifiers());
       LOG.debug(String.format("MMs: %s", movementModifiers));
-      PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, mainPiece,
+      oogasalad.GamePlayer.GamePiece.PieceData pieceData = new oogasalad.GamePlayer.GamePiece.PieceData(startingCoordinate, name, pointValue, team, mainPiece,
           movements, captures, movementModifiers, onInteractionModifiers, imageFile);
 
       Piece currentPiece = new Piece(pieceData);

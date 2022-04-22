@@ -9,8 +9,10 @@ import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
  *
  * @author Vincent Chen
  */
-public record PieceJSONData(String pieceName, String imgFile, int pointValue, List<MovementInterface> basicMovements,
-                            List<MovementInterface> basicCaptures, List<MovementInterface> customMoves, List<MovementModifier>
+public record PieceData(String pieceName, String imgFile, int pointValue,
+                        List<MovementInterface> basicMovements,
+                        List<MovementInterface> basicCaptures, List<MovementInterface> customMoves,
+                        List<MovementModifier>
                             movementModifiers, List<MovementModifier> onInteractionModifiers) {
 
 }
