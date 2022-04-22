@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
+import oogasalad.GamePlayer.Board.Setup.TurnManagerData;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 
 /**
@@ -92,6 +93,37 @@ public class LocalTurnManager implements TurnManager {
   @Override
   public GamePlayers getGamePlayers() {
     return players;
+  }
+
+  /**
+   * Gets the turn criteria for the game
+   *
+   * @return the turn criteria for the game
+   */
+  @Override
+  public TurnCriteria getTurnCriteria() {
+    return turn;
+  }
+
+  /**
+   * Gets the end conditions for the game
+   *
+   * @return the end conditions for the game
+   */
+  @Override
+  public Collection<EndCondition> getEndConditions() {
+    return endConditions;
+  }
+
+  /**
+   * Gets the turn manager API link for the current history manager data. Returns an empty string if
+   * the history manager is a turn manager.
+   *
+   * @return the turn manager API link for the current turn manager data.
+   */
+  @Override
+  public String getLink() {
+    return "";
   }
 
 }

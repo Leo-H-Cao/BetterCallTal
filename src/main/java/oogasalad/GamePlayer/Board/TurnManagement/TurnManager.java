@@ -1,7 +1,10 @@
 package oogasalad.GamePlayer.Board.TurnManagement;
 
+import java.util.Collection;
 import java.util.Map;
 import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
+import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 
 /**
  * Interface for managing all turn interactions. it has two implementations: a local and a server
@@ -47,4 +50,25 @@ public interface TurnManager {
    */
   GamePlayers getGamePlayers();
 
+  /**
+   * Gets the turn criteria for the game
+   *
+   * @return the turn criteria for the game
+   */
+  TurnCriteria getTurnCriteria();
+
+  /**
+   * Gets the end conditions for the game
+   *
+   * @return the end conditions for the game
+   */
+  Collection<EndCondition> getEndConditions();
+
+  /**
+   * Gets the turn manager API link for the current history manager data. Returns an empty string if
+   * the history manager is a turn manager.
+   *
+   * @return the turn manager API link for the current turn manager data.
+   */
+  String getLink();
 }
