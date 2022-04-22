@@ -6,7 +6,7 @@
       "turnCriteria": "Linear",
       "colors": ["black", "white"],
       "endConditions": [],
-      "validStateCheckers": ["BankBlocker"]
+      "validStateCheckers": [["BankBlocker"]]
     }
   ],
   "playerInfo": [
