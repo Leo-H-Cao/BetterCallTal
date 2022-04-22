@@ -1,0 +1,34 @@
+{
+  "general": [
+    {
+      "rows": 10,
+      "columns": 10,
+      "turnCriteria": "Linear",
+      "colors": ["black", "white"],
+      "endConditions": [],
+      "validStateCheckers": [["RandomSelection", "RandomSelection10"]]
+    }
+  ],
+  "playerInfo": [
+    {
+      "team": 0,
+      "opponents": [1]
+    },
+    {
+      "team": 1,
+      "opponents": [0]
+    }
+  ],
+  "pieces": [
+    {
+      "row": 9,
+      "col": 0,
+      "pieceFile": "CALDefault",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 1
+    }
+  ]
+}
