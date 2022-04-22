@@ -20,9 +20,8 @@ import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.History.History;
 import oogasalad.GamePlayer.Board.History.HistoryManager;
 import oogasalad.GamePlayer.Board.History.LocalHistoryManager;
-import oogasalad.GamePlayer.Board.Setup.ChessBoardData;
-import oogasalad.GamePlayer.Board.Setup.HistoryManagerData;
-import oogasalad.GamePlayer.Board.Setup.TurnManagerData;
+import oogasalad.GamePlayer.Board.History.HistoryManagerData;
+import oogasalad.GamePlayer.Board.TurnManagement.TurnManagerData;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.Board.TurnManagement.GamePlayers;
@@ -493,23 +492,23 @@ public class ChessBoard implements Iterable<ChessTile> {
     return -1;
   }
 
-  public List<List<ChessTile>> getTiles() {
+  private List<List<ChessTile>> getTiles() {
     return board;
   }
 
-  public List<ValidStateChecker> getValidStateCheckers() {
+  private List<ValidStateChecker> getValidStateCheckers() {
     return validStateCheckers;
   }
 
-  public HistoryManagerData getHistoryManagerData() {
+  private HistoryManagerData getHistoryManagerData() {
     return history.getHistoryManagerData();
   }
 
-  public GamePlayers getGamePlayers() {
+  private GamePlayers getGamePlayers() {
     return players;
   }
 
-  public ChessBoardData getBoardData(){
+  public ChessBoardData getBoardData() {
     return new ChessBoardData(this);
   }
 
@@ -543,5 +542,32 @@ public class ChessBoard implements Iterable<ChessTile> {
     public ChessTile next() throws NoSuchElementException {
       return queue.poll();
     }
+  }
+
+  /**
+   * This class is used to setup the chess board. It is used to create the chess board JSON object.
+   *
+   * @param board              the list of tiles that make up the chess board
+   * @param players            the list of players in the game
+   * @param validStateCheckers the valid state checkers for the game
+   * @param turnManagerData    the turn manager data for the game
+   * @param history            the history manager data of the game
+   * @author Ritvik Janamsetty
+   */
+  public record ChessBoardData(List<List<ChessTile>> board, TurnManagerData turnManagerData,
+                               GamePlayers players,
+                               List<ValidStateChecker> validStateCheckers,
+                               HistoryManagerData history) {
+
+    /**
+     * This method is used to create the chess board JSON object from a chess board.
+     *
+     * @param board the chess board
+     */
+    public ChessBoardData(ChessBoard board) {
+      this(board.getTiles(), board.getTurnManagerData(), board.getGamePlayers(),
+          board.getValidStateCheckers(), board.getHistoryManagerData());
+    }
+
   }
 }
