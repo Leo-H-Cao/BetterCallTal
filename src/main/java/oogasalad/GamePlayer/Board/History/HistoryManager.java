@@ -93,4 +93,12 @@ public interface HistoryManager {
    * @return way to stream over the history
    */
   Stream<History> stream();
+
+  /**
+   * Gets the history API link for the current history manager data. Returns an empty string if the
+   * history manager is a local history manager.
+   *
+   * @return the history API link for the current history manager data.
+   */
+  String getLink();
 }
