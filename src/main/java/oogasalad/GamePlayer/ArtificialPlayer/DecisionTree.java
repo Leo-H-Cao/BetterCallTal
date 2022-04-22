@@ -15,7 +15,7 @@ public class DecisionTree {
     this.currentPlayer = currentPlayer;
   }
 
-  public void evaluatePosition(ChessBoard position, int player){
+  public void evaluatePosition(ChessBoard position, int player, int depth){
 
   }
 

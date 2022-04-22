@@ -24,6 +24,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/***
+ * Creates an end condition where the first player to get n of x pieces in a row wins
+ *
+ * @author Vincent Chen
+ */
 public class InARow implements EndCondition {
 
   private static final Logger LOG = LogManager.getLogger(InARow.class);

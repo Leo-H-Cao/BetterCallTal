@@ -4,6 +4,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
+/***
+ * Creates a game mode where the first to lose all pieces wins
+ *
+ * @author Vincent Chen
+ */
 public class Antichess extends LoseAllPieces {
 
   /***

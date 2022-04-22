@@ -2,6 +2,11 @@ package oogasalad.GamePlayer.Movement;
 
 import java.util.Objects;
 
+/***
+ * Representation of coordinate on a chessboard
+ *
+ * @author Vincent Chen
+ */
 public class Coordinate{
 
   private int row;
@@ -29,12 +34,25 @@ public class Coordinate{
   /**
    * A static method that takes 2 Coordinate objects,
    * adds like attributes and returns a new Coordinate with the updated values
+   *
    * @param one First Coordinate Object
    * @param two Second Coordinate Object
    * @return A new Coordinate Object
    */
   public static Coordinate add(Coordinate one, Coordinate two) {
-    return new Coordinate(one.row + two.row, one.col + two.col);
+    return Coordinate.of(one.row + two.row, one.col + two.col);
+  }
+
+  /**
+   * A static method that takes 2 Coordinate objects,
+   * multiplies like attributes and returns a new Coordinate with the updated values
+   *
+   * @param one First Coordinate Object
+   * @param two Second Coordinate Object
+   * @return A new Coordinate Object
+   */
+  public static Coordinate multiply(Coordinate one, Coordinate two) {
+    return new Coordinate(one.row * two.row, one.col * two.col);
   }
 
   /**
@@ -63,6 +81,13 @@ public class Coordinate{
    * @return if the coordinates have the same row, col
    */
   public boolean equals(Object other) {
+    if (this == other) {
+      return true;
+    }
+    if (other == null || getClass() != other.getClass()) {
+      return false;
+    }
+
     Coordinate otherCord = (Coordinate) other;
     return this.row == otherCord.getRow() && this.col == otherCord.getCol();
   }

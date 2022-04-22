@@ -16,6 +16,7 @@ public class DecisionNode {
     this.board = board;
     this.children = children;
     this.turnCriteria = tc;
+    this.turnCriteria = board.getTurnManagerData().turn();
   }
 
   public double calculateUtility(List<Utility> objectives){
@@ -23,7 +24,7 @@ public class DecisionNode {
       //calculate current utility, which is the minimum of all objective utilities
       double minUtility = Double.MAX_VALUE;
       for(Utility u : objectives){
-        double util = u.getUtility(turnCriteria.getCurrentPlayer());
+        double util = u.getUtility(turnCriteria.getCurrentPlayer(), board);
         if(util < minUtility){
           minUtility = util;
         }
@@ -32,7 +33,7 @@ public class DecisionNode {
     }
     else{
       //run minimax
-      turnCriteria.incrementTurn();
+      //turnCriteria.incrementTurn();
     }
     return 0;
   }

@@ -1,5 +1,10 @@
 package oogasalad.GamePlayer.EngineExceptions;
 
+/***
+ * Exception due to invalid move
+ *
+ * @author Vincent Chen
+ */
 public class InvalidMoveException extends EngineException {
 
   /***

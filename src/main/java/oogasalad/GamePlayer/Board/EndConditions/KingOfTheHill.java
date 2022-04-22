@@ -15,6 +15,8 @@ import org.apache.logging.log4j.Logger;
 
 /***
  * End condition where first person to reach the middle of the board wins
+ *
+ * @author Vincent Chen
  */
 public class KingOfTheHill implements EndCondition {
 

@@ -2,9 +2,14 @@ package oogasalad.GamePlayer.Board.TurnCriteria;
 
 import oogasalad.GamePlayer.Board.Player;
 
+/***
+ * Abstraction of turn determination
+ *
+ * @author Vincent Chen
+ */
 public abstract class TurnCriteria {
 
-  private Player[] players;
+  protected final Player[] players;
   private int index;
 
   public TurnCriteria(Player[] players) {
@@ -55,4 +60,7 @@ public abstract class TurnCriteria {
    * @return int player id after turn is made
    */
   public abstract int incrementTurn();
+
+
+  public abstract TurnCriteria copy();
 }

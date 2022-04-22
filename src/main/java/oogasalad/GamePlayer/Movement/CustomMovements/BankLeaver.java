@@ -3,6 +3,7 @@ package oogasalad.GamePlayer.Movement.CustomMovements;
 import static oogasalad.GamePlayer.Board.Setup.BoardSetup.JSON_EXTENSION;
 import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_CONFIG_FILE_HEADER;
 import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_DEFAULT_FILE;
+import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.DEFAULT_VALUE;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -30,6 +31,8 @@ import org.json.JSONObject;
 
 /***
  * Creates a custom movement that allows pieces to leave the bank
+ *
+ * @author Vincent Chen
  */
 public class BankLeaver implements MovementInterface {
 
@@ -60,11 +63,18 @@ public class BankLeaver implements MovementInterface {
           getJSONArray("general").getJSONObject(0).getInt("blockerCol");
     } catch (IOException e) {
       blockCol = BankBlocker.DEFAULT_VALUE;
-    } catch (Exception e) {
-      LOG.debug(1);
-      e.printStackTrace();
+      this.configFile = CH_CONFIG_FILE_HEADER + CH_DEFAULT_FILE + JSON_EXTENSION;
     }
     LOG.debug(String.format("Block col: %d", blockCol));
+  }
+
+  /***
+   * For testing, gets the block col
+   *
+   * @return block col
+   */
+  int getBlockCol() {
+    return blockCol;
   }
 
   /**
@@ -121,6 +131,7 @@ public class BankLeaver implements MovementInterface {
     try {
       String content = new String(Files.readAllBytes(Path.of(configFile)));
       JSONArray pieceRestrictionsArray = new JSONObject(content).getJSONArray("pieceRestrictions");
+      LOG.debug(String.format("Piece restriction array length: %d", pieceRestrictionsArray.length()));
       for(int i=0; i<pieceRestrictionsArray.length(); i++) {
         JSONObject currentPR = pieceRestrictionsArray.getJSONObject(i);
         if(currentPR.getString("piece").equals(pieceName)) {

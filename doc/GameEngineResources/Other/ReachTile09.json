@@ -1,0 +1,4 @@
+{
+	"tile": [0, 9],
+	"eligiblePieces": ["Pawn", "Checker"]
+}

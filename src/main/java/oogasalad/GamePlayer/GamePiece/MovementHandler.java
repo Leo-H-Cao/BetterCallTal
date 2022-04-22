@@ -14,6 +14,11 @@ import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/***
+ * Class that handles a piece's movements
+ *
+ * @author Vincent Chen
+ */
 public class MovementHandler {
 
   private static final Logger LOG = LogManager.getLogger(MovementHandler.class);
@@ -99,53 +104,6 @@ public class MovementHandler {
 
 //    LOG.debug(String.format("%s has the following moves: %s", piece.getName(), allMoves));
     return allMoves;
-  }
-
-  /***
-   * @param coordinate to check for captures
-   * @return if this piece can capture a piece on the given coordinate
-   */
-  private boolean validCapture(Piece piece, Coordinate coordinate, ChessBoard board) {
-    //TODO MOVEMENTS IS A PLACEHOLDER, MUST IMPLEMENT CAPTURES AS IT IS NULL WHEN THE PIECE IS FIRST INITIALED AS WELL AS THE GETMOVES METHOD
-    return movements.stream().map(move -> move.getMoves(piece, board))
-        .collect(Collectors.toSet())
-        .stream().flatMap(Set::stream)
-        .collect(Collectors.toSet()).stream()
-        .anyMatch(tile -> tile.getCoordinates().equals(coordinate));
-  }
-
-  /***
-   * @param coordinates to check for captures
-   * @return if this piece can capture a piece on the given coordinates
-   */
-  public boolean validCapture(Piece piece, List<Coordinate> coordinates, ChessBoard board) {
-    return coordinates.stream().anyMatch((c) -> validCapture(piece, c, board));
-  }
-
-  /***
-   * @param piece to do the capture
-   * @param opponent to capture
-   * @return if this piece can capture another piece
-   */
-  public boolean canCapture(Piece piece, Piece opponent, ChessBoard board) {
-    boolean sameTeam = piece.checkTeam(opponent.getTeam());
-
-    //TODO MOVEMENTS IS A PLACEHOLDER, MUST IMPLEMENT CAPTURES AS IT IS NULL WHEN THE PIECE IS FIRST INITIALED
-    boolean canCap = movements.stream()
-        .map(capture -> capture.getCaptures(piece, board))
-        .flatMap(Set::stream)
-        .map(ChessTile::getCoordinates)
-        .anyMatch(coords -> coords.equals(piece.getCoordinates()));
-
-    return !sameTeam && canCap;
-  }
-
-  /***
-   * @param opponentPieces to potentially capture
-   * @return if this piece can capture any piece in a list of pieces
-   */
-  public boolean canCapture(Piece piece, List<Piece> opponentPieces, ChessBoard board) {
-    return opponentPieces.stream().anyMatch((op) -> canCapture(piece, op, board));
   }
 
   /***

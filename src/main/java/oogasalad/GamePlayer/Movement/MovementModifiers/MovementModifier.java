@@ -5,6 +5,11 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
+/***
+ * Abstraction that allows functionality to happen after a move is made
+ *
+ * @author Vincent Chen
+ */
 public interface MovementModifier {
 
   /***
