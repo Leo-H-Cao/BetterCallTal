@@ -20,12 +20,14 @@ import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.History.History;
 import oogasalad.GamePlayer.Board.History.HistoryManager;
 import oogasalad.GamePlayer.Board.History.LocalHistoryManager;
+import oogasalad.GamePlayer.Board.Setup.ChessBoardData;
+import oogasalad.GamePlayer.Board.Setup.HistoryManagerData;
+import oogasalad.GamePlayer.Board.Setup.TurnManagerData;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.Board.TurnManagement.GamePlayers;
 import oogasalad.GamePlayer.Board.TurnManagement.LocalTurnManager;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
-import oogasalad.GamePlayer.Board.TurnManagement.TurnManagerData;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
@@ -60,7 +62,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   public ChessBoard(List<List<ChessTile>> board, TurnCriteria turnCriteria, Player[] players,
       List<ValidStateChecker> validStateCheckers, List<EndCondition> endConditions) {
     this.players = new GamePlayers(players);
-    this.turnManagerData = new TurnManagerData(this.players, turnCriteria, endConditions);
+    this.turnManagerData = new TurnManagerData(this.players, turnCriteria, endConditions, "");
     this.turnManager = new LocalTurnManager(this.turnManagerData);
     this.board = board;
     this.validStateCheckers = validStateCheckers;
@@ -489,6 +491,26 @@ public class ChessBoard implements Iterable<ChessTile> {
 
   public int getThisPlayer() {
     return -1;
+  }
+
+  public List<List<ChessTile>> getTiles() {
+    return board;
+  }
+
+  public List<ValidStateChecker> getValidStateCheckers() {
+    return validStateCheckers;
+  }
+
+  public HistoryManagerData getHistoryManagerData() {
+    return history.getHistoryManagerData();
+  }
+
+  public GamePlayers getGamePlayers() {
+    return players;
+  }
+
+  public ChessBoardData getBoardData(){
+    return new ChessBoardData(this);
   }
 
   /**
