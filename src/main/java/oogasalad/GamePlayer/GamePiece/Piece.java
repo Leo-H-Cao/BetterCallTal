@@ -282,19 +282,6 @@ public class Piece implements Cloneable {
     return health.damage();
   }
 
-  /**
-   * Updates/sets the movement for a piece
-   */
-  public void setMovement(MovementHandler moves) {
-    movementHandler = moves;
-  }
-
-  public void clearActions() {
-
-  }
-
-
-
   public double getPieceValue(){
     return suppPieceData.pointValue();
   }

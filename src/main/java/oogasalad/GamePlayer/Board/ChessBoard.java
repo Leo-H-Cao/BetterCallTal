@@ -314,21 +314,6 @@ public class ChessBoard implements Iterable<ChessTile> {
   }
 
   /**
-   * starting from the top left, this method returns the tile that corresponds to the LINEAR
-   * position of the tiles. That is, by placing each row behind the previous return the tile of
-   * index
-   *
-   * @param index
-   * @return
-   */
-  public ChessTile getTile(int index) {
-    List<ChessTile> linearTiles = board.stream()
-        .flatMap(List::stream).toList();
-
-    return linearTiles.get(index);
-  }
-
-  /**
    * Returns if a tile is empty
    *
    * @param coordinate to check
