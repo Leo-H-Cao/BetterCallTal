@@ -24,6 +24,7 @@ public class ExportJSON {
   private ArrayList<PlayerInfoExport> playerInfo;
   private ExportWrapper exportWrapper;
   private ArrayList<PieceExport> pieces;
+  private ArrayList<PieceMainExport> piecesMain;
   private ArrayList<TileExport> tiles;
 
 
@@ -35,7 +36,7 @@ public class ExportJSON {
     createGeneralExportObject();
     createPlayerInfoObject();
     createPiecesAndTilesExportObjects();
-    exportWrapper = new ExportWrapper(generalExport, playerInfo, pieces, tiles);
+    exportWrapper = new ExportWrapper(generalExport, playerInfo, piecesMain, tiles);
   }
 
   public String getJSONTestString(){
@@ -75,11 +76,13 @@ public class ExportJSON {
   private void createPiecesAndTilesExportObjects(){
     pieces = new ArrayList<>();
     tiles = new ArrayList<>();
+    piecesMain = new ArrayList<>();
     for(int y = 0; y < boardState.getBoardHeight().get(); y++){
       for(int x = 0; x < boardState.getBoardWidth().get(); x++){
         EditorTile tile = boardState.getTile(x, y);
         if(tile.hasPiece()){
-          pieces.add(new PieceExport(y, x, piecesState.getPiece(tile.getPieceID()), tile.getTeam()));
+          pieces.add(new PieceExport( piecesState.getPiece(tile.getPieceID())));
+          piecesMain.add(new PieceMainExport(y,x, tile.getTeam(),piecesState.getPiece(tile.getPieceID()) ));
         }
         if(tile.getTileEffect() != TileEffect.NONE || tile.getImg() != null){
           TileExport tileExport = new TileExport(y, x, tile.getImg());

@@ -8,8 +8,6 @@ import oogasalad.Editor.ModelState.EditPiece.PieceGridTile;
 public class PieceExport {
   private final int PIECE_LOCATION = 3;
 
-  private int row;
-  private int col;
   private String pieceName;
   private String imgFile;
   private int pointValue;
@@ -22,32 +20,20 @@ public class PieceExport {
   private ArrayList<BasicMovementExport> basicMovements;
   private ArrayList<BasicMovementExport> basicCaptures;
 
-  public PieceExport(int row, int col, EditorPiece editorPiece, int team){
-    this.row = row;
-    this.col = col;
-    this.team = team;
+  public PieceExport(EditorPiece editorPiece){
     pieceName = editorPiece.getPieceName();
     imgFile = editorPiece.getImage(team).getValue().getUrl().split("/classes/")[1];
     pointValue = editorPiece.getPointValue();
-    mainPiece = editorPiece.isMainPiece() ? 1 : 0;
     customMoves = editorPiece.getCustomMoves() == null ? new ArrayList<>() :editorPiece.getCustomMoves();
-    movementModifiers = new ArrayList<>();
-    onInteractionModifier = new ArrayList<>();
     movementGrid = editorPiece.getMovementGrid();
     basicMovements = new ArrayList<>();
 
+    movementModifiers = new ArrayList<>();
+    onInteractionModifier = new ArrayList<>();
     //change for customized captures
     basicCaptures = basicMovements;
 
     createBasicMovements();
-  }
-
-  public int getRow() {
-    return row;
-  }
-
-  public int getCol() {
-    return col;
   }
 
   public String getPieceName() {

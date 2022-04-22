@@ -74,7 +74,7 @@ public class ExportJSONTest extends DukeApplicationTest {
     testPiece.setTile(5, 6, PieceGridTile.OPEN);
     testPiece.setTile(2, 5, PieceGridTile.OPEN);
 
-    boardState.setPieceStartingLocation("123", 3, 6, 0);
+    boardState.setPieceStartingLocation("123", 3, 6, 1);
     boardState.setPieceStartingLocation("123", 4, 5, 0);
     exportJSON = new ExportJSON(piecesState, gameRulesState, boardState);
     exportJSON.writeToJSON();
