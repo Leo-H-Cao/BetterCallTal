@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.Setup.HistoryManagerData;
 
 /**
  * This class is used to store prior states of the game, allowing for checking complex game
@@ -182,5 +183,15 @@ public class LocalHistoryManager implements HistoryManager {
   @Override
   public String getLink() {
     return "";
+  }
+
+  /**
+   * Gets the history manager data.
+   *
+   * @return the history manager data.
+   */
+  @Override
+  public HistoryManagerData getHistoryManagerData() {
+    return new HistoryManagerData(this);
   }
 }

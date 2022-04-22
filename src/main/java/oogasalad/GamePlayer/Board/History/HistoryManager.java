@@ -2,6 +2,7 @@ package oogasalad.GamePlayer.Board.History;
 
 import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.Setup.HistoryManagerData;
 
 public interface HistoryManager {
 
@@ -101,4 +102,12 @@ public interface HistoryManager {
    * @return the history API link for the current history manager data.
    */
   String getLink();
+
+  /**
+   * Gets the history manager data.
+   *
+   * @return the history manager data.
+   */
+  HistoryManagerData getHistoryManagerData();
+
 }

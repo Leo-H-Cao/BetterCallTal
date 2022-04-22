@@ -13,10 +13,10 @@ public record HistoryManagerData(String historyAPI) {
   /**
    * Creates the history manager data from the history manager.
    *
-   * @param historyAPI the history manager to create the data from.
+   * @param history the history manager to create the data from.
    */
-  public HistoryManagerData(HistoryManager historyAPI) {
-    this(historyAPI.getLink());
+  public HistoryManagerData(HistoryManager history) {
+    this(history.getLink());
   }
 
 }
