@@ -2,6 +2,7 @@ package oogasalad.Server.Controllers;
 
 import java.util.Map;
 import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.ChessBoard.ChessBoardData;
 import oogasalad.GamePlayer.Board.TurnManagement.GamePlayers;
 import oogasalad.Server.SessionManagement.GameSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,8 +64,8 @@ public class TurnController {
    */
   @GetMapping("/isGameOver/{id}")
   @ResponseBody
-  public boolean isGameOver(@PathVariable String id, @RequestBody ChessBoard board) {
-    return activeSessions.getSession(id).turns().isGameOver(board);
+  public boolean isGameOver(@PathVariable String id, @RequestBody ChessBoardData board) {
+    return activeSessions.getSession(id).turns().isGameOver(new ChessBoard(board));
   }
 
   /**

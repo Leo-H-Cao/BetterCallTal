@@ -1,8 +1,9 @@
 package oogasalad.Server.Controllers;
 
 import java.util.stream.Stream;
-import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.ChessBoard.ChessBoardData;
 import oogasalad.GamePlayer.Board.History.History;
+import oogasalad.GamePlayer.Board.History.HistoryData;
 import oogasalad.Server.SessionManagement.GameSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -40,8 +41,8 @@ public class HistoryController {
    */
   @GetMapping("/current-board/{id}")
   @ResponseBody
-  public ChessBoard getCurrentBoard(@PathVariable String id) {
-    return activeSessions.getSession(id).history().getCurrentBoard();
+  public ChessBoardData getCurrentBoard(@PathVariable String id) {
+    return new ChessBoardData(activeSessions.getSession(id).history().getCurrentBoard());
   }
 
   /**
@@ -52,8 +53,8 @@ public class HistoryController {
    */
   @PostMapping("/add/{id}")
   @ResponseBody
-  public History add(@PathVariable String id, @RequestBody History newState) {
-    return activeSessions.getSession(id).history().add(newState);
+  public HistoryData add(@PathVariable String id, @RequestBody History newState) {
+    return new HistoryData(activeSessions.getSession(id).history().add(newState));
   }
 
   /**
@@ -64,8 +65,8 @@ public class HistoryController {
    */
   @GetMapping("/last/{id}")
   @ResponseBody
-  public History getLast(@PathVariable String id) {
-    return activeSessions.getSession(id).history().getLast();
+  public HistoryData getLast(@PathVariable String id) {
+    return new HistoryData(activeSessions.getSession(id).history().getLast());
   }
 
   /**
@@ -92,8 +93,8 @@ public class HistoryController {
    */
   @GetMapping("/index/{id}/{index}")
   @ResponseBody
-  public History get(@PathVariable String id, @PathVariable int index) {
-    return activeSessions.getSession(id).history().get(index);
+  public HistoryData get(@PathVariable String id, @PathVariable int index) {
+    return new HistoryData(activeSessions.getSession(id).history().get(index));
   }
 
   /**
@@ -104,8 +105,8 @@ public class HistoryController {
    */
   @GetMapping("/first/{id}")
   @ResponseBody
-  public History getFirst(@PathVariable String id) {
-    return activeSessions.getSession(id).history().getFirst();
+  public HistoryData getFirst(@PathVariable String id) {
+    return new HistoryData(activeSessions.getSession(id).history().getFirst());
   }
 
   /**
@@ -116,8 +117,8 @@ public class HistoryController {
    */
   @GetMapping("/current/{id}")
   @ResponseBody
-  public History getCurrent(@PathVariable String id) {
-    return activeSessions.getSession(id).history().getCurrent();
+  public HistoryData getCurrent(@PathVariable String id) {
+    return new HistoryData(activeSessions.getSession(id).history().getCurrent());
   }
 
   /**
@@ -141,8 +142,8 @@ public class HistoryController {
    */
   @PutMapping("/rewind/{id}/{index}")
   @ResponseBody
-  public History goToState(@PathVariable String id, @PathVariable int index) {
-    return activeSessions.getSession(id).history().goToState(index);
+  public HistoryData goToState(@PathVariable String id, @PathVariable int index) {
+    return new HistoryData(activeSessions.getSession(id).history().goToState(index));
   }
 
   /**
@@ -176,7 +177,7 @@ public class HistoryController {
    */
   @GetMapping("/stream/{id}")
   @ResponseBody
-  public Stream<History> stream(@PathVariable String id) {
-    return activeSessions.getSession(id).history().stream();
+  public Stream<HistoryData> stream(@PathVariable String id) {
+    return activeSessions.getSession(id).history().stream().map(HistoryData::new);
   }
 }
