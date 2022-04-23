@@ -48,7 +48,7 @@ public class Bot {
     }
 
 
-    return getMinimaxMove(board, currentPlayer, 1);
+    return getMinimaxMove(board, currentPlayer, 2);
     //return getRandomMove(board, currentPlayer);
   }
 
