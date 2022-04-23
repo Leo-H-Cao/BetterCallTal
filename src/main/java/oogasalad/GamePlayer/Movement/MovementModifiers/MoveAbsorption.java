@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Movement;
 
@@ -30,6 +31,6 @@ public class MoveAbsorption implements MovementModifier {
       piece.addNewMovements(Movement.invertMovements(justTaken.getMoves()),
           Movement.invertMovements(justTaken.getCaptures()));
       return Set.of(board.getTile(piece.getCoordinates()));
-    } catch (Exception e) {return Collections.emptySet();}
+    } catch (OutsideOfBoardException e) {return Collections.emptySet();}
   }
 }
