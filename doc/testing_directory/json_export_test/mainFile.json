@@ -2,10 +2,10 @@
   "general" : {
     "rows" : 8,
     "columns" : 8,
-    "turnCriteria" : "linear",
+    "turnCriteria" : "Linear",
     "colors" : [ "white", "black" ],
-    "endConditions" : [ "checkmate", "stalemate" ],
-    "validStateChecker" : [ "Check" ]
+    "endConditions" : [ [ "Checkmate" ], [ "Stalemate" ] ],
+    "validStateChecker" : [ [ "Check" ] ]
   },
   "playerInfo" : [ {
     "team" : 0,
@@ -33,25 +33,5 @@
     "onInteractionModifier" : [ ],
     "customMoves" : [ ]
   } ],
-  "tiles" : [ {
-    "row" : 2,
-    "col" : 1,
-    "tileActions" : [ "Fire" ],
-    "img" : null
-  }, {
-    "row" : 4,
-    "col" : 3,
-    "tileActions" : [ ],
-    "img" : "images/pieces/black/rook.png"
-  }, {
-    "row" : 5,
-    "col" : 6,
-    "tileActions" : [ "Swap" ],
-    "img" : null
-  }, {
-    "row" : 6,
-    "col" : 2,
-    "tileActions" : [ "BlackHoleAction" ],
-    "img" : null
-  } ]
+  "tiles" : [ ]
 }

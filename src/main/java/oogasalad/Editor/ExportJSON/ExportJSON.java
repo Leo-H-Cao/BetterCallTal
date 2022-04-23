@@ -20,6 +20,7 @@ import org.apache.logging.log4j.Logger;
 public class ExportJSON {
   private static final Logger LOG = LogManager.getLogger(ExportJSON.class);
   private final int PIECE_LOCATION = 3;
+  private final String OBJECT_MAPPER_ERR_MSG = "JSON object mapper exception";
 
   private PiecesState piecesState;
   private GameRulesState gameRulesState;
@@ -51,24 +52,20 @@ public class ExportJSON {
     ObjectMapper objectMapper = new ObjectMapper();
     try{
 //      String piecesJSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pieces);
-//      JSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(exportWrapper);
-//      JSONTestString = objectMapper.writeValueAsString(exportWrapper);
-//      System.out.println(JSONString);
-//      System.out.println(piecesJSONString);
 //      System.out.println(JSONTestString);
 
-      File movementDir = new File("doc/testing_directory/json_export_test/pieces");
+      File movementDir = new File("doc/testing_directory/json_export_test/Pieces");
       if (!movementDir.exists()){
         movementDir.mkdirs();
       }
       for(PieceExport piece : pieces){
-        objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/testing_directory/json_export_test/pieces/"+piece.getPieceName()), piece);
+        objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/testing_directory/json_export_test/Pieces/"+piece.getPieceName()+".json"), piece);
       }
-      objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/testing_directory/json_export_test/"+"mainFile"), exportWrapper);
+      objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/testing_directory/json_export_test/mainFile.json"), exportWrapper);
 
     }
     catch (IOException e){
-      LOG.warn("JSON object mapper exception");
+      LOG.warn(OBJECT_MAPPER_ERR_MSG);
     }
   }
 
@@ -139,14 +136,14 @@ public class ExportJSON {
   private void exportBasicMovement(BasicMovementExportWrapper basicMovements, String pieceName){
     ObjectMapper objectMapper = new ObjectMapper();
     try{
-      File movementDir = new File("doc/testing_directory/json_export_test/movement");
+      File movementDir = new File("doc/testing_directory/json_export_test/BasicMovements");
       if (!movementDir.exists()){
         movementDir.mkdirs();
       }
-      objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/testing_directory/json_export_test/movement/"+pieceName+"Movement"), basicMovements);
+      objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/testing_directory/json_export_test/BasicMovements/"+pieceName+"Movement.json"), basicMovements);
     }
     catch (IOException e){
-      LOG.warn("JSON object mapper exception");
+      LOG.warn(OBJECT_MAPPER_ERR_MSG);
     }
   }
 }

@@ -5,6 +5,6 @@
   "customMoves" : [ ],
   "movementModifiers" : [ ],
   "onInteractionModifier" : [ ],
-  "basicMovements" : [ "piece1Movements" ],
-  "basicCaptures" : [ "piece1Captures" ]
+  "basicMovements" : [ "piece1Movement" ],
+  "basicCaptures" : [ "piece1Movement" ]
 }

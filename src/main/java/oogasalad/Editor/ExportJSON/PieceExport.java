@@ -24,8 +24,10 @@ public class PieceExport {
     movementGrid = editorPiece.getMovementGrid();
     basicMovements = new ArrayList<>();
     basicCaptures = new ArrayList<>();
-    basicMovements.add(pieceName+"Movements");
-    basicCaptures.add(pieceName+"Captures");
+    basicMovements.add(pieceName+"Movement");
+
+    //change for capture != movement
+    basicCaptures.add(pieceName+"Movement");
     movementModifiers = new ArrayList<>();
     onInteractionModifier = new ArrayList<>();
   }
