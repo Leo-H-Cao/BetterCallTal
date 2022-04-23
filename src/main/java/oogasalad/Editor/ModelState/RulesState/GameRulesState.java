@@ -68,8 +68,7 @@ public class GameRulesState {
     return teamOpponents;
   }
 
-  public void setTeamOpponents(
-      HashMap<Integer, ArrayList<Integer>> teamOpponents) {
+  public void setTeamOpponents(HashMap<Integer, ArrayList<Integer>> teamOpponents) {
     this.teamOpponents = teamOpponents;
   }
 

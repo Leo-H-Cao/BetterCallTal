@@ -1,5 +1,7 @@
 package oogasalad.Editor.ModelState;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import javafx.beans.property.*;
 import javafx.scene.image.Image;
 import oogasalad.Editor.ExportJSON.ExportJSON;
@@ -96,5 +98,28 @@ public class EditorBackend {
 		piece.setPieceName(name);
 		piece.setPointValue(val);
 		piece.setMovementGrid(moves);
+	}
+
+	private void setDefaultGameRules(){
+		gameRulesState.setTurnCriteria("linear");
+
+		ArrayList<String> winConditions = new ArrayList<>();
+		winConditions.add("Checkmate");
+		winConditions.add("Stalemate");
+		gameRulesState.setWinConditions(winConditions);
+
+		ArrayList<String> colors = new ArrayList<>();
+		colors.add("black");
+		colors.add("white");
+		gameRulesState.setColors(colors);
+
+		HashMap<Integer, ArrayList<Integer>> teamOpponents = new HashMap<>();
+		int team0 = 0;
+		int team1 = 1;
+		teamOpponents.put(team0, new ArrayList<>());
+		teamOpponents.put(team1, new ArrayList<>());
+		teamOpponents.get(team0).add(team1);
+		teamOpponents.get(team1).add(team0);
+		gameRulesState.setTeamOpponents(teamOpponents);
 	}
 }
