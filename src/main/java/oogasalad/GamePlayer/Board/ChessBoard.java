@@ -31,7 +31,6 @@ import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.MoveAfterGameEndException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
@@ -164,7 +163,7 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @param finalSquare end square
    * @return set of updated tiles + next player turn
    */
-  public TurnUpdate move(Piece piece, Coordinate finalSquare) throws EngineException {
+  public TurnUpdate move(Piece piece, Coordinate finalSquare) throws Throwable {
     // TODO: valid state checker for person who just moved (redundunt - optional)
     // TODO: check end conditions for other player(s)
     if (!isGameOver() && piece.checkTeam(turnManager.getCurrentPlayer())) {

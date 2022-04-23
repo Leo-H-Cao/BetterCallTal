@@ -54,6 +54,8 @@ class GravityMovementModifierTest {
       assertTrue(myBoard.getTile(Coordinate.of(2, 7)).getPiece().isPresent());
     } catch (Exception e) {
       fail();
+    } catch (Throwable e) {
+      e.printStackTrace();
     }
   }
 }
