@@ -144,7 +144,7 @@ public class Movement implements MovementInterface{
   }
 
   public Map<String, Set<ChessTile>> getLegalMoves(Piece piece, ChessBoard board)
-      throws EngineException {
+      throws Throwable {
     Map<String, Set<ChessTile>> allMoves = getAllMoves(piece, board);
     for(String moveType : allMoves.keySet()){
       for(ChessTile move : allMoves.get(moveType)){

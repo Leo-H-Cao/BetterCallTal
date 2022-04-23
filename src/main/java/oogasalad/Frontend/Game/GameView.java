@@ -100,9 +100,11 @@ public class GameView extends View {
                 updates.add(bot.getBotMove(getGameBackend().getChessBoard(), 1));
             }
             updateBoard(updates);
-        } catch (Exception e) {
+        } catch (Exception e){
             e.printStackTrace();
             LOG.warn("Move failed");
+        } catch (Throwable t) {
+            LOG.warn(t.getMessage());
         }
     }
 

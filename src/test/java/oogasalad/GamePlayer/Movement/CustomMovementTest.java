@@ -77,7 +77,7 @@ class CustomMovementTest {
 
       assertThrows(InvalidMoveException.class, () -> new DoubleFirstMove().capturePiece(whiteBlockerTwo, null, board));
       assertThrows(InvalidMoveException.class, () -> new DoubleFirstMove().movePiece(whiteBlockerTwo, Coordinate.of(0, 2), board));
-    } catch(Exception e) {
+    } catch(Throwable e) {
       e.printStackTrace();
       fail();
     }
@@ -263,7 +263,7 @@ class CustomMovementTest {
       chessBoard.move(chessBoard.getTile(Coordinate.of(1, 2)).getPiece().get(), Coordinate.of(2, 2));
       assertEquals(Set.of(), blackReference.getMoves(chessBoard));
 
-    } catch(Exception e) {
+    } catch(Throwable e) {
       e.printStackTrace();
       fail();
     }
@@ -279,7 +279,7 @@ class CustomMovementTest {
       Piece whiteReference = chessBoard.getTile(Coordinate.of(6, 6)).getPiece().get();
       chessBoard.move(chessBoard.getTile(Coordinate.of(6, 6)).getPiece().get(), Coordinate.of(4, 6));
       assertThrows(InvalidMoveException.class, () -> new EnPassant().capturePiece(whiteReference, Coordinate.of(2, 2), chessBoard));
-    } catch(Exception e) {
+    } catch(Throwable e) {
       e.printStackTrace();
       fail();
     }

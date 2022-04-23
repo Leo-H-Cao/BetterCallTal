@@ -6,7 +6,8 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
-public class HomeViewTest extends DukeApplicationTest{
+public class HomeViewTest extends DukeApplicationTest {
+
     private HomeView myHomeView;
     private ChoiceBox myLanguageSelector;
     private Scene myScene;
@@ -27,6 +28,6 @@ public class HomeViewTest extends DukeApplicationTest{
     @Test
     void testOpenGameEditor() {
         clickOn(lookup("#start").query());
-
+         
     }
 }
