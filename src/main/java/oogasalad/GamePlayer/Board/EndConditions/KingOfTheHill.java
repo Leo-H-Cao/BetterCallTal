@@ -31,8 +31,8 @@ public class KingOfTheHill implements EndCondition {
     Set<ChessTile> middleTiles = getMiddleTiles(board);
     Map<Integer, Double> scores = new HashMap<>();
 
-    middleTiles.stream().filter((t) -> t.getPiece().isPresent() && t.getPiece().get().isTargetPiece())
-        .findFirst().ifPresent((t) -> {
+    middleTiles.stream().filter(t -> t.getPiece().isPresent() && t.getPiece().get().isTargetPiece())
+        .findFirst().ifPresent(t -> {
           int winningTeam = t.getPiece().get().getTeam();
           scores.put(winningTeam, WIN);
           LOG.debug(String.format("Players: %s" , Arrays.toString(board.getPlayers())));
@@ -60,8 +60,8 @@ public class KingOfTheHill implements EndCondition {
     int[] rowRange = getRange(board.getBoardHeight());
     Set<ChessTile> middleTiles = new HashSet<>();
 
-    IntStream.range(rowRange[0], rowRange[1]+1).forEach((i) ->
-        IntStream.range(colRange[0], colRange[1]+1).forEach((j) ->
+    IntStream.range(rowRange[0], rowRange[1]+1).forEach(i ->
+        IntStream.range(colRange[0], colRange[1]+1).forEach(j ->
         { try {
             middleTiles.add(board.getTile(Coordinate.of(i, j)));
           } catch (OutsideOfBoardException ignored) {
