@@ -18,6 +18,7 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.util.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,6 +31,7 @@ public class Atomic implements MovementModifier{
 
   private static final String ATOMIC_IMMUNE_FILE_PATH_HEADER = "doc/GameEngineResources/Other/";
   private static final String ATOMIC_IMMUNE_DEFAULT_FILE = "AtomicImmune";
+  private static final List<String> DEFAULT_ATOMIC_IMMUNE = List.of("Pawn");
   private static final Logger LOG = LogManager.getLogger(Atomic.class);
 
   private List<String> explosionImmuneNames;
@@ -53,19 +55,7 @@ public class Atomic implements MovementModifier{
    * Assigns piece immune to explosions, default is just pawn
    */
   private List<String> assignImmune(String atomicImmuneFile) {
-    try {
-      List<String> immuneNames = new ArrayList<>();
-      File immuneFile = new File(atomicImmuneFile);
-      Scanner reader = new Scanner(immuneFile);
-      while (reader.hasNext()) {
-        immuneNames.add(reader.next().trim());
-      }
-      reader.close();
-      return immuneNames;
-    } catch (Exception e) {
-      LOG.warn("Could not find atomic file");
-      return List.of("Pawn");
-    }
+    return FileReader.readManyStrings(atomicImmuneFile, DEFAULT_ATOMIC_IMMUNE);
   }
 
   /***
