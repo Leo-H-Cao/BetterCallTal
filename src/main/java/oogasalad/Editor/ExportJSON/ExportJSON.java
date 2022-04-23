@@ -53,9 +53,11 @@ public class ExportJSON {
   public void writeToJSON(){
     ObjectMapper objectMapper = new ObjectMapper();
     try{
+      String piecesJSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pieces);
       JSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(exportWrapper);
       JSONTestString = objectMapper.writeValueAsString(exportWrapper);
       System.out.println(JSONString);
+      System.out.println(piecesJSONString);
 //      System.out.println(JSONTestString);
 
     }
@@ -90,7 +92,7 @@ public class ExportJSON {
         EditorTile tile = boardState.getTile(x, y);
         if(tile.hasPiece()){
           EditorPiece curEditorPiece = piecesState.getPiece(tile.getPieceID());
-          pieces.add(new PieceExport( curEditorPiece));
+          pieces.add(new PieceExport(curEditorPiece));
           piecesMain.add(new PieceMainExport(y,x, tile.getTeam(),piecesState.getPiece(tile.getPieceID())));
           if(!seenPieceID.contains(curEditorPiece.getPieceID())){
             createBasicMovement(curEditorPiece.getMovementGrid());
