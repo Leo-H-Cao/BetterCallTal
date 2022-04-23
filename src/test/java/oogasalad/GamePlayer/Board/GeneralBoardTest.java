@@ -2,6 +2,7 @@ package oogasalad.GamePlayer.Board;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -113,5 +114,10 @@ class GeneralBoardTest {
     tile = new ChessTile(Coordinate.of(0, 0), pieceOne);
     assertEquals(pieceOne, tile.getPiece().get());
     assertEquals(Coordinate.of(0, 0), tile.getCoordinates());
+  }
+
+  @Test
+  void boardEqualsTest() {
+    assertNotEquals(board, null);
   }
 }
