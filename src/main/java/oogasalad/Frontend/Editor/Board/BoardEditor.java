@@ -30,7 +30,7 @@ public class BoardEditor extends NodeContainer {
 		ret.setCenter(myChessBoard.getNode());
 		ret.setLeft(myPieceLibrary.getNode());
 		ret.setRight(myModifierLibrary.getNode());
-		ret.setBottom(ButtonFactory.makeButton(ButtonType.TEXT, "Export", "export", e -> getEditorBackend().exportState()));
+		ret.setBottom(myBoardSettings.getNode());
 		return ret;
 	}
 }

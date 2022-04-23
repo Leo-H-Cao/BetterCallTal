@@ -106,6 +106,7 @@ public class EditorView extends View {
 		Button addCustomPieceButton = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("NewCustomPiece", getClass()), "newCustomPiece",
 				(e) -> newCustomPiece());
 		buttons.add(addCustomPieceButton, 1, 0);
+		buttons.add(ButtonFactory.makeButton(ButtonType.TEXT, "Export", "export", e -> getEditorBackend().exportState()), 2, 0);
 		GridPane.setFillHeight(addCustomPieceButton, true);
 		ret.add(buttons, 0, 0);
 		ret.add(myTabs, 0, 1);

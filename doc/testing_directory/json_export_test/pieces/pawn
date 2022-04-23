@@ -1,0 +1,10 @@
+{
+  "pieceName" : "pawn",
+  "imgFile" : "images/pieces/white/pawn.png",
+  "pointValue" : 1,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : [ ],
+  "basicMovements" : [ "pawnMovements" ],
+  "basicCaptures" : [ "pawnCaptures" ]
+}

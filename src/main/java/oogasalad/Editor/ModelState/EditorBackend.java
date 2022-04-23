@@ -91,7 +91,7 @@ public class EditorBackend {
 	}
 
 	private void createDefaultPiece(String name, int val, MovementGrid moves) {
-		getPiecesState().createCustomPiece(name);
+		getPiecesState().createDefaultPiece(name);
 		EditorPiece piece = getPiecesState().getPiece(name);
 		piece.setImage(0, new Image("images/pieces/white/" + name + ".png"));
 		piece.setImage(1, new Image("images/pieces/black/" + name + ".png"));
