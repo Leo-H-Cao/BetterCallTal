@@ -4,6 +4,7 @@ import static oogasalad.GamePlayer.Board.Setup.BoardSetup.JSON_EXTENSION;
 import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_CONFIG_FILE_HEADER;
 import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_DEFAULT_FILE;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,6 +17,7 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.CustomMovements.BankLeaver;
+import oogasalad.GamePlayer.util.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
@@ -50,20 +52,8 @@ public class GravityVSC implements ValidStateChecker {
    */
   public GravityVSC(String configFile) {
     configFile =  G_FILE_PATH_HEADER + configFile + JSON_EXTENSION;
-    relativeCoordinates = new ArrayList<>();
     LOG.debug(String.format("Config file: %s", configFile));
-
-    try {
-      String content = new String(Files.readAllBytes(Path.of(configFile)));
-      JSONObject data = new JSONObject(content);
-      JSONArray relCoords = data.getJSONArray("relativeCoordinates");
-      for(int i=0; i<relCoords.length(); i++) {
-        JSONArray current = relCoords.getJSONArray(i);
-        relativeCoordinates.add(Coordinate.of(current.getInt(0), current.getInt(1)));
-      }
-    } catch (IOException e) {
-      relativeCoordinates = DEFAULT;
-    }
+    relativeCoordinates = FileReader.readCoordinates(configFile, "relativeCoordinates", DEFAULT);
   }
 
   /***
@@ -79,5 +69,12 @@ public class GravityVSC implements ValidStateChecker {
     return relativeCoordinates.stream().anyMatch(c -> {
       try { return board.getTile(Coordinate.add(c, move.getCoordinates())).getPiece().isPresent();}
       catch (OutsideOfBoardException e) {return true;}});
+  }
+
+  /***
+   * @return relative coordinates for testing
+   */
+  List<Coordinate> getRelativeCoordinates() {
+    return relativeCoordinates;
   }
 }

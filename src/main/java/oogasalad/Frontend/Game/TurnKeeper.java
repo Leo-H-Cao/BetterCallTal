@@ -58,4 +58,8 @@ public class TurnKeeper implements TurnManager {
   public GamePlayers getGamePlayers() {
     return null;
   }
+
+  public boolean hasRemote() {
+    return turn.stream().anyMatch(e -> e.equals(AI) || e.equals(SERVER));
+  }
 }

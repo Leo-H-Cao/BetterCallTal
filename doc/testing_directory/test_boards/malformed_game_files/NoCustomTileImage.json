@@ -1,0 +1,30 @@
+{
+  "general": [
+    {
+      "rows": 10,
+      "columns": 10,
+      "turnCriteria": "Linear",
+      "colors": ["black", "white"],
+      "endConditions": [],
+      "validStateCheckers": []
+    }
+  ],
+  "playerInfo": [
+    {
+      "team": 0,
+      "opponents": [1]
+    },
+    {
+      "team": 1,
+      "opponents": [0]
+    }
+  ],
+  "pieces": [],
+  "tiles": [
+    {
+      "row": 3,
+      "col": 5,
+      "tileActions": ["BlackHoleAction"]
+    }
+  ]
+}

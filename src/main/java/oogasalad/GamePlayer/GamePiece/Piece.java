@@ -1,10 +1,12 @@
 package oogasalad.GamePlayer.GamePiece;
 
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -79,19 +81,14 @@ public class Piece implements Cloneable {
    * @return updated actions based on tile actions and where piece moved
    */
   public Set<ChessTile> updateCoordinates(ChessTile tile, ChessBoard board) throws OutsideOfBoardException {
-    try {
-      Set<ChessTile> updatedSquares = new HashSet<>(List.of(board.getTile(coordinates), tile));
-      board.getTile(coordinates).removePiece(this);
-      coordinates = tile.getCoordinates();
-      tile.appendPiece(this);
-      history.add(tile.getCoordinates());
-      updatedSquares.addAll(tile.executeActions(board));
-      LOG.debug(String.format("Updated squares: %s", updatedSquares));
-      return updatedSquares;
-    } catch(OutsideOfBoardException e) {
-      LOG.warn("Couldn't update piece coordinates");
-      throw new OutsideOfBoardException(coordinates.toString());
-    }
+    Set<ChessTile> updatedSquares = new HashSet<>(List.of(board.getTile(coordinates), tile));
+    board.getTile(coordinates).removePiece(this);
+    coordinates = tile.getCoordinates();
+    tile.appendPiece(this);
+    history.add(tile.getCoordinates());
+    updatedSquares.addAll(tile.executeActions(board));
+    LOG.debug(String.format("Updated squares: %s", updatedSquares));
+    return updatedSquares;
   }
 
   /***
@@ -104,14 +101,6 @@ public class Piece implements Cloneable {
   }
 
   /***
-   * @param coordinates to check for captures
-   * @return if this piece can capture a piece on the given coordinates
-   */
-  public boolean validCapture(List<Coordinate> coordinates, ChessBoard board) {
-    return movementHandler.validCapture(this, coordinates, board);
-  }
-
-  /***
    * @return coordinate of piece
    */
   public Coordinate getCoordinates() {
@@ -119,19 +108,11 @@ public class Piece implements Cloneable {
   }
 
   /***
-   * @param piece to capture
-   * @return if this piece can capture another piece
-   */
-  public boolean canCapture(Piece piece, ChessBoard board) {
-    return movementHandler.canCapture(this, piece, board);
-  }
-
-  /***
    * @return if this piece is opposing any piece in the given list (i.e. player numbers are
    * opposing)
    */
   public boolean isOpposing(List<Piece> opponents, ChessBoard board) {
-    return opponents.stream().anyMatch((p) -> isOpposing(p, board));
+    return opponents.stream().anyMatch(p -> isOpposing(p, board));
   }
 
   /***
@@ -140,15 +121,7 @@ public class Piece implements Cloneable {
    */
   private boolean isOpposing(Piece piece, ChessBoard board) {
     int[] opponentIDs = board.getPlayer(team).opponentIDs();
-    return Arrays.stream(opponentIDs).anyMatch((o) -> piece.getTeam() == board.getPlayer(o).teamID());
-  }
-
-  /***
-   * @param pieces to potentially capture
-   * @return if this piece can capture any piece in a list of pieces
-   */
-  public boolean canCapture(List<Piece> pieces, ChessBoard board) {
-    return movementHandler.canCapture(this, pieces, board);
+    return Arrays.stream(opponentIDs).anyMatch(o -> piece.getTeam() == board.getPlayer(o).teamID());
   }
 
   /***
@@ -273,7 +246,7 @@ public class Piece implements Cloneable {
    */
   public Set<ChessTile> runInteractionModifiers(ChessBoard board) {
     LOG.debug("Running on interaction modifiers");
-    return onInteractionModifiers.stream().flatMap((oim) -> oim.updateMovement(this, board).stream()).collect(
+    return onInteractionModifiers.stream().flatMap(oim -> oim.updateMovement(this, board).stream()).collect(
         Collectors.toSet());
   }
 
@@ -300,24 +273,12 @@ public class Piece implements Cloneable {
   /**
    * This method is used for the burn tile in order to
    */
+  @Deprecated
   public boolean burn() {
     //TODO NEED TO ADD PIECE HEALTH TO JSON AND CONSTRUCTOR
     PieceHealth health = new PieceHealth();
     return health.damage();
   }
-
-  /**
-   * Updates/sets the movement for a piece
-   */
-  public void setMovement(MovementHandler moves) {
-    movementHandler = moves;
-  }
-
-  public void clearActions() {
-
-  }
-
-
 
   public double getPieceValue(){
     return suppPieceData.pointValue();
@@ -354,5 +315,14 @@ public class Piece implements Cloneable {
     Piece otherPiece = (Piece) o;
     return this.getName().equals(otherPiece.getName()) && this.getTeam() == otherPiece.getTeam() &&
     this.getCoordinates().equals(otherPiece.getCoordinates());
+  }
+
+  /***
+   * @return hash of piece
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(coordinates, suppPieceData, team, name, img, movementHandler,
+        onInteractionModifiers, history);
   }
 }

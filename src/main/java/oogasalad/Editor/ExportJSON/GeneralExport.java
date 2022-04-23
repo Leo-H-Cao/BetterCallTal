@@ -14,7 +14,6 @@ public class GeneralExport {
   public GeneralExport(int row, int col){
     this.rows = row;
     this.columns = col;
-    validStateChecker = new ArrayList<>();
   }
 
   public int getRows() {
