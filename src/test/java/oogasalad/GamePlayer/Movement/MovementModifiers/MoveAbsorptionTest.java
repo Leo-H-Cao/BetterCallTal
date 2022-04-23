@@ -25,7 +25,7 @@ class MoveAbsorptionTest {
   }
 
   @Test
-  void testAbsorption() {
+  void testAbsorption() throws Throwable {
     try {
       Piece pawn = myBoard.getTile(Coordinate.of(6, 0)).getPiece().get();
       myBoard.move(pawn, Coordinate.of(5, 1));
