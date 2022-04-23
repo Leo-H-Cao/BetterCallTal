@@ -70,9 +70,16 @@ public class GameRulesState {
     return teamOpponents;
   }
 
-  public void setTeamOpponents(
-      HashMap<Integer, ArrayList<Integer>> teamOpponents) {
+  public void setTeamOpponents(HashMap<Integer, ArrayList<Integer>> teamOpponents) {
     this.teamOpponents = teamOpponents;
+  }
+
+  public ArrayList<String> getValidStateCheckers() {
+    return validStateCheckers;
+  }
+
+  public void setValidStateCheckers(ArrayList<String> validStateCheckers) {
+    this.validStateCheckers = validStateCheckers;
   }
 
   private void setResources() {
@@ -96,6 +103,5 @@ public class GameRulesState {
     teamOpponents.get(team0).add(team1);
     teamOpponents.get(team1).add(team0);
     validStateCheckers.add(myResources.getString("defaultValidStateCheckers"));
-
   }
 }

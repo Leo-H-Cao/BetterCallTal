@@ -70,6 +70,7 @@ public class ExportJSON {
     generalExport.setTurnCriteria(gameRulesState.getTurnCriteria());
     generalExport.setEndConditions(gameRulesState.getWinConditions());
     generalExport.setColors(gameRulesState.getColors());
+    generalExport.setValidStateChecker(gameRulesState.getValidStateCheckers());
   }
 
   private void createPlayerInfoObject(){
