@@ -20,6 +20,13 @@ import org.json.JSONObject;
 public class FileReader {
 
   /***
+   * Private constructor because utility class
+   */
+  private FileReader() {
+    // Private constructor because utility class
+  }
+
+  /***
    * Reads in given file and returns List of Strings in file
    */
   public static List<String> readManyStrings(String filePath, List<String> defaultValue) {
