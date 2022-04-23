@@ -83,8 +83,7 @@ public class BankJoiner implements MovementModifier{
     try {
       Piece justTaken = board.getHistory().get(board.getHistory().size() - 1).board().getTile(
           piece.getCoordinates()).getPiece().orElse(
-          findTakenPiece(board, board.getHistory().get(board.getHistory().size() - 1).board(),
-              piece.getTeam()));
+          board.findTakenPiece(piece.getTeam()));
       LOG.debug(String.format("Just taken: %s", justTaken));
 
       ChessTile bankTile = findOpenSpot(board.getCurrentPlayer(), board);
@@ -100,27 +99,6 @@ public class BankJoiner implements MovementModifier{
       LOG.debug(String.format("Updated coords: %s", updatedCoords));
       return updatedCoords;
     } catch(OutsideOfBoardException | NullPointerException /*| PieceNotFoundException*/ e) {return Collections.emptySet();}
-  }
-
-  /**
-   * If finding the captured piece by looking at the square covered by the current piece one move
-   * back (e.g. in en passant, the captured piece is on a different square), this function looks
-   * at the piece list for both states to find the captured piece
-   *
-   * @param presentBoard is the present state
-   * @param pastBoard is the board one move ago
-   * @param team is the team of the player
-   * @return piece in pastBoard that's missing from present board that is an opponent of team
-   */
-  private Piece findTakenPiece(ChessBoard presentBoard, ChessBoard pastBoard, int team)
-      /*throws PieceNotFoundException*/ {
-    List<Piece> pastPieces = pastBoard.getOpponentPieces(team);
-    List<Piece> presentPieces = presentBoard.getOpponentPieces(team);
-
-    LOG.debug(String.format("Past pieces: %s", pastPieces));
-    LOG.debug(String.format("Present pieces: %s", presentPieces));
-
-    return pastPieces.stream().filter(p -> !presentPieces.contains(p)).findFirst().orElse(null);
   }
 
   /***

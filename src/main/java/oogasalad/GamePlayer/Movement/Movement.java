@@ -292,7 +292,7 @@ public class Movement implements MovementInterface{
       if(mi.getClass().equals(Movement.class)) {
         Movement movement = (Movement) mi;
         List<Coordinate> invertedCoords = new ArrayList<>();
-        movement.getRelativeCoords().forEach((c) -> {
+        movement.getRelativeCoords().forEach(c -> {
           Coordinate invertedCoord = Coordinate.of(-c.getRow(), -c.getCol());
           invertedCoords.add(invertedCoord);
           LOG.debug(String.format("Movement inverted: %s", invertedCoord));
