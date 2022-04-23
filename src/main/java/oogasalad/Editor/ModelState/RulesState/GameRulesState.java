@@ -19,12 +19,14 @@ public class GameRulesState {
   private ResourceBundle myResources;
   private ArrayList<String> colors;
   private HashMap<Integer, ArrayList<Integer>> teamOpponents;
+  private ArrayList<String> validStateCheckers;
 
   public GameRulesState(){
     setResources();
     winConditions = new ArrayList<>();
     colors = new ArrayList<>();
     teamOpponents = new HashMap<>();
+    validStateCheckers = new ArrayList<>();
     setDefaults();
   }
 
@@ -70,6 +72,14 @@ public class GameRulesState {
 
   public void setTeamOpponents(HashMap<Integer, ArrayList<Integer>> teamOpponents) {
     this.teamOpponents = teamOpponents;
+  }
+
+  public ArrayList<String> getValidStateCheckers() {
+    return validStateCheckers;
+  }
+
+  public void setValidStateCheckers(ArrayList<String> validStateCheckers) {
+    this.validStateCheckers = validStateCheckers;
   }
 
   private void setResources() {

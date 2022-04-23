@@ -100,8 +100,8 @@ public class EditorBackend {
 		piece.setMovementGrid(moves);
 	}
 
-	private void setDefaultGameRules(){
-		gameRulesState.setTurnCriteria("linear");
+	private void setDefaultGameRules() {
+		gameRulesState.setTurnCriteria("Linear");
 
 		ArrayList<String> winConditions = new ArrayList<>();
 		winConditions.add("Checkmate");
@@ -121,5 +121,9 @@ public class EditorBackend {
 		teamOpponents.get(team0).add(team1);
 		teamOpponents.get(team1).add(team0);
 		gameRulesState.setTeamOpponents(teamOpponents);
+
+		ArrayList<String> validStateCheckers = new ArrayList<>();
+		validStateCheckers.add("Check");
+		gameRulesState.setValidStateCheckers(validStateCheckers);
 	}
 }
