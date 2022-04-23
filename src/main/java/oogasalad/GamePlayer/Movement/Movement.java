@@ -61,7 +61,6 @@ public class Movement implements MovementInterface{
   public Set<ChessTile> movePiece(Piece piece, Coordinate finalSquare, ChessBoard board)
       throws InvalidMoveException, OutsideOfBoardException {
     ChessTile finalTile = convertCordToTile(finalSquare, board);
-//    LOG.debug("Moves: " + getMoves(piece, board));
 
     if(getMoves(piece, board).contains(finalTile)) {
       Set<ChessTile> updatedSquares = new HashSet<>(Set.of(board.getTile(piece.getCoordinates()), finalTile));
@@ -128,13 +127,13 @@ public class Movement implements MovementInterface{
 
     Coordinate baseCoordinates = piece.getCoordinates();
 
-    possibleMoves.forEach((delta) -> {
+    possibleMoves.forEach(delta -> {
       Stack<ChessTile> moveStack = generateMoveStack(baseCoordinates, delta, board);
       allMoves.get(MOVE_KEY).addAll(moveStack);
       Optional<ChessTile> capTile = moveStack.isEmpty() ? getNextTile(baseCoordinates, delta, board)
           : (infinite ? getNextTile(moveStack.peek().getCoordinates(), delta, board)
               : Optional.of(moveStack.peek()));
-      capTile.ifPresent((t) -> {
+      capTile.ifPresent(t -> {
         if (piece.isOpposing(t.getPieces(), board)) {
           allMoves.get(CAPTURE_KEY).add(t);
         }
@@ -195,7 +194,7 @@ public class Movement implements MovementInterface{
     if(infinite) {
       moveStack = getMoveBeam(base, delta, board);
     } else{
-      getNextTile(base, delta, board).filter((t) -> t.getPieces().isEmpty()).ifPresent(moveStack::add);
+      getNextTile(base, delta, board).filter(t -> t.getPieces().isEmpty()).ifPresent(moveStack::add);
     }
     return moveStack;
   }
@@ -274,7 +273,7 @@ public class Movement implements MovementInterface{
    */
   public static List<MovementInterface> invertMovements(List<MovementInterface> movements) {
     List<MovementInterface> inverted = new ArrayList<>();
-    movements.forEach((mi) -> {
+    movements.forEach(mi -> {
       if(mi.getClass().equals(Movement.class)) {
         Movement movement = (Movement) mi;
         List<Coordinate> invertedCoords = new ArrayList<>();

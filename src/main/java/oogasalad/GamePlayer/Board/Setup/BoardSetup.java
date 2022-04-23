@@ -47,6 +47,13 @@ public class BoardSetup {
   private static final String VALID_STATE_CHECKER_PACKAGE = "oogasalad.GamePlayer.ValidStateChecker.";
   private static final String MOVEMENT_MODIFIER_PACKAGE = "oogasalad.GamePlayer.Movement.MovementModifiers.";
 
+  /***
+   * Private constructor because utility class
+   */
+  private BoardSetup() {
+    // Private because utility class
+  }
+
   /**
    * Creates a ChessBoard from a JSON file for a local game.
    *
@@ -338,7 +345,6 @@ public class BoardSetup {
           createInstance(packagePath + currentObj.getString(0), new Class[]{},
               new Object[]{});
     } catch (JSONException | IOException e) {
-//      e.printStackTrace();
       LOG.debug(String.format("String class: %s", array.getString(index)));
       return createInstance(
           packagePath + array.getString(index), new Class[]{},

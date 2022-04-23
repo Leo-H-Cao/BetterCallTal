@@ -134,7 +134,7 @@ public class InARow implements EndCondition {
       Coordinate coordinate, Coordinate direction, int rayLength) {
     if(rayLength == 0) return true;
     if(direction.getCol() == 0 && direction.getRow() == 0 ||
-        !continueExtendingRay(board,coordinate, pieceName, pieceTeam)) return false;
+        !continueExtendingRay(board,coordinate, pieceName, pieceTeam)) {return false;}
 
     LOG.debug(String.format("Current coordinate and rayLength: (%d, %d), %d",
         coordinate.getRow(), coordinate.getCol(), rayLength));
