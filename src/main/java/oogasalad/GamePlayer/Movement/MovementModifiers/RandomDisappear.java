@@ -44,6 +44,13 @@ public class RandomDisappear implements MovementModifier {
     LOG.debug(String.format("Chance of disappearing: %f%%", chanceOfDisappearing * 100));
   }
 
+  /***
+   * If a randomly generated value is under the chance of disappearing, remove that piece
+   *
+   * @param piece that is referenced
+   * @param board that piece is on
+   * @return piece tile if it is removed
+   */
   @Override
   public Set<ChessTile> updateMovement(Piece piece, ChessBoard board) {
     double randomVal = Math.random();
@@ -55,5 +62,12 @@ public class RandomDisappear implements MovementModifier {
       } catch (OutsideOfBoardException e) {return Collections.emptySet();}
     }
     return Collections.emptySet();
+  }
+
+  /***
+   * @return chance of disappearing for testing
+   */
+  double getChanceOfDisappearing() {
+    return chanceOfDisappearing;
   }
 }
