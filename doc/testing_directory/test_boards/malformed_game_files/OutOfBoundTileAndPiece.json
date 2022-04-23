@@ -1,0 +1,47 @@
+{
+  "general": [
+    {
+      "rows": 1,
+      "columns": 1,
+      "turnCriteria": "Linear",
+      "colors": ["black", "white"],
+      "endConditions": [],
+      "validStateCheckers": []
+    }
+  ],
+  "playerInfo": [
+    {
+      "team": 0,
+      "opponents": [1]
+    },
+    {
+      "team": 1,
+      "opponents": [0]
+    }
+  ],
+  "pieces": [
+    {
+      "row": 6,
+      "col": 0,
+      "pieceFile": "WhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    }
+  ],
+  "tiles": [
+    {
+      "row": 3,
+      "col": 5,
+      "tileActions": ["BlackHoleAction"],
+      "img": "blackhole"
+    },
+    {
+      "row": 12,
+      "col": 5,
+      "tileActions": ["BlackHoleAction"]
+    }
+  ]
+}

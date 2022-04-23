@@ -79,7 +79,7 @@ class EndConditionsTest {
       board.move(pieceTwo, new Coordinate(1, 2));
       assertTrue(board.isGameOver());
       assertEquals(board.getScores(), scores);
-    } catch(Exception e) {
+    } catch(Throwable e) {
       e.printStackTrace();
       fail();
     }
@@ -95,7 +95,7 @@ class EndConditionsTest {
       board.move(pieceOne, new Coordinate(0, 2));
       board.move(pieceTwo, new Coordinate(1, 2));
       assertThrows(MoveAfterGameEndException.class, () -> board.move(pieceOne, new Coordinate(0, 3)));
-    } catch(Exception e) {
+    } catch(Throwable e) {
       fail();
     }
   }
@@ -107,6 +107,7 @@ class EndConditionsTest {
     try {
       assertTrue(board.isGameOver());
       assertEquals(board.getScores(), Map.of(0, 1.0, 1, 0.0));
+      assertEquals(Collections.emptySet(), board.getMoves(pieceOne));
       assertThrows(MoveAfterGameEndException.class, () -> board.move(pieceTwo, new Coordinate(1, 2)));
     } catch (Exception e) {
       e.printStackTrace();

@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
 public class EditPieceTest extends DukeApplicationTest {
+
   private Scene myScene;
   private Stage myStage;
   private LanguageModal mylangmod;

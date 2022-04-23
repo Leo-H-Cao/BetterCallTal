@@ -19,7 +19,13 @@ public class MovementGrid {
 
   public void setTile(int x, int y, PieceGridTile tileStatus){
     checkCoordinates(x, y);
-    pieceGrid[y][x] = tileStatus;
+    if((tileStatus == PieceGridTile.CAPTURE && pieceGrid[y][x] == PieceGridTile.OPEN) ||
+        (tileStatus == PieceGridTile.OPEN && pieceGrid[y][x] == PieceGridTile.CAPTURE)){
+      pieceGrid[y][x] = PieceGridTile.OPENANDCAPTURE;
+    }
+    else{
+      pieceGrid[y][x] = tileStatus;
+    }
   }
 
   public PieceGridTile getTileStatus(int x, int y){

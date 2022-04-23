@@ -1,0 +1,54 @@
+{
+  "general": [
+    {
+      "rows": 8,
+      "columns": 8,
+      "turnCriteria": "OnlyFirstTeam",
+      "colors": ["black", "white"],
+      "endConditions": [],
+      "validStateCheckers": ["ForcedCapture"]
+    }
+  ],
+  "playerInfo": [
+    {
+      "team": 0,
+      "opponents": [1]
+    },
+    {
+      "team": 1,
+      "opponents": [0]
+    }
+  ],
+  "pieces": [
+    {
+      "row": 1,
+      "col": 1,
+      "pieceFile": "BlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 2,
+      "col": 2,
+      "pieceFile": "WhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 4,
+      "col": 4,
+      "pieceFile": "WhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    }
+  ]
+}

@@ -3,6 +3,7 @@ package oogasalad.GamePlayer.Movement.MovementModifiers;
 import static oogasalad.GamePlayer.Board.EndConditions.InARow.DIRECTIONS;
 
 import java.io.File;
+import java.lang.reflect.Executable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,6 +18,7 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.util.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,6 +31,7 @@ public class Atomic implements MovementModifier{
 
   private static final String ATOMIC_IMMUNE_FILE_PATH_HEADER = "doc/GameEngineResources/Other/";
   private static final String ATOMIC_IMMUNE_DEFAULT_FILE = "AtomicImmune";
+  private static final List<String> DEFAULT_ATOMIC_IMMUNE = List.of("Pawn");
   private static final Logger LOG = LogManager.getLogger(Atomic.class);
 
   private List<String> explosionImmuneNames;
@@ -52,19 +55,7 @@ public class Atomic implements MovementModifier{
    * Assigns piece immune to explosions, default is just pawn
    */
   private List<String> assignImmune(String atomicImmuneFile) {
-    try {
-      List<String> immuneNames = new ArrayList<>();
-      File immuneFile = new File(atomicImmuneFile);
-      Scanner reader = new Scanner(immuneFile);
-      while (reader.hasNext()) {
-        immuneNames.add(reader.next().trim());
-      }
-      reader.close();
-      return immuneNames;
-    } catch (Exception e) {
-      LOG.warn("Could not find atomic file");
-      return List.of("Pawn");
-    }
+    return FileReader.readManyStrings(atomicImmuneFile, DEFAULT_ATOMIC_IMMUNE);
   }
 
   /***
@@ -79,17 +70,15 @@ public class Atomic implements MovementModifier{
     Set<ChessTile> explodedSquares = new HashSet<>();
     try {
       getSurroundingTiles(board.getTile(piece.getCoordinates()), board).stream().filter(
-          (t) -> t.getPiece().isPresent()).filter((t) -> explosionImmuneNames.stream().noneMatch(
-              (n) -> t.getPiece().get().getName().equalsIgnoreCase(n) && !t.getCoordinates().equals(piece.getCoordinates())
-          )).forEach((t) -> {
-            LOG.debug("Exploded piece name: " + t.getPiece().get().getName());
+          t -> t.getPiece().isPresent()).filter(t -> explosionImmuneNames.stream().noneMatch(
+              n -> t.getPiece().get().getName().equalsIgnoreCase(n) && !t.getCoordinates().equals(piece.getCoordinates())
+          )).forEach(t -> {
+            LOG.debug(String.format("Exploded piece name: %s", t.getPiece().get().getName()));
             t.clearPieces();
             explodedSquares.add(t);
           });
       return explodedSquares;
-    } catch (OutsideOfBoardException e) {
-     return Collections.emptySet();
-    }
+    } catch (OutsideOfBoardException e) {return Collections.emptySet();}
   }
 
   /***
@@ -99,7 +88,7 @@ public class Atomic implements MovementModifier{
    */
   private Set<ChessTile> getSurroundingTiles(ChessTile center, ChessBoard board) {
     Set<ChessTile> surroundingTiles = new HashSet<>();
-    Arrays.stream(DIRECTIONS).forEach((i) -> Arrays.stream(DIRECTIONS).forEach((j) -> {
+    DIRECTIONS.forEach(i -> DIRECTIONS.forEach(j -> {
       try {
         surroundingTiles.add(board.getTile(
             Coordinate.of(center.getCoordinates().getRow()+i, center.getCoordinates().getCol()+j)));
@@ -107,7 +96,14 @@ public class Atomic implements MovementModifier{
         LOG.debug(String.format("Invalid coordinate detected: (%d, %d)", center.getCoordinates().getRow()+i, center.getCoordinates().getCol()+j));
       }
     }));
-    LOG.debug("Surrounding tiles: " + surroundingTiles);
+    LOG.debug(String.format("Surrounding tiles: %s", surroundingTiles));
     return surroundingTiles;
+  }
+
+  /***
+   * @return explosion immune names for testing
+   */
+  List<String> getExplosionImmuneNames() {
+    return List.copyOf(explosionImmuneNames);
   }
 }

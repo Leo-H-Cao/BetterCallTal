@@ -1,5 +1,6 @@
 package oogasalad.GamePlayer.GamePiece;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -48,7 +49,7 @@ public class MovementHandler {
    * @return set of updated chess tiles
    */
   public Set<ChessTile> move(Piece piece, ChessTile finalSquare, ChessBoard board)
-      throws InvalidMoveException, OutsideOfBoardException {
+      throws InvalidMoveException {
 
     if (!getMoves(piece, board).contains(finalSquare)) {
       throw new InvalidMoveException("Tile is not a valid move!");
@@ -57,7 +58,7 @@ public class MovementHandler {
     Set<ChessTile> updatedSquares = new HashSet<>(findMovements(piece, finalSquare, board));
     updatedSquares.addAll(findCaptures(piece, finalSquare, board));
 
-    movementModifiers.forEach((mm) -> updatedSquares.addAll(mm.updateMovement(piece, board)));
+    movementModifiers.forEach(mm -> updatedSquares.addAll(mm.updateMovement(piece, board)));
     return updatedSquares;
   }
 
@@ -69,9 +70,9 @@ public class MovementHandler {
    */
   private Set<ChessTile> findMovements(Piece piece, ChessTile finalSquare, ChessBoard board) {
     Set<ChessTile> updatedSquares = new HashSet<>();
-    movements.stream().filter((m) -> m.getMoves(piece, board).contains(finalSquare)).findFirst().ifPresent((m) ->
-    {try{updatedSquares.addAll(m.movePiece(piece, finalSquare.getCoordinates(), board));} catch (Exception ignored){}});
-    LOG.debug("Updated squares: " + updatedSquares);
+    movements.stream().filter(m -> m.getMoves(piece, board).contains(finalSquare)).findFirst().ifPresent((m) ->
+    {try{updatedSquares.addAll(m.movePiece(piece, finalSquare.getCoordinates(), board));} catch (InvalidMoveException | OutsideOfBoardException ignored){}});
+    LOG.debug(String.format("Updated squares: %s", updatedSquares));
     return updatedSquares;
   }
 
@@ -83,11 +84,11 @@ public class MovementHandler {
    */
   private Set<ChessTile> findCaptures(Piece piece, ChessTile captureSquare, ChessBoard board) {
     Set<ChessTile> updatedSquares = new HashSet<>();
-    captures.stream().filter((m) -> m.getCaptures(piece, board).contains(captureSquare)).findFirst().ifPresent((m) ->
+    captures.stream().filter(m -> m.getCaptures(piece, board).contains(captureSquare)).findFirst().ifPresent((m) ->
     {try{
       updatedSquares.addAll(m.capturePiece(piece, captureSquare.getCoordinates(), board));
       updatedSquares.addAll(piece.runInteractionModifiers(board));
-    } catch (Exception ignored){}});
+    } catch (InvalidMoveException | OutsideOfBoardException ignored){}});
     return updatedSquares;
   }
 
@@ -99,58 +100,10 @@ public class MovementHandler {
    */
   public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
     Set<ChessTile> allMoves = new HashSet<>();
-    movements.forEach((m) -> allMoves.addAll(m.getMoves(piece, board)));
-    captures.forEach((m) -> allMoves.addAll(m.getCaptures(piece, board)));
+    movements.forEach(m -> allMoves.addAll(m.getMoves(piece, board)));
+    captures.forEach(m -> allMoves.addAll(m.getCaptures(piece, board)));
 
-//    LOG.debug(String.format("%s has the following moves: %s", piece.getName(), allMoves));
     return allMoves;
-  }
-
-  /***
-   * @param coordinate to check for captures
-   * @return if this piece can capture a piece on the given coordinate
-   */
-  private boolean validCapture(Piece piece, Coordinate coordinate, ChessBoard board) {
-    //TODO MOVEMENTS IS A PLACEHOLDER, MUST IMPLEMENT CAPTURES AS IT IS NULL WHEN THE PIECE IS FIRST INITIALED AS WELL AS THE GETMOVES METHOD
-    return movements.stream().map(move -> move.getMoves(piece, board))
-        .collect(Collectors.toSet())
-        .stream().flatMap(Set::stream)
-        .collect(Collectors.toSet()).stream()
-        .anyMatch(tile -> tile.getCoordinates().equals(coordinate));
-  }
-
-  /***
-   * @param coordinates to check for captures
-   * @return if this piece can capture a piece on the given coordinates
-   */
-  public boolean validCapture(Piece piece, List<Coordinate> coordinates, ChessBoard board) {
-    return coordinates.stream().anyMatch((c) -> validCapture(piece, c, board));
-  }
-
-  /***
-   * @param piece to do the capture
-   * @param opponent to capture
-   * @return if this piece can capture another piece
-   */
-  public boolean canCapture(Piece piece, Piece opponent, ChessBoard board) {
-    boolean sameTeam = piece.checkTeam(opponent.getTeam());
-
-    //TODO MOVEMENTS IS A PLACEHOLDER, MUST IMPLEMENT CAPTURES AS IT IS NULL WHEN THE PIECE IS FIRST INITIALED
-    boolean canCap = movements.stream()
-        .map(capture -> capture.getCaptures(piece, board))
-        .flatMap(Set::stream)
-        .map(ChessTile::getCoordinates)
-        .anyMatch(coords -> coords.equals(piece.getCoordinates()));
-
-    return !sameTeam && canCap;
-  }
-
-  /***
-   * @param opponentPieces to potentially capture
-   * @return if this piece can capture any piece in a list of pieces
-   */
-  public boolean canCapture(Piece piece, List<Piece> opponentPieces, ChessBoard board) {
-    return opponentPieces.stream().anyMatch((op) -> canCapture(piece, op, board));
   }
 
   /***
@@ -171,7 +124,7 @@ public class MovementHandler {
    * @return relative coordinates list for given movementList
    */
   private List<Coordinate> getRelativeMoveCoordsFromList(List<MovementInterface> movementList) {
-    return movementList.stream().flatMap((m) -> m.getRelativeCoords().stream()).collect(Collectors.toList());
+    return movementList.stream().flatMap(m -> m.getRelativeCoords().stream()).collect(Collectors.toList());
   }
 
   /***

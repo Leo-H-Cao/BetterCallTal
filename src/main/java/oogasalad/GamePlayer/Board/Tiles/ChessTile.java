@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
  *
  * @author Vincent Chen
  */
-public class ChessTile implements Tile, Cloneable {
+public class ChessTile implements Cloneable {
 
   private Coordinate coordinate;
   private List<Piece> pieces;
@@ -141,7 +141,7 @@ public class ChessTile implements Tile, Cloneable {
    * @param board to execute actions on
    * @return set of updated tiles
    */
-  public Set<ChessTile> executeActions(ChessBoard board) throws OutsideOfBoardException {
+  public Set<ChessTile> executeActions(ChessBoard board) {
 
     return specialActions.stream().flatMap(t -> {
       try {
@@ -199,5 +199,13 @@ public class ChessTile implements Tile, Cloneable {
     }
     ChessTile chessTile = (ChessTile) o;
     return coordinate.equals(chessTile.coordinate);
+  }
+
+  /***
+   * @return hashcode of tile
+   */
+  @Override
+  public int hashCode() {
+    return super.hashCode();
   }
 }
