@@ -1,8 +1,6 @@
 package oogasalad.GamePlayer.Movement.MovementModifiers;
 
-import java.io.File;
 import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;

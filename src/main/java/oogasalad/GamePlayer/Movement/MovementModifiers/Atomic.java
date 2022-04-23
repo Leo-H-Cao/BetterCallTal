@@ -88,7 +88,7 @@ public class Atomic implements MovementModifier{
    */
   private Set<ChessTile> getSurroundingTiles(ChessTile center, ChessBoard board) {
     Set<ChessTile> surroundingTiles = new HashSet<>();
-    Arrays.stream(DIRECTIONS).forEach((i) -> Arrays.stream(DIRECTIONS).forEach((j) -> {
+    DIRECTIONS.forEach(i -> DIRECTIONS.forEach(j -> {
       try {
         surroundingTiles.add(board.getTile(
             Coordinate.of(center.getCoordinates().getRow()+i, center.getCoordinates().getCol()+j)));
@@ -96,7 +96,7 @@ public class Atomic implements MovementModifier{
         LOG.debug(String.format("Invalid coordinate detected: (%d, %d)", center.getCoordinates().getRow()+i, center.getCoordinates().getCol()+j));
       }
     }));
-    LOG.debug("Surrounding tiles: " + surroundingTiles);
+    LOG.debug(String.format("Surrounding tiles: %s", surroundingTiles));
     return surroundingTiles;
   }
 
