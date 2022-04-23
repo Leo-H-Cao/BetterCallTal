@@ -104,26 +104,10 @@ public class Piece implements Cloneable {
   }
 
   /***
-   * @param coordinates to check for captures
-   * @return if this piece can capture a piece on the given coordinates
-   */
-  public boolean validCapture(List<Coordinate> coordinates, ChessBoard board) {
-    return movementHandler.validCapture(this, coordinates, board);
-  }
-
-  /***
    * @return coordinate of piece
    */
   public Coordinate getCoordinates() {
     return coordinates;
-  }
-
-  /***
-   * @param piece to capture
-   * @return if this piece can capture another piece
-   */
-  public boolean canCapture(Piece piece, ChessBoard board) {
-    return movementHandler.canCapture(this, piece, board);
   }
 
   /***
@@ -141,14 +125,6 @@ public class Piece implements Cloneable {
   private boolean isOpposing(Piece piece, ChessBoard board) {
     int[] opponentIDs = board.getPlayer(team).opponentIDs();
     return Arrays.stream(opponentIDs).anyMatch((o) -> piece.getTeam() == board.getPlayer(o).teamID());
-  }
-
-  /***
-   * @param pieces to potentially capture
-   * @return if this piece can capture any piece in a list of pieces
-   */
-  public boolean canCapture(List<Piece> pieces, ChessBoard board) {
-    return movementHandler.canCapture(this, pieces, board);
   }
 
   /***
@@ -315,6 +291,12 @@ public class Piece implements Cloneable {
 
   public void clearActions() {
 
+  }
+
+
+
+  public double getPieceValue(){
+    return suppPieceData.pointValue();
   }
 
   /**

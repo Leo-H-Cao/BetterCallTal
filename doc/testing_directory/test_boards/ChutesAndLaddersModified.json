@@ -1,0 +1,44 @@
+{
+  "general": [
+    {
+      "rows": 4,
+      "columns": 4,
+      "turnCriteria": "Linear",
+      "colors": ["black", "white"],
+      "endConditions": [],
+      "validStateCheckers": []
+    }
+  ],
+  "playerInfo": [
+    {
+      "team": 0,
+      "opponents": [1]
+    },
+    {
+      "team": 1,
+      "opponents": [0]
+    }
+  ],
+  "pieces": [
+    {
+      "row": 3,
+      "col": 0,
+      "pieceFile": "CALFive",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 1
+    },
+    {
+      "row": 0,
+      "col": 0,
+      "pieceFile": "CALFive",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 1
+    }
+  ]
+}

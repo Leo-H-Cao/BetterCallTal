@@ -28,6 +28,6 @@ public class HomeViewTest extends DukeApplicationTest {
     @Test
     void testOpenGameEditor() {
         clickOn(lookup("#start").query());
-         
+
     }
 }

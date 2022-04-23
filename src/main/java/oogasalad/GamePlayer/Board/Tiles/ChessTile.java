@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
  *
  * @author Vincent Chen
  */
-public class ChessTile implements Tile, Cloneable {
+public class ChessTile implements Cloneable {
 
   private Coordinate coordinate;
   private List<Piece> pieces;

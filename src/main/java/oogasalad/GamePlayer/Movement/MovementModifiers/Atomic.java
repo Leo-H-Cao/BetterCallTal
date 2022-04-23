@@ -3,6 +3,7 @@ package oogasalad.GamePlayer.Movement.MovementModifiers;
 import static oogasalad.GamePlayer.Board.EndConditions.InARow.DIRECTIONS;
 
 import java.io.File;
+import java.lang.reflect.Executable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -87,9 +88,7 @@ public class Atomic implements MovementModifier{
             explodedSquares.add(t);
           });
       return explodedSquares;
-    } catch (OutsideOfBoardException e) {
-     return Collections.emptySet();
-    }
+    } catch (OutsideOfBoardException e) {return Collections.emptySet();}
   }
 
   /***
@@ -109,5 +108,12 @@ public class Atomic implements MovementModifier{
     }));
     LOG.debug("Surrounding tiles: " + surroundingTiles);
     return surroundingTiles;
+  }
+
+  /***
+   * @return explosion immune names for testing
+   */
+  List<String> getExplosionImmuneNames() {
+    return List.copyOf(explosionImmuneNames);
   }
 }

@@ -29,11 +29,12 @@ import org.json.JSONObject;
  */
 public class BankLeaverNoRemove extends BankLeaver {
 
+  private static final String TTT_DEFAULT_FILE = "TicTacToeConfig";
   /***
    * Create BankLeaverNoRemove with default config file
    */
   public BankLeaverNoRemove() {
-    super(CH_DEFAULT_FILE);
+    super(TTT_DEFAULT_FILE);
   }
 
   /***

@@ -157,6 +157,20 @@ public class LoopAround implements MovementInterface {
   }
 
   /***
+   * @return pmd for testing
+   */
+  Coordinate getPMD() {
+    return primaryMoveDirection;
+  }
+
+  /***
+   * @return smd for testing
+   */
+  Coordinate getSMD() {
+    return secondaryMoveDirection;
+  }
+
+  /***
    * @return empty list, not applicable
    */
   @Override

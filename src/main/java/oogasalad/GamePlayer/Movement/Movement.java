@@ -259,7 +259,7 @@ public class Movement implements MovementInterface{
    * @param coordinate to check for emptiness
    * @return if the coordinate on the board is empty
    */
-  private boolean isTileEmpty(ChessBoard board, Coordinate coordinate) {
+  boolean isTileEmpty(ChessBoard board, Coordinate coordinate) {
     try {
       return board.isTileEmpty(coordinate);
     } catch (OutsideOfBoardException e) {

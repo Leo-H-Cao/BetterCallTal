@@ -57,14 +57,10 @@ public class CheckersCapture implements MovementInterface {
     Set<ChessTile> updatedSquares = new HashSet<>(List.of(board.getTile(captureSquare),
         board.getTile(piece.getCoordinates())));
     LOG.debug(String.format("Capture squares : %s", capturePaths.keySet()));
-    try {
-      capturePaths.get(captureSquare).forEach(t -> {
-        t.clearPieces();
-        updatedSquares.add(t);
-      });
-    } catch (Exception e) {
-      LOG.debug("Exception");
-    }
+    capturePaths.get(captureSquare).forEach(t -> {
+      t.clearPieces();
+      updatedSquares.add(t);
+    });
     piece.updateCoordinates(board.getTile(captureSquare), board);
     LOG.debug(String.format("Updated squares: %s", updatedSquares));
     return updatedSquares;

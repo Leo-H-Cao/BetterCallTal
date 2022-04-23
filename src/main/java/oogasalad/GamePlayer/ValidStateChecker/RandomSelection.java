@@ -45,6 +45,7 @@ public class RandomSelection implements ValidStateChecker {
   public RandomSelection(String configFile) {
     numRandom = FileReader.readOneInt(RS_NUM_FILE_PATH_HEADER + configFile, DEFAULT_RS_NUM);
     currentRandomGenerations = new HashMap<>();
+    LOG.debug(String.format("Random num: %d", numRandom));
   }
 
   /***
@@ -75,5 +76,12 @@ public class RandomSelection implements ValidStateChecker {
     List<ChessTile> movesList = new ArrayList<>(moves);
     Collections.shuffle(movesList);
     return new HashSet<>(movesList.subList(0, numRandom));
+  }
+
+  /***
+   * @return num random for testing purposes
+   */
+  int getNumRandom() {
+    return numRandom;
   }
 }

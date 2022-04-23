@@ -1,5 +1,8 @@
 package oogasalad.Frontend.Local;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import java.util.ResourceBundle;
 import javafx.stage.Stage;
 import oogasalad.Frontend.LocalPlay.LocalGame;
@@ -20,6 +23,7 @@ public class TestLocalMultiplayer extends DukeApplicationTest {
     BackendConnector.initBackend(myResources);
     stage.setScene(myLocalGame.getScene());
     stage.show();
+    myStage = stage;
   }
 
   @Test
@@ -29,8 +33,6 @@ public class TestLocalMultiplayer extends DukeApplicationTest {
 //    clickOn(lookup("#upload").query());
     myLocalGame.injectBoard("doc/games/TicTacToe.json");
     clickOn(lookup("#done").query());
-
-
   }
 
   @Test
@@ -41,8 +43,34 @@ public class TestLocalMultiplayer extends DukeApplicationTest {
 //    clickOn(lookup("#upload").query());
     myLocalGame.injectBoard("doc/games/TicTacToe.json");
     clickOn(lookup("#done").query());
+  }
 
+  @Test
+  void testSinglePlayerLocalPlayNoGameUploaded() {
+    clickOn(lookup("#singleplayerButton").query());
+    clickOn(lookup("#easyAI").query());
+    clickOn(lookup("#first").query());
+//    clickOn(lookup("#upload").query());
+    //myLocalGame.injectBoard("doc/games/TicTacToe.json");
+    try {
+      clickOn(lookup("#done").query());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 
+  @Test
+  void testSinglePlayerLocalPlayNoAISelected() {
+    clickOn(lookup("#singleplayerButton").query());
+    //clickOn(lookup("#easyAI").query());
+    clickOn(lookup("#first").query());
+//    clickOn(lookup("#upload").query());
+    myLocalGame.injectBoard("doc/games/TicTacToe.json");
+    try {
+      clickOn(lookup("#done").query());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
 

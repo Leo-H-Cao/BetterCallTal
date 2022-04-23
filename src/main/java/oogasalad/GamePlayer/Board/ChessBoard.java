@@ -139,12 +139,14 @@ public class ChessBoard implements Iterable<ChessTile> {
         try {
           getTile(coordinate).addPiece(p);
         } catch (OutsideOfBoardException ignored) {
+
           LOG.warn("Set pieces has out of bounds coordinate");
         }
       });
       ChessBoard copied = deepCopy();
       LOG.debug("History updated for first time");
-      history.add(new History(copied, new HashSet<>(pieces), pieces.stream()
+      history.add(new History(copied, new HashSet<>(pieces), pieces.stream().filter(p ->
+              this.inBounds(p.getCoordinates()))
           .map(p -> board.get(p.getCoordinates().getRow()).get(p.getCoordinates().getCol()))
           .collect(Collectors.toSet())));
       generatePieceList();
