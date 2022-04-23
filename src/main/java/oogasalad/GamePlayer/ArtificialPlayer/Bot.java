@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import oogasalad.Frontend.LocalPlay.RemotePlayer.RemotePlayer;
 import oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.Checkmate;
 import oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.PieceValue;
 import oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.Utility;
@@ -14,7 +15,7 @@ import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
-public class Bot {
+public class Bot implements RemotePlayer {
   private TurnCriteria turnCriteria;
   private int team;
   private TurnManager turnManager;
@@ -78,4 +79,8 @@ public class Bot {
     //return new TurnUpdate(movingPiece.move(finalSquare, board), turnManager.incrementTurn());
   }
 
+  @Override
+  public TurnUpdate getRemoteMove(ChessBoard board, int currentPlayer) throws Throwable {
+    return getBotMove(board, currentPlayer);
+  }
 }

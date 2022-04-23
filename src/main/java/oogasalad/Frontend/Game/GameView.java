@@ -18,6 +18,7 @@ import oogasalad.Frontend.Game.Sections.BoardGrid;
 import oogasalad.Frontend.Game.Sections.GameOverDisplay;
 import oogasalad.Frontend.Game.Sections.RightSideSection;
 import oogasalad.Frontend.Game.Sections.TopSection;
+import oogasalad.Frontend.LocalPlay.RemotePlayer.RemotePlayer;
 import oogasalad.Frontend.Menu.HomeView;
 import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.ArtificialPlayer.Bot;
@@ -52,7 +53,7 @@ public class GameView extends View {
     private Consumer<TurnUpdate> servUpRun;
 
     private TurnKeeper turnKeeper;
-    private Bot bot;
+    private List<RemotePlayer> remotePlayers;
 
 
     public GameView(Stage stage) {
@@ -75,7 +76,7 @@ public class GameView extends View {
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
         if (singleplayer) {
             turnKeeper = new TurnKeeper(new String[]{"human", AI});
-            bot = new Bot(turnKeeper);
+            remotePlayers.add(new Bot(turnKeeper));
         } else {
             turnKeeper = new TurnKeeper(new String[]{"human", "human"});
         }
@@ -96,8 +97,14 @@ public class GameView extends View {
             Collection<TurnUpdate> updates = new ArrayList<>();
             TurnUpdate tu = getGameBackend().getChessBoard().move(myBoardGrid.getSelectedPiece(), c);
             updates.add(tu);
-            if (turnKeeper.hasAI()) {
-                updates.add(bot.getBotMove(getGameBackend().getChessBoard(), 1));
+            if (turnKeeper.hasRemote()) {
+                remotePlayers.forEach(e -> {
+                    try {
+                        updates.add(e.getRemoteMove(getGameBackend().getChessBoard(), 1));
+                    } catch (Throwable ex) {
+                        ex.printStackTrace();
+                    }
+                });
             }
             updateBoard(updates);
         } catch (Exception e){

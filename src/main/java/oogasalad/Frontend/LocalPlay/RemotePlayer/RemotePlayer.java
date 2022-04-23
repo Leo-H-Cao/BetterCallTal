@@ -1,13 +1,13 @@
 package oogasalad.Frontend.LocalPlay.RemotePlayer;
 
-import java.util.Set;
-import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
 
 public interface RemotePlayer {
 
   /**
    * Gets the move of a remote player
    */
-  Set<ChessTile> getRemoteMove();
+  TurnUpdate getRemoteMove(ChessBoard board, int currentPlayer) throws Throwable;
 
 }
