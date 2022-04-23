@@ -74,6 +74,7 @@ public class GameView extends View {
         myBoardGrid = new BoardGrid(chessboard, id, lightUpCons, MoveCons); //TODO: Figure out player ID stuff
         //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
+        remotePlayers = new ArrayList<>();
         if (singleplayer) {
             turnKeeper = new TurnKeeper(new String[]{"human", AI});
             remotePlayers.add(new Bot(turnKeeper));

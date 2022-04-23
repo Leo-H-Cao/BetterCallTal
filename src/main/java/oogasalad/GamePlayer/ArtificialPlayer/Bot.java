@@ -13,6 +13,7 @@ import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
 public class Bot implements RemotePlayer {
@@ -45,12 +46,12 @@ public class Bot implements RemotePlayer {
     }
 
 
-    return getMinimaxMove(board, currentPlayer, 2);
+    return getMinimaxMove(board, currentPlayer, 1);
     //return getRandomMove(board, currentPlayer);
   }
 
   private TurnUpdate getMinimaxMove(ChessBoard board, int currentPlayer, int depth)
-      throws EngineException {
+      throws Throwable {
     List<Piece> playerPieces = new ArrayList<>();
 
     for(Piece p : board.getPieces()){
