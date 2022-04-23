@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 import oogasalad.GamePlayer.Movement.Coordinate;
@@ -18,6 +17,13 @@ import org.json.JSONObject;
  * @author Vincent Chen
  */
 public class FileReader {
+
+  /***
+   * Private constructor because utility class
+   */
+  private FileReader() {
+    // Private constructor because utility class
+  }
 
   /***
    * Reads in given file and returns List of Strings in file

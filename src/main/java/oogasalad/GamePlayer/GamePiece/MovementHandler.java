@@ -1,5 +1,6 @@
 package oogasalad.GamePlayer.GamePiece;
 
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -48,7 +49,7 @@ public class MovementHandler {
    * @return set of updated chess tiles
    */
   public Set<ChessTile> move(Piece piece, ChessTile finalSquare, ChessBoard board)
-      throws InvalidMoveException, OutsideOfBoardException {
+      throws InvalidMoveException {
 
     if (!getMoves(piece, board).contains(finalSquare)) {
       throw new InvalidMoveException("Tile is not a valid move!");
@@ -57,7 +58,7 @@ public class MovementHandler {
     Set<ChessTile> updatedSquares = new HashSet<>(findMovements(piece, finalSquare, board));
     updatedSquares.addAll(findCaptures(piece, finalSquare, board));
 
-    movementModifiers.forEach((mm) -> updatedSquares.addAll(mm.updateMovement(piece, board)));
+    movementModifiers.forEach(mm -> updatedSquares.addAll(mm.updateMovement(piece, board)));
     return updatedSquares;
   }
 
@@ -69,9 +70,9 @@ public class MovementHandler {
    */
   private Set<ChessTile> findMovements(Piece piece, ChessTile finalSquare, ChessBoard board) {
     Set<ChessTile> updatedSquares = new HashSet<>();
-    movements.stream().filter((m) -> m.getMoves(piece, board).contains(finalSquare)).findFirst().ifPresent((m) ->
-    {try{updatedSquares.addAll(m.movePiece(piece, finalSquare.getCoordinates(), board));} catch (Exception ignored){}});
-    LOG.debug("Updated squares: " + updatedSquares);
+    movements.stream().filter(m -> m.getMoves(piece, board).contains(finalSquare)).findFirst().ifPresent((m) ->
+    {try{updatedSquares.addAll(m.movePiece(piece, finalSquare.getCoordinates(), board));} catch (InvalidMoveException | OutsideOfBoardException ignored){}});
+    LOG.debug(String.format("Updated squares: %s", updatedSquares));
     return updatedSquares;
   }
 
@@ -83,11 +84,11 @@ public class MovementHandler {
    */
   private Set<ChessTile> findCaptures(Piece piece, ChessTile captureSquare, ChessBoard board) {
     Set<ChessTile> updatedSquares = new HashSet<>();
-    captures.stream().filter((m) -> m.getCaptures(piece, board).contains(captureSquare)).findFirst().ifPresent((m) ->
+    captures.stream().filter(m -> m.getCaptures(piece, board).contains(captureSquare)).findFirst().ifPresent((m) ->
     {try{
       updatedSquares.addAll(m.capturePiece(piece, captureSquare.getCoordinates(), board));
       updatedSquares.addAll(piece.runInteractionModifiers(board));
-    } catch (Exception ignored){}});
+    } catch (InvalidMoveException | OutsideOfBoardException ignored){}});
     return updatedSquares;
   }
 
@@ -99,10 +100,9 @@ public class MovementHandler {
    */
   public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
     Set<ChessTile> allMoves = new HashSet<>();
-    movements.forEach((m) -> allMoves.addAll(m.getMoves(piece, board)));
-    captures.forEach((m) -> allMoves.addAll(m.getCaptures(piece, board)));
+    movements.forEach(m -> allMoves.addAll(m.getMoves(piece, board)));
+    captures.forEach(m -> allMoves.addAll(m.getCaptures(piece, board)));
 
-//    LOG.debug(String.format("%s has the following moves: %s", piece.getName(), allMoves));
     return allMoves;
   }
 
@@ -124,7 +124,7 @@ public class MovementHandler {
    * @return relative coordinates list for given movementList
    */
   private List<Coordinate> getRelativeMoveCoordsFromList(List<MovementInterface> movementList) {
-    return movementList.stream().flatMap((m) -> m.getRelativeCoords().stream()).collect(Collectors.toList());
+    return movementList.stream().flatMap(m -> m.getRelativeCoords().stream()).collect(Collectors.toList());
   }
 
   /***

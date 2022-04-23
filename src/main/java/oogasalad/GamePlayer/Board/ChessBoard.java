@@ -31,7 +31,6 @@ import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.MoveAfterGameEndException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
@@ -116,7 +115,7 @@ public class ChessBoard implements Iterable<ChessTile> {
    * Generates the list of all pieces mapped to each team
    */
   private void generatePieceList() {
-    board.forEach((l) -> l.stream().filter((t) -> t.getPiece().isPresent()).forEach((t) -> {
+    board.forEach(l -> l.stream().filter(t -> t.getPiece().isPresent()).forEach(t -> {
       Piece piece = t.getPiece().get();
       pieceList.putIfAbsent(piece.getTeam(), new ArrayList<>());
       if (pieceList.get(piece.getTeam()).stream().noneMatch(p ->
@@ -164,14 +163,14 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @param finalSquare end square
    * @return set of updated tiles + next player turn
    */
-  public TurnUpdate move(Piece piece, Coordinate finalSquare) throws EngineException {
+  public TurnUpdate move(Piece piece, Coordinate finalSquare) throws Throwable {
     // TODO: valid state checker for person who just moved (redundunt - optional)
     // TODO: check end conditions for other player(s)
     if (!isGameOver() && piece.checkTeam(turnManager.getCurrentPlayer())) {
       TurnUpdate update = new TurnUpdate(piece.move(getTileFromCoords(finalSquare), this),
           turnManager.incrementTurn());
       history.add(new History(deepCopy(), Set.of(piece), update.updatedSquares()));
-      LOG.debug("History updated: " + history.size());
+      LOG.debug(String.format("History updated: %d", history.size()));
       return update;
     }
 
@@ -246,7 +245,7 @@ public class ChessBoard implements Iterable<ChessTile> {
       return Set.of();
     }
     Set<ChessTile> allPieceMovements = piece.getMoves(this);
-    validStateCheckers.forEach((v) ->
+    validStateCheckers.forEach(v ->
         allPieceMovements.removeIf(entry -> {
           try {
             LOG.debug(String.format("Valid state checker class: %s", v.getClass()));

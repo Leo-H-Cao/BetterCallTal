@@ -2,6 +2,7 @@ package oogasalad.GamePlayer.Board.Tiles.CustomTiles;
 
 import static oogasalad.Frontend.Game.GameView.promotionPopUp;
 
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -53,13 +54,12 @@ public class Promotion implements TileAction {
    */
   @Override
   public Set<ChessTile> executeAction(ChessTile tile, ChessBoard board) {
-//    LOG.debug(String.format("Promotion pieces: %s", PROMOTABLE_PIECE_NAMES));
     LOG.debug(String.format("In promotion: %s", tile.getPiece().get().getName()));
-    if(tile.getPiece().isEmpty()) return Collections.emptySet();
+    if(tile.getPiece().isEmpty()) {return Collections.emptySet();}
     if(promotablePieceNames.stream().noneMatch(n ->
         n.equalsIgnoreCase(tile.getPiece().get().getName()))) return Collections.emptySet();
     List<Piece> pieceList = board.getPieceList().get(tile.getPiece().get().getTeam()).stream().
-        filter((p) -> !p.isTargetPiece() &&
+        filter(p -> !p.isTargetPiece() &&
             !p.getName().equalsIgnoreCase(tile.getPiece().get().getName())).collect(Collectors.toList());
     Piece p = promotionPopUp(pieceList);
     Piece clone = p.clone();

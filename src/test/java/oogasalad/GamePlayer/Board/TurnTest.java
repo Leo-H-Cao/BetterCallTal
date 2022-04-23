@@ -11,7 +11,6 @@ import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Board.TurnCriteria.OnlyFirstTeam;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.Board.TurnManagement.GamePlayers;
-import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
@@ -68,7 +67,7 @@ class TurnTest {
       assertEquals(board.move(pieceOne, new Coordinate(0, 1)).nextPlayer(), 1);
       assertEquals(board.move(pieceTwo, new Coordinate(1, 1)).nextPlayer(), 2);
       assertEquals(board.move(pieceThree, new Coordinate(2, 1)).nextPlayer(), 0);
-    } catch (Exception e) {
+    } catch (Throwable e) {
       fail();
     }
   }
@@ -85,7 +84,7 @@ class TurnTest {
       assertEquals(board.move(pieceThree, new Coordinate(2, 1)).nextPlayer(), 2);
       assertEquals(board.move(pieceThree, new Coordinate(2, 2)).nextPlayer(), 2);
       assertEquals(board.move(pieceThree, new Coordinate(2, 3)).nextPlayer(), 0);
-    } catch (Exception e) {
+    } catch (Throwable e) {
       fail();
     }
   }
@@ -97,7 +96,7 @@ class TurnTest {
     assertThrows(WrongPlayerException.class, () -> board.move(pieceTwo, new Coordinate(0, 1)));
     try {
       board.move(pieceOne, new Coordinate(0, 1));
-    } catch (Exception e) {
+    } catch (Throwable e) {
       fail();
     }
 
@@ -113,7 +112,7 @@ class TurnTest {
     try {
       board.move(pieceOne, new Coordinate(0, 1));
       board.move(pieceTwo, new Coordinate(1, 1));
-    } catch (Exception e) {
+    } catch (Throwable e) {
       fail();
     }
 
@@ -129,7 +128,8 @@ class TurnTest {
     try {
       board.move(pieceOne, new Coordinate(0, 1));
       board.move(pieceOne, new Coordinate(0, 2));
-    } catch (Exception e) {
+
+    } catch (Throwable e) {
       e.printStackTrace();
       fail();
     }

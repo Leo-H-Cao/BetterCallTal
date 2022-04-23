@@ -34,7 +34,7 @@ public class AtomicEndCondition implements EndCondition {
         board.getPlayer(t).opponentIDs()).filter(o -> !scores.containsKey(o)).forEach(o ->
         scores.put(o, WIN)));
 
-    Arrays.stream(teams).filter((t) -> !scores.containsKey(t)).forEach(t ->
+    Arrays.stream(teams).filter(t -> !scores.containsKey(t)).forEach(t ->
         scores.put(t, DRAW));
 
     return scores;

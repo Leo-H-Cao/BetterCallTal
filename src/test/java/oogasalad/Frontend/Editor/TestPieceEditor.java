@@ -10,10 +10,10 @@ import util.DukeApplicationTest;
 import java.util.ResourceBundle;
 
 public class TestPieceEditor extends DukeApplicationTest {
+
 	private Stage myStage;
 	private EditorView myEditorView;
 	private ResourceBundle myResources;
-
 
 	@Override
 	public void start (Stage stage) {
