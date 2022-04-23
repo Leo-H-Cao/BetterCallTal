@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
@@ -98,9 +99,7 @@ public class BankJoiner implements MovementModifier{
       Set<ChessTile> updatedCoords = Set.of(bankTile);
       LOG.debug(String.format("Updated coords: %s", updatedCoords));
       return updatedCoords;
-    } catch(OutsideOfBoardException | NullPointerException /*| PieceNotFoundException*/ e) {
-      return Set.of();
-    }
+    } catch(OutsideOfBoardException | NullPointerException /*| PieceNotFoundException*/ e) {return Collections.emptySet();}
   }
 
   /**
@@ -122,8 +121,6 @@ public class BankJoiner implements MovementModifier{
     LOG.debug(String.format("Present pieces: %s", presentPieces));
 
     return pastPieces.stream().filter(p -> !presentPieces.contains(p)).findFirst().orElse(null);
-    /* orElseThrow(
-        () -> new PieceNotFoundException("Taken piece cannot be found for crazyhouse"));*/
   }
 
   /***

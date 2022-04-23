@@ -32,6 +32,9 @@ class BankJoinerTest {
       BankJoiner test = new BankJoiner("89y473hf");
       assertEquals(8, test.getBlockCol());
 
+      test = new BankJoiner();
+      assertEquals(8, test.getBlockCol());
+
       test = new BankJoiner("TicTacToeConfig");
       assertEquals(3, test.getBlockCol());
     } catch (Exception e) {

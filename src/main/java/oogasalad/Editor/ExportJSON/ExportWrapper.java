@@ -6,10 +6,10 @@ public class ExportWrapper {
 
   private GeneralExport general;
   private ArrayList<PlayerInfoExport> playerInfo;
-  private ArrayList<PieceExport> pieces;
+  private ArrayList<PieceMainExport> pieces;
   private ArrayList<TileExport> tiles;
 
-  public ExportWrapper(GeneralExport generalExport, ArrayList<PlayerInfoExport> playerInfo, ArrayList<PieceExport> pieces, ArrayList<TileExport> tiles){
+  public ExportWrapper(GeneralExport generalExport, ArrayList<PlayerInfoExport> playerInfo, ArrayList<PieceMainExport> pieces, ArrayList<TileExport> tiles){
     general = generalExport;
     this.playerInfo = playerInfo;
     this.pieces = pieces;
@@ -24,7 +24,7 @@ public class ExportWrapper {
     return playerInfo;
   }
 
-  public ArrayList<PieceExport> getPieces() {
+  public ArrayList<PieceMainExport> getPieces() {
     return pieces;
   }
 
