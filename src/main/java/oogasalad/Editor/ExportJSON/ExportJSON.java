@@ -4,9 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
 import oogasalad.Editor.ModelState.BoardState.EditorTile;
 import oogasalad.Editor.ModelState.BoardState.TileEffect;
+import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
+import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
+import oogasalad.Editor.ModelState.EditPiece.PieceGridTile;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Editor.ModelState.RulesState.GameRulesState;
 import org.apache.logging.log4j.LogManager;
@@ -14,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 
 public class ExportJSON {
   private static final Logger LOG = LogManager.getLogger(ExportJSON.class);
+  private final int PIECE_LOCATION = 3;
 
   private PiecesState piecesState;
   private GameRulesState gameRulesState;
@@ -26,9 +31,11 @@ public class ExportJSON {
   private ArrayList<PieceExport> pieces;
   private ArrayList<PieceMainExport> piecesMain;
   private ArrayList<TileExport> tiles;
+  private HashSet<String> seenPieceID;
 
 
   public ExportJSON(PiecesState piecesState, GameRulesState gameRulesState, BoardState boardState){
+    seenPieceID = new HashSet<>();
     this.piecesState = piecesState;
     this.gameRulesState = gameRulesState;
     this.boardState = boardState;
@@ -81,8 +88,13 @@ public class ExportJSON {
       for(int x = 0; x < boardState.getBoardWidth().get(); x++){
         EditorTile tile = boardState.getTile(x, y);
         if(tile.hasPiece()){
-          pieces.add(new PieceExport( piecesState.getPiece(tile.getPieceID())));
-          piecesMain.add(new PieceMainExport(y,x, tile.getTeam(),piecesState.getPiece(tile.getPieceID()) ));
+          EditorPiece curEditorPiece = piecesState.getPiece(tile.getPieceID());
+          pieces.add(new PieceExport( curEditorPiece));
+          piecesMain.add(new PieceMainExport(y,x, tile.getTeam(),piecesState.getPiece(tile.getPieceID())));
+          if(!seenPieceID.contains(curEditorPiece.getPieceID())){
+            createBasicMovement(curEditorPiece.getMovementGrid());
+            seenPieceID.add(curEditorPiece.getPieceID());
+          }
         }
         if(tile.getTileEffect() != TileEffect.NONE || tile.getImg() != null){
           TileExport tileExport = new TileExport(y, x, tile.getImg());
@@ -92,6 +104,30 @@ public class ExportJSON {
           tiles.add(tileExport);
         }
       }
+    }
+  }
+
+  private void createBasicMovement(MovementGrid movementGrid){
+    for(int y = 0; y < MovementGrid.PIECE_GRID_SIZE; y++){
+      for(int x = 0; x < MovementGrid.PIECE_GRID_SIZE; x++){
+        PieceGridTile curTile = movementGrid.getTileStatus(x, y);
+        if(curTile == PieceGridTile.OPEN || curTile == PieceGridTile.INFINITY){
+          int relX = x-PIECE_LOCATION;
+          int relY = PIECE_LOCATION-y;
+          BasicMovementExport basicMovement = new BasicMovementExport(relX, relY, curTile == PieceGridTile.INFINITY);
+          exportBasicMovement(basicMovement);
+        }
+      }
+    }
+  }
+
+  private void exportBasicMovement(BasicMovementExport basicMovement){
+    ObjectMapper objectMapper = new ObjectMapper();
+    try{
+      System.out.println(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(basicMovement));
+    }
+    catch (IOException e){
+      LOG.warn("JSON object mapper exception");
     }
   }
 }

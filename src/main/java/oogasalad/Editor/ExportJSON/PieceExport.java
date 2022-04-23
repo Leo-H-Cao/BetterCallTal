@@ -17,8 +17,9 @@ public class PieceExport {
   private ArrayList<String> movementModifiers;
   private ArrayList<String> onInteractionModifier;
   private MovementGrid movementGrid;
-  private ArrayList<BasicMovementExport> basicMovements;
-  private ArrayList<BasicMovementExport> basicCaptures;
+  private String basicMovements;
+  private String basicCaptures;
+
 
   public PieceExport(EditorPiece editorPiece){
     pieceName = editorPiece.getPieceName();
@@ -26,14 +27,11 @@ public class PieceExport {
     pointValue = editorPiece.getPointValue();
     customMoves = editorPiece.getCustomMoves() == null ? new ArrayList<>() :editorPiece.getCustomMoves();
     movementGrid = editorPiece.getMovementGrid();
-    basicMovements = new ArrayList<>();
+    basicMovements = pieceName+"Movements";
+    basicCaptures = pieceName+"Captures";
 
     movementModifiers = new ArrayList<>();
     onInteractionModifier = new ArrayList<>();
-    //change for customized captures
-    basicCaptures = basicMovements;
-
-    createBasicMovements();
   }
 
   public String getPieceName() {
@@ -68,24 +66,17 @@ public class PieceExport {
     return onInteractionModifier;
   }
 
-  public ArrayList<BasicMovementExport> getBasicMovements() {
-    return basicMovements;
-  }
 
-  public ArrayList<BasicMovementExport> getBasicCaptures() {
-    return basicCaptures;
-  }
-
-  private void createBasicMovements(){
-    for(int y = 0; y < MovementGrid.PIECE_GRID_SIZE; y++){
-      for(int x = 0; x < MovementGrid.PIECE_GRID_SIZE; x++){
-        PieceGridTile curTile = movementGrid.getTileStatus(x, y);
-        if(curTile == PieceGridTile.OPEN || curTile == PieceGridTile.INFINITY){
-          int relX = x-PIECE_LOCATION;
-          int relY = PIECE_LOCATION-y;
-          basicMovements.add(new BasicMovementExport(relX, relY, curTile == PieceGridTile.INFINITY));
-        }
-      }
-    }
-  }
+//  private void createBasicMovements(){
+//    for(int y = 0; y < MovementGrid.PIECE_GRID_SIZE; y++){
+//      for(int x = 0; x < MovementGrid.PIECE_GRID_SIZE; x++){
+//        PieceGridTile curTile = movementGrid.getTileStatus(x, y);
+//        if(curTile == PieceGridTile.OPEN || curTile == PieceGridTile.INFINITY){
+//          int relX = x-PIECE_LOCATION;
+//          int relY = PIECE_LOCATION-y;
+//          basicMovements.add(new BasicMovementExport(relX, relY, curTile == PieceGridTile.INFINITY));
+//        }
+//      }
+//    }
+//  }
 }

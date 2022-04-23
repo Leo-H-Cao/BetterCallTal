@@ -19,12 +19,14 @@ public class GameRulesState {
   private ResourceBundle myResources;
   private ArrayList<String> colors;
   private HashMap<Integer, ArrayList<Integer>> teamOpponents;
+  private ArrayList<String> validStateCheckers;
 
   public GameRulesState(){
     setResources();
     winConditions = new ArrayList<>();
     colors = new ArrayList<>();
     teamOpponents = new HashMap<>();
+    validStateCheckers = new ArrayList<>();
     setDefaults();
   }
 
@@ -93,5 +95,7 @@ public class GameRulesState {
     teamOpponents.put(team1, new ArrayList<>());
     teamOpponents.get(team0).add(team1);
     teamOpponents.get(team1).add(team0);
+    validStateCheckers.add(myResources.getString("defaultValidStateCheckers"));
+
   }
 }
