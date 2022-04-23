@@ -70,10 +70,10 @@ public class Atomic implements MovementModifier{
     Set<ChessTile> explodedSquares = new HashSet<>();
     try {
       getSurroundingTiles(board.getTile(piece.getCoordinates()), board).stream().filter(
-          (t) -> t.getPiece().isPresent()).filter((t) -> explosionImmuneNames.stream().noneMatch(
-              (n) -> t.getPiece().get().getName().equalsIgnoreCase(n) && !t.getCoordinates().equals(piece.getCoordinates())
-          )).forEach((t) -> {
-            LOG.debug("Exploded piece name: " + t.getPiece().get().getName());
+          t -> t.getPiece().isPresent()).filter(t -> explosionImmuneNames.stream().noneMatch(
+              n -> t.getPiece().get().getName().equalsIgnoreCase(n) && !t.getCoordinates().equals(piece.getCoordinates())
+          )).forEach(t -> {
+            LOG.debug(String.format("Exploded piece name: %s", t.getPiece().get().getName()));
             t.clearPieces();
             explodedSquares.add(t);
           });

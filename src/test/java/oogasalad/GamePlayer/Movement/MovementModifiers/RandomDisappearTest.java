@@ -14,7 +14,6 @@ class RandomDisappearTest {
   static final String RANDOM_DISAPPEAR_TEST_FILE = BOARD_TEST_FILES_HEADER + "RemoveAfterMoveAlways.json";
   static final String RANDOM_DISAPPEAR_TEST_FILE_TWO = BOARD_TEST_FILES_HEADER + "RemoveAfterMoveNever.json";
 
-
   private ChessBoard myBoard;
 
   @BeforeEach
@@ -43,7 +42,7 @@ class RandomDisappearTest {
   }
 
   @Test
-  void testDissapear() {
+  void testDisappear() {
     try {
       myBoard.move(myBoard.getTile(Coordinate.of(6, 0)).getPiece().get(), Coordinate.of(5, 0));
       assertTrue(myBoard.getTile(Coordinate.of(5, 0)).getPiece().isEmpty());

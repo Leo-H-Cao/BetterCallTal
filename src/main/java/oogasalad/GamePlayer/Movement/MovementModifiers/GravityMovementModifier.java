@@ -26,7 +26,7 @@ public class GravityMovementModifier implements MovementModifier {
 
   private static final String G_FILE_PATH_HEADER = "doc/GameEngineResources/Other/";
   private static final String G_DEFAULT_FILE = "GravityRight";
-  private static final List<Coordinate> DEFAULT = List.of(Coordinate.of(0, -1));
+  private static final List<Coordinate> DEFAULT = List.of(Coordinate.of(0, 1));
 
   private List<Coordinate> relativeCoordinates;
 
@@ -109,8 +109,13 @@ public class GravityMovementModifier implements MovementModifier {
       changedTiles.add(board.getTile(newCoordinate));
       piece.updateCoordinates(board.getTile(newCoordinate), board);
       piece.getHistory().remove(piece.getHistory().size() - 1);
-    } catch (OutsideOfBoardException e) {
-      LOG.debug(String.format("Out of bounds for tile: %s", newCoordinate));
-    }
+    } catch (OutsideOfBoardException e) {LOG.debug(String.format("Out of bounds for tile: %s", newCoordinate));}
+  }
+
+  /***
+   * @return relative coordinates list for testing
+   */
+  List<Coordinate> getRelativeCoordinates() {
+    return relativeCoordinates;
   }
 }
