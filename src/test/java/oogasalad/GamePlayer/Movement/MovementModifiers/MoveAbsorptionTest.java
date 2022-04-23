@@ -42,6 +42,8 @@ class MoveAbsorptionTest {
       assertTrue(pawn.getMoves(myBoard).contains(myBoard.getTile(Coordinate.of(3, 2))));
     } catch (Exception e) {
       fail();
+    } catch (Throwable e) {
+      throw new RuntimeException(e);
     }
   }
 }

@@ -1,6 +1,6 @@
 {
   "pieceName" : "piece1",
-  "imgFile" : "images/pieces/black/rook.png",
+  "imgFile" : "images/pieces/black/cartman.png",
   "pointValue" : 0,
   "customMoves" : [ ],
   "movementModifiers" : [ ],
