@@ -9,6 +9,8 @@ import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.util.FileReader;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /***
  * Piece has the given chance of disappearing after a move
@@ -18,8 +20,9 @@ import oogasalad.GamePlayer.util.FileReader;
 public class RandomDisappear implements MovementModifier {
 
   private static final String RD_FILE_PATH_HEADER = "doc/GameEngineResources/Other/";
-  private static final String RD_DEFAULT_FILE = "RDHalf";
-  private static final double DEFAULT_RD = 0.5;
+  private static final String RD_DEFAULT_FILE = "RDFive";
+  private static final double DEFAULT_RD = 0.05;
+  private static final Logger LOG = LogManager.getLogger(RandomDisappear.class);
 
   private double chanceOfDisappearing;
 
@@ -37,12 +40,15 @@ public class RandomDisappear implements MovementModifier {
    */
   public RandomDisappear(String configFile) {
     chanceOfDisappearing = FileReader.readOneDouble(
-        RD_FILE_PATH_HEADER + RD_DEFAULT_FILE, DEFAULT_RD);
+        RD_FILE_PATH_HEADER + configFile, DEFAULT_RD);
+    LOG.debug(String.format("Chance of disappearing: %f%%", chanceOfDisappearing * 100));
   }
 
   @Override
   public Set<ChessTile> updateMovement(Piece piece, ChessBoard board) {
-    if (Math.random() <= chanceOfDisappearing) {
+    double randomVal = Math.random();
+    LOG.debug(String.format("Random val: 5%f", randomVal));
+    if (randomVal <= chanceOfDisappearing) {
       try {
         board.getTile(piece.getCoordinates()).removePiece(piece);
         return Set.of(board.getTile(piece.getCoordinates()));
