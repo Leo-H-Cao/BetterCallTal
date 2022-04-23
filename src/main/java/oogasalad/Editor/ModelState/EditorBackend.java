@@ -1,25 +1,32 @@
 package oogasalad.Editor.ModelState;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import javafx.beans.property.*;
 import javafx.scene.image.Image;
+import oogasalad.Editor.ExportJSON.ExportJSON;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 import oogasalad.Editor.ModelState.EditPiece.PieceGridTile;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
+import oogasalad.Editor.ModelState.RulesState.GameRulesState;
+
 import static oogasalad.Editor.ModelState.EditPiece.PieceGridTile.OPEN;
 
 public class EditorBackend {
 	private final PiecesState piecesState;
 	private final BoardState boardState;
+	private final GameRulesState gameRulesState;
 	private final Property<PieceGridTile> selectedTypeProperty;
 	private final SimpleStringProperty selectedPieceId;
 	private final SimpleIntegerProperty alternatePiece;
 	private final SimpleStringProperty customPieceOpenId;
 
 	public EditorBackend(){
-		this.piecesState = new PiecesState();
-		this.boardState = new BoardState();
+		piecesState = new PiecesState();
+		boardState = new BoardState();
+		gameRulesState = new GameRulesState();
 		selectedTypeProperty = new SimpleObjectProperty<>(OPEN);
 		selectedPieceId = new SimpleStringProperty("rook");
 		alternatePiece = new SimpleIntegerProperty(0);
@@ -67,6 +74,11 @@ public class EditorBackend {
 		return customPieceOpenId;
 	}
 
+	public void exportState() {
+		ExportJSON exporter = new ExportJSON(piecesState, gameRulesState, boardState);
+		exporter.writeToJSON();
+	}
+
 	private void createDefaultPieces() {
 		MovementGrid moves = new MovementGrid();
 
@@ -86,5 +98,38 @@ public class EditorBackend {
 		piece.setPieceName(name);
 		piece.setPointValue(val);
 		piece.setMovementGrid(moves);
+	}
+
+	private void setDefaultGameRules() {
+		gameRulesState.setTurnCriteria("Linear");
+
+		ArrayList<ArrayList<String>> winConditions = new ArrayList<>();
+		ArrayList<String> winConditionsDefaultStalemate = new ArrayList<>();
+		ArrayList<String> winConditionsDefaultCheckmate = new ArrayList<>();
+		winConditionsDefaultStalemate.add("Stalemate");
+		winConditionsDefaultCheckmate.add("Checkmate");
+		winConditions.add(winConditionsDefaultCheckmate);
+		winConditions.add(winConditionsDefaultStalemate);
+		gameRulesState.setWinConditions(winConditions);
+
+		ArrayList<String> colors = new ArrayList<>();
+		colors.add("black");
+		colors.add("white");
+		gameRulesState.setColors(colors);
+
+		HashMap<Integer, ArrayList<Integer>> teamOpponents = new HashMap<>();
+		int team0 = 0;
+		int team1 = 1;
+		teamOpponents.put(team0, new ArrayList<>());
+		teamOpponents.put(team1, new ArrayList<>());
+		teamOpponents.get(team0).add(team1);
+		teamOpponents.get(team1).add(team0);
+		gameRulesState.setTeamOpponents(teamOpponents);
+
+		ArrayList<ArrayList<String>> validStateCheckers = new ArrayList<>();
+		ArrayList<String> defaultValidStateCheckers = new ArrayList<>();
+		defaultValidStateCheckers.add("Check");
+		validStateCheckers.add(defaultValidStateCheckers);
+		gameRulesState.setValidStateCheckers(validStateCheckers);
 	}
 }
