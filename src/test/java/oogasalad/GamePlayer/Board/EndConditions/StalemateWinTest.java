@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 /**
  *
  */
-public class StalemateTests {
+public class StalemateWinTest {
   private BoardTestUtil util;
 
   private static final Logger LOG = LogManager.getLogger(CheckmateTest.class);
@@ -34,7 +34,7 @@ public class StalemateTests {
   private ChessBoard board;
   private List<Piece> pieces;
 
-  Stalemate s = new Stalemate();
+  StalemateWin sw = new StalemateWin();
 
   @BeforeEach
   void setUp() {
@@ -60,17 +60,14 @@ public class StalemateTests {
   @Test
   void reachedStalemate() throws EngineException {
 
-    assertTrue(s.isStalemate(board));
+    assertTrue(sw.isStalemate(board));
 
   }
 
   @Test
   void testStalemateScores(){
-    assertEquals(0.5, s.getScores(board).get(TEAM_1));
-    assertEquals(0.5, s.getScores(board).get(TEAM_2));
+    assertEquals(0.0, sw.getScores(board).get(TEAM_1));
+    assertEquals(1.0, sw.getScores(board).get(TEAM_2));
   }
 
 }
-
-//Snake style turns
-//Custom promotion

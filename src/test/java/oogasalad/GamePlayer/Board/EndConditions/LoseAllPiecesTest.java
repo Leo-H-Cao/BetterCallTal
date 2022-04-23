@@ -1,7 +1,6 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +8,6 @@ import oogasalad.GamePlayer.Board.BoardTestUtil;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Player;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
-import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.ValidStateChecker.Check;
 import org.apache.logging.log4j.LogManager;
@@ -17,10 +15,7 @@ import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-/**
- *
- */
-public class StalemateTests {
+public class LoseAllPiecesTest {
   private BoardTestUtil util;
 
   private static final Logger LOG = LogManager.getLogger(CheckmateTest.class);
@@ -28,13 +23,10 @@ public class StalemateTests {
   private static final int TEAM_1 = 1;
   private static final int TEAM_2 = 0;
 
-  oogasalad.GamePlayer.ValidStateChecker.Check Check = new Check();
-  Checkmate checkmate = new Checkmate();
+  LoseAllPieces l = new LoseAllPieces();
 
   private ChessBoard board;
   private List<Piece> pieces;
-
-  Stalemate s = new Stalemate();
 
   @BeforeEach
   void setUp() {
@@ -50,27 +42,28 @@ public class StalemateTests {
 
     board = new ChessBoard(8, 8, turnCriteria, players, List.of(endCondition));
     pieces = new ArrayList<>();
-    pieces.addAll(List.of(util.makeKing(7, 0, TEAM_1),
-        util.makeRook(6, 6, TEAM_2),
+
+  }
+
+  @Test
+  void testNoGameOver(){
+    pieces.addAll(List.of(util.makeKing(7, 0, TEAM_1), util.makeRook(6, 6, TEAM_2),
         util.makeRook(0, 1, TEAM_2)));
-
     board.setPieces(pieces);
+    assert(l.getScores(board).isEmpty());
   }
 
   @Test
-  void reachedStalemate() throws EngineException {
-
-    assertTrue(s.isStalemate(board));
+  void testLoseAllPiecesPlayerScores(){
+    pieces.addAll(List.of(util.makeRook(7, 0, TEAM_2), util.makeRook(6, 6, TEAM_2),
+        util.makeRook(0, 1, TEAM_2)));
+    board.setPieces(pieces);
+    assert(!l.getScores(board).isEmpty());
+    assertEquals(0.0, l.getScores(board).get(TEAM_1));
+    assertEquals(1.0, l.getScores(board).get(TEAM_2));
 
   }
 
-  @Test
-  void testStalemateScores(){
-    assertEquals(0.5, s.getScores(board).get(TEAM_1));
-    assertEquals(0.5, s.getScores(board).get(TEAM_2));
-  }
+
 
 }
-
-//Snake style turns
-//Custom promotion
