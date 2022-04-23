@@ -15,6 +15,7 @@ public class EditorPiece {
   private ArrayList<String> customMoves;
   private int pointValue;
   private String pieceName;
+  private ArrayList<ArrayList<String>> onInteractionModifiers;
 
   public EditorPiece(String pieceID){
     Image defaultMainPieceImage = new Image("images/pieces/white/rook.png");
@@ -44,6 +45,15 @@ public class EditorPiece {
 
   public void setTile(int x, int y, PieceGridTile tileStatus){
     movementGrid.setTile(x, y, tileStatus);
+  }
+
+  public ArrayList<ArrayList<String>> getOnInteractionModifiers() {
+    return onInteractionModifiers;
+  }
+
+  public void setOnInteractionModifiers(
+      ArrayList<ArrayList<String>> onInteractionModifiers) {
+    this.onInteractionModifiers = onInteractionModifiers;
   }
 
   public PieceGridTile getTileStatus(int x, int y){
