@@ -1,6 +1,7 @@
 package oogasalad.Editor.ExportJSON;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,24 +47,29 @@ public class ExportJSON {
     exportWrapper = new ExportWrapper(generalExport, playerInfo, piecesMain, tiles);
   }
 
-  public String getJSONTestString(){
-    return JSONTestString;
-  }
-
   public void writeToJSON(){
     ObjectMapper objectMapper = new ObjectMapper();
     try{
-      String piecesJSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pieces);
-      JSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(exportWrapper);
-      JSONTestString = objectMapper.writeValueAsString(exportWrapper);
-      System.out.println(JSONString);
-      System.out.println(piecesJSONString);
+//      String piecesJSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pieces);
+//      JSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(exportWrapper);
+//      JSONTestString = objectMapper.writeValueAsString(exportWrapper);
+//      System.out.println(JSONString);
+//      System.out.println(piecesJSONString);
 //      System.out.println(JSONTestString);
+
+      for(PieceExport piece : pieces){
+        objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/testing_directory/json_export_test/"+piece.getPieceName()), piece);
+      }
+      objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/testing_directory/json_export_test/"+"mainFile"), exportWrapper);
 
     }
     catch (IOException e){
       LOG.warn("JSON object mapper exception");
     }
+  }
+
+  public String getJSONTestString(){
+    return JSONTestString;
   }
 
   private void createGeneralExportObject(){
@@ -92,10 +98,10 @@ public class ExportJSON {
         EditorTile tile = boardState.getTile(x, y);
         if(tile.hasPiece()){
           EditorPiece curEditorPiece = piecesState.getPiece(tile.getPieceID());
-          pieces.add(new PieceExport(curEditorPiece));
           piecesMain.add(new PieceMainExport(y,x, tile.getTeam(),piecesState.getPiece(tile.getPieceID())));
           if(!seenPieceID.contains(curEditorPiece.getPieceID())){
-            createBasicMovement(curEditorPiece.getMovementGrid());
+            pieces.add(new PieceExport(curEditorPiece, tile.getTeam()));
+            createBasicMovement(curEditorPiece.getMovementGrid(), curEditorPiece.getPieceName());
             seenPieceID.add(curEditorPiece.getPieceID());
           }
         }
@@ -110,7 +116,8 @@ public class ExportJSON {
     }
   }
 
-  private void createBasicMovement(MovementGrid movementGrid){
+  private void createBasicMovement(MovementGrid movementGrid, String pieceName){
+    BasicMovementExportWrapper movementWrapper = new BasicMovementExportWrapper();
     for(int y = 0; y < MovementGrid.PIECE_GRID_SIZE; y++){
       for(int x = 0; x < MovementGrid.PIECE_GRID_SIZE; x++){
         PieceGridTile curTile = movementGrid.getTileStatus(x, y);
@@ -118,16 +125,17 @@ public class ExportJSON {
           int relX = x-PIECE_LOCATION;
           int relY = PIECE_LOCATION-y;
           BasicMovementExport basicMovement = new BasicMovementExport(relX, relY, curTile == PieceGridTile.INFINITY);
-          exportBasicMovement(basicMovement);
+          movementWrapper.addMovement(basicMovement);
         }
       }
     }
+    exportBasicMovement(movementWrapper, pieceName);
   }
 
-  private void exportBasicMovement(BasicMovementExport basicMovement){
+  private void exportBasicMovement(BasicMovementExportWrapper basicMovements, String pieceName){
     ObjectMapper objectMapper = new ObjectMapper();
     try{
-      System.out.println(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(basicMovement));
+      objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/testing_directory/json_export_test/"+pieceName+"Movement"), basicMovements);
     }
     catch (IOException e){
       LOG.warn("JSON object mapper exception");

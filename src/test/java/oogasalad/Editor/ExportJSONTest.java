@@ -61,6 +61,7 @@ public class ExportJSONTest extends DukeApplicationTest {
     piecesState.createCustomPiece("123");
     piecesState.changePieceImage("123", new Image("images/pieces/black/rook.png"), 0);
     EditorPiece testPiece = piecesState.getPiece("123");
+    testPiece.setPieceName("piece1");
 
     testPiece.setTile(4, 2, PieceGridTile.OPEN);
     testPiece.setTile(6, 0, PieceGridTile.INFINITY);
@@ -76,6 +77,25 @@ public class ExportJSONTest extends DukeApplicationTest {
 
     boardState.setPieceStartingLocation("123", 3, 6, 1);
     boardState.setPieceStartingLocation("123", 4, 5, 0);
+
+
+
+    piecesState.createCustomPiece("1234");
+    piecesState.changePieceImage("1234", new Image("images/pieces/black/rook.png"), 1);
+    EditorPiece testPiece2 = piecesState.getPiece("1234");
+    testPiece2.setPieceName("piece2");
+
+    testPiece2.setTile(4, 2, PieceGridTile.OPEN);
+    testPiece2.setTile(6, 0, PieceGridTile.INFINITY);
+    testPiece2.setTile(5,1, PieceGridTile.OPEN);
+
+    boardState.setPieceStartingLocation("1234", 4, 5, 1);
+
+    boardState.setTileEffect(1,2,TileEffect.FIRE);
+    boardState.setTileEffect(6,5, TileEffect.SWAP);
+    boardState.setTileEffect(2,6, TileEffect.BLACKHOLE);
+    boardState.setTileImage(3,4, new Image("images/pieces/black/rook.png"));
+
     exportJSON = new ExportJSON(piecesState, gameRulesState, boardState);
     exportJSON.writeToJSON();
 //    assertEquals(exportJSON.getJSONTestString(), myResources.getString("exportPiecesJSONString"));
