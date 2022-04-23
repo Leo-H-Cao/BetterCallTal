@@ -105,7 +105,7 @@ public class ExportJSON {
           piecesMain.add(new PieceMainExport(y,x, tile.getTeam(),piecesState.getPiece(tile.getPieceID())));
           if(!seenPieceID.contains(curEditorPiece.getPieceID())){
             pieces.add(new PieceExport(curEditorPiece, tile.getTeam()));
-            createBasicMovement(curEditorPiece.getMovementGrid(), curEditorPiece.getPieceName());
+            createBasicMovement(curEditorPiece.getMovementGrid(), curEditorPiece.getPieceName().getValue());
             seenPieceID.add(curEditorPiece.getPieceID());
           }
         }

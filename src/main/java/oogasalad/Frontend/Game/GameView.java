@@ -1,7 +1,6 @@
 package oogasalad.Frontend.Game;
 
 import static oogasalad.Frontend.Game.TurnKeeper.AI;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;

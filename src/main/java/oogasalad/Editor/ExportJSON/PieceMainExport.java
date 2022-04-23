@@ -21,7 +21,7 @@ public class PieceMainExport {
     movementModifiers = new ArrayList<>();
     onInteractionModifier = new ArrayList<>();
     customMoves = editorPiece.getCustomMoves() == null ? new ArrayList<>() :editorPiece.getCustomMoves();
-    pieceFile = editorPiece.getPieceName();
+    pieceFile = editorPiece.getPieceName().getValue();
   }
 
   public int getRow() {
