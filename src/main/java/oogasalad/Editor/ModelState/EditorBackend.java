@@ -103,9 +103,13 @@ public class EditorBackend {
 	private void setDefaultGameRules() {
 		gameRulesState.setTurnCriteria("Linear");
 
-		ArrayList<String> winConditions = new ArrayList<>();
-		winConditions.add("Checkmate");
-		winConditions.add("Stalemate");
+		ArrayList<ArrayList<String>> winConditions = new ArrayList<>();
+		ArrayList<String> winConditionsDefaultStalemate = new ArrayList<>();
+		ArrayList<String> winConditionsDefaultCheckmate = new ArrayList<>();
+		winConditionsDefaultStalemate.add("Stalemate");
+		winConditionsDefaultCheckmate.add("Checkmate");
+		winConditions.add(winConditionsDefaultCheckmate);
+		winConditions.add(winConditionsDefaultStalemate);
 		gameRulesState.setWinConditions(winConditions);
 
 		ArrayList<String> colors = new ArrayList<>();
@@ -122,8 +126,10 @@ public class EditorBackend {
 		teamOpponents.get(team1).add(team0);
 		gameRulesState.setTeamOpponents(teamOpponents);
 
-		ArrayList<String> validStateCheckers = new ArrayList<>();
-		validStateCheckers.add("Check");
+		ArrayList<ArrayList<String>> validStateCheckers = new ArrayList<>();
+		ArrayList<String> defaultValidStateCheckers = new ArrayList<>();
+		defaultValidStateCheckers.add("Check");
+		validStateCheckers.add(defaultValidStateCheckers);
 		gameRulesState.setValidStateCheckers(validStateCheckers);
 	}
 }
