@@ -56,6 +56,8 @@ class BankJoinerTest {
       assertTrue(myBoard.getTile(Coordinate.of(6, 9)).getPiece().isPresent());
     } catch (Exception e) {
       fail();
+    } catch (Throwable e) {
+      e.printStackTrace();
     }
   }
 }

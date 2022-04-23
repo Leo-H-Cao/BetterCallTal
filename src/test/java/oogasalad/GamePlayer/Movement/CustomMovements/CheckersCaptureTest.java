@@ -45,7 +45,7 @@ class CheckersCaptureTest {
       assertEquals("checkerKing", myBoard.getTile(Coordinate.of(0, 6)).getPiece().get().getName());
       assertTrue(myBoard.getTile(Coordinate.of(3,3)).getPieces().isEmpty());
       assertTrue(myBoard.getTile(Coordinate.of(1,5)).getPieces().isEmpty());
-    } catch (Exception e) {
+    } catch (Throwable e) {
       fail();
     }
   }

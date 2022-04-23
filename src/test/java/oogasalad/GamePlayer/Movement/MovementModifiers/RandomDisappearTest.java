@@ -52,6 +52,8 @@ class RandomDisappearTest {
       assertTrue(myBoard.getTile(Coordinate.of(5, 0)).getPiece().isPresent());
     } catch (Exception e) {
       fail();
+    } catch (Throwable e) {
+      e.printStackTrace();
     }
   }
 }
