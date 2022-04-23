@@ -18,6 +18,7 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.util.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -30,6 +31,7 @@ public class Atomic implements MovementModifier{
 
   private static final String ATOMIC_IMMUNE_FILE_PATH_HEADER = "doc/GameEngineResources/Other/";
   private static final String ATOMIC_IMMUNE_DEFAULT_FILE = "AtomicImmune";
+  private static final List<String> DEFAULT_ATOMIC_IMMUNE = List.of("Pawn");
   private static final Logger LOG = LogManager.getLogger(Atomic.class);
 
   private List<String> explosionImmuneNames;
@@ -53,19 +55,7 @@ public class Atomic implements MovementModifier{
    * Assigns piece immune to explosions, default is just pawn
    */
   private List<String> assignImmune(String atomicImmuneFile) {
-    try {
-      List<String> immuneNames = new ArrayList<>();
-      File immuneFile = new File(atomicImmuneFile);
-      Scanner reader = new Scanner(immuneFile);
-      while (reader.hasNext()) {
-        immuneNames.add(reader.next().trim());
-      }
-      reader.close();
-      return immuneNames;
-    } catch (Exception e) {
-      LOG.warn("Could not find atomic file");
-      return List.of("Pawn");
-    }
+    return FileReader.readManyStrings(atomicImmuneFile, DEFAULT_ATOMIC_IMMUNE);
   }
 
   /***
@@ -98,7 +88,7 @@ public class Atomic implements MovementModifier{
    */
   private Set<ChessTile> getSurroundingTiles(ChessTile center, ChessBoard board) {
     Set<ChessTile> surroundingTiles = new HashSet<>();
-    Arrays.stream(DIRECTIONS).forEach((i) -> Arrays.stream(DIRECTIONS).forEach((j) -> {
+    DIRECTIONS.forEach(i -> DIRECTIONS.forEach(j -> {
       try {
         surroundingTiles.add(board.getTile(
             Coordinate.of(center.getCoordinates().getRow()+i, center.getCoordinates().getCol()+j)));
@@ -106,7 +96,7 @@ public class Atomic implements MovementModifier{
         LOG.debug(String.format("Invalid coordinate detected: (%d, %d)", center.getCoordinates().getRow()+i, center.getCoordinates().getCol()+j));
       }
     }));
-    LOG.debug("Surrounding tiles: " + surroundingTiles);
+    LOG.debug(String.format("Surrounding tiles: %s", surroundingTiles));
     return surroundingTiles;
   }
 
