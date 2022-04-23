@@ -29,8 +29,9 @@ public class Linear extends TurnCriteria {
     return getCurrentPlayer();
   }
 
-
-
+  /***
+   * @return copy of this turn criteria
+   */
   public TurnCriteria copy(){
     Linear copy = new Linear(players);
     copy.incrementTurn();//temporary fix
