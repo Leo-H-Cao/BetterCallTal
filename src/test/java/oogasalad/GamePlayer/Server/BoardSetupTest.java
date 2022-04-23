@@ -1,6 +1,10 @@
 package oogasalad.GamePlayer.Server;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.IOException;
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -13,7 +17,12 @@ import org.junit.jupiter.api.Test;
 
 public class BoardSetupTest {
   ChessBoard myBoard;
-  String JSON_FILE_PATH = "doc/GameEngineResources/PresentationBoardUpdated.json";
+  static final String PATH_HEADER = "doc/testing_directory/test_boards/";
+  static final String JSON_FILE_PATH = PATH_HEADER + "RegularGame.json";
+  static final String OUT_OF_BOUNDS_FILE = PATH_HEADER + "/malformed_game_files/OutOfBoundTileAndPiece.json";
+  static final String MALFORMED_CLASS_NAMES_FILE = PATH_HEADER + "/malformed_game_files/MalformedClassNames.json";
+  static final String NO_TILE_SECTION_FILE = PATH_HEADER + "/malformed_game_files/NoTileSection.json";
+  static final String NO_TILE_IMG_FILE = PATH_HEADER + "/malformed_game_files/NoCustomTileImage.json";
 
   @BeforeEach
   void setup () throws IOException {
@@ -40,5 +49,42 @@ public class BoardSetupTest {
     assertEquals(1, myBoard.getPlayers()[1].teamID());
   }
 
+  @Test
+  void testOutOfBounds() {
+    try {
+      myBoard = BoardSetup.createLocalBoard(OUT_OF_BOUNDS_FILE);
+      assertNotNull(myBoard);
+      assertTrue(myBoard.getTile(Coordinate.of(0, 0)).getPieces().isEmpty());
+      assertTrue(myBoard.getTile(Coordinate.of(0, 0)).getCustomImg().isEmpty());
+    } catch (Exception e) {
+      e.printStackTrace();
+      fail();
+    }
+  }
 
+  @Test
+  void testMalformedReflection() {
+    assertThrows(IOException.class, () -> BoardSetup.createLocalBoard(MALFORMED_CLASS_NAMES_FILE));
+  }
+
+  @Test
+  void testNoTileSectionInJSON() {
+    try {
+      myBoard = BoardSetup.createLocalBoard(NO_TILE_SECTION_FILE);
+      assertNotNull(myBoard);
+    } catch (Exception e) {
+      fail();
+    }
+  }
+
+  @Test
+  void testNoTileImage() {
+    try {
+      myBoard = BoardSetup.createLocalBoard(NO_TILE_IMG_FILE);
+      assertNotNull(myBoard);
+    } catch (Exception e) {
+      e.printStackTrace();
+      fail();
+    }
+  }
 }

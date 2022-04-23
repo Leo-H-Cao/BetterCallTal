@@ -18,6 +18,8 @@ import org.apache.logging.log4j.Logger;
 
 /***
  * Creates a custom movement that allows the king to castle with a rook
+ *
+ * @author Vincent Chen
  */
 public class Castling implements MovementInterface {
 
@@ -86,7 +88,7 @@ public class Castling implements MovementInterface {
   }
 
   /**
-   * @return exception because no capture possible
+   * @throws InvalidMoveException because no capture possible
    */
   @Override
   public Set<ChessTile> capturePiece(Piece piece, Coordinate captureSquare, ChessBoard board)
@@ -176,7 +178,7 @@ public class Castling implements MovementInterface {
 
     int startCol = Math.min(main.getCoordinates().getCol(), supporter.getCoordinates().getCol()) + 1;
     int endCol = Math.max(main.getCoordinates().getCol(), supporter.getCoordinates().getCol()) - 1;
-    return IntStream.range(startCol, endCol).noneMatch((c) -> {
+    return IntStream.range(startCol, endCol + 1).noneMatch((c) -> {
       try {
         return !board.getTile(new Coordinate(main.getCoordinates().getRow(), c)).getPieces().isEmpty();
       } catch (OutsideOfBoardException e) {

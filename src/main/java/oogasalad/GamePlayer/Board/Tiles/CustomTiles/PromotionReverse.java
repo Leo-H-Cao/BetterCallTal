@@ -23,6 +23,8 @@ import org.json.JSONObject;
 
 /**
  * Promotion but it just adds the reverse of possible moves
+ *
+ * @author Vincent Chen
  */
 public class PromotionReverse implements TileAction{
 

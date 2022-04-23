@@ -24,10 +24,15 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/***
+ * Creates an end condition where the first player to get n of x pieces in a row wins
+ *
+ * @author Vincent Chen
+ */
 public class InARow implements EndCondition {
 
   private static final Logger LOG = LogManager.getLogger(InARow.class);
-  public static final int[] DIRECTIONS = new int[]{-1, 0, 1};
+  public static final List<Integer> DIRECTIONS = List.of(-1, 0, 1);
 
   public static final String IAR_CONFIG_FILE_HEADER = "doc/GameEngineResources/Other/";
   public static final String IAR_DEFAULT_FILE = "InARowThree";
@@ -109,7 +114,7 @@ public class InARow implements EndCondition {
    */
   private boolean anyRayReachesNum(ChessBoard board, Coordinate start,
     String pieceName, int pieceTeam) {
-    return Arrays.stream(DIRECTIONS).anyMatch(i -> Arrays.stream(DIRECTIONS).anyMatch(j ->
+    return DIRECTIONS.stream().anyMatch(i -> DIRECTIONS.stream().anyMatch(j ->
         rayReachesNum(board, pieceName, pieceTeam, start, Coordinate.of(i, j), numInARow)));
   }
 

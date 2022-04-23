@@ -13,6 +13,11 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/***
+ * Creates a tile action that demotes a piece to a given piece
+ *
+ * @author Vincent Chen
+ */
 public class Demote implements TileAction {
 
   private static final Logger LOG = LogManager.getLogger(Demote.class);

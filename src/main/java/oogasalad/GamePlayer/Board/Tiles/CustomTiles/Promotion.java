@@ -16,6 +16,8 @@ import org.apache.logging.log4j.Logger;
 
 /***
  * Creates a tile action that promotes the given piece on it
+ *
+ * @author Vincent Chen
  */
 public class Promotion implements TileAction {
 

@@ -2,6 +2,7 @@ package oogasalad.GamePlayer.Board;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -56,7 +57,7 @@ class GeneralBoardTest {
   }
 
   @Test
-  void generalBoardTestHappy() {
+  void boardAttributeTest() {
     try {
       assertEquals(3, board.getBoardLength());
       assertEquals(3, board.getBoardHeight());
@@ -74,7 +75,7 @@ class GeneralBoardTest {
   }
 
   @Test
-  void boardIteratorTestHS() {
+  void boardIteratorTest() {
     try {
       Iterator<ChessTile> iterator = board.iterator();
       for(int i=0; i<3; i++) {
@@ -95,7 +96,7 @@ class GeneralBoardTest {
   }
 
   @Test
-  void testPieceGeneralHS() {
+  void pieceAttributeTest() {
     try {
       assertEquals("test1", pieceOne.getName());
       assertEquals("test1.png", pieceOne.getImgFile());
@@ -105,7 +106,7 @@ class GeneralBoardTest {
   }
 
   @Test
-  void tileTest() {
+  void tileAttributeTest() {
     ChessTile tile = new ChessTile();
     assertTrue(tile.getPieces().isEmpty());
     assertEquals(Coordinate.of(0, 0), tile.getCoordinates());
@@ -113,5 +114,10 @@ class GeneralBoardTest {
     tile = new ChessTile(Coordinate.of(0, 0), pieceOne);
     assertEquals(pieceOne, tile.getPiece().get());
     assertEquals(Coordinate.of(0, 0), tile.getCoordinates());
+  }
+
+  @Test
+  void boardEqualsTest() {
+    assertNotEquals(board, null);
   }
 }

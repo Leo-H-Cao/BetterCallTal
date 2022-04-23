@@ -28,6 +28,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/***
+ * Sets up a board given a JSON file
+ *
+ * @author Jed, Vincent, Ritvik
+ */
 public class BoardSetup {
 
   private static final Logger LOG = LogManager.getLogger(BoardSetup.class);
@@ -65,7 +70,6 @@ public class BoardSetup {
   public static ChessBoard createRemoteBoard(String path, String key, int thisPlayer)
       throws IOException {
     return createLocalBoard(path);
-
   }
 
   /**
@@ -118,6 +122,7 @@ public class BoardSetup {
     JSONArray customTiles;
     try {
       customTiles = mainGameFile.getJSONArray("tiles");
+      LOG.debug("Got custom tiles array");
     } catch (Exception e) {
       LOG.debug("No custom tile entry found");
       return;
@@ -140,8 +145,7 @@ public class BoardSetup {
         tile.setSpecialActions(tileActions);
         try {
           tile.setCustomImg(rawTileData.getString("img"));
-        } catch (JSONException ignored) {
-        }
+        } catch (JSONException ignored) {}
       } catch (OutsideOfBoardException e) {
         LOG.debug("Tile action setting failed, out of bounds");
       }
@@ -295,27 +299,6 @@ public class BoardSetup {
   }
 
   /**
-   * Parses the JSON to get the pieces
-   *
-   * @param myJSONObject JSONObject of the file
-   * @param pieceIndex   index of the piece
-   * @return custom moves as defined by the JSON
-   */
-  private static List<MovementInterface> getCustomMovements(JSONObject myJSONObject, int pieceIndex)
-      throws IOException {
-    List<MovementInterface> customMovements = new ArrayList<>();
-    JSONArray customMoveArray = myJSONObject.getJSONArray("pieces").getJSONObject(pieceIndex)
-        .getJSONArray("customMoves");
-    for (int i = 0; i < customMoveArray.length(); i++) {
-      customMovements.add(
-          (MovementInterface) createInstance(CUSTOM_MOVE_PACKAGE + customMoveArray.getString(i),
-              new Class[]{}, new Object[]{}));
-    }
-    LOG.debug(String.format("Custom movement list for piece %d: %s", pieceIndex, customMovements));
-    return customMovements;
-  }
-
-  /**
    * Gets movement modifiers from data
    *
    * @param data to get data from
@@ -348,10 +331,12 @@ public class BoardSetup {
     try {
       JSONArray currentObj = array.getJSONArray(index);
       LOG.debug(String.format("String class: %s", currentObj.getString(0)));
-      LOG.debug(String.format("Parameter: %s", currentObj.getString(1)));
-      return createInstance(
+      if(currentObj.length() > 1) LOG.debug(String.format("Parameter: %s", currentObj.getString(1)));
+      return currentObj.length() >= 2 ? createInstance(
           packagePath + currentObj.getString(0),
-          new Class[]{String.class}, new Object[]{currentObj.getString(1)});
+          new Class[]{String.class}, new Object[]{currentObj.getString(1)}) :
+          createInstance(packagePath + currentObj.getString(0), new Class[]{},
+              new Object[]{});
     } catch (JSONException | IOException e) {
 //      e.printStackTrace();
       LOG.debug(String.format("String class: %s", array.getString(index)));
@@ -409,20 +394,11 @@ public class BoardSetup {
       String pieceFile = PIECE_JSON_PACKAGE + rawPieceData.getString("pieceFile") + JSON_EXTENSION;
       PieceJSONData pieceJSONData = getPieceJSONData(pieceFile);
 
-      int startRow = rawPieceData.getInt("row");
-      int startCol = rawPieceData.getInt("col");
-      Coordinate startingCoordinate = new Coordinate(startRow, startCol);
-
-      String name = pieceJSONData.pieceName();
-      String imageFile = pieceJSONData.imgFile();
-      int team = rawPieceData.getInt("team");
-      int pointValue = pieceJSONData.pointValue();
-      boolean mainPiece = rawPieceData.getInt("mainPiece") == 1;
-
       List<MovementInterface> movements = pieceJSONData.basicMovements();
       List<MovementInterface> captures = pieceJSONData.basicCaptures();
       List<MovementInterface> customMovements = getCustomMovements(
           rawPieceData, "customMoves");
+
       movements.addAll(customMovements);
       movements.addAll(pieceJSONData.customMoves());
       captures.addAll(customMovements);
@@ -435,12 +411,12 @@ public class BoardSetup {
           rawPieceData, "onInteractionModifier");
       onInteractionModifiers.addAll(pieceJSONData.onInteractionModifiers());
       LOG.debug(String.format("MMs: %s", movementModifiers));
-      PieceData pieceData = new PieceData(startingCoordinate, name, pointValue, team, mainPiece,
-          movements, captures, movementModifiers, onInteractionModifiers, imageFile);
+      PieceData pieceData = new PieceData(Coordinate.of(rawPieceData.getInt("row"), rawPieceData.getInt("col")),
+          pieceJSONData.pieceName(), pieceJSONData.pointValue(), rawPieceData.getInt("team"), rawPieceData.getInt("mainPiece") == 1,
+          movements, captures, movementModifiers, onInteractionModifiers, pieceJSONData.imgFile());
 
       Piece currentPiece = new Piece(pieceData);
       pieceList.add(currentPiece);
-//      myBoard.placePiece(new Coordinate(startRow, startCol), currentPiece);
       LOG.debug("Piece placed");
     }
     myBoard.setPieces(pieceList);

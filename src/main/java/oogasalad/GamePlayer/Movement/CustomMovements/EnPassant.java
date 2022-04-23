@@ -21,6 +21,8 @@ import org.apache.logging.log4j.Logger;
  * Creates a movement object that represents en passant: if a piece of the same name has just
  * moved and only moved once and is on the (height-3) rank relative to the piece doing en passant,
  * then the piece can capture the other piece by moving diagonally one square behind it
+ *
+ * @author Vincent Chen
  */
 public class EnPassant implements MovementInterface {
 
@@ -143,8 +145,7 @@ public class EnPassant implements MovementInterface {
     try {
       possibleCaptures.add(
           board.getTile(Coordinate.of(base.getRow(), base.getCol() + EP_DISTANCE)));
-    } catch (Exception ignored) {
-    }
+    } catch (Exception ignored) {}
 //    LOG.debug("Preliminary capture squares: " + possibleCaptures);
     Set<ChessTile> capSquares = possibleCaptures.stream().filter((t) -> t.getPiece().isPresent() &&
             (board.getHistory().isEmpty() || board.getHistory().get(board.getHistory().size() - 1)
@@ -159,9 +160,7 @@ public class EnPassant implements MovementInterface {
         return board.getTile(
             Coordinate.of(c.getCoordinates().getRow() + (movingUp(enPassantExacter) ? -1 : 1),
                 c.getCoordinates().getCol()));
-      } catch (OutsideOfBoardException ignored) {
-        return null;
-      }
+      } catch (OutsideOfBoardException e) {return null;}
     }).collect(Collectors.toSet());
   }
 

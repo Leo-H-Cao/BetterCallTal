@@ -71,6 +71,23 @@ class MovementTest {
   }
 
   @Test
+  void isEmptyTest() {
+    assertTrue(new Movement(List.of(), false).isTileEmpty(board, Coordinate.of(1, 1)));
+    assertFalse( new Movement(List.of(), false).isTileEmpty(board, Coordinate.of(1000, 10000)));
+  }
+
+  @Test
+  void coordinateMultiplyTest() {
+    assertEquals(Coordinate.of(15, 20), Coordinate.multiply(Coordinate.of(5, 10), Coordinate.of(3, 2)));
+  }
+
+  @Test
+  void coordinateEqualsTest() {
+    assertNotEquals(new Coordinate(0, 5), null);
+    assertNotEquals(new Coordinate(0, 5), new int[]{});
+  }
+
+  @Test
   void finiteMovementTestHappy() {
     try {
       assertEquals(movementOne.getMoves(pieceOne, board),

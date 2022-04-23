@@ -8,6 +8,11 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/***
+ * Capture is forced if applicable
+ *
+ * @author Vincent Chen
+ */
 public class ForcedCapture implements ValidStateChecker {
 
   private static final Logger LOG = LogManager.getLogger(ForcedCapture.class);

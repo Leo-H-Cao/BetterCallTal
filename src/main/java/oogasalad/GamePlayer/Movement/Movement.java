@@ -18,6 +18,11 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/***
+ * Basic piece movement given relative coordinates
+ *
+ * @author Vincent Chen
+ */
 public class Movement implements MovementInterface{
 
   private static final Logger LOG = LogManager.getLogger(Movement.class);
@@ -138,21 +143,6 @@ public class Movement implements MovementInterface{
     return allMoves;
   }
 
-  public Map<String, Set<ChessTile>> getLegalMoves(Piece piece, ChessBoard board)
-      throws EngineException {
-    Map<String, Set<ChessTile>> allMoves = getAllMoves(piece, board);
-    for(String moveType : allMoves.keySet()){
-      for(ChessTile move : allMoves.get(moveType)){
-        ChessBoard deepCopy = board.deepCopy();
-        deepCopy.move(piece, move.getCoordinates());
-        if(new Check().isValid(board, piece.getTeam())){
-          allMoves.get(moveType).remove(move);
-        }
-      }
-    }
-    return null;
-  }
-
   /***
    * Returns all possible captures a piece can make
    *
@@ -254,7 +244,7 @@ public class Movement implements MovementInterface{
    * @param coordinate to check for emptiness
    * @return if the coordinate on the board is empty
    */
-  private boolean isTileEmpty(ChessBoard board, Coordinate coordinate) {
+  boolean isTileEmpty(ChessBoard board, Coordinate coordinate) {
     try {
       return board.isTileEmpty(coordinate);
     } catch (OutsideOfBoardException e) {
