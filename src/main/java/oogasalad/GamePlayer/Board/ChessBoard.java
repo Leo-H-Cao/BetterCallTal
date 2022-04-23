@@ -327,6 +327,25 @@ public class ChessBoard implements Iterable<ChessTile> {
     return getTile(coordinate).getPiece().isEmpty();
   }
 
+  /**
+   * If finding the captured piece by looking at the square covered by the current piece one move
+   * back (e.g. in en passant, the captured piece is on a different square), this function looks
+   * at the piece list for both states to find the captured piece
+   *
+   * @param team is the team of the player
+   * @return piece in pastBoard that's missing from present board that is an opponent of team
+   */
+  public Piece findTakenPiece(int team)
+  /*throws PieceNotFoundException*/ {
+    List<Piece> pastPieces = this.getHistory().get(this.getHistory().size() - 1).board().getOpponentPieces(team);
+    List<Piece> presentPieces = this.getOpponentPieces(team);
+
+    LOG.debug(String.format("Past pieces: %s", pastPieces));
+    LOG.debug(String.format("Present pieces: %s", presentPieces));
+
+    return pastPieces.stream().filter(p -> !presentPieces.contains(p)).findFirst().orElse(null);
+  }
+
 
   /**
    * Gets the player object with the associated ID
