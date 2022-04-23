@@ -178,7 +178,7 @@ public class Castling implements MovementInterface {
 
     int startCol = Math.min(main.getCoordinates().getCol(), supporter.getCoordinates().getCol()) + 1;
     int endCol = Math.max(main.getCoordinates().getCol(), supporter.getCoordinates().getCol()) - 1;
-    return IntStream.range(startCol, endCol).noneMatch((c) -> {
+    return IntStream.range(startCol, endCol + 1).noneMatch((c) -> {
       try {
         return !board.getTile(new Coordinate(main.getCoordinates().getRow(), c)).getPieces().isEmpty();
       } catch (OutsideOfBoardException e) {

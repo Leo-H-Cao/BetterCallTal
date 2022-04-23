@@ -1,9 +1,16 @@
 package oogasalad.GamePlayer.util;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+import oogasalad.GamePlayer.Movement.Coordinate;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /***
  * Utility class for reading files structures that are used often
@@ -54,5 +61,26 @@ public class FileReader {
     } catch (Exception e) {
       return defaultVal;
     }
+  }
+
+  /***
+   * @return coordinate list from JSON
+   */
+  public static List<Coordinate> readCoordinates(
+      String configFile, String JSONKey, List<Coordinate> defaultVal) {
+    try {
+      List<Coordinate> coords = new ArrayList<>();
+      String content = new String(Files.readAllBytes(Path.of(configFile)));
+      JSONObject data = new JSONObject(content);
+      JSONArray relCoords = data.getJSONArray(JSONKey);
+      for(int i=0; i<relCoords.length(); i++) {
+        JSONArray current = relCoords.getJSONArray(i);
+        coords.add(Coordinate.of(current.getInt(0), current.getInt(1)));
+      }
+      return coords;
+    } catch (IOException e) {
+      return defaultVal;
+    }
+
   }
 }

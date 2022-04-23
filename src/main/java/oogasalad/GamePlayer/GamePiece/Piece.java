@@ -276,24 +276,12 @@ public class Piece implements Cloneable {
   /**
    * This method is used for the burn tile in order to
    */
+  @Deprecated
   public boolean burn() {
     //TODO NEED TO ADD PIECE HEALTH TO JSON AND CONSTRUCTOR
     PieceHealth health = new PieceHealth();
     return health.damage();
   }
-
-  /**
-   * Updates/sets the movement for a piece
-   */
-  public void setMovement(MovementHandler moves) {
-    movementHandler = moves;
-  }
-
-  public void clearActions() {
-
-  }
-
-
 
   public double getPieceValue(){
     return suppPieceData.pointValue();

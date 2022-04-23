@@ -29,7 +29,6 @@ class BankBlockerTest {
       assertThrows(InvalidBoardSizeException.class,
           () -> new BankBlocker().isValid(myBoard, null, null));
     } catch (Exception e) {
-      e.printStackTrace();
       fail();
     }
   }
