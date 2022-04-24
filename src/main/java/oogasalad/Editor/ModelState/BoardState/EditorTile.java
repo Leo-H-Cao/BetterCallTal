@@ -42,6 +42,7 @@ public class EditorTile {
   public void removePiece(){
     pieceID = null;
     team = -1;
+    img = null;
   }
 
   public TileEffect getTileEffect() {

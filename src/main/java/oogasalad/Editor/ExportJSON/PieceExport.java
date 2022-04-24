@@ -19,19 +19,24 @@ public class PieceExport {
   private ArrayList<String> basicCaptures;
 
 
-  public PieceExport(EditorPiece editorPiece, int team){
+  public PieceExport(EditorPiece editorPiece, int teamNum){
     pieceName = editorPiece.getPieceName().getValue();
-    imgFile = editorPiece.getImage(team).getValue().getUrl().split("/classes/")[1];
+    imgFile = editorPiece.getImage(teamNum).getValue().getUrl().split("/classes/")[1];
     pointValue = editorPiece.getPointValue();
     customMoves = editorPiece.getCustomMoves() == null ? new ArrayList<>() :editorPiece.getCustomMoves();
     basicMovements = new ArrayList<>();
     basicCaptures = new ArrayList<>();
-    basicMovements.add(pieceName+"Movement");
+
+    String team = teamNum == 0? "w" : "b";
+    basicMovements.add(team+pieceName+"Movement");
 
     //change for capture != movement
-    basicCaptures.add(pieceName+"Movement");
+    basicCaptures.add(team+pieceName+"Movement");
     movementModifiers = new ArrayList<>();
     onInteractionModifier = editorPiece.getOnInteractionModifiers();
+
+    team = teamNum == 0? "White" : "Black";
+    pieceName = team+editorPiece.getPieceName().getValue();
   }
 
   public String getPieceName() {

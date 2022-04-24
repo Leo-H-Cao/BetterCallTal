@@ -118,7 +118,7 @@ public class ExportJSON {
             seenPieceID.add(curEditorPiece.getPieceID());
           }
         }
-        if(tile.getTileEffect() != TileEffect.NONE || tile.getImg() != null){
+        if(tile.getTileEffect() != TileEffect.NONE){
           TileExport tileExport = new TileExport(y, x, tile.getImg());
           if(tile.getTileEffect() != TileEffect.NONE){
             tileExport.addTileAction(tile.getTileEffect().toString());
