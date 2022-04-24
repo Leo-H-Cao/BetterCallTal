@@ -35,6 +35,9 @@ public class ChessBoardTile extends NodeContainer {
 		image.setFitHeight(myYSize - PADDING);
 		image.setPreserveRatio(true);
 		image.setCache(true);
+
+		image.setImage(getEditorBackend().getBoardState().getTile(myX, myY).getImg());
+
 		Rectangle rect = new Rectangle(myXSize, myYSize);
 		if (alt) {
 			myResources.ifPresent((e) -> rect.setFill(Paint.valueOf(e.getString("BaseColor"))));
@@ -61,6 +64,7 @@ public class ChessBoardTile extends NodeContainer {
 
 		image.setImage(getEditorBackend().getPiecesState().getPiece(selectedId).getImage(selectedTeam).getValue());
 
+		// Update piece image if it gets updated in the editor
 		getEditorBackend().getPiecesState().getPiece(selectedId).getImage(selectedTeam).addListener((ob, ov, nv) -> image.setImage(nv));
 		filled = true;
 	}
