@@ -36,4 +36,15 @@ public class BoardTestUtil {
   }
 
 
+  public Piece makePawn(int row, int col, int team) {
+    return new Piece(new PieceData(new Coordinate(row, col),
+        "pawn", 0, team, false,
+
+        List.of(new Movement(List.of(new Coordinate(2*team-1, 0), new Coordinate(1, 0)), false)),
+        List.of(new Movement(List.of(new Coordinate(2*team-1, 0), new Coordinate(1, 0)), false)),
+        Collections.emptyList(), Collections.emptyList(), ""));
+
+  }
+
+
 }
