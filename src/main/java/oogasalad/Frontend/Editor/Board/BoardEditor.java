@@ -2,8 +2,6 @@ package oogasalad.Frontend.Editor.Board;
 
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
-import oogasalad.Frontend.util.ButtonFactory;
-import oogasalad.Frontend.util.ButtonType;
 import oogasalad.Frontend.util.NodeContainer;
 
 public class BoardEditor extends NodeContainer {

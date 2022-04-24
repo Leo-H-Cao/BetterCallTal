@@ -1,16 +1,7 @@
 package oogasalad.Editor.ExportJSON;
 
-import com.fasterxml.jackson.core.exc.StreamWriteException;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
 import oogasalad.Editor.ModelState.BoardState.EditorTile;
@@ -22,6 +13,11 @@ import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Editor.ModelState.RulesState.GameRulesState;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class ExportJSON {
   private static final Logger LOG = LogManager.getLogger(ExportJSON.class);
@@ -56,12 +52,6 @@ public class ExportJSON {
   public void writeToJSON(){
     ObjectMapper objectMapper = new ObjectMapper();
     try{
-//      String piecesJSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pieces);
-//      JSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(exportWrapper);
-//      JSONTestString = objectMapper.writeValueAsString(exportWrapper);
-//      System.out.println(JSONString);
-//      System.out.println(piecesJSONString);
-//      System.out.println(JSONTestString);
 
       DirectoryChooser chooser = new DirectoryChooser();
       chooser.setTitle("Choose Export Location");
