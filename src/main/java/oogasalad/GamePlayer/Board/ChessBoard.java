@@ -1,6 +1,7 @@
 package oogasalad.GamePlayer.Board;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -614,7 +615,8 @@ public class ChessBoard implements Iterable<ChessTile> {
    */
   public static final class ChessBoardData {
 
-    @JsonDeserialize(as = ArrayList.class, contentAs = ArrayList.class)
+    @JsonProperty
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private final ChessTile[][] board;
     private final TurnManagerData turnManagerData;
     private final GamePlayers players;
@@ -632,7 +634,11 @@ public class ChessBoard implements Iterable<ChessTile> {
         GamePlayers players,
         List<ValidStateChecker> validStateCheckers,
         HistoryManagerData history) {
-      this.board = new ChessTile[board.size()][board.get(0).size()];
+      if (board.size() == 0) {
+        this.board = new ChessTile[0][0];
+      } else {
+        this.board = new ChessTile[board.size()][board.get(0).size()];
+      }
       for (int i = 0; i < board.size(); i++) {
         for (int j = 0; j < board.get(i).size(); j++) {
           this.board[i][j] = board.get(i).get(j);

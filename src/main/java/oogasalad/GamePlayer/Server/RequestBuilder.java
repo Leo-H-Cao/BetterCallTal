@@ -12,8 +12,10 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.ServerConnectionException;
+import oogasalad.GamePlayer.Movement.Coordinate;
 
 public class RequestBuilder {
 
@@ -27,6 +29,9 @@ public class RequestBuilder {
 
   public static ObjectMapper objectMapperWithPTV() {
     PolymorphicTypeValidator ptv = BasicPolymorphicTypeValidator.builder()
+        .allowIfSubTypeIsArray()
+        .allowIfSubType(ChessTile.class)
+        .allowIfSubType(Coordinate.class)
         .build();
     return new ObjectMapper().activateDefaultTyping(ptv, DefaultTyping.NON_FINAL)
         .enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
@@ -100,6 +105,6 @@ public class RequestBuilder {
    * @return the HttpRequestBuilder with the given uri to continue building the request
    */
   private static HttpRequest.Builder createRequest(String uri) {
-    return HttpRequest.newBuilder().uri(URI.create(uri)).header(CONTENT_TYPE, APPLICATION_JSON);
+    return HttpRequest.newBuilder().uri(URI.create(uri)).setHeader(CONTENT_TYPE, APPLICATION_JSON);
   }
 }
