@@ -16,7 +16,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Game.Sections.BoardGrid;
 import oogasalad.Frontend.Game.Sections.GameOverDisplay;
-import oogasalad.Frontend.Game.Sections.RightSideSection;
+import oogasalad.Frontend.Game.Sections.LeftSection;
 import oogasalad.Frontend.Game.Sections.TopSection;
 import oogasalad.Frontend.LocalPlay.RemotePlayer.RemotePlayer;
 import oogasalad.Frontend.Menu.HomeView;
@@ -42,14 +42,12 @@ public class GameView extends View {
 
     private BoardGrid myBoardGrid;
     private static Integer myID;
-    private BorderPane myBP;
     private Consumer<Piece> lightUpCons;
     private Consumer<Coordinate> MoveCons;
     private Consumer<Node> removeGOCons;
-    private Boolean GameOver;
     private StackPane myCenterBoard;
     private Runnable flipRun;
-    private RightSideSection myRightSide;
+    private LeftSection myLeftSide;
     private Consumer<TurnUpdate> servUpRun;
     private BiConsumer<String, String> errorRun;
 
@@ -59,7 +57,6 @@ public class GameView extends View {
 
     public GameView(Stage stage) {
         super(stage);
-        GameOver = false;
     }
 
     /**
@@ -163,7 +160,6 @@ public class GameView extends View {
     }
 
     private void gameOver(){
-        GameOver = true;
         Map<Integer, Double> scores = getGameBackend().getChessBoard().getScores();
         GameOverDisplay godisp = new GameOverDisplay(scores, removeGOCons);
         StackPane.setAlignment(godisp.getDisplay(), Pos.CENTER);
@@ -174,7 +170,7 @@ public class GameView extends View {
     @Override
     protected Node makeNode() {
         BorderPane bp = new BorderPane();
-        myBP = bp;
+
         TopSection top = new TopSection();
 
         top.setExitButton(e -> {
@@ -187,11 +183,8 @@ public class GameView extends View {
         myCenterBoard.getChildren().add(myBoardGrid.getBoard());
         bp.setCenter(myCenterBoard);
 
-        myRightSide = new RightSideSection(flipRun);
-        bp.setRight(myRightSide.getVbox());
-
-
-
+        myLeftSide = new LeftSection(flipRun);
+        bp.setLeft(myLeftSide.getVbox());
         return bp;
     }
 

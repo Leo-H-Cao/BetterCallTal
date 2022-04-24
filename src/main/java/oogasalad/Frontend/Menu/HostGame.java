@@ -40,9 +40,7 @@ public class HostGame extends View {
     private static final String ROOM = "Room";
     private Map<String, Integer> piececolors;
     private Integer DEFAULT_COLOR = 1;
-    private Integer myTeam;
     private static final String COLORPROMPT = "COLORPROMPT";
-    private static final String SELECTEDCOLOR = "SELECTEDCOLOR";
     private static final Double VBOXSPACING = 5.0;
     private ChoiceBox<String> colorchoice;
     private TextArea RoomName;
@@ -132,7 +130,6 @@ public class HostGame extends View {
         Label prompt = new Label();
         prompt.setText(BackendConnector.getFrontendWord(COLORPROMPT, getClass()));
         prompt.setFont(new Font(50));
-        myTeam = DEFAULT_COLOR;
         colorchoice = new ChoiceBox<>();
         String white = BackendConnector.getFrontendWord(WHITE, getClass());
         String black = BackendConnector.getFrontendWord(BLACK, getClass());
