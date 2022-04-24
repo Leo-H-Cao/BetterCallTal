@@ -11,7 +11,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import oogasalad.Frontend.Menu.ErrorPopUp;
 import oogasalad.Frontend.Menu.HomeView;
 import oogasalad.Frontend.ViewManager;
 import org.apache.logging.log4j.LogManager;
@@ -29,7 +28,6 @@ public abstract class View extends BackendConnector {
 	protected Optional<ResourceBundle> myResources;
 	private final Stage myStage;
 	protected static final Logger LOG = LogManager.getLogger(View.class);
-	private String ERRORMESSAGESPACING = ": ";
 
 	public View(Stage stage) {
 		if(myViews == null) {
@@ -124,10 +122,5 @@ public abstract class View extends BackendConnector {
 	protected Node makeExitGroup() {
 		Button Exit = makeExitButton();
 		return new Group(Exit);
-	}
-
-	protected void showError(String classname, String errorMessage) {
-		String message = classname + ERRORMESSAGESPACING + errorMessage;
-		ErrorPopUp oops = new ErrorPopUp(message);
 	}
 }

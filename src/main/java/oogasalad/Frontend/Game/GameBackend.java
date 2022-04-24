@@ -2,6 +2,8 @@ package oogasalad.Frontend.Game;
 
 import java.io.File;
 import java.util.Optional;
+
+import oogasalad.Frontend.Menu.ErrorPopUp;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Setup.BoardSetup;
 
@@ -13,13 +15,14 @@ import oogasalad.GamePlayer.Board.Setup.BoardSetup;
 public class GameBackend {
 
   private ChessBoard myChessBoard;
+  private String ERRORMESSAGESPACING = ": ";
 
   public Optional<ChessBoard> initalizeLocalChessBoard(File JSON) {
     try {
       myChessBoard = BoardSetup.createLocalBoard(JSON.getPath());
       return Optional.of(myChessBoard);
     } catch (Exception e) {
-      // myMainView.showError();
+      showError(e.getClass().getSimpleName(), e.getMessage());
       return Optional.empty();
     }
   }
@@ -29,7 +32,7 @@ public class GameBackend {
       myChessBoard = BoardSetup.createRemoteBoard(JSON.getPath(), RoomName, player);
       return Optional.of(myChessBoard);
     } catch (Exception e) {
-      // myMainView.showError();
+      showError(e.getClass().getSimpleName(), e.getMessage());
       return Optional.empty();
     }
   }
@@ -40,12 +43,17 @@ public class GameBackend {
       return Optional.of(myChessBoard);
     } catch (Exception e) {
       e.printStackTrace();
-      // myMainView.showError();
+      showError(e.getClass().getSimpleName(), e.getMessage());
       return Optional.empty();
     }
   }
 
   public ChessBoard getChessBoard() {
     return myChessBoard;
+  }
+
+  protected void showError(String classname, String errorMessage) {
+    String message = classname + ERRORMESSAGESPACING + errorMessage;
+    ErrorPopUp oops = new ErrorPopUp(message);
   }
 }
