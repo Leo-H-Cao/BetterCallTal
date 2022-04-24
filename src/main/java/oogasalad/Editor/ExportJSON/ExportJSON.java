@@ -68,14 +68,10 @@ public class ExportJSON {
           if (!result) return;
         }
 
-        File piecesDir = new File(parentDir.getAbsolutePath() + "/pieces");
-        if (!piecesDir.exists()){
-          boolean result = piecesDir.mkdirs();
-          if (!result) return;
-        }
+
 
         for(PieceExport piece : pieces){
-          objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(piecesDir.getAbsolutePath()+"/"+piece.getPieceName()), piece);
+          objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/GameEngineResources/Pieces/"+piece.getPieceName()+".json"), piece);
         }
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(parentDir.getAbsolutePath()+"/mainFile.json"), exportWrapper);
 
@@ -154,11 +150,11 @@ public class ExportJSON {
   private void exportBasicMovement(BasicMovementExportWrapper basicMovements, String pieceName){
     ObjectMapper objectMapper = new ObjectMapper();
     try{
-      File movementDir = new File("doc/testing_directory/json_export_test/BasicMovements");
+      File movementDir = new File("doc/GameEngineResources/BasicMovements");
       if (!movementDir.exists()){
         movementDir.mkdirs();
       }
-      objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/testing_directory/json_export_test/BasicMovements/"+pieceName+"Movement.json"), basicMovements);
+      objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(movementDir.getAbsolutePath()+"/"+pieceName+"Movement.json"), basicMovements);
     }
     catch (IOException e){
       LOG.warn(OBJECT_MAPPER_ERR_MSG);
