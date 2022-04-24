@@ -287,5 +287,4 @@ public class LocalGame extends View {
       View.LOG.debug("INVALID JSON OR INVALID PLAYER SELECTION");
     }
   }
-
 }

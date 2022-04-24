@@ -8,12 +8,14 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import oogasalad.Frontend.Game.History.BoardHistory;
 import oogasalad.Frontend.Game.Sections.BoardGrid;
 import oogasalad.Frontend.Game.Sections.GameOverDisplay;
 import oogasalad.Frontend.Game.Sections.RightSideSection;
@@ -56,11 +58,14 @@ public class GameView extends View {
     private TurnKeeper turnKeeper;
     private List<RemotePlayer> remotePlayers;
 
+    private BoardHistory myBoardHistory;
+
 
     public GameView(Stage stage) {
         super(stage);
         GameOver = false;
         remotePlayers = new ArrayList<>();
+        myBoardHistory = new BoardHistory();
     }
 
     /**
@@ -83,6 +88,7 @@ public class GameView extends View {
         } else {
             turnKeeper = new TurnKeeper(new String[]{"human", "human"});
         }
+        makeKeyListener();
     }
 
 
@@ -159,6 +165,12 @@ public class GameView extends View {
                 break;
             }
         }
+        updateHistory(getGameBackend().getChessBoard());
+    }
+
+    private void updateHistory(ChessBoard board) {
+        myBoardHistory.add(board);
+        myBoardHistory.update(board);
     }
 
     private void gameOver(){
@@ -189,8 +201,6 @@ public class GameView extends View {
         myRightSide = new RightSideSection(flipRun);
         bp.setRight(myRightSide.getVbox());
 
-
-
         return bp;
     }
 
@@ -206,11 +216,30 @@ public class GameView extends View {
         getGameBackend().showError(classname, message);
     }
 
+    private void makeKeyListener() {
+        myScene.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case LEFT -> onLeftKey();
+                case RIGHT -> onRightKey();
+            }
+        });
+    }
+
+    private void onLeftKey() {
+        LOG.debug("LEFT KEY PRESSED");
+        myBoardGrid.updateTiles(myBoardHistory.previous().getBoard().stream().flatMap(List::stream).toList());
+
+    }
+
+    private void onRightKey() {
+        LOG.debug("RIGHT KEY PRESSED");
+        myBoardGrid.updateTiles(myBoardHistory.next().getBoard().stream().flatMap(List::stream).toList());
+    }
 
     /**
      * RECEIVED PERMISSION FROM DUVALL TO DO THIS
      */
-    public static Piece promotionPopUp(List<Piece> possPromotions){
+    public static Piece promotionPopUp(List<Piece> possPromotions) {
         ChoiceDialog cd = new ChoiceDialog(possPromotions.get(0), possPromotions);
         Optional<Piece> p = cd.showAndWait();
         return p.orElse(null);
