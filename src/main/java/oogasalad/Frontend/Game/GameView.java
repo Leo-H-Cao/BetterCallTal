@@ -76,6 +76,8 @@ public class GameView extends View {
         //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
         remotePlayers = new ArrayList<>();
+        chessboard.setShowAsyncError(this::showmyError);
+        chessboard.setPerformAsyncTurnUpdate(this::updateBoard);
         if (singleplayer) {
             turnKeeper = new TurnKeeper(new String[]{"human", AI});
             remotePlayers.add(new Bot(turnKeeper));
