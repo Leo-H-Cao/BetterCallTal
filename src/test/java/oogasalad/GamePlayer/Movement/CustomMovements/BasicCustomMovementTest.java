@@ -304,9 +304,10 @@ class BasicCustomMovementTest {
 
   @Test
   void enPassantEqualsTest() {
-    assertEquals(new EnPassant(), new EnPassant());
+    EnPassant test = new EnPassant();
+    assertEquals(test, test);
     assertNotEquals(new EnPassant(), null);
-    assertNotEquals(new EnPassant("bad file"), new EnPassant());
+    assertEquals(new EnPassant("bad file"), new EnPassant());
     assertNotEquals(new EnPassant("EnPassantRowValTest"), new EnPassant());
   }
 

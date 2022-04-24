@@ -74,10 +74,10 @@ public class DoubleFirstMove implements MovementInterface {
         LOG.debug("Out of bounds");
         return false;
       }
-    }).forEach((c) -> {
-//      LOG.debug("Double move coord: " + Coordinate.of(c.getRow()*MULT, c.getCol()*MULT));
-      newMovements.add(new Movement(Coordinate.of(c.getRow()*MULT, c.getCol()*MULT), false));
-    });
+    }).forEach(c ->
+//      LOG.debug("Double move coord: " + Coordinate.of(c.getRow()*MULT, c.getCol()*MULT))
+      newMovements.add(new Movement(Coordinate.of(c.getRow()*MULT, c.getCol()*MULT), false))
+    );
     return newMovements.stream().flatMap((m) -> m.getMoves(piece, board).stream()).collect(Collectors.toSet());
   }
 

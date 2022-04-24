@@ -103,7 +103,8 @@ public class BankLeaverTest {
 
   @Test
   void equalsTest() {
-    assertEquals(new BankLeaver(), new BankLeaver());
+    BankLeaver test = new BankLeaver();
+    assertEquals(test, test);
     assertNotEquals(new BankLeaver(), null);
     assertEquals(new BankLeaver("badFile"), new BankLeaver());
     assertNotEquals(new BankLeaver("TicTacToeConfig"), new BankLeaver());
