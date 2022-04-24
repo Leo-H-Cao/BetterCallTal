@@ -1,7 +1,7 @@
 package oogasalad.Editor.ExportJSON;
 
 /**
- * Single basic movement object designed to be serialized to JSON by Jackson library
+ * Basic movement class designed to be serialized to JSON by Jackson library
  * @author Leo Cao
  */
 public class BasicMovementExport {

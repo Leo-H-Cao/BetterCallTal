@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 
 /**
- * Object containing info for single piece file that is to be exported, separate from piece
+ * Class containing info for single piece file that is to be exported, separate from piece
  * information that goes in the main export file
  * @author Leo Cao
  */

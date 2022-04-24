@@ -3,7 +3,7 @@ package oogasalad.Editor.ExportJSON;
 import java.util.ArrayList;
 
 /**
- * Object meant to be serialazed into JSON, containing mappings of players and their opponents
+ * Class meant to be serialazed into JSON, containing mappings of players and their opponents
  * @author Leo Cao
  */
 public class PlayerInfoExport {
