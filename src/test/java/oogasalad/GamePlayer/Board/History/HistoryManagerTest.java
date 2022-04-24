@@ -1,14 +1,15 @@
-package oogasalad.GamePlayer.Board;
+package oogasalad.GamePlayer.Board.History;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import oogasalad.GamePlayer.Board.History.History;
-import oogasalad.GamePlayer.Board.History.HistoryManager;
-import oogasalad.GamePlayer.Board.History.LocalHistoryManager;
+import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.Player;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
@@ -16,10 +17,12 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.Server.SessionManager;
+import oogasalad.Server.ServerApplication;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class LocalHistoryManagerTest {
+class HistoryManagerTest {
 
   private History board0;
   private History board1;
@@ -55,8 +58,24 @@ class LocalHistoryManagerTest {
   }
 
   @Test
-  void standardGameTest() {
+  void standardLocalGameTest() {
     HistoryManager historyManager = new LocalHistoryManager();
+    standardGameTest(historyManager);
+  }
+
+  @Test
+  void standardRemoteGameTest() {
+    SessionManager sessionManager = new SessionManager();
+    try {
+      sessionManager.createGameSession("test", 0,1,board0.board());
+    } catch (Exception e) {
+      fail("Could not create session");
+    }
+    HistoryManager historyManager = new RemoteHistoryManager("test");
+    standardGameTest(historyManager);
+  }
+
+  private void standardGameTest(HistoryManager historyManager) {
     historyManager.add(board0);
     assertEquals(1, historyManager.size());
     historyManager.add(board1);
@@ -77,8 +96,12 @@ class LocalHistoryManagerTest {
   }
 
   @Test
-  void undoGameTest() {
+  void undoLocalGameTest() {
     HistoryManager historyManager = new LocalHistoryManager();
+    undoGameTest(historyManager);
+  }
+
+  private void undoGameTest(HistoryManager historyManager) {
     historyManager.add(board0);
     historyManager.add(board1);
     historyManager.add(board2);
@@ -112,6 +135,10 @@ class LocalHistoryManagerTest {
   @Test
   void badTest() {
     HistoryManager historyManager = new LocalHistoryManager();
+    badTest(historyManager);
+  }
+
+  private void badTest(HistoryManager historyManager) {
     historyManager.add(board0);
     historyManager.add(board1);
     historyManager.add(board2);
