@@ -59,6 +59,7 @@ public class GameView extends View {
     public GameView(Stage stage) {
         super(stage);
         GameOver = false;
+        remotePlayers = new ArrayList<>();
     }
 
     /**
