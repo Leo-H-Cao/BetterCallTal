@@ -35,7 +35,7 @@ public class CheckmateTest {
   private static final int TEAM_1 = 1;
   private static final int TEAM_2 = 0;
 
-  Check Check = new Check();
+  Check check = new Check();
   Checkmate checkmate = new Checkmate();
 
   private ChessBoard board;
@@ -85,7 +85,7 @@ public class CheckmateTest {
     board.setPieces(pieces);
     LOG.debug(board);
 
-    assertTrue(!Check.isValid(board, TEAM_1));
+    assertTrue(!check.isValid(board, TEAM_1));
     assertTrue(checkmate.isInMate(board, TEAM_1));
 
     assertTrue(checkmate.getScores(board).get(1)==0.0);

@@ -61,14 +61,14 @@ class TurnTest {
 
   @Test
   void testLinear() {
-    turnCriteria = new Linear(gamePlayers.getPlayersArr()).copy();
+    turnCriteria = new Linear(gamePlayers.getPlayersArr());
     setBoard();
 
     try {
       assertEquals(board.move(pieceOne, new Coordinate(0, 1)).nextPlayer(), 1);
       assertEquals(board.move(pieceTwo, new Coordinate(1, 1)).nextPlayer(), 2);
       assertEquals(board.move(pieceThree, new Coordinate(2, 1)).nextPlayer(), 0);
-    } catch (Exception e) {
+    } catch (Throwable e) {
       fail();
     }
   }
@@ -85,19 +85,19 @@ class TurnTest {
       assertEquals(board.move(pieceThree, new Coordinate(2, 1)).nextPlayer(), 2);
       assertEquals(board.move(pieceThree, new Coordinate(2, 2)).nextPlayer(), 2);
       assertEquals(board.move(pieceThree, new Coordinate(2, 3)).nextPlayer(), 0);
-    } catch (Exception e) {
+    } catch (Throwable e) {
       fail();
     }
   }
 
   @Test
   void testLinearExceptions() {
-    turnCriteria = new Linear(gamePlayers.getPlayersArr()).copy();
+    turnCriteria = new Linear(gamePlayers.getPlayersArr());
     setBoard();
     assertThrows(WrongPlayerException.class, () -> board.move(pieceTwo, new Coordinate(0, 1)));
     try {
       board.move(pieceOne, new Coordinate(0, 1));
-    } catch (Exception e) {
+    } catch (Throwable e) {
       fail();
     }
 
@@ -113,7 +113,7 @@ class TurnTest {
     try {
       board.move(pieceOne, new Coordinate(0, 1));
       board.move(pieceTwo, new Coordinate(1, 1));
-    } catch (Exception e) {
+    } catch (Throwable e) {
       fail();
     }
 
@@ -129,7 +129,8 @@ class TurnTest {
     try {
       board.move(pieceOne, new Coordinate(0, 1));
       board.move(pieceOne, new Coordinate(0, 2));
-    } catch (Exception e) {
+
+    } catch (Throwable e) {
       e.printStackTrace();
       fail();
     }

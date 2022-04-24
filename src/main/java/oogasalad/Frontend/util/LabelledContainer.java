@@ -1,16 +1,12 @@
 package oogasalad.Frontend.util;
 
-import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
-
-import java.util.Collection;
 
 public abstract class LabelledContainer extends NodeContainer {
 	private String myTitle;
@@ -31,13 +27,13 @@ public abstract class LabelledContainer extends NodeContainer {
 	private Node makeLayout() {
 		GridPane ret = new GridPane();
 		ret.add(makeTitle(), 0, 0);
-		Group g = new Group();
+		Group g = new Group(fillContent());
 		ret.add(g, 0, 1);
-		g.getChildren().add(fillContent());
 		ScrollPane scrollPane = new ScrollPane();
 		scrollPane.setContent(ret);
 		scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 		scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+		scrollPane.setPrefViewportWidth(500);
 		return scrollPane;
 	}
 

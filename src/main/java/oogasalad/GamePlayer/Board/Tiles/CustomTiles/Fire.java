@@ -6,6 +6,7 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
+@Deprecated
 public class Fire implements TileAction {
 
   public Set<ChessTile> executeAction(ChessTile tile, ChessBoard board) {

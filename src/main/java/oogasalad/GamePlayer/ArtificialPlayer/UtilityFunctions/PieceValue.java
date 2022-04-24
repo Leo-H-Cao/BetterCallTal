@@ -21,7 +21,7 @@ public class PieceValue extends Utility {
         totalValue -= p.getPieceValue();
       }
     }
-    return 0;
+    return totalValue;
   }
 
 }
