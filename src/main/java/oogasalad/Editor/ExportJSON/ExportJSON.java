@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-
 import oogasalad.Editor.ModelState.BoardState.BoardState;
 import oogasalad.Editor.ModelState.BoardState.EditorTile;
 import oogasalad.Editor.ModelState.BoardState.TileEffect;
@@ -23,17 +22,17 @@ public class ExportJSON {
   private final int PIECE_LOCATION = 3;
   private final String OBJECT_MAPPER_ERR_MSG = "JSON object mapper exception";
 
-  private PiecesState piecesState;
-  private GameRulesState gameRulesState;
-  private BoardState boardState;
+  private final PiecesState piecesState;
+  private final GameRulesState gameRulesState;
+  private final BoardState boardState;
+  private final ExportWrapper exportWrapper;
+  private final HashSet<String> seenPieceID;
   private String MainJSONString;
   private GeneralExport generalExport;
   private ArrayList<PlayerInfoExport> playerInfo;
-  private ExportWrapper exportWrapper;
   private ArrayList<PieceExport> pieces;
   private ArrayList<PieceMainExport> piecesMain;
   private ArrayList<TileExport> tiles;
-  private HashSet<String> seenPieceID;
 
 
   public ExportJSON(PiecesState piecesState, GameRulesState gameRulesState, BoardState boardState){

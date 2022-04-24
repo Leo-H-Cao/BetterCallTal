@@ -45,7 +45,7 @@ public class ChessBoardTile extends NodeContainer {
 		ret.getChildren().addAll(rect, image);
 		ButtonFactory.addAction(ret, (e) -> {
 			if(filled) {
-				removePieceImage(image);
+				clearTile(image);
 			} else {
 				setPieceImage(image);
 			}
@@ -65,7 +65,13 @@ public class ChessBoardTile extends NodeContainer {
 		filled = true;
 	}
 
-	private void removePieceImage(ImageView image) {
+	private void setModifierImage(ImageView image) {
+
+
+		filled = true;
+	}
+
+	private void clearTile(ImageView image) {
 		filled = false;
 		image.setImage(null);
 		getEditorBackend().getBoardState().clearTile(myX, myY);
