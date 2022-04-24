@@ -2,6 +2,7 @@ package oogasalad.GamePlayer.Movement.CustomMovements;
 
 import static oogasalad.GamePlayer.Movement.CustomMovements.BankLeaverTest.BOARD_TEST_FILES_HEADER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -12,6 +13,7 @@ import oogasalad.GamePlayer.Board.Setup.BoardSetup;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
+import oogasalad.GamePlayer.ValidStateChecker.Check;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -58,5 +60,11 @@ class CheckersCaptureTest {
     } catch (Exception e) {
       fail();
     }
+  }
+
+  @Test
+  void checkersCaptureEqualsTest() {
+    assertEquals(new CheckersCapture(), new CheckersCapture());
+    assertNotEquals(new CheckersCapture(), null);
   }
 }

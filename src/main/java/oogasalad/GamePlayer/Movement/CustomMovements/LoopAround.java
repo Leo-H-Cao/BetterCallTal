@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
@@ -37,6 +38,7 @@ public class LoopAround implements MovementInterface {
 
   private Coordinate primaryMoveDirection;
   private Coordinate secondaryMoveDirection;
+
 //  private Coordinate primaryMultiplier;
 //  private boolean enactedSecondaryMove;
 
@@ -176,5 +178,29 @@ public class LoopAround implements MovementInterface {
   @Override
   public List<Coordinate> getRelativeCoords() {
     return Collections.emptyList();
+  }
+
+  /***
+   * @return equals if pmd and smd are equal
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    LoopAround that = (LoopAround) o;
+    return Objects.equals(primaryMoveDirection, that.primaryMoveDirection)
+        && Objects.equals(secondaryMoveDirection, that.secondaryMoveDirection);
+  }
+
+  /***
+   * @return hash of this object
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(primaryMoveDirection, secondaryMoveDirection);
   }
 }
