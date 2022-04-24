@@ -55,8 +55,8 @@ public class ChessBoard implements Iterable<ChessTile> {
   private final TurnManagerData turnManagerData;
   private List<List<ChessTile>> board;
   private Map<Integer, List<Piece>> pieceList;
-  private BiConsumer<String, String> showAsyncError;
-  private Consumer<TurnUpdate> performAsyncTurnUpdate;
+  private Consumer<Throwable> showAsyncError = LOG::error;
+  private Consumer<TurnUpdate> performAsyncTurnUpdate = LOG::info;
 
   /**
    * Creates a representation of a chessboard if an array of pieces is already provided
@@ -559,9 +559,9 @@ public class ChessBoard implements Iterable<ChessTile> {
    *
    * @param showAsyncError the callback function to use
    */
-  public void setShowAsyncError(
-      BiConsumer<String, String> showAsyncError) {
-    this.showAsyncError = showAsyncError;
+  public void setShowAsyncError(BiConsumer<String, String> showAsyncError) {
+    this.showAsyncError = (Throwable e) -> showAsyncError.accept(e.getClass().getSimpleName(),
+        e.getMessage());
   }
 
   /**

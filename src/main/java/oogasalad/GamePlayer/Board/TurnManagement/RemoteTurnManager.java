@@ -1,22 +1,24 @@
 package oogasalad.GamePlayer.Board.TurnManagement;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Objects;
-import java.util.logging.Logger;
+import java.util.function.Consumer;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
+import oogasalad.GamePlayer.Board.Player;
+import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
-import oogasalad.GamePlayer.EngineExceptions.EngineException;
-import oogasalad.GamePlayer.EngineExceptions.ServerParsingException;
 import oogasalad.GamePlayer.Server.RequestBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class RemoteTurnManager implements TurnManager {
 
+  private static final Logger LOG = LogManager.getLogger(RemoteTurnManager.class);
   private static final String BASE_URL = "http://localhost:8080/turns";
   private static final String INCREMENT_TURN = BASE_URL + "/increment/%s";
   private static final String GET_CURRENT_PLAYER = BASE_URL + "/current/%s";
@@ -25,12 +27,13 @@ public class RemoteTurnManager implements TurnManager {
   private static final String GET_PLAYERS = BASE_URL + "/getPlayers/%s";
   private static final String GET_END_CONDITIONS = BASE_URL + "/getEndConditions/%s";
   private static final String GET_TURN_CRITERIA = BASE_URL + "/getTurnCriteria/%s";
-  private static final Logger logger = Logger.getLogger(RemoteTurnManager.class.getName());
   private static final ObjectMapper mapper = new ObjectMapper();
   private final String id;
+  private Consumer<Throwable> showAsyncError;
 
   public RemoteTurnManager(String id) {
     this.id = id;
+    this.showAsyncError = (Throwable e) -> LOG.error(e.getMessage());
   }
 
   /**
@@ -39,16 +42,17 @@ public class RemoteTurnManager implements TurnManager {
    * @return the current player
    */
   @Override
-  public int incrementTurn() throws EngineException {
+  public int incrementTurn() {
     String url = String.format(INCREMENT_TURN, id);
     String json = RequestBuilder.EMPTY_JSON;
-
-    HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.post(url, json));
     try {
+      HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.post(url, json));
       return mapper.readValue(response.body(), Integer.class);
-    } catch (JsonProcessingException e) {
-      logger.severe(e.getMessage());
-      throw new ServerParsingException();
+
+    } catch (Exception e) {
+      LOG.error(e.getMessage());
+      showAsyncError.accept(e);
+      return -1;
     }
   }
 
@@ -58,14 +62,15 @@ public class RemoteTurnManager implements TurnManager {
    * @return int player id
    */
   @Override
-  public int getCurrentPlayer() throws EngineException {
+  public int getCurrentPlayer() {
     String url = String.format(GET_CURRENT_PLAYER, id);
-    HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
     try {
+      HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
       return mapper.readValue(response.body(), Integer.class);
-    } catch (JsonProcessingException e) {
-      logger.severe(e.getMessage());
-      throw new ServerParsingException();
+    } catch (Exception e) {
+      LOG.error(e.getMessage());
+      showAsyncError.accept(e);
+      return -1;
     }
   }
 
@@ -76,15 +81,16 @@ public class RemoteTurnManager implements TurnManager {
    * @return true if the game is over, false otherwise
    */
   @Override
-  public boolean isGameOver(ChessBoard board) throws EngineException {
+  public boolean isGameOver(ChessBoard board) {
     String url = String.format(IS_GAMEOVER, id);
     String json = RequestBuilder.EMPTY_JSON;
-    HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.put(url, json));
     try {
+      HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.put(url, json));
       return mapper.readValue(response.body(), Boolean.class);
-    } catch (JsonProcessingException e) {
-      logger.severe(e.getMessage());
-      throw new ServerParsingException();
+    } catch (Exception e) {
+      LOG.error(e.getMessage());
+      showAsyncError.accept(e);
+      return false;
     }
   }
 
@@ -95,15 +101,16 @@ public class RemoteTurnManager implements TurnManager {
    * @return scores of all players after game over.
    */
   @Override
-  public Map<Integer, Double> getScores() throws EngineException {
+  public Map<Integer, Double> getScores() {
     String url = String.format(GET_SCORES, id);
-    HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
     try {
+      HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
       return mapper.readValue(response.body(), new TypeReference<>() {
       });
-    } catch (JsonProcessingException e) {
-      logger.severe(e.getMessage());
-      throw new ServerParsingException();
+    } catch (Exception e) {
+      LOG.error(e.getMessage());
+      showAsyncError.accept(e);
+      return Map.of();
     }
   }
 
@@ -113,14 +120,15 @@ public class RemoteTurnManager implements TurnManager {
    * @return all players playing in the game
    */
   @Override
-  public GamePlayers getGamePlayers() throws EngineException {
+  public GamePlayers getGamePlayers() {
     String url = String.format(GET_PLAYERS, id);
-    HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
     try {
+      HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
       return mapper.readValue(response.body(), GamePlayers.class);
-    } catch (JsonProcessingException e) {
-      logger.severe(e.getMessage());
-      throw new ServerParsingException();
+    } catch (Exception e) {
+      LOG.error(e.getMessage());
+      showAsyncError.accept(e);
+      return new GamePlayers();
     }
   }
 
@@ -130,14 +138,15 @@ public class RemoteTurnManager implements TurnManager {
    * @return the turn criteria for the game
    */
   @Override
-  public TurnCriteria getTurnCriteria() throws EngineException {
+  public TurnCriteria getTurnCriteria() {
     String url = String.format(GET_TURN_CRITERIA, id);
-    HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
     try {
+      HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
       return mapper.readValue(response.body(), TurnCriteria.class);
-    } catch (JsonProcessingException e) {
-      logger.severe(e.getMessage());
-      throw new ServerParsingException();
+    } catch (Exception e) {
+      LOG.error(e.getMessage());
+      showAsyncError.accept(e);
+      return new Linear(new Player[]{});
     }
   }
 
@@ -147,15 +156,16 @@ public class RemoteTurnManager implements TurnManager {
    * @return the end conditions for the game
    */
   @Override
-  public Collection<EndCondition> getEndConditions() throws EngineException {
+  public Collection<EndCondition> getEndConditions() {
     String url = String.format(GET_END_CONDITIONS, id);
-    HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
     try {
+      HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
       return mapper.readValue(response.body(), new TypeReference<>() {
       });
-    } catch (JsonProcessingException e) {
-      logger.severe(e.getMessage());
-      throw new ServerParsingException();
+    } catch (Exception e) {
+      LOG.error(e.getMessage());
+      showAsyncError.accept(e);
+      return new ArrayList<>();
     }
   }
 
@@ -170,26 +180,14 @@ public class RemoteTurnManager implements TurnManager {
     return id;
   }
 
-
+  /**
+   * Sets a callback to handle any sort of error that occurs during the game.
+   *
+   * @param errorHandler the error handler to set
+   */
   @Override
-  public boolean equals(Object obj) {
-    if (obj == this)
-      return true;
-    if (obj == null || obj.getClass() != this.getClass())
-      return false;
-    var that = (RemoteTurnManager) obj;
-    return Objects.equals(this.id, that.id);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id);
-  }
-
-  @Override
-  public String toString() {
-    return "RemoteTurnManager[" +
-        "id=" + id + ']';
+  public void setErrorHandler(Consumer<Throwable> errorHandler) {
+    this.showAsyncError = errorHandler;
   }
 
 }
