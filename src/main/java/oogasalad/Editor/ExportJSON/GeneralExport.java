@@ -52,8 +52,7 @@ public class GeneralExport {
     return validStateChecker;
   }
 
-  public void setValidStateChecker(
-      ArrayList<ArrayList<String>> validStateChecker) {
+  public void setValidStateChecker(ArrayList<ArrayList<String>> validStateChecker) {
     this.validStateChecker = validStateChecker;
   }
 }

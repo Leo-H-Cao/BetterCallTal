@@ -9,16 +9,18 @@ import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.NodeContainer;
 
 public class ChessBoardTile extends NodeContainer {
-	public static final int SIZE = 80;
+	private final int myXSize, myYSize;
 	private final int myX;
 	private final int myY;
 	private final boolean alt;
 	private boolean filled = false;
 
-	public ChessBoardTile(int x, int y, boolean toggled) {
+	public ChessBoardTile(int x, int y, boolean toggled, int xSize, int ySize) {
 		myX = x;
 		myY = y;
 		alt = toggled;
+		myXSize = xSize;
+		myYSize = ySize;
 	}
 
 	@Override
@@ -29,11 +31,11 @@ public class ChessBoardTile extends NodeContainer {
 	private Node makeGridTile() {
 		StackPane ret;
 		ImageView image = new ImageView();
-		image.setFitWidth(SIZE - PADDING);
-		image.setFitHeight(SIZE - PADDING);
+		image.setFitWidth(myXSize - PADDING);
+		image.setFitHeight(myYSize - PADDING);
 		image.setPreserveRatio(true);
 		image.setCache(true);
-		Rectangle rect = new Rectangle(SIZE, SIZE);
+		Rectangle rect = new Rectangle(myXSize, myYSize);
 		if (alt) {
 			myResources.ifPresent((e) -> rect.setFill(Paint.valueOf(e.getString("BaseColor"))));
 		} else {

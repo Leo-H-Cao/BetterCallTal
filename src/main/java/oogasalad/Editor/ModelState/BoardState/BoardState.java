@@ -3,7 +3,6 @@ package oogasalad.Editor.ModelState.BoardState;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 import oogasalad.Editor.ModelState.PiecesState.EditorCoordinate;
-import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 
 public class BoardState {
   private EditorBoard myEditorBoard;
@@ -12,8 +11,12 @@ public class BoardState {
     myEditorBoard = new EditorBoard();
   }
 
-  public void changeBoardSize(int width, int height) {
-    myEditorBoard.changeBoardSize(width, height);
+  public void setWidth(int newValue) {
+    myEditorBoard.changeWidth(newValue);
+  }
+
+  public void setHeight(int newValue) {
+    myEditorBoard.changeHeight(newValue);
   }
 
   public void setTileEffect(int x, int y, TileEffect effect) {
@@ -24,12 +27,12 @@ public class BoardState {
     myEditorBoard.setTileImage(x,y,img);
   }
 
-  public SimpleIntegerProperty getBoardWidth(){
-    return myEditorBoard.getBoardWidth();
+  public SimpleIntegerProperty getWidth(){
+    return myEditorBoard.getWidth();
   }
 
-  public SimpleIntegerProperty getBoardHeight(){
-    return myEditorBoard.getBoardHeight();
+  public SimpleIntegerProperty getHeight(){
+    return myEditorBoard.getHeight();
   }
 
   public void setPieceStartingLocation(String pieceID, int x, int y, int team) {
