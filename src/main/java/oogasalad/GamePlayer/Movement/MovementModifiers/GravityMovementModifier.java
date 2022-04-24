@@ -1,6 +1,6 @@
 package oogasalad.GamePlayer.Movement.MovementModifiers;
 
-import static oogasalad.GamePlayer.Board.Setup.BoardSetup.JSON_EXTENSION;
+import static oogasalad.GamePlayer.Board.BoardSetup.JSON_EXTENSION;
 
 import java.util.HashSet;
 import java.util.List;
@@ -58,13 +58,13 @@ public class GravityMovementModifier implements MovementModifier {
   public Set<ChessTile> updateMovement(Piece piece, ChessBoard board) {
     Set<ChessTile> updatedTiles = new HashSet<>();
     AtomicBoolean updated = new AtomicBoolean(true);
-    while(updated.get()) {
+    while (updated.get()) {
       updated.set(false);
       board.getPieces().forEach(p -> {
         final Coordinate[] currentPieceTile = {p.getCoordinates()};
         relativeCoordinates.forEach(rc ->
             currentPieceTile[0] = findNewSpot(board, currentPieceTile[0], rc));
-        if(p.getCoordinates() != currentPieceTile[0]) {
+        if (p.getCoordinates() != currentPieceTile[0]) {
           updated.set(true);
           updatePieceCoordinates(updatedTiles, board, p, currentPieceTile[0]);
         }
@@ -109,7 +109,9 @@ public class GravityMovementModifier implements MovementModifier {
       changedTiles.add(board.getTile(newCoordinate));
       piece.updateCoordinates(board.getTile(newCoordinate), board);
       piece.getHistory().remove(piece.getHistory().size() - 1);
-    } catch (OutsideOfBoardException e) {LOG.debug(String.format("Out of bounds for tile: %s", newCoordinate));}
+    } catch (OutsideOfBoardException e) {
+      LOG.debug(String.format("Out of bounds for tile: %s", newCoordinate));
+    }
   }
 
   /***
