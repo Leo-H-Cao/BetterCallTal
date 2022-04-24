@@ -12,9 +12,11 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.ServerConnectionException;
+import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
 public class RequestBuilder {
@@ -32,6 +34,8 @@ public class RequestBuilder {
         .allowIfSubTypeIsArray()
         .allowIfSubType(ChessTile.class)
         .allowIfSubType(Coordinate.class)
+        .allowIfSubType(ArrayList.class)
+        .allowIfSubType(Piece.class)
         .build();
     return new ObjectMapper().activateDefaultTyping(ptv, DefaultTyping.NON_FINAL)
         .enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
