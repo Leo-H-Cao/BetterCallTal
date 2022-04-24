@@ -34,9 +34,6 @@ public class PieceExport {
     basicCaptures.add(team+pieceName+"Movement");
     movementModifiers = new ArrayList<>();
     onInteractionModifier = editorPiece.getOnInteractionModifiers();
-
-    team = teamNum == 0? "White" : "Black";
-    pieceName = team+editorPiece.getPieceName().getValue();
   }
 
   public String getPieceName() {
