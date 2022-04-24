@@ -64,6 +64,10 @@ public class Bot implements RemotePlayer {
     double maxUtility = Integer.MIN_VALUE;
     Piece movingPiece = null;
     ChessTile finalSquare = null;
+
+    ArrayList<Piece> topMovePieces = new ArrayList<>();
+    ArrayList<ChessTile> topMoveTiles = new ArrayList<>();
+
     for(Piece p : playerPieces){
       for(ChessTile t : board.getMoves(p)){
         ChessBoard copy = board.makeHypotheticalMove(p, t.getCoordinates());
@@ -72,16 +76,24 @@ public class Bot implements RemotePlayer {
         DecisionNode childNode = new DecisionNode(copy, turnCriteria);
         double util = childNode.calculateUtility(objectives, depth);
         utilityList.add(util);
-        if(util > maxUtility){
+        if(util >= maxUtility){
+          if(util > maxUtility){
+            topMovePieces.clear();
+            topMoveTiles.clear();
+          }
           maxUtility = util;
           movingPiece = p;
           finalSquare = t;
+          topMovePieces.add(p);
+          topMoveTiles.add(t);
 
         }
       }
     }
 
-    return board.move(movingPiece, finalSquare.getCoordinates());
+    int seed = (int) (Math.random() * topMovePieces.size());
+    //return board.move(movingPiece, finalSquare.getCoordinates());
+    return board.move(topMovePieces.get(seed), topMoveTiles.get(seed).getCoordinates());
   }
 
 
