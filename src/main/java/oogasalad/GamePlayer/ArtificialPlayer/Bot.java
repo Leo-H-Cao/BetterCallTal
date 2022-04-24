@@ -46,7 +46,7 @@ public class Bot implements RemotePlayer {
     }
 
 
-    return getMinimaxMove(board, currentPlayer, 1);
+    return getMinimaxMove(board, currentPlayer, 2);
     //return getRandomMove(board, currentPlayer);
   }
 
@@ -61,14 +61,18 @@ public class Bot implements RemotePlayer {
     }
 
     //maximize utility. TODO: move logic to DecisionTree class
+    ArrayList<Double> utilityList  = new ArrayList<>();
     double maxUtility = Integer.MIN_VALUE;
     Piece movingPiece = null;
     ChessTile finalSquare = null;
     for(Piece p : playerPieces){
       for(ChessTile t : board.getMoves(p)){
         ChessBoard copy = board.makeHypotheticalMove(p, t.getCoordinates());
+        copy.getTurnManagerData().turn().incrementTurn();
+
         DecisionNode childNode = new DecisionNode(copy, turnCriteria);
         double util = childNode.calculateUtility(objectives, depth);
+        utilityList.add(util);
         if(util > maxUtility){
           maxUtility = util;
           movingPiece = p;
