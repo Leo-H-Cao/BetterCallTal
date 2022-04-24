@@ -39,7 +39,7 @@ import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/***
+/**
  * Class representing the chess board
  *
  * @author Jed, Jose, Vincent, Ritvik
@@ -122,7 +122,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     return turnManagerData;
   }
 
-  /***
+  /**
    * Generates the list of all pieces mapped to each team
    */
   private void generatePieceList() {
@@ -311,7 +311,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     return board.get(coordinate.getRow()).get(coordinate.getCol());
   }
 
-  /***
+  /**
    * Finds if a chess tile contains an opposing team to a given team
    *
    * @param team to check for
@@ -363,7 +363,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     return players.getPlayer(id);
   }
 
-  /***
+  /**
    * @return list of pieces, with each piece mapped to their team
    */
   public Map<Integer, List<Piece>> getPieceList() {
@@ -435,7 +435,7 @@ public class ChessBoard implements Iterable<ChessTile> {
         .flatMap(List::stream).toList();
   }
 
-  /***
+  /**
    * Gets list of all opponent pieces for a given board
    *
    * @param team to get opponents for
@@ -464,7 +464,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     return history;
   }
 
-  /***
+  /**
    * Checks if all the pieces are the same
    *
    * @param o to compare to
@@ -479,7 +479,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     return getPieces().equals(otherBoard.getPieces());
   }
 
-  /***
+  /**
    * @return hash of piece list
    */
   @Override
@@ -501,22 +501,47 @@ public class ChessBoard implements Iterable<ChessTile> {
     return -1;
   }
 
+  /**
+   * Get all of the tiles on the board. Used for ChessBoardData
+   *
+   * @return list of tiles
+   */
   private List<List<ChessTile>> getTiles() {
     return board;
   }
 
+  /**
+   * Gets all the ValidStateCheckers on the board. Used for ChessBoardData
+   *
+   * @return list of valid state checkers
+   */
   private List<ValidStateChecker> getValidStateCheckers() {
     return validStateCheckers;
   }
 
+  /**
+   * Gets the history manager data for the board. Used for ChessBoardData
+   *
+   * @return history manager data
+   */
   private HistoryManagerData getHistoryManagerData() {
     return history.getHistoryManagerData();
   }
 
+  /**
+   * Gets the gameplayer object for the board. Used for ChessBoardData
+   *
+   * @return gameplayer object
+   */
   private GamePlayers getGamePlayers() {
     return players;
   }
 
+  /**
+   * Gets the ChessBoardData object for the board for JSON serialization.
+   *
+   * @return ChessBoardData object
+   */
   public ChessBoardData getBoardData() {
     return new ChessBoardData(this);
   }
@@ -576,6 +601,23 @@ public class ChessBoard implements Iterable<ChessTile> {
     public ChessBoardData(ChessBoard board) {
       this(board.getTiles(), board.getTurnManagerData(), board.getGamePlayers(),
           board.getValidStateCheckers(), board.getHistoryManagerData());
+    }
+
+    /**
+     * Creates an empty chess board data object
+     */
+    public ChessBoardData() {
+      this(new ArrayList<>(), new TurnManagerData(), new GamePlayers(), new ArrayList<>(),
+          new HistoryManagerData());
+    }
+
+    /**
+     * Converts the chess board data to a chess board
+     *
+     * @return the chess board
+     */
+    public ChessBoard toChessBoard() {
+      return new ChessBoard(this);
     }
 
   }

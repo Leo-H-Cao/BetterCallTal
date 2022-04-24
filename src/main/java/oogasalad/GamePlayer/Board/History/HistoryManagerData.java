@@ -1,7 +1,5 @@
 package oogasalad.GamePlayer.Board.History;
 
-import oogasalad.GamePlayer.Board.History.HistoryManager;
-
 /**
  * This class is used to store the data of the history manager when being sent via the network.
  *
@@ -17,6 +15,21 @@ public record HistoryManagerData(String historyAPI) {
    */
   public HistoryManagerData(HistoryManager history) {
     this(history.getLink());
+  }
+
+  /**
+   * Creates an empty history manager data record.
+   */
+  public HistoryManagerData() {
+    this("");
+  }
+
+  /**
+   * Creates a history manager data record from the given data.
+   * @return the history manager data record.
+   */
+  public HistoryManager toHistoryManager() {
+    return new LocalHistoryManager(this);
   }
 
 }

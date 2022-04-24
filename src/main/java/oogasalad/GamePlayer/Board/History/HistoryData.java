@@ -2,7 +2,6 @@ package oogasalad.GamePlayer.Board.History;
 
 import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard.ChessBoardData;
-import oogasalad.GamePlayer.Board.History.History;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
@@ -25,4 +24,10 @@ public record HistoryData(ChessBoardData board, Set<Piece> movedPieces,
     this(history.board().getBoardData(), history.movedPieces(), history.updatedTiles());
   }
 
+  /**
+   * Creates an empty history data object.
+   */
+  public HistoryData() {
+    this(new ChessBoardData(), Set.of(), Set.of());
+  }
 }

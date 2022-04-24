@@ -1,10 +1,11 @@
 package oogasalad.GamePlayer.Board.TurnManagement;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
+import oogasalad.GamePlayer.Board.Player;
+import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
-import oogasalad.GamePlayer.Board.TurnManagement.GamePlayers;
-import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
 
 /**
  * This class is used to store the data needed to setup a turn manager.
@@ -18,9 +19,30 @@ import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
 public record TurnManagerData(GamePlayers players, TurnCriteria turn,
                               Collection<EndCondition> conditions, String link) {
 
+  /**
+   * Creates a new TurnManagerData object from an existing TurnManager.
+   *
+   * @param turnManager the existing TurnManager.
+   */
   public TurnManagerData(TurnManager turnManager) {
     this(turnManager.getGamePlayers(), turnManager.getTurnCriteria(),
         turnManager.getEndConditions(), turnManager.getLink());
+  }
+
+  /**
+   * Creates an empty TurnManagerData object.
+   */
+  public TurnManagerData() {
+    this(new GamePlayers(), new Linear(new Player[1]), new ArrayList<>(), "");
+  }
+
+  /**
+   * Creates a new TurnManager from the data stored in this object.
+   *
+   * @return the new TurnManager.
+   */
+  public TurnManager toTurnManager() {
+    return new LocalTurnManager(this);
   }
 
 }
