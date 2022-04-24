@@ -226,6 +226,7 @@ public class LocalGame extends View {
       diffHolder.getChildren().remove(diffSelectionLabel);
 
     } catch (Exception e) {
+      getGameBackend().showError(e.getClass().getSimpleName(), e.getMessage());
       View.LOG.warn(e.getMessage());
     }
     diffSelectionLabel = new Label(s);
@@ -236,6 +237,7 @@ public class LocalGame extends View {
     try {
       playerHolder.getChildren().remove(playerSelectionLabel);
     } catch (Exception e) {
+      getGameBackend().showError(e.getClass().getSimpleName(), e.getMessage());
       View.LOG.warn(e.getMessage());
     }
     playerSelectionLabel = new Label(s);
@@ -260,6 +262,7 @@ public class LocalGame extends View {
       return (e) -> getView(GameView.class).ifPresent(this::changeScene);
 
     } catch (NullPointerException error) {
+      getGameBackend().showError(error.getClass().getSimpleName(), error.getMessage());
       return e -> View.LOG.warn(error.getMessage());
     }
   }
@@ -269,6 +272,7 @@ public class LocalGame extends View {
       if (playerSelectionLabel.getText().equals(FIRST)) return 0;
       return 1;
     } catch (NullPointerException error) {
+      getGameBackend().showError(error.getClass().getSimpleName(), error.getMessage());
       LOG.warn(error.getMessage());
     }
     return 0;

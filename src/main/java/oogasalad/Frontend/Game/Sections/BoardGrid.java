@@ -11,6 +11,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 /**
@@ -33,12 +34,12 @@ public class BoardGrid {
     private Integer myID;
 
 
-    public BoardGrid(ChessBoard cb, int PlayerID, Consumer<Piece> lightupCons, Consumer<Coordinate> MoveCons) {
+    public BoardGrid(ChessBoard cb, int PlayerID, Consumer<Piece> lightupCons, Consumer<Coordinate> MoveCons, BiConsumer<String, String> errorRun) {
         myLitTiles = new ArrayList<>();
         myBoard = new GridPane();
         makeRunAndCons();
         setUpGP(myBoard, cb.getBoardHeight(), cb.getBoardLength());
-        makeBoard(cb, PlayerID, lightupCons, MoveCons);
+        makeBoard(cb, PlayerID, lightupCons, MoveCons, errorRun);
         myID = PlayerID;
     }
 
@@ -51,7 +52,7 @@ public class BoardGrid {
         }
     }
 
-    private void makeBoard(ChessBoard cb, int id, Consumer<Piece> lightupCons, Consumer<Coordinate> MoveCons) {
+    private void makeBoard(ChessBoard cb, int id, Consumer<Piece> lightupCons, Consumer<Coordinate> MoveCons, BiConsumer<String, String> errorRun) {
         myBoardTiles = new ArrayList<>();
         for (ChessTile ct : cb) {
             int grid_x = ct.getCoordinates().getCol();
@@ -59,7 +60,7 @@ public class BoardGrid {
             BoardTile tile = new BoardTile(ct,
                     WIDTH_Board / Math.max(cb.getBoardLength(), cb.getBoardHeight()),
                     HEIGHT_BOARD / Math.max(cb.getBoardLength(), cb.getBoardHeight()),
-                    lightupCons, ClearLitTilesRun, setSelPiece, MoveCons);
+                    lightupCons, ClearLitTilesRun, setSelPiece, MoveCons, errorRun);
             myBoardTiles.add(tile);
 
             if (id == 1) {
