@@ -9,7 +9,7 @@ import javafx.scene.layout.GridPane;
 import oogasalad.Frontend.util.LabelledContainer;
 
 public class BoardSettings extends LabelledContainer {
-	public static final int MAX_SIZE = 50;
+	public static final int MAX_SIZE = 40;
 
 	public BoardSettings() {
 		super("Board Settings");
@@ -24,25 +24,21 @@ public class BoardSettings extends LabelledContainer {
 		ret.add(widthSelector, 0, 0);
 		ret.add(heightSelector, 0, 1);
 
-
 		return ret;
 	}
 
 	private Node makeSpinner(boolean width) {
-		int defaultValue = getEditorBackend().getBoardState().getBoardHeight().getValue();
-		SpinnerValueFactory<Integer> factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, MAX_SIZE, defaultValue);
-		factory.setValue(8);
+		int defaultValue = getEditorBackend().getBoardState().getHeight().getValue();
+		SpinnerValueFactory<Integer> factory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, MAX_SIZE, defaultValue);
 		Spinner<Integer> spinner = new Spinner<>(factory);
-
-		spinner.valueProperty().addListener((ob, ov, nv) -> System.out.println(nv));
 
 		Label text = new Label();
 		if (width) {
 			text.setText("board width");
-			spinner.valueProperty().addListener((ob, ov, nv) -> getEditorBackend().getBoardState().setBoardWidth(nv));
+			spinner.valueProperty().addListener((ob, ov, nv) -> getEditorBackend().getBoardState().setWidth(nv));
 		} else {
 			text.setText("board height");
-			spinner.valueProperty().addListener((ob, ov, nv) -> getEditorBackend().getBoardState().setBoardHeight(nv));
+			spinner.valueProperty().addListener((ob, ov, nv) -> getEditorBackend().getBoardState().setHeight(nv));
 		}
 		GridPane ret = new GridPane();
 		ret.add(text, 0, 0);

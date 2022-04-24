@@ -2,9 +2,7 @@ package oogasalad.Editor.ModelState.BoardState;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-import javafx.beans.property.Property;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 import oogasalad.Editor.Exceptions.InvalidPieceIDException;
@@ -106,11 +104,11 @@ public class EditorBoard {
     board.get(y).get(x).addPiece(pieceID, team);
   }
 
-  public SimpleIntegerProperty getBoardWidth(){
+  public SimpleIntegerProperty getWidth(){
     return myWidth;
   }
 
-  public SimpleIntegerProperty getBoardHeight(){
+  public SimpleIntegerProperty getHeight(){
     return myHeight;
   }
 
