@@ -1,4 +1,4 @@
-package oogasalad.Frontend.LocalPlay;
+package oogasalad.Frontend.Menu.LocalPlay;
 
 import java.io.File;
 import java.util.List;
@@ -278,6 +278,10 @@ public class LocalGame extends View {
     return 0;
   }
 
+  /**
+   * PURELY FOR TESTING.
+   * @param path filepath to example file for testing
+   */
   public void injectBoard(String path) {
     File f = new File(path);
     Optional<ChessBoard> cb = getGameBackend().initalizeLocalChessBoard(f);
