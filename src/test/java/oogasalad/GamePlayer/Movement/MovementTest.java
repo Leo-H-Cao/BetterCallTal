@@ -157,7 +157,7 @@ class MovementTest {
         InvalidMoveException.class, () -> movementTwo.movePiece(pieceOne, new Coordinate(2, 0),board));
     assertThrows(InvalidMoveException.class, () -> captureTwo.capturePiece(pieceOne, new Coordinate(2, 0),board));
   }
-  
+
   @Test
   void equalsTest() {
     assertEquals(movementOne, movementOne);
