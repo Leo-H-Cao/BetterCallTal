@@ -7,6 +7,12 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 
+/**
+ * Piece class with configurations created and modified by user, unique pieceID,
+ * and is placed on editor board to set starting location,
+ * A single piece editor contains info for both its black and white version
+ * @author Leo Cao
+ */
 public class EditorPiece {
 	private MovementGrid movementGrid0;
 	private MovementGrid movementGrid1;
@@ -65,6 +71,10 @@ public class EditorPiece {
 
 	}
 
+	/**
+	 * Sets current piece as objective of game
+	 * @param main
+	 */
 	public void setMainPiece(boolean main){
 		mainPiece = main;
 	}
@@ -77,6 +87,13 @@ public class EditorPiece {
 		return pieceID;
 	}
 
+	/**
+	 * Sets movement grid tile as open, closed, or capture for movement
+	 * @param x coord of tile
+	 * @param y coord of tile
+	 * @param tileStatus determine whether tile is closed or open for movement/capture
+	 * @param team determines which movement grid of the piece to edit
+	 */
 	public void setTile(int x, int y, PieceGridTile tileStatus, int team){
 		if(team == 0){
 			movementGrid0.setTile(x, y, tileStatus);
@@ -96,6 +113,11 @@ public class EditorPiece {
 		}
 	}
 
+	/**
+	 * Changes piece image to image set by user
+	 * @param team determine which team's (black or white) image of this piece should be changed
+	 * @param image new piece image
+	 */
 	public void setImage(int team, Image image) {
 		if(team == 0){image0.setValue(image);}
 		else{image1.setValue(image);}
