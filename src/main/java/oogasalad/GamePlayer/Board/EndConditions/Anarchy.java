@@ -2,9 +2,15 @@ package oogasalad.GamePlayer.Board.EndConditions;
 
 import java.util.Map;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 
 public class Anarchy implements EndCondition {
+
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public Anarchy() {
+    super();
+  }
 
   @Override
   public Map<Integer, Double> getScores(ChessBoard board) {
@@ -15,4 +21,5 @@ public class Anarchy implements EndCondition {
   public int compareTo(EndCondition o) {
     return 0;
   }
+
 }

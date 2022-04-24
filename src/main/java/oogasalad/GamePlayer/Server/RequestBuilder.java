@@ -7,17 +7,29 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectMapper.DefaultTyping;
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.Board.Tiles.CustomTiles.TileAction;
+import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.ServerConnectionException;
+import oogasalad.GamePlayer.GamePiece.MovementHandler;
 import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.GamePiece.PieceData;
+import oogasalad.GamePlayer.GamePiece.SupplementaryPieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
+import oogasalad.GamePlayer.Movement.MovementInterface;
+import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
+import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 
 public class RequestBuilder {
 
@@ -31,14 +43,31 @@ public class RequestBuilder {
 
   public static ObjectMapper objectMapperWithPTV() {
     PolymorphicTypeValidator ptv = BasicPolymorphicTypeValidator.builder()
+        .allowIfBaseType(TurnCriteria.class)
+        .allowIfBaseType(EndCondition.class)
+
         .allowIfSubTypeIsArray()
-        .allowIfSubType(ChessTile.class)
-        .allowIfSubType(Coordinate.class)
-        .allowIfSubType(ArrayList.class)
-        .allowIfSubType(Piece.class)
+        .allowIfBaseType(ChessTile.class)
+        .allowIfBaseType(TileAction.class)
+        .allowIfBaseType(EngineException.class)
+        .allowIfBaseType(MovementInterface.class)
+        .allowIfBaseType(Piece.class)
+        .allowIfBaseType(PieceData.class)
+        .allowIfBaseType(SupplementaryPieceData.class)
+        .allowIfBaseType(MovementHandler.class)
+        .allowIfBaseType(MovementModifier.class)
+        .allowIfBaseType(FileReader.class)
+        .allowIfBaseType(ValidStateChecker.class)
+        .allowIfBaseType(Coordinate.class)
+        .allowIfBaseType(Collection.class)
+        .allowIfBaseType(Collections.emptyList().getClass())
+        .allowIfBaseType("java.util.ImmutableCollections$List12")
+        .allowIfBaseType(List.of(new Coordinate(0, 0)).getClass())
+        .allowIfBaseType("java.util.ImmutableCollections$ListN")
         .build();
     return new ObjectMapper().activateDefaultTyping(ptv, DefaultTyping.NON_FINAL)
         .enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+        .setVisibility(PropertyAccessor.ALL, Visibility.NONE)
         .setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
   }
 

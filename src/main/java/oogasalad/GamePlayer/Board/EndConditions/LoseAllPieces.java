@@ -17,6 +17,13 @@ import oogasalad.GamePlayer.Board.Player;
  */
 public class LoseAllPieces implements EndCondition {
 
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public LoseAllPieces(){
+    super();
+  }
+
   /***
    * Losers are the ones who lose all pieces, winners are their opponents, draw for everyone else
    *

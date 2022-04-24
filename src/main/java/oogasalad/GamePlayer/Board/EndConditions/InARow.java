@@ -25,12 +25,10 @@ import org.json.JSONObject;
  */
 public class InARow implements EndCondition {
 
-  private static final Logger LOG = LogManager.getLogger(InARow.class);
   public static final List<Integer> DIRECTIONS = List.of(-1, 0, 1);
-
   public static final String IAR_CONFIG_FILE_HEADER = "doc/GameEngineResources/Other/";
   public static final String IAR_DEFAULT_FILE = "InARowThree";
-
+  private static final Logger LOG = LogManager.getLogger(InARow.class);
   private static final int IAR_DEFAULT_VAL = 3;
   private static final List<String> IAR_DEFAULT_NAMES = List.of("checker");
 
@@ -59,7 +57,7 @@ public class InARow implements EndCondition {
       numInARow = data.getInt("num");
       pieceNames = new ArrayList<>();
       JSONArray pieceArray = data.getJSONArray("pieces");
-      for(int i=0; i<pieceArray.length(); i++) {
+      for (int i = 0; i < pieceArray.length(); i++) {
         pieceNames.add(pieceArray.getString(i).toLowerCase());
       }
     } catch (IOException e) {
@@ -79,17 +77,19 @@ public class InARow implements EndCondition {
     Map<Integer, Double> scores = new HashMap<>();
     board.stream().flatMap(List::stream).toList().stream().filter(t ->
         t.getPiece().isPresent() &&
-        pieceNames.contains(t.getPiece().get().getName().toLowerCase()) &&
-        anyRayReachesNum(board, t.getCoordinates(),
-            t.getPiece().get().getName(), t.getPiece().get().getTeam())).forEach(t -> {
-          scores.put(t.getPiece().get().getTeam(), WIN);
-          Arrays.stream(board.getPlayer(t.getPiece().get().getTeam()).opponentIDs()).filter(o ->
-              !scores.containsKey(o)).forEach(o -> scores.put(o, LOSS));
-        });
+            pieceNames.contains(t.getPiece().get().getName().toLowerCase()) &&
+            anyRayReachesNum(board, t.getCoordinates(),
+                t.getPiece().get().getName(), t.getPiece().get().getTeam())).forEach(t -> {
+      scores.put(t.getPiece().get().getTeam(), WIN);
+      Arrays.stream(board.getPlayer(t.getPiece().get().getTeam()).opponentIDs()).filter(o ->
+          !scores.containsKey(o)).forEach(o -> scores.put(o, LOSS));
+    });
 
     LOG.debug(String.format("Scores: %s", scores));
 
-    if(scores.isEmpty()) return scores;
+    if (scores.isEmpty()) {
+      return scores;
+    }
 
     Arrays.stream(board.getPlayers()).filter(p -> !scores.containsKey(p.teamID())).forEach(p ->
         scores.put(p.teamID(), DRAW));
@@ -107,7 +107,7 @@ public class InARow implements EndCondition {
    * @return above
    */
   private boolean anyRayReachesNum(ChessBoard board, Coordinate start,
-    String pieceName, int pieceTeam) {
+      String pieceName, int pieceTeam) {
     return DIRECTIONS.stream().anyMatch(i -> DIRECTIONS.stream().anyMatch(j ->
         rayReachesNum(board, pieceName, pieceTeam, start, Coordinate.of(i, j), numInARow)));
   }
@@ -126,9 +126,13 @@ public class InARow implements EndCondition {
    */
   private boolean rayReachesNum(ChessBoard board, String pieceName, int pieceTeam,
       Coordinate coordinate, Coordinate direction, int rayLength) {
-    if(rayLength == 0) return true;
-    if(direction.getCol() == 0 && direction.getRow() == 0 ||
-        !continueExtendingRay(board,coordinate, pieceName, pieceTeam)) {return false;}
+    if (rayLength == 0) {
+      return true;
+    }
+    if (direction.getCol() == 0 && direction.getRow() == 0 ||
+        !continueExtendingRay(board, coordinate, pieceName, pieceTeam)) {
+      return false;
+    }
 
     LOG.debug(String.format("Current coordinate and rayLength: (%d, %d), %d",
         coordinate.getRow(), coordinate.getCol(), rayLength));
@@ -152,8 +156,9 @@ public class InARow implements EndCondition {
     try {
       if (board.getTile(coordinate).getPiece().isPresent() &&
           board.getTile(coordinate).getPiece().get().getName().equalsIgnoreCase(pieceName) &&
-          board.getTile(coordinate).getPiece().get().getTeam() == pieceTeam)
+          board.getTile(coordinate).getPiece().get().getTeam() == pieceTeam) {
         return true;
+      }
     } catch (OutsideOfBoardException e) {
       return false;
     }
