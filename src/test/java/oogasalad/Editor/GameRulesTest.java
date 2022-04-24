@@ -16,7 +16,7 @@ public class GameRulesTest {
   }
 
   @Test
-  void testSetTurnCriteria(){
+  void testSetTurnCriteria() {
     String defaultTurnCriteria = "Linear";
     assertEquals(gameRulesState.getTurnCriteria(), defaultTurnCriteria);
 

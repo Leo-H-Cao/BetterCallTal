@@ -6,12 +6,16 @@ import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import oogasalad.Editor.ExportJSON.ExportJSON;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author Leo Cao
  * Tracks game rules configurations changes from user
  */
 public class GameRulesState {
+  private static final Logger LOG = LogManager.getLogger(ExportJSON.class);
   private static final String CONFIGURATION_RESOURCE_PATH = "oogasalad/Editor/GameRules";
 
   private ArrayList<ArrayList<String>> winConditions;
@@ -86,7 +90,7 @@ public class GameRulesState {
     try {
       myResources = ResourceBundle.getBundle(CONFIGURATION_RESOURCE_PATH, Locale.ENGLISH);
     } catch (NullPointerException | MissingResourceException e) {
-      throw new IllegalArgumentException(String.format("Invalid resource file: %s", "GameRules"));
+      LOG.warn(String.format("Invalid resource file: %s", CONFIGURATION_RESOURCE_PATH));
     }
   }
 
