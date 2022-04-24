@@ -3,12 +3,15 @@ package oogasalad.Editor.ModelState.BoardState;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.image.Image;
 import oogasalad.Editor.ModelState.PiecesState.EditorCoordinate;
+import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 
 public class BoardState {
   private EditorBoard myEditorBoard;
+  private PiecesState piecesState;
 
-  public BoardState(){
+  public BoardState(PiecesState piecesState){
     myEditorBoard = new EditorBoard();
+    this.piecesState = piecesState;
   }
 
   public void setWidth(int newValue) {
@@ -36,7 +39,8 @@ public class BoardState {
   }
 
   public void setPieceStartingLocation(String pieceID, int x, int y, int team) {
-    myEditorBoard.addPieceStartingLocation(pieceID, x, y, team);
+    Image pieceImg = piecesState.getPiece(pieceID).getImage(team).getValue();
+    myEditorBoard.addPieceStartingLocation(pieceID, x, y, team, pieceImg);
   }
 
   public EditorCoordinate getPieceLocation(String pieceID){

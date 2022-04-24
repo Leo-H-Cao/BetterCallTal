@@ -61,20 +61,12 @@ public class ExportJSON {
   public void writeToJSON(File parentDir){
     ObjectMapper objectMapper = new ObjectMapper();
     try{
-
-//      File parentDir = chooser.showDialog(new Stage());
-//      if(parentDir != null) {
-//        if (!parentDir.exists()){
-//          boolean result = parentDir.mkdirs();
-//          if (!result) return;
-//        }
         for(PieceExport piece : pieces){
           objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/GameEngineResources/Pieces/"+piece.getPieceName()+".json"), piece);
         }
         MainJSONString = objectMapper.writeValueAsString(exportWrapper);
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(parentDir.getAbsolutePath()+"/mainFile.json"), exportWrapper);
 
-//      }
       } catch (IOException e) {
       LOG.warn(OBJECT_MAPPER_ERR_MSG);
       throw new RuntimeException(e);

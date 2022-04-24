@@ -95,8 +95,9 @@ public class EditorBoard {
    * @param y coord of spot on board
    * @param team black or white version of current piece
    */
-  public void addPieceStartingLocation(String pieceID, int x, int y, int team){
+  public void addPieceStartingLocation(String pieceID, int x, int y, int team, Image pieceImage){
     board.get(y).get(x).addPiece(pieceID, team);
+    board.get(y).get(x).setImg(pieceImage);
   }
 
   public SimpleIntegerProperty getWidth(){
