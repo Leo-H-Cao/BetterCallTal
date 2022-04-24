@@ -10,8 +10,7 @@ public class PieceExport {
   private int pointValue;
   private ArrayList<String> customMoves;
   private ArrayList<String> movementModifiers;
-  private ArrayList<String> onInteractionModifier;
-  private MovementGrid movementGrid;
+  private ArrayList<ArrayList<String>> onInteractionModifier;
   private ArrayList<String> basicMovements;
   private ArrayList<String> basicCaptures;
 
@@ -21,13 +20,14 @@ public class PieceExport {
     imgFile = editorPiece.getImage(team).getValue().getUrl().split("/classes/")[1];
     pointValue = editorPiece.getPointValue();
     customMoves = editorPiece.getCustomMoves() == null ? new ArrayList<>() :editorPiece.getCustomMoves();
-    movementGrid = editorPiece.getMovementGrid();
     basicMovements = new ArrayList<>();
     basicCaptures = new ArrayList<>();
-    basicMovements.add(pieceName+"Movements");
-    basicCaptures.add(pieceName+"Captures");
+    basicMovements.add(pieceName+"Movement");
+
+    //change for capture != movement
+    basicCaptures.add(pieceName+"Movement");
     movementModifiers = new ArrayList<>();
-    onInteractionModifier = new ArrayList<>();
+    onInteractionModifier = editorPiece.getOnInteractionModifiers();
   }
 
   public String getPieceName() {
@@ -50,7 +50,7 @@ public class PieceExport {
     return movementModifiers;
   }
 
-  public ArrayList<String> getOnInteractionModifier() {
+  public ArrayList<ArrayList<String>> getOnInteractionModifier() {
     return onInteractionModifier;
   }
 
