@@ -4,7 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.http.HttpResponse;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Server.Exceptions.ServerConnectionException;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
+import oogasalad.GamePlayer.EngineExceptions.ServerParsingException;
 
 
 public class SessionManager {
@@ -24,10 +25,14 @@ public class SessionManager {
    * @param initialBoard the initial board of the game session
    */
   public void createGameSession(String id, int host, int opponent, ChessBoard initialBoard)
-      throws ServerConnectionException, JsonProcessingException {
+      throws EngineException {
     String uri = String.format(CREATE, id, host, opponent);
-    String json = mapperJSON.writeValueAsString(initialBoard.getBoardData());
-    RequestBuilder.sendRequest(RequestBuilder.post(uri, json));
+    try {
+      String json = mapperJSON.writeValueAsString(initialBoard.getBoardData());
+      RequestBuilder.sendRequest(RequestBuilder.post(uri, json));
+    } catch (JsonProcessingException e) {
+      throw new ServerParsingException();
+    }
   }
 
   /**
@@ -35,10 +40,14 @@ public class SessionManager {
    *
    * @param id the id of the game session
    */
-  public int joinGameSession(String id) throws ServerConnectionException, JsonProcessingException {
+  public int joinGameSession(String id) throws EngineException {
     String uri = String.format(JOIN, id);
-    HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(uri));
-    return mapperJSON.readValue(response.body(), Integer.class);
+    try {
+      HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(uri));
+      return mapperJSON.readValue(response.body(), Integer.class);
+    } catch (JsonProcessingException e) {
+      throw new ServerParsingException();
+    }
   }
 
   /**
@@ -46,7 +55,7 @@ public class SessionManager {
    *
    * @param id the id of the game session
    */
-  public void pauseGameSession(String id) throws ServerConnectionException {
+  public void pauseGameSession(String id) throws EngineException {
     String uri = String.format(PAUSE, id);
     String json = RequestBuilder.EMPTY_JSON;
     RequestBuilder.sendRequest(RequestBuilder.put(uri, json));
@@ -57,7 +66,7 @@ public class SessionManager {
    *
    * @param id the id of the game session
    */
-  public void resumeGameSession(String id) throws ServerConnectionException {
+  public void resumeGameSession(String id) throws EngineException {
     String uri = String.format(RESUME, id);
     String json = RequestBuilder.EMPTY_JSON;
     RequestBuilder.sendRequest(RequestBuilder.put(uri, json));
@@ -68,7 +77,7 @@ public class SessionManager {
    *
    * @param id the id of the game session
    */
-  public void endGameSession(String id) throws ServerConnectionException {
+  public void endGameSession(String id) throws EngineException {
     String uri = String.format(END, id);
     RequestBuilder.sendRequest(RequestBuilder.delete(uri));
   }

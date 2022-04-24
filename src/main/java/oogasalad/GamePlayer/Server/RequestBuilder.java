@@ -5,7 +5,8 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import oogasalad.GamePlayer.Server.Exceptions.ServerConnectionException;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
+import oogasalad.GamePlayer.EngineExceptions.ServerConnectionException;
 
 public class RequestBuilder {
 
@@ -68,12 +69,12 @@ public class RequestBuilder {
    * @throws ServerConnectionException if the request fails
    */
   public static HttpResponse<String> sendRequest(HttpRequest request)
-      throws ServerConnectionException {
+      throws EngineException {
     HttpClient client = HttpClient.newHttpClient();
     try {
       return client.send(request, HttpResponse.BodyHandlers.ofString());
     } catch (IOException | InterruptedException e) {
-      throw new ServerConnectionException("Could not connect to server", e);
+      throw new ServerConnectionException();
     }
   }
 
