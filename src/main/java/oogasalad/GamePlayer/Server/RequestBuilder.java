@@ -9,8 +9,9 @@ import oogasalad.GamePlayer.Server.Exceptions.ServerConnectionException;
 
 public class RequestBuilder {
 
-  public static final String CONTENT_TYPE = "Content-Type";
-  public static final String APPLICATION_JSON = "application/json";
+  public static final String EMPTY_JSON = "{}";
+  private static final String CONTENT_TYPE = "Content-Type";
+  private static final String APPLICATION_JSON = "application/json";
 
   private RequestBuilder() {
     // Empty constructor for utility class with no instances allowed
