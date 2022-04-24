@@ -39,7 +39,6 @@ public class HostGame extends View {
     private static final String BLACK = "Black";
     private static final String ROOM = "Room";
     private Map<String, Integer> piececolors;
-    private Integer DEFAULT_COLOR = 1;
     private static final String COLORPROMPT = "COLORPROMPT";
     private static final Double VBOXSPACING = 5.0;
     private ChoiceBox<String> colorchoice;
@@ -150,7 +149,7 @@ public class HostGame extends View {
                 (e) -> {
             Optional<ChessBoard> cbOp = getGameBackend().initalizeHostServerChessBoard(f, RoomID, piececolors.get(colorchoice.getValue()));
             if(cbOp.isPresent()) {
-                getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cbOp.get(), cbOp.get().getThisPlayer(), false));
+                getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cbOp.get(), false));
             } else {
                 View.LOG.debug("Invalid JSON");
             }

@@ -51,6 +51,7 @@ public class GameView extends View {
     private TopSection myTopSection;
     private Consumer<TurnUpdate> servUpRun;
     private BiConsumer<String, String> errorRun;
+    private Boolean isServer;
 
     private TurnKeeper turnKeeper;
     private List<RemotePlayer> remotePlayers;
@@ -67,10 +68,11 @@ public class GameView extends View {
      * setting up the board.
      */
 
-    public void SetUpBoard(ChessBoard chessboard, int id, boolean singleplayer) {
-        myID = id;
+    public void SetUpBoard(ChessBoard chessboard, boolean singleplayer) {
+        myID = chessboard.getThisPlayer();
+        isServer = getGameBackend().getChessBoard().getGameType().equals("SERVER");
         makeConsandRuns();
-        myBoardGrid = new BoardGrid(chessboard, id, lightUpCons, MoveCons, errorRun); //TODO: Figure out player ID stuff
+        myBoardGrid = new BoardGrid(chessboard, myID, lightUpCons, MoveCons, errorRun); //TODO: Figure out player ID stuff
         //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
         remotePlayers = new ArrayList<>();
@@ -147,6 +149,14 @@ public class GameView extends View {
         if (getGameBackend().getChessBoard().isGameOver()) {
            gameOver();
            return false;
+        }
+
+        if (isServer) {
+            if (myID != tu.nextPlayer()) {
+                //TODO: DISPLAY WAITING FOR SERVER MESSAGE
+            } else {
+                //TODO: REMOVE MESSAGE
+            }
         }
         return true;
     }
