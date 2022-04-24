@@ -189,6 +189,6 @@ public class BankLeaver implements MovementInterface {
    */
   @Override
   public int hashCode() {
-    return Objects.hash(blockCol, configFile);
+    return Objects.hash(blockCol);
   }
 }
