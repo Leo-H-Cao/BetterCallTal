@@ -3,6 +3,10 @@ package oogasalad.Editor.ExportJSON;
 import java.util.ArrayList;
 import javafx.scene.image.Image;
 
+/**
+ * Object meant to be serialazed into JSON, single tile and the special modifiers of that tile
+ * @author Leo Cao
+ */
 public class TileExport {
   private int row;
   private int col;

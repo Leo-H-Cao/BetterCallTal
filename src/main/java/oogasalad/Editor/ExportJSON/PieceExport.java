@@ -2,8 +2,12 @@ package oogasalad.Editor.ExportJSON;
 
 import java.util.ArrayList;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
-import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 
+/**
+ * Object containing info for single piece file that is to be exported, separate from piece
+ * information that goes in the main export file
+ * @author Leo Cao
+ */
 public class PieceExport {
   private String pieceName;
   private String imgFile;

@@ -3,6 +3,11 @@ package oogasalad.Editor.ExportJSON;
 import java.util.ArrayList;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 
+/**
+ * Object containing info for single piece file that is to be exported
+ * as part of the main export file, separate from individual piece files
+ * @author Leo Cao
+ */
 public class PieceMainExport {
   private int row;
   private int col;

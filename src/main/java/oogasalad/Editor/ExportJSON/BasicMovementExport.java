@@ -1,5 +1,9 @@
 package oogasalad.Editor.ExportJSON;
 
+/**
+ * Single basic movement object designed to be serialized to JSON by Jackson library
+ * @author Leo Cao
+ */
 public class BasicMovementExport {
   private int[] relativeCoords;
   private boolean infinite;
