@@ -3,9 +3,9 @@
     "rows" : 8,
     "columns" : 8,
     "turnCriteria" : "Linear",
-    "colors" : [ "color1", "color2" ],
-    "endConditions" : [ [ "Stalemate" ], [ "Another End Condition" ] ],
-    "validStateChecker" : [ [ "ValidStateChecker" ] ]
+    "colors" : [ "white", "black" ],
+    "endConditions" : [ [ "Checkmate" ], [ "Stalemate" ] ],
+    "validStateChecker" : [ [ "Check" ] ]
   },
   "playerInfo" : [ {
     "team" : 0,
@@ -14,6 +14,33 @@
     "team" : 1,
     "opponents" : [ 0 ]
   } ],
-  "pieces" : [ ],
+  "pieces" : [ {
+    "row" : 1,
+    "col" : 2,
+    "team" : 1,
+    "mainPiece" : 0,
+    "pieceFile" : "piece2",
+    "movementModifiers" : [ ],
+    "onInteractionModifier" : [ ],
+    "customMoves" : [ ]
+  }, {
+    "row" : 5,
+    "col" : 4,
+    "team" : 0,
+    "mainPiece" : 0,
+    "pieceFile" : "piece1",
+    "movementModifiers" : [ ],
+    "onInteractionModifier" : [ ],
+    "customMoves" : [ ]
+  }, {
+    "row" : 6,
+    "col" : 3,
+    "team" : 1,
+    "mainPiece" : 0,
+    "pieceFile" : "piece1",
+    "movementModifiers" : [ ],
+    "onInteractionModifier" : [ ],
+    "customMoves" : [ ]
+  } ],
   "tiles" : [ ]
 }

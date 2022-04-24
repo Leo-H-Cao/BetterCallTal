@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import oogasalad.Frontend.LocalPlay.RemotePlayer.RemotePlayer;
-import oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.Checkmate;
+import oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.CheckmateLoss;
+import oogasalad.Frontend.Menu.LocalPlay.RemotePlayer.RemotePlayer;
 import oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.PieceValue;
 import oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.Utility;
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -13,7 +13,6 @@ import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
-import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
 public class Bot implements RemotePlayer {
@@ -34,7 +33,7 @@ public class Bot implements RemotePlayer {
   public Bot(TurnManager turnManager) {
     this.turnManager = turnManager;
     objectives = new ArrayList<>();
-    //objectives.add(new Checkmate());
+    objectives.add(new CheckmateLoss());
     objectives.add(new PieceValue());
   }
 
@@ -46,7 +45,7 @@ public class Bot implements RemotePlayer {
     }
 
 
-    return getMinimaxMove(board, currentPlayer, 1);
+    return getMinimaxMove(board, currentPlayer, 2);
     //return getRandomMove(board, currentPlayer);
   }
 
@@ -61,24 +60,40 @@ public class Bot implements RemotePlayer {
     }
 
     //maximize utility. TODO: move logic to DecisionTree class
+    ArrayList<Double> utilityList  = new ArrayList<>();
     double maxUtility = Integer.MIN_VALUE;
     Piece movingPiece = null;
     ChessTile finalSquare = null;
+
+    ArrayList<Piece> topMovePieces = new ArrayList<>();
+    ArrayList<ChessTile> topMoveTiles = new ArrayList<>();
+
     for(Piece p : playerPieces){
       for(ChessTile t : board.getMoves(p)){
         ChessBoard copy = board.makeHypotheticalMove(p, t.getCoordinates());
+        copy.getTurnManagerData().turn().incrementTurn();
+
         DecisionNode childNode = new DecisionNode(copy, turnCriteria);
         double util = childNode.calculateUtility(objectives, depth);
-        if(util > maxUtility){
+        utilityList.add(util);
+        if(util >= maxUtility){
+          if(util > maxUtility){
+            topMovePieces.clear();
+            topMoveTiles.clear();
+          }
           maxUtility = util;
           movingPiece = p;
           finalSquare = t;
+          topMovePieces.add(p);
+          topMoveTiles.add(t);
 
         }
       }
     }
 
-    return board.move(movingPiece, finalSquare.getCoordinates());
+    int seed = (int) (Math.random() * topMovePieces.size());
+    //return board.move(movingPiece, finalSquare.getCoordinates());
+    return board.move(topMovePieces.get(seed), topMoveTiles.get(seed).getCoordinates());
   }
 
 

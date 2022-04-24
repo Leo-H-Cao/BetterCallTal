@@ -13,11 +13,11 @@ import oogasalad.Frontend.util.ButtonType;
  * This class will control the right side of the Game View borderpane.
  */
 
-public class RightSideSection {
+public class LeftSection {
 
     private VBox SideVbox;
 
-    public RightSideSection(Runnable Switch) {
+    public LeftSection(Runnable Switch) {
         SideVbox = makeSideVbox(Switch);
     }
 

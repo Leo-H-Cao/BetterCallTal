@@ -17,6 +17,12 @@ import oogasalad.Editor.ModelState.RulesState.GameRulesState;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Handles exporting game configurations set by user,
+ * creates objects for serialization according to format
+ * that can be parsed by game engine
+ * @author Leo Cao
+ */
 public class ExportJSON {
   private static final Logger LOG = LogManager.getLogger(ExportJSON.class);
   private final int PIECE_LOCATION = 3;
@@ -47,31 +53,29 @@ public class ExportJSON {
     exportWrapper = new ExportWrapper(generalExport, playerInfo, piecesMain, tiles);
   }
 
+  /**
+   * Writes pieces to individual pieces JSON, and creates main game file
+   * @param parentDir to save the main game configurations file
+   */
   public void writeToJSON(File parentDir){
     ObjectMapper objectMapper = new ObjectMapper();
     try{
-
-//      File parentDir = chooser.showDialog(new Stage());
-//      if(parentDir != null) {
-//        if (!parentDir.exists()){
-//          boolean result = parentDir.mkdirs();
-//          if (!result) return;
-//        }
-
         for(PieceExport piece : pieces){
           objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/GameEngineResources/Pieces/"+piece.getPieceName()+".json"), piece);
         }
         MainJSONString = objectMapper.writeValueAsString(exportWrapper);
-        System.out.println(MainJSONString);
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(parentDir.getAbsolutePath()+"/mainFile.json"), exportWrapper);
 
-//      }
       } catch (IOException e) {
       LOG.warn(OBJECT_MAPPER_ERR_MSG);
       throw new RuntimeException(e);
     }
   }
 
+  /**
+   * creates general configurations object including turn criteria, end conditions, etc
+   * ready to be serialized into JSON
+   */
   private void createGeneralExportObject(){
     generalExport = new GeneralExport(boardState.getHeight().get(),
         boardState.getWidth().get());
@@ -81,6 +85,9 @@ public class ExportJSON {
     generalExport.setValidStateChecker(gameRulesState.getValidStateCheckers());
   }
 
+  /**
+   * creates player info (mappings of player and their opponents) export objects
+   */
   private void createPlayerInfoObject(){
     playerInfo = new ArrayList<>();
     HashMap<Integer, ArrayList<Integer>> gameRulesPlayers = gameRulesState.getTeamOpponents();
@@ -89,6 +96,10 @@ public class ExportJSON {
     }
   }
 
+  /**
+   * iterates through game board to create export objects for
+   * pieces (and their starting positions), and tiles
+   */
   private void createPiecesAndTilesExportObjects(){
     pieces = new ArrayList<>();
     tiles = new ArrayList<>();
@@ -106,7 +117,7 @@ public class ExportJSON {
             seenPieceID.add(curEditorPiece.getPieceID());
           }
         }
-        if(tile.getTileEffect() != TileEffect.NONE || tile.getImg() != null){
+        if(tile.getTileEffect() != TileEffect.NONE){
           TileExport tileExport = new TileExport(y, x, tile.getImg());
           if(tile.getTileEffect() != TileEffect.NONE){
             tileExport.addTileAction(tile.getTileEffect().toString());
@@ -117,6 +128,12 @@ public class ExportJSON {
     }
   }
 
+  /**
+   * creates list of basic movement export objects for each piece
+   * @param movementGrid current piece's movement grid
+   * @param pieceName used for naming the export file
+   * @param teamNum determines which team (black or white) current movement grid is for
+   */
   private void createBasicMovement(MovementGrid movementGrid, String pieceName, int teamNum){
     BasicMovementExportWrapper movementWrapper = new BasicMovementExportWrapper();
     for(int y = 0; y < MovementGrid.PIECE_GRID_SIZE; y++){
@@ -133,6 +150,12 @@ public class ExportJSON {
     exportBasicMovement(movementWrapper, pieceName, teamNum);
   }
 
+  /**
+   * Writes basic movements file to doc/GameEngineResources
+   * @param basicMovements list of basic movements for current piece
+   * @param pieceName used for naming the export file
+   * @param teamNum determines which team (black or white) current movement grid is for
+   */
   private void exportBasicMovement(BasicMovementExportWrapper basicMovements, String pieceName, int teamNum){
     String team = teamNum == 0 ? "w" : "b";
     ObjectMapper objectMapper = new ObjectMapper();
