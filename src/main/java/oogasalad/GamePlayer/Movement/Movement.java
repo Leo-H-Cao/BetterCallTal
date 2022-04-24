@@ -286,8 +286,8 @@ public class Movement implements MovementInterface{
    * @param movements to invert
    * @return inverted movements
    */
-  public static List<MovementInterface> invertMovements(List<MovementInterface> movements) {
-    List<MovementInterface> inverted = new ArrayList<>();
+  public static Set<MovementInterface> invertMovements(Set<MovementInterface> movements) {
+    Set<MovementInterface> inverted = new HashSet<>();
     movements.forEach(mi -> {
       if(mi.getClass().equals(Movement.class)) {
         Movement movement = (Movement) mi;
