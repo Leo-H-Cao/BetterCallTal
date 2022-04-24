@@ -9,6 +9,13 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 @Deprecated
 public class Fire implements TileAction {
 
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public Fire(){
+    super();
+  }
+
   public Set<ChessTile> executeAction(ChessTile tile, ChessBoard board) {
     Set<Piece> pieceList = tile.getPieces().stream()
         .filter(Piece::isTargetPiece)

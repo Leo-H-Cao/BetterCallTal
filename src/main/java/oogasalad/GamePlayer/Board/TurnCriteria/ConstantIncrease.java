@@ -14,6 +14,13 @@ public class ConstantIncrease extends TurnCriteria {
   private int numMovesTotal;
   private int numMovesPlayed;
 
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public ConstantIncrease(){
+    super();
+  }
+
   /***
    * Creates TurnCriteria where each player gets one more move than the last
    * @param players array to get turns for
