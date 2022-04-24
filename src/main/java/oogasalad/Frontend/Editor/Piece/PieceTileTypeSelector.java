@@ -1,6 +1,5 @@
 package oogasalad.Frontend.Editor.Piece;
 
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
@@ -20,7 +19,7 @@ import java.util.ResourceBundle;
 
 public class PieceTileTypeSelector extends LabelledContainer {
 
-	private String myId;
+	private final String myId;
 
 	public PieceTileTypeSelector(String id) {
 		super(BackendConnector.getFrontendWord("TileType", EditorView.class));

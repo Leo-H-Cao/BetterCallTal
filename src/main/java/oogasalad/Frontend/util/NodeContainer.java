@@ -4,9 +4,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.stage.Screen;
-import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Frontend.Editor.Board.PieceLibrary;
-import oogasalad.Frontend.ViewManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.util.MissingResourceException;
@@ -20,7 +18,7 @@ public abstract class NodeContainer extends BackendConnector {
 	protected static final Logger LOG = LogManager.getLogger(PieceLibrary.class);
 	protected Rectangle2D myScreenSize;
 	protected Optional<ResourceBundle> myResources;
-	private Node myNode;
+	protected Node myNode;
 
 	public NodeContainer() {
 		myScreenSize = Screen.getPrimary().getVisualBounds();

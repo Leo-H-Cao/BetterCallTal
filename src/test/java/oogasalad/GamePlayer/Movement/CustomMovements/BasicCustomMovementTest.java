@@ -1,6 +1,7 @@
 package oogasalad.GamePlayer.Movement.CustomMovements;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -293,5 +294,26 @@ class BasicCustomMovementTest {
       e.printStackTrace();
       fail();
     }
+  }
+
+  @Test
+  void castlingEqualsTest() {
+    assertEquals(new Castling(), new Castling());
+    assertNotEquals(new Castling(), null);
+  }
+
+  @Test
+  void enPassantEqualsTest() {
+    EnPassant test = new EnPassant();
+    assertEquals(test, test);
+    assertNotEquals(new EnPassant(), null);
+    assertEquals(new EnPassant("bad file"), new EnPassant());
+    assertNotEquals(new EnPassant("EnPassantRowValTest"), new EnPassant());
+  }
+
+  @Test
+  void doubleFirstMoveEqualsTest() {
+    assertEquals(new DoubleFirstMove(), new DoubleFirstMove());
+    assertNotEquals(new DoubleFirstMove(), null);
   }
 }
