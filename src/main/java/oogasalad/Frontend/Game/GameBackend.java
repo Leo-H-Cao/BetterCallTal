@@ -48,11 +48,20 @@ public class GameBackend {
     }
   }
 
+  /**
+   * Getter for chessboard, needed primarily by BoardGrid / GameView classes.
+   * @return the game chessboard / engine
+   */
   public ChessBoard getChessBoard() {
     return myChessBoard;
   }
 
-  protected void showError(String classname, String errorMessage) {
+  /**
+   * Method to be called to create an error pop up.
+   * @param classname the name of the class of the specific error being caught.
+   * @param errorMessage the message of the error.
+   */
+  public void showError(String classname, String errorMessage) {
     String message = classname + ERRORMESSAGESPACING + errorMessage;
     ErrorPopUp oops = new ErrorPopUp(message);
   }

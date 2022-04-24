@@ -15,6 +15,7 @@ import oogasalad.GamePlayer.Movement.Coordinate;
 
 import java.io.FileInputStream;
 import java.util.ArrayList;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -44,11 +45,13 @@ public class BoardTile {
     private Color WhiteSquare = Color.GRAY;
     private Color myColor;
     private String LitColor = "Cyan";
+    private BiConsumer<String, String> ErrorRunnable;
 
-    public BoardTile(ChessTile ct, double width, double height, Consumer<Piece> lightupCons, Runnable clearlitrun, Consumer<Piece> setSelPiece, Consumer<Coordinate> MoveCons) {
+    public BoardTile(ChessTile ct, double width, double height, Consumer<Piece> lightupCons, Runnable clearlitrun, Consumer<Piece> setSelPiece, Consumer<Coordinate> MoveCons, BiConsumer<String, String> errorRun) {
         myCoord = ct.getCoordinates();
         myStackPane = new StackPane();
         addActionToSP(lightupCons, clearlitrun, setSelPiece, MoveCons);
+        ErrorRunnable = errorRun;
         myTileHeight = height;
         myTileWidth = width;
         myRectangle = new Rectangle(myTileWidth, myTileHeight);
@@ -131,7 +134,7 @@ public class BoardTile {
             PieceView.setCache(true);
             return PieceView;
         } catch (Exception e) {
-            e.printStackTrace();
+            ErrorRunnable.accept(e.getClass().getSimpleName(), e.getMessage());
         }
         return null;
     }
