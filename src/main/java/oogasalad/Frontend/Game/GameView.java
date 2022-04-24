@@ -41,6 +41,9 @@ import org.apache.logging.log4j.Logger;
 public class GameView extends View {
 
     private static final Logger LOG = LogManager.getLogger(GameView.class);
+    public static final String SERVER = "server";
+    public static final String MULTIPLAYER = "multiplayer";
+    public static final String SINGLEPLAYER = "singleplayer";
 
     private BoardGrid myBoardGrid;
     private static Integer myID;
@@ -75,20 +78,26 @@ public class GameView extends View {
      * setting up the board.
      */
 
-    public void SetUpBoard(ChessBoard chessboard, int id, boolean singleplayer) {
+    public void SetUpBoard(ChessBoard chessboard, int id, String mode) {
         myID = id;
         makeConsandRuns();
         myBoardGrid = new BoardGrid(chessboard, id, lightUpCons, MoveCons, errorRun); //TODO: Figure out player ID stuff
         //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
         remotePlayers = new ArrayList<>();
-        if (singleplayer) {
-            turnKeeper = new TurnKeeper(new String[]{"human", AI});
-            remotePlayers.add(new Bot(turnKeeper));
-        } else {
-            turnKeeper = new TurnKeeper(new String[]{"human", "human"});
+
+        switch (mode) {
+            case SERVER:
+                //TODO
+                break;
+            case SINGLEPLAYER:
+                turnKeeper = new TurnKeeper(new String[]{"human", AI});
+                remotePlayers.add(new Bot(turnKeeper));
+                break;
+            case MULTIPLAYER:
+                turnKeeper = new TurnKeeper(new String[]{"human", "human"});
+                break;
         }
-        makeKeyListener();
     }
 
 
@@ -102,6 +111,7 @@ public class GameView extends View {
     }
 
     private void makeMove(Coordinate c) {
+        makeKeyListener();
         LOG.debug("makeMove in GameView reached\n");
         try {
             Collection<TurnUpdate> updates = new ArrayList<>();
@@ -151,6 +161,7 @@ public class GameView extends View {
     private boolean updateBoard(TurnUpdate tu) {
         LOG.debug("Updating board");
         myBoardGrid.updateTiles(tu.updatedSquares());
+        myBoardHistory.add(getGameBackend().getChessBoard());
         if (getGameBackend().getChessBoard().isGameOver()) {
            gameOver();
            return false;
@@ -218,9 +229,10 @@ public class GameView extends View {
 
     private void makeKeyListener() {
         myScene.setOnKeyPressed(e -> {
+            System.out.println(e.getCode());
             switch (e.getCode()) {
-                case LEFT -> onLeftKey();
-                case RIGHT -> onRightKey();
+                case A -> onLeftKey();
+                case B -> onRightKey();
             }
         });
     }
