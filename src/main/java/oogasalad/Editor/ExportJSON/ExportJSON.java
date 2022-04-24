@@ -9,9 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
 import oogasalad.Editor.ModelState.BoardState.EditorTile;
 import oogasalad.Editor.ModelState.BoardState.TileEffect;
@@ -53,27 +50,25 @@ public class ExportJSON {
     exportWrapper = new ExportWrapper(generalExport, playerInfo, piecesMain, tiles);
   }
 
-  public void writeToJSON(){
+  public void writeToJSON(File parentDir){
     ObjectMapper objectMapper = new ObjectMapper();
     try{
 
-      DirectoryChooser chooser = new DirectoryChooser();
-      chooser.setTitle("Choose Export Location");
-
-      File parentDir = chooser.showDialog(new Stage());
-      if(parentDir != null) {
-        if (!parentDir.exists()){
-          boolean result = parentDir.mkdirs();
-          if (!result) return;
-        }
+//      File parentDir = chooser.showDialog(new Stage());
+//      if(parentDir != null) {
+//        if (!parentDir.exists()){
+//          boolean result = parentDir.mkdirs();
+//          if (!result) return;
+//        }
 
         for(PieceExport piece : pieces){
           objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/GameEngineResources/Pieces/"+piece.getPieceName()+".json"), piece);
         }
-        MainJSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(exportWrapper);
+        MainJSONString = objectMapper.writeValueAsString(exportWrapper);
+        System.out.println(MainJSONString);
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(parentDir.getAbsolutePath()+"/mainFile.json"), exportWrapper);
 
-      }
+//      }
       } catch (IOException e) {
       LOG.warn(OBJECT_MAPPER_ERR_MSG);
       throw new RuntimeException(e);

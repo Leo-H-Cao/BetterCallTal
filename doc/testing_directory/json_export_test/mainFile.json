@@ -3,9 +3,9 @@
     "rows" : 8,
     "columns" : 8,
     "turnCriteria" : "Linear",
-    "colors" : [ "white", "black" ],
-    "endConditions" : [ [ "Checkmate" ], [ "Stalemate" ] ],
-    "validStateChecker" : [ [ "Check" ] ]
+    "colors" : [ "color1", "color2" ],
+    "endConditions" : [ [ "Stalemate" ], [ "Another End Condition" ] ],
+    "validStateChecker" : [ [ "ValidStateChecker" ] ]
   },
   "playerInfo" : [ {
     "team" : 0,
@@ -15,25 +15,5 @@
     "opponents" : [ 0 ]
   } ],
   "pieces" : [ ],
-  "tiles" : [ {
-    "row" : 2,
-    "col" : 1,
-    "tileActions" : [ "Fire" ],
-    "img" : null
-  }, {
-    "row" : 4,
-    "col" : 3,
-    "tileActions" : [ ],
-    "img" : "images/pieces/black/rook.png"
-  }, {
-    "row" : 5,
-    "col" : 6,
-    "tileActions" : [ "Swap" ],
-    "img" : null
-  }, {
-    "row" : 6,
-    "col" : 2,
-    "tileActions" : [ "BlackHoleAction" ],
-    "img" : null
-  } ]
+  "tiles" : [ ]
 }

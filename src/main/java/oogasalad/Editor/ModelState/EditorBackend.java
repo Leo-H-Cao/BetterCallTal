@@ -1,5 +1,6 @@
 package oogasalad.Editor.ModelState;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.beans.property.*;
@@ -76,7 +77,8 @@ public class EditorBackend {
 
 	public void exportState() {
 		ExportJSON exporter = new ExportJSON(piecesState, gameRulesState, boardState);
-		exporter.writeToJSON();
+		File parentDir = new File("doc/testing_directory/json_export_test");
+		exporter.writeToJSON(parentDir);
 	}
 
 	private void createDefaultPieces() {

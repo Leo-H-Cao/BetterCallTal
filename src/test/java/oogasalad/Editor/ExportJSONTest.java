@@ -3,6 +3,7 @@ package oogasalad.Editor;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
@@ -84,16 +85,15 @@ public class ExportJSONTest extends DukeApplicationTest {
     piecesState.changePieceImage("1234", new Image("images/pieces/black/rook.png"), 1);
     EditorPiece testPiece2 = piecesState.getPiece("1234");
     testPiece2.setPieceName("piece2");
-
     testPiece2.setTile(4, 2, PieceGridTile.OPEN, 0);
     testPiece2.setTile(6, 0, PieceGridTile.INFINITY, 0);
     testPiece2.setTile(5,1, PieceGridTile.OPEN, 0);
-
     boardState.setPieceStartingLocation("1234", 4, 5, 1);
 
     exportJSON = new ExportJSON(piecesState, gameRulesState, boardState);
-    exportJSON.writeToJSON();
-//    assertEquals(myResources.getString("exportPiecesJSONString"), ReflectionTestUtils.getField(exportJSON, "MainJSONString"));
+    File parentDir = new File("doc/testing_directory/json_export_test");
+    exportJSON.writeToJSON(parentDir);
+    assertEquals(myResources.getString("exportPiecesJSONString"), ReflectionTestUtils.getField(exportJSON, "MainJSONString"));
   }
 
   @Test
@@ -102,9 +102,11 @@ public class ExportJSONTest extends DukeApplicationTest {
     boardState.setTileEffect(6,5, TileEffect.SWAP);
     boardState.setTileEffect(2,6, TileEffect.BLACKHOLE);
     boardState.setTileImage(3,4, new Image("images/pieces/black/rook.png"));
+
     exportJSON = new ExportJSON(piecesState, gameRulesState, boardState);
-    exportJSON.writeToJSON();
-//    assertEquals(myResources.getString("exportTilesJSONString"), ReflectionTestUtils.getField(exportJSON, "MainJSONString"));
+    File parentDir = new File("doc/testing_directory/json_export_test");
+    exportJSON.writeToJSON(parentDir);
+    assertEquals(myResources.getString("exportTilesJSONString"), ReflectionTestUtils.getField(exportJSON, "MainJSONString"));
   }
 
   @Test
@@ -136,12 +138,14 @@ public class ExportJSONTest extends DukeApplicationTest {
 
     ArrayList<ArrayList<String>> validStateCheckers = new ArrayList<>();
     ArrayList<String> defaultValidStateCheckers = new ArrayList<>();
-    defaultValidStateCheckers.add("ValidStatechecker");
+    defaultValidStateCheckers.add("ValidStateChecker");
     validStateCheckers.add(defaultValidStateCheckers);
     gameRulesState.setValidStateCheckers(validStateCheckers);
+
     exportJSON = new ExportJSON(piecesState, gameRulesState, boardState);
-    exportJSON.writeToJSON();
-//    assertEquals(myResources.getString("exportRulesStateJSONString"), ReflectionTestUtils.getField(exportJSON, "MainJSONString"));
+    File parentDir = new File("doc/testing_directory/json_export_test");
+    exportJSON.writeToJSON(parentDir);
+    assertEquals(myResources.getString("exportRulesStateJSONString"), ReflectionTestUtils.getField(exportJSON, "MainJSONString"));
   }
 
   private void setResources() {
