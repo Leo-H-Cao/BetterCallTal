@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -166,5 +167,28 @@ public class BankLeaver implements MovementInterface {
   @Override
   public List<Coordinate> getRelativeCoords() {
     return Collections.emptyList();
+  }
+
+  /***
+   * @return equals if block cols are the same
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    BankLeaver that = (BankLeaver) o;
+    return blockCol == that.blockCol;
+  }
+
+  /***
+   * @return hash of this object
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(blockCol, configFile);
   }
 }

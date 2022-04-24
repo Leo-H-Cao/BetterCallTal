@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.Stack;
@@ -303,5 +304,29 @@ public class Movement implements MovementInterface{
       }
     });
     return inverted;
+  }
+
+  /***
+   * @return equal if both movements have the same possible moves and infinite is the same
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Movement movement = (Movement) o;
+    return infinite == movement.infinite && Objects.equals(possibleMoves,
+        movement.possibleMoves);
+  }
+
+  /***
+   * @return hash of this object
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(possibleMoves, infinite);
   }
 }
