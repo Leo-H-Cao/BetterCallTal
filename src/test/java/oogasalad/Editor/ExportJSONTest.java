@@ -3,6 +3,8 @@ package oogasalad.Editor;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -20,6 +22,7 @@ import oogasalad.Editor.ModelState.RulesState.GameRulesState;
 import oogasalad.Frontend.Menu.LanguageModal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.util.ReflectionTestUtils;
 import util.DukeApplicationTest;
 
 public class ExportJSONTest extends DukeApplicationTest {
@@ -53,7 +56,6 @@ public class ExportJSONTest extends DukeApplicationTest {
    piecesState = boardAndPieces.getPiecesState();
    boardState = boardAndPieces.getBoardState();
    gameRulesState = new GameRulesState();
-//   exportJSON = new ExportJSON(piecesState, gameRulesState, boardState);
   }
 
   @Test
@@ -78,8 +80,6 @@ public class ExportJSONTest extends DukeApplicationTest {
     boardState.setPieceStartingLocation("123", 3, 6, 1);
     boardState.setPieceStartingLocation("123", 4, 5, 0);
 
-
-
     piecesState.createCustomPiece("1234");
     piecesState.changePieceImage("1234", new Image("images/pieces/black/rook.png"), 1);
     EditorPiece testPiece2 = piecesState.getPiece("1234");
@@ -91,14 +91,9 @@ public class ExportJSONTest extends DukeApplicationTest {
 
     boardState.setPieceStartingLocation("1234", 4, 5, 1);
 
-//    boardState.setTileEffect(1,2,TileEffect.FIRE);
-//    boardState.setTileEffect(6,5, TileEffect.SWAP);
-//    boardState.setTileEffect(2,6, TileEffect.BLACKHOLE);
-//    boardState.setTileImage(3,4, new Image("images/pieces/black/rook.png"));
-
     exportJSON = new ExportJSON(piecesState, gameRulesState, boardState);
     exportJSON.writeToJSON();
-//    assertEquals(exportJSON.getJSONTestString(), myResources.getString("exportPiecesJSONString"));
+//    assertEquals(myResources.getString("exportPiecesJSONString"), ReflectionTestUtils.getField(exportJSON, "MainJSONString"));
   }
 
   @Test
@@ -109,6 +104,44 @@ public class ExportJSONTest extends DukeApplicationTest {
     boardState.setTileImage(3,4, new Image("images/pieces/black/rook.png"));
     exportJSON = new ExportJSON(piecesState, gameRulesState, boardState);
     exportJSON.writeToJSON();
+//    assertEquals(myResources.getString("exportTilesJSONString"), ReflectionTestUtils.getField(exportJSON, "MainJSONString"));
+  }
+
+  @Test
+  void testGameRulesExport(){
+    gameRulesState.setTurnCriteria("Linear");
+
+    ArrayList<ArrayList<String>> winConditions = new ArrayList<>();
+    ArrayList<String> winConditionsDefaultStalemate = new ArrayList<>();
+    ArrayList<String> secondWinCondition = new ArrayList<>();
+    winConditionsDefaultStalemate.add("Stalemate");
+    secondWinCondition.add("Another End Condition");
+    winConditions.add(winConditionsDefaultStalemate);
+    winConditions.add(secondWinCondition);
+    gameRulesState.setWinConditions(winConditions);
+
+    ArrayList<String> colors = new ArrayList<>();
+    colors.add("color1");
+    colors.add("color2");
+    gameRulesState.setColors(colors);
+
+    HashMap<Integer, ArrayList<Integer>> teamOpponents = new HashMap<>();
+    int team0 = 0;
+    int team1 = 1;
+    teamOpponents.put(team0, new ArrayList<>());
+    teamOpponents.put(team1, new ArrayList<>());
+    teamOpponents.get(team0).add(team1);
+    teamOpponents.get(team1).add(team0);
+    gameRulesState.setTeamOpponents(teamOpponents);
+
+    ArrayList<ArrayList<String>> validStateCheckers = new ArrayList<>();
+    ArrayList<String> defaultValidStateCheckers = new ArrayList<>();
+    defaultValidStateCheckers.add("ValidStatechecker");
+    validStateCheckers.add(defaultValidStateCheckers);
+    gameRulesState.setValidStateCheckers(validStateCheckers);
+    exportJSON = new ExportJSON(piecesState, gameRulesState, boardState);
+    exportJSON.writeToJSON();
+//    assertEquals(myResources.getString("exportRulesStateJSONString"), ReflectionTestUtils.getField(exportJSON, "MainJSONString"));
   }
 
   private void setResources() {

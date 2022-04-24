@@ -31,8 +31,7 @@ public class ExportJSON {
   private PiecesState piecesState;
   private GameRulesState gameRulesState;
   private BoardState boardState;
-  private String JSONString;
-  private String JSONTestString;
+  private String MainJSONString;
   private GeneralExport generalExport;
   private ArrayList<PlayerInfoExport> playerInfo;
   private ExportWrapper exportWrapper;
@@ -47,7 +46,7 @@ public class ExportJSON {
     this.piecesState = piecesState;
     this.gameRulesState = gameRulesState;
     this.boardState = boardState;
-    JSONString = "";
+    MainJSONString = "";
     createGeneralExportObject();
     createPlayerInfoObject();
     createPiecesAndTilesExportObjects();
@@ -71,6 +70,7 @@ public class ExportJSON {
         for(PieceExport piece : pieces){
           objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/GameEngineResources/Pieces/"+piece.getPieceName()+".json"), piece);
         }
+        MainJSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(exportWrapper);
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(parentDir.getAbsolutePath()+"/mainFile.json"), exportWrapper);
 
       }
@@ -78,10 +78,6 @@ public class ExportJSON {
       LOG.warn(OBJECT_MAPPER_ERR_MSG);
       throw new RuntimeException(e);
     }
-  }
-
-  public String getJSONTestString(){
-    return JSONTestString;
   }
 
   private void createGeneralExportObject(){
