@@ -86,8 +86,8 @@ public class ExportJSON {
    * ready to be serialized into JSON
    */
   private void createGeneralExportObject(){
-    generalExport = new GeneralExport(boardState.getBoardHeight().get(),
-        boardState.getBoardWidth().get());
+    generalExport = new GeneralExport(boardState.getHeight().get(),
+        boardState.getWidth().get());
     generalExport.setTurnCriteria(gameRulesState.getTurnCriteria());
     generalExport.setEndConditions(gameRulesState.getWinConditions());
     generalExport.setColors(gameRulesState.getColors());
@@ -113,8 +113,8 @@ public class ExportJSON {
     pieces = new ArrayList<>();
     tiles = new ArrayList<>();
     piecesMain = new ArrayList<>();
-    for(int y = 0; y < boardState.getBoardHeight().get(); y++){
-      for(int x = 0; x < boardState.getBoardWidth().get(); x++){
+    for(int y = 0; y < boardState.getHeight().get(); y++){
+      for(int x = 0; x < boardState.getWidth().get(); x++){
         EditorTile tile = boardState.getTile(x, y);
         if(tile.hasPiece()){
           EditorPiece curEditorPiece = piecesState.getPiece(tile.getPieceID());
