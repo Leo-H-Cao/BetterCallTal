@@ -143,21 +143,6 @@ public class Movement implements MovementInterface{
     return allMoves;
   }
 
-  public Map<String, Set<ChessTile>> getLegalMoves(Piece piece, ChessBoard board)
-      throws Throwable {
-    Map<String, Set<ChessTile>> allMoves = getAllMoves(piece, board);
-    for(String moveType : allMoves.keySet()){
-      for(ChessTile move : allMoves.get(moveType)){
-        ChessBoard deepCopy = board.deepCopy();
-        deepCopy.move(piece, move.getCoordinates());
-        if(new Check().isValid(board, piece.getTeam())){
-          allMoves.get(moveType).remove(move);
-        }
-      }
-    }
-    return null;
-  }
-
   /***
    * Returns all possible captures a piece can make
    *
