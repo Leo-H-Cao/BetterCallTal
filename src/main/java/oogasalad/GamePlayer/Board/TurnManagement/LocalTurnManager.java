@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.function.Consumer;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
@@ -128,6 +129,16 @@ public class LocalTurnManager implements TurnManager {
   @Override
   public String getLink() {
     return "";
+  }
+
+  /**
+   * Sets a callback to handle any sort of error that occurs during the game.
+   *
+   * @param errorHandler the error handler to set
+   */
+  @Override
+  public void setErrorHandler(Consumer<Throwable> errorHandler) {
+    // Do nothing
   }
 
 }

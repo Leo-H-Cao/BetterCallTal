@@ -3,6 +3,7 @@ package oogasalad.Frontend.Game;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
@@ -95,5 +96,15 @@ public class TurnKeeper implements TurnManager {
   @Override
   public String getLink() {
     return null;
+  }
+
+  /**
+   * Sets a callback to handle any sort of error that occurs during the game.
+   *
+   * @param errorHandler the error handler to set
+   */
+  @Override
+  public void setErrorHandler(Consumer<Throwable> errorHandler) {
+
   }
 }

@@ -2,6 +2,7 @@ package oogasalad.GamePlayer.Board.TurnManagement;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.function.Consumer;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
@@ -71,4 +72,11 @@ public interface TurnManager {
    * @return the turn manager API link for the current turn manager data.
    */
   String getLink();
+
+  /**
+   * Sets a callback to handle any sort of error that occurs during the game.
+   *
+   * @param errorHandler the error handler to set
+   */
+  void setErrorHandler(Consumer<Throwable> errorHandler);
 }
