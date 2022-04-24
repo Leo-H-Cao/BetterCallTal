@@ -68,8 +68,6 @@ public class ExportJSON {
           if (!result) return;
         }
 
-
-
         for(PieceExport piece : pieces){
           objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/GameEngineResources/Pieces/"+piece.getPieceName()+".json"), piece);
         }
@@ -115,8 +113,8 @@ public class ExportJSON {
           piecesMain.add(new PieceMainExport(y,x, tile.getTeam(),piecesState.getPiece(tile.getPieceID())));
           if(!seenPieceID.contains(curEditorPiece.getPieceID())){
             pieces.add(new PieceExport(curEditorPiece, tile.getTeam()));
-            //only get team 0 movement grid for now
-            createBasicMovement(curEditorPiece.getMovementGrid(0), curEditorPiece.getPieceName().getValue());
+            createBasicMovement(curEditorPiece.getMovementGrid(0), curEditorPiece.getPieceName().getValue(), 0);
+            createBasicMovement(curEditorPiece.getMovementGrid(1), curEditorPiece.getPieceName().getValue(), 1);
             seenPieceID.add(curEditorPiece.getPieceID());
           }
         }
@@ -131,7 +129,7 @@ public class ExportJSON {
     }
   }
 
-  private void createBasicMovement(MovementGrid movementGrid, String pieceName){
+  private void createBasicMovement(MovementGrid movementGrid, String pieceName, int teamNum){
     BasicMovementExportWrapper movementWrapper = new BasicMovementExportWrapper();
     for(int y = 0; y < MovementGrid.PIECE_GRID_SIZE; y++){
       for(int x = 0; x < MovementGrid.PIECE_GRID_SIZE; x++){
@@ -144,17 +142,18 @@ public class ExportJSON {
         }
       }
     }
-    exportBasicMovement(movementWrapper, pieceName);
+    exportBasicMovement(movementWrapper, pieceName, teamNum);
   }
 
-  private void exportBasicMovement(BasicMovementExportWrapper basicMovements, String pieceName){
+  private void exportBasicMovement(BasicMovementExportWrapper basicMovements, String pieceName, int teamNum){
+    String team = teamNum == 0 ? "w" : "b";
     ObjectMapper objectMapper = new ObjectMapper();
     try{
       File movementDir = new File("doc/GameEngineResources/BasicMovements");
       if (!movementDir.exists()){
         movementDir.mkdirs();
       }
-      objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(movementDir.getAbsolutePath()+"/"+pieceName+"Movement.json"), basicMovements);
+      objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(movementDir.getAbsolutePath()+"/"+team+pieceName+"Movement.json"), basicMovements);
     }
     catch (IOException e){
       LOG.warn(OBJECT_MAPPER_ERR_MSG);
