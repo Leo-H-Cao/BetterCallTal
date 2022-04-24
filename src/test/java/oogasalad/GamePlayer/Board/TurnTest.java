@@ -61,7 +61,7 @@ class TurnTest {
 
   @Test
   void testLinear() {
-    turnCriteria = new Linear(gamePlayers.getPlayersArr());
+    turnCriteria = new Linear(gamePlayers.getPlayersArr()).copy();
     setBoard();
 
     try {
@@ -92,7 +92,7 @@ class TurnTest {
 
   @Test
   void testLinearExceptions() {
-    turnCriteria = new Linear(gamePlayers.getPlayersArr());
+    turnCriteria = new Linear(gamePlayers.getPlayersArr()).copy();
     setBoard();
     assertThrows(WrongPlayerException.class, () -> board.move(pieceTwo, new Coordinate(0, 1)));
     try {

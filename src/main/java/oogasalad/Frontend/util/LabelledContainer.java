@@ -21,7 +21,7 @@ public abstract class LabelledContainer extends NodeContainer {
 
 	@Override
 	protected Node makeNode() {
-		return new Group(makeLayout());
+		return makeLayout();
 	}
 
 	private Node makeLayout() {
@@ -33,7 +33,7 @@ public abstract class LabelledContainer extends NodeContainer {
 		scrollPane.setContent(ret);
 		scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 		scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-		scrollPane.setPrefViewportWidth(500);
+		scrollPane.setMinViewportWidth(300);
 		return scrollPane;
 	}
 

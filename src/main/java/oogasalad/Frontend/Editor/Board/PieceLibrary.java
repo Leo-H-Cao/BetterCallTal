@@ -1,10 +1,11 @@
 package oogasalad.Frontend.Editor.Board;
 
-import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.control.CheckBox;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
@@ -22,6 +23,7 @@ public class PieceLibrary extends LabelledContainer {
 
 	@Override
 	protected Node fillContent() {
+		GridPane ret = new GridPane();
 		Collection<Node> listOfNodes = new ArrayList();
 		getEditorBackend().getPiecesState().getAllPieces().getValue().forEach((piece) -> listOfNodes.add(createPiece(piece.getPieceID())));
 		FlowPane fp = new FlowPane();
@@ -34,7 +36,20 @@ public class PieceLibrary extends LabelledContainer {
 			nv.forEach((piece) -> listOfNodes.add(createPiece(piece.getPieceID())));
 			fp.getChildren().addAll(listOfNodes);
 		});
-		return fp;
+
+		CheckBox placeAlternateColor = new CheckBox("Place alternate color");
+		placeAlternateColor.selectedProperty().addListener((ob, ov, nv) -> {
+			if(nv) {
+				getEditorBackend().setAlternatePiece(1);
+			} else {
+				getEditorBackend().setAlternatePiece(0);
+			}
+		});
+
+		ret.add(placeAlternateColor, 0, 0);
+		ret.add(fp, 0, 1);
+
+		return ret;
 	}
 
 	private Node createPiece(String id) {

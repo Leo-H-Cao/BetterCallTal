@@ -2,6 +2,11 @@ package oogasalad.Editor.ExportJSON;
 
 import java.util.ArrayList;
 
+/**
+ * Wrapper of all the game configurations that go into the main export file,
+ * to fit formatting needed by game engine once serialized to JSON by Jackson library
+ * @author Leo Cao
+ */
 public class ExportWrapper {
 
   private GeneralExport general;

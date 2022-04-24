@@ -1,5 +1,6 @@
 package oogasalad.GamePlayer.GamePiece;
 
+@Deprecated
 public class PieceHealth {
 
   private static final int DEFAULT_HEALTH = 5;
