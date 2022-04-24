@@ -49,12 +49,14 @@ class BoardStateTest extends DukeApplicationTest {
     assertEquals(boardState.getBoardWidth().getValue(), 8);
     int newHeight = 5;
     int newWidth = 10;
-    boardState.changeBoardSize(newWidth,newHeight);
+    boardState.setBoardWidth(newWidth);
+    boardState.setBoardHeight(newHeight);
     assertEquals(newHeight, boardState.getBoardHeight().getValue());
     assertEquals(newWidth, boardState.getBoardWidth().getValue());
     newHeight = 12;
     newWidth = 3;
-    boardState.changeBoardSize(newWidth, newHeight);
+    boardState.setBoardWidth(newWidth);
+    boardState.setBoardHeight(newHeight);
     assertEquals(newHeight, boardState.getBoardHeight().getValue());
     assertEquals(newWidth, boardState.getBoardWidth().getValue());
   }

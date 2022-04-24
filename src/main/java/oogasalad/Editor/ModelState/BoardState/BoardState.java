@@ -12,8 +12,12 @@ public class BoardState {
     myEditorBoard = new EditorBoard();
   }
 
-  public void changeBoardSize(int width, int height) {
-    myEditorBoard.changeBoardSize(width, height);
+  public void setBoardWidth(int newValue) {
+    myEditorBoard.changeWidth(newValue);
+  }
+
+  public void setBoardHeight(int newValue) {
+    myEditorBoard.changeHeight(newValue);
   }
 
   public void setTileEffect(int x, int y, TileEffect effect) {
