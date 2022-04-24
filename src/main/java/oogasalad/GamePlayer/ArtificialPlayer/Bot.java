@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import oogasalad.Frontend.LocalPlay.RemotePlayer.RemotePlayer;
-import oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.Checkmate;
+import oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.CheckmateLoss;
 import oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.PieceValue;
 import oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.Utility;
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -13,7 +13,6 @@ import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
-import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
 public class Bot implements RemotePlayer {
@@ -34,7 +33,7 @@ public class Bot implements RemotePlayer {
   public Bot(TurnManager turnManager) {
     this.turnManager = turnManager;
     objectives = new ArrayList<>();
-    //objectives.add(new Checkmate());
+    objectives.add(new CheckmateLoss());
     objectives.add(new PieceValue());
   }
 
