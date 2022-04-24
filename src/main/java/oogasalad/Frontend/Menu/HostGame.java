@@ -39,10 +39,7 @@ public class HostGame extends View {
     private static final String BLACK = "Black";
     private static final String ROOM = "Room";
     private Map<String, Integer> piececolors;
-    private Integer DEFAULT_COLOR = 1;
-    private Integer myTeam;
     private static final String COLORPROMPT = "COLORPROMPT";
-    private static final String SELECTEDCOLOR = "SELECTEDCOLOR";
     private static final Double VBOXSPACING = 5.0;
     private ChoiceBox<String> colorchoice;
     private TextArea RoomName;
@@ -50,6 +47,7 @@ public class HostGame extends View {
     private static final Double TEXTAREAHEIGHT = 20.0;
     private String RoomID;
     private Boolean StartShowing;
+    private Node prompt; // MADE GLOBAL FOR TESTING!!!
 
 
     public HostGame(Stage stage) {
@@ -67,7 +65,7 @@ public class HostGame extends View {
         myStackPane.setPrefSize(myScreenSize.getWidth(), myScreenSize.getHeight());
         Node exit = makeExitGroup();
         Node title = makeLabelGroup(BackendConnector.getFrontendWord(TITLE, getClass()), TITLE_SIZE);
-        Node prompt = makeLabelGroup(BackendConnector.getFrontendWord(PROMPT, getClass()), PROMPT_SIZE);
+        prompt = makeLabelGroup(BackendConnector.getFrontendWord(PROMPT, getClass()), PROMPT_SIZE);
         Node load = makeFileUploadGroup(prompt);
 
         StackPane.setAlignment(exit, Pos.TOP_LEFT);
@@ -105,6 +103,7 @@ public class HostGame extends View {
         hostID.setFont(new Font(50.0));
 
         RoomName = new TextArea();
+        RoomName.setId("RoomName"); //test
         vb.setAlignment(Pos.CENTER);
         RoomName.setPrefHeight(TEXTAREAHEIGHT);
         RoomName.setPrefWidth(TEXTAREAWIDTH);
@@ -132,8 +131,8 @@ public class HostGame extends View {
         Label prompt = new Label();
         prompt.setText(BackendConnector.getFrontendWord(COLORPROMPT, getClass()));
         prompt.setFont(new Font(50));
-        myTeam = DEFAULT_COLOR;
         colorchoice = new ChoiceBox<>();
+        colorchoice.setId("colorchoice"); // for testing
         String white = BackendConnector.getFrontendWord(WHITE, getClass());
         String black = BackendConnector.getFrontendWord(BLACK, getClass());
         colorchoice.getItems().addAll(white, black);
@@ -150,7 +149,7 @@ public class HostGame extends View {
                 (e) -> {
             Optional<ChessBoard> cbOp = getGameBackend().initalizeHostServerChessBoard(f, RoomID, piececolors.get(colorchoice.getValue()));
             if(cbOp.isPresent()) {
-                getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cbOp.get(), cbOp.get().getThisPlayer(), false));
+                getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cbOp.get(), false));
             } else {
                 View.LOG.debug("Invalid JSON");
             }
@@ -159,5 +158,18 @@ public class HostGame extends View {
         start.setPrefWidth(150);
         start.setPrefHeight(50);
         return new Group(start);
+    }
+    /**
+     * PURELY FOR TESTING.
+     * @param path filepath to example file for testing
+     */
+    public void injectBoard(String path) {
+        File f = new File(path);
+        myStackPane.getChildren().remove(prompt);
+        Node team = makeChooseTeamBox();
+        Node Room = makeRoomStringBox(f);
+        StackPane.setAlignment(team, Pos.CENTER);
+        StackPane.setAlignment(Room, Pos.CENTER_LEFT);
+        myStackPane.getChildren().addAll(team, Room);
     }
 }

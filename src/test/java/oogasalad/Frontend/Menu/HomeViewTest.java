@@ -26,8 +26,24 @@ public class HomeViewTest extends DukeApplicationTest {
     }
 
     @Test
-    void testOpenGameEditor() {
+    void testOpenEditorView() {
         clickOn(lookup("#start").query());
+        clickOn(lookup("#createButton").query());
+    }
 
+    @Test
+    void testOpenHostView() {
+        clickOn(lookup("#start").query());
+        clickOn(lookup("#hostButton").query());
+    }
+    @Test
+    void testOpenJoinView() {
+        clickOn(lookup("#start").query());
+        clickOn(lookup("#joinButton").query());
+    }
+    @Test
+    void testOpenLocalView() {
+        clickOn(lookup("#start").query());
+        clickOn(lookup("#localButton").query());
     }
 }

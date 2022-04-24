@@ -11,7 +11,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Editor.EditorView;
-import oogasalad.Frontend.LocalPlay.LocalGame;
+import oogasalad.Frontend.Menu.LocalPlay.LocalGame;
 import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
