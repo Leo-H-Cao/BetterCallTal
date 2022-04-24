@@ -19,6 +19,9 @@ import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Server.SessionManager;
 import oogasalad.Server.ServerApplication;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.internal.LogManagerStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,6 +32,7 @@ class HistoryManagerTest {
   private History board2;
   private History board3;
   private History board4;
+  private static final Logger LOG = LogManager.getLogger(HistoryManagerTest.class);
 
 
   private History generateHistory(int num) {
@@ -69,6 +73,7 @@ class HistoryManagerTest {
     try {
       sessionManager.createGameSession("test", 0,1,board0.board());
     } catch (Exception e) {
+      LOG.error(e);
       fail("Could not create session");
     }
     HistoryManager historyManager = new RemoteHistoryManager("test");

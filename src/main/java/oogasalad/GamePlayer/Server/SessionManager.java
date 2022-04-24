@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.http.HttpResponse;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
-import oogasalad.GamePlayer.EngineExceptions.ServerParsingException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,8 +17,8 @@ public class SessionManager {
   private static final String PAUSE = BASE_URL + "/pause/%s";
   private static final String RESUME = BASE_URL + "/resume/%s";
   private static final String END = BASE_URL + "/end/%s";
-  private final ObjectMapper mapperJSON = RequestBuilder.objectMapperWithPTV();
   private static final Logger LOG = LogManager.getLogger(SessionManager.class);
+  private final ObjectMapper mapperJSON = RequestBuilder.objectMapperWithPTV();
 
   /**
    * Creates a new game session with the given id.
@@ -28,17 +27,13 @@ public class SessionManager {
    * @param initialBoard the initial board of the game session
    */
   public void createGameSession(String id, int host, int opponent, ChessBoard initialBoard)
-      throws EngineException {
+      throws EngineException, JsonProcessingException {
     String uri = String.format(CREATE, id, host, opponent);
-    try {
-      String json = mapperJSON.writeValueAsString(initialBoard.getBoardData());
-      LOG.info(json);
-      HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.post(uri, json));
-      LOG.info(response.statusCode());
-      LOG.info(response.body());
-    } catch (JsonProcessingException e) {
-      throw new ServerParsingException();
-    }
+    String json = mapperJSON.writeValueAsString(initialBoard.getBoardData());
+    LOG.info(json);
+    HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.post(uri, json));
+    LOG.info(response.statusCode());
+    LOG.info(response.body());
   }
 
   /**
@@ -46,14 +41,11 @@ public class SessionManager {
    *
    * @param id the id of the game session
    */
-  public int joinGameSession(String id) throws EngineException {
+  public int joinGameSession(String id) throws EngineException, JsonProcessingException {
     String uri = String.format(JOIN, id);
-    try {
-      HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(uri));
-      return mapperJSON.readValue(response.body(), Integer.class);
-    } catch (JsonProcessingException e) {
-      throw new ServerParsingException();
-    }
+    HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(uri));
+    return mapperJSON.readValue(response.body(), Integer.class);
+
   }
 
   /**

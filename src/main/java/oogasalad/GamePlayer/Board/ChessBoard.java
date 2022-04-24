@@ -1,5 +1,6 @@
 package oogasalad.GamePlayer.Board;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -609,17 +610,39 @@ public class ChessBoard implements Iterable<ChessTile> {
   /**
    * This class is used to setup the chess board. It is used to create the chess board JSON object.
    *
-   * @param board              the list of tiles that make up the chess board
-   * @param players            the list of players in the game
-   * @param validStateCheckers the valid state checkers for the game
-   * @param turnManagerData    the turn manager data for the game
-   * @param history            the history manager data of the game
    * @author Ritvik Janamsetty
    */
-  public record ChessBoardData(List<List<ChessTile>> board, TurnManagerData turnManagerData,
-                               GamePlayers players,
-                               List<ValidStateChecker> validStateCheckers,
-                               HistoryManagerData history) {
+  public static final class ChessBoardData {
+
+    @JsonDeserialize(as = ArrayList.class, contentAs = ArrayList.class)
+    private final ChessTile[][] board;
+    private final TurnManagerData turnManagerData;
+    private final GamePlayers players;
+    private final ValidStateChecker[] validStateCheckers;
+    private final HistoryManagerData history;
+
+    /**
+     * @param board              the list of tiles that make up the chess board
+     * @param players            the list of players in the game
+     * @param validStateCheckers the valid state checkers for the game
+     * @param turnManagerData    the turn manager data for the game
+     * @param history            the history manager data of the game
+     */
+    public ChessBoardData(List<List<ChessTile>> board, TurnManagerData turnManagerData,
+        GamePlayers players,
+        List<ValidStateChecker> validStateCheckers,
+        HistoryManagerData history) {
+      this.board = new ChessTile[board.size()][board.get(0).size()];
+      for (int i = 0; i < board.size(); i++) {
+        for (int j = 0; j < board.get(i).size(); j++) {
+          this.board[i][j] = board.get(i).get(j);
+        }
+      }
+      this.turnManagerData = turnManagerData;
+      this.players = players;
+      this.validStateCheckers = validStateCheckers.toArray(new ValidStateChecker[0]);
+      this.history = history;
+    }
 
     /**
      * This method is used to create the chess board JSON object from a chess board.
@@ -647,6 +670,31 @@ public class ChessBoard implements Iterable<ChessTile> {
     public ChessBoard toChessBoard() {
       return new ChessBoard(this);
     }
+
+    public List<List<ChessTile>> board() {
+      List<List<ChessTile>> board = new ArrayList<>();
+      for (ChessTile[] chessTiles : this.board) {
+        board.add(Arrays.asList(chessTiles));
+      }
+      return board;
+    }
+
+    public TurnManagerData turnManagerData() {
+      return turnManagerData;
+    }
+
+    public GamePlayers players() {
+      return players;
+    }
+
+    public List<ValidStateChecker> validStateCheckers() {
+      return Arrays.asList(validStateCheckers);
+    }
+
+    public HistoryManagerData history() {
+      return history;
+    }
+
 
   }
 }

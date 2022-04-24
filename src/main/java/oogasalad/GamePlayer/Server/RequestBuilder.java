@@ -1,5 +1,7 @@
 package oogasalad.GamePlayer.Server;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectMapper.DefaultTyping;
@@ -23,13 +25,12 @@ public class RequestBuilder {
     // Empty constructor for utility class with no instances allowed
   }
 
-  public static ObjectMapper objectMapperWithPTV(){
+  public static ObjectMapper objectMapperWithPTV() {
     PolymorphicTypeValidator ptv = BasicPolymorphicTypeValidator.builder()
         .build();
-    ObjectMapper mapper = new ObjectMapper();
-    mapper = mapper.activateDefaultTyping(ptv, DefaultTyping.NON_FINAL);
-    mapper = mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
-    return mapper;
+    return new ObjectMapper().activateDefaultTyping(ptv, DefaultTyping.NON_FINAL)
+        .enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+        .setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
   }
 
   /**
