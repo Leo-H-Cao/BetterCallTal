@@ -6,6 +6,8 @@ import java.net.http.HttpResponse;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.ServerParsingException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class SessionManager {
@@ -16,7 +18,8 @@ public class SessionManager {
   private static final String PAUSE = BASE_URL + "/pause/%s";
   private static final String RESUME = BASE_URL + "/resume/%s";
   private static final String END = BASE_URL + "/end/%s";
-  private final ObjectMapper mapperJSON = new ObjectMapper();
+  private final ObjectMapper mapperJSON = RequestBuilder.objectMapperWithPTV();
+  private static final Logger LOG = LogManager.getLogger(SessionManager.class);
 
   /**
    * Creates a new game session with the given id.
@@ -29,7 +32,10 @@ public class SessionManager {
     String uri = String.format(CREATE, id, host, opponent);
     try {
       String json = mapperJSON.writeValueAsString(initialBoard.getBoardData());
-      RequestBuilder.sendRequest(RequestBuilder.post(uri, json));
+      LOG.info(json);
+      HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.post(uri, json));
+      LOG.info(response.statusCode());
+      LOG.info(response.body());
     } catch (JsonProcessingException e) {
       throw new ServerParsingException();
     }

@@ -27,7 +27,7 @@ public final class RemoteHistoryManager implements HistoryManager {
   private static final String CLEAR = BASE_URL + "/clear/%s";
   private static final String IS_EMPTY = BASE_URL + "/empty/%s";
   private static final String STREAM = BASE_URL + "/stream/%s";
-  private static final ObjectMapper mapper = new ObjectMapper();
+  private static final ObjectMapper mapper = RequestBuilder.objectMapperWithPTV();
   private final String id;
   private Consumer<Throwable> showAsyncError;
 

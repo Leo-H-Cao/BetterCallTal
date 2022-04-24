@@ -85,7 +85,7 @@ public class TurnController {
   @ResponseBody
   public boolean isGameOver(@PathVariable String id, @RequestBody ChessBoardData board) {
     try {
-      return activeSessions.getSession(id).turns().isGameOver(new ChessBoard(board));
+      return activeSessions.getSession(id).turns().isGameOver(board.toChessBoard());
     } catch (Exception e) {
       logger.log(java.util.logging.Level.SEVERE, EXCEPT_MSG, e);
       return false;

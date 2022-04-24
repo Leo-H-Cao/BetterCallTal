@@ -53,8 +53,8 @@ public class HistoryController {
    */
   @PostMapping("/add/{id}")
   @ResponseBody
-  public HistoryData add(@PathVariable String id, @RequestBody History newState) {
-    return new HistoryData(activeSessions.getSession(id).history().add(newState));
+  public HistoryData add(@PathVariable String id, @RequestBody HistoryData newState) {
+    return new HistoryData(activeSessions.getSession(id).history().add(newState.toHistory()));
   }
 
   /**

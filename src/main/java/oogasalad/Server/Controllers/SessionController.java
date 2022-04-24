@@ -41,7 +41,7 @@ public class SessionController {
   @ResponseBody
   public void createGameSession(@PathVariable String id, @PathVariable int host,
       @PathVariable int opponent, @RequestBody ChessBoardData initialBoard) {
-    activeSessions.addSession(id, host, opponent, new ChessBoard(initialBoard));
+    activeSessions.addSession(id, host, opponent, initialBoard.toChessBoard());
   }
 
   /**

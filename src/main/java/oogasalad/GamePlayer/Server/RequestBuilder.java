@@ -1,5 +1,10 @@
 package oogasalad.GamePlayer.Server;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper.DefaultTyping;
+import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
+import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -16,6 +21,15 @@ public class RequestBuilder {
 
   private RequestBuilder() {
     // Empty constructor for utility class with no instances allowed
+  }
+
+  public static ObjectMapper objectMapperWithPTV(){
+    PolymorphicTypeValidator ptv = BasicPolymorphicTypeValidator.builder()
+        .build();
+    ObjectMapper mapper = new ObjectMapper();
+    mapper = mapper.activateDefaultTyping(ptv, DefaultTyping.NON_FINAL);
+    mapper = mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+    return mapper;
   }
 
   /**

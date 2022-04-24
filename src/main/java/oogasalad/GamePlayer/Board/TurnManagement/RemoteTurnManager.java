@@ -27,7 +27,7 @@ public class RemoteTurnManager implements TurnManager {
   private static final String GET_PLAYERS = BASE_URL + "/getPlayers/%s";
   private static final String GET_END_CONDITIONS = BASE_URL + "/getEndConditions/%s";
   private static final String GET_TURN_CRITERIA = BASE_URL + "/getTurnCriteria/%s";
-  private static final ObjectMapper mapper = new ObjectMapper();
+  private static final ObjectMapper mapper = RequestBuilder.objectMapperWithPTV();
   private final String id;
   private Consumer<Throwable> showAsyncError;
 

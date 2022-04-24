@@ -1,5 +1,8 @@
 package oogasalad.GamePlayer.Movement.MovementModifiers;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
@@ -10,6 +13,13 @@ import oogasalad.GamePlayer.GamePiece.Piece;
  *
  * @author Vincent Chen
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME)
+@JsonSubTypes({@JsonSubTypes.Type(value = Atomic.class, name = "Atomic"),
+    @JsonSubTypes.Type(value = BankJoiner.class, name = "BankJoiner"),
+    @JsonSubTypes.Type(value = GravityMovementModifier.class, name = "GravityMovementModifier"),
+    @JsonSubTypes.Type(value = MoveAbsorption.class, name = "MoveAbsorption"),
+    @JsonSubTypes.Type(value = RandomDisappear.class, name = "RandomDisappear")})
 public interface MovementModifier {
 
   /***
