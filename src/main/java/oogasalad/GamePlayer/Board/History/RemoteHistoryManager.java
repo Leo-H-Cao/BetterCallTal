@@ -1,14 +1,22 @@
 package oogasalad.GamePlayer.Board.History;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.http.HttpResponse;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.ChessBoard.ChessBoardData;
+import oogasalad.GamePlayer.Server.RequestBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public record RemoteHistoryManager(String id) implements HistoryManager {
+public final class RemoteHistoryManager implements HistoryManager {
 
+  private static final Logger LOG = LogManager.getLogger(RemoteHistoryManager.class);
   private static final String BASE_URL = "http://localhost:8080/turns";
   private static final String CURRENT_BOARD = BASE_URL + "/current-board/%s";
   private static final String ADD = BASE_URL + "/add/%s";
-  private static final String LAST = BASE_URL + "/last/%s";
   private static final String SIZE = BASE_URL + "/size/%s";
   private static final String GET = BASE_URL + "/index/%s/%d";
   private static final String GET_FIRST = BASE_URL + "/first/%s";
@@ -18,7 +26,15 @@ public record RemoteHistoryManager(String id) implements HistoryManager {
   private static final String REWIND = BASE_URL + "/rewind/%s/%d";
   private static final String CLEAR = BASE_URL + "/clear/%s";
   private static final String IS_EMPTY = BASE_URL + "/empty/%s";
-  private static final String IS_FULL = BASE_URL + "/stream/%s";
+  private static final String STREAM = BASE_URL + "/stream/%s";
+  private static final ObjectMapper mapper = new ObjectMapper();
+  private final String id;
+  private Consumer<Throwable> showAsyncError;
+
+  public RemoteHistoryManager(String id) {
+    this.id = id;
+    this.showAsyncError = (Throwable e) -> LOG.error(e.getMessage());
+  }
 
   /**
    * Gets the current chess board state of the game.
@@ -28,7 +44,13 @@ public record RemoteHistoryManager(String id) implements HistoryManager {
   @Override
   public ChessBoard getCurrentBoard() {
     String url = String.format(CURRENT_BOARD, id);
-    return null;
+    try {
+      HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
+      return mapper.readValue(response.body(), ChessBoardData.class).toChessBoard();
+    } catch (Exception e) {
+      handleError(e);
+      return new ChessBoardData().toChessBoard();
+    }
   }
 
   /**
@@ -39,7 +61,14 @@ public record RemoteHistoryManager(String id) implements HistoryManager {
   @Override
   public History add(History newState) {
     String url = String.format(ADD, id);
-    return null;
+    try {
+      String json = mapper.writeValueAsString(newState.getHistoryData());
+      HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.post(url, json));
+      return mapper.readValue(response.body(), HistoryData.class).toHistory();
+    } catch (Exception e) {
+      handleError(e);
+      return new HistoryData().toHistory();
+    }
   }
 
   /**
@@ -49,9 +78,10 @@ public record RemoteHistoryManager(String id) implements HistoryManager {
    */
   @Override
   public History getLast() {
-
-    return null;
+    String url = String.format(GET_LAST, id);
+    return getHistoryFromURI(url);
   }
+
 
   /**
    * Returns the size of the history.
@@ -63,7 +93,7 @@ public record RemoteHistoryManager(String id) implements HistoryManager {
    */
   @Override
   public int size() {
-    return 0;
+    return getHistoryInteger(SIZE);
   }
 
   /**
@@ -74,7 +104,8 @@ public record RemoteHistoryManager(String id) implements HistoryManager {
    */
   @Override
   public History get(int index) {
-    return null;
+    String url = String.format(GET, id, index);
+    return getHistoryFromURI(url);
   }
 
   /**
@@ -84,7 +115,8 @@ public record RemoteHistoryManager(String id) implements HistoryManager {
    */
   @Override
   public History getFirst() {
-    return null;
+    String url = String.format(GET_FIRST, id);
+    return getHistoryFromURI(url);
   }
 
   /**
@@ -94,7 +126,8 @@ public record RemoteHistoryManager(String id) implements HistoryManager {
    */
   @Override
   public History getCurrent() {
-    return null;
+    String url = String.format(GET_CURRENT, id);
+    return getHistoryFromURI(url);
   }
 
   /**
@@ -104,7 +137,7 @@ public record RemoteHistoryManager(String id) implements HistoryManager {
    */
   @Override
   public int getCurrentIndex() {
-    return 0;
+    return getHistoryInteger(GET_CURRENT_INDEX);
   }
 
   /**
@@ -115,17 +148,28 @@ public record RemoteHistoryManager(String id) implements HistoryManager {
    */
   @Override
   public History goToState(int index) {
-    return null;
+    String url = String.format(REWIND, id, index);
+    String json = RequestBuilder.EMPTY_JSON;
+    try {
+      HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.put(url, json));
+      return mapper.readValue(response.body(), HistoryData.class).toHistory();
+    } catch (Exception e) {
+      handleError(e);
+      return new HistoryData().toHistory();
+    }
   }
 
   /**
    * Clears the history.
-   *
-   * @return the state that was cleared to.
    */
   @Override
   public void clearHistory() {
-
+    String url = String.format(CLEAR, id);
+    try {
+      RequestBuilder.sendRequest(RequestBuilder.delete(url));
+    } catch (Exception e) {
+      handleError(e);
+    }
   }
 
   /**
@@ -135,7 +179,14 @@ public record RemoteHistoryManager(String id) implements HistoryManager {
    */
   @Override
   public boolean isEmpty() {
-    return false;
+    String url = String.format(IS_EMPTY, id);
+    try {
+      HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
+      return mapper.readValue(response.body(), Boolean.class);
+    } catch (Exception e) {
+      handleError(e);
+      return true;
+    }
   }
 
   /**
@@ -145,7 +196,15 @@ public record RemoteHistoryManager(String id) implements HistoryManager {
    */
   @Override
   public Stream<History> stream() {
-    return null;
+    String url = String.format(STREAM, id);
+    try {
+      HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
+      return mapper.readValue(response.body(), new TypeReference<>() {
+      });
+    } catch (Exception e) {
+      handleError(e);
+      return Stream.empty();
+    }
   }
 
   /**
@@ -166,6 +225,59 @@ public record RemoteHistoryManager(String id) implements HistoryManager {
    */
   @Override
   public HistoryManagerData getHistoryManagerData() {
-    return null;
+    return new HistoryManagerData(this);
+  }
+
+  /**
+   * Sets a callback to handle any sort of error that occurs during the game.
+   *
+   * @param errorHandler the error handler to set
+   */
+  @Override
+  public void setErrorHandler(Consumer<Throwable> errorHandler) {
+    this.showAsyncError = errorHandler;
+  }
+
+  /**
+   * Gets the history from the given URI.
+   *
+   * @param url the URI to get the history from.
+   * @return the history from the given URI.
+   */
+  private History getHistoryFromURI(String url) {
+    try {
+      HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
+      return mapper.readValue(response.body(), HistoryData.class).toHistory();
+    } catch (Exception e) {
+      handleError(e);
+      return new HistoryData().toHistory();
+    }
+  }
+
+  /**
+   * Gets an integer based request from the given URI.
+   *
+   * @param baseURI the base URI to get the integer from.
+   * @return the integer from the given URI.
+   */
+  private int getHistoryInteger(String baseURI) {
+    String url = String.format(baseURI, id);
+    try {
+      HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
+      return mapper.readValue(response.body(), Integer.class);
+    } catch (Exception e) {
+      handleError(e);
+      return 0;
+    }
+  }
+
+  /**
+   * Appropriately logs and (if connected to frontend) displays an error to the user.
+   *
+   * @param e the error to handle
+   */
+  private void handleError(Exception e) {
+    LOG.error(e.getMessage());
+    showAsyncError.accept(e);
   }
 }
