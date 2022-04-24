@@ -43,6 +43,8 @@ public class ConstantIncrease extends TurnCriteria {
    * @return copy of this turn criteria
    */
   public TurnCriteria copy(){
-    return new ConstantIncrease(this.players);
+    ConstantIncrease copy = new ConstantIncrease(players);
+    copy.setIndex(this.getCurrentPlayer());
+    return copy;
   }
 }
