@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
@@ -196,5 +197,15 @@ public class LocalHistoryManager implements HistoryManager {
   @Override
   public HistoryManagerData getHistoryManagerData() {
     return new HistoryManagerData(this);
+  }
+
+  /**
+   * Sets a callback to handle any sort of error that occurs during the game.
+   *
+   * @param errorHandler the error handler to set
+   */
+  @Override
+  public void setErrorHandler(Consumer<Throwable> errorHandler) {
+    // Do nothing
   }
 }

@@ -48,7 +48,6 @@ public class RemoteTurnManager implements TurnManager {
     try {
       HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.post(url, json));
       return mapper.readValue(response.body(), Integer.class);
-
     } catch (Exception e) {
       LOG.error(e.getMessage());
       showAsyncError.accept(e);
