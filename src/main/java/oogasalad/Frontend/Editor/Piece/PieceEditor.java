@@ -1,6 +1,6 @@
 package oogasalad.Frontend.Editor.Piece;
 
-import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Node;
 import javafx.scene.layout.BorderPane;
 import oogasalad.Frontend.util.NodeContainer;
@@ -10,14 +10,14 @@ public class PieceEditor extends NodeContainer {
 	private final PieceBoard myPieceBoard;
 	private final PieceTileTypeSelector myTileTypeSelector;
 	private final PieceSettings myPieceSettings;
-	private SimpleBooleanProperty alt;
+	private SimpleIntegerProperty selectedTeam;
 
 	public PieceEditor(String id) {
 		ID = id;
-		myPieceBoard = new PieceBoard(id);
-		myTileTypeSelector = new PieceTileTypeSelector(id);
-		myPieceSettings = new PieceSettings(id);
-		alt = new SimpleBooleanProperty(false);
+		selectedTeam = new SimpleIntegerProperty(0);
+		myPieceBoard = new PieceBoard(id, selectedTeam);
+		myTileTypeSelector = new PieceTileTypeSelector(id, selectedTeam);
+		myPieceSettings = new PieceSettings(id, selectedTeam);
 	}
 
 	public String getId() {

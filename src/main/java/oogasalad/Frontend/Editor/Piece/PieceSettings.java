@@ -1,5 +1,6 @@
 package oogasalad.Frontend.Editor.Piece;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -14,10 +15,12 @@ import java.io.File;
 
 public class PieceSettings extends LabelledContainer {
 	private final String myId;
+	private final SimpleIntegerProperty mySelectedTeam;
 
-	public PieceSettings(String id) {
+	public PieceSettings(String id, SimpleIntegerProperty selectedTeam) {
 		super("Piece Settings");
 		myId = id;
+		mySelectedTeam = selectedTeam;
 	}
 
 	/**

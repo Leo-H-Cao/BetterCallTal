@@ -1,5 +1,6 @@
 package oogasalad.Frontend.Editor.Piece;
 
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
@@ -7,8 +8,11 @@ import oogasalad.Frontend.util.NodeContainer;
 
 public class PieceBoard extends NodeContainer {
 	private String myId;
-	public PieceBoard(String id) {
+	private SimpleIntegerProperty mySelectedTeam;
+
+	public PieceBoard(String id, SimpleIntegerProperty selectedTeam) {
 		myId = id;
+		mySelectedTeam = selectedTeam;
 	}
 
 	@Override
