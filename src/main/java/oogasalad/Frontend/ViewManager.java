@@ -14,14 +14,13 @@ import java.util.ResourceBundle;
 public class ViewManager {
 	public ViewManager(Stage stage, ResourceBundle rb) {
 		BackendConnector.initBackend(rb);
-		Stage myStage = stage;
-		View homeView = new HomeView(myStage);
+		View homeView = new HomeView(stage);
 		View.addView(homeView);
-		View.addView(new GameView(myStage));
-		View.addView(new EditorView(myStage));
-		View.addView(new HostGame(myStage));
-		View.addView(new JoinGame(myStage));
-		View.addView(new LocalGame(myStage));
-		myStage.setScene(homeView.getScene());
+		View.addView(new GameView(stage));
+		View.addView(new EditorView(stage));
+		View.addView(new HostGame(stage));
+		View.addView(new JoinGame(stage));
+		View.addView(new LocalGame(stage));
+		stage.setScene(homeView.getScene());
 	}
 }

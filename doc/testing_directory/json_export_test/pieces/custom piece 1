@@ -1,0 +1,10 @@
+{
+  "pieceName" : "custom piece 1",
+  "imgFile" : "images/pieces/white/kyle.png",
+  "pointValue" : 0,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : [ ],
+  "basicMovements" : [ "custom piece 1Movements" ],
+  "basicCaptures" : [ "custom piece 1Captures" ]
+}

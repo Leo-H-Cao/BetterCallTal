@@ -11,6 +11,7 @@ import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Board.TurnCriteria.OnlyFirstTeam;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.Board.TurnManagement.GamePlayers;
+import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
@@ -60,7 +61,7 @@ class TurnTest {
 
   @Test
   void testLinear() {
-    turnCriteria = new Linear(gamePlayers.getPlayersArr()).copy();
+    turnCriteria = new Linear(gamePlayers.getPlayersArr());
     setBoard();
 
     try {
@@ -91,7 +92,7 @@ class TurnTest {
 
   @Test
   void testLinearExceptions() {
-    turnCriteria = new Linear(gamePlayers.getPlayersArr()).copy();
+    turnCriteria = new Linear(gamePlayers.getPlayersArr());
     setBoard();
     assertThrows(WrongPlayerException.class, () -> board.move(pieceTwo, new Coordinate(0, 1)));
     try {

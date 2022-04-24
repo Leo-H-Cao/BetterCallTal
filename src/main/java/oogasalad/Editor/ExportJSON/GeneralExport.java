@@ -8,8 +8,8 @@ public class GeneralExport {
   private int columns;
   private String turnCriteria;
   private ArrayList<String> colors;
-  private ArrayList<String> endConditions;
-  private ArrayList<String> validStateChecker;
+  private ArrayList<ArrayList<String>> endConditions;
+  private ArrayList<ArrayList<String>> validStateChecker;
 
   public GeneralExport(int row, int col){
     this.rows = row;
@@ -40,19 +40,20 @@ public class GeneralExport {
     this.colors = colors;
   }
 
-  public ArrayList<String> getEndConditions() {
+  public ArrayList<ArrayList<String>> getEndConditions() {
     return endConditions;
   }
 
-  public void setEndConditions(ArrayList<String> endConditions) {
+  public void setEndConditions(ArrayList<ArrayList<String>> endConditions) {
     this.endConditions = endConditions;
   }
 
-  public ArrayList<String> getValidStateChecker() {
+  public ArrayList<ArrayList<String>> getValidStateChecker() {
     return validStateChecker;
   }
 
-  public void setValidStateChecker(ArrayList<String> validStateChecker) {
+  public void setValidStateChecker(
+      ArrayList<ArrayList<String>> validStateChecker) {
     this.validStateChecker = validStateChecker;
   }
 }

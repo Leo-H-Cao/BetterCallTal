@@ -15,6 +15,7 @@ import java.util.ResourceBundle;
 
 @SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public abstract class NodeContainer extends BackendConnector {
+	protected int PADDING;
 	protected static final Logger LOG = LogManager.getLogger(PieceLibrary.class);
 	protected Rectangle2D myScreenSize;
 	protected Optional<ResourceBundle> myResources;
@@ -27,6 +28,7 @@ public abstract class NodeContainer extends BackendConnector {
 		} catch (MissingResourceException e) {
 			myResources = Optional.empty();
 		}
+		PADDING = Integer.parseInt(ResourceBundle.getBundle("oogasalad.Frontend.util.NodeContainer").getString("Padding"));
 	}
 
 	public Node getNode() {

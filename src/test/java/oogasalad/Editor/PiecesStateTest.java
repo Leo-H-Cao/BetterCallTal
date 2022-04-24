@@ -62,11 +62,11 @@ public class PiecesStateTest extends DukeApplicationTest {
     piecesState.setPieceName(pieceID, "my piece");
     piecesState.setPiecePointValue(pieceID, 1);
     piecesState.getPiece(pieceID).setPointValue(1);
-    assertEquals("my piece", piecesState.getPiece(pieceID).getPieceName());
+    assertEquals("my piece", piecesState.getPiece(pieceID).getPieceName().getValue());
     assertEquals(1, piecesState.getPiece(pieceID).getPointValue());
     piecesState.setPiecePointValue(pieceID, 3);
     piecesState.setPieceName(pieceID, "new name");
-    assertEquals("new name", piecesState.getPiece(pieceID).getPieceName());
+    assertEquals("new name", piecesState.getPiece(pieceID).getPieceName().getValue());
     assertEquals(3, piecesState.getPiece(pieceID).getPointValue());
 
   }

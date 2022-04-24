@@ -1,99 +1,125 @@
 package oogasalad.Editor.ModelState.EditPiece;
 
 import java.util.ArrayList;
-
+import java.util.ResourceBundle;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 
 public class EditorPiece {
-  private MovementGrid movementGrid;
-  private Property<Image> image0;
-  private Property<Image> image1;
-  private final String pieceID;
-  private boolean mainPiece;
-  private ArrayList<String> customMoves;
-  private int pointValue;
-  private String pieceName;
+	private MovementGrid movementGrid;
+	private final Property<Image> image0;
+	private final Property<Image> image1;
+	private final String pieceID;
+	private final boolean defaultPiece;
+	private boolean mainPiece;
+	private ArrayList<String> customMoves;
+	private int pointValue;
+	private final SimpleStringProperty pieceName;
 
-  public EditorPiece(String pieceID){
-    Image defaultMainPieceImage = new Image("images/pieces/white/rook.png");
-    Image defaultAltPieceImage = new Image("images/pieces/black/rook.png");
-    this.pieceID = pieceID;
-    movementGrid = new MovementGrid();
-    mainPiece = false;
-    image0 = new SimpleObjectProperty<>(defaultMainPieceImage);
-    image1 = new SimpleObjectProperty<>(defaultAltPieceImage);
-  }
+	public EditorPiece(String pieceID){
+		this.pieceID = pieceID;
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(getClass().getName());
+		String image0Path = String.format("images/pieces/white/%s.png", resourceBundle.getString("DefaultImage0"));
+		String image1Path = String.format("images/pieces/black/%s.png", resourceBundle.getString("DefaultImage1"));
 
-  public MovementGrid getMovementGrid() {
-    return movementGrid;
-  }
+		movementGrid = new MovementGrid();
+		mainPiece = false;
+		pieceName = new SimpleStringProperty(pieceID);
+		image0 = new SimpleObjectProperty<>(new Image(image0Path));
+		image1 = new SimpleObjectProperty<>(new Image(image1Path));
+		defaultPiece = false;
+	}
 
-  public void setMainPiece(boolean main){
-    mainPiece = main;
-  }
+	public EditorPiece(String pieceID, boolean defaultPiece) {
+		this.pieceID = pieceID;
+		ResourceBundle resourceBundle = ResourceBundle.getBundle(getClass().getName());
+		String image0Path = String.format("images/pieces/white/%s.png", resourceBundle.getString("DefaultImage0"));
+		String image1Path = String.format("images/pieces/black/%s.png", resourceBundle.getString("DefaultImage1"));
 
-  public boolean getMainPiece(){
-    return mainPiece;
-  }
+		movementGrid = new MovementGrid();
+		mainPiece = false;
+		pieceName = new SimpleStringProperty(pieceID);
+		image0 = new SimpleObjectProperty<>(new Image(image0Path));
+		image1 = new SimpleObjectProperty<>(new Image(image1Path));
+		this.defaultPiece = defaultPiece;
+	}
 
-  public String getPieceID() {
-    return pieceID;
-  }
+	public boolean isDefaultPiece() {
+		return defaultPiece;
+	}
 
-  public void setTile(int x, int y, PieceGridTile tileStatus){
-    movementGrid.setTile(x, y, tileStatus);
-  }
+	public MovementGrid getMovementGrid() {
+		return movementGrid;
+	}
 
-  public PieceGridTile getTileStatus(int x, int y){
-    return movementGrid.getTileStatus(x, y);
-  }
+	public void setMainPiece(boolean main){
+		mainPiece = main;
+	}
 
-  public void setImage(int team, Image image) {
-    if(team == 0){image0.setValue(image);}
-    else{image1.setValue(image);}
-  }
+	public boolean getMainPiece(){
+		return mainPiece;
+	}
 
-  public Property<Image> getImage(int team){
-    if(team == 0){return image0;}
-    else{return image1;}
-  }
+	public String getPieceID() {
+		return pieceID;
+	}
 
-  public void setCustomMoves(ArrayList<String> customMoves){
-    this.customMoves = customMoves;
-  }
+	public void setTile(int x, int y, PieceGridTile tileStatus){
+		movementGrid.setTile(x, y, tileStatus);
+	}
 
-  public ArrayList<String> getCustomMoves(){
-    return customMoves;
-  }
+	public PieceGridTile getTileStatus(int x, int y){
+		return movementGrid.getTileStatus(x, y);
+	}
 
-  public void setMovementGrid(MovementGrid movementGrid) {
-    this.movementGrid = movementGrid;
-  }
+	public void setImage(int team, Image image) {
+		if(team == 0){image0.setValue(image);}
+		else{image1.setValue(image);}
+	}
 
-  public boolean isMainPiece() {
-    return mainPiece;
-  }
+	public Property<Image> getImage(int team){
+		if(team == 0){return image0;}
+		else{return image1;}
+	}
 
-  public int getPointValue() {
-    return pointValue;
-  }
+	public void setCustomMoves(ArrayList<String> customMoves){
+		this.customMoves = customMoves;
+	}
 
-  public void setPointValue(int pointValue) {
-    this.pointValue = pointValue;
-  }
+	public ArrayList<String> getCustomMoves(){
+		return customMoves;
+	}
 
-  public String getPieceName() {
-    return pieceName;
-  }
+	public void setMovementGrid(MovementGrid movementGrid) {
+		this.movementGrid = movementGrid;
+	}
 
-  public void setPieceName(String pieceName) {
-    this.pieceName = pieceName;
-  }
+	public boolean isMainPiece() {
+		return mainPiece;
+	}
 
-  @Override
-  public String toString() {
-    return pieceID;
-  }
+	public int getPointValue() {
+		return pointValue;
+	}
+
+	public void setPointValue(int pointValue) {
+		this.pointValue = pointValue;
+	}
+
+	public Property<String> getPieceName() {
+		return pieceName;
+	}
+
+	public void setPieceName(String pieceName) {
+		// Ensure that the piece name cannot be empty
+		if(pieceName.equals("")) return;
+		this.pieceName.setValue(pieceName);
+	}
+
+	@Override
+	public String toString() {
+		return pieceID;
+	}
 }

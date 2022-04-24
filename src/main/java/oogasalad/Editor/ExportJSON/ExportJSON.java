@@ -1,11 +1,17 @@
 package oogasalad.Editor.ExportJSON;
 
+import com.fasterxml.jackson.core.exc.StreamWriteException;
+import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+
+import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
 import oogasalad.Editor.ModelState.BoardState.EditorTile;
 import oogasalad.Editor.ModelState.BoardState.TileEffect;
@@ -57,18 +63,30 @@ public class ExportJSON {
 //      System.out.println(piecesJSONString);
 //      System.out.println(JSONTestString);
 
-      File movementDir = new File("doc/testing_directory/json_export_test/pieces");
-      if (!movementDir.exists()){
-        movementDir.mkdirs();
-      }
-      for(PieceExport piece : pieces){
-        objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/testing_directory/json_export_test/pieces/"+piece.getPieceName()), piece);
-      }
-      objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/testing_directory/json_export_test/"+"mainFile"), exportWrapper);
+      DirectoryChooser chooser = new DirectoryChooser();
+      chooser.setTitle("Choose Export Location");
 
-    }
-    catch (IOException e){
-      LOG.warn("JSON object mapper exception");
+      File parentDir = chooser.showDialog(new Stage());
+      if(parentDir != null) {
+        if (!parentDir.exists()){
+          boolean result = parentDir.mkdirs();
+          if (!result) return;
+        }
+
+        File piecesDir = new File(parentDir.getAbsolutePath() + "/pieces");
+        if (!piecesDir.exists()){
+          boolean result = piecesDir.mkdirs();
+          if (!result) return;
+        }
+
+        for(PieceExport piece : pieces){
+          objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(piecesDir.getAbsolutePath()+"/"+piece.getPieceName()), piece);
+        }
+        objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(parentDir.getAbsolutePath()+"/mainFile.json"), exportWrapper);
+
+      }
+      } catch (IOException e) {
+      throw new RuntimeException(e);
     }
   }
 
@@ -105,7 +123,7 @@ public class ExportJSON {
           piecesMain.add(new PieceMainExport(y,x, tile.getTeam(),piecesState.getPiece(tile.getPieceID())));
           if(!seenPieceID.contains(curEditorPiece.getPieceID())){
             pieces.add(new PieceExport(curEditorPiece, tile.getTeam()));
-            createBasicMovement(curEditorPiece.getMovementGrid(), curEditorPiece.getPieceName());
+            createBasicMovement(curEditorPiece.getMovementGrid(), curEditorPiece.getPieceName().getValue());
             seenPieceID.add(curEditorPiece.getPieceID());
           }
         }

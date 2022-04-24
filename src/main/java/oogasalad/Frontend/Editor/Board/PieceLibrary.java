@@ -3,13 +3,13 @@ package oogasalad.Frontend.Editor.Board;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
-import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.LabelledContainer;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -60,29 +60,34 @@ public class PieceLibrary extends LabelledContainer {
 			}
 		});
 
-		ImageView image = new ImageView(piece.getImage(0).getValue());
-		image.setFitHeight(size - 5);
-		image.setFitWidth(size - 5);
+		ImageView image = new ImageView(piece.getImage(getEditorBackend().getSelectedTeam().getValue()).getValue());
+		image.setFitHeight(size - PADDING);
+		image.setFitWidth(size - PADDING);
 		image.setPreserveRatio(true);
 		image.setSmooth(true);
 		image.setCache(true);
-
-
 
 		// Listen for changes to the custom piece images
 		addPieceImageListener(piece, 0, image);
 		addPieceImageListener(piece, 1, image);
 
 		// Listen for changing to alternate pieces
-		getEditorBackend().getAlternatePiece().addListener((ob, ov, nv) -> image.setImage(piece.getImage((Integer) nv).getValue()));
+		getEditorBackend().getSelectedTeam().addListener((ob, ov, nv) -> image.setImage(piece.getImage((Integer) nv).getValue()));
 		StackPane ret = new StackPane(rect, image);
-		ButtonFactory.addAction(ret, (e) -> getEditorBackend().setSelectedPieceId(id));
-		return new Group(ret);
+		ret.setOnMouseClicked(e -> {
+			if (e.getButton() == MouseButton.PRIMARY) {
+				getEditorBackend().setSelectedPieceId(id);
+			} else if(e.getButton() == MouseButton.SECONDARY) {
+				getEditorBackend().setOpenCustomPieceProperty(id);
+			}
+		});
+		ret.setId(id);
+		return ret;
 	}
 
 	private void addPieceImageListener(EditorPiece p, int team, ImageView image) {
 		p.getImage(team).addListener((ob, ov, nv) -> {
-			if(getEditorBackend().getAlternatePiece().getValue() == team) {
+			if(getEditorBackend().getSelectedTeam().getValue() == team) {
 				image.setImage(nv);
 			}
 		});

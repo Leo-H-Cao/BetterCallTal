@@ -14,12 +14,12 @@ import java.util.ResourceBundle;
 public class GameRulesState {
   private static final String CONFIGURATION_RESOURCE_PATH = "oogasalad/Editor/GameRules";
 
-  private ArrayList<String> winConditions;
+  private ArrayList<ArrayList<String>> winConditions;
   private String turnCriteria;
   private ResourceBundle myResources;
   private ArrayList<String> colors;
   private HashMap<Integer, ArrayList<Integer>> teamOpponents;
-  private ArrayList<String> validStateCheckers;
+  private ArrayList<ArrayList<String>> validStateCheckers;
 
   public GameRulesState(){
     setResources();
@@ -34,7 +34,7 @@ public class GameRulesState {
    * Tracks win conditions for the game that is being created
    * @param winConditions list of win conditions
    */
-  public void setWinConditions(ArrayList<String> winConditions) {
+  public void setWinConditions(ArrayList<ArrayList<String>> winConditions) {
     this.winConditions = winConditions;
   }
 
@@ -54,7 +54,7 @@ public class GameRulesState {
     return turnCriteria;
   }
 
-  public ArrayList<String> getWinConditions() {
+  public ArrayList<ArrayList<String>> getWinConditions() {
     return winConditions;
   }
 
@@ -74,11 +74,11 @@ public class GameRulesState {
     this.teamOpponents = teamOpponents;
   }
 
-  public ArrayList<String> getValidStateCheckers() {
+  public ArrayList<ArrayList<String>> getValidStateCheckers() {
     return validStateCheckers;
   }
 
-  public void setValidStateCheckers(ArrayList<String> validStateCheckers) {
+  public void setValidStateCheckers(ArrayList<ArrayList<String>> validStateCheckers) {
     this.validStateCheckers = validStateCheckers;
   }
 
@@ -91,17 +91,27 @@ public class GameRulesState {
   }
 
   private void setDefaults(){
-    winConditions.add(myResources.getString("defaultConditionsCheckmate"));
-    winConditions.add(myResources.getString("defaultConditionsStalemate"));
+    ArrayList<String> defaultConditionsCheckmate = new ArrayList<>();
+    defaultConditionsCheckmate.add(myResources.getString("defaultConditionsCheckmate"));
+    ArrayList<String> defaultConditionsStalemate = new ArrayList<>();
+    defaultConditionsStalemate.add(myResources.getString("defaultConditionsStalemate"));
+    winConditions.add(defaultConditionsCheckmate);
+    winConditions.add(defaultConditionsStalemate);
+
     turnCriteria = myResources.getString("defaultTurnCriteria");
     colors.add(myResources.getString("defaultColor0"));
     colors.add(myResources.getString("defaultColor1"));
+
     int team0 = Integer.parseInt(myResources.getString("defaultTeam0"));
     int team1 = Integer.parseInt(myResources.getString("defaultTeam1"));
     teamOpponents.put(team0, new ArrayList<>());
     teamOpponents.put(team1, new ArrayList<>());
     teamOpponents.get(team0).add(team1);
     teamOpponents.get(team1).add(team0);
-    validStateCheckers.add(myResources.getString("defaultValidStateCheckers"));
+
+    ArrayList<String> defaultValidStateCheckers = new ArrayList<>();
+    defaultValidStateCheckers.add(myResources.getString("defaultValidStateCheckers"));
+    validStateCheckers.add(defaultValidStateCheckers);
+
   }
 }

@@ -13,6 +13,7 @@ import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
 public class Bot implements RemotePlayer {
@@ -33,7 +34,7 @@ public class Bot implements RemotePlayer {
   public Bot(TurnManager turnManager) {
     this.turnManager = turnManager;
     objectives = new ArrayList<>();
-    objectives.add(new Checkmate());
+    //objectives.add(new Checkmate());
     objectives.add(new PieceValue());
   }
 
@@ -44,7 +45,40 @@ public class Bot implements RemotePlayer {
       return new TurnUpdate(null, -1);
     }
 
-    return getRandomMove(board, currentPlayer);
+
+    return getMinimaxMove(board, currentPlayer, 1);
+    //return getRandomMove(board, currentPlayer);
+  }
+
+  private TurnUpdate getMinimaxMove(ChessBoard board, int currentPlayer, int depth)
+      throws Throwable {
+    List<Piece> playerPieces = new ArrayList<>();
+
+    for(Piece p : board.getPieces()){
+      if(p.getTeam()==currentPlayer && !p.getMoves(board).isEmpty()){
+        playerPieces.add(p);
+      }
+    }
+
+    //maximize utility. TODO: move logic to DecisionTree class
+    double maxUtility = Integer.MIN_VALUE;
+    Piece movingPiece = null;
+    ChessTile finalSquare = null;
+    for(Piece p : playerPieces){
+      for(ChessTile t : board.getMoves(p)){
+        ChessBoard copy = board.makeHypotheticalMove(p, t.getCoordinates());
+        DecisionNode childNode = new DecisionNode(copy, turnCriteria);
+        double util = childNode.calculateUtility(objectives, depth);
+        if(util > maxUtility){
+          maxUtility = util;
+          movingPiece = p;
+          finalSquare = t;
+
+        }
+      }
+    }
+
+    return board.move(movingPiece, finalSquare.getCoordinates());
   }
 
 

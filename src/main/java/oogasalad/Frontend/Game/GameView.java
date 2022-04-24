@@ -1,12 +1,12 @@
 package oogasalad.Frontend.Game;
 
 import static oogasalad.Frontend.Game.TurnKeeper.AI;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -51,6 +51,7 @@ public class GameView extends View {
     private Runnable flipRun;
     private RightSideSection myRightSide;
     private Consumer<TurnUpdate> servUpRun;
+    private BiConsumer<String, String> errorRun;
 
     private TurnKeeper turnKeeper;
     private List<RemotePlayer> remotePlayers;
@@ -72,9 +73,10 @@ public class GameView extends View {
     public void SetUpBoard(ChessBoard chessboard, int id, boolean singleplayer) {
         myID = id;
         makeConsandRuns();
-        myBoardGrid = new BoardGrid(chessboard, id, lightUpCons, MoveCons); //TODO: Figure out player ID stuff
+        myBoardGrid = new BoardGrid(chessboard, id, lightUpCons, MoveCons, errorRun); //TODO: Figure out player ID stuff
         //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
+        remotePlayers = new ArrayList<>();
         if (singleplayer) {
             turnKeeper = new TurnKeeper(new String[]{"human", AI});
             remotePlayers.add(new Bot(turnKeeper));
@@ -90,6 +92,7 @@ public class GameView extends View {
         removeGOCons = this::removeGameOverNode;
         flipRun = this::flipBoard;
         servUpRun = this::updateBoard;
+        errorRun = this::showmyError;
     }
 
     private void makeMove(Coordinate c) {
@@ -103,13 +106,13 @@ public class GameView extends View {
                     try {
                         updates.add(e.getRemoteMove(getGameBackend().getChessBoard(), 1));
                     } catch (Throwable ex) {
-                        ex.printStackTrace();
+                        getGameBackend().showError(ex.getClass().getSimpleName(), ex.getMessage());
                     }
                 });
             }
             updateBoard(updates);
         } catch (Exception e){
-            e.printStackTrace();
+            getGameBackend().showError(e.getClass().getSimpleName(), e.getMessage());
             LOG.warn("Move failed");
         } catch (Throwable t) {
             LOG.warn(t.getMessage());
@@ -197,6 +200,10 @@ public class GameView extends View {
 
     private void flipBoard() {
         myBoardGrid.flip();
+    }
+
+    private void showmyError(String classname, String message){
+        getGameBackend().showError(classname, message);
     }
 
 
