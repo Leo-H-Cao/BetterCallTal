@@ -49,8 +49,7 @@ public class RemoteTurnManager implements TurnManager {
       HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.post(url, json));
       return mapper.readValue(response.body(), Integer.class);
     } catch (Exception e) {
-      LOG.error(e.getMessage());
-      showAsyncError.accept(e);
+      handleError(e);
       return -1;
     }
   }
@@ -67,8 +66,7 @@ public class RemoteTurnManager implements TurnManager {
       HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
       return mapper.readValue(response.body(), Integer.class);
     } catch (Exception e) {
-      LOG.error(e.getMessage());
-      showAsyncError.accept(e);
+      handleError(e);
       return -1;
     }
   }
@@ -87,8 +85,7 @@ public class RemoteTurnManager implements TurnManager {
       HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.put(url, json));
       return mapper.readValue(response.body(), Boolean.class);
     } catch (Exception e) {
-      LOG.error(e.getMessage());
-      showAsyncError.accept(e);
+      handleError(e);
       return false;
     }
   }
@@ -107,8 +104,7 @@ public class RemoteTurnManager implements TurnManager {
       return mapper.readValue(response.body(), new TypeReference<>() {
       });
     } catch (Exception e) {
-      LOG.error(e.getMessage());
-      showAsyncError.accept(e);
+      handleError(e);
       return Map.of();
     }
   }
@@ -125,8 +121,7 @@ public class RemoteTurnManager implements TurnManager {
       HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
       return mapper.readValue(response.body(), GamePlayers.class);
     } catch (Exception e) {
-      LOG.error(e.getMessage());
-      showAsyncError.accept(e);
+      handleError(e);
       return new GamePlayers();
     }
   }
@@ -143,8 +138,7 @@ public class RemoteTurnManager implements TurnManager {
       HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
       return mapper.readValue(response.body(), TurnCriteria.class);
     } catch (Exception e) {
-      LOG.error(e.getMessage());
-      showAsyncError.accept(e);
+      handleError(e);
       return new Linear(new Player[]{});
     }
   }
@@ -162,8 +156,7 @@ public class RemoteTurnManager implements TurnManager {
       return mapper.readValue(response.body(), new TypeReference<>() {
       });
     } catch (Exception e) {
-      LOG.error(e.getMessage());
-      showAsyncError.accept(e);
+      handleError(e);
       return new ArrayList<>();
     }
   }
@@ -187,6 +180,16 @@ public class RemoteTurnManager implements TurnManager {
   @Override
   public void setErrorHandler(Consumer<Throwable> errorHandler) {
     this.showAsyncError = errorHandler;
+  }
+
+  /**
+   * Appropriately logs and (if connected to frontend) displays an error to the user.
+   *
+   * @param e the error to handle
+   */
+  private void handleError(Exception e) {
+    LOG.error(e.getMessage());
+    showAsyncError.accept(e);
   }
 
 }

@@ -29,4 +29,13 @@ public record History(ChessBoard board, Set<Piece> movedPieces, Set<ChessTile> u
   public String toString() {
     return String.format("Moved pieces: %s; Updated tiles:%s", movedPieces, updatedTiles);
   }
+
+  /**
+   * Gets the history data from the record
+   *
+   * @return the history data
+   */
+  public HistoryData getHistoryData() {
+    return new HistoryData(board.getBoardData(), movedPieces, updatedTiles);
+  }
 }

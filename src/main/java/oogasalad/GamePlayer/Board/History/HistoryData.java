@@ -30,4 +30,13 @@ public record HistoryData(ChessBoardData board, Set<Piece> movedPieces,
   public HistoryData() {
     this(new ChessBoardData(), Set.of(), Set.of());
   }
+
+  /**
+   * Creates a history data object with the given parameters.
+   *
+   * @return the history data object
+   */
+  public History toHistory() {
+    return new History(board().toChessBoard(), movedPieces(), updatedTiles());
+  }
 }
