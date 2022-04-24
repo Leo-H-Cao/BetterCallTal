@@ -1,5 +1,9 @@
 package oogasalad.Editor.ModelState.BoardState;
 
+/**
+ * Enums representing the different tile modifiers that are allowed
+ * @author Leo Cao
+ */
 public enum TileEffect {
   NONE("none"),
   BLACKHOLE("BlackHoleAction"),
