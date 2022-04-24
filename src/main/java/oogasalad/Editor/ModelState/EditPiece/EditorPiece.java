@@ -8,7 +8,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 
 public class EditorPiece {
-	private MovementGrid movementGrid;
+	private MovementGrid movementGrid0;
+	private MovementGrid movementGrid1;
 	private final Property<Image> image0;
 	private final Property<Image> image1;
 	private final String pieceID;
@@ -26,7 +27,8 @@ public class EditorPiece {
 		String image1Path = String.format("images/pieces/black/%s.png", resourceBundle.getString("DefaultImage1"));
 		onInteractionModifiers = new ArrayList<>();
 
-		movementGrid = new MovementGrid();
+		movementGrid0 = new MovementGrid();
+		movementGrid1 = new MovementGrid();
 		mainPiece = false;
 		pieceName = new SimpleStringProperty(pieceID);
 		image0 = new SimpleObjectProperty<>(new Image(image0Path));
@@ -40,7 +42,8 @@ public class EditorPiece {
 		String image0Path = String.format("images/pieces/white/%s.png", resourceBundle.getString("DefaultImage0"));
 		String image1Path = String.format("images/pieces/black/%s.png", resourceBundle.getString("DefaultImage1"));
 
-		movementGrid = new MovementGrid();
+		movementGrid0 = new MovementGrid();
+		movementGrid1 = new MovementGrid();
 		mainPiece = false;
 		pieceName = new SimpleStringProperty(pieceID);
 		image0 = new SimpleObjectProperty<>(new Image(image0Path));
@@ -52,8 +55,14 @@ public class EditorPiece {
 		return defaultPiece;
 	}
 
-	public MovementGrid getMovementGrid() {
-		return movementGrid;
+	public MovementGrid getMovementGrid(int team) {
+		if(team == 0){
+			return movementGrid0;
+		}
+		else{
+			return movementGrid1;
+		}
+
 	}
 
 	public void setMainPiece(boolean main){
@@ -68,12 +77,23 @@ public class EditorPiece {
 		return pieceID;
 	}
 
-	public void setTile(int x, int y, PieceGridTile tileStatus){
-		movementGrid.setTile(x, y, tileStatus);
+	public void setTile(int x, int y, PieceGridTile tileStatus, int team){
+		if(team == 0){
+			movementGrid0.setTile(x, y, tileStatus);
+		}
+		else{
+			movementGrid1.setTile(x,y,tileStatus);
+		}
+
 	}
 
-	public PieceGridTile getTileStatus(int x, int y){
-		return movementGrid.getTileStatus(x, y);
+	public PieceGridTile getTileStatus(int x, int y, int team){
+		if(team == 0){
+			return movementGrid0.getTileStatus(x,y);
+		}
+		else{
+			return movementGrid1.getTileStatus(x,y);
+		}
 	}
 
 	public void setImage(int team, Image image) {
@@ -94,8 +114,13 @@ public class EditorPiece {
 		return customMoves;
 	}
 
-	public void setMovementGrid(MovementGrid movementGrid) {
-		this.movementGrid = movementGrid;
+	public void setMovementGrid(MovementGrid movementGrid, int team) {
+		if(team == 1){
+			this.movementGrid1 = movementGrid;
+		}
+		else{
+			this.movementGrid0 = movementGrid;
+		}
 	}
 
 	public boolean isMainPiece() {

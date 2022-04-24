@@ -97,7 +97,7 @@ public class EditorBackend {
 		piece.setImage(1, new Image("images/pieces/black/" + name + ".png"));
 		piece.setPieceName(name);
 		piece.setPointValue(val);
-		piece.setMovementGrid(moves);
+		piece.setMovementGrid(moves, 0);
 	}
 
 	private void setDefaultGameRules() {

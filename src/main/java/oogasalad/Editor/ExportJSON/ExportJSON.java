@@ -57,8 +57,6 @@ public class ExportJSON {
   public void writeToJSON(){
     ObjectMapper objectMapper = new ObjectMapper();
     try{
-//      String piecesJSONString = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(pieces);
-//      System.out.println(JSONTestString);
 
       DirectoryChooser chooser = new DirectoryChooser();
       chooser.setTitle("Choose Export Location");
@@ -121,7 +119,8 @@ public class ExportJSON {
           piecesMain.add(new PieceMainExport(y,x, tile.getTeam(),piecesState.getPiece(tile.getPieceID())));
           if(!seenPieceID.contains(curEditorPiece.getPieceID())){
             pieces.add(new PieceExport(curEditorPiece, tile.getTeam()));
-            createBasicMovement(curEditorPiece.getMovementGrid(), curEditorPiece.getPieceName().getValue());
+            //only get team 0 movement grid for now
+            createBasicMovement(curEditorPiece.getMovementGrid(0), curEditorPiece.getPieceName().getValue());
             seenPieceID.add(curEditorPiece.getPieceID());
           }
         }

@@ -63,17 +63,17 @@ public class ExportJSONTest extends DukeApplicationTest {
     EditorPiece testPiece = piecesState.getPiece("123");
     testPiece.setPieceName("piece1");
 
-    testPiece.setTile(4, 2, PieceGridTile.OPEN);
-    testPiece.setTile(6, 0, PieceGridTile.INFINITY);
-    testPiece.setTile(5,1, PieceGridTile.OPEN);
+    testPiece.setTile(4, 2, PieceGridTile.OPEN, 0);
+    testPiece.setTile(6, 0, PieceGridTile.INFINITY, 0);
+    testPiece.setTile(5,1, PieceGridTile.OPEN, 0);
 
-    testPiece.setTile(0, 3, PieceGridTile.INFINITY);
-    testPiece.setTile(1,3, PieceGridTile.OPEN);
-    testPiece.setTile(2, 3, PieceGridTile.OPEN);
+    testPiece.setTile(0, 3, PieceGridTile.INFINITY, 0);
+    testPiece.setTile(1,3, PieceGridTile.OPEN, 0);
+    testPiece.setTile(2, 3, PieceGridTile.OPEN, 0);
 
-    testPiece.setTile(1,2, PieceGridTile.OPEN);
-    testPiece.setTile(5, 6, PieceGridTile.OPEN);
-    testPiece.setTile(2, 5, PieceGridTile.OPEN);
+    testPiece.setTile(1,2, PieceGridTile.OPEN, 0);
+    testPiece.setTile(5, 6, PieceGridTile.OPEN, 0);
+    testPiece.setTile(2, 5, PieceGridTile.OPEN, 0);
 
     boardState.setPieceStartingLocation("123", 3, 6, 1);
     boardState.setPieceStartingLocation("123", 4, 5, 0);
@@ -85,9 +85,9 @@ public class ExportJSONTest extends DukeApplicationTest {
     EditorPiece testPiece2 = piecesState.getPiece("1234");
     testPiece2.setPieceName("piece2");
 
-    testPiece2.setTile(4, 2, PieceGridTile.OPEN);
-    testPiece2.setTile(6, 0, PieceGridTile.INFINITY);
-    testPiece2.setTile(5,1, PieceGridTile.OPEN);
+    testPiece2.setTile(4, 2, PieceGridTile.OPEN, 0);
+    testPiece2.setTile(6, 0, PieceGridTile.INFINITY, 0);
+    testPiece2.setTile(5,1, PieceGridTile.OPEN, 0);
 
     boardState.setPieceStartingLocation("1234", 4, 5, 1);
 
