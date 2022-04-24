@@ -48,6 +48,7 @@ public class GameView extends View {
     private StackPane myCenterBoard;
     private Runnable flipRun;
     private LeftSection myLeftSide;
+    private TopSection myTopSection;
     private Consumer<TurnUpdate> servUpRun;
     private BiConsumer<String, String> errorRun;
 
@@ -171,13 +172,13 @@ public class GameView extends View {
     protected Node makeNode() {
         BorderPane bp = new BorderPane();
 
-        TopSection top = new TopSection();
+        myTopSection = new TopSection();
 
-        top.setExitButton(e -> {
+        myTopSection.setExitButton(e -> {
             getView(HomeView.class).ifPresent(this::changeScene);
         });
 
-        bp.setTop(top.getGP());
+        bp.setTop(myTopSection.getGP());
 
         myCenterBoard = new StackPane();
         myCenterBoard.getChildren().add(myBoardGrid.getBoard());
@@ -185,7 +186,12 @@ public class GameView extends View {
 
         myLeftSide = new LeftSection(flipRun);
         bp.setLeft(myLeftSide.getVbox());
+        fixsizeBorderPane(bp);
         return bp;
+    }
+
+    private void fixsizeBorderPane(BorderPane bp) {
+
     }
 
     private void removeGameOverNode(Node n) {
