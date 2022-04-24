@@ -61,6 +61,8 @@ public abstract class TurnCriteria {
    */
   public abstract int incrementTurn();
 
-
+  /***
+   * @return copy of this turn criteria
+   */
   public abstract TurnCriteria copy();
 }

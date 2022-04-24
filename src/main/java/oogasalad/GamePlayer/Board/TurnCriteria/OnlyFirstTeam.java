@@ -26,6 +26,9 @@ public class OnlyFirstTeam extends TurnCriteria {
     return getCurrentPlayer();
   }
 
+  /***
+   * @return copy of this turn criteria
+   */
   @Override
   public TurnCriteria copy() {
     return new OnlyFirstTeam(players);

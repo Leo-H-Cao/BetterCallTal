@@ -12,6 +12,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -54,6 +55,8 @@ public class ChessBoard implements Iterable<ChessTile> {
   private final TurnManagerData turnManagerData;
   private List<List<ChessTile>> board;
   private Map<Integer, List<Piece>> pieceList;
+  private BiConsumer<String, String> showAsyncError;
+  private Consumer<TurnUpdate> performAsyncTurnUpdate;
 
   /**
    * Creates a representation of a chessboard if an array of pieces is already provided
@@ -126,7 +129,7 @@ public class ChessBoard implements Iterable<ChessTile> {
    * Generates the list of all pieces mapped to each team
    */
   private void generatePieceList() {
-    board.forEach((l) -> l.stream().filter((t) -> t.getPiece().isPresent()).forEach((t) -> {
+    board.forEach(l -> l.stream().filter(t -> t.getPiece().isPresent()).forEach(t -> {
       Piece piece = t.getPiece().get();
       pieceList.putIfAbsent(piece.getTeam(), new ArrayList<>());
       if (pieceList.get(piece.getTeam()).stream().noneMatch(p ->
@@ -181,7 +184,7 @@ public class ChessBoard implements Iterable<ChessTile> {
       TurnUpdate update = new TurnUpdate(piece.move(getTileFromCoords(finalSquare), this),
           turnManager.incrementTurn());
       history.add(new History(deepCopy(), Set.of(piece), update.updatedSquares()));
-      LOG.debug("History updated: " + history.size());
+      LOG.debug(String.format("History updated: %d", history.size()));
       return update;
     }
 
@@ -256,7 +259,7 @@ public class ChessBoard implements Iterable<ChessTile> {
       return Set.of();
     }
     Set<ChessTile> allPieceMovements = piece.getMoves(this);
-    validStateCheckers.forEach((v) ->
+    validStateCheckers.forEach(v ->
         allPieceMovements.removeIf(entry -> {
           try {
             LOG.debug(String.format("Valid state checker class: %s", v.getClass()));
@@ -324,21 +327,6 @@ public class ChessBoard implements Iterable<ChessTile> {
   }
 
   /**
-   * starting from the top left, this method returns the tile that corresponds to the LINEAR
-   * position of the tiles. That is, by placing each row behind the previous return the tile of
-   * index
-   *
-   * @param index
-   * @return
-   */
-  public ChessTile getTile(int index) {
-    List<ChessTile> linearTiles = board.stream()
-        .flatMap(List::stream).toList();
-
-    return linearTiles.get(index);
-  }
-
-  /**
    * Returns if a tile is empty
    *
    * @param coordinate to check
@@ -350,6 +338,26 @@ public class ChessBoard implements Iterable<ChessTile> {
       throw new OutsideOfBoardException(coordinate.toString());
     }
     return getTile(coordinate).getPiece().isEmpty();
+  }
+
+  /**
+   * If finding the captured piece by looking at the square covered by the current piece one move
+   * back (e.g. in en passant, the captured piece is on a different square), this function looks at
+   * the piece list for both states to find the captured piece
+   *
+   * @param team is the team of the player
+   * @return piece in pastBoard that's missing from present board that is an opponent of team
+   */
+  public Piece findTakenPiece(int team)
+  /*throws PieceNotFoundException*/ {
+    List<Piece> pastPieces = this.getHistory().get(this.getHistory().size() - 1).board()
+        .getOpponentPieces(team);
+    List<Piece> presentPieces = this.getOpponentPieces(team);
+
+    LOG.debug(String.format("Past pieces: %s", pastPieces));
+    LOG.debug(String.format("Present pieces: %s", presentPieces));
+
+    return pastPieces.stream().filter(p -> !presentPieces.contains(p)).findFirst().orElse(null);
   }
 
 
@@ -544,6 +552,26 @@ public class ChessBoard implements Iterable<ChessTile> {
    */
   public ChessBoardData getBoardData() {
     return new ChessBoardData(this);
+  }
+
+  /**
+   * Sets the callback function used to show an exception as a result of an async task
+   *
+   * @param showAsyncError the callback function to use
+   */
+  public void setShowAsyncError(
+      BiConsumer<String, String> showAsyncError) {
+    this.showAsyncError = showAsyncError;
+  }
+
+  /**
+   * Sets the callback function used to perform a turn update on the UI asynchronously
+   *
+   * @param performAsyncTurnUpdate the callback function to use
+   */
+  public void setPerformAsyncTurnUpdate(
+      Consumer<TurnUpdate> performAsyncTurnUpdate) {
+    this.performAsyncTurnUpdate = performAsyncTurnUpdate;
   }
 
   /**

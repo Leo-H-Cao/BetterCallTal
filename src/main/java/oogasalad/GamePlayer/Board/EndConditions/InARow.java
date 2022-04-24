@@ -26,7 +26,7 @@ import org.json.JSONObject;
 public class InARow implements EndCondition {
 
   private static final Logger LOG = LogManager.getLogger(InARow.class);
-  public static final int[] DIRECTIONS = new int[]{-1, 0, 1};
+  public static final List<Integer> DIRECTIONS = List.of(-1, 0, 1);
 
   public static final String IAR_CONFIG_FILE_HEADER = "doc/GameEngineResources/Other/";
   public static final String IAR_DEFAULT_FILE = "InARowThree";
@@ -108,7 +108,7 @@ public class InARow implements EndCondition {
    */
   private boolean anyRayReachesNum(ChessBoard board, Coordinate start,
     String pieceName, int pieceTeam) {
-    return Arrays.stream(DIRECTIONS).anyMatch(i -> Arrays.stream(DIRECTIONS).anyMatch(j ->
+    return DIRECTIONS.stream().anyMatch(i -> DIRECTIONS.stream().anyMatch(j ->
         rayReachesNum(board, pieceName, pieceTeam, start, Coordinate.of(i, j), numInARow)));
   }
 
@@ -128,7 +128,7 @@ public class InARow implements EndCondition {
       Coordinate coordinate, Coordinate direction, int rayLength) {
     if(rayLength == 0) return true;
     if(direction.getCol() == 0 && direction.getRow() == 0 ||
-        !continueExtendingRay(board,coordinate, pieceName, pieceTeam)) return false;
+        !continueExtendingRay(board,coordinate, pieceName, pieceTeam)) {return false;}
 
     LOG.debug(String.format("Current coordinate and rayLength: (%d, %d), %d",
         coordinate.getRow(), coordinate.getCol(), rayLength));

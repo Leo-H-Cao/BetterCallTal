@@ -65,12 +65,12 @@ class BoardStateTest extends DukeApplicationTest {
     int firstX = 5;
     int firstY = 6;
     piecesState.createCustomPiece(pieceID);
-    boardState.setPieceStartingLocation(pieceID, 5,  6, 0);
+    boardState.setPieceStartingLocation(pieceID, 5,  6, 1);
     assertEquals(firstX, boardState.getPieceLocation(pieceID).getX());
     assertEquals(firstY, boardState.getPieceLocation(pieceID).getY());
     int newX = 2;
     int newY = 3;
-    boardState.setPieceStartingLocation(pieceID, newX, newY, 0);
+    boardState.setPieceStartingLocation(pieceID, newX, newY, 1);
     assertEquals(newX, boardState.getPieceLocation(pieceID).getX());
     assertEquals(newY, boardState.getPieceLocation(pieceID).getY());
   }

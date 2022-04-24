@@ -42,6 +42,8 @@ class LoopAroundTest {
           myBoard.getTile(Coordinate.of(0, 0)).getPiece().get(), Coordinate.of(1, 0), myBoard));
     } catch (Exception e) {
       fail();
+    } catch (Throwable e) {
+      e.printStackTrace();
     }
   }
 

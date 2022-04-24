@@ -4,13 +4,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import oogasalad.Frontend.util.NodeContainer;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class ChessBoard extends NodeContainer {
 
 	private GridPane myGrid;
-	private SimpleIntegerProperty myWidth;
-	private SimpleIntegerProperty myHeight;
+	private final SimpleIntegerProperty myWidth;
+	private final SimpleIntegerProperty myHeight;
 	public ChessBoard(){
 		myGrid = new GridPane();
 		myHeight = getEditorBackend().getBoardState().getBoardHeight();

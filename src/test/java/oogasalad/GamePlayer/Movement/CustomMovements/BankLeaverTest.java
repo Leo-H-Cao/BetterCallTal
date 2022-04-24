@@ -57,7 +57,7 @@ public class BankLeaverTest {
       myBoard.move(blackPawn, Coordinate.of(2, 0));
       assertFalse(myBoard.getMoves(myBoard.getTile(Coordinate.of(7, 9)).getPiece().get()).contains(myBoard.getTile(Coordinate.of(0, 4))) &&
           myBoard.getMoves(whitePawn).contains(myBoard.getTile(Coordinate.of(7, 4))));
-    } catch (Exception e) {
+    } catch (Throwable e) {
       e.printStackTrace();
       fail();
     }

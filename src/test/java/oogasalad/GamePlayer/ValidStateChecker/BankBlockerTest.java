@@ -11,7 +11,8 @@ import org.junit.jupiter.api.Test;
 class BankBlockerTest {
 
   static final String BANK_BLOCKER_TEST_FILE = "TicTacToeConfig";
-  static final String BANK_BLOCKER_INVALID_SIZE = BOARD_TEST_FILES_HEADER + "CrazyhouseBankTooSmall.json";
+  static final String BANK_BLOCKER_INVALID_SIZE =
+      BOARD_TEST_FILES_HEADER + "CrazyhouseBankTooSmall.json";
 
   @Test
   void testConfigFiles() {
@@ -27,7 +28,6 @@ class BankBlockerTest {
       assertThrows(InvalidBoardSizeException.class,
           () -> new BankBlocker().isValid(myBoard, null, null));
     } catch (Exception e) {
-      e.printStackTrace();
       fail();
     }
   }

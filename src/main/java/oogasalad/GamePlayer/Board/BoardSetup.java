@@ -14,6 +14,7 @@ import oogasalad.GamePlayer.Board.Tiles.CustomTiles.TileAction;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.GamePiece.PieceJSONData;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
@@ -44,6 +45,13 @@ public class BoardSetup {
   private static final String END_CONDITION_PACKAGE = "oogasalad.GamePlayer.Board.EndConditions.";
   private static final String VALID_STATE_CHECKER_PACKAGE = "oogasalad.GamePlayer.ValidStateChecker.";
   private static final String MOVEMENT_MODIFIER_PACKAGE = "oogasalad.GamePlayer.Movement.MovementModifiers.";
+
+  /***
+   * Private constructor because utility class
+   */
+  private BoardSetup() {
+    // Private because utility class
+  }
 
   /**
    * Creates a ChessBoard from a JSON file for a local game.
@@ -336,7 +344,6 @@ public class BoardSetup {
           createInstance(packagePath + currentObj.getString(0), new Class[]{},
               new Object[]{});
     } catch (JSONException | IOException e) {
-//      e.printStackTrace();
       LOG.debug(String.format("String class: %s", array.getString(index)));
       return createInstance(
           packagePath + array.getString(index), new Class[]{},
@@ -392,20 +399,11 @@ public class BoardSetup {
       String pieceFile = PIECE_JSON_PACKAGE + rawPieceData.getString("pieceFile") + JSON_EXTENSION;
       PieceJSONData pieceJSONData = getPieceJSONData(pieceFile);
 
-      int startRow = rawPieceData.getInt("row");
-      int startCol = rawPieceData.getInt("col");
-      Coordinate startingCoordinate = new Coordinate(startRow, startCol);
-
-      String name = pieceJSONData.pieceName();
-      String imageFile = pieceJSONData.imgFile();
-      int team = rawPieceData.getInt("team");
-      int pointValue = pieceJSONData.pointValue();
-      boolean mainPiece = rawPieceData.getInt("mainPiece") == 1;
-
       List<MovementInterface> movements = pieceJSONData.basicMovements();
       List<MovementInterface> captures = pieceJSONData.basicCaptures();
       List<MovementInterface> customMovements = getCustomMovements(
           rawPieceData, "customMoves");
+
       movements.addAll(customMovements);
       movements.addAll(pieceJSONData.customMoves());
       captures.addAll(customMovements);
@@ -418,12 +416,12 @@ public class BoardSetup {
           rawPieceData, "onInteractionModifier");
       onInteractionModifiers.addAll(pieceJSONData.onInteractionModifiers());
       LOG.debug(String.format("MMs: %s", movementModifiers));
-      oogasalad.GamePlayer.GamePiece.PieceData pieceData = new oogasalad.GamePlayer.GamePiece.PieceData(startingCoordinate, name, pointValue, team, mainPiece,
-          movements, captures, movementModifiers, onInteractionModifiers, imageFile);
+      PieceData pieceData = new PieceData(Coordinate.of(rawPieceData.getInt("row"), rawPieceData.getInt("col")),
+          pieceJSONData.pieceName(), pieceJSONData.pointValue(), rawPieceData.getInt("team"), rawPieceData.getInt("mainPiece") == 1,
+          movements, captures, movementModifiers, onInteractionModifiers, pieceJSONData.imgFile());
 
       Piece currentPiece = new Piece(pieceData);
       pieceList.add(currentPiece);
-//      myBoard.placePiece(new Coordinate(startRow, startCol), currentPiece);
       LOG.debug("Piece placed");
     }
     myBoard.setPieces(pieceList);

@@ -24,7 +24,6 @@ public class Repetition implements EndCondition {
 
   private static final String REP_NUM_FILE_PATH_HEADER = "doc/GameEngineResources/Other/";
   private static final String DEFAULT_REP_FILE = "Repetition";
-  private static final Logger LOG = LogManager.getLogger(Repetition.class);
   private static final int DEFAULT_REP_NUM = 3;
 
   private int numRep;

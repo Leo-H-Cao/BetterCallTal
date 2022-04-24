@@ -2,10 +2,6 @@ package oogasalad.GamePlayer.ValidStateChecker;
 
 import static oogasalad.GamePlayer.Board.BoardSetup.JSON_EXTENSION;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
@@ -13,10 +9,9 @@ import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
+import oogasalad.GamePlayer.util.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 /***
  * VSC that only allows moves that don't have an empty square in the given direction
@@ -46,21 +41,9 @@ public class GravityVSC implements ValidStateChecker {
    * @param configFile to read
    */
   public GravityVSC(String configFile) {
-    configFile =  G_FILE_PATH_HEADER + configFile + JSON_EXTENSION;
-    relativeCoordinates = new ArrayList<>();
+    configFile = G_FILE_PATH_HEADER + configFile + JSON_EXTENSION;
     LOG.debug(String.format("Config file: %s", configFile));
-
-    try {
-      String content = new String(Files.readAllBytes(Path.of(configFile)));
-      JSONObject data = new JSONObject(content);
-      JSONArray relCoords = data.getJSONArray("relativeCoordinates");
-      for(int i=0; i<relCoords.length(); i++) {
-        JSONArray current = relCoords.getJSONArray(i);
-        relativeCoordinates.add(Coordinate.of(current.getInt(0), current.getInt(1)));
-      }
-    } catch (IOException e) {
-      relativeCoordinates = DEFAULT;
-    }
+    relativeCoordinates = FileReader.readCoordinates(configFile, "relativeCoordinates", DEFAULT);
   }
 
   /***
@@ -74,8 +57,12 @@ public class GravityVSC implements ValidStateChecker {
   @Override
   public boolean isValid(ChessBoard board, Piece piece, ChessTile move) throws EngineException {
     return relativeCoordinates.stream().anyMatch(c -> {
-      try { return board.getTile(Coordinate.add(c, move.getCoordinates())).getPiece().isPresent();}
-      catch (OutsideOfBoardException e) {return true;}});
+      try {
+        return board.getTile(Coordinate.add(c, move.getCoordinates())).getPiece().isPresent();
+      } catch (OutsideOfBoardException e) {
+        return true;
+      }
+    });
   }
 
   /***

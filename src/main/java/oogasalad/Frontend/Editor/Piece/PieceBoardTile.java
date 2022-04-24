@@ -36,7 +36,7 @@ public class PieceBoardTile extends NodeContainer {
 	private Node makeTile() {
 		Rectangle rect = new Rectangle(SIZE, SIZE, getTileColor(status.getValue()));
 		StackPane ret = new StackPane(rect);
-		Coordinate pieceLocation = getEditorBackend().getPiecesState().getPiece(myId).getMovementGrid().getPieceLocation();
+		Coordinate pieceLocation = getEditorBackend().getPiecesState().getPiece(myId).getMovementGrid(0).getPieceLocation();
 		ImageView pieceImage = new ImageView();
 		if(pieceLocation.getRow() == myX && pieceLocation.getCol() == myY) {
 			pieceImage.setImage(myImage.getValue());
@@ -53,7 +53,7 @@ public class PieceBoardTile extends NodeContainer {
 		if(status.getValue() != PieceGridTile.PIECE) {
 			ButtonFactory.addAction(ret, (e) -> {
 				PieceGridTile type = getEditorBackend().getSelectedPieceEditorType().getValue();
-				getEditorBackend().getPiecesState().getPiece(myId).setTile(myX, myY, type);
+				getEditorBackend().getPiecesState().getPiece(myId).setTile(myX, myY, type, 0);
 				status.setValue(type);
 			});
 		}
