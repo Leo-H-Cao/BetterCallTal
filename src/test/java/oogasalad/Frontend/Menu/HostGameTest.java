@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 
 public class HostGameTest extends DukeApplicationTest {
 
-    private Stage myStage;
     private HostGame myHostGame;
     private ResourceBundle myResources;
     private String filepath = "doc/games/TicTacToe.json";
@@ -23,7 +22,6 @@ public class HostGameTest extends DukeApplicationTest {
         BackendConnector.initBackend(myResources);
         stage.setScene(myHostGame.getScene());
         stage.show();
-        myStage = stage;
     }
 
     @Test

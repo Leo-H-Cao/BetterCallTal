@@ -10,10 +10,8 @@ import java.util.ResourceBundle;
 
 public class JoinGameTest extends DukeApplicationTest {
 
-    private Stage myStage;
     private JoinGame myJoinGame;
     private ResourceBundle myResources;
-    private String filepath = "doc/games/TicTacToe.json";
 
     @Override
     public void start(Stage stage) {
@@ -22,7 +20,6 @@ public class JoinGameTest extends DukeApplicationTest {
         BackendConnector.initBackend(myResources);
         stage.setScene(myJoinGame.getScene());
         stage.show();
-        myStage = stage;
     }
 
     @Test
