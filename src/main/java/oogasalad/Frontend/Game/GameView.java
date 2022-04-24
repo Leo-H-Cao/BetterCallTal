@@ -70,7 +70,7 @@ public class GameView extends View {
 
     public void SetUpBoard(ChessBoard chessboard, boolean singleplayer) {
         myID = chessboard.getThisPlayer();
-        isServer = getGameBackend().getChessBoard().getGameType().equals("SERVER");
+        isServer = false;  // getGameBackend().getChessBoard().getGameType().equals("SERVER");
         makeConsandRuns();
         myBoardGrid = new BoardGrid(chessboard, myID, lightUpCons, MoveCons, errorRun); //TODO: Figure out player ID stuff
         //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
