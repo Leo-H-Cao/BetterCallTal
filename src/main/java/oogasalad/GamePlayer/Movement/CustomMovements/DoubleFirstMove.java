@@ -29,10 +29,17 @@ public class DoubleFirstMove implements MovementInterface {
 
   private static final Logger LOG = LogManager.getLogger(DoubleFirstMove.class);
 
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public DoubleFirstMove() {
+    super();
+  }
+
   @Override
   public Set<ChessTile> movePiece(Piece piece, Coordinate finalSquare, ChessBoard board)
       throws InvalidMoveException, OutsideOfBoardException {
-    if(!getMoves(piece, board).contains(board.getTile(finalSquare))) {
+    if (!getMoves(piece, board).contains(board.getTile(finalSquare))) {
       LOG.warn("Illegal double move attempted");
       throw new InvalidMoveException(finalSquare.toString());
     }
@@ -62,7 +69,9 @@ public class DoubleFirstMove implements MovementInterface {
    */
   @Override
   public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
-    if(piece.getHistory().size() != NO_MOVEMENT_HISTORY_LENGTH) return Set.of();
+    if (piece.getHistory().size() != NO_MOVEMENT_HISTORY_LENGTH) {
+      return Set.of();
+    }
 //    LOG.debug("Getting double moves: " + piece.getName());
     List<MovementInterface> newMovements = new ArrayList<>();
     piece.getRelativeMoveCoords().stream().filter((c) -> {
@@ -75,9 +84,10 @@ public class DoubleFirstMove implements MovementInterface {
       }
     }).forEach((c) -> {
 //      LOG.debug("Double move coord: " + Coordinate.of(c.getRow()*MULT, c.getCol()*MULT));
-      newMovements.add(new Movement(Coordinate.of(c.getRow()*MULT, c.getCol()*MULT), false));
+      newMovements.add(new Movement(Coordinate.of(c.getRow() * MULT, c.getCol() * MULT), false));
     });
-    return newMovements.stream().flatMap((m) -> m.getMoves(piece, board).stream()).collect(Collectors.toSet());
+    return newMovements.stream().flatMap((m) -> m.getMoves(piece, board).stream())
+        .collect(Collectors.toSet());
   }
 
   /***
