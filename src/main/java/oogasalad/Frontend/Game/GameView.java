@@ -14,7 +14,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Game.History.BoardHistory;
 import oogasalad.Frontend.Game.History.BoardHistoryPanel;
@@ -219,10 +221,9 @@ public class GameView extends View {
         bp.setCenter(myCenterBoard);
 
         myLeftSide = new LeftSection(flipRun);
-        bp.setLeft(myLeftSide.getVbox());
-
         myHistoryPanel = new BoardHistoryPanel();
-        bp.setRight(myHistoryPanel.makeNode());
+
+        bp.setLeft(new VBox(myLeftSide.getVbox(), myHistoryPanel.makeNode()));
 
         setFlipButton(); //ONLY FOR TESTING GAMEVIEW, IGNORE THIS
         return bp;
@@ -242,7 +243,6 @@ public class GameView extends View {
 
     private void makeKeyListener() {
         myScene.setOnKeyPressed(e -> {
-            System.out.println(e.getCode());
             switch (e.getCode()) {
                 case A -> onLeftKey();
                 case D -> onRightKey();
