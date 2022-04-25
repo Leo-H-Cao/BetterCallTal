@@ -287,11 +287,15 @@ public class LocalGame extends View {
    * @param path filepath to example file for testing
    */
   public void injectBoard(String path) {
+
     File f = new File(path);
     Optional<ChessBoard> cb = getGameBackend().initalizeLocalChessBoard(f);
-    if (cb.isPresent()) {
-      getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), player(), mode)); // hardcoded 0 here for white
-   } else {
+    if (cb.isPresent() && mode.equals(SINGLEPLAYER)) {
+      getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), player(), String.format("%s %s", mode, diffSelectionLabel.getText()))); // hardcoded 0 here for white
+    } else if (cb.isPresent()) {
+      getView(GameView.class).ifPresent((c) -> ((GameView) c).SetUpBoard(cb.get(), player(), mode));// hardcoded 0 here for white
+    }
+    else {
       View.LOG.debug("INVALID JSON OR INVALID PLAYER SELECTION");
     }
   }
