@@ -119,6 +119,7 @@ public class BoardTile {
             } else if (team == 1){TEAM = "black/";
             } else if (team == -1){TEAM = "piecemodifiers/";
             } else {TEAM = "tilemodifiers/";}
+            System.out.println(Image_Path + TEAM + name.toLowerCase() + ".png");
             Image image = new Image(new FileInputStream(Image_Path + TEAM + name.toLowerCase() + ".png"));
             ImageView PieceView = new ImageView(image);
             if (team == -2) {
