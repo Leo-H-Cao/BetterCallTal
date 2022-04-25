@@ -37,6 +37,7 @@ public class Bot implements RemotePlayer {
   private List<Utility> objectives;
   private static final String RESOURCE_PATH = "oogasalad.GamePlayer.BotGameModes";
   private static final String OBJECTIVES_PATH = "oogasalad.GamePlayer.BotObjectives";
+  private static final String UTILITY_FUNCTIONS_PATH = "oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.";
   private String setting;
   private boolean firstMove = true; //TODO: get the endconditions upon setup to complete setup of bot before a move is made
 
@@ -59,9 +60,8 @@ public class Bot implements RemotePlayer {
     objectives = new ArrayList<>();
     objectives.add(new CheckmateLoss());
     objectives.add(new PieceValue());
-    //objectives.add(new KingOfTheHillWin());
     try {
-      //setSpecialObjectives(turnManager.getEndConditions());
+      setSpecialObjectives(turnManager.getEndConditions());
     } catch (Exception e) {
       return;
     }
@@ -84,7 +84,6 @@ public class Bot implements RemotePlayer {
       return new TurnUpdate(Set.of(), -1, "");
     }
 
-
     ResourceBundle botResources = ResourceBundle.getBundle(RESOURCE_PATH);
     String[] depthProbabilities = botResources.getString(setting).split(",");
     double[] depths = new double[depthProbabilities.length];
@@ -105,13 +104,13 @@ public class Bot implements RemotePlayer {
       String conditionClass = condition.getClass().getSimpleName();
       if(botObjectiveResources.containsKey(conditionClass)){
         String objectiveName = botObjectiveResources.getString(conditionClass);
-        Class<?> clazz = Class.forName(objectiveName);
-        Constructor<?> ctor = clazz.getConstructor(String.class);
+        Class<?> clazz = Class.forName(UTILITY_FUNCTIONS_PATH+objectiveName);
+        Constructor<?> ctor = clazz.getConstructor();
         Utility objective = (Utility) ctor.newInstance();
         objectives.add(objective);
       }
     }
-    //Class<Utility> clazz = Class.forName();
+
   }
 
   private TurnUpdate getSettingBasedMove(ChessBoard board, int currentPlayer, double[] depths)
