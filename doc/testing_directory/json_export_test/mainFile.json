@@ -5,7 +5,7 @@
     "turnCriteria" : "Linear",
     "colors" : [ "white", "black" ],
     "endConditions" : [ [ "Checkmate" ], [ "Stalemate" ] ],
-    "validStateChecker" : [ [ "Check" ] ]
+    "validStateCheckers" : [ [ "Check" ] ]
   } ],
   "playerInfo" : [ {
     "team" : 0,
@@ -15,38 +15,29 @@
     "opponents" : [ 0 ]
   } ],
   "pieces" : [ {
-    "row" : 0,
+    "row" : 2,
+    "col" : 1,
+    "team" : 0,
+    "mainPiece" : 0,
+    "pieceFile" : "rookTest",
+    "movementModifiers" : [ ],
+    "onInteractionModifier" : [ ],
+    "customMoves" : [ ]
+  }, {
+    "row" : 2,
     "col" : 5,
-    "team" : 1,
+    "team" : 0,
     "mainPiece" : 0,
-    "pieceFile" : "king",
+    "pieceFile" : "knightTest",
     "movementModifiers" : [ ],
     "onInteractionModifier" : [ ],
     "customMoves" : [ ]
   }, {
-    "row" : 1,
-    "col" : 4,
-    "team" : 1,
-    "mainPiece" : 0,
-    "pieceFile" : "knight",
-    "movementModifiers" : [ ],
-    "onInteractionModifier" : [ ],
-    "customMoves" : [ ]
-  }, {
-    "row" : 6,
+    "row" : 5,
     "col" : 2,
     "team" : 0,
     "mainPiece" : 0,
-    "pieceFile" : "rook",
-    "movementModifiers" : [ ],
-    "onInteractionModifier" : [ ],
-    "customMoves" : [ ]
-  }, {
-    "row" : 7,
-    "col" : 2,
-    "team" : 0,
-    "mainPiece" : 0,
-    "pieceFile" : "king",
+    "pieceFile" : "queenTest",
     "movementModifiers" : [ ],
     "onInteractionModifier" : [ ],
     "customMoves" : [ ]

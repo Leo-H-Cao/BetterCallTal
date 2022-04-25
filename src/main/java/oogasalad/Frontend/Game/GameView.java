@@ -72,7 +72,7 @@ public class GameView extends View {
         myID = chessboard.getThisPlayer();
         isServer = false;  // getGameBackend().getChessBoard().getGameType().equals("SERVER");
         makeConsandRuns();
-        myBoardGrid = new BoardGrid(chessboard, myID, lightUpCons, MoveCons, errorRun); //TODO: Figure out player ID stuff
+        myBoardGrid = new BoardGrid(chessboard, lightUpCons, MoveCons, errorRun); //TODO: Figure out player ID stuff
         //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
         remotePlayers = new ArrayList<>();
@@ -92,8 +92,6 @@ public class GameView extends View {
         MoveCons = this::makeMove;
         removeGOCons = this::removeGameOverNode;
         flipRun = this::flipBoard;
-        servUpRun = this::updateBoard;
-        errorRun = this::showmyError;
     }
 
     private void makeMove(Coordinate c) {
@@ -153,9 +151,9 @@ public class GameView extends View {
 
         if (isServer) {
             if (myID != tu.nextPlayer()) {
-                //TODO: DISPLAY WAITING FOR SERVER MESSAGE
+                myLeftSide.dispServWait(true);
             } else {
-                //TODO: REMOVE MESSAGE
+                myLeftSide.dispServWait(false);
             }
         }
         return true;
@@ -196,12 +194,7 @@ public class GameView extends View {
 
         myLeftSide = new LeftSection(flipRun);
         bp.setLeft(myLeftSide.getVbox());
-        fixsizeBorderPane(bp);
         return bp;
-    }
-
-    private void fixsizeBorderPane(BorderPane bp) {
-
     }
 
     private void removeGameOverNode(Node n) {

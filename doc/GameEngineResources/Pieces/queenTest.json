@@ -1,0 +1,10 @@
+{
+  "pieceName" : "queenTest",
+  "imgFile" : "images/pieces/white/queen.png",
+  "pointValue" : 9,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : [ ],
+  "basicMovements" : [ "wqueenTestMov" ],
+  "basicCaptures" : [ "wqueenTestCap" ]
+}
