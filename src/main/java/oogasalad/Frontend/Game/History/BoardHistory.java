@@ -52,4 +52,7 @@ public class BoardHistory implements History {
     return i >= 0 && i < myHistory.size();
   }
 
+  public boolean isOnRecent() {
+    return idx == myHistory.size() - 1;
+  }
 }

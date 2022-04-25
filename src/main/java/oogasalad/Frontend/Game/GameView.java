@@ -44,6 +44,7 @@ public class GameView extends View {
     public static final String SERVER = "server";
     public static final String MULTIPLAYER = "multiplayer";
     public static final String SINGLEPLAYER = "singleplayer";
+    public static final String HUMAN = "human";
 
     private BoardGrid myBoardGrid;
     private static Integer myID;
@@ -87,18 +88,14 @@ public class GameView extends View {
         //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
         remotePlayers = new ArrayList<>();
-
-        switch (mode) {
-            case SERVER:
-                //TODO
-                break;
-            case SINGLEPLAYER:
-                turnKeeper = new TurnKeeper(new String[]{"human", AI});
-                remotePlayers.add(new Bot(turnKeeper));
-                break;
-            case MULTIPLAYER:
-                turnKeeper = new TurnKeeper(new String[]{"human", "human"});
-                break;
+        String[] splitMode = mode.split(" ");
+        switch (splitMode[0]) {
+            case SERVER -> turnKeeper = new TurnKeeper(new String[]{HUMAN, SERVER});
+            case SINGLEPLAYER -> {
+                turnKeeper = new TurnKeeper(new String[]{HUMAN, AI});
+                remotePlayers.add(new Bot(turnKeeper, splitMode[1]));
+            }
+            case MULTIPLAYER -> turnKeeper = new TurnKeeper(new String[]{HUMAN, HUMAN});
         }
         chessboard.setShowAsyncError(this::showmyError);
         chessboard.setPerformAsyncTurnUpdate(this::updateBoard);
@@ -122,7 +119,7 @@ public class GameView extends View {
             if (turnKeeper.hasRemote()) {
                 remotePlayers.forEach(e -> {
                     try {
-                        updates.add(e.getRemoteMove(getGameBackend().getChessBoard(), 1));
+                        updates.add(e.getRemoteMove(getGameBackend().getChessBoard(), remotePlayers.indexOf(e)));
                     } catch (Throwable ex) {
                         getGameBackend().showError(ex.getClass().getSimpleName(), ex.getMessage());
                     }
