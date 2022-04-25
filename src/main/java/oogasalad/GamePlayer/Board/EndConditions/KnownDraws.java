@@ -16,6 +16,7 @@ import oogasalad.GamePlayer.Board.Player;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /***
@@ -65,10 +66,7 @@ public class KnownDraws implements EndCondition {
         allConfigs.add(currentConfig);
       }
       return allConfigs;
-    } catch (IOException e) {
-      LOG.warn("Draw config read failed");
-      return Collections.emptyList();
-    }
+    } catch (JSONException | IOException e) { return Collections.emptyList();}
   }
   /**
    * Returns draw if a known draw position is reached
@@ -89,5 +87,12 @@ public class KnownDraws implements EndCondition {
   @Override
   public int compareTo(EndCondition o) {
     return 0;
+  }
+
+  /***
+   * @return draw configs for testing
+   */
+  List<List<String>> getDrawConfigs() {
+    return drawConfigs;
   }
 }

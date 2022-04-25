@@ -62,8 +62,7 @@ public class LoseAllPiecesTest {
     assertEquals(0.0, l.getScores(board).get(TEAM_1));
     assertEquals(1.0, l.getScores(board).get(TEAM_2));
 
+    assertEquals(1.0, new Antichess().getScores(board).get(TEAM_1));
+    assertEquals(0.0, new Antichess().getScores(board).get(TEAM_2));
   }
-
-
-
 }

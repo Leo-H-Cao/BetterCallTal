@@ -6,8 +6,8 @@ import oogasalad.Editor.ModelState.PiecesState.EditorCoordinate;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 
 public class BoardState {
-  private EditorBoard myEditorBoard;
-  private PiecesState piecesState;
+  private final EditorBoard myEditorBoard;
+  private final PiecesState piecesState;
 
   public BoardState(PiecesState piecesState){
     myEditorBoard = new EditorBoard();
