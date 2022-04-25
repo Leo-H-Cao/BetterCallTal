@@ -14,7 +14,7 @@ import oogasalad.Editor.ModelState.PiecesState.EditorCoordinate;
  */
 public class EditorBoard {
 
-  private final int DEFAULT_BOARD_SIZE = 8;
+  public static final int DEFAULT_BOARD_SIZE = 8;
   private final String PIECE_ID_ERROR = "Invalid pieceID, piece does not exist in board";
   private List<List<EditorTile>> board;
   private final SimpleIntegerProperty myWidth;

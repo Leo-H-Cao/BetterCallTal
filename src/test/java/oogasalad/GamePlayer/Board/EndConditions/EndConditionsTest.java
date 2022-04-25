@@ -126,4 +126,10 @@ class EndConditionsTest {
       fail();
     }
   }
+
+  @Test
+  void drawConfigBadFileTest() {
+    KnownDraws test = new KnownDraws("KnownDrawsMalformed");
+    assertEquals(Collections.emptyList(), test.getDrawConfigs());
+  }
 }

@@ -135,4 +135,28 @@ class TurnTest {
       fail();
     }
   }
+
+  @Test
+  void defaultConstructorTests() {
+    Linear linearDefault = new Linear();
+    assertEquals(0, linearDefault.getCurrentPlayer());
+    linearDefault.incrementTurn();
+    assertEquals(1, linearDefault.getCurrentPlayer());
+    linearDefault.incrementTurn();
+    assertEquals(0, linearDefault.getCurrentPlayer());
+
+    ConstantIncrease ciDefault = new ConstantIncrease();
+    assertEquals(0, ciDefault.getCurrentPlayer());
+    ciDefault.incrementTurn();
+    assertEquals(1, ciDefault.getCurrentPlayer());
+    ciDefault.incrementTurn();
+    assertEquals(1, ciDefault.getCurrentPlayer());
+
+    OnlyFirstTeam oftDefault = new OnlyFirstTeam();
+    assertEquals(0, oftDefault.getCurrentPlayer());
+    oftDefault.incrementTurn();
+    assertEquals(0, oftDefault.getCurrentPlayer());
+    oftDefault.incrementTurn();
+    assertEquals(0, oftDefault.getCurrentPlayer());
+  }
 }

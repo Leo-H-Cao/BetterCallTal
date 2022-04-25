@@ -141,10 +141,7 @@ public class BankLeaver implements MovementInterface {
         }
       }
       return false;
-    } catch (IOException e) {
-      LOG.warn("Could not read CH_CONFIG JSON");
-      return true;
-    }
+    } catch (IOException e) { return true;}
   }
 
   /***

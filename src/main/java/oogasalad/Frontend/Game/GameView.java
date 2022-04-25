@@ -11,6 +11,7 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
@@ -59,6 +60,7 @@ public class GameView extends View {
     private Consumer<TurnUpdate> servUpRun;
     private BiConsumer<String, String> errorRun;
     private Boolean isServer;
+    private Button Flip;
 
     private TurnKeeper turnKeeper;
     private List<RemotePlayer> remotePlayers;
@@ -222,6 +224,7 @@ public class GameView extends View {
         myHistoryPanel = new BoardHistoryPanel();
         bp.setRight(myHistoryPanel.makeNode());
 
+        setFlipButton(); //ONLY FOR TESTING GAMEVIEW, IGNORE THIS
         return bp;
     }
 
@@ -265,5 +268,12 @@ public class GameView extends View {
         ChoiceDialog cd = new ChoiceDialog(possPromotions.get(0), possPromotions);
         Optional<Piece> p = cd.showAndWait();
         return p.orElse(null);
+    }
+
+    /**
+     * PURELY FOR TESTING:::
+     */
+    public void setFlipButton() {
+        Flip = myLeftSide.getFlip();
     }
 }

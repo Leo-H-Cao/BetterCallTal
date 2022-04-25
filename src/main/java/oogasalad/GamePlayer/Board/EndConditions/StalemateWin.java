@@ -39,15 +39,11 @@ public class StalemateWin extends Stalemate {
         scores.put(board.getCurrentPlayer(), LOSS);
         Arrays.stream(board.getPlayer(board.getCurrentPlayer()).opponentIDs()).forEach(p ->
             scores.put(p, WIN));
-        Arrays.stream(board.getPlayers()).filter(p -> !scores.containsKey(p.teamID())).forEach(p ->
-            scores.put(p.teamID(), DRAW));
+        Arrays.stream(board.getPlayers()).filter(p -> !scores.containsKey(p.teamID())).forEach(p -> scores.put(p.teamID(), DRAW));
         return scores;
       }
       return Collections.emptyMap();
-    } catch (EngineException e) {
-      LOG.warn("Stalemate exception");
-      return Collections.emptyMap();
-    }
+    } catch (EngineException e) { return Collections.emptyMap();}
   }
 
   /***

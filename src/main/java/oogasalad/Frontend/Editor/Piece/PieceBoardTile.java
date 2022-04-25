@@ -14,81 +14,62 @@ import oogasalad.Frontend.util.NodeContainer;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
 public class PieceBoardTile extends NodeContainer {
+	public int SIZE;
+	private final Property<PieceGridTile> status;
+	private final Property<Image> myImage;
+	private final int myX, myY, myTeam;
+	private final String myId;
 
-  public static int SIZE = 85;
-  private Property<PieceGridTile> status;
-  private Property<Image> myImage;
-  private int myX, myY;
-  private String myId;
+	public PieceBoardTile(int x, int y, PieceGridTile type, String id, int team) {
+		myX = x;
+		myY = y;
+		myId = id;
+		myTeam = team;
+		status = new SimpleObjectProperty(type);
+		myImage = getEditorBackend().getPiecesState().getPiece(myId).getImage(myTeam);
+		myResources.ifPresent(e -> SIZE = Integer.parseInt(e.getString("Size")));
+	}
 
-  public PieceBoardTile(int x, int y, PieceGridTile type, String id) {
-    myX = x;
-    myY = y;
-    myId = id;
-    status = new SimpleObjectProperty(type);
-    myImage = getEditorBackend().getPiecesState().getPiece(myId).getImage(0);
-  }
+	@Override
+	protected Node makeNode() {
+		return makeTile();
+	}
 
-  @Override
-  protected Node makeNode() {
-    return makeTile();
-  }
+	private Node makeTile() {
+		Rectangle rect = new Rectangle(SIZE, SIZE, status.getValue().getColor());
+		StackPane ret = new StackPane(rect);
+		Coordinate pieceLocation = getEditorBackend().getPiecesState().getPiece(myId).getMovementGrid(myTeam).getPieceLocation();
+		ImageView pieceImage = new ImageView();
+		if(pieceLocation.getRow() == myX && pieceLocation.getCol() == myY) {
+			pieceImage.setImage(myImage.getValue());
+			pieceImage.setFitHeight(SIZE - PADDING);
+			pieceImage.setFitWidth(SIZE - PADDING);
+			pieceImage.setCache(true);
+			pieceImage.setPreserveRatio(true);
+			ret.getChildren().add(pieceImage);
+		}
 
-  private Node makeTile() {
-    Rectangle rect = new Rectangle(SIZE, SIZE, getTileColor(status.getValue()));
-    StackPane ret = new StackPane(rect);
-    Coordinate pieceLocation = getEditorBackend().getPiecesState().getPiece(myId).getMovementGrid(0)
-        .getPieceLocation();
-    ImageView pieceImage = new ImageView();
-    if (pieceLocation.getRow() == myX && pieceLocation.getCol() == myY) {
-      pieceImage.setImage(myImage.getValue());
-      pieceImage.setFitHeight(SIZE - 5);
-      pieceImage.setFitWidth(SIZE - 5);
-      pieceImage.setCache(true);
-      pieceImage.setPreserveRatio(true);
-      ret.getChildren().add(pieceImage);
-    }
-    status.addListener((ob, ov, nv) -> rect.setFill(getTileColor(nv)));
-    myImage.addListener((ob, ov, nv) -> pieceImage.setImage(nv));
+		status.addListener((ob, ov, nv) -> rect.setFill(nv.getColor()));
+		myImage.addListener((ob, ov, nv) -> pieceImage.setImage(nv));
 
-    // Update tile color when clicked
-    if (status.getValue() != PieceGridTile.PIECE) {
-      ButtonFactory.addAction(ret, (e) -> {
-        PieceGridTile type = getEditorBackend().getSelectedPieceEditorType().getValue();
-        getEditorBackend().getPiecesState().getPiece(myId).setTile(myX, myY, type, 0);
-        status.setValue(type);
-      });
-    }
+		// Update tile color when clicked
+		if(status.getValue() != PieceGridTile.PIECE) {
+			ButtonFactory.addAction(ret, (e) -> {
+				PieceGridTile type = getEditorBackend().getSelectedPieceEditorType().getValue();
+				getEditorBackend().getPiecesState().getPiece(myId).setTile(myX, myY, type, myTeam);
+				status.setValue(type);
+			});
+		}
 
-    ret.hoverProperty().addListener((ob, ov, nv) -> {
-      if (nv && status.getValue() == PieceGridTile.CLOSED) {
-        myResources.ifPresent((e) -> rect.setFill(Paint.valueOf(e.getString("HoverColor"))));
-      } else {
-        rect.setFill(getTileColor(status.getValue()));
-      }
-    });
 
-    return ret;
-  }
+		ret.hoverProperty().addListener((ob, ov, nv) -> {
+			if(nv && status.getValue() == PieceGridTile.CLOSED) {
+				myResources.ifPresent((e) -> rect.setFill(Paint.valueOf(e.getString("HoverColor"))));
+			} else {
+				rect.setFill(status.getValue().getColor());
+			}
+		});
 
-  private Paint getTileColor(PieceGridTile type) {
-    if (myResources.isPresent()) {
-      switch (type) {
-        case CLOSED, PIECE -> {
-          return Paint.valueOf(myResources.get().getString("DefaultColor"));
-        }
-        case OPEN -> {
-          return Paint.valueOf(myResources.get().getString("SelectedColor"));
-        }
-        case INFINITY -> {
-          return Paint.valueOf(myResources.get().getString("InfinityColor"));
-        }
-        default -> {
-          return Paint.valueOf(myResources.get().getString("ErrorColor"));
-        }
-      }
-    } else {
-      return Paint.valueOf("#000");
-    }
-  }
+		return ret;
+	}
 }

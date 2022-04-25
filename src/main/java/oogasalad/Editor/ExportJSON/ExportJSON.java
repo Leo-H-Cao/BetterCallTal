@@ -140,17 +140,17 @@ public class ExportJSON {
     for(int y = 0; y < MovementGrid.PIECE_GRID_SIZE; y++){
       for(int x = 0; x < MovementGrid.PIECE_GRID_SIZE; x++){
         PieceGridTile curTile = movementGrid.getTileStatus(x, y);
+        int relX = x-PIECE_LOCATION;
+        int relY = PIECE_LOCATION-y;
+        BasicMovementExport basicMovement = new BasicMovementExport(relX, relY, curTile == PieceGridTile.INFINITY || curTile == PieceGridTile.INFINITECAPTURE);
         if(curTile == PieceGridTile.OPEN || curTile == PieceGridTile.INFINITY){
-          int relX = x-PIECE_LOCATION;
-          int relY = PIECE_LOCATION-y;
-          BasicMovementExport basicMovement = new BasicMovementExport(relX, relY, curTile == PieceGridTile.INFINITY);
           movementWrapper.addMovement(basicMovement);
         }
         else if(curTile == PieceGridTile.OPENANDCAPTURE || curTile == PieceGridTile.INFINITECAPTURE){
-          int relX = x-PIECE_LOCATION;
-          int relY = PIECE_LOCATION-y;
-          BasicMovementExport basicMovement = new BasicMovementExport(relX, relY, curTile == PieceGridTile.INFINITECAPTURE);
           movementWrapper.addMovement(basicMovement);
+          captureWrapper.addMovement(basicMovement);
+        }
+        else if(curTile == PieceGridTile.CAPTURE){
           captureWrapper.addMovement(basicMovement);
         }
       }
