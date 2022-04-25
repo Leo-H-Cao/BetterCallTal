@@ -51,4 +51,5 @@ public class BoardHistory implements History {
   private boolean inBounds(int i) {
     return i >= 0 && i < myHistory.size();
   }
+
 }

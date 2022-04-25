@@ -165,7 +165,6 @@ public class GameView extends View {
     private boolean updateBoard(TurnUpdate tu) {
         LOG.debug("Updating board");
         myBoardGrid.updateTiles(tu.updatedSquares());
-        myBoardHistory.add(getGameBackend().getChessBoard());
         if (getGameBackend().getChessBoard().isGameOver()) {
            gameOver();
            return false;
@@ -188,11 +187,10 @@ public class GameView extends View {
                 break;
             }
         }
-        updateHistory(getGameBackend().getChessBoard());
+        updateHistory(getGameBackend().getChessBoard().getHistory().getCurrentBoard());
     }
 
     private void updateHistory(ChessBoard board) {
-        myBoardHistory.add(board);
         myBoardHistory.update(board);
     }
 
@@ -247,7 +245,7 @@ public class GameView extends View {
             System.out.println(e.getCode());
             switch (e.getCode()) {
                 case A -> onLeftKey();
-                case B -> onRightKey();
+                case D -> onRightKey();
             }
         });
     }
