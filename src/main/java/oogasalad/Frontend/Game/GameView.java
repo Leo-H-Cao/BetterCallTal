@@ -2,6 +2,7 @@ package oogasalad.Frontend.Game;
 
 import static oogasalad.Frontend.Game.TurnKeeper.AI;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -202,7 +203,11 @@ public class GameView extends View {
     protected Node makeNode() {
         BorderPane bp = new BorderPane();
 
-        myTopSection = new TopSection();
+        try {
+            myTopSection = new TopSection();
+        } catch (FileNotFoundException e) {
+            showmyError(e.getClass().getSimpleName(), e.getMessage());
+        }
 
         myTopSection.setExitButton(e -> {
             getView(HomeView.class).ifPresent(this::changeScene);

@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -12,6 +14,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import oogasalad.Frontend.util.BackendConnector;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
@@ -24,8 +28,11 @@ public class TopSection {
     private final GridPane myGP;
     private static final String TITLE = "Title";
     private Button exit;
+    private String Image_Path = "src/main/resources/images/pieces/Default/extra/";
+    private int imgviewsize = 100;
+    private int LEFTHBOXSPACING = 100;
 
-    public TopSection() {
+    public TopSection() throws FileNotFoundException {
 
         myGP = new GridPane();
         setTopColConstraints();
@@ -44,12 +51,13 @@ public class TopSection {
         myGP.getColumnConstraints().add(new ColumnConstraints(500));
     }
 
-    private ArrayList<HBox> createTopHBoxes() {
+    private ArrayList<HBox> createTopHBoxes() throws FileNotFoundException {
         ArrayList<HBox> hboxes = new ArrayList<>();
-        HBox left = new HBox();
+        ImageView imageView2 = makeTalImg("Tal2.png");
+        HBox left = new HBox(LEFTHBOXSPACING);
         left.setAlignment(Pos.CENTER_LEFT);
         exit = new Button("exit");
-        left.getChildren().add(exit);
+        left.getChildren().addAll(exit, imageView2);
         hboxes.add(left);
 
         HBox middle = new HBox();
@@ -59,11 +67,23 @@ public class TopSection {
         title.setFill(Color.PURPLE);
         middle.getChildren().add(title);
         hboxes.add(middle);
-
-        HBox right = new HBox(new Text("Image here maybe"));
+        ImageView imgview = makeTalImg("Tal.png");
+        HBox right = new HBox();
         right.setAlignment(Pos.CENTER);
+        right.getChildren().add(imgview);
         hboxes.add(right);
         return hboxes;
+    }
+
+    private ImageView makeTalImg(String whichTal) throws FileNotFoundException {
+        Image img = new Image(new FileInputStream(Image_Path + whichTal));
+        ImageView imgview = new ImageView(img);
+        imgview.setPreserveRatio(true);
+        imgview.setSmooth(true);
+        imgview.setCache(true);
+        imgview.setFitWidth(imgviewsize);
+        imgview.setFitHeight(imgviewsize);
+        return imgview;
     }
 
     /**
