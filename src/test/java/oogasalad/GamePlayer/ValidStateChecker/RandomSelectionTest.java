@@ -3,11 +3,10 @@ package oogasalad.GamePlayer.ValidStateChecker;
 import static oogasalad.GamePlayer.Movement.CustomMovements.BankLeaverTest.BOARD_TEST_FILES_HEADER;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Setup.BoardSetup;
+import oogasalad.GamePlayer.Board.BoardSetup;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;

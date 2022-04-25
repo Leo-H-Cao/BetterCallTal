@@ -14,6 +14,13 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 public class AtomicEndCondition implements EndCondition {
 
   /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public AtomicEndCondition() {
+    super();
+  }
+
+  /**
    * @param board to check
    * @return 0 to teams with missing kings, 1 to its opponents, .5 to others, and nothing if both
    * kings present
@@ -41,7 +48,7 @@ public class AtomicEndCondition implements EndCondition {
   }
 
   /***
-  /**
+   /**
    * @return if the given team has its main piece on the given board
    */
   private boolean hasMainPiece(int team, ChessBoard board) {

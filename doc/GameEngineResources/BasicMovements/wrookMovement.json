@@ -1,3 +1,32 @@
 {
-  "moves" : [ ]
+  "moves": [
+    {
+      "relativeCoords": [
+        -1,
+        0
+      ],
+      "infinite": true
+    },
+    {
+      "relativeCoords": [
+        1,
+        0
+      ],
+      "infinite": true
+    },
+    {
+      "relativeCoords": [
+        0,
+        -1
+      ],
+      "infinite": true
+    },
+    {
+      "relativeCoords": [
+        0,
+        1
+      ],
+      "infinite": true
+    }
+  ]
 }

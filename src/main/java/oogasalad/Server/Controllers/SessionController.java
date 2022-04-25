@@ -1,6 +1,7 @@
 package oogasalad.Server.Controllers;
 
 import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.ChessBoard.ChessBoardData;
 import oogasalad.Server.SessionManagement.GameSessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -8,7 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -35,9 +38,10 @@ public class SessionController {
    * @param initialBoard the initial board of the game session
    */
   @PostMapping("/host/{id}/{host}/{opponent}")
+  @ResponseBody
   public void createGameSession(@PathVariable String id, @PathVariable int host,
-      @PathVariable int opponent, ChessBoard initialBoard) {
-    activeSessions.addSession(id, host, opponent, initialBoard);
+      @PathVariable int opponent, @RequestBody ChessBoardData initialBoard) {
+    activeSessions.addSession(id, host, opponent, initialBoard.toChessBoard());
   }
 
   /**
@@ -46,6 +50,7 @@ public class SessionController {
    * @param id the id of the game session
    */
   @GetMapping("/join/{id}")
+  @ResponseBody
   public int joinGameSession(@PathVariable String id) {
     return activeSessions.getSession(id).getOpponent();
   }
@@ -56,6 +61,7 @@ public class SessionController {
    * @param id the id of the game session
    */
   @PutMapping("/pause/{id}")
+  @ResponseBody
   public void pauseGameSession(@PathVariable String id) {
     activeSessions.getSession(id).setPaused(true);
   }
@@ -66,6 +72,7 @@ public class SessionController {
    * @param id the id of the game session
    */
   @PutMapping("/resume/{id}")
+  @ResponseBody
   public void resumeGameSession(@PathVariable String id) {
     activeSessions.getSession(id).setPaused(false);
   }
@@ -76,6 +83,7 @@ public class SessionController {
    * @param id the id of the game session
    */
   @DeleteMapping("/end/{id}")
+  @ResponseBody
   public void endGameSession(@PathVariable String id) {
     activeSessions.removeSession(id);
   }

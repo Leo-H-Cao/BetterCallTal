@@ -15,6 +15,13 @@ import oogasalad.GamePlayer.Movement.Movement;
  */
 public class MoveAbsorption implements MovementModifier {
 
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public MoveAbsorption() {
+    super();
+  }
+
   /***
    * Adds taken piece's moves to the current piece
    *
@@ -31,6 +38,8 @@ public class MoveAbsorption implements MovementModifier {
       piece.addNewMovements(Movement.invertMovements(justTaken.getMoves()),
           Movement.invertMovements(justTaken.getCaptures()));
       return Set.of(board.getTile(piece.getCoordinates()));
-    } catch (OutsideOfBoardException e) {return Collections.emptySet();}
+    } catch (OutsideOfBoardException e) {
+      return Collections.emptySet();
+    }
   }
 }

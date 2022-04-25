@@ -9,6 +9,13 @@ import oogasalad.GamePlayer.Board.Player;
  */
 public class OnlyFirstTeam extends TurnCriteria {
 
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public OnlyFirstTeam() {
+    super();
+  }
+
   /***
    * Creates OnlyFirstTeam with given players array
    *

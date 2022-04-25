@@ -30,6 +30,13 @@ public class DoubleFirstMove implements MovementInterface {
 
   private static final Logger LOG = LogManager.getLogger(DoubleFirstMove.class);
 
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public DoubleFirstMove() {
+    super();
+  }
+
   @Override
   public Set<ChessTile> movePiece(Piece piece, Coordinate finalSquare, ChessBoard board)
       throws InvalidMoveException, OutsideOfBoardException {

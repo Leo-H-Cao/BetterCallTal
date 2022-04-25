@@ -1,8 +1,12 @@
 package oogasalad.Server.SessionManagement;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashMap;
 import java.util.Map;
 import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Server.RequestBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 @Component("activeSessions")
@@ -10,6 +14,12 @@ public class GameSessionService {
 
   private static final int INIT_CAP = 1;
   private final Map<String, GameSession> activeSessions = new HashMap<>(INIT_CAP);
+
+  @Bean
+  @Primary
+  public ObjectMapper objectMapper() {
+    return RequestBuilder.objectMapperWithPTV();
+  }
 
   /**
    * Gets the session with the given sessionId.
