@@ -253,7 +253,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     ChessTile endTile = updatedTiles.stream().filter(t ->
         t.getPiece().isPresent() && t.getPiece().get().equals(moved)).findFirst().orElse(null);
     return endTile == null ? "Empty"
-        : String.format("%s %s %s%d", moved.getName(), getMovePreposition(endTile),
+        : String.format("%s %s %s%d", moved.getName(), getMovePreposition(endTile, moved.getTeam()),
             (char) (endTile.getCoordinates().getCol() + 'a'),
             getBoardHeight() - endTile.getCoordinates().getRow());
   }
@@ -261,9 +261,9 @@ public class ChessBoard implements Iterable<ChessTile> {
   /***
    * @return to for move, x for capture
    */
-  private String getMovePreposition(ChessTile tile) {
+  private String getMovePreposition(ChessTile tile, int team) {
     return history.getLast().board().getTileFromCoords(tile.getCoordinates()).getPiece().isPresent()
-        ? "x" : "to";
+        || findTakenPiece(team) != null ? "x" : "to";
   }
 
   /**
@@ -428,10 +428,12 @@ public class ChessBoard implements Iterable<ChessTile> {
         .getOpponentPieces(team);
     List<Piece> presentPieces = this.getOpponentPieces(team);
 
-    LOG.debug(String.format("Past pieces: %s", pastPieces));
+    LOG.debug(String.format("Past pieces:    %s", pastPieces));
     LOG.debug(String.format("Present pieces: %s", presentPieces));
 
-    return pastPieces.stream().filter(p -> !presentPieces.contains(p)).findFirst().orElse(null);
+    Piece takenPiece =  pastPieces.stream().filter(p -> !presentPieces.contains(p)).findFirst().orElse(null);
+    LOG.debug(String.format("Taken piece: %s", takenPiece));
+    return takenPiece;
   }
 
 
