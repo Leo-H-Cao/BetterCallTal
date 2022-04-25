@@ -12,6 +12,7 @@ import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 import oogasalad.Editor.ModelState.EditPiece.PieceGridTile;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Editor.ModelState.RulesState.GameRulesState;
+import oogasalad.Frontend.util.BackendConnector;
 
 import static oogasalad.Editor.ModelState.EditPiece.PieceGridTile.CAPTURE;
 import static oogasalad.Editor.ModelState.EditPiece.PieceGridTile.INFINITECAPTURE;
@@ -32,7 +33,7 @@ public class EditorBackend {
 		boardState = new BoardState(piecesState);
 		gameRulesState = new GameRulesState();
 		selectedTypeProperty = new SimpleObjectProperty<>(OPEN);
-		selectedPieceId = new SimpleStringProperty("rook");
+		selectedPieceId = new SimpleStringProperty("pawn");
 		alternatePiece = new SimpleIntegerProperty(0);
 		customPieceOpenId = new SimpleStringProperty();
 		createDefaultPieces();
@@ -94,15 +95,14 @@ public class EditorBackend {
 	}
 
 	private void createDefaultPiece(String name, int val, MovementGrid moves) {
-		getPiecesState().createDefaultPiece(name);
-		EditorPiece piece = getPiecesState().getPiece(name);
+		EditorPiece piece = getPiecesState().createDefaultPiece(name);
 		piece.setImage(0, new Image("images/pieces/white/" + name + ".png"));
 		piece.setImage(1, new Image("images/pieces/black/" + name + ".png"));
-		name = name + "Test";
+		name = name.substring(0, 1).toUpperCase() + name.substring(1) + " " + BackendConnector.getFrontendWord("ro");
 		piece.setPieceName(name);
 		piece.setPointValue(val);
 		piece.setMovementGrid(moves, 0);
-		if(name.equals("pawnTest")){
+		if(name.equals("Pawn")){
 			piece.setMovementGrid(createBlackPawnDefaultMoves(), 1);
 		}
 		else{
@@ -110,7 +110,7 @@ public class EditorBackend {
 		}
 	}
 
-	private MovementGrid createBlackPawnDefaultMoves(){
+	private MovementGrid createWhitePawnDefaultMoves(){
 		MovementGrid moves = new MovementGrid();
 		moves.setTile(3,2, OPEN);
 		moves.setTile(2,2, CAPTURE);
@@ -118,7 +118,7 @@ public class EditorBackend {
 		return moves;
 	}
 
-	private MovementGrid createWhitePawnDefaultMoves(){
+	private MovementGrid createBlackPawnDefaultMoves(){
 		MovementGrid moves = new MovementGrid();
 		moves.setTile(3,4, OPEN);
 		moves.setTile(2,4, CAPTURE);
@@ -132,10 +132,10 @@ public class EditorBackend {
 		moves.setTile(4,1, OPENANDCAPTURE);
 		moves.setTile(1,2, OPENANDCAPTURE);
 		moves.setTile(1,4, OPENANDCAPTURE);
-		moves.setTile(6,2, OPENANDCAPTURE);
-		moves.setTile(6,4, OPENANDCAPTURE);
-		moves.setTile(2,6, OPENANDCAPTURE);
-		moves.setTile(4,6, OPENANDCAPTURE);
+		moves.setTile(5,2, OPENANDCAPTURE);
+		moves.setTile(5,4, OPENANDCAPTURE);
+		moves.setTile(2,5, OPENANDCAPTURE);
+		moves.setTile(4,5, OPENANDCAPTURE);
 		return moves;
 	}
 

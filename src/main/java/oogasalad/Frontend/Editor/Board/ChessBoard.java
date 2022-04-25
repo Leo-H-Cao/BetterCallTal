@@ -4,7 +4,6 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import oogasalad.Editor.ModelState.BoardState.EditorBoard;
-import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 import oogasalad.Frontend.util.NodeContainer;
 
 public class ChessBoard extends NodeContainer {

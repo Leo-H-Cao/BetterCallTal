@@ -13,7 +13,7 @@ public enum PieceGridTile {
   OPENANDCAPTURE,
   INFINITECAPTURE;
 
-  public ResourceBundle myBundle;
+  public final ResourceBundle myBundle;
 
   PieceGridTile() {
     myBundle = ResourceBundle.getBundle(getClass().getName());

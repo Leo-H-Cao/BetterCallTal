@@ -4,8 +4,6 @@ import javafx.scene.Node;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import oogasalad.Frontend.util.LabelledContainer;
-import java.util.ArrayList;
-import java.util.Collection;
 
 public class ModifierLibrary extends LabelledContainer {
 	public ModifierLibrary() {
