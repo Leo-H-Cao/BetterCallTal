@@ -1,6 +1,6 @@
 package oogasalad.GamePlayer.Movement.MovementModifiers;
 
-import static oogasalad.GamePlayer.Board.Setup.BoardSetup.JSON_EXTENSION;
+import static oogasalad.GamePlayer.Board.BoardSetup.JSON_EXTENSION;
 import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_CONFIG_FILE_HEADER;
 import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_DEFAULT_FILE;
 
@@ -10,9 +10,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Set;
-import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;

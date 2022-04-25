@@ -28,10 +28,10 @@ public class PieceExport {
     basicCaptures = new ArrayList<>();
 
     String team = teamNum == 0? "w" : "b";
-    basicMovements.add(team+pieceName+"Movement");
+    basicMovements.add(team+pieceName+"Mov");
 
     //change for capture != movement
-    basicCaptures.add(team+pieceName+"Movement");
+    basicCaptures.add(team+pieceName+"Cap");
     movementModifiers = new ArrayList<>();
     onInteractionModifier = editorPiece.getOnInteractionModifiers();
   }

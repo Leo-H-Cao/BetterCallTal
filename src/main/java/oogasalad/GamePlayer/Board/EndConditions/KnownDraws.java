@@ -1,6 +1,6 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
-import static oogasalad.GamePlayer.Board.Setup.BoardSetup.JSON_EXTENSION;
+import static oogasalad.GamePlayer.Board.BoardSetup.JSON_EXTENSION;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,8 +13,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Player;
-import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.ValidStateChecker.BankBlocker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;

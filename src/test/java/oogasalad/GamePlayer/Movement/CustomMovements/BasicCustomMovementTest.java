@@ -15,7 +15,7 @@ import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.Board.Setup.BoardSetup;
+import oogasalad.GamePlayer.Board.BoardSetup;
 import oogasalad.GamePlayer.Movement.Movement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

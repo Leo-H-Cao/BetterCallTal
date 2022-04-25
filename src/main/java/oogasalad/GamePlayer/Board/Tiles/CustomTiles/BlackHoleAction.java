@@ -11,6 +11,13 @@ import oogasalad.GamePlayer.Board.Tiles.ChessTile;
  */
 public class BlackHoleAction implements TileAction {
 
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public BlackHoleAction(){
+    super();
+  }
+
   /***
    * Clears all pieces on tile
    *

@@ -1,12 +1,19 @@
 {
-  "general" : {
+  "general" : [ {
     "rows" : 8,
     "columns" : 8,
     "turnCriteria" : "Linear",
+<<<<<<< HEAD
     "colors" : [ "color1", "color2" ],
     "endConditions" : [ [ "Stalemate" ], [ "Another End Condition" ] ],
     "validStateChecker" : [ [ "ValidStateChecker" ] ]
   },
+=======
+    "colors" : [ "white", "black" ],
+    "endConditions" : [ [ "Checkmate" ], [ "Stalemate" ] ],
+    "validStateCheckers" : [ [ "Check" ] ]
+  } ],
+>>>>>>> 619a2e5a2ec93f97f17024245bef937914a6c732
   "playerInfo" : [ {
     "team" : 0,
     "opponents" : [ 1 ]
@@ -14,6 +21,37 @@
     "team" : 1,
     "opponents" : [ 0 ]
   } ],
+<<<<<<< HEAD
   "pieces" : [ ],
+=======
+  "pieces" : [ {
+    "row" : 2,
+    "col" : 1,
+    "team" : 0,
+    "mainPiece" : 0,
+    "pieceFile" : "rookTest",
+    "movementModifiers" : [ ],
+    "onInteractionModifier" : [ ],
+    "customMoves" : [ ]
+  }, {
+    "row" : 2,
+    "col" : 5,
+    "team" : 0,
+    "mainPiece" : 0,
+    "pieceFile" : "knightTest",
+    "movementModifiers" : [ ],
+    "onInteractionModifier" : [ ],
+    "customMoves" : [ ]
+  }, {
+    "row" : 5,
+    "col" : 2,
+    "team" : 0,
+    "mainPiece" : 0,
+    "pieceFile" : "queenTest",
+    "movementModifiers" : [ ],
+    "onInteractionModifier" : [ ],
+    "customMoves" : [ ]
+  } ],
+>>>>>>> 619a2e5a2ec93f97f17024245bef937914a6c732
   "tiles" : [ ]
 }

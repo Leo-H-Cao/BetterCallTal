@@ -1,16 +1,19 @@
 package oogasalad.GamePlayer.Movement.MovementModifiers;
 
 import static oogasalad.GamePlayer.Movement.CustomMovements.BankLeaverTest.BOARD_TEST_FILES_HEADER;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
+import oogasalad.GamePlayer.Board.BoardSetup;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Setup.BoardSetup;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class MoveAbsorptionTest {
+
   static final String MA_TEST_FILE = BOARD_TEST_FILES_HEADER + "MoveAbsorptionTest.json";
 
   private ChessBoard myBoard;
@@ -41,6 +44,7 @@ class MoveAbsorptionTest {
       assertTrue(pawn.getMoves(myBoard).contains(myBoard.getTile(Coordinate.of(6, 3))));
       assertTrue(pawn.getMoves(myBoard).contains(myBoard.getTile(Coordinate.of(3, 2))));
     } catch (Throwable e) {
+      e.printStackTrace();
       fail();
     }
   }

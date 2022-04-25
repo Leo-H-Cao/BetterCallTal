@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
@@ -23,6 +24,10 @@ public class LocalHistoryManager implements HistoryManager {
    */
   public LocalHistoryManager() {
     this(Collections.emptyList());
+  }
+
+  public LocalHistoryManager(HistoryManagerData data) {
+    this();
   }
 
   /**
@@ -171,5 +176,36 @@ public class LocalHistoryManager implements HistoryManager {
   @Override
   public Stream<History> stream() {
     return history.stream();
+  }
+
+  /**
+   * Gets the history API link for the current history manager data. Returns an empty string if the
+   * history manager is a local history manager.
+   *
+   * @return the history API link for the current history manager data.
+   */
+  @Override
+  public String getLink() {
+    return "";
+  }
+
+  /**
+   * Gets the history manager data.
+   *
+   * @return the history manager data.
+   */
+  @Override
+  public HistoryManagerData getHistoryManagerData() {
+    return new HistoryManagerData(this);
+  }
+
+  /**
+   * Sets a callback to handle any sort of error that occurs during the game.
+   *
+   * @param errorHandler the error handler to set
+   */
+  @Override
+  public void setErrorHandler(Consumer<Throwable> errorHandler) {
+    // Do nothing
   }
 }

@@ -1,12 +1,8 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Player;
 
 /***
  * Creates an end condition where the game never ends
@@ -14,6 +10,13 @@ import oogasalad.GamePlayer.Board.Player;
  * @author Vincent Chen
  */
 public class NoEndCondition implements EndCondition {
+
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public NoEndCondition() {
+    super();
+  }
 
   /***
    * @return nothing, as the game never ends

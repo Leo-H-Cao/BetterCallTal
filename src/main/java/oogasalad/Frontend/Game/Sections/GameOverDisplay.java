@@ -2,7 +2,6 @@ package oogasalad.Frontend.Game.Sections;
 
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -13,7 +12,6 @@ import oogasalad.Frontend.util.ButtonType;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 public class GameOverDisplay {

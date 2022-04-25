@@ -37,7 +37,6 @@ public class LanguageModalTest extends DukeApplicationTest {
 		assertEquals(myStage.getTitle(), ResourceBundle.getBundle("oogasalad.Frontend.Menu.languages.French").getString("SelectLanguage"));
 	}
 
-
 //	@Test
 //	void testSelectEnglish() {
 //		select(myLanguageSelector, "English");
@@ -56,4 +55,6 @@ public class LanguageModalTest extends DukeApplicationTest {
 //		clickOn(lookup("#start").query());
 //		assertTrue(myStage.isFullScreen());
 //	}
+
+
 }

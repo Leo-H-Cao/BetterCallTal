@@ -1,0 +1,10 @@
+{
+  "pieceName" : "rookTest",
+  "imgFile" : "images/pieces/white/rook.png",
+  "pointValue" : 5,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : [ ],
+  "basicMovements" : [ "wrookTestMov" ],
+  "basicCaptures" : [ "wrookTestCap" ]
+}

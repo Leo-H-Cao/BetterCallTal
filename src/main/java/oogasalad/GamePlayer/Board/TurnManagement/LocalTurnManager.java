@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.function.Consumer;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
@@ -31,6 +32,11 @@ public class LocalTurnManager implements TurnManager {
     endResult = new HashMap<>();
   }
 
+  /**
+   * Creates a new turn manager with the same data as the turn manager passed in.
+   *
+   * @param turnManagerData the turn manager data to copy
+   */
   public LocalTurnManager(TurnManagerData turnManagerData) {
     this(turnManagerData.players(), turnManagerData.turn(), turnManagerData.conditions());
   }
@@ -92,6 +98,47 @@ public class LocalTurnManager implements TurnManager {
   @Override
   public GamePlayers getGamePlayers() {
     return players;
+  }
+
+  /**
+   * Gets the turn criteria for the game
+   *
+   * @return the turn criteria for the game
+   */
+  @Override
+  public TurnCriteria getTurnCriteria() {
+    return turn;
+  }
+
+  /**
+   * Gets the end conditions for the game
+   *
+   * @return the end conditions for the game
+   */
+  @Override
+  public Collection<EndCondition> getEndConditions() {
+    return endConditions;
+  }
+
+  /**
+   * Gets the turn manager API link for the current history manager data. Returns an empty string if
+   * the history manager is a turn manager.
+   *
+   * @return the turn manager API link for the current turn manager data.
+   */
+  @Override
+  public String getLink() {
+    return "";
+  }
+
+  /**
+   * Sets a callback to handle any sort of error that occurs during the game.
+   *
+   * @param errorHandler the error handler to set
+   */
+  @Override
+  public void setErrorHandler(Consumer<Throwable> errorHandler) {
+    // Do nothing
   }
 
 }
