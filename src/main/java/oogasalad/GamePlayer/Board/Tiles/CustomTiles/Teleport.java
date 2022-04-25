@@ -67,4 +67,11 @@ public class Teleport implements TileAction {
     }
     return Collections.emptySet();
   }
+
+  /***
+   * @return teleport location for testing
+   */
+  Coordinate getTeleportLocation() {
+    return teleportLocation;
+  }
 }

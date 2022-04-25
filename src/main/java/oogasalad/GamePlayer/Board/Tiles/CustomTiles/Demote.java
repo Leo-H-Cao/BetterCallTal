@@ -11,6 +11,7 @@ import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
+import oogasalad.GamePlayer.util.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,6 +25,7 @@ public class Demote implements TileAction {
   private static final Logger LOG = LogManager.getLogger(Demote.class);
   private static final String DEMOTE_FILE_PATH_HEADER = "doc/GameEngineResources/Other/";
   private static final String DEFAULT_DEMOTE_FILE = "DemotionPiece";
+  private static final List<String> DEFAULT_DEMOTE_PIECE = List.of("Pawn");
 
   private String demotePieceName;
 
@@ -40,24 +42,7 @@ public class Demote implements TileAction {
    * @param demoteFilePath to read
    */
   public Demote(String demoteFilePath) {
-    demotePieceName = getDemotablePieceName(DEMOTE_FILE_PATH_HEADER + demoteFilePath);
-  }
-
-  /**
-   * Reads in promotable piece names from a text file
-   *
-   * @return promotable piece list
-   */
-  private String getDemotablePieceName(String filePath) {
-    try {
-      File demoteFile = new File(filePath);
-      Scanner reader = new Scanner(demoteFile);
-      String demoteName = reader.next();
-      reader.close();
-      return demoteName;
-    } catch (Exception e) {
-      return "Pawn";
-    }
+    demotePieceName = FileReader.readManyStrings(DEMOTE_FILE_PATH_HEADER + demoteFilePath, DEFAULT_DEMOTE_PIECE).get(0);
   }
 
   /***
