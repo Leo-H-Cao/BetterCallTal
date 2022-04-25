@@ -15,29 +15,38 @@
     "opponents" : [ 0 ]
   } ],
   "pieces" : [ {
-    "row" : 1,
-    "col" : 2,
+    "row" : 0,
+    "col" : 5,
     "team" : 1,
     "mainPiece" : 0,
-    "pieceFile" : "piece2",
+    "pieceFile" : "king",
     "movementModifiers" : [ ],
     "onInteractionModifier" : [ ],
     "customMoves" : [ ]
   }, {
-    "row" : 5,
+    "row" : 1,
     "col" : 4,
-    "team" : 0,
+    "team" : 1,
     "mainPiece" : 0,
-    "pieceFile" : "piece1",
+    "pieceFile" : "knight",
     "movementModifiers" : [ ],
     "onInteractionModifier" : [ ],
     "customMoves" : [ ]
   }, {
     "row" : 6,
-    "col" : 3,
-    "team" : 1,
+    "col" : 2,
+    "team" : 0,
     "mainPiece" : 0,
-    "pieceFile" : "piece1",
+    "pieceFile" : "rook",
+    "movementModifiers" : [ ],
+    "onInteractionModifier" : [ ],
+    "customMoves" : [ ]
+  }, {
+    "row" : 7,
+    "col" : 2,
+    "team" : 0,
+    "mainPiece" : 0,
+    "pieceFile" : "king",
     "movementModifiers" : [ ],
     "onInteractionModifier" : [ ],
     "customMoves" : [ ]

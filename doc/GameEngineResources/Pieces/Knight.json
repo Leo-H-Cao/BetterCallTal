@@ -1,10 +1,10 @@
 {
-  "pieceName": "Knight",
-  "imgFile": "knight",
-  "pointValue": 3,
-  "basicMovements": ["knight"],
-  "basicCaptures": ["knight"],
-  "customMoves": [],
-  "movementModifiers": [],
-  "onInteractionModifier": []
+  "pieceName" : "knight",
+  "imgFile" : "images/pieces/black/knight.png",
+  "pointValue" : 3,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : null,
+  "basicMovements" : [ "bknightMovement" ],
+  "basicCaptures" : [ "bknightMovement" ]
 }
