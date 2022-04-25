@@ -19,6 +19,7 @@ import java.io.File;
 import java.util.*;
 
 public abstract class View extends BackendConnector {
+
 	private static Collection<View> myViews;
 	private static boolean fullscreen = false;
 	protected Scene myScene;
