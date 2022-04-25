@@ -1,7 +1,6 @@
 package oogasalad.GamePlayer.GamePiece;
 
 
-import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;

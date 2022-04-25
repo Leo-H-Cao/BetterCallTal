@@ -2,7 +2,6 @@ package oogasalad.Server.Controllers;
 
 import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.ChessBoard.ChessBoardData;
-import oogasalad.GamePlayer.Board.History.History;
 import oogasalad.GamePlayer.Board.History.HistoryData;
 import oogasalad.Server.SessionManagement.GameSessionService;
 import org.apache.logging.log4j.LogManager;

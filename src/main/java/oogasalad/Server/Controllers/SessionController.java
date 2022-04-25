@@ -1,6 +1,5 @@
 package oogasalad.Server.Controllers;
 
-import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.ChessBoard.ChessBoardData;
 import oogasalad.Server.SessionManagement.GameSessionService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,7 +2,6 @@ package oogasalad.GamePlayer.Board.Tiles.CustomTiles;
 
 import static oogasalad.Frontend.Game.GameView.promotionPopUp;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;

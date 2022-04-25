@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 import java.util.ResourceBundle;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LanguageModalTest extends DukeApplicationTest {
 	private ChoiceBox<String> myLanguageSelector;
