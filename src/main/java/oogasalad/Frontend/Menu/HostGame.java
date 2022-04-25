@@ -47,6 +47,8 @@ public class HostGame extends View {
     private TextArea RoomName;
     private static final Double TEXTAREAWIDTH = 100.0;
     private static final Double TEXTAREAHEIGHT = 20.0;
+    private Integer prefWidth = 150;
+    private Integer prefHeight=50;
     private String RoomID;
     private Boolean StartShowing;
     private Node prompt; // MADE GLOBAL FOR TESTING!!!
@@ -92,8 +94,8 @@ public class HostGame extends View {
                     StackPane.setAlignment(Room, Pos.CENTER_LEFT);
                     myStackPane.getChildren().addAll(team, Room);
                 });
-        load.setPrefWidth(150);
-        load.setPrefHeight(50);
+        load.setPrefWidth(prefWidth);
+        load.setPrefHeight(prefHeight);
         return new Group(load);
     }
 

@@ -27,6 +27,7 @@ public class GameOverDisplay {
     private static Double WINVALUE = 1.0;
     private static Double WIDTH = 500.0;
     private static Double HEIGHT = 500.0;
+    private Integer fontsize  = 50;
 
     public GameOverDisplay(Map<Integer, Double> scores, Consumer<Node> remove) {
         removeCons =remove;
@@ -49,11 +50,11 @@ public class GameOverDisplay {
         VBox vb = new VBox();
         vb.setMaxSize(WIDTH, HEIGHT);
         Text GameOver = new Text(BackendConnector.getFrontendWord("GameOver", getClass()));
-        GameOver.setFont(new Font("Times New Roman",64));
+        GameOver.setFont(new Font("Times New Roman",fontsize));
         GameOver.setFill(Color.WHITE);
 
         Text win = new Text(BackendConnector.getFrontendWord(myTeams.get(winner), getClass()));
-        win.setFont(new Font("Times New Roman",64));
+        win.setFont(new Font("Times New Roman",fontsize));
         win.setFill(Color.CORAL);
 
         Button OK = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("Ok", getClass()), OK_BUTTON_ID,

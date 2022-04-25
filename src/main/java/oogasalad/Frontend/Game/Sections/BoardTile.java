@@ -45,6 +45,7 @@ public class BoardTile {
     private Color WhiteSquare = Color.LIGHTGREY;
     private String LitColor = "Cyan";
     private BiConsumer<String, String> ErrorRunnable;
+    private int borderSpacing = 10;
 
     public BoardTile(ChessTile ct, double width, double height, Consumer<Piece> lightupCons, Runnable clearlitrun, Consumer<Piece> setSelPiece, Consumer<Coordinate> MoveCons, BiConsumer<String, String> errorRun) {
         myCoord = ct.getCoordinates();
@@ -126,8 +127,8 @@ public class BoardTile {
                 PieceView.setFitHeight(myTileHeight);
                 PieceView.setFitWidth(myTileWidth);
             } else {
-                PieceView.setFitHeight(myTileHeight - 10);
-                PieceView.setFitWidth(myTileWidth - 10);
+                PieceView.setFitHeight(myTileHeight - borderSpacing);
+                PieceView.setFitWidth(myTileWidth - borderSpacing);
             }
             PieceView.setPreserveRatio(true);
             PieceView.setSmooth(true);
