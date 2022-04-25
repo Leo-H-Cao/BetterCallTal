@@ -18,8 +18,8 @@ public class HostGameTest extends DukeApplicationTest {
     @Override
     public void start(Stage stage) {
         myResources = ResourceBundle.getBundle("oogasalad.Frontend.Menu.languages.English");
-        myHostGame = new HostGame(stage);
         BackendConnector.initBackend(myResources);
+        myHostGame = new HostGame(stage);
         stage.setScene(myHostGame.getScene());
         stage.show();
     }
@@ -42,14 +42,5 @@ public class HostGameTest extends DukeApplicationTest {
         TextArea roomname = lookup("#RoomName").query();
         writeInputTo(roomname, "THIS IS WORKING");
         clickOn(lookup("#HostConfirm").query());
-    }
-
-    @Test
-    void testStartButton() {
-        runAsJFXAction(() -> myHostGame.injectBoard(filepath));
-        TextArea roomname = lookup("#RoomName").query();
-        writeInputTo(roomname, "THIS IS WORKING");
-        clickOn(lookup("#HostConfirm").query());
-        clickOn(lookup("#HostStart").query());
     }
 }

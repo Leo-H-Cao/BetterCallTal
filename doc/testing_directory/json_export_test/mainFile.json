@@ -1,12 +1,12 @@
 {
-  "general" : {
+  "general" : [ {
     "rows" : 8,
     "columns" : 8,
     "turnCriteria" : "Linear",
     "colors" : [ "white", "black" ],
     "endConditions" : [ [ "Checkmate" ], [ "Stalemate" ] ],
     "validStateChecker" : [ [ "Check" ] ]
-  },
+  } ],
   "playerInfo" : [ {
     "team" : 0,
     "opponents" : [ 1 ]

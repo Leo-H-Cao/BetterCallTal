@@ -16,8 +16,8 @@ public class JoinGameTest extends DukeApplicationTest {
     @Override
     public void start(Stage stage) {
         myResources = ResourceBundle.getBundle("oogasalad.Frontend.Menu.languages.English");
-        myJoinGame = new JoinGame(stage);
         BackendConnector.initBackend(myResources);
+        myJoinGame = new JoinGame(stage);
         stage.setScene(myJoinGame.getScene());
         stage.show();
     }
@@ -32,13 +32,5 @@ public class JoinGameTest extends DukeApplicationTest {
         TextArea roomname = lookup("#RoomName").query();
         writeInputTo(roomname, "THIS IS WORKING");
         clickOn(lookup("#JoinConfirm").query());
-    }
-
-    @Test
-    void testStartButton() {
-        TextArea roomname = lookup("#RoomName").query();
-        writeInputTo(roomname, "THIS IS WORKING");
-        clickOn(lookup("#JoinConfirm").query());
-        clickOn(lookup("#JoinStart").query());
     }
 }
