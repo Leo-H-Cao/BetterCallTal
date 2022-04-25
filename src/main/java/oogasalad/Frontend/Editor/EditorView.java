@@ -68,7 +68,7 @@ public class EditorView extends View {
 		String pieceId = "custom" + pieceEditorCount;
 		getEditorBackend().getPiecesState().createCustomPiece(pieceId);
 		EditorPiece piece = getEditorBackend().getPiecesState().getPiece(pieceId);
-		piece.setPieceName("custom piece " + pieceEditorCount);
+		piece.setPieceName("customPiece" + pieceEditorCount);
 		openCustomPiece(pieceId);
 	}
 
