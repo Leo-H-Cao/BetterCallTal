@@ -68,7 +68,6 @@ public class GameView extends View {
     public GameView(Stage stage) {
         super(stage);
         remotePlayers = new ArrayList<>();
-        myBoardHistory = new BoardHistory();
 
     }
 
@@ -84,7 +83,8 @@ public class GameView extends View {
         myID = chessboard.getThisPlayer();
         isServer = false;  // getGameBackend().getChessBoard().getGameType().equals("SERVER");
         makeConsandRuns();
-        myBoardGrid = new BoardGrid(chessboard, lightUpCons, MoveCons, errorRun); //TODO: Figure out player ID stuff
+        myBoardHistory = new BoardHistory();
+        myBoardGrid = new BoardGrid(chessboard, lightUpCons, MoveCons, errorRun, myBoardHistory); //TODO: Figure out player ID stuff
         //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
         remotePlayers = new ArrayList<>();
@@ -113,6 +113,7 @@ public class GameView extends View {
         makeKeyListener();
         LOG.debug("makeMove in GameView reached\n");
         try {
+            if (!myBoardHistory.isOnRecent()) throw new Exception("Please make sure your board is the most current! Hint, press D until no noticeable visual changes occur");
             Collection<TurnUpdate> updates = new ArrayList<>();
             TurnUpdate tu = getGameBackend().getChessBoard().move(myBoardGrid.getSelectedPiece(), c);
             updates.add(tu);
