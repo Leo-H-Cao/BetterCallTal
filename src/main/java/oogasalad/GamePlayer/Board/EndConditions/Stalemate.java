@@ -13,6 +13,12 @@ import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.ValidStateChecker.Check;
 
+/**
+ * End condition where a player reaches stalemate
+ *
+ * @author Jed Yang
+ */
+
 public class Stalemate implements EndCondition{
   private Check check = new Check();
 

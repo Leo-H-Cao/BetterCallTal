@@ -9,7 +9,7 @@ import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 /***
  * Interface for custom tile functionality
  *
- * @author Vincent Chen
+ * @author Vincent Chen, Jed Yang
  */
 public interface TileAction {
 
