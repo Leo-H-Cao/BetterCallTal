@@ -27,6 +27,7 @@ public class Bot implements RemotePlayer {
   private ArrayList<ChessTile> topMoveTiles = new ArrayList<>();
   ArrayList<Double> utilityList  = new ArrayList<>();
   double maxUtility = Integer.MIN_VALUE;
+  private int minimaxDepth = 2;
 
 
   public Bot(int team, TurnCriteria tc){
@@ -47,11 +48,11 @@ public class Bot implements RemotePlayer {
       throws Throwable {
 
     if(board.isGameOver()){
-      return new TurnUpdate(null, -1);
+      return new TurnUpdate(Set.of(), -1);
     }
 
 
-    return getMinimaxMove(board, currentPlayer, 2);
+    return getMinimaxMove(board, currentPlayer, minimaxDepth);
     //return getRandomMove(board, currentPlayer);
   }
 
