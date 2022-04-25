@@ -136,6 +136,7 @@ public class ExportJSON {
    */
   private void createBasicMovement(MovementGrid movementGrid, String pieceName, int teamNum){
     BasicMovementExportWrapper movementWrapper = new BasicMovementExportWrapper();
+    BasicMovementExportWrapper captureWrapper = new BasicMovementExportWrapper();
     for(int y = 0; y < MovementGrid.PIECE_GRID_SIZE; y++){
       for(int x = 0; x < MovementGrid.PIECE_GRID_SIZE; x++){
         PieceGridTile curTile = movementGrid.getTileStatus(x, y);
