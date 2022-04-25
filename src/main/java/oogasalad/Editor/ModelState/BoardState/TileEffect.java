@@ -10,8 +10,7 @@ public enum TileEffect {
   PROMOTION("Promotion"),
   SWAP("Swap"),
   PROMOTIONREVERSE("PromotionReverse"),
-  DEMOTE("Demote"),
-  FIRE("Fire");
+  DEMOTE("Demote");
 
   // Member to hold the name
   private String string;
