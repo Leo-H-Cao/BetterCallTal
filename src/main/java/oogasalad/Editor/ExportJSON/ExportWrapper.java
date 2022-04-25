@@ -9,10 +9,10 @@ import java.util.ArrayList;
  */
 public class ExportWrapper {
 
-  private ArrayList<GeneralExport> general;
-  private ArrayList<PlayerInfoExport> playerInfo;
-  private ArrayList<PieceMainExport> pieces;
-  private ArrayList<TileExport> tiles;
+  private final ArrayList<GeneralExport> general;
+  private final ArrayList<PlayerInfoExport> playerInfo;
+  private final ArrayList<PieceMainExport> pieces;
+  private final ArrayList<TileExport> tiles;
 
   public ExportWrapper(GeneralExport generalExport, ArrayList<PlayerInfoExport> playerInfo, ArrayList<PieceMainExport> pieces, ArrayList<TileExport> tiles){
     general = new ArrayList<>();

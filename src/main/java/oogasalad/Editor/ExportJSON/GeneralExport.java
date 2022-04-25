@@ -9,8 +9,8 @@ import java.util.ArrayList;
  */
 public class GeneralExport {
 
-  private int rows;
-  private int columns;
+  private final int rows;
+  private final int columns;
   private String turnCriteria;
   private ArrayList<String> colors;
   private ArrayList<ArrayList<String>> endConditions;

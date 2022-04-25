@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
@@ -25,7 +26,6 @@ import org.apache.logging.log4j.Logger;
  */
 public class ExportJSON {
   private static final Logger LOG = LogManager.getLogger(ExportJSON.class);
-  private final int PIECE_LOCATION = 3;
   private final String OBJECT_MAPPER_ERR_MSG = "JSON object mapper exception";
 
   private final PiecesState piecesState;
@@ -55,16 +55,23 @@ public class ExportJSON {
 
   /**
    * Writes pieces to individual pieces JSON, and creates main game file
-   * @param parentDir to save the main game configurations file
+   * @param fileName to save the main game configurations file
    */
-  public void writeToJSON(File parentDir){
+  public void writeToJSON(File fileName){
     ObjectMapper objectMapper = new ObjectMapper();
     try{
         for(PieceExport piece : pieces){
-          objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/GameEngineResources/Pieces/"+piece.getPieceName()+".json"), piece);
+          objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/GameEngineResources/Pieces/"+piece.getPieceId()+".json"), piece);
         }
         MainJSONString = objectMapper.writeValueAsString(exportWrapper);
-        objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(parentDir.getAbsolutePath()+"/mainFile.json"), exportWrapper);
+        String mainFileName = fileName.getAbsolutePath();
+
+        // Add json extension if not provided
+        if(Arrays.stream(mainFileName.split("\\.")).noneMatch((e) -> e.equals("json"))) {
+          mainFileName = mainFileName + ".json";
+        }
+
+        objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(mainFileName), exportWrapper);
 
       } catch (IOException e) {
       LOG.warn(OBJECT_MAPPER_ERR_MSG);
@@ -140,8 +147,9 @@ public class ExportJSON {
     for(int y = 0; y < MovementGrid.PIECE_GRID_SIZE; y++){
       for(int x = 0; x < MovementGrid.PIECE_GRID_SIZE; x++){
         PieceGridTile curTile = movementGrid.getTileStatus(x, y);
-        int relX = x-PIECE_LOCATION;
-        int relY = PIECE_LOCATION-y;
+        int PIECE_LOCATION = 3;
+        int relX = x- PIECE_LOCATION;
+        int relY = PIECE_LOCATION -y;
         BasicMovementExport basicMovement = new BasicMovementExport(relX, relY, curTile == PieceGridTile.INFINITY || curTile == PieceGridTile.INFINITECAPTURE);
         if(curTile == PieceGridTile.OPEN || curTile == PieceGridTile.INFINITY){
           movementWrapper.addMovement(basicMovement);
@@ -172,9 +180,11 @@ public class ExportJSON {
     try{
       File movementDir = new File("doc/GameEngineResources/BasicMovements");
       if (!movementDir.exists()){
-        movementDir.mkdirs();
+        boolean result = movementDir.mkdirs();
+        if(result) {
+          objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(movementDir.getAbsolutePath()+"/"+team+pieceName+fileName), basicMovements);
+        }
       }
-      objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(movementDir.getAbsolutePath()+"/"+team+pieceName+fileName), basicMovements);
     }
     catch (IOException e){
       LOG.warn(OBJECT_MAPPER_ERR_MSG);

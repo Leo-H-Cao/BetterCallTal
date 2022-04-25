@@ -78,10 +78,9 @@ public class EditorBackend {
 		return customPieceOpenId;
 	}
 
-	public void exportState() {
+	public void exportState(File fileName) {
 		ExportJSON exporter = new ExportJSON(piecesState, gameRulesState, boardState);
-		File parentDir = new File("doc/testing_directory/json_export_test");
-		exporter.writeToJSON(parentDir);
+		exporter.writeToJSON(fileName);
 	}
 
 	private void createDefaultPieces() {
