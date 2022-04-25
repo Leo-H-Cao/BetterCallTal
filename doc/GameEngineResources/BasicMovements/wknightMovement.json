@@ -1,3 +1,60 @@
 {
-  "moves" : [ ]
+  "moves": [
+    {
+      "relativeCoords": [
+        1,
+        -2
+      ],
+      "infinite": false
+    },
+    {
+      "relativeCoords": [
+        1,
+        2
+      ],
+      "infinite": false
+    },
+    {
+      "relativeCoords": [
+        -1,
+        2
+      ],
+      "infinite": false
+    },
+    {
+      "relativeCoords": [
+        -1,
+        -2
+      ],
+      "infinite": false
+    },
+    {
+      "relativeCoords": [
+        2,
+        1
+      ],
+      "infinite": false
+    },
+    {
+      "relativeCoords": [
+        2,
+        -1
+      ],
+      "infinite": false
+    },
+    {
+      "relativeCoords": [
+        -2,
+        -1
+      ],
+      "infinite": false
+    },
+    {
+      "relativeCoords": [
+        -2,
+        1
+      ],
+      "infinite": false
+    }
+  ]
 }

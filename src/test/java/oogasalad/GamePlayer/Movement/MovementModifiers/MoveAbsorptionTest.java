@@ -44,6 +44,7 @@ class MoveAbsorptionTest {
       assertTrue(pawn.getMoves(myBoard).contains(myBoard.getTile(Coordinate.of(6, 3))));
       assertTrue(pawn.getMoves(myBoard).contains(myBoard.getTile(Coordinate.of(3, 2))));
     } catch (Throwable e) {
+      e.printStackTrace();
       fail();
     }
   }
