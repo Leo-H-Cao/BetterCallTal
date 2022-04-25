@@ -1,5 +1,6 @@
 package oogasalad.Frontend.util;
 
+import javafx.geometry.HPos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -26,7 +27,9 @@ public abstract class LabelledContainer extends NodeContainer {
 
 	private Node makeLayout() {
 		GridPane ret = new GridPane();
-		ret.add(makeTitle(), 0, 0);
+		Node title = makeTitle();
+		ret.add(title, 0, 0);
+		GridPane.setHalignment(title, HPos.CENTER);
 		Group g = new Group(fillContent());
 		ret.add(g, 0, 1);
 		ScrollPane scrollPane = new ScrollPane();

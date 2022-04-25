@@ -17,15 +17,16 @@ public class PieceBoardTile extends NodeContainer {
 	public int SIZE;
 	private final Property<PieceGridTile> status;
 	private final Property<Image> myImage;
-	private int myX, myY;
-	private String myId;
+	private final int myX, myY, myTeam;
+	private final String myId;
 
-	public PieceBoardTile(int x, int y, PieceGridTile type, String id) {
+	public PieceBoardTile(int x, int y, PieceGridTile type, String id, int team) {
 		myX = x;
 		myY = y;
 		myId = id;
+		myTeam = team;
 		status = new SimpleObjectProperty(type);
-		myImage = getEditorBackend().getPiecesState().getPiece(myId).getImage(0);
+		myImage = getEditorBackend().getPiecesState().getPiece(myId).getImage(myTeam);
 		myResources.ifPresent(e -> SIZE = Integer.parseInt(e.getString("Size")));
 	}
 
@@ -37,7 +38,7 @@ public class PieceBoardTile extends NodeContainer {
 	private Node makeTile() {
 		Rectangle rect = new Rectangle(SIZE, SIZE, status.getValue().getColor());
 		StackPane ret = new StackPane(rect);
-		Coordinate pieceLocation = getEditorBackend().getPiecesState().getPiece(myId).getMovementGrid(0).getPieceLocation();
+		Coordinate pieceLocation = getEditorBackend().getPiecesState().getPiece(myId).getMovementGrid(myTeam).getPieceLocation();
 		ImageView pieceImage = new ImageView();
 		if(pieceLocation.getRow() == myX && pieceLocation.getCol() == myY) {
 			pieceImage.setImage(myImage.getValue());
@@ -47,6 +48,7 @@ public class PieceBoardTile extends NodeContainer {
 			pieceImage.setPreserveRatio(true);
 			ret.getChildren().add(pieceImage);
 		}
+
 		status.addListener((ob, ov, nv) -> rect.setFill(nv.getColor()));
 		myImage.addListener((ob, ov, nv) -> pieceImage.setImage(nv));
 
@@ -54,7 +56,7 @@ public class PieceBoardTile extends NodeContainer {
 		if(status.getValue() != PieceGridTile.PIECE) {
 			ButtonFactory.addAction(ret, (e) -> {
 				PieceGridTile type = getEditorBackend().getSelectedPieceEditorType().getValue();
-				getEditorBackend().getPiecesState().getPiece(myId).setTile(myX, myY, type, 0);
+				getEditorBackend().getPiecesState().getPiece(myId).setTile(myX, myY, type, myTeam);
 				status.setValue(type);
 			});
 		}

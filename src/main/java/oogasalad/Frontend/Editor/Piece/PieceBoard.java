@@ -1,20 +1,18 @@
 package oogasalad.Frontend.Editor.Piece;
 
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 import oogasalad.Frontend.util.NodeContainer;
 
 public class PieceBoard extends NodeContainer {
-	private String myId;
-	private SimpleIntegerProperty mySelectedTeam;
+	private final String myId;
+	private final int mySelectedTeam;
 
-	public PieceBoard(String id, SimpleIntegerProperty selectedTeam) {
+	public PieceBoard(String id, int selectedTeam) {
 		myId = id;
 		mySelectedTeam = selectedTeam;
 	}
@@ -34,7 +32,7 @@ public class PieceBoard extends NodeContainer {
 		int size = MovementGrid.PIECE_GRID_SIZE;
 		for(int i = 0; i < size; i++) {
 			for(int j = 0; j < size; j++) {
-				PieceBoardTile newTile = new PieceBoardTile(j, i, getEditorBackend().getPiecesState().getPiece(myId).getTileStatus(j, i, 0), myId);
+				PieceBoardTile newTile = new PieceBoardTile(j, i, getEditorBackend().getPiecesState().getPiece(myId).getTileStatus(j, i, mySelectedTeam), myId, mySelectedTeam);
 				ret.add(newTile.getNode(), j, i);
 			}
 		}
@@ -45,6 +43,7 @@ public class PieceBoard extends NodeContainer {
 		TextField textArea = new TextField(getEditorBackend().getPiecesState().getPiece(myId).getPieceName().getValue());
 		textArea.setFont(new Font(36));
 		textArea.setId("pieceName");
+		textArea.setAlignment(Pos.CENTER);
 
 		textArea.textProperty().addListener((ob, ov, nv) -> getEditorBackend().getPiecesState().getPiece(myId).setPieceName(nv));
 
