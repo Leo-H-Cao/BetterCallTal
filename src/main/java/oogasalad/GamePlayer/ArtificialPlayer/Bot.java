@@ -1,6 +1,7 @@
 package oogasalad.GamePlayer.ArtificialPlayer;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -51,7 +52,7 @@ public class Bot implements RemotePlayer {
       throws Throwable {
 
     if(board.isGameOver()){
-      return new TurnUpdate(Set.of(), -1);
+      return new TurnUpdate(Set.of(), -1, "");
     }
 
     ResourceBundle botResources = ResourceBundle.getBundle(RESOURCE_PATH);
@@ -79,7 +80,7 @@ public class Bot implements RemotePlayer {
         return getMinimaxMove(board, currentPlayer, i);
       }
     }
-    return new TurnUpdate(Set.of(), -1);
+    return new TurnUpdate(Set.of(), -1, "");
   }
 
   private TurnUpdate getMinimaxMove(ChessBoard board, int currentPlayer, int depth)

@@ -1,5 +1,6 @@
 package oogasalad.GamePlayer.Board.TurnManagement;
 
+import java.util.List;
 import java.util.Set;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 
@@ -8,10 +9,6 @@ import oogasalad.GamePlayer.Board.Tiles.ChessTile;
  *
  * @author Vincent Chen
  */
-public record TurnUpdate(Set<ChessTile> updatedSquares, int nextPlayer) {
+public record TurnUpdate(Set<ChessTile> updatedSquares, int nextPlayer, String notation) {
 
-  public TurnUpdate(Set<ChessTile> updatedSquares, int nextPlayer) {
-    this.updatedSquares = updatedSquares;
-    this.nextPlayer = nextPlayer;
-  }
 }

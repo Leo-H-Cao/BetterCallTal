@@ -84,7 +84,7 @@ public class Piece implements Cloneable {
    * @return set of updated chess tiles
    */
   public Set<ChessTile> move(ChessTile finalSquare, ChessBoard board)
-      throws InvalidMoveException, OutsideOfBoardException {
+      throws InvalidMoveException {
     return movementHandler.move(this, finalSquare, board);
   }
 
