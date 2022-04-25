@@ -119,7 +119,7 @@ public class GameView extends View {
             if (turnKeeper.hasRemote()) {
                 remotePlayers.forEach(e -> {
                     try {
-                        updates.add(e.getRemoteMove(getGameBackend().getChessBoard(), remotePlayers.indexOf(e)));
+                        updates.add(e.getRemoteMove(getGameBackend().getChessBoard(), 1));
                     } catch (Throwable ex) {
                         getGameBackend().showError(ex.getClass().getSimpleName(), ex.getMessage());
                     }
