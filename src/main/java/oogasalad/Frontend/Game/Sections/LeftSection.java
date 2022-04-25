@@ -4,8 +4,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
@@ -22,6 +20,7 @@ public class LeftSection {
     private String Flip_ID = "flip";
     private String ServMess = "ServerMessage";
     private Double fontsize = 45.0;
+    private Button flipbutton; //MADE GLOBAL ONLY FOR TESTING
 
     public LeftSection(Runnable Switch) {
         SideVbox = makeSideVbox(Switch);
@@ -33,12 +32,16 @@ public class LeftSection {
         serverMessage.wrapTextProperty();
         VBox vb = new VBox();
 
-        Button flipbutton = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord(Flip, getClass()), Flip_ID,
+        flipbutton = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord(Flip, getClass()), Flip_ID,
                 (e) -> Switchrun.run());
         vb.getChildren().addAll(flipbutton);
         return vb;
     }
 
+    /**
+     * This method is called in GameView whenever the game is currently waiting on a response from server.
+     * @param t True if message should be displayed, false else
+     */
     public void dispServWait(Boolean t) {
         if (t) {
             SideVbox.getChildren().add(serverMessage);
@@ -46,6 +49,11 @@ public class LeftSection {
             SideVbox.getChildren().remove(serverMessage);
         }
     }
-
     public VBox getVbox() {return SideVbox;}
+
+    /**
+     * ONLY FOR TESTING
+     * @return flipbutton
+     */
+    public Button getFlip() {return flipbutton;}
 }

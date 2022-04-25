@@ -1,9 +1,11 @@
 package oogasalad.GamePlayer.GamePiece;
 
 
+import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -29,6 +31,10 @@ import org.apache.logging.log4j.Logger;
 public class Piece implements Cloneable {
 
   private static final Logger LOG = LogManager.getLogger(Piece.class);
+  private static final int DEFAULT_INT_VALUE = 0;
+  private static final double DEFAULT_DOUBLE_VALUE = 0.0;
+  private static final boolean DEFAULT_BOOLEAN_VALUE = false;
+  private static final String DEFAULT_STRING = "default";
 
   private Coordinate coordinates;
   private SupplementaryPieceData suppPieceData;
@@ -51,7 +57,9 @@ public class Piece implements Cloneable {
    * Used by Jackson for JSON serialization and deserialization
    */
   public Piece() {
-    super();
+    this(new PieceData(new Coordinate(), DEFAULT_STRING, DEFAULT_DOUBLE_VALUE, DEFAULT_INT_VALUE,
+        DEFAULT_BOOLEAN_VALUE, Collections.emptyList(), Collections.emptyList(),
+        Collections.emptyList(), Collections.emptyList(), DEFAULT_STRING));
   }
 
   /**

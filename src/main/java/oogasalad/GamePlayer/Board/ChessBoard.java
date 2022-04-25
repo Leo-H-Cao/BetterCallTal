@@ -266,9 +266,7 @@ public class ChessBoard implements Iterable<ChessTile> {
           try {
             LOG.debug(String.format("Valid state checker class: %s", v.getClass()));
             return !v.isValid(this, piece, entry);
-          } catch (EngineException e) {
-            return false;
-          }
+          } catch (EngineException e) {return false;}
         }));
     return piece.checkTeam(turnManager.getCurrentPlayer()) ? allPieceMovements : Set.of();
   }

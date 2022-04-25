@@ -37,23 +37,24 @@ public class LanguageModalTest extends DukeApplicationTest {
 		assertEquals(myStage.getTitle(), ResourceBundle.getBundle("oogasalad.Frontend.Menu.languages.French").getString("SelectLanguage"));
 	}
 
+//	@Test
+//	void testSelectEnglish() {
+//		select(myLanguageSelector, "English");
+//		assertEquals(myStage.getTitle(), myResources.getString("SelectLanguage"));
+//	}
+//
+//	@Test
+//	void testStartGame() {
+//		clickOn(lookup("#start").query());
+//		assertEquals(myStage.getTitle(), myResources.getString("HomeViewTitle"));
+//	}
+//
+//	@Test
+//	void testFullscreen() {
+//		clickOn(lookup("#fullscreen").query());
+//		clickOn(lookup("#start").query());
+//		assertTrue(myStage.isFullScreen());
+//	}
 
-	@Test
-	void testSelectEnglish() {
-		select(myLanguageSelector, "English");
-		assertEquals(myStage.getTitle(), myResources.getString("SelectLanguage"));
-	}
 
-
-	void testStartGame() {
-		clickOn(lookup("#start").query());
-		assertEquals(myStage.getTitle(), myResources.getString("HomeViewTitle"));
-	}
-
-
-	void testFullscreen() {
-		clickOn(lookup("#fullscreen").query());
-		clickOn(lookup("#start").query());
-		assertTrue(myStage.isFullScreen());
-	}
 }
