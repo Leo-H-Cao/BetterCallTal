@@ -85,13 +85,13 @@ public class GameView extends View {
      * setting up the board.
      */
 
-    public void SetUpBoard(ChessBoard chessboard, int id, String mode) {
+    public void SetUpBoard(ChessBoard chessboard, int id, String mode, String imgPackage) {
 
         myID = chessboard.getThisPlayer();
         isServer = false;  // getGameBackend().getChessBoard().getGameType().equals("SERVER");
         makeConsandRuns();
         myBoardHistory = new BoardHistory();
-        myBoardGrid = new BoardGrid(chessboard, lightUpCons, MoveCons, errorRun, myBoardHistory); //TODO: Figure out player ID stuff
+        myBoardGrid = new BoardGrid(chessboard, lightUpCons, MoveCons, errorRun, myBoardHistory, imgPackage); //TODO: Figure out player ID stuff
         //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
         remotePlayers = new ArrayList<>();
