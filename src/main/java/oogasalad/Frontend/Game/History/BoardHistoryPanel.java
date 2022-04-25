@@ -2,19 +2,13 @@ package oogasalad.Frontend.Game.History;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-import javafx.geometry.Insets;
+
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
-import oogasalad.GamePlayer.GamePiece.Piece;
 
 public class BoardHistoryPanel {
 
@@ -55,11 +49,12 @@ public class BoardHistoryPanel {
   }
 
   private Label makeLabel(TurnUpdate tu) {
-    List<ChessTile> tiles = tu.updatedSquares().stream()
-        .filter(tile -> tile.getPieces().size() != 0).toList();
-    Optional<Piece> piece = tiles.get(0).getPiece();
-    String name =  piece.isPresent() ? piece.get().getName() : "Empty";
-    return new Label(String.format("%s, %s", name, tiles.get(0).getCoordinates()));
+//    List<ChessTile> tiles = tu.updatedSquares().stream()
+//        .filter(tile -> tile.getPieces().size() != 0).toList();
+//    Optional<Piece> piece = tiles.get(0).getPiece();
+//    String name =  piece.isPresent() ? piece.get().getName() : "Empty";
+//    return new Label(String.format("%s, %s", name, tiles.get(0).getCoordinates()));
+    return new Label(tu.notation());
   }
 
   public void add(Collection<TurnUpdate> tu) {

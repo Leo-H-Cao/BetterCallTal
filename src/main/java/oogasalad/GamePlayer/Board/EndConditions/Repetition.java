@@ -1,19 +1,12 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Player;
-import oogasalad.GamePlayer.Movement.MovementModifiers.Atomic;
 import oogasalad.GamePlayer.util.FileReader;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /***
  * Creates an end condition where the game ends after a given amount of repeated positions

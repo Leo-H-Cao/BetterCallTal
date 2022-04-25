@@ -48,7 +48,7 @@ public class PiecesState {
   }
 
   /**
-   * Creats custom piece with configurations set by user
+   * Creates custom piece with configurations set by user
    * @param pieceID new unique pieceID for piece that is being created
    * @return created piece
    */

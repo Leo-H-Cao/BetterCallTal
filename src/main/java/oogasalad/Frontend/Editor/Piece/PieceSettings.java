@@ -34,7 +34,13 @@ public class PieceSettings extends LabelledContainer {
 		ret.setPrefWrapLength(1);
 		ret.setVgap(GAP);
 		Button setPieceImage = ButtonFactory.makeButton(ButtonType.TEXT, "Change image", "changeImage", (e) -> choosePieceImage());
-		ret.getChildren().addAll(makeTeamToggle(), setPieceImage);
+		ret.getChildren().add(makeTeamToggle());
+
+		// Prevent changing the image of a read only piece
+		if(!getEditorBackend().getPiecesState().getPiece(myId).isDefaultPiece()) {
+			ret.getChildren().add(setPieceImage);
+		}
+
 		return ret;
 	}
 

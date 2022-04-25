@@ -11,10 +11,8 @@ public class MovementGrid {
   public static final int PIECE_GRID_SIZE = 7;
   private final int PIECE_LOC_X = 3;
   private final int PIECE_LOC_Y = 3;
-  private final String INVALID_MOVEMENT_ERR = "Coordinates for movement are invalid";
-  private final String INVALID_PIECE_CHANGE = "Piece tile cannot be changed.";
 
-  private PieceGridTile[][] pieceGrid;
+	private final PieceGridTile[][] pieceGrid;
 
   public MovementGrid(){
     pieceGrid = new PieceGridTile[PIECE_GRID_SIZE][PIECE_GRID_SIZE];
@@ -51,9 +49,11 @@ public class MovementGrid {
 
   private void checkCoordinates(int x, int y){
     if(x >= PIECE_GRID_SIZE || x < 0 || y >= PIECE_GRID_SIZE || y < 0){
-      throw new MovementGridException(INVALID_MOVEMENT_ERR);
+	    String INVALID_MOVEMENT_ERR = "Coordinates for movement are invalid";
+	    throw new MovementGridException(INVALID_MOVEMENT_ERR);
     } else if((x==PIECE_LOC_X && y==PIECE_LOC_Y)) {
-      throw new MovementGridException(INVALID_PIECE_CHANGE);
+	    String INVALID_PIECE_CHANGE = "Piece tile cannot be changed.";
+	    throw new MovementGridException(INVALID_PIECE_CHANGE);
     }
   }
 

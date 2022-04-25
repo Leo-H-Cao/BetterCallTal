@@ -53,22 +53,24 @@ public class PieceBoardTile extends NodeContainer {
 		myImage.addListener((ob, ov, nv) -> pieceImage.setImage(nv));
 
 		// Update tile color when clicked
-		if(status.getValue() != PieceGridTile.PIECE) {
-			ButtonFactory.addAction(ret, (e) -> {
-				PieceGridTile type = getEditorBackend().getSelectedPieceEditorType().getValue();
-				getEditorBackend().getPiecesState().getPiece(myId).setTile(myX, myY, type, myTeam);
-				status.setValue(type);
+		if(!getEditorBackend().getPiecesState().getPiece(myId).isDefaultPiece()) {
+			if (status.getValue() != PieceGridTile.PIECE) {
+				ButtonFactory.addAction(ret, (e) -> {
+					PieceGridTile type = getEditorBackend().getSelectedPieceEditorType().getValue();
+					getEditorBackend().getPiecesState().getPiece(myId).setTile(myX, myY, type, myTeam);
+					status.setValue(type);
+				});
+			}
+
+
+			ret.hoverProperty().addListener((ob, ov, nv) -> {
+				if (nv && status.getValue() == PieceGridTile.CLOSED) {
+					myResources.ifPresent((e) -> rect.setFill(Paint.valueOf(e.getString("HoverColor"))));
+				} else {
+					rect.setFill(status.getValue().getColor());
+				}
 			});
 		}
-
-
-		ret.hoverProperty().addListener((ob, ov, nv) -> {
-			if(nv && status.getValue() == PieceGridTile.CLOSED) {
-				myResources.ifPresent((e) -> rect.setFill(Paint.valueOf(e.getString("HoverColor"))));
-			} else {
-				rect.setFill(status.getValue().getColor());
-			}
-		});
 
 		return ret;
 	}

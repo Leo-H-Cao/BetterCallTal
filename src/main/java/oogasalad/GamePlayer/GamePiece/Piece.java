@@ -1,7 +1,6 @@
 package oogasalad.GamePlayer.GamePiece;
 
 
-import com.fasterxml.jackson.databind.ser.std.StdKeySerializers.Default;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -84,7 +83,7 @@ public class Piece implements Cloneable {
    * @return set of updated chess tiles
    */
   public Set<ChessTile> move(ChessTile finalSquare, ChessBoard board)
-      throws InvalidMoveException, OutsideOfBoardException {
+      throws InvalidMoveException {
     return movementHandler.move(this, finalSquare, board);
   }
 

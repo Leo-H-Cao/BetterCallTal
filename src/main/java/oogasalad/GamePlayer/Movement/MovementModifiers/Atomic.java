@@ -2,16 +2,10 @@ package oogasalad.GamePlayer.Movement.MovementModifiers;
 
 import static oogasalad.GamePlayer.Board.EndConditions.InARow.DIRECTIONS;
 
-import java.io.File;
-import java.lang.reflect.Executable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
-import java.util.stream.IntStream;
 
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Board.ChessBoard;

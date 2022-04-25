@@ -2,7 +2,6 @@ package oogasalad.GamePlayer.ValidStateChecker;
 
 import java.util.Set;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.GamePiece.Piece;
 
 /***
  * Info related to a previously created random generation

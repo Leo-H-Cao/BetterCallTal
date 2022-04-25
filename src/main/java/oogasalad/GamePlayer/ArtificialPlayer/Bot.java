@@ -81,7 +81,7 @@ public class Bot implements RemotePlayer {
       throws Throwable {
 
     if(board.isGameOver()){
-      return new TurnUpdate(Set.of(), -1);
+      return new TurnUpdate(Set.of(), -1, "");
     }
 
 
@@ -126,7 +126,7 @@ public class Bot implements RemotePlayer {
         return getMinimaxMove(board, currentPlayer, i);
       }
     }
-    return new TurnUpdate(Set.of(), -1);
+    return new TurnUpdate(Set.of(), -1, "");
   }
 
   private TurnUpdate getMinimaxMove(ChessBoard board, int currentPlayer, int depth)

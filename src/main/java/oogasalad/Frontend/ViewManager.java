@@ -12,6 +12,7 @@ import oogasalad.Frontend.util.View;
 import java.util.ResourceBundle;
 
 public class ViewManager {
+
 	public ViewManager(Stage stage, ResourceBundle rb) {
 		BackendConnector.initBackend(rb);
 		View homeView = new HomeView(stage);
@@ -23,4 +24,5 @@ public class ViewManager {
 		View.addView(new LocalGame(stage));
 		stage.setScene(homeView.getScene());
 	}
+
 }

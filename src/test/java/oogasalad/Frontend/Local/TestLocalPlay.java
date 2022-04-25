@@ -1,8 +1,5 @@
 package oogasalad.Frontend.Local;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.ResourceBundle;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Menu.LocalPlay.LocalGame;

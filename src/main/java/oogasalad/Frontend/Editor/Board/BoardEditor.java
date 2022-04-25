@@ -1,7 +1,6 @@
 package oogasalad.Frontend.Editor.Board;
 
 import javafx.scene.Node;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import oogasalad.Frontend.util.NodeContainer;
