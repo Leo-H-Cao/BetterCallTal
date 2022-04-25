@@ -9,6 +9,7 @@ import java.util.Objects;
  */
 public class Coordinate {
 
+  private static int DEFAULT_VALUE = 0;
   private int row;
   private int col;
 
@@ -27,7 +28,8 @@ public class Coordinate {
    * Used by Jackson to deserialize the JSON into a Coordinate object
    */
   public Coordinate() {
-    super();
+    this.row = DEFAULT_VALUE;
+    this.col = DEFAULT_VALUE;
   }
 
   /**

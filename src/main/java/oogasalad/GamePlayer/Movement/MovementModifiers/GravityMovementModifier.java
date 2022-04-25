@@ -109,9 +109,7 @@ public class GravityMovementModifier implements MovementModifier {
       changedTiles.add(board.getTile(newCoordinate));
       piece.updateCoordinates(board.getTile(newCoordinate), board);
       piece.getHistory().remove(piece.getHistory().size() - 1);
-    } catch (OutsideOfBoardException e) {
-      LOG.debug(String.format("Out of bounds for tile: %s", newCoordinate));
-    }
+    } catch (OutsideOfBoardException e) {LOG.debug(String.format("Out of bounds for tile: %s", newCoordinate));}
   }
 
   /***

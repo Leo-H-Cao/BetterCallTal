@@ -38,8 +38,6 @@ public class MoveAbsorption implements MovementModifier {
       piece.addNewMovements(Movement.invertMovements(justTaken.getMoves()),
           Movement.invertMovements(justTaken.getCaptures()));
       return Set.of(board.getTile(piece.getCoordinates()));
-    } catch (OutsideOfBoardException e) {
-      return Collections.emptySet();
-    }
+    } catch (OutsideOfBoardException e) {return Collections.emptySet();}
   }
 }
