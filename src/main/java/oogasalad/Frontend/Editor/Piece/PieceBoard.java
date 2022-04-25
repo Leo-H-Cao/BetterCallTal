@@ -2,6 +2,9 @@ package oogasalad.Frontend.Editor.Piece;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Node;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.GridPane;
 import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 import oogasalad.Frontend.util.NodeContainer;
@@ -17,7 +20,10 @@ public class PieceBoard extends NodeContainer {
 
 	@Override
 	protected Node makeNode() {
-		return makeBoard();
+		GridPane ret = new GridPane();
+		ret.add(makeName(), 0, 0);
+		ret.add(makeBoard(), 0, 1);
+		return ret;
 	}
 
 	private Node makeBoard() {
@@ -32,5 +38,13 @@ public class PieceBoard extends NodeContainer {
 			}
 		}
 		return ret;
+	}
+
+	private Node makeName() {
+		TextField textArea = new TextField(getEditorBackend().getPiecesState().getPiece(myId).getPieceName().getValue());
+
+		textArea.textProperty().addListener((ob, ov, nv) -> getEditorBackend().getPiecesState().getPiece(myId).setPieceName(nv));
+
+		return textArea;
 	}
 }

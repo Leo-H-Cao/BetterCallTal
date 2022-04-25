@@ -14,9 +14,9 @@ import oogasalad.Frontend.util.NodeContainer;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
 public class PieceBoardTile extends NodeContainer {
-	public static int SIZE = 85;
-	private Property<PieceGridTile> status;
-	private Property<Image> myImage;
+	public int SIZE;
+	private final Property<PieceGridTile> status;
+	private final Property<Image> myImage;
 	private int myX, myY;
 	private String myId;
 
@@ -26,6 +26,7 @@ public class PieceBoardTile extends NodeContainer {
 		myId = id;
 		status = new SimpleObjectProperty(type);
 		myImage = getEditorBackend().getPiecesState().getPiece(myId).getImage(0);
+		myResources.ifPresent(e -> SIZE = Integer.parseInt(e.getString("Size")));
 	}
 
 	@Override
@@ -34,19 +35,19 @@ public class PieceBoardTile extends NodeContainer {
 	}
 
 	private Node makeTile() {
-		Rectangle rect = new Rectangle(SIZE, SIZE, getTileColor(status.getValue()));
+		Rectangle rect = new Rectangle(SIZE, SIZE, status.getValue().getColor());
 		StackPane ret = new StackPane(rect);
 		Coordinate pieceLocation = getEditorBackend().getPiecesState().getPiece(myId).getMovementGrid(0).getPieceLocation();
 		ImageView pieceImage = new ImageView();
 		if(pieceLocation.getRow() == myX && pieceLocation.getCol() == myY) {
 			pieceImage.setImage(myImage.getValue());
-			pieceImage.setFitHeight(SIZE - 5);
-			pieceImage.setFitWidth(SIZE - 5);
+			pieceImage.setFitHeight(SIZE - PADDING);
+			pieceImage.setFitWidth(SIZE - PADDING);
 			pieceImage.setCache(true);
 			pieceImage.setPreserveRatio(true);
 			ret.getChildren().add(pieceImage);
 		}
-		status.addListener((ob, ov, nv) -> rect.setFill(getTileColor(nv)));
+		status.addListener((ob, ov, nv) -> rect.setFill(nv.getColor()));
 		myImage.addListener((ob, ov, nv) -> pieceImage.setImage(nv));
 
 		// Update tile color when clicked
@@ -63,32 +64,10 @@ public class PieceBoardTile extends NodeContainer {
 			if(nv && status.getValue() == PieceGridTile.CLOSED) {
 				myResources.ifPresent((e) -> rect.setFill(Paint.valueOf(e.getString("HoverColor"))));
 			} else {
-				rect.setFill(getTileColor(status.getValue()));
+				rect.setFill(status.getValue().getColor());
 			}
 		});
 
 		return ret;
-	}
-
-	private Paint getTileColor(PieceGridTile type) {
-		if(myResources.isPresent()) {
-			switch (type) {
-				case CLOSED, PIECE -> {
-					return Paint.valueOf(myResources.get().getString("DefaultColor"));
-				}
-				case OPEN -> {
-					return Paint.valueOf(myResources.get().getString("SelectedColor"));
-				}
-				case INFINITY -> {
-					return Paint.valueOf(myResources.get().getString("InfinityColor"));
-				}
-				default -> {
-					return Paint.valueOf(myResources.get().getString("ErrorColor"));
-				}
-			}
-		}
-		else {
-			return Paint.valueOf("#000");
-		}
 	}
 }
