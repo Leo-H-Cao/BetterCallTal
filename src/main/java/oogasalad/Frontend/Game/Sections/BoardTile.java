@@ -75,7 +75,7 @@ public class BoardTile {
                 clearlitrun.run();
                 MoveCons.accept(myCoord);
             }
-                });
+        });
     }
 
     /**

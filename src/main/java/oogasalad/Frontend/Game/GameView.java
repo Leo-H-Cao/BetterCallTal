@@ -171,7 +171,6 @@ public class GameView extends View {
            gameOver();
            return false;
         }
-
         if (isServer) {
             if (myID != tu.nextPlayer()) {
                 myLeftSide.dispServWait(true);
@@ -183,12 +182,7 @@ public class GameView extends View {
     }
 
     private void updateBoard(Collection<TurnUpdate> tu) {
-        //tu.forEach(this::updateBoard);
-        for(TurnUpdate t : tu){
-            if(!updateBoard(t)){
-                break;
-            }
-        }
+        tu.forEach(this::updateBoard);
         updateHistory(getGameBackend().getChessBoard().getHistory().getCurrentBoard());
     }
 
