@@ -60,7 +60,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   private Map<Integer, List<Piece>> pieceList;
   private Consumer<Throwable> showAsyncError = LOG::error;
   private Consumer<TurnUpdate> performAsyncTurnUpdate = LOG::info;
-
+  private Collection<EndCondition> endConditions;
   /**
    * Creates a representation of a chessboard if an array of pieces is already provided
    */
@@ -73,6 +73,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     this.validStateCheckers = validStateCheckers;
     this.history = new LocalHistoryManager();
     this.pieceList = new HashMap<>();
+    this.endConditions = endConditions;
   }
 
   public ChessBoard(List<List<ChessTile>> board, TurnManagerData turnManagerData,
@@ -530,6 +531,10 @@ public class ChessBoard implements Iterable<ChessTile> {
 
   public int getThisPlayer() {
     return -1;
+  }
+
+  public Collection<EndCondition> getEndConditions() {
+    return endConditions;
   }
 
   /**
