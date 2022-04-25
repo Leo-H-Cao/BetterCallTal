@@ -30,17 +30,14 @@ public class BoardGrid {
     private ArrayList<BoardTile> myLitTiles;
     private Runnable ClearLitTilesRun;
     private Consumer<Piece> setSelPiece;
-    private Integer Turn;
-    private Integer myID;
 
 
-    public BoardGrid(ChessBoard cb, int PlayerID, Consumer<Piece> lightupCons, Consumer<Coordinate> MoveCons, BiConsumer<String, String> errorRun) {
+    public BoardGrid(ChessBoard cb, Consumer<Piece> lightupCons, Consumer<Coordinate> MoveCons, BiConsumer<String, String> errorRun) {
         myLitTiles = new ArrayList<>();
         myBoard = new GridPane();
         makeRunAndCons();
         setUpGP(myBoard, cb.getBoardHeight(), cb.getBoardLength());
-        makeBoard(cb, PlayerID, lightupCons, MoveCons, errorRun);
-        myID = PlayerID;
+        makeBoard(cb, cb.getThisPlayer(), lightupCons, MoveCons, errorRun);
     }
 
     private void setUpGP(GridPane gp, int rows, int cols) {

@@ -72,7 +72,7 @@ public class GameView extends View {
         myID = chessboard.getThisPlayer();
         isServer = false;  // getGameBackend().getChessBoard().getGameType().equals("SERVER");
         makeConsandRuns();
-        myBoardGrid = new BoardGrid(chessboard, myID, lightUpCons, MoveCons, errorRun); //TODO: Figure out player ID stuff
+        myBoardGrid = new BoardGrid(chessboard, lightUpCons, MoveCons, errorRun); //TODO: Figure out player ID stuff
         //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
         remotePlayers = new ArrayList<>();

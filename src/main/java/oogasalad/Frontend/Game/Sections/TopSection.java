@@ -10,13 +10,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import oogasalad.Frontend.Menu.HomeView;
-import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.BackendConnector;
 
 import java.util.ArrayList;
-import oogasalad.Frontend.util.ButtonFactory;
-import oogasalad.Frontend.util.ButtonType;
 
 /**
  * This class will handle the top section of the Game View's borderpane.
