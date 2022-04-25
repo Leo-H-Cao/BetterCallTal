@@ -11,6 +11,13 @@ import oogasalad.GamePlayer.Board.Player;
  */
 public class Linear extends TurnCriteria {
 
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public Linear(){
+    super();
+  }
+
   /***
    * Creates a turn criteria that linearly goes across the player array: the most basic type
    * @param players array to get turns for

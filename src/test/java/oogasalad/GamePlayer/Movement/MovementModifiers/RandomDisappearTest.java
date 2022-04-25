@@ -1,18 +1,22 @@
 package oogasalad.GamePlayer.Movement.MovementModifiers;
 
 import static oogasalad.GamePlayer.Movement.CustomMovements.BankLeaverTest.BOARD_TEST_FILES_HEADER;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
+import oogasalad.GamePlayer.Board.BoardSetup;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Setup.BoardSetup;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class RandomDisappearTest {
 
-  static final String RANDOM_DISAPPEAR_TEST_FILE = BOARD_TEST_FILES_HEADER + "RemoveAfterMoveAlways.json";
-  static final String RANDOM_DISAPPEAR_TEST_FILE_TWO = BOARD_TEST_FILES_HEADER + "RemoveAfterMoveNever.json";
+  static final String RANDOM_DISAPPEAR_TEST_FILE =
+      BOARD_TEST_FILES_HEADER + "RemoveAfterMoveAlways.json";
+  static final String RANDOM_DISAPPEAR_TEST_FILE_TWO =
+      BOARD_TEST_FILES_HEADER + "RemoveAfterMoveNever.json";
 
   private ChessBoard myBoard;
 

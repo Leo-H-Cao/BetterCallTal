@@ -1,7 +1,6 @@
 package oogasalad.GamePlayer.GamePiece;
 
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -10,7 +9,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
@@ -41,14 +39,22 @@ public class Piece implements Cloneable {
   private List<MovementModifier> onInteractionModifiers;
   private List<Coordinate> history;
 
-  /***
+  /**
    * Creates a chess piece with all of its attributes
    */
   public Piece(PieceData pieceData) {
-    this(pieceData, new MovementHandler(pieceData.movements(), pieceData.captures(), pieceData.movementModifiers()));
+    this(pieceData, new MovementHandler(pieceData.movements(), pieceData.captures(),
+        pieceData.movementModifiers()));
   }
 
-  /***
+  /**
+   * Used by Jackson for JSON serialization and deserialization
+   */
+  public Piece() {
+    super();
+  }
+
+  /**
    * Helper constructor for clone when a movementHandler is directly provided
    */
   public Piece(PieceData pieceData, MovementHandler movementHandler) {
@@ -63,7 +69,7 @@ public class Piece implements Cloneable {
     this.history = new ArrayList<>(List.of(pieceData.startingLocation()));
   }
 
-  /***
+  /**
    * Moves this piece to a given square
    *
    * @param finalSquare to move the piece to
@@ -74,14 +80,15 @@ public class Piece implements Cloneable {
     return movementHandler.move(this, finalSquare, board);
   }
 
-  /***
-   * Updates this piece's coordinates to the parameter passed and updates that tile to hold the
-   * new piece
+  /**
+   * Updates this piece's coordinates to the parameter passed and updates that tile to hold the new
+   * piece
    *
    * @param tile to put piece on
    * @return updated actions based on tile actions and where piece moved
    */
-  public Set<ChessTile> updateCoordinates(ChessTile tile, ChessBoard board) throws OutsideOfBoardException {
+  public Set<ChessTile> updateCoordinates(ChessTile tile, ChessBoard board)
+      throws OutsideOfBoardException {
     Set<ChessTile> updatedSquares = new HashSet<>(List.of(board.getTile(coordinates), tile));
     board.getTile(coordinates).removePiece(this);
     coordinates = tile.getCoordinates();
@@ -92,7 +99,7 @@ public class Piece implements Cloneable {
     return updatedSquares;
   }
 
-  /***
+  /**
    * Gets all possible moves the piece can make
    *
    * @return set of possible moves
@@ -101,14 +108,14 @@ public class Piece implements Cloneable {
     return movementHandler.getMoves(this, board);
   }
 
-  /***
+  /**
    * @return coordinate of piece
    */
   public Coordinate getCoordinates() {
     return coordinates;
   }
 
-  /***
+  /**
    * @return if this piece is opposing any piece in the given list (i.e. player numbers are
    * opposing)
    */
@@ -116,7 +123,7 @@ public class Piece implements Cloneable {
     return opponents.stream().anyMatch(p -> isOpposing(p, board));
   }
 
-  /***
+  /**
    * @param piece to check
    * @return if a given piece opposes this piece
    */
@@ -125,14 +132,14 @@ public class Piece implements Cloneable {
     return Arrays.stream(opponentIDs).anyMatch(o -> piece.getTeam() == board.getPlayer(o).teamID());
   }
 
-  /***
+  /**
    * @return file path to image file representing piece
    */
   public String getImgFile() {
     return img;
   }
 
-  /***
+  /**
    * Checks if a given team matches the piece team
    *
    * @param team to check
@@ -146,7 +153,7 @@ public class Piece implements Cloneable {
   /**
    * @return team of piece
    */
-  public int getTeam(){
+  public int getTeam() {
     return team;
   }
 
@@ -158,7 +165,7 @@ public class Piece implements Cloneable {
     return getTeam() == piece.getTeam();
   }
 
-  /***
+  /**
    * @return if this piece is the main piece
    */
   public boolean isTargetPiece() {
@@ -168,7 +175,7 @@ public class Piece implements Cloneable {
   /**
    * @return name of piece
    */
-  public String getName(){
+  public String getName() {
     return name;
   }
 
@@ -179,67 +186,69 @@ public class Piece implements Cloneable {
     return history;
   }
 
-  /***
+  /**
    * @return relative coordinates for all regular moves, not including captures
    */
   public Set<MovementInterface> getMoves() {
     return movementHandler.getMovements();
   }
 
-  /***
+  /**
    * @return relative coordinates for all regular moves, not including captures
    */
   public List<Coordinate> getRelativeMoveCoords() {
     return movementHandler.getRelativeMoveCoords();
   }
 
-  /***
+  /**
    * @return relative coordinates for all regular moves, including captures
    */
   public List<Coordinate> getRelativeCapCoords() {
     return movementHandler.getRelativeCapCoords();
   }
 
-  /***
+  /**
    * @param newMovements new coordinates for all regular moves to set
-   * @param newCaptures new coordinates for all regular captures to set
+   * @param newCaptures  new coordinates for all regular captures to set
    */
   public void setNewMovements(Collection<MovementInterface> newMovements, Collection<MovementInterface> newCaptures) {
     movementHandler.setNewMovements(newMovements, newCaptures);
   }
 
-  /***
+  /**
    * @param newMovements new coordinates for all regular moves to add
-   * @param newCaptures new coordinates for all regular captures to add
+   * @param newCaptures  new coordinates for all regular captures to add
    */
   public void addNewMovements(Collection<MovementInterface> newMovements, Collection<MovementInterface> newCaptures) {
     movementHandler.addNewMovements(newMovements, newCaptures);
   }
 
-  /***
+  /**
    * @return relative coordinates for all regular moves including captures
    */
   public Set<MovementInterface> getCaptures() {
     return movementHandler.getCaptures();
   }
 
-  /***
+  /**
    * Changes team of this piece
+   *
    * @param newTeam is the new team of this piece
    */
   public void updateTeam(int newTeam) {
     this.team = newTeam;
   }
 
-  /***
+  /**
    * Changes team of this piece
+   *
    * @param newImgFile is the new team of this piece
    */
   public void updateImgFile(String newImgFile) {
     this.img = newImgFile;
   }
 
-  /***
+  /**
    * Updates board state based on interaction modifiers and returns set of updated tiles
    *
    * @param board that piece is on
@@ -247,11 +256,12 @@ public class Piece implements Cloneable {
    */
   public Set<ChessTile> runInteractionModifiers(ChessBoard board) {
     LOG.debug("Running on interaction modifiers");
-    return onInteractionModifiers.stream().flatMap(oim -> oim.updateMovement(this, board).stream()).collect(
-        Collectors.toSet());
+    return onInteractionModifiers.stream().flatMap(oim -> oim.updateMovement(this, board).stream())
+        .collect(
+            Collectors.toSet());
   }
 
-  /***
+  /**
    * @return complete copy of the piece, including copies of all instance variables
    */
   @Override
@@ -287,7 +297,7 @@ public class Piece implements Cloneable {
     this.name = newName;
   }
 
-  /***
+  /**
    * @return piece data
    */
   @Override
@@ -295,7 +305,7 @@ public class Piece implements Cloneable {
     return name;
   }
 
-  /***
+  /**
    * Checks if name, team, and coordinates are the same
    *
    * @param o other piece to compare to
@@ -308,10 +318,10 @@ public class Piece implements Cloneable {
     }
     Piece otherPiece = (Piece) o;
     return this.getName().equals(otherPiece.getName()) && this.getTeam() == otherPiece.getTeam() &&
-    this.getCoordinates().equals(otherPiece.getCoordinates());
+        this.getCoordinates().equals(otherPiece.getCoordinates());
   }
 
-  /***
+  /**
    * @return hash of piece
    */
   @Override

@@ -22,6 +22,13 @@ public class KingOfTheHill implements EndCondition {
 
   private static final Logger LOG = LogManager.getLogger(KingOfTheHill.class);
 
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public KingOfTheHill() {
+    super();
+  }
+
   /***
    * @param board to get scores from
    * @return WIN for king in the middle, LOSS for others, empty map if not applicable
@@ -35,14 +42,17 @@ public class KingOfTheHill implements EndCondition {
         .findFirst().ifPresent(t -> {
           int winningTeam = t.getPiece().get().getTeam();
           scores.put(winningTeam, WIN);
-          LOG.debug(String.format("Players: %s" , Arrays.toString(board.getPlayers())));
+          LOG.debug(String.format("Players: %s", Arrays.toString(board.getPlayers())));
           LOG.debug(String.format("Winning team put: %d, %f", winningTeam, scores.get(winningTeam)));
-          LOG.debug(String.format("Losers: %s", Arrays.toString(board.getPlayer(winningTeam).opponentIDs())));
+          LOG.debug(
+              String.format("Losers: %s", Arrays.toString(board.getPlayer(winningTeam).opponentIDs())));
           Arrays.stream(board.getPlayer(winningTeam).opponentIDs()).forEach(team ->
               scores.put(team, LOSS));
         });
 
-    if(scores.isEmpty()) return scores;
+    if (scores.isEmpty()) {
+      return scores;
+    }
 
     LOG.debug(String.format("Non-draw scores: %s", scores));
     Arrays.stream(board.getPlayers()).filter((p) -> !scores.containsKey(p.teamID())).forEach(pl ->
@@ -60,9 +70,10 @@ public class KingOfTheHill implements EndCondition {
     int[] rowRange = getRange(board.getBoardHeight());
     Set<ChessTile> middleTiles = new HashSet<>();
 
-    IntStream.range(rowRange[0], rowRange[1]+1).forEach(i ->
-        IntStream.range(colRange[0], colRange[1]+1).forEach(j ->
-        { try {
+    IntStream.range(rowRange[0], rowRange[1] + 1).forEach(i ->
+        IntStream.range(colRange[0], colRange[1] + 1).forEach(j ->
+        {
+          try {
             middleTiles.add(board.getTile(Coordinate.of(i, j)));
           } catch (OutsideOfBoardException ignored) {
             LOG.debug("Middle tile out of bounds");
@@ -77,7 +88,7 @@ public class KingOfTheHill implements EndCondition {
    * @return middle element if odd, middle two if even
    */
   private int[] getRange(int max) {
-    return max % 2 == 0 ? new int[]{max/2-1, max/2} : new int[]{max/2, max/2};
+    return max % 2 == 0 ? new int[]{max / 2 - 1, max / 2} : new int[]{max / 2, max / 2};
   }
 
   /**

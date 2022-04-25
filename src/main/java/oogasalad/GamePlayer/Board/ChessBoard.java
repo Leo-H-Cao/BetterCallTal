@@ -1,5 +1,7 @@
 package oogasalad.GamePlayer.Board;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -20,6 +22,7 @@ import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.History.History;
 import oogasalad.GamePlayer.Board.History.HistoryManager;
+import oogasalad.GamePlayer.Board.History.HistoryManagerData;
 import oogasalad.GamePlayer.Board.History.LocalHistoryManager;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
@@ -39,7 +42,7 @@ import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-/***
+/**
  * Class representing the chess board
  *
  * @author Jed, Jose, Vincent, Ritvik
@@ -54,8 +57,8 @@ public class ChessBoard implements Iterable<ChessTile> {
   private final TurnManagerData turnManagerData;
   private List<List<ChessTile>> board;
   private Map<Integer, List<Piece>> pieceList;
-  private BiConsumer<String, String> showAsyncError;
-  private Consumer<TurnUpdate> performAsyncTurnUpdate;
+  private Consumer<Throwable> showAsyncError = LOG::error;
+  private Consumer<TurnUpdate> performAsyncTurnUpdate = LOG::info;
 
   /**
    * Creates a representation of a chessboard if an array of pieces is already provided
@@ -63,7 +66,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   public ChessBoard(List<List<ChessTile>> board, TurnCriteria turnCriteria, Player[] players,
       List<ValidStateChecker> validStateCheckers, List<EndCondition> endConditions) {
     this.players = new GamePlayers(players);
-    this.turnManagerData = new TurnManagerData(this.players, turnCriteria, endConditions);
+    this.turnManagerData = new TurnManagerData(this.players, turnCriteria, endConditions, "");
     this.turnManager = new LocalTurnManager(this.turnManagerData);
     this.board = board;
     this.validStateCheckers = validStateCheckers;
@@ -106,6 +109,15 @@ public class ChessBoard implements Iterable<ChessTile> {
     });
   }
 
+  public ChessBoard(ChessBoardData boardData) {
+    this.players = boardData.players();
+    this.turnManagerData = boardData.turnManagerData();
+    this.turnManager = new LocalTurnManager(this.turnManagerData);
+    this.board = boardData.board();
+    this.validStateCheckers = boardData.validStateCheckers();
+    this.history = new LocalHistoryManager(boardData.history());
+  }
+
   /**
    * Gets the data required to set up a new turn manager
    *
@@ -115,7 +127,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     return turnManagerData;
   }
 
-  /***
+  /**
    * Generates the list of all pieces mapped to each team
    */
   private void generatePieceList() {
@@ -304,7 +316,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     return board.get(coordinate.getRow()).get(coordinate.getCol());
   }
 
-  /***
+  /**
    * Finds if a chess tile contains an opposing team to a given team
    *
    * @param team to check for
@@ -361,7 +373,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     return players.getPlayer(id);
   }
 
-  /***
+  /**
    * @return list of pieces, with each piece mapped to their team
    */
   public Map<Integer, List<Piece>> getPieceList() {
@@ -433,7 +445,7 @@ public class ChessBoard implements Iterable<ChessTile> {
         .flatMap(List::stream).toList();
   }
 
-  /***
+  /**
    * Gets list of all opponent pieces for a given board
    *
    * @param team to get opponents for
@@ -462,7 +474,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     return history;
   }
 
-  /***
+  /**
    * Checks if all the pieces are the same
    *
    * @param o to compare to
@@ -477,7 +489,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     return getPieces().equals(otherBoard.getPieces());
   }
 
-  /***
+  /**
    * @return hash of piece list
    */
   @Override
@@ -500,13 +512,58 @@ public class ChessBoard implements Iterable<ChessTile> {
   }
 
   /**
+   * Get all of the tiles on the board. Used for ChessBoardData
+   *
+   * @return list of tiles
+   */
+  private List<List<ChessTile>> getTiles() {
+    return board;
+  }
+
+  /**
+   * Gets all the ValidStateCheckers on the board. Used for ChessBoardData
+   *
+   * @return list of valid state checkers
+   */
+  private List<ValidStateChecker> getValidStateCheckers() {
+    return validStateCheckers;
+  }
+
+  /**
+   * Gets the history manager data for the board. Used for ChessBoardData
+   *
+   * @return history manager data
+   */
+  private HistoryManagerData getHistoryManagerData() {
+    return history.getHistoryManagerData();
+  }
+
+  /**
+   * Gets the gameplayer object for the board. Used for ChessBoardData
+   *
+   * @return gameplayer object
+   */
+  private GamePlayers getGamePlayers() {
+    return players;
+  }
+
+  /**
+   * Gets the ChessBoardData object for the board for JSON serialization.
+   *
+   * @return ChessBoardData object
+   */
+  public ChessBoardData getBoardData() {
+    return new ChessBoardData(this);
+  }
+
+  /**
    * Sets the callback function used to show an exception as a result of an async task
    *
    * @param showAsyncError the callback function to use
    */
-  public void setShowAsyncError(
-      BiConsumer<String, String> showAsyncError) {
-    this.showAsyncError = showAsyncError;
+  public void setShowAsyncError(BiConsumer<String, String> showAsyncError) {
+    this.showAsyncError = (Throwable e) -> showAsyncError.accept(e.getClass().getSimpleName(),
+        e.getMessage());
   }
 
   /**
@@ -549,5 +606,101 @@ public class ChessBoard implements Iterable<ChessTile> {
     public ChessTile next() throws NoSuchElementException {
       return queue.poll();
     }
+  }
+
+  /**
+   * This class is used to setup the chess board. It is used to create the chess board JSON object.
+   *
+   * @author Ritvik Janamsetty
+   */
+  public static final class ChessBoardData {
+
+    @JsonProperty
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
+    private final ChessTile[][] board;
+    private final TurnManagerData turnManagerData;
+    private final GamePlayers players;
+    private final ValidStateChecker[] validStateCheckers;
+    private final HistoryManagerData history;
+
+    /**
+     * @param board              the list of tiles that make up the chess board
+     * @param players            the list of players in the game
+     * @param validStateCheckers the valid state checkers for the game
+     * @param turnManagerData    the turn manager data for the game
+     * @param history            the history manager data of the game
+     */
+    public ChessBoardData(List<List<ChessTile>> board, TurnManagerData turnManagerData,
+        GamePlayers players,
+        List<ValidStateChecker> validStateCheckers,
+        HistoryManagerData history) {
+      if (board.size() == 0) {
+        this.board = new ChessTile[0][0];
+      } else {
+        this.board = new ChessTile[board.size()][board.get(0).size()];
+      }
+      for (int i = 0; i < board.size(); i++) {
+        for (int j = 0; j < board.get(i).size(); j++) {
+          this.board[i][j] = board.get(i).get(j);
+        }
+      }
+      this.turnManagerData = turnManagerData;
+      this.players = players;
+      this.validStateCheckers = validStateCheckers.toArray(new ValidStateChecker[0]);
+      this.history = history;
+    }
+
+    /**
+     * This method is used to create the chess board JSON object from a chess board.
+     *
+     * @param board the chess board
+     */
+    public ChessBoardData(ChessBoard board) {
+      this(board.getTiles(), board.getTurnManagerData(), board.getGamePlayers(),
+          board.getValidStateCheckers(), board.getHistoryManagerData());
+    }
+
+    /**
+     * Creates an empty chess board data object
+     */
+    public ChessBoardData() {
+      this(new ArrayList<>(), new TurnManagerData(), new GamePlayers(), new ArrayList<>(),
+          new HistoryManagerData());
+    }
+
+    /**
+     * Converts the chess board data to a chess board
+     *
+     * @return the chess board
+     */
+    public ChessBoard toChessBoard() {
+      return new ChessBoard(this);
+    }
+
+    public List<List<ChessTile>> board() {
+      List<List<ChessTile>> board = new ArrayList<>();
+      for (ChessTile[] chessTiles : this.board) {
+        board.add(Arrays.asList(chessTiles));
+      }
+      return board;
+    }
+
+    public TurnManagerData turnManagerData() {
+      return turnManagerData;
+    }
+
+    public GamePlayers players() {
+      return players;
+    }
+
+    public List<ValidStateChecker> validStateCheckers() {
+      return Arrays.asList(validStateCheckers);
+    }
+
+    public HistoryManagerData history() {
+      return history;
+    }
+
+
   }
 }

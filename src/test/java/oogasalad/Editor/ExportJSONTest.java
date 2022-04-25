@@ -98,7 +98,6 @@ public class ExportJSONTest extends DukeApplicationTest {
 
   @Test
   void testTilesExport(){
-    boardState.setTileEffect(1,2,TileEffect.FIRE);
     boardState.setTileEffect(6,5, TileEffect.SWAP);
     boardState.setTileEffect(2,6, TileEffect.BLACKHOLE);
 

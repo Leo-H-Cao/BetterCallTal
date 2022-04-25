@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import oogasalad.Frontend.Menu.ErrorPopUp;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Setup.BoardSetup;
+import oogasalad.GamePlayer.Board.BoardSetup;
 
 
 /**

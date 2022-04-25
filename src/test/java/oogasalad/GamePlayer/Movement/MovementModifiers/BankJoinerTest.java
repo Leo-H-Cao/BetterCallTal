@@ -1,11 +1,10 @@
 package oogasalad.GamePlayer.Movement.MovementModifiers;
 
-import static oogasalad.GamePlayer.Movement.CustomMovements.BankLeaverTest.BANK_TEST_FILE;
 import static oogasalad.GamePlayer.Movement.CustomMovements.BankLeaverTest.BOARD_TEST_FILES_HEADER;
 import static org.junit.jupiter.api.Assertions.*;
 
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Setup.BoardSetup;
+import oogasalad.GamePlayer.Board.BoardSetup;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import org.junit.jupiter.api.BeforeEach;

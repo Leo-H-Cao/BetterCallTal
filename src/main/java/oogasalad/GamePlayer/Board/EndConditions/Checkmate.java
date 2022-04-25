@@ -8,6 +8,7 @@ import oogasalad.GamePlayer.ValidStateChecker.Check;
 
 /**
  * This class
+ *
  * @author Jose Santillan
  */
 public class Checkmate implements EndCondition {
@@ -21,6 +22,13 @@ public class Checkmate implements EndCondition {
   private Check check = new Check();
   private Stalemate stalemate = new Stalemate();
 
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public Checkmate() {
+    super();
+  }
+
   public boolean isInMate(ChessBoard board, int team) throws EngineException {
     return stalemate.hasNoLegalMoves(board, team) && !check.isValid(board, team);
   }
@@ -30,8 +38,8 @@ public class Checkmate implements EndCondition {
   public Map<Integer, Double> getScores(ChessBoard board) {
     HashMap<Integer, Double> scores = new HashMap<>();
     try {
-      for(int i : board.getTeams()){
-        if(isInMate(board, i)){
+      for (int i : board.getTeams()) {
+        if (isInMate(board, i)) {
           return generateScores(board, i);
         }
       }
@@ -42,13 +50,12 @@ public class Checkmate implements EndCondition {
     return new HashMap<>();
   }
 
-  private Map<Integer, Double> generateScores(ChessBoard board, int winner){
+  private Map<Integer, Double> generateScores(ChessBoard board, int winner) {
     HashMap<Integer, Double> finalScores = new HashMap<>();
-    for(int i : board.getTeams()){
-      if(i==winner){
+    for (int i : board.getTeams()) {
+      if (i == winner) {
         finalScores.put(i, 0.0);
-      }
-      else{
+      } else {
         finalScores.put(i, 1.0);
       }
     }
