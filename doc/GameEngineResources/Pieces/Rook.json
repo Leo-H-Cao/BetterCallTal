@@ -1,10 +1,10 @@
 {
-  "pieceName": "Rook",
-  "imgFile": "rook",
-  "pointValue": 5,
-  "basicMovements": ["rook"],
-  "basicCaptures": ["rook"],
-  "customMoves": [],
-  "movementModifiers": [],
-  "onInteractionModifier": []
+  "pieceName" : "rook",
+  "imgFile" : "images/pieces/white/rook.png",
+  "pointValue" : 5,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : null,
+  "basicMovements" : [ "wrookMovement" ],
+  "basicCaptures" : [ "wrookMovement" ]
 }

@@ -1,10 +1,10 @@
 {
-  "pieceName": "King",
-  "imgFile": "king",
-  "pointValue": 4,
-  "basicMovements": ["king"],
-  "basicCaptures": ["king"],
-  "customMoves": ["Castling"],
-  "movementModifiers": [],
-  "onInteractionModifier": []
+  "pieceName" : "king",
+  "imgFile" : "images/pieces/black/king.png",
+  "pointValue" : 99,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : null,
+  "basicMovements" : [ "bkingMovement" ],
+  "basicCaptures" : [ "bkingMovement" ]
 }
