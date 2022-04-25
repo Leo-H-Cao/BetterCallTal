@@ -55,11 +55,12 @@ public class BoardHistoryPanel {
   }
 
   private Label makeLabel(TurnUpdate tu) {
-    List<ChessTile> tiles = tu.updatedSquares().stream()
-        .filter(tile -> tile.getPieces().size() != 0).toList();
-    Optional<Piece> piece = tiles.get(0).getPiece();
-    String name =  piece.isPresent() ? piece.get().getName() : "Empty";
-    return new Label(String.format("%s, %s", name, tiles.get(0).getCoordinates()));
+//    List<ChessTile> tiles = tu.updatedSquares().stream()
+//        .filter(tile -> tile.getPieces().size() != 0).toList();
+//    Optional<Piece> piece = tiles.get(0).getPiece();
+//    String name =  piece.isPresent() ? piece.get().getName() : "Empty";
+//    return new Label(String.format("%s, %s", name, tiles.get(0).getCoordinates()));
+    return new Label(tu.notation());
   }
 
   public void add(Collection<TurnUpdate> tu) {
