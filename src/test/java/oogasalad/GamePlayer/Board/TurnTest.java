@@ -1,6 +1,7 @@
 package oogasalad.GamePlayer.Board;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -11,6 +12,7 @@ import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Board.TurnCriteria.OnlyFirstTeam;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.Board.TurnManagement.GamePlayers;
+import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
 import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
@@ -63,11 +65,16 @@ class TurnTest {
   void testLinear() {
     turnCriteria = new Linear(gamePlayers.getPlayersArr()).copy();
     setBoard();
-
     try {
-      assertEquals(board.move(pieceOne, new Coordinate(0, 1)).nextPlayer(), 1);
-      assertEquals(board.move(pieceTwo, new Coordinate(1, 1)).nextPlayer(), 2);
-      assertEquals(board.move(pieceThree, new Coordinate(2, 1)).nextPlayer(), 0);
+      TurnUpdate tu1 = board.move(pieceOne, new Coordinate(0, 1));
+      assertEquals(tu1.nextPlayer(), 1);
+      assertNotEquals("", tu1.notation());
+      TurnUpdate tu2 = board.move(pieceTwo, new Coordinate(1, 1));
+      assertEquals(tu2.nextPlayer(), 2);
+      assertNotEquals("", tu2.notation());
+      TurnUpdate tu3 = board.move(pieceThree, new Coordinate(2, 1));
+      assertEquals(tu3.nextPlayer(), 0);
+      assertNotEquals("", tu3.notation());
     } catch (Throwable e) {
       fail();
     }
