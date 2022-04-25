@@ -10,6 +10,7 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.Movement.Coordinate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -70,10 +71,10 @@ public class Demote implements TileAction {
     Piece demotePiece = board.getPieceList().get(tile.getPiece().get().getTeam()).stream().filter(
         p -> p.getName().equals(demotePieceName)).findFirst().orElse(tile.getPiece().get());
     Piece clone = demotePiece.clone();
+    clone.forceUpdateCoordinates(tile.getCoordinates());
+    LOG.debug(String.format("Current piece on tile: %s", tile.getPiece().get()));
     tile.clearPieces();
-
-    try {clone.updateCoordinates(tile, board); }
-    catch (OutsideOfBoardException e) {LOG.warn("Placing piece after demotion failed.");}
+    board.placePiece(tile.getCoordinates(), clone);
 
     return Set.of(tile);
   }

@@ -107,6 +107,15 @@ public class Piece implements Cloneable {
     return updatedSquares;
   }
 
+  /***
+   * Force updates the piece's coordinates with the given coordinates
+   *
+   * @param coordinate to force update
+   */
+  public void forceUpdateCoordinates(Coordinate coordinate) {
+    this.coordinates = coordinate;
+  }
+
   /**
    * Gets all possible moves the piece can make
    *
