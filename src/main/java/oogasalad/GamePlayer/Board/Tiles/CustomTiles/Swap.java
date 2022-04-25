@@ -35,7 +35,7 @@ public class Swap implements TileAction {
     updatedTiles.add(tile);
 
     for (Piece p : nonTargetPiece) {
-      List<Piece> pieces = board.getPieces();
+      List<Piece> pieces = board.getPieces().stream().filter(piece -> !piece.equals(p)).toList();
       Piece p2 = pieces.get(DICE.nextInt(pieces.size()));
       ChessTile secondTile = swap(p, p2, board);
       updatedTiles.add(secondTile);

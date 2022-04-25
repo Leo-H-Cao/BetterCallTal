@@ -61,7 +61,7 @@ public class Promotion implements TileAction {
     List<Piece> pieceList = board.getPieceList().get(tile.getPiece().get().getTeam()).stream().
         filter(p -> !p.isTargetPiece() &&
             !p.getName().equalsIgnoreCase(tile.getPiece().get().getName())).collect(Collectors.toList());
-    Piece p = promotionPopUp(pieceList);
+    Piece p = pieceList.size() == 1 ? pieceList.get(0) : promotionPopUp(pieceList);
     Piece clone = p.clone();
     tile.clearPieces();
     
