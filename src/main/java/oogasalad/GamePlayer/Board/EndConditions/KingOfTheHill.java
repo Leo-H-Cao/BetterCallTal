@@ -50,13 +50,10 @@ public class KingOfTheHill implements EndCondition {
               scores.put(team, LOSS));
         });
 
-    if (scores.isEmpty()) {
-      return scores;
-    }
+    if (scores.isEmpty()) {return scores;}
 
     LOG.debug(String.format("Non-draw scores: %s", scores));
-    Arrays.stream(board.getPlayers()).filter((p) -> !scores.containsKey(p.teamID())).forEach(pl ->
-        scores.put(pl.teamID(), DRAW));
+    Arrays.stream(board.getPlayers()).filter(p -> !scores.containsKey(p.teamID())).forEach(pl -> scores.put(pl.teamID(), DRAW));
 
     LOG.debug(String.format("Final scores: %s", scores));
     return scores;
@@ -75,9 +72,7 @@ public class KingOfTheHill implements EndCondition {
         {
           try {
             middleTiles.add(board.getTile(Coordinate.of(i, j)));
-          } catch (OutsideOfBoardException ignored) {
-            LOG.debug("Middle tile out of bounds");
-          }
+          } catch (OutsideOfBoardException e) {LOG.debug("Middle tile out of bounds");}
         }));
     LOG.debug(String.format("Middle tiles: %s", middleTiles));
     return middleTiles;

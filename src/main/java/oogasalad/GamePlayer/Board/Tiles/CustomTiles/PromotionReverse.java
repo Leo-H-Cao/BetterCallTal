@@ -101,4 +101,18 @@ public class PromotionReverse implements TileAction{
     }
     return Collections.emptySet();
   }
+
+  /***
+   * @return promotable piece names for testing
+   */
+  List<String> getPromotablePieceNames() {
+    return promotablePieceNames;
+  }
+
+  /***
+   * @return promotion image for testing
+   */
+  String getPromotionImage() {
+    return promotionImage;
+  }
 }

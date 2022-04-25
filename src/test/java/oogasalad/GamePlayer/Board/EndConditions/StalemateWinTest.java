@@ -1,10 +1,14 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
+import static oogasalad.GamePlayer.Movement.CustomMovements.CheckersCaptureTest.CHECKERS_TEST_FILE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import oogasalad.GamePlayer.Board.BoardSetup;
 import oogasalad.GamePlayer.Board.BoardTestUtil;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Player;
@@ -59,9 +63,17 @@ public class StalemateWinTest {
 
   @Test
   void reachedStalemate() throws EngineException {
-
     assertTrue(sw.isStalemate(board));
+  }
 
+  @Test
+  void notStalemateTest() {
+    try {
+      board = BoardSetup.createLocalBoard(CHECKERS_TEST_FILE);
+      assertEquals(Collections.emptyMap(), sw.getScores(board));
+    } catch (Exception e) {
+      fail();
+    }
   }
 
   @Test

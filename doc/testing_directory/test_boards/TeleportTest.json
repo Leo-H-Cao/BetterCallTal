@@ -1,0 +1,52 @@
+{
+  "general": [
+    {
+      "rows": 8,
+      "columns": 8,
+      "turnCriteria": "OnlyFirstTeam",
+      "colors": ["black", "white"],
+      "endConditions": [],
+      "validStateCheckers": []
+    }
+  ],
+  "playerInfo": [
+    {
+      "team": 0,
+      "opponents": [1]
+    },
+    {
+      "team": 1,
+      "opponents": [0]
+    }
+  ],
+  "pieces": [
+    {
+      "row": 7,
+      "col": 0,
+      "pieceFile": "Rook",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 7,
+      "pieceFile": "Rook",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    }
+  ],
+  "tiles": [
+    {
+      "row": 7,
+      "col": 3,
+      "tileActions": ["Teleport"],
+      "img": "blackhole"
+    }
+  ]
+}

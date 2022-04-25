@@ -25,7 +25,7 @@ public class GameViewTest extends DukeApplicationTest {
         myResources = ResourceBundle.getBundle("oogasalad.Frontend.Menu.languages.English");
         BackendConnector.initBackend(myResources);
         myChessBoard = BoardSetup.createRemoteBoard("doc/games/TicTacToe.json", "RoomName", 0);
-        myGameView.SetUpBoard(myChessBoard, false);
+        myGameView.SetUpBoard(myChessBoard, 0, "Server");
         stage.setScene(myGameView.getScene());
         stage.show();
     }

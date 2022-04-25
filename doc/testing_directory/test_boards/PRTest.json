@@ -1,0 +1,126 @@
+{
+  "general": [
+    {
+      "rows": 7,
+      "columns": 7,
+      "turnCriteria": "OnlyFirstTeam",
+      "colors": ["black", "white"],
+      "endConditions": [],
+      "validStateCheckers": []
+    }
+  ],
+  "playerInfo": [
+    {
+      "team": 0,
+      "opponents": [1]
+    },
+    {
+      "team": 1,
+      "opponents": [0]
+    }
+  ],
+  "pieces": [
+    {
+      "row": 1,
+      "col": 1,
+      "pieceFile": "WhiteChecker",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 4,
+      "col": 4,
+      "pieceFile": "Rook",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    }
+  ],
+  "tiles": [
+    {
+      "row": 0,
+      "col": 0,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 0,
+      "col": 1,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 0,
+      "col": 2,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 0,
+      "col": 3,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 0,
+      "col": 4,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 0,
+      "col": 5,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 0,
+      "col": 6,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 0,
+      "col": 7,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 6,
+      "col": 0,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 6,
+      "col": 1,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 6,
+      "col": 2,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 6,
+      "col": 3,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 6,
+      "col": 4,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 6,
+      "col": 5,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 6,
+      "col": 6,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 6,
+      "col": 7,
+      "tileActions": ["PromotionReverse"]
+    }
+  ]
+}

@@ -18,7 +18,6 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.util.*;
 
-@SuppressWarnings("OptionalUsedAsFieldOrParameterType")
 public abstract class View extends BackendConnector {
 	private static Collection<View> myViews;
 	private static boolean fullscreen = false;
@@ -26,7 +25,7 @@ public abstract class View extends BackendConnector {
 	protected Group myRoot;
 	protected Rectangle2D myScreenSize;
 	protected Optional<ResourceBundle> myResources;
-	private final Stage myStage;
+	protected final Stage myStage;
 	protected static final Logger LOG = LogManager.getLogger(View.class);
 
 	public View(Stage stage) {

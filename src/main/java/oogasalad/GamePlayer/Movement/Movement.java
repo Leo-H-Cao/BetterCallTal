@@ -57,7 +57,8 @@ public class Movement implements MovementInterface{
    * Constructor for Jackson serialization and deserialization
    */
   public Movement(){
-    super();
+    this.possibleMoves = new ArrayList<>();
+    this.infinite = false;
   }
 
   /**

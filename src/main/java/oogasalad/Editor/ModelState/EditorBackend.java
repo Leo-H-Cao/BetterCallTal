@@ -13,7 +13,10 @@ import oogasalad.Editor.ModelState.EditPiece.PieceGridTile;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Editor.ModelState.RulesState.GameRulesState;
 
+import static oogasalad.Editor.ModelState.EditPiece.PieceGridTile.CAPTURE;
+import static oogasalad.Editor.ModelState.EditPiece.PieceGridTile.INFINITECAPTURE;
 import static oogasalad.Editor.ModelState.EditPiece.PieceGridTile.OPEN;
+import static oogasalad.Editor.ModelState.EditPiece.PieceGridTile.OPENANDCAPTURE;
 
 public class EditorBackend {
 	private final PiecesState piecesState;
@@ -82,14 +85,12 @@ public class EditorBackend {
 	}
 
 	private void createDefaultPieces() {
-		MovementGrid moves = new MovementGrid();
-
-		createDefaultPiece("pawn", 1, moves);
-		createDefaultPiece("knight", 3, moves);
-		createDefaultPiece("bishop", 3, moves);
-		createDefaultPiece("rook", 5, moves);
-		createDefaultPiece("queen", 9, moves);
-		createDefaultPiece("king", 99, moves);
+		createDefaultPiece("pawn", 1, createWhitePawnDefaultMoves());
+		createDefaultPiece("knight", 3, createKnightDefaultMoves());
+		createDefaultPiece("bishop", 3, createBishopDefaultMoves());
+		createDefaultPiece("rook", 5, createRookDefaultMoves());
+		createDefaultPiece("queen", 9, createQueenDefaultMoves());
+		createDefaultPiece("king", 99, createKingDefaultMoves());
 	}
 
 	private void createDefaultPiece(String name, int val, MovementGrid moves) {
@@ -101,6 +102,81 @@ public class EditorBackend {
 		piece.setPieceName(name);
 		piece.setPointValue(val);
 		piece.setMovementGrid(moves, 0);
+		if(name.equals("pawnTest")){
+			piece.setMovementGrid(createBlackPawnDefaultMoves(), 1);
+		}
+		else{
+			piece.setMovementGrid(moves, 1);
+		}
+	}
+
+	private MovementGrid createBlackPawnDefaultMoves(){
+		MovementGrid moves = new MovementGrid();
+		moves.setTile(3,2, OPEN);
+		moves.setTile(2,2, CAPTURE);
+		moves.setTile(4,2, CAPTURE);
+		return moves;
+	}
+
+	private MovementGrid createWhitePawnDefaultMoves(){
+		MovementGrid moves = new MovementGrid();
+		moves.setTile(3,4, OPEN);
+		moves.setTile(2,4, CAPTURE);
+		moves.setTile(4,4, CAPTURE);
+		return moves;
+	}
+
+	private MovementGrid createKnightDefaultMoves(){
+		MovementGrid moves = new MovementGrid();
+		moves.setTile(2,1, OPENANDCAPTURE);
+		moves.setTile(4,1, OPENANDCAPTURE);
+		moves.setTile(1,2, OPENANDCAPTURE);
+		moves.setTile(1,4, OPENANDCAPTURE);
+		moves.setTile(6,2, OPENANDCAPTURE);
+		moves.setTile(6,4, OPENANDCAPTURE);
+		moves.setTile(2,6, OPENANDCAPTURE);
+		moves.setTile(4,6, OPENANDCAPTURE);
+		return moves;
+	}
+
+	private MovementGrid createBishopDefaultMoves(){
+		MovementGrid moves = new MovementGrid();
+		moves.setTile(2,2, INFINITECAPTURE);
+		moves.setTile(4,2, INFINITECAPTURE);
+		moves.setTile(2, 4, INFINITECAPTURE);
+		moves.setTile(4,4, INFINITECAPTURE);
+		return moves;
+	}
+
+	private MovementGrid createRookDefaultMoves(){
+		MovementGrid moves = new MovementGrid();
+		moves.setTile(3,2, INFINITECAPTURE);
+		moves.setTile(2,3, INFINITECAPTURE);
+		moves.setTile(4, 3, INFINITECAPTURE);
+		moves.setTile(3,4, INFINITECAPTURE);
+		return moves;
+	}
+
+	private MovementGrid createQueenDefaultMoves(){
+		MovementGrid moves = createBishopDefaultMoves();
+		moves.setTile(3,2, INFINITECAPTURE);
+		moves.setTile(2,3, INFINITECAPTURE);
+		moves.setTile(4, 3, INFINITECAPTURE);
+		moves.setTile(3,4, INFINITECAPTURE);
+		return moves;
+	}
+
+	private MovementGrid createKingDefaultMoves(){
+		MovementGrid moves = new MovementGrid();
+		moves.setTile(3,2, OPENANDCAPTURE);
+		moves.setTile(2,3, OPENANDCAPTURE);
+		moves.setTile(4, 3, OPENANDCAPTURE);
+		moves.setTile(3,4, OPENANDCAPTURE);
+		moves.setTile(2,2, OPENANDCAPTURE);
+		moves.setTile(4,2, OPENANDCAPTURE);
+		moves.setTile(2, 4, OPENANDCAPTURE);
+		moves.setTile(4,4, OPENANDCAPTURE);
+		return moves;
 	}
 
 	private void setDefaultGameRules() {

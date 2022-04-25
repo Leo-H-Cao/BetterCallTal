@@ -201,9 +201,12 @@ public class LocalGame extends View {
     EventHandler<ActionEvent> upload = (e) -> {
       File f = chooseLoadFile();
       Optional<ChessBoard> cb = getGameBackend().initalizeLocalChessBoard(f);
-      if (cb.isPresent()) {
-        getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), mode.equals(SINGLEPLAYER))); // hardcoded 0 here for white
-      } else {
+      if (cb.isPresent() && mode.equals(SINGLEPLAYER)) {
+        getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), player(), String.format("%s %s", mode, diffSelectionLabel.getText()))); // hardcoded 0 here for white
+      } else if (cb.isPresent()) {
+        getView(GameView.class).ifPresent((c) -> ((GameView) c).SetUpBoard(cb.get(), player(), mode));// hardcoded 0 here for white
+      }
+      else {
         View.LOG.debug("INVALID JSON OR INVALID PLAYER SELECTION");
       }
     };
@@ -286,10 +289,9 @@ public class LocalGame extends View {
     File f = new File(path);
     Optional<ChessBoard> cb = getGameBackend().initalizeLocalChessBoard(f);
     if (cb.isPresent()) {
-      getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), mode.equals(SINGLEPLAYER))); // hardcoded 0 here for white
-    } else {
+      getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), player(), mode)); // hardcoded 0 here for white
+   } else {
       View.LOG.debug("INVALID JSON OR INVALID PLAYER SELECTION");
     }
   }
-
 }
