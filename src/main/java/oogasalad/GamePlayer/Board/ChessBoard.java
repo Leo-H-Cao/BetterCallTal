@@ -55,6 +55,7 @@ public class ChessBoard implements Iterable<ChessTile> {
 
   public static final String EMPTY_LINK = "";
   public static final int TIME_PERIOD = 10000;
+  public static final int TIME_DELAY = 1000;
   private static final Logger LOG = LogManager.getLogger(ChessBoard.class);
   private final GamePlayers players;
   private final List<ValidStateChecker> validStateCheckers;
@@ -129,7 +130,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     if (gameType == GameType.SERVER) {
       this.turnManager = new RemoteTurnManager(boardData.turnManagerData());
       this.history = new RemoteHistoryManager(boardData.history());
-      timer.scheduleAtFixedRate(createTask(), 0, TIME_PERIOD);
+      timer.scheduleAtFixedRate(createTask(), TIME_DELAY, TIME_PERIOD);
     } else {
       this.turnManager = new LocalTurnManager(boardData.turnManagerData());
       this.history = new LocalHistoryManager(boardData.history());
@@ -642,6 +643,9 @@ public class ChessBoard implements Iterable<ChessTile> {
     return server;
   }
 
+  public void disableTimer() {
+    timer.cancel();
+  }
 
   /**
    * Iterator class over the board list

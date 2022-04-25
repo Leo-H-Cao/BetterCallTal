@@ -1,6 +1,5 @@
 package oogasalad.Server.SessionManagement;
 
-import java.util.List;
 import java.util.Objects;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.History.History;
@@ -26,11 +25,13 @@ public final class GameSession {
    *                      of the game.
    */
   public GameSession(String gameSessionId, int host, int opponent, ChessBoard initialBoard) {
+    ChessBoard board = initialBoard.toServerChessBoard(gameSessionId, host);
+    board.disableTimer();
     this.gameSessionId = gameSessionId;
     this.host = host;
     this.opponent = opponent;
     this.turns = new LocalTurnManager(initialBoard.getTurnManagerData());
-    this.history = new LocalHistoryManager(History.fromBoard(initialBoard));
+    this.history = new LocalHistoryManager(History.fromBoard(board));
     this.isPaused = false;
   }
 
