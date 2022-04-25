@@ -226,7 +226,9 @@ public class GameView extends View {
         myLeftSide = new LeftSection(flipRun);
         myHistoryPanel = new BoardHistoryPanel();
 
-        bp.setLeft(new VBox(myLeftSide.getVbox(), myHistoryPanel.makeNode()));
+        VBox leftvbox = new VBox(myLeftSide.getVbox(), myHistoryPanel.makeNode());
+        leftvbox.setAlignment(Pos.CENTER);
+        bp.setLeft(leftvbox);
 
         setFlipButton(); //ONLY FOR TESTING GAMEVIEW, IGNORE THIS
         return bp;
