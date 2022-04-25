@@ -4,6 +4,7 @@ import javafx.stage.Stage;
 import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.GamePlayer.Board.BoardSetup;
 import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
@@ -18,7 +19,7 @@ public class GameViewTest extends DukeApplicationTest {
     private ChessBoard myChessBoard;
 
     @Override
-    public void start (Stage stage) throws IOException {
+    public void start (Stage stage) throws IOException, EngineException {
         myStage = stage;
         myGameView = new GameView(stage);
         myResources = ResourceBundle.getBundle("oogasalad.Frontend.Menu.languages.English");

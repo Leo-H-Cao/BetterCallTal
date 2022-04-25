@@ -30,6 +30,7 @@ import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.ArtificialPlayer.Bot;
 import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.GameType;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
@@ -87,7 +88,7 @@ public class GameView extends View {
     public void SetUpBoard(ChessBoard chessboard, int id, String mode, String imgPackage) {
 
         myID = chessboard.getThisPlayer();
-        isServer = false;  // getGameBackend().getChessBoard().getGameType().equals("SERVER");
+        isServer = getGameBackend().getChessBoard().getGameType() == GameType.SERVER;
         makeConsandRuns();
         myBoardHistory = new BoardHistory();
         myBoardGrid = new BoardGrid(chessboard, lightUpCons, MoveCons, errorRun, myBoardHistory, imgPackage); //TODO: Figure out player ID stuff
@@ -173,11 +174,7 @@ public class GameView extends View {
            return false;
         }
         if (isServer) {
-            if (myID != tu.nextPlayer()) {
-                myLeftSide.dispServWait(true);
-            } else {
-                myLeftSide.dispServWait(false);
-            }
+            myLeftSide.dispServWait(myID != tu.nextPlayer());
         }
         return true;
     }

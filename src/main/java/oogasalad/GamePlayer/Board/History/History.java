@@ -1,5 +1,7 @@
 package oogasalad.GamePlayer.Board.History;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
@@ -20,6 +22,16 @@ public record History(ChessBoard board, Set<Piece> movedPieces, Set<ChessTile> u
   public History(HistoryData historyData) {
     this(new ChessBoard(historyData.board()), historyData.movedPieces(),
         historyData.updatedTiles());
+  }
+
+  /**
+   * Creates a history record from a given board
+   *
+   * @param board the board to be converted to a history record
+   * @return the history record
+   */
+  public static Collection<History> fromBoard(ChessBoard board) {
+    return List.of(new History(board, Set.of(), Set.of()));
   }
 
   /**

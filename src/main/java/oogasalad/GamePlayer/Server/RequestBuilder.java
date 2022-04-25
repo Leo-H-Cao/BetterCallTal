@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectMapper.DefaultTyping;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator;
 import com.fasterxml.jackson.databind.jsontype.PolymorphicTypeValidator;
 import java.io.FileReader;
@@ -16,6 +17,7 @@ import java.net.http.HttpResponse;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import oogasalad.GamePlayer.Board.ChessBoard.ChessBoardData;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.Tiles.CustomTiles.TileAction;
@@ -45,7 +47,6 @@ public class RequestBuilder {
     PolymorphicTypeValidator ptv = BasicPolymorphicTypeValidator.builder()
         .allowIfBaseType(TurnCriteria.class)
         .allowIfBaseType(EndCondition.class)
-
         .allowIfSubTypeIsArray()
         .allowIfBaseType(ChessTile.class)
         .allowIfBaseType(TileAction.class)
@@ -67,6 +68,7 @@ public class RequestBuilder {
         .build();
     return new ObjectMapper().activateDefaultTyping(ptv, DefaultTyping.NON_FINAL)
         .enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+        .configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false)
         .setVisibility(PropertyAccessor.ALL, Visibility.NONE)
         .setVisibility(PropertyAccessor.FIELD, Visibility.ANY);
   }

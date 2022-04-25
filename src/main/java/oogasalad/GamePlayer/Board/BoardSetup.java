@@ -1,6 +1,7 @@
 package oogasalad.GamePlayer.Board;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.nio.file.Files;
@@ -9,9 +10,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
+import oogasalad.GamePlayer.Board.History.HistoryManager;
+import oogasalad.GamePlayer.Board.History.RemoteHistoryManager;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.Tiles.CustomTiles.TileAction;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
@@ -20,6 +24,7 @@ import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Movement.MovementInterface;
 import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
+import oogasalad.GamePlayer.Server.SessionManager;
 import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -74,8 +79,12 @@ public class BoardSetup {
    * @throws IOException if the file is not found
    */
   public static ChessBoard createRemoteBoard(String path, String key, int thisPlayer)
-      throws IOException {
-    return createLocalBoard(path);
+      throws IOException, EngineException {
+    ChessBoard localboard = createLocalBoard(path);
+    int otherPlayer = 1 - thisPlayer;
+    SessionManager sessionManager = new SessionManager();
+    sessionManager.createGameSession(key, thisPlayer, otherPlayer, localboard);
+    return localboard.toServerChessBoard(key, thisPlayer);
   }
 
   /**
@@ -84,8 +93,12 @@ public class BoardSetup {
    * @param key the key to the game trying to join
    * @return the ChessBoard
    */
-  public static ChessBoard joinRemoteBoard(String key) {
-    return null;
+  public static ChessBoard joinRemoteBoard(String key)
+      throws EngineException, JsonProcessingException {
+    SessionManager sessionManager = new SessionManager();
+    HistoryManager historyManager = new RemoteHistoryManager(key);
+    int thisPlayer = sessionManager.joinGameSession(key);
+    return historyManager.getCurrentBoard().toServerChessBoard(key, thisPlayer);
   }
 
   private static ChessBoard boardFromJSONPath(String jsonFileName) throws IOException {
