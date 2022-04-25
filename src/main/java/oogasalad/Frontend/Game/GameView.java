@@ -153,9 +153,9 @@ public class GameView extends View {
 
         if (isServer) {
             if (myID != tu.nextPlayer()) {
-                //TODO: DISPLAY WAITING FOR SERVER MESSAGE
+                myLeftSide.dispServWait(true);
             } else {
-                //TODO: REMOVE MESSAGE
+                myLeftSide.dispServWait(false);
             }
         }
         return true;
