@@ -11,6 +11,13 @@ import oogasalad.GamePlayer.Board.ChessBoard;
  */
 public class Antichess extends LoseAllPieces {
 
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public Antichess() {
+    super();
+  }
+
   /***
    * Losers are the ones who lose all pieces, winners are their opponents, draw for everyone else
    *
@@ -34,7 +41,7 @@ public class Antichess extends LoseAllPieces {
    * @return 1-val
    */
   private double invertScore(double val) {
-    return WIN-val;
+    return WIN - val;
   }
 
   /***

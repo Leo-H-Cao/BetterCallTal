@@ -1,0 +1,42 @@
+package oogasalad.GamePlayer.Board.History;
+
+import java.util.Set;
+import oogasalad.GamePlayer.Board.ChessBoard.ChessBoardData;
+import oogasalad.GamePlayer.Board.Tiles.ChessTile;
+import oogasalad.GamePlayer.GamePiece.Piece;
+
+/**
+ * This class is used to store the history of the game when communicating with the server.
+ *
+ * @param board        the board of the game
+ * @param movedPieces  the pieces that have been moved
+ * @param updatedTiles the tiles that have been updated
+ */
+public record HistoryData(ChessBoardData board, Set<Piece> movedPieces,
+                          Set<ChessTile> updatedTiles) {
+
+  /**
+   * This method returns the history of the game.
+   *
+   * @param history the history of the game
+   */
+  public HistoryData(History history) {
+    this(history.board().getBoardData(), history.movedPieces(), history.updatedTiles());
+  }
+
+  /**
+   * Creates an empty history data object.
+   */
+  public HistoryData() {
+    this(new ChessBoardData(), Set.of(), Set.of());
+  }
+
+  /**
+   * Creates a history data object with the given parameters.
+   *
+   * @return the history data object
+   */
+  public History toHistory() {
+    return new History(board().toChessBoard(), movedPieces(), updatedTiles());
+  }
+}

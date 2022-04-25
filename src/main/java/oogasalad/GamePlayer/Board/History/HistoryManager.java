@@ -1,5 +1,6 @@
 package oogasalad.GamePlayer.Board.History;
 
+import java.util.function.Consumer;
 import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
@@ -75,8 +76,6 @@ public interface HistoryManager {
 
   /**
    * Clears the history.
-   *
-   * @return the state that was cleared to.
    */
   void clearHistory();
 
@@ -93,4 +92,27 @@ public interface HistoryManager {
    * @return way to stream over the history
    */
   Stream<History> stream();
+
+  /**
+   * Gets the history API link for the current history manager data. Returns an empty string if the
+   * history manager is a local history manager.
+   *
+   * @return the history API link for the current history manager data.
+   */
+  String getLink();
+
+  /**
+   * Gets the history manager data.
+   *
+   * @return the history manager data.
+   */
+  HistoryManagerData getHistoryManagerData();
+
+  /**
+   * Sets a callback to handle any sort of error that occurs during the game.
+   *
+   * @param errorHandler the error handler to set
+   */
+  void setErrorHandler(Consumer<Throwable> errorHandler);
+
 }

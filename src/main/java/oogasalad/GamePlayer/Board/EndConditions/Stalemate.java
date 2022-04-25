@@ -16,6 +16,13 @@ import oogasalad.GamePlayer.ValidStateChecker.Check;
 public class Stalemate implements EndCondition{
   private Check check = new Check();
 
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public Stalemate(){
+    super();
+  }
+
   boolean isStalemate(ChessBoard board) throws EngineException{
     //for all teams, check if there are legal moves left
 //    for(int i : board.getTeams()){

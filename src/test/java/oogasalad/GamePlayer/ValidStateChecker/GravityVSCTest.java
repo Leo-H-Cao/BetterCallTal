@@ -4,9 +4,8 @@ import static oogasalad.GamePlayer.Movement.CustomMovements.BankLeaverTest.BOARD
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
-import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.Setup.BoardSetup;
+import oogasalad.GamePlayer.Board.BoardSetup;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import org.junit.jupiter.api.BeforeEach;

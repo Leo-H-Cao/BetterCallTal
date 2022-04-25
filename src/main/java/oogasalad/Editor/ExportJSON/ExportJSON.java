@@ -82,7 +82,7 @@ public class ExportJSON {
     generalExport.setTurnCriteria(gameRulesState.getTurnCriteria());
     generalExport.setEndConditions(gameRulesState.getWinConditions());
     generalExport.setColors(gameRulesState.getColors());
-    generalExport.setValidStateChecker(gameRulesState.getValidStateCheckers());
+    generalExport.setValidStateCheckers(gameRulesState.getValidStateCheckers());
   }
 
   /**
@@ -136,6 +136,7 @@ public class ExportJSON {
    */
   private void createBasicMovement(MovementGrid movementGrid, String pieceName, int teamNum){
     BasicMovementExportWrapper movementWrapper = new BasicMovementExportWrapper();
+    BasicMovementExportWrapper captureWrapper = new BasicMovementExportWrapper();
     for(int y = 0; y < MovementGrid.PIECE_GRID_SIZE; y++){
       for(int x = 0; x < MovementGrid.PIECE_GRID_SIZE; x++){
         PieceGridTile curTile = movementGrid.getTileStatus(x, y);
@@ -145,9 +146,17 @@ public class ExportJSON {
           BasicMovementExport basicMovement = new BasicMovementExport(relX, relY, curTile == PieceGridTile.INFINITY);
           movementWrapper.addMovement(basicMovement);
         }
+        else if(curTile == PieceGridTile.OPENANDCAPTURE || curTile == PieceGridTile.INFINITECAPTURE){
+          int relX = x-PIECE_LOCATION;
+          int relY = PIECE_LOCATION-y;
+          BasicMovementExport basicMovement = new BasicMovementExport(relX, relY, curTile == PieceGridTile.INFINITECAPTURE);
+          movementWrapper.addMovement(basicMovement);
+          captureWrapper.addMovement(basicMovement);
+        }
       }
     }
-    exportBasicMovement(movementWrapper, pieceName, teamNum);
+    exportBasicMovement(movementWrapper, pieceName, teamNum, false);
+    exportBasicMovement(captureWrapper, pieceName, teamNum, true);
   }
 
   /**
@@ -156,15 +165,16 @@ public class ExportJSON {
    * @param pieceName used for naming the export file
    * @param teamNum determines which team (black or white) current movement grid is for
    */
-  private void exportBasicMovement(BasicMovementExportWrapper basicMovements, String pieceName, int teamNum){
+  private void exportBasicMovement(BasicMovementExportWrapper basicMovements, String pieceName, int teamNum, boolean captures){
     String team = teamNum == 0 ? "w" : "b";
+    String fileName = captures ? "Cap.json" : "Mov.json";
     ObjectMapper objectMapper = new ObjectMapper();
     try{
       File movementDir = new File("doc/GameEngineResources/BasicMovements");
       if (!movementDir.exists()){
         movementDir.mkdirs();
       }
-      objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(movementDir.getAbsolutePath()+"/"+team+pieceName+"Movement.json"), basicMovements);
+      objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(movementDir.getAbsolutePath()+"/"+team+pieceName+fileName), basicMovements);
     }
     catch (IOException e){
       LOG.warn(OBJECT_MAPPER_ERR_MSG);

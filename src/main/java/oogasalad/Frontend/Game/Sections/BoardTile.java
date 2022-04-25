@@ -42,8 +42,7 @@ public class BoardTile {
     private Boolean Lit;
     private String Image_Path = "src/main/resources/images/pieces/";
     private Color BlackSquare = Color.GREEN;
-    private Color WhiteSquare = Color.GRAY;
-    private Color myColor;
+    private Color WhiteSquare = Color.LIGHTGREY;
     private String LitColor = "Cyan";
     private BiConsumer<String, String> ErrorRunnable;
 
@@ -147,10 +146,8 @@ public class BoardTile {
     private void ColorRect(int x, int y) {
         if ((x + y) % 2 == 1) {
             myRectangle.setFill(BlackSquare);
-            myColor = BlackSquare;
         } else {
             myRectangle.setFill(WhiteSquare);
-            myColor = WhiteSquare;
         }
         myRectangle.setStroke(Paint.valueOf(LitColor));
         myRectangle.setStrokeType(StrokeType.INSIDE);

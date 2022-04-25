@@ -1,9 +1,7 @@
 package oogasalad.Editor.ModelState.EditPiece;
 
 import javafx.scene.paint.Paint;
-
 import java.util.MissingResourceException;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public enum PieceGridTile {
@@ -12,7 +10,8 @@ public enum PieceGridTile {
   INFINITY,
   PIECE,
   CAPTURE,
-  OPENANDCAPTURE;
+  OPENANDCAPTURE,
+  INFINITECAPTURE;
 
   public ResourceBundle myBundle;
 

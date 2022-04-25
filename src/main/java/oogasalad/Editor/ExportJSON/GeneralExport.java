@@ -14,7 +14,7 @@ public class GeneralExport {
   private String turnCriteria;
   private ArrayList<String> colors;
   private ArrayList<ArrayList<String>> endConditions;
-  private ArrayList<ArrayList<String>> validStateChecker;
+  private ArrayList<ArrayList<String>> validStateCheckers;
 
   public GeneralExport(int row, int col){
     this.rows = row;
@@ -53,11 +53,11 @@ public class GeneralExport {
     this.endConditions = endConditions;
   }
 
-  public ArrayList<ArrayList<String>> getValidStateChecker() {
-    return validStateChecker;
+  public ArrayList<ArrayList<String>> getValidStateCheckers() {
+    return validStateCheckers;
   }
 
-  public void setValidStateChecker(ArrayList<ArrayList<String>> validStateChecker) {
-    this.validStateChecker = validStateChecker;
+  public void setValidStateCheckers(ArrayList<ArrayList<String>> validStateCheckers) {
+    this.validStateCheckers = validStateCheckers;
   }
 }
