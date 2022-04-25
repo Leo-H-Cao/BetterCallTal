@@ -1,16 +1,21 @@
 package oogasalad.Server.Controllers;
 
 import java.util.stream.Stream;
-import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.Board.ChessBoard.ChessBoardData;
 import oogasalad.GamePlayer.Board.History.History;
+import oogasalad.GamePlayer.Board.History.HistoryData;
 import oogasalad.Server.SessionManagement.GameSessionService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HistoryController {
 
   private final GameSessionService activeSessions;
+  private static final Logger LOG = LogManager.getLogger(HistoryController.class);
 
   /**
    * Constructor called by Spring to create a new HistoryController. Constructor initializes the
@@ -37,8 +43,9 @@ public class HistoryController {
    * @return the current chess board state of the game.
    */
   @GetMapping("/current-board/{id}")
-  public ChessBoard getCurrentBoard(@PathVariable String id) {
-    return activeSessions.getSession(id).history().getCurrentBoard();
+  @ResponseBody
+  public ChessBoardData getCurrentBoard(@PathVariable String id) {
+    return new ChessBoardData(activeSessions.getSession(id).history().getCurrentBoard());
   }
 
   /**
@@ -48,8 +55,10 @@ public class HistoryController {
    * @param newState The new state to add.
    */
   @PostMapping("/add/{id}")
-  public History add(@PathVariable String id, History newState) {
-    return activeSessions.getSession(id).history().add(newState);
+  @ResponseBody
+  public HistoryData add(@PathVariable String id, @RequestBody HistoryData newState) {
+    LOG.info("Adding new state to history" + id);
+    return new HistoryData(activeSessions.getSession(id).history().add(newState.toHistory()));
   }
 
   /**
@@ -59,8 +68,9 @@ public class HistoryController {
    * @return the most recent state.
    */
   @GetMapping("/last/{id}")
-  public History getLast(@PathVariable String id) {
-    return activeSessions.getSession(id).history().getLast();
+  @ResponseBody
+  public HistoryData getLast(@PathVariable String id) {
+    return new HistoryData(activeSessions.getSession(id).history().getLast());
   }
 
   /**
@@ -73,6 +83,7 @@ public class HistoryController {
    * @return the size of the history.
    */
   @GetMapping("/size/{id}")
+  @ResponseBody
   public int size(@PathVariable String id) {
     return activeSessions.getSession(id).history().size();
   }
@@ -85,8 +96,9 @@ public class HistoryController {
    * @return the state at a given index.
    */
   @GetMapping("/index/{id}/{index}")
-  public History get(@PathVariable String id, @PathVariable int index) {
-    return activeSessions.getSession(id).history().get(index);
+  @ResponseBody
+  public HistoryData get(@PathVariable String id, @PathVariable int index) {
+    return new HistoryData(activeSessions.getSession(id).history().get(index));
   }
 
   /**
@@ -96,8 +108,9 @@ public class HistoryController {
    * @return the starting board configuration.
    */
   @GetMapping("/first/{id}")
-  public History getFirst(@PathVariable String id) {
-    return activeSessions.getSession(id).history().getFirst();
+  @ResponseBody
+  public HistoryData getFirst(@PathVariable String id) {
+    return new HistoryData(activeSessions.getSession(id).history().getFirst());
   }
 
   /**
@@ -107,8 +120,9 @@ public class HistoryController {
    * @return the current state of the game.
    */
   @GetMapping("/current/{id}")
-  public History getCurrent(@PathVariable String id) {
-    return activeSessions.getSession(id).history().getCurrent();
+  @ResponseBody
+  public HistoryData getCurrent(@PathVariable String id) {
+    return new HistoryData(activeSessions.getSession(id).history().getCurrent());
   }
 
   /**
@@ -118,6 +132,7 @@ public class HistoryController {
    * @return the index of the most recent state.
    */
   @GetMapping("/current-index/{id}")
+  @ResponseBody
   public int getCurrentIndex(@PathVariable String id) {
     return activeSessions.getSession(id).history().getCurrentIndex();
   }
@@ -130,8 +145,9 @@ public class HistoryController {
    * @return the state that was rewound to.
    */
   @PutMapping("/rewind/{id}/{index}")
-  public History goToState(@PathVariable String id, @PathVariable int index) {
-    return activeSessions.getSession(id).history().goToState(index);
+  @ResponseBody
+  public HistoryData goToState(@PathVariable String id, @PathVariable int index) {
+    return new HistoryData(activeSessions.getSession(id).history().goToState(index));
   }
 
   /**
@@ -140,6 +156,7 @@ public class HistoryController {
    * @param id The id of the game.
    */
   @DeleteMapping("/clear/{id}")
+  @ResponseBody
   public void clearHistory(@PathVariable String id) {
     activeSessions.getSession(id).history().clearHistory();
   }
@@ -151,6 +168,7 @@ public class HistoryController {
    * @return true if the history is empty, false otherwise.
    */
   @GetMapping("/empty/{id}")
+  @ResponseBody
   public boolean isEmpty(@PathVariable String id) {
     return activeSessions.getSession(id).history().isEmpty();
   }
@@ -162,7 +180,8 @@ public class HistoryController {
    * @return way to stream over the history
    */
   @GetMapping("/stream/{id}")
-  public Stream<History> stream(@PathVariable String id) {
-    return activeSessions.getSession(id).history().stream();
+  @ResponseBody
+  public Stream<HistoryData> stream(@PathVariable String id) {
+    return activeSessions.getSession(id).history().stream().map(HistoryData::new);
   }
 }

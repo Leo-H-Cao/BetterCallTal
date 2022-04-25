@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
-import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
@@ -14,6 +13,13 @@ import oogasalad.GamePlayer.Movement.Coordinate;
 public class Swap implements TileAction {
 
   private static final Random DICE = new Random();
+
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public Swap() {
+    super();
+  }
 
   /***
    * Swaps two random pieces

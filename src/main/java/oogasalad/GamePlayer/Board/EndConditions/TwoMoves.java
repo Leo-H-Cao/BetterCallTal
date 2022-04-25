@@ -16,6 +16,13 @@ public class TwoMoves implements EndCondition {
 
   private static final int MULTIPLIER = 2;
 
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public TwoMoves() {
+    super();
+  }
+
   @Override
   public Map<Integer, Double> getScores(ChessBoard board) {
     return board.getHistory().size() == getHistoryLength(board.getPlayers().length) ?
@@ -23,7 +30,7 @@ public class TwoMoves implements EndCondition {
   }
 
   /***
-  /**
+   /**
    * @param numPlayers in the current game
    * @return length of history needed to match 3 moves for the current player size
    */

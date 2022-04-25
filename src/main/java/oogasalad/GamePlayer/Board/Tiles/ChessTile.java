@@ -1,10 +1,8 @@
 package oogasalad.GamePlayer.Board.Tiles;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -12,9 +10,7 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.CustomTiles.TileAction;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import org.apache.logging.log4j.Logger;
 
 /***
  * Class representing a tile on a chessboard
@@ -40,29 +36,6 @@ public class ChessTile implements Cloneable {
   }
 
   /**
-   * Sets up the special actions list
-   *
-   * @param tileActions is this tile's special actions
-   */
-  public void setSpecialActions(List<TileAction> tileActions) {
-    specialActions = tileActions;
-  }
-
-  /***
-   * @param img to set customImg to
-   */
-  public void setCustomImg(String img) {
-    customImg = img;
-  }
-
-  /***
-   * @return custom img
-   */
-  public Optional<String> getCustomImg() {
-    return customImg == null ? Optional.empty() : Optional.of(customImg);
-  }
-
-  /**
    * Creates a chess tile with one piece and a given coordinate
    */
   public ChessTile(Coordinate coordinate, Piece piece) {
@@ -84,6 +57,29 @@ public class ChessTile implements Cloneable {
     this.pieces = pieces;
     this.specialActions = actions;
     this.customImg = null;
+  }
+
+  /**
+   * Sets up the special actions list
+   *
+   * @param tileActions is this tile's special actions
+   */
+  public void setSpecialActions(List<TileAction> tileActions) {
+    specialActions = tileActions;
+  }
+
+  /***
+   * @return custom img
+   */
+  public Optional<String> getCustomImg() {
+    return customImg == null ? Optional.empty() : Optional.of(customImg);
+  }
+
+  /***
+   * @param img to set customImg to
+   */
+  public void setCustomImg(String img) {
+    customImg = img;
   }
 
   /**

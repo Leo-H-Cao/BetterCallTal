@@ -1,7 +1,6 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
-import static oogasalad.GamePlayer.Board.Setup.BoardSetup.JSON_EXTENSION;
-import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_CONFIG_FILE_HEADER;
+import static oogasalad.GamePlayer.Board.BoardSetup.JSON_EXTENSION;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,11 +10,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.ValidStateChecker.BankBlocker;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
