@@ -12,6 +12,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -53,6 +54,8 @@ public class ChessBoard implements Iterable<ChessTile> {
   private final TurnManagerData turnManagerData;
   private List<List<ChessTile>> board;
   private Map<Integer, List<Piece>> pieceList;
+  private BiConsumer<String, String> showAsyncError;
+  private Consumer<TurnUpdate> performAsyncTurnUpdate;
 
   /**
    * Creates a representation of a chessboard if an array of pieces is already provided
@@ -220,7 +223,7 @@ public class ChessBoard implements Iterable<ChessTile> {
       boardCopy.add(new ArrayList<>());
       boardCopy.get(i).addAll(this.board.get(i).stream().map(ChessTile::clone).toList());
     });
-    return new ChessBoard(boardCopy, this.turnManagerData, this.players, this.validStateCheckers,
+    return new ChessBoard(boardCopy, this.turnManagerData.copy(), this.players, this.validStateCheckers,
         this.history);
   }
 
@@ -329,15 +332,16 @@ public class ChessBoard implements Iterable<ChessTile> {
 
   /**
    * If finding the captured piece by looking at the square covered by the current piece one move
-   * back (e.g. in en passant, the captured piece is on a different square), this function looks
-   * at the piece list for both states to find the captured piece
+   * back (e.g. in en passant, the captured piece is on a different square), this function looks at
+   * the piece list for both states to find the captured piece
    *
    * @param team is the team of the player
    * @return piece in pastBoard that's missing from present board that is an opponent of team
    */
   public Piece findTakenPiece(int team)
   /*throws PieceNotFoundException*/ {
-    List<Piece> pastPieces = this.getHistory().get(this.getHistory().size() - 1).board().getOpponentPieces(team);
+    List<Piece> pastPieces = this.getHistory().get(this.getHistory().size() - 1).board()
+        .getOpponentPieces(team);
     List<Piece> presentPieces = this.getOpponentPieces(team);
 
     LOG.debug(String.format("Past pieces: %s", pastPieces));
@@ -493,6 +497,26 @@ public class ChessBoard implements Iterable<ChessTile> {
 
   public int getThisPlayer() {
     return -1;
+  }
+
+  /**
+   * Sets the callback function used to show an exception as a result of an async task
+   *
+   * @param showAsyncError the callback function to use
+   */
+  public void setShowAsyncError(
+      BiConsumer<String, String> showAsyncError) {
+    this.showAsyncError = showAsyncError;
+  }
+
+  /**
+   * Sets the callback function used to perform a turn update on the UI asynchronously
+   *
+   * @param performAsyncTurnUpdate the callback function to use
+   */
+  public void setPerformAsyncTurnUpdate(
+      Consumer<TurnUpdate> performAsyncTurnUpdate) {
+    this.performAsyncTurnUpdate = performAsyncTurnUpdate;
   }
 
   /**

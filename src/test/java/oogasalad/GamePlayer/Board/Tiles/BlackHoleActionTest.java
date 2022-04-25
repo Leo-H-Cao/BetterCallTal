@@ -33,7 +33,7 @@ public class BlackHoleActionTest {
   }
 
   @Test
-  void test() throws OutsideOfBoardException {
+  void testExecuteAction() throws OutsideOfBoardException {
 
     PieceData data = new PieceData(new Coordinate(0,0), "test", 0, 0, false, List.of(), List.of(), List.of(), List.of(), "i.img");
     Piece p = new Piece(data);

@@ -18,9 +18,9 @@ import javafx.stage.Stage;
 import oogasalad.Frontend.Game.History.BoardHistory;
 import oogasalad.Frontend.Game.Sections.BoardGrid;
 import oogasalad.Frontend.Game.Sections.GameOverDisplay;
-import oogasalad.Frontend.Game.Sections.RightSideSection;
+import oogasalad.Frontend.Game.Sections.LeftSection;
 import oogasalad.Frontend.Game.Sections.TopSection;
-import oogasalad.Frontend.LocalPlay.RemotePlayer.RemotePlayer;
+import oogasalad.Frontend.Menu.LocalPlay.RemotePlayer.RemotePlayer;
 import oogasalad.Frontend.Menu.HomeView;
 import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.ArtificialPlayer.Bot;
@@ -47,16 +47,16 @@ public class GameView extends View {
 
     private BoardGrid myBoardGrid;
     private static Integer myID;
-    private BorderPane myBP;
     private Consumer<Piece> lightUpCons;
     private Consumer<Coordinate> MoveCons;
     private Consumer<Node> removeGOCons;
-    private Boolean GameOver;
     private StackPane myCenterBoard;
     private Runnable flipRun;
-    private RightSideSection myRightSide;
+    private LeftSection myLeftSide;
+    private TopSection myTopSection;
     private Consumer<TurnUpdate> servUpRun;
     private BiConsumer<String, String> errorRun;
+    private Boolean isServer;
 
     private TurnKeeper turnKeeper;
     private List<RemotePlayer> remotePlayers;
@@ -66,9 +66,9 @@ public class GameView extends View {
 
     public GameView(Stage stage) {
         super(stage);
-        GameOver = false;
         remotePlayers = new ArrayList<>();
         myBoardHistory = new BoardHistory();
+
     }
 
     /**
@@ -79,9 +79,11 @@ public class GameView extends View {
      */
 
     public void SetUpBoard(ChessBoard chessboard, int id, String mode) {
-        myID = id;
+
+        myID = chessboard.getThisPlayer();
+        isServer = false;  // getGameBackend().getChessBoard().getGameType().equals("SERVER");
         makeConsandRuns();
-        myBoardGrid = new BoardGrid(chessboard, id, lightUpCons, MoveCons, errorRun); //TODO: Figure out player ID stuff
+        myBoardGrid = new BoardGrid(chessboard, myID, lightUpCons, MoveCons, errorRun); //TODO: Figure out player ID stuff
         //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
         remotePlayers = new ArrayList<>();
@@ -98,6 +100,8 @@ public class GameView extends View {
                 turnKeeper = new TurnKeeper(new String[]{"human", "human"});
                 break;
         }
+        chessboard.setShowAsyncError(this::showmyError);
+        chessboard.setPerformAsyncTurnUpdate(this::updateBoard);
     }
 
 
@@ -166,6 +170,14 @@ public class GameView extends View {
            gameOver();
            return false;
         }
+
+        if (isServer) {
+            if (myID != tu.nextPlayer()) {
+                //TODO: DISPLAY WAITING FOR SERVER MESSAGE
+            } else {
+                //TODO: REMOVE MESSAGE
+            }
+        }
         return true;
     }
 
@@ -185,7 +197,6 @@ public class GameView extends View {
     }
 
     private void gameOver(){
-        GameOver = true;
         Map<Integer, Double> scores = getGameBackend().getChessBoard().getScores();
         GameOverDisplay godisp = new GameOverDisplay(scores, removeGOCons);
         StackPane.setAlignment(godisp.getDisplay(), Pos.CENTER);
@@ -196,23 +207,27 @@ public class GameView extends View {
     @Override
     protected Node makeNode() {
         BorderPane bp = new BorderPane();
-        myBP = bp;
-        TopSection top = new TopSection();
 
-        top.setExitButton(e -> {
+        myTopSection = new TopSection();
+
+        myTopSection.setExitButton(e -> {
             getView(HomeView.class).ifPresent(this::changeScene);
         });
 
-        bp.setTop(top.getGP());
+        bp.setTop(myTopSection.getGP());
 
         myCenterBoard = new StackPane();
         myCenterBoard.getChildren().add(myBoardGrid.getBoard());
         bp.setCenter(myCenterBoard);
 
-        myRightSide = new RightSideSection(flipRun);
-        bp.setRight(myRightSide.getVbox());
-
+        myLeftSide = new LeftSection(flipRun);
+        bp.setLeft(myLeftSide.getVbox());
+        fixsizeBorderPane(bp);
         return bp;
+    }
+
+    private void fixsizeBorderPane(BorderPane bp) {
+
     }
 
     private void removeGameOverNode(Node n) {

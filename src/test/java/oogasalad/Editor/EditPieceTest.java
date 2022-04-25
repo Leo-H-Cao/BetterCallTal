@@ -39,53 +39,53 @@ public class EditPieceTest extends DukeApplicationTest {
 
   @Test
   void testFiniteMovementChanges(){
-    assertEquals(editorPiece.getTileStatus(2,3), PieceGridTile.CLOSED);
-    assertEquals(editorPiece.getTileStatus(6, 5), PieceGridTile.CLOSED);
-    editorPiece.setTile(2,3, PieceGridTile.OPEN);
-    editorPiece.setTile(6,5, PieceGridTile.OPEN);
-    assertEquals(PieceGridTile.OPEN, editorPiece.getTileStatus(2,3));
-    assertEquals(PieceGridTile.OPEN, editorPiece.getTileStatus(6, 5));
-    editorPiece.setTile(2,3, PieceGridTile.CLOSED);
-    editorPiece.setTile(6,5, PieceGridTile.CLOSED);
-    assertEquals(editorPiece.getTileStatus(2,3), PieceGridTile.CLOSED);
-    assertEquals(editorPiece.getTileStatus(6, 5), PieceGridTile.CLOSED);
+    assertEquals(editorPiece.getTileStatus(2,3, 0), PieceGridTile.CLOSED);
+    assertEquals(editorPiece.getTileStatus(6, 5, 0), PieceGridTile.CLOSED);
+    editorPiece.setTile(2,3, PieceGridTile.OPEN, 0);
+    editorPiece.setTile(6,5, PieceGridTile.OPEN, 0);
+    assertEquals(PieceGridTile.OPEN, editorPiece.getTileStatus(2,3, 0));
+    assertEquals(PieceGridTile.OPEN, editorPiece.getTileStatus(6, 5, 0));
+    editorPiece.setTile(2,3, PieceGridTile.CLOSED, 0);
+    editorPiece.setTile(6,5, PieceGridTile.CLOSED, 0);
+    assertEquals(editorPiece.getTileStatus(2,3, 0), PieceGridTile.CLOSED);
+    assertEquals(editorPiece.getTileStatus(6, 5, 0), PieceGridTile.CLOSED);
   }
 
   @Test
   void testInfiniteDiagonalMovemementChanges(){
     checkBoardAllClosed();
-    editorPiece.setTile(6,0, PieceGridTile.INFINITY);
-    editorPiece.setTile(5,5, PieceGridTile.INFINITY);
-    assertEquals(PieceGridTile.INFINITY, editorPiece.getTileStatus(6,0));
-    assertEquals(PieceGridTile.INFINITY, editorPiece.getTileStatus(5, 5));
-    editorPiece.setTile(6,0, PieceGridTile.CLOSED);
-    editorPiece.setTile(5,5, PieceGridTile.CLOSED);
+    editorPiece.setTile(6,0, PieceGridTile.INFINITY, 0);
+    editorPiece.setTile(5,5, PieceGridTile.INFINITY, 0);
+    assertEquals(PieceGridTile.INFINITY, editorPiece.getTileStatus(6,0, 0));
+    assertEquals(PieceGridTile.INFINITY, editorPiece.getTileStatus(5, 5, 0));
+    editorPiece.setTile(6,0, PieceGridTile.CLOSED, 0);
+    editorPiece.setTile(5,5, PieceGridTile.CLOSED, 0);
     checkBoardAllClosed();
   }
 
   @Test
   void testNonDiagonalInfiniteMovement(){
     checkBoardAllClosed();
-    editorPiece.setTile(1,3, PieceGridTile.INFINITY);
-    editorPiece.setTile(3,4, PieceGridTile.INFINITY);
-    assertEquals(PieceGridTile.INFINITY, editorPiece.getTileStatus(1,3));
-    assertEquals(PieceGridTile.INFINITY, editorPiece.getTileStatus(3, 4));
-    editorPiece.setTile(1,3, PieceGridTile.CLOSED);
-    editorPiece.setTile(3,4, PieceGridTile.CLOSED);
+    editorPiece.setTile(1,3, PieceGridTile.INFINITY, 0);
+    editorPiece.setTile(3,4, PieceGridTile.INFINITY, 0);
+    assertEquals(PieceGridTile.INFINITY, editorPiece.getTileStatus(1,3, 0));
+    assertEquals(PieceGridTile.INFINITY, editorPiece.getTileStatus(3, 4, 0));
+    editorPiece.setTile(1,3, PieceGridTile.CLOSED, 0);
+    editorPiece.setTile(3,4, PieceGridTile.CLOSED, 0);
     checkBoardAllClosed();
   }
 
   @Test
   void testMovementGridExceptions(){
     Exception infiniteMovementInvalidDirections = assertThrows(MovementGridException.class, () -> {
-      editorPiece.setTile(3, 3, PieceGridTile.CLOSED);
+      editorPiece.setTile(3, 3, PieceGridTile.CLOSED, 0);
     });
     String editPIeceExpectedMessage = "Piece tile cannot be changed.";
     String actualMessage = infiniteMovementInvalidDirections.getMessage();
     assertTrue(actualMessage.contains(editPIeceExpectedMessage));
 
     Exception finiteMovementInvalidCoordinates = assertThrows(MovementGridException.class, () -> {
-      editorPiece.setTile(3, 8, PieceGridTile.OPEN);
+      editorPiece.setTile(3, 8, PieceGridTile.OPEN, 0);
     });
 
     String finiteMovementExpectedMessage = "Coordinates for movement are invalid";;
@@ -109,10 +109,10 @@ public class EditPieceTest extends DukeApplicationTest {
     for(int i = 0; i < 7; i ++){
       for(int j = 0; j < 7; j++){
         if(i == 3 && j ==3){
-          assertEquals(editorPiece.getTileStatus(i,j), PieceGridTile.PIECE);
+          assertEquals(editorPiece.getTileStatus(i,j, 0), PieceGridTile.PIECE);
           continue;
         }
-        assertEquals(editorPiece.getTileStatus(i,j), PieceGridTile.CLOSED);
+        assertEquals(editorPiece.getTileStatus(i,j, 0), PieceGridTile.CLOSED);
       }
     }
   }

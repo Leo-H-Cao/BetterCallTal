@@ -1,5 +1,6 @@
 package oogasalad.Editor.ModelState;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.beans.property.*;
@@ -25,7 +26,7 @@ public class EditorBackend {
 
 	public EditorBackend(){
 		piecesState = new PiecesState();
-		boardState = new BoardState();
+		boardState = new BoardState(piecesState);
 		gameRulesState = new GameRulesState();
 		selectedTypeProperty = new SimpleObjectProperty<>(OPEN);
 		selectedPieceId = new SimpleStringProperty("rook");
@@ -76,7 +77,8 @@ public class EditorBackend {
 
 	public void exportState() {
 		ExportJSON exporter = new ExportJSON(piecesState, gameRulesState, boardState);
-		exporter.writeToJSON();
+		File parentDir = new File("doc/testing_directory/json_export_test");
+		exporter.writeToJSON(parentDir);
 	}
 
 	private void createDefaultPieces() {
@@ -97,7 +99,7 @@ public class EditorBackend {
 		piece.setImage(1, new Image("images/pieces/black/" + name + ".png"));
 		piece.setPieceName(name);
 		piece.setPointValue(val);
-		piece.setMovementGrid(moves);
+		piece.setMovementGrid(moves, 0);
 	}
 
 	private void setDefaultGameRules() {

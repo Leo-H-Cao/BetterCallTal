@@ -1,6 +1,8 @@
 package oogasalad.Editor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import javafx.scene.Scene;
@@ -57,7 +59,6 @@ public class PiecesStateTest extends DukeApplicationTest {
   @Test
   void testChangePieceAttributes(){
     String pieceID = "123";
-    Image rookImage = new Image("images/pieces/black/rook.png");
     piecesState.createCustomPiece(pieceID);
     piecesState.setPieceName(pieceID, "my piece");
     piecesState.setPiecePointValue(pieceID, 1);
@@ -68,7 +69,15 @@ public class PiecesStateTest extends DukeApplicationTest {
     piecesState.setPieceName(pieceID, "new name");
     assertEquals("new name", piecesState.getPiece(pieceID).getPieceName().getValue());
     assertEquals(3, piecesState.getPiece(pieceID).getPointValue());
+  }
 
+  @Test
+  void testSetMainPiece(){
+    String pieceID = "123";
+    piecesState.createCustomPiece(pieceID);
+    piecesState.getPiece(pieceID).setMainPiece(true);
+    assertTrue(piecesState.getPiece(pieceID).isMainPiece());
+    assertFalse(piecesState.getPiece(pieceID).isDefaultPiece());
   }
 
   @Test
@@ -80,5 +89,12 @@ public class PiecesStateTest extends DukeApplicationTest {
     List<EditorPiece> pieces = piecesState.getAllPieces();
     assertEquals(pieceID, pieces.get(0).getPieceID());
     assertEquals(pieceID2, pieces.get(1).getPieceID());
+  }
+
+  @Test
+  void testPiecesToString(){
+    String pieceID = "123";
+    piecesState.createCustomPiece(pieceID);
+    assertEquals(pieceID, piecesState.getPiece(pieceID).toString());
   }
 }

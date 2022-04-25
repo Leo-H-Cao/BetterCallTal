@@ -1,4 +1,4 @@
-package oogasalad.Frontend.LocalPlay.RemotePlayer;
+package oogasalad.Frontend.Menu.LocalPlay.RemotePlayer;
 
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;

@@ -72,6 +72,7 @@ public class JoinGame extends View {
         hostID.setFont(new Font(50.0));
 
         RoomName = new TextArea();
+        RoomName.setId("RoomName");
         vb.setAlignment(Pos.CENTER);
         RoomName.setPrefHeight(TEXTAREAHEIGHT);
         RoomName.setPrefWidth(TEXTAREAWIDTH);

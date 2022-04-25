@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ResourceBundle;
 import javafx.stage.Stage;
-import oogasalad.Frontend.LocalPlay.LocalGame;
+import oogasalad.Frontend.Menu.LocalPlay.LocalGame;
 import oogasalad.Frontend.util.BackendConnector;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;

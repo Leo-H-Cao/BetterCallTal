@@ -1,4 +1,4 @@
-package oogasalad.Frontend.LocalPlay;
+package oogasalad.Frontend.Menu.LocalPlay;
 
 import java.io.File;
 import java.util.List;
@@ -278,12 +278,16 @@ public class LocalGame extends View {
     return 0;
   }
 
+  /**
+   * PURELY FOR TESTING.
+   * @param path filepath to example file for testing
+   */
   public void injectBoard(String path) {
     File f = new File(path);
     Optional<ChessBoard> cb = getGameBackend().initalizeLocalChessBoard(f);
     if (cb.isPresent()) {
       getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), player(), SINGLEPLAYER)); // hardcoded 0 here for white
-    } else {
+   } else {
       View.LOG.debug("INVALID JSON OR INVALID PLAYER SELECTION");
     }
   }

@@ -7,13 +7,19 @@ import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 
 public class BoardState {
   private EditorBoard myEditorBoard;
+  private PiecesState piecesState;
 
-  public BoardState(){
+  public BoardState(PiecesState piecesState){
     myEditorBoard = new EditorBoard();
+    this.piecesState = piecesState;
   }
 
-  public void changeBoardSize(int width, int height) {
-    myEditorBoard.changeBoardSize(width, height);
+  public void setWidth(int newValue) {
+    myEditorBoard.changeWidth(newValue);
+  }
+
+  public void setHeight(int newValue) {
+    myEditorBoard.changeHeight(newValue);
   }
 
   public void setTileEffect(int x, int y, TileEffect effect) {
@@ -24,16 +30,17 @@ public class BoardState {
     myEditorBoard.setTileImage(x,y,img);
   }
 
-  public SimpleIntegerProperty getBoardWidth(){
-    return myEditorBoard.getBoardWidth();
+  public SimpleIntegerProperty getWidth(){
+    return myEditorBoard.getWidth();
   }
 
-  public SimpleIntegerProperty getBoardHeight(){
-    return myEditorBoard.getBoardHeight();
+  public SimpleIntegerProperty getHeight(){
+    return myEditorBoard.getHeight();
   }
 
   public void setPieceStartingLocation(String pieceID, int x, int y, int team) {
-    myEditorBoard.addPieceStartingLocation(pieceID, x, y, team);
+    Image pieceImg = piecesState.getPiece(pieceID).getImage(team).getValue();
+    myEditorBoard.addPieceStartingLocation(pieceID, x, y, team, pieceImg);
   }
 
   public EditorCoordinate getPieceLocation(String pieceID){

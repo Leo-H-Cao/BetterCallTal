@@ -1,10 +1,10 @@
 {
-  "pieceName" : "piece2",
+  "pieceName" : "piece1",
   "imgFile" : "images/pieces/black/rook.png",
   "pointValue" : 0,
   "customMoves" : [ ],
   "movementModifiers" : [ ],
   "onInteractionModifier" : [ ],
-  "basicMovements" : [ "piece2Movements" ],
-  "basicCaptures" : [ "piece2Captures" ]
+  "basicMovements" : [ "wpiece1Movement" ],
+  "basicCaptures" : [ "wpiece1Movement" ]
 }

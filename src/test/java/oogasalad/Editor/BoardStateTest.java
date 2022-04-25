@@ -5,13 +5,11 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import oogasalad.Editor.Exceptions.InvalidPieceIDException;
 import oogasalad.Editor.ModelState.EditorBackend;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
-import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Frontend.Menu.LanguageModal;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,18 +43,20 @@ class BoardStateTest extends DukeApplicationTest {
 
   @Test
   void testChangeBoardSize(){
-    assertEquals(boardState.getBoardHeight().getValue(), 8);
-    assertEquals(boardState.getBoardWidth().getValue(), 8);
+    assertEquals(boardState.getHeight().getValue(), 8);
+    assertEquals(boardState.getWidth().getValue(), 8);
     int newHeight = 5;
     int newWidth = 10;
-    boardState.changeBoardSize(newWidth,newHeight);
-    assertEquals(newHeight, boardState.getBoardHeight().getValue());
-    assertEquals(newWidth, boardState.getBoardWidth().getValue());
+    boardState.setWidth(newWidth);
+    boardState.setHeight(newHeight);
+    assertEquals(newHeight, boardState.getHeight().getValue());
+    assertEquals(newWidth, boardState.getWidth().getValue());
     newHeight = 12;
     newWidth = 3;
-    boardState.changeBoardSize(newWidth, newHeight);
-    assertEquals(newHeight, boardState.getBoardHeight().getValue());
-    assertEquals(newWidth, boardState.getBoardWidth().getValue());
+    boardState.setWidth(newWidth);
+    boardState.setHeight(newHeight);
+    assertEquals(newHeight, boardState.getHeight().getValue());
+    assertEquals(newWidth, boardState.getWidth().getValue());
   }
 
   @Test
@@ -65,12 +65,12 @@ class BoardStateTest extends DukeApplicationTest {
     int firstX = 5;
     int firstY = 6;
     piecesState.createCustomPiece(pieceID);
-    boardState.setPieceStartingLocation(pieceID, 5,  6, 0);
+    boardState.setPieceStartingLocation(pieceID, 5,  6, 1);
     assertEquals(firstX, boardState.getPieceLocation(pieceID).getX());
     assertEquals(firstY, boardState.getPieceLocation(pieceID).getY());
     int newX = 2;
     int newY = 3;
-    boardState.setPieceStartingLocation(pieceID, newX, newY, 0);
+    boardState.setPieceStartingLocation(pieceID, newX, newY, 1);
     assertEquals(newX, boardState.getPieceLocation(pieceID).getX());
     assertEquals(newY, boardState.getPieceLocation(pieceID).getY());
   }
