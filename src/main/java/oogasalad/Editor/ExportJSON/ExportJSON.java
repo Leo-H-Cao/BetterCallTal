@@ -64,7 +64,6 @@ public class ExportJSON {
           objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/GameEngineResources/Pieces/"+piece.getPieceName()+".json"), piece);
         }
         MainJSONString = objectMapper.writeValueAsString(exportWrapper);
-        System.out.println(MainJSONString);
         objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(parentDir.getAbsolutePath()+"/mainFile.json"), exportWrapper);
 
       } catch (IOException e) {

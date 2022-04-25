@@ -93,7 +93,7 @@ public class ExportJSONTest extends DukeApplicationTest {
     exportJSON = new ExportJSON(piecesState, gameRulesState, boardState);
     File parentDir = new File("doc/testing_directory/json_export_test");
     exportJSON.writeToJSON(parentDir);
-//    assertEquals(myResources.getString("exportPiecesJSONString"), ReflectionTestUtils.getField(exportJSON, "MainJSONString"));
+    assertEquals(myResources.getString("exportPiecesJSONString"), ReflectionTestUtils.getField(exportJSON, "MainJSONString"));
   }
 
   @Test
@@ -105,7 +105,7 @@ public class ExportJSONTest extends DukeApplicationTest {
     exportJSON = new ExportJSON(piecesState, gameRulesState, boardState);
     File parentDir = new File("doc/testing_directory/json_export_test");
     exportJSON.writeToJSON(parentDir);
-//    assertEquals(myResources.getString("exportTilesJSONString"), ReflectionTestUtils.getField(exportJSON, "MainJSONString"));
+    assertEquals(myResources.getString("exportTilesJSONString"), ReflectionTestUtils.getField(exportJSON, "MainJSONString"));
   }
 
   @Test
