@@ -40,6 +40,7 @@ public class LocalGame extends View {
   private static final String DIFF_SELECTED = "DiffSelected";
   private static final String MULTIPLAYER = "multiplayer";
   private static final String SINGLEPLAYER = "singleplayer";
+  private static final String PROMPTPADDING = "     ";
 
   private static final int PADDING = 25;
   private final Integer TITLE_SIZE = 70;
@@ -80,8 +81,8 @@ public class LocalGame extends View {
 
     root.setTop(top);
     root.setLeft(makeGamemodeSelection());
-    root.setCenter(makeSingleplayerSelection());
-    root.setRight(makePlayerSelection());
+    root.setCenter(makePlayerSelection());
+    root.setRight(makeSingleplayerSelection());
     root.setBottom(makeDonePanel());
 
     selectionHolder();
@@ -92,7 +93,7 @@ public class LocalGame extends View {
   private Node makeGamemodeSelection() {
     VBox box = new VBox();
 
-    Label prompt = new Label(BackendConnector.getFrontendWord(PROMPT_GAME, getClass()));
+    Label prompt = new Label(BackendConnector.getFrontendWord(PROMPT_GAME, getClass()) + PROMPTPADDING);
     prompt.setFont(new Font(PROMPT_SIZE));
     prompt.setAlignment(Pos.TOP_CENTER);
 
@@ -110,7 +111,7 @@ public class LocalGame extends View {
 
     GridPane buttons = makeSinglePlayerButtons();
 
-    Label prompt = new Label(BackendConnector.getFrontendWord(PROMPT_AI_DIFFICULTY, getClass()));
+    Label prompt = new Label(BackendConnector.getFrontendWord(PROMPT_AI_DIFFICULTY, getClass()) + PROMPTPADDING);
     prompt.setFont(new Font(PROMPT_SIZE));
     prompt.setAlignment(Pos.TOP_CENTER);
 
@@ -123,7 +124,7 @@ public class LocalGame extends View {
 
   private Node makePlayerSelection() {
     orderSelector = new VBox();
-    Label prompt = new Label(BackendConnector.getFrontendWord(PROMPT_ORDER, getClass()));
+    Label prompt = new Label(BackendConnector.getFrontendWord(PROMPT_ORDER, getClass()) + PROMPTPADDING);
     prompt.setFont(new Font(PROMPT_SIZE));
     prompt.setAlignment(Pos.TOP_CENTER);
 
