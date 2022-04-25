@@ -74,6 +74,12 @@ public interface TurnManager {
   String getLink();
 
   /**
+   * Adds a link to the turn manager
+   * @param link the link to add
+   */
+  void setLink(String link);
+
+  /**
    * Sets a callback to handle any sort of error that occurs during the game.
    *
    * @param errorHandler the error handler to set

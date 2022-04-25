@@ -28,7 +28,7 @@ public final class RemoteHistoryManager implements HistoryManager {
   private static final String IS_EMPTY = BASE_URL + "/empty/%s";
   private static final String STREAM = BASE_URL + "/stream/%s";
   private static final ObjectMapper mapper = RequestBuilder.objectMapperWithPTV();
-  private final String id;
+  private String id;
   private Consumer<Throwable> showAsyncError;
 
   public RemoteHistoryManager(String id) {
@@ -218,6 +218,16 @@ public final class RemoteHistoryManager implements HistoryManager {
   @Override
   public String getLink() {
     return id;
+  }
+
+  /**
+   * Adds a link to the history manager
+   *
+   * @param link the link to add
+   */
+  @Override
+  public void setLink(String link) {
+    id = link;
   }
 
   /**

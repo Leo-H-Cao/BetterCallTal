@@ -22,6 +22,7 @@ public class LocalTurnManager implements TurnManager {
   private final PriorityQueue<EndCondition> endConditions;
   private final TurnCriteria turn;
   private final GamePlayers players;
+  private String link;
   private Map<Integer, Double> endResult;
 
   public LocalTurnManager(GamePlayers players, TurnCriteria turn,
@@ -30,6 +31,7 @@ public class LocalTurnManager implements TurnManager {
     this.turn = turn;
     endConditions = new PriorityQueue<>(conditions);
     endResult = new HashMap<>();
+    link = "";
   }
 
   /**
@@ -38,7 +40,16 @@ public class LocalTurnManager implements TurnManager {
    * @param turnManagerData the turn manager data to copy
    */
   public LocalTurnManager(TurnManagerData turnManagerData) {
-    this(turnManagerData.players(), turnManagerData.turn(), turnManagerData.conditions());
+    this(turnManagerData.players(), turnManagerData.turn(), turnManagerData.conditions(),
+        turnManagerData.link());
+  }
+
+  public LocalTurnManager(GamePlayers players, TurnCriteria turnCriteria,
+      Collection<EndCondition> endConditions, String link) {
+    this.players = players;
+    this.turn = turnCriteria;
+    this.endConditions = new PriorityQueue<>(endConditions);
+    this.link = link;
   }
 
   /**
@@ -128,7 +139,17 @@ public class LocalTurnManager implements TurnManager {
    */
   @Override
   public String getLink() {
-    return "";
+    return link;
+  }
+
+  /**
+   * Adds a link to the turn manager
+   *
+   * @param link the link to add
+   */
+  @Override
+  public void setLink(String link) {
+    this.link = link;
   }
 
   /**

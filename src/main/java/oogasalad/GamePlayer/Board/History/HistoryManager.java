@@ -102,6 +102,12 @@ public interface HistoryManager {
   String getLink();
 
   /**
+   * Adds a link to the history manager
+   * @param link the link to add
+   */
+  void setLink(String link);
+
+  /**
    * Gets the history manager data.
    *
    * @return the history manager data.

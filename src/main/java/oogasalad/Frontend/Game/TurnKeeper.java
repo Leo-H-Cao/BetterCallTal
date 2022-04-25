@@ -99,6 +99,16 @@ public class TurnKeeper implements TurnManager {
   }
 
   /**
+   * Adds a link to the turn manager
+   *
+   * @param link the link to add
+   */
+  @Override
+  public void setLink(String link) {
+    //do nothing
+  }
+
+  /**
    * Sets a callback to handle any sort of error that occurs during the game.
    *
    * @param errorHandler the error handler to set

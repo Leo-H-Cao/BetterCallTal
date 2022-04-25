@@ -28,7 +28,7 @@ public class RemoteTurnManager implements TurnManager {
   private static final String GET_END_CONDITIONS = BASE_URL + "/getEndConditions/%s";
   private static final String GET_TURN_CRITERIA = BASE_URL + "/getTurnCriteria/%s";
   private static final ObjectMapper mapper = RequestBuilder.objectMapperWithPTV();
-  private final String id;
+  private String id;
   private Consumer<Throwable> showAsyncError;
 
   public RemoteTurnManager(String id) {
@@ -170,6 +170,16 @@ public class RemoteTurnManager implements TurnManager {
   @Override
   public String getLink() {
     return id;
+  }
+
+  /**
+   * Adds a link to the turn manager
+   *
+   * @param link the link to add
+   */
+  @Override
+  public void setLink(String link) {
+    this.id = link;
   }
 
   /**

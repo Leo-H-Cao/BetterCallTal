@@ -14,6 +14,8 @@ import oogasalad.GamePlayer.Board.ChessBoard;
  */
 public class LocalHistoryManager implements HistoryManager {
 
+  public static final String EMPTY_LINK = "";
+  private String link;
   private List<History> history;
   private int currentIndex;
 
@@ -26,8 +28,12 @@ public class LocalHistoryManager implements HistoryManager {
     this(Collections.emptyList());
   }
 
+  public LocalHistoryManager(String link) {
+    this(Collections.emptyList(), link);
+  }
+
   public LocalHistoryManager(HistoryManagerData data) {
-    this();
+    this(data.historyAPI());
   }
 
   /**
@@ -36,8 +42,13 @@ public class LocalHistoryManager implements HistoryManager {
    * @param history the collection of states to store.
    */
   public LocalHistoryManager(Collection<History> history) {
+    this(history, EMPTY_LINK);
+  }
+
+  public LocalHistoryManager(Collection<History> history, String link) {
     this.history = new ArrayList<>(history);
     this.currentIndex = history.size() - 1;
+    this.link = link;
   }
 
   /**
@@ -186,7 +197,17 @@ public class LocalHistoryManager implements HistoryManager {
    */
   @Override
   public String getLink() {
-    return "";
+    return link;
+  }
+
+  /**
+   * Adds a link to the history manager
+   *
+   * @param link the link to add
+   */
+  @Override
+  public void setLink(String link) {
+    this.link = link;
   }
 
   /**
