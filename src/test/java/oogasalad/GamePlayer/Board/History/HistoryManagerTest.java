@@ -1,7 +1,6 @@
 package oogasalad.GamePlayer.Board.History;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -18,22 +17,19 @@ import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
 import oogasalad.GamePlayer.Server.SessionManager;
-import oogasalad.Server.ServerApplication;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.internal.LogManagerStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class HistoryManagerTest {
 
+  private static final Logger LOG = LogManager.getLogger(HistoryManagerTest.class);
   private History board0;
   private History board1;
   private History board2;
   private History board3;
   private History board4;
-  private static final Logger LOG = LogManager.getLogger(HistoryManagerTest.class);
-
 
   private History generateHistory(int num) {
     int row = num / 3;
@@ -71,7 +67,7 @@ class HistoryManagerTest {
   void standardRemoteGameTest() {
     SessionManager sessionManager = new SessionManager();
     try {
-      sessionManager.createGameSession("test", 0,1,board0.board());
+      sessionManager.createGameSession("test", 0, 1, board0.board());
     } catch (Exception e) {
       LOG.error(e);
       fail("Could not create session");
@@ -81,6 +77,7 @@ class HistoryManagerTest {
   }
 
   private void standardGameTest(HistoryManager historyManager) {
+    assertEquals(0, historyManager.size());
     historyManager.add(board0);
     assertEquals(1, historyManager.size());
     historyManager.add(board1);

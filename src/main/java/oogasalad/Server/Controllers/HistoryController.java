@@ -5,6 +5,8 @@ import oogasalad.GamePlayer.Board.ChessBoard.ChessBoardData;
 import oogasalad.GamePlayer.Board.History.History;
 import oogasalad.GamePlayer.Board.History.HistoryData;
 import oogasalad.Server.SessionManagement.GameSessionService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class HistoryController {
 
   private final GameSessionService activeSessions;
+  private static final Logger LOG = LogManager.getLogger(HistoryController.class);
 
   /**
    * Constructor called by Spring to create a new HistoryController. Constructor initializes the
@@ -54,6 +57,7 @@ public class HistoryController {
   @PostMapping("/add/{id}")
   @ResponseBody
   public HistoryData add(@PathVariable String id, @RequestBody HistoryData newState) {
+    LOG.info("Adding new state to history" + id);
     return new HistoryData(activeSessions.getSession(id).history().add(newState.toHistory()));
   }
 

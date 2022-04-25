@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 public final class RemoteHistoryManager implements HistoryManager {
 
   private static final Logger LOG = LogManager.getLogger(RemoteHistoryManager.class);
-  private static final String BASE_URL = "http://localhost:8080/turns";
+  private static final String BASE_URL = "http://localhost:8080/history";
   private static final String CURRENT_BOARD = BASE_URL + "/current-board/%s";
   private static final String ADD = BASE_URL + "/add/%s";
   private static final String SIZE = BASE_URL + "/size/%s";
@@ -63,7 +63,9 @@ public final class RemoteHistoryManager implements HistoryManager {
     String url = String.format(ADD, id);
     try {
       String json = mapper.writeValueAsString(newState.getHistoryData());
+      LOG.info(json);
       HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.post(url, json));
+      LOG.info(response.body());
       return mapper.readValue(response.body(), HistoryData.class).toHistory();
     } catch (Exception e) {
       handleError(e);
