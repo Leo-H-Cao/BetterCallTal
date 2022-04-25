@@ -16,6 +16,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Game.History.BoardHistory;
+import oogasalad.Frontend.Game.History.BoardHistoryPanel;
 import oogasalad.Frontend.Game.Sections.BoardGrid;
 import oogasalad.Frontend.Game.Sections.GameOverDisplay;
 import oogasalad.Frontend.Game.Sections.LeftSection;
@@ -63,12 +64,12 @@ public class GameView extends View {
     private List<RemotePlayer> remotePlayers;
 
     private BoardHistory myBoardHistory;
+    private BoardHistoryPanel myHistoryPanel;
 
 
     public GameView(Stage stage) {
         super(stage);
         remotePlayers = new ArrayList<>();
-
     }
 
     /**
@@ -127,6 +128,7 @@ public class GameView extends View {
                 });
             }
             updateBoard(updates);
+            myHistoryPanel.add(updates);
         } catch (Exception e){
             getGameBackend().showError(e.getClass().getSimpleName(), e.getMessage());
             LOG.warn("Move failed");
@@ -216,6 +218,10 @@ public class GameView extends View {
 
         myLeftSide = new LeftSection(flipRun);
         bp.setLeft(myLeftSide.getVbox());
+
+        myHistoryPanel = new BoardHistoryPanel();
+        bp.setRight(myHistoryPanel.makeNode());
+
         return bp;
     }
 
