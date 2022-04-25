@@ -82,7 +82,7 @@ public class ExportJSON {
     generalExport.setTurnCriteria(gameRulesState.getTurnCriteria());
     generalExport.setEndConditions(gameRulesState.getWinConditions());
     generalExport.setColors(gameRulesState.getColors());
-    generalExport.setValidStateChecker(gameRulesState.getValidStateCheckers());
+    generalExport.setValidStateCheckers(gameRulesState.getValidStateCheckers());
   }
 
   /**
@@ -167,7 +167,7 @@ public class ExportJSON {
    */
   private void exportBasicMovement(BasicMovementExportWrapper basicMovements, String pieceName, int teamNum, boolean captures){
     String team = teamNum == 0 ? "w" : "b";
-    String fileName = captures ? "Cap" : "Mov";
+    String fileName = captures ? "Cap.json" : "Mov.json";
     ObjectMapper objectMapper = new ObjectMapper();
     try{
       File movementDir = new File("doc/GameEngineResources/BasicMovements");
