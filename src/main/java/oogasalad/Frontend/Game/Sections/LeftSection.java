@@ -39,6 +39,10 @@ public class LeftSection {
         return vb;
     }
 
+    /**
+     * This method is called in GameView whenever the game is currently waiting on a response from server.
+     * @param t True if message should be displayed, false else
+     */
     public void dispServWait(Boolean t) {
         if (t) {
             SideVbox.getChildren().add(serverMessage);
@@ -46,6 +50,5 @@ public class LeftSection {
             SideVbox.getChildren().remove(serverMessage);
         }
     }
-
     public VBox getVbox() {return SideVbox;}
 }

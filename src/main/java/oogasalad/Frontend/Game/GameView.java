@@ -92,8 +92,6 @@ public class GameView extends View {
         MoveCons = this::makeMove;
         removeGOCons = this::removeGameOverNode;
         flipRun = this::flipBoard;
-        servUpRun = this::updateBoard;
-        errorRun = this::showmyError;
     }
 
     private void makeMove(Coordinate c) {
@@ -196,12 +194,7 @@ public class GameView extends View {
 
         myLeftSide = new LeftSection(flipRun);
         bp.setLeft(myLeftSide.getVbox());
-        fixsizeBorderPane(bp);
         return bp;
-    }
-
-    private void fixsizeBorderPane(BorderPane bp) {
-
     }
 
     private void removeGameOverNode(Node n) {
