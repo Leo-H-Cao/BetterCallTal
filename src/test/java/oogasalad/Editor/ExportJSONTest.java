@@ -74,8 +74,8 @@ public class ExportJSONTest extends DukeApplicationTest {
     testPiece.setTile(1,3, PieceGridTile.OPEN, 0);
     testPiece.setTile(2, 3, PieceGridTile.OPEN, 0);
 
-    testPiece.setTile(1,2, PieceGridTile.OPEN, 0);
-    testPiece.setTile(5, 6, PieceGridTile.OPEN, 0);
+    testPiece.setTile(1,2, PieceGridTile.INFINITECAPTURE, 0);
+    testPiece.setTile(5, 6, PieceGridTile.OPENANDCAPTURE, 0);
     testPiece.setTile(2, 5, PieceGridTile.OPEN, 0);
 
     boardState.setPieceStartingLocation("123", 3, 6, 1);
@@ -98,6 +98,7 @@ public class ExportJSONTest extends DukeApplicationTest {
 
   @Test
   void testTilesExport(){
+    boardState.setTileEffect(1,2,TileEffect.PROMOTIONREVERSE);
     boardState.setTileEffect(6,5, TileEffect.SWAP);
     boardState.setTileEffect(2,6, TileEffect.BLACKHOLE);
 

@@ -47,6 +47,7 @@ public class EditorPiece {
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(getClass().getName());
 		String image0Path = String.format("images/pieces/white/%s.png", resourceBundle.getString("DefaultImage0"));
 		String image1Path = String.format("images/pieces/black/%s.png", resourceBundle.getString("DefaultImage1"));
+		onInteractionModifiers = new ArrayList<>();
 
 		movementGrid0 = new MovementGrid();
 		movementGrid1 = new MovementGrid();
