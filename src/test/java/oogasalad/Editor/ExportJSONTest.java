@@ -62,7 +62,7 @@ public class ExportJSONTest extends DukeApplicationTest {
   @Test
   void testPiecesExport(){
     piecesState.createCustomPiece("123");
-    piecesState.changePieceImage("123", new Image("images/pieces/black/rook.png"), 0);
+    piecesState.changePieceImage("123", new Image("images/pieces/Default/black/rook.png"), 0);
     EditorPiece testPiece = piecesState.getPiece("123");
     testPiece.setPieceName("piece1");
 
@@ -82,7 +82,7 @@ public class ExportJSONTest extends DukeApplicationTest {
     boardState.setPieceStartingLocation("123", 4, 5, 0);
 
     piecesState.createCustomPiece("1234");
-    piecesState.changePieceImage("1234", new Image("images/pieces/black/rook.png"), 1);
+    piecesState.changePieceImage("1234", new Image("images/pieces/Default/black/rook.png"), 1);
     EditorPiece testPiece2 = piecesState.getPiece("1234");
     testPiece2.setPieceName("piece2");
     testPiece2.setTile(4, 2, PieceGridTile.OPEN, 0);
