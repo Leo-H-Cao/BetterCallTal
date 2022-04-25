@@ -24,10 +24,12 @@ import oogasalad.GamePlayer.Board.History.History;
 import oogasalad.GamePlayer.Board.History.HistoryManager;
 import oogasalad.GamePlayer.Board.History.HistoryManagerData;
 import oogasalad.GamePlayer.Board.History.LocalHistoryManager;
+import oogasalad.GamePlayer.Board.History.RemoteHistoryManager;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.Board.TurnManagement.GamePlayers;
 import oogasalad.GamePlayer.Board.TurnManagement.LocalTurnManager;
+import oogasalad.GamePlayer.Board.TurnManagement.RemoteTurnManager;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnManagerData;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
@@ -49,41 +51,43 @@ import org.apache.logging.log4j.Logger;
  */
 public class ChessBoard implements Iterable<ChessTile> {
 
+  public static final String EMPTY_LINK = "";
   private static final Logger LOG = LogManager.getLogger(ChessBoard.class);
   private final GamePlayers players;
   private final List<ValidStateChecker> validStateCheckers;
-  private final TurnManager turnManager;
-  private final HistoryManager history;
-  private final TurnManagerData turnManagerData;
+  private final GameType gameType;
+  private TurnManager turnManager;
+  private HistoryManager history;
   private List<List<ChessTile>> board;
   private Map<Integer, List<Piece>> pieceList;
   private Consumer<Throwable> showAsyncError = LOG::error;
   private Consumer<TurnUpdate> performAsyncTurnUpdate = LOG::info;
 
   /**
-   * Creates a representation of a chessboard if an array of pieces is already provided
+   * Creates a representation of a chessboard if an array of pieces is already provided. Defaults
+   * game type to local game to maintain consistent API.
    */
   public ChessBoard(List<List<ChessTile>> board, TurnCriteria turnCriteria, Player[] players,
       List<ValidStateChecker> validStateCheckers, List<EndCondition> endConditions) {
     this.players = new GamePlayers(players);
-    this.turnManagerData = new TurnManagerData(this.players, turnCriteria, endConditions, "");
-    this.turnManager = new LocalTurnManager(this.turnManagerData);
+    this.turnManager = new LocalTurnManager(this.players, turnCriteria, endConditions, EMPTY_LINK);
     this.board = board;
     this.validStateCheckers = validStateCheckers;
     this.history = new LocalHistoryManager();
     this.pieceList = new HashMap<>();
+    this.gameType = GameType.LOCAL;
   }
 
   public ChessBoard(List<List<ChessTile>> board, TurnManagerData turnManagerData,
       GamePlayers players,
       List<ValidStateChecker> validStateCheckers, HistoryManager history) {
     this.players = players;
-    this.turnManagerData = turnManagerData;
-    this.turnManager = new LocalTurnManager(this.turnManagerData);
+    this.turnManager = new LocalTurnManager(turnManagerData);
     this.board = board;
     this.validStateCheckers = validStateCheckers;
     this.history = history;
     this.pieceList = new HashMap<>();
+    this.gameType = GameType.LOCAL;
   }
 
   /**
@@ -111,11 +115,16 @@ public class ChessBoard implements Iterable<ChessTile> {
 
   public ChessBoard(ChessBoardData boardData) {
     this.players = boardData.players();
-    this.turnManagerData = boardData.turnManagerData();
-    this.turnManager = new LocalTurnManager(this.turnManagerData);
+    this.gameType = boardData.gameType();
     this.board = boardData.board();
     this.validStateCheckers = boardData.validStateCheckers();
-    this.history = new LocalHistoryManager(boardData.history());
+    if (gameType == GameType.SERVER) {
+      this.turnManager = new RemoteTurnManager(boardData.turnManagerData());
+      this.history = new RemoteHistoryManager(boardData.history());
+    } else {
+      this.turnManager = new LocalTurnManager(boardData.turnManagerData());
+      this.history = new LocalHistoryManager(boardData.history());
+    }
   }
 
   /**
@@ -124,7 +133,7 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @return the data required to set up a new turn manager
    */
   public TurnManagerData getTurnManagerData() {
-    return turnManagerData;
+    return new TurnManagerData(turnManager);
   }
 
   /**
@@ -191,7 +200,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     }
 
     LOG.warn(isGameOver() ? "Move made after game over" : "Move made by wrong player");
-    throw isGameOver() ? new MoveAfterGameEndException("") : new WrongPlayerException(
+    throw isGameOver() ? new MoveAfterGameEndException(EMPTY_LINK) : new WrongPlayerException(
         "Expected: " + turnManager.getCurrentPlayer() + "\n Actual: " + piece.getTeam());
   }
 
@@ -235,7 +244,8 @@ public class ChessBoard implements Iterable<ChessTile> {
       boardCopy.add(new ArrayList<>());
       boardCopy.get(i).addAll(this.board.get(i).stream().map(ChessTile::clone).toList());
     });
-    return new ChessBoard(boardCopy, this.turnManagerData.copy(), this.players, this.validStateCheckers,
+    return new ChessBoard(boardCopy, new TurnManagerData(turnManager), this.players,
+        this.validStateCheckers,
         this.history);
   }
 
@@ -564,6 +574,8 @@ public class ChessBoard implements Iterable<ChessTile> {
   public void setShowAsyncError(BiConsumer<String, String> showAsyncError) {
     this.showAsyncError = (Throwable e) -> showAsyncError.accept(e.getClass().getSimpleName(),
         e.getMessage());
+    turnManager.setErrorHandler(this.showAsyncError);
+    history.setErrorHandler(this.showAsyncError);
   }
 
   /**
@@ -574,6 +586,10 @@ public class ChessBoard implements Iterable<ChessTile> {
   public void setPerformAsyncTurnUpdate(
       Consumer<TurnUpdate> performAsyncTurnUpdate) {
     this.performAsyncTurnUpdate = performAsyncTurnUpdate;
+  }
+
+  public GameType getGameType() {
+    return gameType;
   }
 
   /**
@@ -613,7 +629,7 @@ public class ChessBoard implements Iterable<ChessTile> {
    *
    * @author Ritvik Janamsetty
    */
-  public static final class ChessBoardData {
+  public static class ChessBoardData {
 
     @JsonProperty
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
@@ -622,6 +638,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     private final GamePlayers players;
     private final ValidStateChecker[] validStateCheckers;
     private final HistoryManagerData history;
+    private GameType gameType;
 
     /**
      * @param board              the list of tiles that make up the chess board
@@ -633,8 +650,8 @@ public class ChessBoard implements Iterable<ChessTile> {
     public ChessBoardData(List<List<ChessTile>> board, TurnManagerData turnManagerData,
         GamePlayers players,
         List<ValidStateChecker> validStateCheckers,
-        HistoryManagerData history) {
-      if (board.size() == 0) {
+        HistoryManagerData history, GameType gameType) {
+      if (board.isEmpty()) {
         this.board = new ChessTile[0][0];
       } else {
         this.board = new ChessTile[board.size()][board.get(0).size()];
@@ -648,6 +665,7 @@ public class ChessBoard implements Iterable<ChessTile> {
       this.players = players;
       this.validStateCheckers = validStateCheckers.toArray(new ValidStateChecker[0]);
       this.history = history;
+      this.gameType = gameType;
     }
 
     /**
@@ -657,7 +675,7 @@ public class ChessBoard implements Iterable<ChessTile> {
      */
     public ChessBoardData(ChessBoard board) {
       this(board.getTiles(), board.getTurnManagerData(), board.getGamePlayers(),
-          board.getValidStateCheckers(), board.getHistoryManagerData());
+          board.getValidStateCheckers(), board.getHistoryManagerData(), board.getGameType());
     }
 
     /**
@@ -665,7 +683,7 @@ public class ChessBoard implements Iterable<ChessTile> {
      */
     public ChessBoardData() {
       this(new ArrayList<>(), new TurnManagerData(), new GamePlayers(), new ArrayList<>(),
-          new HistoryManagerData());
+          new HistoryManagerData(), GameType.SERVER);
     }
 
     /**
@@ -677,30 +695,40 @@ public class ChessBoard implements Iterable<ChessTile> {
       return new ChessBoard(this);
     }
 
-    public List<List<ChessTile>> board() {
-      List<List<ChessTile>> board = new ArrayList<>();
-      for (ChessTile[] chessTiles : this.board) {
-        board.add(Arrays.asList(chessTiles));
-      }
-      return board;
+    public ChessBoard toChessBoard(GameType gameType) {
+      this.gameType = gameType;
+      return new ChessBoard(this);
     }
 
-    public TurnManagerData turnManagerData() {
+    private List<List<ChessTile>> board() {
+      List<List<ChessTile>> retBoard = new ArrayList<>();
+      for (ChessTile[] chessTiles : this.board) {
+        retBoard.add(Arrays.asList(chessTiles));
+      }
+      return retBoard;
+    }
+
+    private TurnManagerData turnManagerData() {
       return turnManagerData;
     }
 
-    public GamePlayers players() {
+    private GamePlayers players() {
       return players;
     }
 
-    public List<ValidStateChecker> validStateCheckers() {
+    private List<ValidStateChecker> validStateCheckers() {
       return Arrays.asList(validStateCheckers);
     }
 
-    public HistoryManagerData history() {
+    private HistoryManagerData history() {
       return history;
+    }
+
+    private GameType gameType() {
+      return gameType;
     }
 
 
   }
+
 }

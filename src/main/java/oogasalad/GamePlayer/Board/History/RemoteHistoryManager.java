@@ -36,6 +36,10 @@ public final class RemoteHistoryManager implements HistoryManager {
     this.showAsyncError = (Throwable e) -> LOG.error(e.getMessage());
   }
 
+  public RemoteHistoryManager(HistoryManagerData history) {
+    this.id = history.historyAPI();
+  }
+
   /**
    * Gets the current chess board state of the game.
    *

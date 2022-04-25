@@ -36,6 +36,10 @@ public class RemoteTurnManager implements TurnManager {
     this.showAsyncError = (Throwable e) -> LOG.error(e.getMessage());
   }
 
+  public RemoteTurnManager(TurnManagerData turnManagerData) {
+    this.id = turnManagerData.link();
+  }
+
   /**
    * Updates the turn manager with the current board.
    *
