@@ -1,7 +1,7 @@
 package oogasalad.GamePlayer.Board;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -684,15 +684,14 @@ public class ChessBoard implements Iterable<ChessTile> {
    *
    * @author Ritvik Janamsetty
    */
+  @JsonTypeInfo(use = Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
   public static class ChessBoardData {
 
-    @JsonProperty
-    @JsonInclude(JsonInclude.Include.NON_EMPTY)
-    private final ChessTile[][] board;
-    private final TurnManagerData turnManagerData;
-    private final GamePlayers players;
-    private final ValidStateChecker[] validStateCheckers;
-    private final HistoryManagerData history;
+    private ChessTile[][] board;
+    private TurnManagerData turnManagerData;
+    private GamePlayers players;
+    private ValidStateChecker[] validStateCheckers;
+    private HistoryManagerData history;
     private GameType gameType;
 
     /**
@@ -702,6 +701,7 @@ public class ChessBoard implements Iterable<ChessTile> {
      * @param turnManagerData    the turn manager data for the game
      * @param history            the history manager data of the game
      */
+
     public ChessBoardData(List<List<ChessTile>> board, TurnManagerData turnManagerData,
         GamePlayers players,
         List<ValidStateChecker> validStateCheckers,
@@ -726,8 +726,9 @@ public class ChessBoard implements Iterable<ChessTile> {
     /**
      * This method is used to create the chess board JSON object from a chess board.
      *
-     * @param board the chess board
+     * @param board the chess board to create the JSON object from
      */
+
     public ChessBoardData(ChessBoard board) {
       this(board.getTiles(), board.getTurnManagerData(), board.getGamePlayers(),
           board.getValidStateCheckers(), board.getHistoryManagerData(), board.getGameType());
