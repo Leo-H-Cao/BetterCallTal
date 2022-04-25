@@ -22,7 +22,7 @@ public class PieceEditor extends NodeContainer {
 		myPieceBoards = new ArrayList<>();
 		myPieceBoards.add(new PieceBoard(id, 0));
 		myPieceBoards.add(new PieceBoard(id, 1));
-		myTileTypeSelector = new PieceTileTypeSelector(id, mySelectedTeam);
+		myTileTypeSelector = new PieceTileTypeSelector();
 		myPieceSettings = new PieceSettings(id, mySelectedTeam);
 	}
 

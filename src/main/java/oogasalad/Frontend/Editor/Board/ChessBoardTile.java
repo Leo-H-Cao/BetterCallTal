@@ -77,7 +77,7 @@ public class ChessBoardTile extends NodeContainer {
 		filled = true;
 	}
 
-	private void setModifierImage(ImageView image) {
+	private void setModifierImage() {
 
 
 		filled = true;

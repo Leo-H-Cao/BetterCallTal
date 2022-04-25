@@ -2,7 +2,7 @@ package oogasalad.Frontend.Game.History;
 
 import java.util.ArrayList;
 import java.util.List;
-import oogasalad.Frontend.util.View;
+
 import oogasalad.GamePlayer.Board.ChessBoard;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

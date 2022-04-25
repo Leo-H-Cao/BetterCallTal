@@ -20,7 +20,6 @@ import oogasalad.Frontend.util.ButtonType;
 import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
-import java.io.File;
 import java.util.Optional;
 
 public class JoinGame extends View {

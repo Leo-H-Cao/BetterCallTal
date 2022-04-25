@@ -45,6 +45,9 @@ public class PieceBoard extends NodeContainer {
 		textArea.setId("pieceName");
 		textArea.setAlignment(Pos.CENTER);
 
+		// Prevent editing the name of read only pieces
+		textArea.setEditable(!getEditorBackend().getPiecesState().getPiece(myId).isDefaultPiece());
+
 		textArea.textProperty().addListener((ob, ov, nv) -> getEditorBackend().getPiecesState().getPiece(myId).setPieceName(nv));
 
 		return textArea;

@@ -73,7 +73,7 @@ public class EditorPiece {
 
 	/**
 	 * Sets current piece as objective of game
-	 * @param main
+	 * @param main is the piece a main piece
 	 */
 	public void setMainPiece(boolean main){
 		mainPiece = main;

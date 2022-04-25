@@ -2,6 +2,7 @@ package oogasalad.Frontend.Game;
 
 import static oogasalad.Frontend.Game.TurnKeeper.AI;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -15,7 +16,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -25,7 +25,6 @@ import oogasalad.Frontend.Game.Sections.BoardGrid;
 import oogasalad.Frontend.Game.Sections.GameOverDisplay;
 import oogasalad.Frontend.Game.Sections.LeftSection;
 import oogasalad.Frontend.Game.Sections.TopSection;
-import oogasalad.Frontend.Menu.HomeView;
 import oogasalad.Frontend.Menu.LocalPlay.RemotePlayer.RemotePlayer;
 import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.View;
@@ -204,7 +203,11 @@ public class GameView extends View {
     protected Node makeNode() {
         BorderPane bp = new BorderPane();
 
-        myTopSection = new TopSection();
+        try {
+            myTopSection = new TopSection();
+        } catch (FileNotFoundException e) {
+            showmyError(e.getClass().getSimpleName(), e.getMessage());
+        }
 
         myTopSection.setExitButton(e -> {
 
@@ -223,7 +226,9 @@ public class GameView extends View {
         myLeftSide = new LeftSection(flipRun);
         myHistoryPanel = new BoardHistoryPanel();
 
-        bp.setLeft(new VBox(myLeftSide.getVbox(), myHistoryPanel.makeNode()));
+        VBox leftvbox = new VBox(myLeftSide.getVbox(), myHistoryPanel.makeNode());
+        leftvbox.setAlignment(Pos.CENTER);
+        bp.setLeft(leftvbox);
 
         setFlipButton(); //ONLY FOR TESTING GAMEVIEW, IGNORE THIS
         return bp;
