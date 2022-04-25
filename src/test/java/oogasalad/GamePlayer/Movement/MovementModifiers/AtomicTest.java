@@ -1,7 +1,6 @@
 package oogasalad.GamePlayer.Movement.MovementModifiers;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Collections;
 import java.util.List;

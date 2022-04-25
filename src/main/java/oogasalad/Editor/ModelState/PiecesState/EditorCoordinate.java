@@ -5,8 +5,8 @@ package oogasalad.Editor.ModelState.PiecesState;
  * @author Leo Cao
  */
 public class EditorCoordinate {
-  private int x;
-  private int y;
+  private final int x;
+  private final int y;
 
   /***
    * Creates a new coordinate object with row, col

@@ -1,8 +1,10 @@
 package oogasalad.GamePlayer.GamePiece;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.Collections;
@@ -60,4 +62,24 @@ public class PieceClassTest {
     assertEquals(List.of(Coordinate.of(0, 1)), piece.getRelativeCapCoords());
   }
 
+  @Test
+  void defaultConstructorTest() {
+   Piece piece = new Piece();
+   assertEquals("default", piece.getName());
+    assertEquals("default", piece.getImgFile());
+    assertEquals(Coordinate.of(0, 0), piece.getCoordinates());
+    assertEquals(Collections.emptySet(), piece.getMoves());
+    assertEquals(Collections.emptySet(), piece.getCaptures());
+    assertEquals(0, piece.getTeam());
+    assertEquals(0.0, piece.getPieceValue());
+    assertFalse(piece.isTargetPiece());
+  }
+
+  @Test
+  void defaultMovementHandlerTest() {
+    MovementHandler test = new MovementHandler();
+    assertTrue(test.getMovements().isEmpty());
+    assertTrue(test.getCaptures().isEmpty());
+    assertTrue(test.getMovementModifiers().isEmpty());
+  }
 }

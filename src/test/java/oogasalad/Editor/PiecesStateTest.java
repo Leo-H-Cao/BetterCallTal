@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
-import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Frontend.Menu.LanguageModal;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,11 +46,11 @@ public class PiecesStateTest extends DukeApplicationTest {
   @Test
   void testChangePieceImage(){
     String pieceID = "123";
-    Image rookImage = new Image("images/pieces/black/rook.png");
+    Image rookImage = new Image("images/pieces/Default/black/rook.png");
     piecesState.createCustomPiece(pieceID);
     piecesState.changePieceImage(pieceID, rookImage, 0);
     assertEquals(rookImage, piecesState.getPiece(pieceID).getImage(0).getValue());
-    Image newImage = new Image("images/pieces/black/queen.png");
+    Image newImage = new Image("images/pieces/Default/black/queen.png");
     piecesState.changePieceImage(pieceID,newImage, 0);
     assertEquals(newImage, piecesState.getPiece(pieceID).getImage(0).getValue());
   }

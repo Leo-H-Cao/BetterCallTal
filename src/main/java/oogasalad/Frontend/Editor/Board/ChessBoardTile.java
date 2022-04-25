@@ -8,19 +8,21 @@ import javafx.scene.shape.Rectangle;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.NodeContainer;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class ChessBoardTile extends NodeContainer {
-	private final int myXSize, myYSize;
+	private final double myXSizeMultiplier, myYSizeMultiplier;
 	private final int myX;
 	private final int myY;
 	private final boolean alt;
 	private boolean filled = false;
 
-	public ChessBoardTile(int x, int y, boolean toggled, int xSize, int ySize) {
+	public ChessBoardTile(int x, int y, boolean toggled, double xSize, double ySize) {
 		myX = x;
 		myY = y;
 		alt = toggled;
-		myXSize = xSize;
-		myYSize = ySize;
+		myXSizeMultiplier = xSize;
+		myYSizeMultiplier = ySize;
 	}
 
 	@Override
@@ -29,13 +31,22 @@ public class ChessBoardTile extends NodeContainer {
 	}
 
 	private Node makeGridTile() {
+
+
+
+		AtomicInteger size = new AtomicInteger(-1);
+		myResources.ifPresentOrElse(e -> size.set(Integer.parseInt(e.getString("Size"))), () -> size.set(50));
+
 		StackPane ret;
 		ImageView image = new ImageView();
-		image.setFitWidth(myXSize - PADDING);
-		image.setFitHeight(myYSize - PADDING);
+		image.setFitWidth(size.get() * myXSizeMultiplier - PADDING);
+		image.setFitHeight(size.get() * myYSizeMultiplier - PADDING);
 		image.setPreserveRatio(true);
 		image.setCache(true);
-		Rectangle rect = new Rectangle(myXSize, myYSize);
+
+		image.setImage(getEditorBackend().getBoardState().getTile(myX, myY).getImg());
+
+		Rectangle rect = new Rectangle(myXSizeMultiplier*size.get(), myYSizeMultiplier*size.get());
 		if (alt) {
 			myResources.ifPresent((e) -> rect.setFill(Paint.valueOf(e.getString("BaseColor"))));
 		} else {
@@ -61,11 +72,12 @@ public class ChessBoardTile extends NodeContainer {
 
 		image.setImage(getEditorBackend().getPiecesState().getPiece(selectedId).getImage(selectedTeam).getValue());
 
+		// Update piece image if it gets updated in the editor
 		getEditorBackend().getPiecesState().getPiece(selectedId).getImage(selectedTeam).addListener((ob, ov, nv) -> image.setImage(nv));
 		filled = true;
 	}
 
-	private void setModifierImage(ImageView image) {
+	private void setModifierImage() {
 
 
 		filled = true;

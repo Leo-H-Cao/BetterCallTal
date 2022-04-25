@@ -165,4 +165,13 @@ class MovementTest {
     assertEquals(movementOne, new Movement(new Coordinate(1, 1), false));
     assertNotEquals(movementThree, new Movement(new Coordinate(1, 1), true));
   }
+
+  @Test
+  void defaultConstructorTest() {
+    Movement testMove = new Movement();
+    assertEquals(Collections.emptyList(), testMove.getRelativeCoords());
+    Coordinate testCord = new Coordinate();
+    assertEquals(0, testCord.getRow());
+    assertEquals(0, testCord.getCol());
+  }
 }

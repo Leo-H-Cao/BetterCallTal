@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -238,6 +239,27 @@ public class ChessBoard implements Iterable<ChessTile> {
         "Expected: " + turnManager.getCurrentPlayer() + "\n Actual: " + piece.getTeam());
   }
 
+  /***
+   * Converts a movement into a notation
+   *
+   * @param updatedTiles to get notation for
+   * @return list of notations based on updated squares
+   */
+  private String getNotation(Collection<ChessTile> updatedTiles, Piece moved) {
+    ChessTile endTile = updatedTiles.stream().filter(t ->
+        t.getPiece().isPresent() && t.getPiece().get().equals(moved)).findFirst().orElse(null);
+    return endTile == null ? "Empty" : String.format("%s %s %s%d", moved.getName(), getMovePreposition(endTile),
+            (char) (endTile.getCoordinates().getCol() + 'a'),
+        getBoardHeight() - endTile.getCoordinates().getRow());
+  }
+
+  /***
+   * @return to for move, x for capture
+   */
+  private String getMovePreposition(ChessTile tile) {
+    return history.getLast().board().getTileFromCoords(tile.getCoordinates()).getPiece().isPresent() ? "x" : "to";
+  }
+
   /**
    * Copies this board and then makes the move
    *
@@ -310,9 +332,7 @@ public class ChessBoard implements Iterable<ChessTile> {
           try {
             LOG.debug(String.format("Valid state checker class: %s", v.getClass()));
             return !v.isValid(this, piece, entry);
-          } catch (EngineException e) {
-            return false;
-          }
+          } catch (EngineException e) {return false;}
         }));
     return piece.checkTeam(turnManager.getCurrentPlayer()) ? allPieceMovements : Set.of();
   }
@@ -557,6 +577,10 @@ public class ChessBoard implements Iterable<ChessTile> {
 
   public void setThisPlayer(int thisPlayer) {
     this.thisPlayer = thisPlayer;
+  }
+
+  public Collection<EndCondition> getEndConditions() {
+    return endConditions;
   }
 
   /**

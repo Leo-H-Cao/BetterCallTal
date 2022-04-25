@@ -1,17 +1,18 @@
 package oogasalad.Frontend.Menu;
 
+import static oogasalad.Frontend.Game.GameView.SERVER;
+
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import oogasalad.Frontend.Game.GameBackend;
 import oogasalad.Frontend.Game.GameView;
 import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.Frontend.util.ButtonFactory;
@@ -19,7 +20,6 @@ import oogasalad.Frontend.util.ButtonType;
 import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
-import java.io.File;
 import java.util.Optional;
 
 public class JoinGame extends View {
@@ -37,6 +37,7 @@ public class JoinGame extends View {
     private static final String CONFIRM = "Confirm";
     private static final String Start_Button_ID = "JoinStart";
     private boolean StartShowing;
+    private ChoiceBox<String> packages;
 
     public JoinGame(Stage stage) {super(stage);}
 
@@ -64,6 +65,8 @@ public class JoinGame extends View {
 
     private Node makeRoomStringBox() {
         VBox vb = new VBox();
+        packages = makePackageSelectGroup();
+
         vb.setSpacing(VBOXSPACING);
 
         Label hostID = new Label(BackendConnector.getFrontendWord(ROOM, getClass()));
@@ -87,7 +90,7 @@ public class JoinGame extends View {
                 ROOMID = RoomName.getText();
             }
                 });
-        vb.getChildren().addAll(hostID, RoomName, Confirm);
+        vb.getChildren().addAll(hostID, RoomName, packages, Confirm);
         return new Group(vb);
     }
 
@@ -96,7 +99,7 @@ public class JoinGame extends View {
                 (e) -> {
                     Optional<ChessBoard> cb = getGameBackend().initalizeJoinServerChessBoard(ROOMID);
                     if(cb.isPresent()) {
-                        getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), false));
+                        getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), cb.get().getThisPlayer(), SERVER, packages.getValue()));
                     } else {
                         View.LOG.debug("Invalid JSON");
                     }

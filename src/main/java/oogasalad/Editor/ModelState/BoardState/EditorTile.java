@@ -12,7 +12,7 @@ public class EditorTile {
   private int team;
   private Image img;
 
-  public EditorTile(int x, int y){
+  public EditorTile(){
     myTileEffect = TileEffect.NONE;
     pieceID = null;
     team = -1;

@@ -14,8 +14,6 @@ import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Movement;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -100,5 +98,19 @@ public class PromotionReverse implements TileAction{
       return Set.of(tile);
     }
     return Collections.emptySet();
+  }
+
+  /***
+   * @return promotable piece names for testing
+   */
+  List<String> getPromotablePieceNames() {
+    return promotablePieceNames;
+  }
+
+  /***
+   * @return promotion image for testing
+   */
+  String getPromotionImage() {
+    return promotionImage;
   }
 }

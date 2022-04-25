@@ -19,11 +19,8 @@ import java.util.ResourceBundle;
 
 public class PieceTileTypeSelector extends LabelledContainer {
 
-	private final String myId;
-
-	public PieceTileTypeSelector(String id) {
+	public PieceTileTypeSelector() {
 		super(BackendConnector.getFrontendWord("TileType", EditorView.class));
-		myId = id;
 	}
 
 	/**
@@ -44,7 +41,7 @@ public class PieceTileTypeSelector extends LabelledContainer {
 			ResourceBundle resources = myResources.get();
 			double size = Double.parseDouble(resources.getString("Size"));
 			int strokeWidth = Integer.parseInt(resources.getString("StrokeWidth"));
-			rect = new Rectangle(size, size, Paint.valueOf(resources.getString("BackgroundColor")));
+			rect = new Rectangle(size, size, type.getColor());
 			rect.setStroke(Paint.valueOf(resources.getString("SelectionColor")));
 			rect.setStrokeWidth(0);
 			rect.setStrokeType(StrokeType.INSIDE);

@@ -14,9 +14,8 @@ import oogasalad.Editor.ModelState.PiecesState.EditorCoordinate;
  */
 public class EditorBoard {
 
-  private final int DEFAULT_BOARD_SIZE = 8;
-  private final String PIECE_ID_ERROR = "Invalid pieceID, piece does not exist in board";
-  private List<List<EditorTile>> board;
+  public static final int DEFAULT_BOARD_SIZE = 8;
+  private final List<List<EditorTile>> board;
   private final SimpleIntegerProperty myWidth;
   private final SimpleIntegerProperty myHeight;
 
@@ -24,7 +23,7 @@ public class EditorBoard {
     myWidth = new SimpleIntegerProperty(DEFAULT_BOARD_SIZE);
     myHeight = new SimpleIntegerProperty(DEFAULT_BOARD_SIZE);
     board = new ArrayList<>(DEFAULT_BOARD_SIZE);
-    initializeBoard(DEFAULT_BOARD_SIZE);
+    initializeBoard();
   }
 
   /**
@@ -42,7 +41,7 @@ public class EditorBoard {
     else{
       for(int i = 0; i< myHeight.getValue(); i++){
         for(int j = myWidth.get(); j < newWidth; j++){
-          board.get(i).add(new EditorTile(i, j));
+          board.get(i).add(new EditorTile());
         }
       }
     }
@@ -142,19 +141,20 @@ public class EditorBoard {
         }
       }
     }
+    String PIECE_ID_ERROR = "Invalid pieceID, piece does not exist in board";
     throw new InvalidPieceIDException(PIECE_ID_ERROR);
   }
 
-  private void initializeBoard(int boardSize){
-    for(int i = 0; i < boardSize; i++){
+  private void initializeBoard(){
+    for(int i = 0; i < EditorBoard.DEFAULT_BOARD_SIZE; i++){
       board.add(new ArrayList<>());
-      addDefaultRow(boardSize, i);
+      addDefaultRow(EditorBoard.DEFAULT_BOARD_SIZE, i);
     }
   }
 
   private void addDefaultRow(int rowWidth, int rowNum){
     for(int j = 0; j < rowWidth; j++){
-      board.get(board.size()-1).add(new EditorTile(rowNum, j));
+      board.get(board.size()-1).add(new EditorTile());
     }
   }
 }

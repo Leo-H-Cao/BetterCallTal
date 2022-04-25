@@ -9,6 +9,9 @@ import oogasalad.GamePlayer.Board.Player;
  */
 public abstract class TurnCriteria {
 
+  protected static final Player[] DEFAULT_PLAYERS = new Player[]{
+      new Player(0, new int[]{1}), new Player(1, new int[]{0})};
+
   protected Player[] players;
   private int index;
 
@@ -21,7 +24,7 @@ public abstract class TurnCriteria {
    * Empty constructor used for Jackson serialization and deserialization
    */
   protected TurnCriteria(){
-    super();
+    this(DEFAULT_PLAYERS);
   }
 
   /**

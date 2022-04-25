@@ -1,7 +1,4 @@
-package oogasalad.Frontend.Menu.Local;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+package oogasalad.Frontend.Local;
 
 import java.util.ResourceBundle;
 import javafx.stage.Stage;
@@ -10,7 +7,7 @@ import oogasalad.Frontend.util.BackendConnector;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
-public class TestLocalMultiplayer extends DukeApplicationTest {
+public class TestLocalPlay extends DukeApplicationTest {
 
   private Stage myStage;
   private LocalGame myLocalGame;

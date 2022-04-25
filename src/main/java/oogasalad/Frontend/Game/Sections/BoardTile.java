@@ -40,13 +40,15 @@ public class BoardTile {
     private Double EMPTY_BORDER = 0.0;
     private int TILEMOD= -2;
     private Boolean Lit;
-    private String Image_Path = "src/main/resources/images/pieces/";
+    private String Image_Path;
     private Color BlackSquare = Color.GREEN;
     private Color WhiteSquare = Color.LIGHTGREY;
     private String LitColor = "Cyan";
     private BiConsumer<String, String> ErrorRunnable;
+    private int borderSpacing = 10;
 
-    public BoardTile(ChessTile ct, double width, double height, Consumer<Piece> lightupCons, Runnable clearlitrun, Consumer<Piece> setSelPiece, Consumer<Coordinate> MoveCons, BiConsumer<String, String> errorRun) {
+    public BoardTile(ChessTile ct, double width, double height, Consumer<Piece> lightupCons, Runnable clearlitrun, Consumer<Piece> setSelPiece, Consumer<Coordinate> MoveCons, BiConsumer<String, String> errorRun, String pack) {
+        Image_Path = "src/main/resources/images/pieces/" + pack + "/";
         myCoord = ct.getCoordinates();
         myStackPane = new StackPane();
         addActionToSP(lightupCons, clearlitrun, setSelPiece, MoveCons);
@@ -75,7 +77,7 @@ public class BoardTile {
                 clearlitrun.run();
                 MoveCons.accept(myCoord);
             }
-                });
+        });
     }
 
     /**
@@ -125,8 +127,8 @@ public class BoardTile {
                 PieceView.setFitHeight(myTileHeight);
                 PieceView.setFitWidth(myTileWidth);
             } else {
-                PieceView.setFitHeight(myTileHeight - 10);
-                PieceView.setFitWidth(myTileWidth - 10);
+                PieceView.setFitHeight(myTileHeight - borderSpacing);
+                PieceView.setFitWidth(myTileWidth - borderSpacing);
             }
             PieceView.setPreserveRatio(true);
             PieceView.setSmooth(true);

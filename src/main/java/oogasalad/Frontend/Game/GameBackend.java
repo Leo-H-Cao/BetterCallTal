@@ -15,8 +15,13 @@ import oogasalad.GamePlayer.Board.BoardSetup;
 public class GameBackend {
 
   private ChessBoard myChessBoard;
-  private String ERRORMESSAGESPACING = ": ";
+  private static final String ERRORMESSAGESPACING = ": ";
 
+  /**
+   * Initalizes the LocalPlay ChessBoard
+   * @param JSON The JSON Representing the ChessBoard
+   * @return and Optional of a potential ChessBoard
+   */
   public Optional<ChessBoard> initalizeLocalChessBoard(File JSON) {
     try {
       myChessBoard = BoardSetup.createLocalBoard(JSON.getPath());
@@ -26,7 +31,11 @@ public class GameBackend {
       return Optional.empty();
     }
   }
-
+  /**
+   * Initalizes the Server ChessBoard
+   * @param JSON The JSON Representing the ChessBoard
+   * @return and Optional of a potential ChessBoard
+   */
   public Optional<ChessBoard> initalizeHostServerChessBoard(File JSON, String RoomName, int player) {
     try {
       myChessBoard = BoardSetup.createRemoteBoard(JSON.getPath(), RoomName, player);
@@ -36,7 +45,11 @@ public class GameBackend {
       return Optional.empty();
     }
   }
-
+  /**
+   * Initalizes the JoinServer ChessBoard
+   * @param RoomName The String ID of the room
+   * @return and Optional of a potential ChessBoard
+   */
   public Optional<ChessBoard> initalizeJoinServerChessBoard(String RoomName) {
     try {
       myChessBoard = BoardSetup.joinRemoteBoard(RoomName);

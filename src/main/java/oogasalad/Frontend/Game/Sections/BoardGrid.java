@@ -3,6 +3,7 @@ package oogasalad.Frontend.Game.Sections;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import oogasalad.Frontend.Game.History.BoardHistory;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.GamePiece.Piece;
@@ -30,14 +31,17 @@ public class BoardGrid {
     private ArrayList<BoardTile> myLitTiles;
     private Runnable ClearLitTilesRun;
     private Consumer<Piece> setSelPiece;
+    private BoardHistory myBoardHistory;
 
 
-    public BoardGrid(ChessBoard cb, Consumer<Piece> lightupCons, Consumer<Coordinate> MoveCons, BiConsumer<String, String> errorRun) {
+    public BoardGrid(ChessBoard cb, Consumer<Piece> lightupCons, Consumer<Coordinate> MoveCons, BiConsumer<String, String> errorRun, BoardHistory history, String imgpackage) {
+        myBoardHistory = history;
         myLitTiles = new ArrayList<>();
         myBoard = new GridPane();
         makeRunAndCons();
         setUpGP(myBoard, cb.getBoardHeight(), cb.getBoardLength());
-        makeBoard(cb, cb.getThisPlayer(), lightupCons, MoveCons, errorRun);
+        makeBoard(cb, cb.getThisPlayer(), lightupCons, MoveCons, errorRun, imgpackage);
+
     }
 
     private void setUpGP(GridPane gp, int rows, int cols) {
@@ -49,7 +53,7 @@ public class BoardGrid {
         }
     }
 
-    private void makeBoard(ChessBoard cb, int id, Consumer<Piece> lightupCons, Consumer<Coordinate> MoveCons, BiConsumer<String, String> errorRun) {
+    private void makeBoard(ChessBoard cb, int id, Consumer<Piece> lightupCons, Consumer<Coordinate> MoveCons, BiConsumer<String, String> errorRun, String pack) {
         myBoardTiles = new ArrayList<>();
         for (ChessTile ct : cb) {
             int grid_x = ct.getCoordinates().getCol();
@@ -57,7 +61,7 @@ public class BoardGrid {
             BoardTile tile = new BoardTile(ct,
                     WIDTH_Board / Math.max(cb.getBoardLength(), cb.getBoardHeight()),
                     HEIGHT_BOARD / Math.max(cb.getBoardLength(), cb.getBoardHeight()),
-                    lightupCons, ClearLitTilesRun, setSelPiece, MoveCons, errorRun);
+                    lightupCons, ClearLitTilesRun, setSelPiece, MoveCons, errorRun, pack);
             myBoardTiles.add(tile);
 
             if (id == 1) {
@@ -66,6 +70,7 @@ public class BoardGrid {
             }
             myBoard.add(tile.getMyStackPane(), grid_x, grid_y);
         }
+        myBoardHistory.add(cb.getHistory().getCurrentBoard());
     }
 
     /**
@@ -93,7 +98,6 @@ public class BoardGrid {
      * @param cts
      */
     public void lightSquares(Collection<ChessTile> cts) {
-        LOG.debug("Got to lightsquares in Boardgrid");
         turnOffTiles();
         for (ChessTile ct : cts) {
             BoardTile bt = grabTile(ct.getCoordinates());
@@ -129,8 +133,8 @@ public class BoardGrid {
     }
 
     private void makeRunAndCons() {
-        ClearLitTilesRun = () -> turnOffTiles();
-        setSelPiece = piece -> setSelectedPiece(piece);
+        ClearLitTilesRun = this::turnOffTiles;
+        setSelPiece = this::setSelectedPiece;
     }
 
     /**

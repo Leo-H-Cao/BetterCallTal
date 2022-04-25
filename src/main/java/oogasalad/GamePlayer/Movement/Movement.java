@@ -1,9 +1,5 @@
 package oogasalad.GamePlayer.Movement;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -18,7 +14,6 @@ import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.ValidStateChecker.Check;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -57,7 +52,8 @@ public class Movement implements MovementInterface{
    * Constructor for Jackson serialization and deserialization
    */
   public Movement(){
-    super();
+    this.possibleMoves = new ArrayList<>();
+    this.infinite = false;
   }
 
   /**

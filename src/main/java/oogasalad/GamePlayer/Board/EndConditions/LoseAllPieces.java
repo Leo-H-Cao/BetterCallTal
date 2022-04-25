@@ -1,10 +1,8 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -44,8 +42,7 @@ public class LoseAllPieces implements EndCondition {
       scores.put(p, LOSS);
       Arrays.stream(board.getPlayer(p).opponentIDs()).forEach(o -> scores.put(o, WIN));
     });
-    Arrays.stream(board.getPlayers()).filter(p -> !scores.containsKey(p.teamID())).forEach(p ->
-        scores.put(p.teamID(), DRAW));
+    Arrays.stream(board.getPlayers()).filter(p -> !scores.containsKey(p.teamID())).forEach(p -> scores.put(p.teamID(), DRAW));
 
     return scores;
   }

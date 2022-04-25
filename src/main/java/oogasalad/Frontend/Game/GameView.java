@@ -1,11 +1,14 @@
 package oogasalad.Frontend.Game;
 
 import static oogasalad.Frontend.Game.TurnKeeper.AI;
+
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import javafx.geometry.Pos;
@@ -14,13 +17,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import oogasalad.Frontend.Game.History.BoardHistory;
+import oogasalad.Frontend.Game.History.BoardHistoryPanel;
 import oogasalad.Frontend.Game.Sections.BoardGrid;
 import oogasalad.Frontend.Game.Sections.GameOverDisplay;
 import oogasalad.Frontend.Game.Sections.LeftSection;
 import oogasalad.Frontend.Game.Sections.TopSection;
 import oogasalad.Frontend.Menu.LocalPlay.RemotePlayer.RemotePlayer;
-import oogasalad.Frontend.Menu.HomeView;
+import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.ArtificialPlayer.Bot;
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -41,6 +47,10 @@ import org.apache.logging.log4j.Logger;
 public class GameView extends View {
 
     private static final Logger LOG = LogManager.getLogger(GameView.class);
+    public static final String SERVER = "server";
+    public static final String MULTIPLAYER = "multiplayer";
+    public static final String SINGLEPLAYER = "singleplayer";
+    public static final String HUMAN = "human";
 
     private BoardGrid myBoardGrid;
     private static Integer myID;
@@ -59,9 +69,13 @@ public class GameView extends View {
     private TurnKeeper turnKeeper;
     private List<RemotePlayer> remotePlayers;
 
+    private BoardHistory myBoardHistory;
+    private BoardHistoryPanel myHistoryPanel;
+
 
     public GameView(Stage stage) {
         super(stage);
+        remotePlayers = new ArrayList<>();
     }
 
     /**
@@ -71,22 +85,27 @@ public class GameView extends View {
      * setting up the board.
      */
 
-    public void SetUpBoard(ChessBoard chessboard, boolean singleplayer) {
+    public void SetUpBoard(ChessBoard chessboard, int id, String mode, String imgPackage) {
+
         myID = chessboard.getThisPlayer();
         isServer = getGameBackend().getChessBoard().getGameType() == GameType.SERVER;
         makeConsandRuns();
-        myBoardGrid = new BoardGrid(chessboard, lightUpCons, MoveCons, errorRun); //TODO: Figure out player ID stuff
+        myBoardHistory = new BoardHistory();
+        myBoardGrid = new BoardGrid(chessboard, lightUpCons, MoveCons, errorRun, myBoardHistory, imgPackage); //TODO: Figure out player ID stuff
         //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
         remotePlayers = new ArrayList<>();
+        String[] splitMode = mode.split(" ");
+        switch (splitMode[0]) {
+            case SERVER -> turnKeeper = new TurnKeeper(new String[]{HUMAN, SERVER}, getGameBackend().getChessBoard().getEndConditions());
+            case SINGLEPLAYER -> {
+                turnKeeper = new TurnKeeper(new String[]{HUMAN, AI}, getGameBackend().getChessBoard().getEndConditions());
+                remotePlayers.add(new Bot(turnKeeper, splitMode[1]));
+            }
+            case MULTIPLAYER -> turnKeeper = new TurnKeeper(new String[]{HUMAN, HUMAN}, getGameBackend().getChessBoard().getEndConditions());
+        }
         chessboard.setShowAsyncError(this::showmyError);
         chessboard.setPerformAsyncTurnUpdate(this::updateBoard);
-        if (singleplayer) {
-            turnKeeper = new TurnKeeper(new String[]{"human", AI});
-            remotePlayers.add(new Bot(turnKeeper));
-        } else {
-            turnKeeper = new TurnKeeper(new String[]{"human", "human"});
-        }
     }
 
 
@@ -98,8 +117,10 @@ public class GameView extends View {
     }
 
     private void makeMove(Coordinate c) {
+        makeKeyListener();
         LOG.debug("makeMove in GameView reached\n");
         try {
+            if (!myBoardHistory.isOnRecent()) throw new Exception("Please make sure your board is the most current! Hint, press D until no noticeable visual changes occur");
             Collection<TurnUpdate> updates = new ArrayList<>();
             TurnUpdate tu = getGameBackend().getChessBoard().move(myBoardGrid.getSelectedPiece(), c);
             updates.add(tu);
@@ -113,6 +134,7 @@ public class GameView extends View {
                 });
             }
             updateBoard(updates);
+            myHistoryPanel.add(updates);
         } catch (Exception e){
             getGameBackend().showError(e.getClass().getSimpleName(), e.getMessage());
             LOG.warn("Move failed");
@@ -158,12 +180,12 @@ public class GameView extends View {
     }
 
     private void updateBoard(Collection<TurnUpdate> tu) {
-        //tu.forEach(this::updateBoard);
-        for(TurnUpdate t : tu){
-            if(!updateBoard(t)){
-                break;
-            }
-        }
+        tu.forEach(this::updateBoard);
+        updateHistory(getGameBackend().getChessBoard().getHistory().getCurrentBoard());
+    }
+
+    private void updateHistory(ChessBoard board) {
+        myBoardHistory.update(board);
     }
 
     private void gameOver(){
@@ -178,10 +200,18 @@ public class GameView extends View {
     protected Node makeNode() {
         BorderPane bp = new BorderPane();
 
-        myTopSection = new TopSection();
+        try {
+            myTopSection = new TopSection();
+        } catch (FileNotFoundException e) {
+            showmyError(e.getClass().getSimpleName(), e.getMessage());
+        }
 
         myTopSection.setExitButton(e -> {
-            getView(HomeView.class).ifPresent(this::changeScene);
+
+            ResourceBundle resource = myResources.orElseGet(
+                () -> ResourceBundle.getBundle("oogasalad.Frontend.Menu.languages.English"));
+            resetView();
+            new ViewManager(myStage, resource);
         });
 
         bp.setTop(myTopSection.getGP());
@@ -191,7 +221,12 @@ public class GameView extends View {
         bp.setCenter(myCenterBoard);
 
         myLeftSide = new LeftSection(flipRun);
-        bp.setLeft(myLeftSide.getVbox());
+        myHistoryPanel = new BoardHistoryPanel();
+
+        VBox leftvbox = new VBox(myLeftSide.getVbox(), myHistoryPanel.makeNode());
+        leftvbox.setAlignment(Pos.CENTER);
+        bp.setLeft(leftvbox);
+
         setFlipButton(); //ONLY FOR TESTING GAMEVIEW, IGNORE THIS
         return bp;
     }
@@ -208,11 +243,30 @@ public class GameView extends View {
         getGameBackend().showError(classname, message);
     }
 
+    private void makeKeyListener() {
+        myScene.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case A -> onLeftKey();
+                case D -> onRightKey();
+            }
+        });
+    }
+
+    private void onLeftKey() {
+        LOG.debug("LEFT KEY PRESSED");
+        myBoardGrid.updateTiles(myBoardHistory.previous().getBoard().stream().flatMap(List::stream).toList());
+
+    }
+
+    private void onRightKey() {
+        LOG.debug("RIGHT KEY PRESSED");
+        myBoardGrid.updateTiles(myBoardHistory.next().getBoard().stream().flatMap(List::stream).toList());
+    }
 
     /**
      * RECEIVED PERMISSION FROM DUVALL TO DO THIS
      */
-    public static Piece promotionPopUp(List<Piece> possPromotions){
+    public static Piece promotionPopUp(List<Piece> possPromotions) {
         ChoiceDialog cd = new ChoiceDialog(possPromotions.get(0), possPromotions);
         Optional<Piece> p = cd.showAndWait();
         return p.orElse(null);

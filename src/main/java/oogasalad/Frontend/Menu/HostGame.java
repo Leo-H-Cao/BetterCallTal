@@ -1,5 +1,7 @@
 package oogasalad.Frontend.Menu;
 
+import static oogasalad.Frontend.Game.GameView.SERVER;
+
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -45,9 +47,12 @@ public class HostGame extends View {
     private TextArea RoomName;
     private static final Double TEXTAREAWIDTH = 100.0;
     private static final Double TEXTAREAHEIGHT = 20.0;
+    private Integer prefWidth = 150;
+    private Integer prefHeight=50;
     private String RoomID;
     private Boolean StartShowing;
     private Node prompt; // MADE GLOBAL FOR TESTING!!!
+    private ChoiceBox<String> packages;
 
 
     public HostGame(Stage stage) {
@@ -90,8 +95,8 @@ public class HostGame extends View {
                     StackPane.setAlignment(Room, Pos.CENTER_LEFT);
                     myStackPane.getChildren().addAll(team, Room);
                 });
-        load.setPrefWidth(150);
-        load.setPrefHeight(50);
+        load.setPrefWidth(prefWidth);
+        load.setPrefHeight(prefHeight);
         return new Group(load);
     }
 
@@ -140,7 +145,9 @@ public class HostGame extends View {
 
         piececolors.put(white, 0);
         piececolors.put(black, 1);
-        vb.getChildren().addAll(prompt, colorchoice);
+
+        packages = makePackageSelectGroup();
+        vb.getChildren().addAll(prompt, colorchoice, packages);
         return new Group(vb);
     }
 
@@ -149,7 +156,7 @@ public class HostGame extends View {
                 (e) -> {
             Optional<ChessBoard> cbOp = getGameBackend().initalizeHostServerChessBoard(f, RoomID, piececolors.get(colorchoice.getValue()));
             if(cbOp.isPresent()) {
-                getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cbOp.get(), false));
+                getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cbOp.get(), cbOp.get().getThisPlayer(), SERVER, packages.getValue()));
             } else {
                 View.LOG.debug("Invalid JSON");
             }

@@ -16,6 +16,7 @@ import oogasalad.GamePlayer.Movement.Coordinate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /***
@@ -60,7 +61,7 @@ public class InARow implements EndCondition {
       for (int i = 0; i < pieceArray.length(); i++) {
         pieceNames.add(pieceArray.getString(i).toLowerCase());
       }
-    } catch (IOException e) {
+    } catch (IOException | JSONException e) {
       numInARow = IAR_DEFAULT_VAL;
       pieceNames = IAR_DEFAULT_NAMES;
     }
@@ -91,8 +92,7 @@ public class InARow implements EndCondition {
       return scores;
     }
 
-    Arrays.stream(board.getPlayers()).filter(p -> !scores.containsKey(p.teamID())).forEach(p ->
-        scores.put(p.teamID(), DRAW));
+    Arrays.stream(board.getPlayers()).filter(p -> !scores.containsKey(p.teamID())).forEach(p -> scores.put(p.teamID(), DRAW));
 
     return scores;
   }
@@ -126,9 +126,7 @@ public class InARow implements EndCondition {
    */
   private boolean rayReachesNum(ChessBoard board, String pieceName, int pieceTeam,
       Coordinate coordinate, Coordinate direction, int rayLength) {
-    if (rayLength == 0) {
-      return true;
-    }
+    if (rayLength == 0) {return true;}
     if (direction.getCol() == 0 && direction.getRow() == 0 ||
         !continueExtendingRay(board, coordinate, pieceName, pieceTeam)) {
       return false;
@@ -163,6 +161,20 @@ public class InARow implements EndCondition {
       return false;
     }
     return false;
+  }
+
+  /***
+   * @return num in a row for testing
+   */
+  int getNumInARow() {
+    return numInARow;
+  }
+
+  /***
+   * @return piece names for testing
+   */
+  List<String> getPieceNames() {
+    return pieceNames;
   }
 
   /***

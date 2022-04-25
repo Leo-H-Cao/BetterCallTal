@@ -1,7 +1,6 @@
 package oogasalad.Frontend.Editor.Board;
 
 import javafx.scene.Node;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import oogasalad.Frontend.util.NodeContainer;
@@ -28,13 +27,16 @@ public class BoardEditor extends NodeContainer {
 		BorderPane borderPane = new BorderPane();
 		borderPane.setPrefWidth(myScreenSize.getWidth());
 		borderPane.setCenter(myChessBoard.getNode());
-		borderPane.setLeft(myPieceLibrary.getNode());
+		borderPane.setLeft(makeLeft());
 		borderPane.setRight(myModifierLibrary.getNode());
 
-		AnchorPane ret = new AnchorPane(borderPane, myBoardSettings.getNode());
-		AnchorPane.setTopAnchor(borderPane, 10.);
-		AnchorPane.setBottomAnchor(myBoardSettings.getNode(), 10.);
+		return borderPane;
+	}
 
+	private Node makeLeft() {
+		GridPane ret = new GridPane();
+		ret.add(myPieceLibrary.getNode(), 0, 0);
+		ret.add(myBoardSettings.getNode(), 0, 1);
 		return ret;
 	}
 }

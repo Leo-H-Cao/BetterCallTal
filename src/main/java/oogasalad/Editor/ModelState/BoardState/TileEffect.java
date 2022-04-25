@@ -13,7 +13,7 @@ public enum TileEffect {
   DEMOTE("Demote");
 
   // Member to hold the name
-  private String string;
+  private final String string;
 
   // constructor to set the string
   TileEffect(String name){string = name;}

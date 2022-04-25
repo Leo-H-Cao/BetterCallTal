@@ -8,6 +8,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 import oogasalad.Frontend.Editor.Board.BoardEditor;
@@ -16,8 +17,7 @@ import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
 import oogasalad.Frontend.util.View;
-
-import java.util.Arrays;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,7 +68,7 @@ public class EditorView extends View {
 		String pieceId = "custom" + pieceEditorCount;
 		getEditorBackend().getPiecesState().createCustomPiece(pieceId);
 		EditorPiece piece = getEditorBackend().getPiecesState().getPiece(pieceId);
-		piece.setPieceName("custom piece " + pieceEditorCount);
+		piece.setPieceName("customPiece" + pieceEditorCount);
 		openCustomPiece(pieceId);
 	}
 
@@ -107,10 +107,21 @@ public class EditorView extends View {
 		Button addCustomPieceButton = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("NewCustomPiece", getClass()), "newCustomPiece",
 				(e) -> newCustomPiece());
 		buttons.add(addCustomPieceButton, 1, 0);
-		buttons.add(ButtonFactory.makeButton(ButtonType.TEXT, "Export", "export", e -> getEditorBackend().exportState()), 2, 0);
+		buttons.add(ButtonFactory.makeButton(ButtonType.TEXT, "Export", "export", e -> exportAction()), 2, 0);
 		GridPane.setFillHeight(addCustomPieceButton, true);
 		ret.add(buttons, 0, 0);
 		ret.add(myTabs, 0, 1);
 		return ret;
+	}
+
+	private void exportAction() {
+		FileChooser chooser = new FileChooser();
+		chooser.setInitialFileName("MainFile.json");
+		chooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("JSON Files", "*.json"));
+		File dir = chooser.showSaveDialog(new Stage());
+
+		if(dir != null) {
+			getEditorBackend().exportState(dir);
+		}
 	}
 }

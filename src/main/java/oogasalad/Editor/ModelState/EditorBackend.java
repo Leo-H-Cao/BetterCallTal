@@ -12,8 +12,11 @@ import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 import oogasalad.Editor.ModelState.EditPiece.PieceGridTile;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Editor.ModelState.RulesState.GameRulesState;
-
+import oogasalad.Frontend.util.BackendConnector;
+import static oogasalad.Editor.ModelState.EditPiece.PieceGridTile.CAPTURE;
+import static oogasalad.Editor.ModelState.EditPiece.PieceGridTile.INFINITECAPTURE;
 import static oogasalad.Editor.ModelState.EditPiece.PieceGridTile.OPEN;
+import static oogasalad.Editor.ModelState.EditPiece.PieceGridTile.OPENANDCAPTURE;
 
 public class EditorBackend {
 	private final PiecesState piecesState;
@@ -29,7 +32,7 @@ public class EditorBackend {
 		boardState = new BoardState(piecesState);
 		gameRulesState = new GameRulesState();
 		selectedTypeProperty = new SimpleObjectProperty<>(OPEN);
-		selectedPieceId = new SimpleStringProperty("rook");
+		selectedPieceId = new SimpleStringProperty("pawn");
 		alternatePiece = new SimpleIntegerProperty(0);
 		customPieceOpenId = new SimpleStringProperty();
 		createDefaultPieces();
@@ -75,32 +78,103 @@ public class EditorBackend {
 		return customPieceOpenId;
 	}
 
-	public void exportState() {
+	public void exportState(File fileName) {
 		ExportJSON exporter = new ExportJSON(piecesState, gameRulesState, boardState);
-		File parentDir = new File("doc/testing_directory/json_export_test");
-		exporter.writeToJSON(parentDir);
+		exporter.writeToJSON(fileName);
 	}
 
 	private void createDefaultPieces() {
-		MovementGrid moves = new MovementGrid();
-
-		createDefaultPiece("pawn", 1, moves);
-		createDefaultPiece("knight", 3, moves);
-		createDefaultPiece("bishop", 3, moves);
-		createDefaultPiece("rook", 5, moves);
-		createDefaultPiece("queen", 9, moves);
-		createDefaultPiece("king", 99, moves);
+		createDefaultPiece("pawn", 1, createWhitePawnDefaultMoves());
+		createDefaultPiece("knight", 3, createKnightDefaultMoves());
+		createDefaultPiece("bishop", 3, createBishopDefaultMoves());
+		createDefaultPiece("rook", 5, createRookDefaultMoves());
+		createDefaultPiece("queen", 9, createQueenDefaultMoves());
+		createDefaultPiece("king", 99, createKingDefaultMoves());
 	}
 
 	private void createDefaultPiece(String name, int val, MovementGrid moves) {
-		getPiecesState().createDefaultPiece(name);
-		EditorPiece piece = getPiecesState().getPiece(name);
-		piece.setImage(0, new Image("images/pieces/white/" + name + ".png"));
-		piece.setImage(1, new Image("images/pieces/black/" + name + ".png"));
-		name = name + "Test";
+		EditorPiece piece = getPiecesState().createDefaultPiece(name);
+		piece.setImage(0, new Image("images/pieces/Default/white/" + name + ".png"));
+		piece.setImage(1, new Image("images/pieces/Default/black/" + name + ".png"));
+		name = name.substring(0, 1).toUpperCase() + name.substring(1) + " " + BackendConnector.getFrontendWord("ro");
 		piece.setPieceName(name);
 		piece.setPointValue(val);
 		piece.setMovementGrid(moves, 0);
+		if(name.equals("Pawn")){
+			piece.setMovementGrid(createBlackPawnDefaultMoves(), 1);
+		}
+		else{
+			piece.setMovementGrid(moves, 1);
+		}
+	}
+
+	private MovementGrid createWhitePawnDefaultMoves(){
+		MovementGrid moves = new MovementGrid();
+		moves.setTile(3,2, OPEN);
+		moves.setTile(2,2, CAPTURE);
+		moves.setTile(4,2, CAPTURE);
+		return moves;
+	}
+
+	private MovementGrid createBlackPawnDefaultMoves(){
+		MovementGrid moves = new MovementGrid();
+		moves.setTile(3,4, OPEN);
+		moves.setTile(2,4, CAPTURE);
+		moves.setTile(4,4, CAPTURE);
+		return moves;
+	}
+
+	private MovementGrid createKnightDefaultMoves(){
+		MovementGrid moves = new MovementGrid();
+		moves.setTile(2,1, OPENANDCAPTURE);
+		moves.setTile(4,1, OPENANDCAPTURE);
+		moves.setTile(1,2, OPENANDCAPTURE);
+		moves.setTile(1,4, OPENANDCAPTURE);
+		moves.setTile(5,2, OPENANDCAPTURE);
+		moves.setTile(5,4, OPENANDCAPTURE);
+		moves.setTile(2,5, OPENANDCAPTURE);
+		moves.setTile(4,5, OPENANDCAPTURE);
+		return moves;
+	}
+
+	private MovementGrid createBishopDefaultMoves(){
+		MovementGrid moves = new MovementGrid();
+		moves.setTile(2,2, INFINITECAPTURE);
+		moves.setTile(4,2, INFINITECAPTURE);
+		moves.setTile(2, 4, INFINITECAPTURE);
+		moves.setTile(4,4, INFINITECAPTURE);
+		return moves;
+	}
+
+	private MovementGrid createRookDefaultMoves(){
+		MovementGrid moves = new MovementGrid();
+		moves.setTile(3,2, INFINITECAPTURE);
+		moves.setTile(2,3, INFINITECAPTURE);
+		moves.setTile(4, 3, INFINITECAPTURE);
+		moves.setTile(3,4, INFINITECAPTURE);
+		return moves;
+	}
+
+	private MovementGrid createQueenDefaultMoves(){
+		MovementGrid moves = createBishopDefaultMoves();
+		moves.setTile(3,2, INFINITECAPTURE);
+		moves.setTile(2,3, INFINITECAPTURE);
+		moves.setTile(4, 3, INFINITECAPTURE);
+		moves.setTile(3,4, INFINITECAPTURE);
+		return moves;
+	}
+
+	private MovementGrid createKingDefaultMoves(){
+		MovementGrid moves = new MovementGrid();
+		moves.setTile(3,2, OPENANDCAPTURE);
+		moves.setTile(2,3, OPENANDCAPTURE);
+		moves.setTile(4, 3, OPENANDCAPTURE);
+		moves.setTile(3,4, OPENANDCAPTURE);
+		moves.setTile(2,2, OPENANDCAPTURE);
+		moves.setTile(4,2, OPENANDCAPTURE);
+		moves.setTile(2, 4, OPENANDCAPTURE);
+		moves.setTile(4,4, OPENANDCAPTURE);
+		return moves;
 	}
 
 	private void setDefaultGameRules() {

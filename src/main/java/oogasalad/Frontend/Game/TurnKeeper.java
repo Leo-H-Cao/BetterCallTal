@@ -15,12 +15,13 @@ public class TurnKeeper implements TurnManager {
   public static final String AI = "ai";
   public static final String SERVER = "server";
 
-
+  Collection<EndCondition> endConditions;
   private List<String> turn;
   private int counter;
 
-  public TurnKeeper(String[] players) {
+  public TurnKeeper(String[] players, Collection<EndCondition> endConditions) {
     turn = List.of(players);
+    this.endConditions = endConditions;
     counter = 0;
   }
 
@@ -84,7 +85,7 @@ public class TurnKeeper implements TurnManager {
    */
   @Override
   public Collection<EndCondition> getEndConditions() {
-    return null;
+    return endConditions;
   }
 
   /**

@@ -13,13 +13,12 @@ import oogasalad.GamePlayer.Board.BoardSetup;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.ValidStateChecker.Check;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class CheckersCaptureTest {
+public class CheckersCaptureTest {
 
-  static final String CHECKERS_TEST_FILE = BOARD_TEST_FILES_HEADER + "CheckersTest.json";
+  public static final String CHECKERS_TEST_FILE = BOARD_TEST_FILES_HEADER + "CheckersTest.json";
 
   private ChessBoard myBoard;
 

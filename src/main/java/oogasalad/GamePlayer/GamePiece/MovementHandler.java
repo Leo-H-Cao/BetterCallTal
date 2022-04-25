@@ -1,9 +1,7 @@
 package oogasalad.GamePlayer.GamePiece;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -46,7 +44,7 @@ public class MovementHandler {
    * Constructor for Jackson serialization and deserialization
    */
   public MovementHandler() {
-    super();
+    this(Collections.emptyList(), Collections.emptySet(), Collections.emptySortedSet());
   }
 
   /**
@@ -85,8 +83,7 @@ public class MovementHandler {
         {
           try {
             updatedSquares.addAll(m.movePiece(piece, finalSquare.getCoordinates(), board));
-          } catch (InvalidMoveException | OutsideOfBoardException ignored) {
-          }
+          } catch (InvalidMoveException | OutsideOfBoardException ignored) {}
         });
     LOG.debug(String.format("Updated squares: %s", updatedSquares));
     return updatedSquares;
@@ -107,8 +104,7 @@ public class MovementHandler {
           try {
             updatedSquares.addAll(m.capturePiece(piece, captureSquare.getCoordinates(), board));
             updatedSquares.addAll(piece.runInteractionModifiers(board));
-          } catch (InvalidMoveException | OutsideOfBoardException ignored) {
-          }
+          } catch (InvalidMoveException | OutsideOfBoardException ignored) {}
         });
     return updatedSquares;
   }
@@ -179,5 +175,12 @@ public class MovementHandler {
   public void addNewMovements(Collection<MovementInterface> newMovements, Collection<MovementInterface> newCaptures) {
     this.movements.addAll(newMovements);
     this.captures.addAll(newCaptures);
+  }
+
+  /***
+   * @return movement modifiers for testing
+   */
+  Set<MovementModifier> getMovementModifiers() {
+    return movementModifiers;
   }
 }

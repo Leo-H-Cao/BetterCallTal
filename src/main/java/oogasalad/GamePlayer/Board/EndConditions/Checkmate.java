@@ -7,9 +7,9 @@ import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.ValidStateChecker.Check;
 
 /**
- * This class
+ * End condition where one team reaches classically-defined checkmate
  *
- * @author Jose Santillan
+ * @author Jose Santillan, Jed Yang
  */
 public class Checkmate implements EndCondition {
 
@@ -43,10 +43,7 @@ public class Checkmate implements EndCondition {
           return generateScores(board, i);
         }
       }
-
-    } catch (EngineException e) {
-      return new HashMap<>();
-    }
+    } catch (EngineException e) {return new HashMap<>();}
     return new HashMap<>();
   }
 

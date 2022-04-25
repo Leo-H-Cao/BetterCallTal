@@ -18,7 +18,7 @@ public class ConstantIncrease extends TurnCriteria {
    * Empty constructor used for Jackson serialization and deserialization
    */
   public ConstantIncrease(){
-    super();
+    this(DEFAULT_PLAYERS);
   }
 
   /***
