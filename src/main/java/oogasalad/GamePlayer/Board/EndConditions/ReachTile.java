@@ -87,9 +87,7 @@ public class ReachTile implements EndCondition {
             scores.put(t.teamID(), DRAW));
       }
       return scores;
-    } catch (OutsideOfBoardException e) {
-      return new HashMap<>();
-    }
+    } catch (OutsideOfBoardException e) {return new HashMap<>();}
   }
 
   /***

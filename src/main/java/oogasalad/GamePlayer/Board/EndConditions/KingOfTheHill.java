@@ -75,9 +75,7 @@ public class KingOfTheHill implements EndCondition {
         {
           try {
             middleTiles.add(board.getTile(Coordinate.of(i, j)));
-          } catch (OutsideOfBoardException ignored) {
-            LOG.debug("Middle tile out of bounds");
-          }
+          } catch (OutsideOfBoardException e) {LOG.debug("Middle tile out of bounds");}
         }));
     LOG.debug(String.format("Middle tiles: %s", middleTiles));
     return middleTiles;

@@ -64,7 +64,6 @@ public class Promotion implements TileAction {
     Piece p = pieceList.size() == 1 ? pieceList.get(0) : promotionPopUp(pieceList);
     Piece clone = p.clone();
     tile.clearPieces();
-    
     try {clone.updateCoordinates(tile, board); }
     catch (OutsideOfBoardException e) {LOG.warn("Placing piece after promotion failed.");}
 
