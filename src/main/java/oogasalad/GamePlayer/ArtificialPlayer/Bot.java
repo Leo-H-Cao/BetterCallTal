@@ -31,6 +31,7 @@ public class Bot implements RemotePlayer {
   ArrayList<Double> utilityList  = new ArrayList<>();
   double maxUtility = Integer.MIN_VALUE;
   private int minimaxDepth = 2;
+  private static final double RANDOMIZER_THRESHOLD = 0.001;
 
 
   public Bot(int team, TurnCriteria tc){
@@ -60,7 +61,8 @@ public class Bot implements RemotePlayer {
       depths[i] = Double.parseDouble(depthProbabilities[i]);
     }
 
-    return getSettingBasedMove(board, currentPlayer, depths);
+    TurnUpdate result = getSettingBasedMove(board, currentPlayer, depths);
+    return result;
     //return getMinimaxMove(board, currentPlayer, minimaxDepth);
     //return getRandomMove(board, currentPlayer);
   }
@@ -73,11 +75,11 @@ public class Bot implements RemotePlayer {
     }
     for(int i=0; i<depths.length; i++){
       seed -= depths[i];
-      if(seed < 0){
+      if(seed < RANDOMIZER_THRESHOLD){
         return getMinimaxMove(board, currentPlayer, i);
       }
     }
-    return null;
+    return new TurnUpdate(Set.of(), -1);
   }
 
   private TurnUpdate getMinimaxMove(ChessBoard board, int currentPlayer, int depth)
