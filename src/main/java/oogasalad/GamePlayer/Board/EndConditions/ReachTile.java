@@ -83,8 +83,7 @@ public class ReachTile implements EndCondition {
             eligiblePieces.contains(p.getName().toLowerCase())).forEach(p -> scores.put(p.getTeam(), WIN));
         scores.keySet().stream().toList().forEach(t -> Arrays.stream(board.getPlayer(t).opponentIDs())
             .filter(o -> !scores.containsKey(o)).forEach(o -> scores.put(o, LOSS)));
-        Arrays.stream(board.getPlayers()).filter(t -> !scores.containsKey(t.teamID())).forEach(t ->
-            scores.put(t.teamID(), DRAW));
+        Arrays.stream(board.getPlayers()).filter(t -> !scores.containsKey(t.teamID())).forEach(t -> scores.put(t.teamID(), DRAW));
       }
       return scores;
     } catch (OutsideOfBoardException e) {return new HashMap<>();}
@@ -96,5 +95,19 @@ public class ReachTile implements EndCondition {
   @Override
   public int compareTo(EndCondition o) {
     return 0;
+  }
+
+  /***
+   * @return goal for testing
+   */
+  Coordinate getGoal() {
+    return goal;
+  }
+
+  /***
+   * @return eligible pieces for testing
+   */
+  List<String> getEligiblePieces() {
+    return eligiblePieces;
   }
 }

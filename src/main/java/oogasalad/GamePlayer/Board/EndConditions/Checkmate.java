@@ -43,10 +43,7 @@ public class Checkmate implements EndCondition {
           return generateScores(board, i);
         }
       }
-
-    } catch (EngineException e) {
-      return new HashMap<>();
-    }
+    } catch (EngineException e) {return new HashMap<>();}
     return new HashMap<>();
   }
 
