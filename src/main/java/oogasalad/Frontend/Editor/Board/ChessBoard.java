@@ -3,6 +3,8 @@ package oogasalad.Frontend.Editor.Board;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
+import oogasalad.Editor.ModelState.BoardState.EditorBoard;
+import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 import oogasalad.Frontend.util.NodeContainer;
 
 public class ChessBoard extends NodeContainer {
@@ -11,6 +13,8 @@ public class ChessBoard extends NodeContainer {
 	private final SimpleIntegerProperty myHeight;
 	public ChessBoard(){
 		myGrid = new GridPane();
+		myGrid.setHgap(0);
+		myGrid.setVgap(0);
 		myHeight = getEditorBackend().getBoardState().getHeight();
 		myWidth = getEditorBackend().getBoardState().getWidth();
 
@@ -21,11 +25,11 @@ public class ChessBoard extends NodeContainer {
 	@Override
 	protected Node makeNode() {
 		boolean alt = false;
-		int xSize = 8*50/myWidth.getValue();
-		int ySize = 8*50/myHeight.getValue();
+		double xSizeMultiplier = EditorBoard.DEFAULT_BOARD_SIZE/Double.valueOf(myWidth.getValue());
+		double ySizeMultiplier = EditorBoard.DEFAULT_BOARD_SIZE/Double.valueOf(myHeight.getValue());
 		for(int i = 0; i < myHeight.getValue(); i++) {
 			for(int j = 0; j < myWidth.getValue(); j++) {
-				ChessBoardTile newTile = new ChessBoardTile(j, i, alt, xSize, ySize);
+				ChessBoardTile newTile = new ChessBoardTile(j, i, alt, xSizeMultiplier, ySizeMultiplier);
 				myGrid.add(newTile.getNode(), j, i);
 				alt = !alt;
 			}

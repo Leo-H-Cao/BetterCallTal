@@ -34,6 +34,8 @@ public abstract class LabelledContainer extends NodeContainer {
 		scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
 		scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 		scrollPane.setMinViewportWidth(300);
+		scrollPane.setPrefViewportWidth(400);
+		scrollPane.setMaxHeight(600);
 		return scrollPane;
 	}
 
