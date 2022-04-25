@@ -52,6 +52,7 @@ public class HostGame extends View {
     private String RoomID;
     private Boolean StartShowing;
     private Node prompt; // MADE GLOBAL FOR TESTING!!!
+    private ChoiceBox<String> packages;
 
 
     public HostGame(Stage stage) {
@@ -144,7 +145,9 @@ public class HostGame extends View {
 
         piececolors.put(white, 0);
         piececolors.put(black, 1);
-        vb.getChildren().addAll(prompt, colorchoice);
+
+        packages = makePackageSelectGroup();
+        vb.getChildren().addAll(prompt, colorchoice, packages);
         return new Group(vb);
     }
 
@@ -153,7 +156,7 @@ public class HostGame extends View {
                 (e) -> {
             Optional<ChessBoard> cbOp = getGameBackend().initalizeHostServerChessBoard(f, RoomID, piececolors.get(colorchoice.getValue()));
             if(cbOp.isPresent()) {
-                getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cbOp.get(), cbOp.get().getThisPlayer(), SERVER));
+                getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cbOp.get(), cbOp.get().getThisPlayer(), SERVER, packages.getValue()));
             } else {
                 View.LOG.debug("Invalid JSON");
             }

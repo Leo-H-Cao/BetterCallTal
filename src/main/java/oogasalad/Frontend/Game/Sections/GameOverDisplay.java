@@ -28,6 +28,7 @@ public class GameOverDisplay {
     private static Double WIDTH = 500.0;
     private static Double HEIGHT = 500.0;
     private Integer fontsize  = 50;
+    private double DRAWVALUE = .5;
 
     public GameOverDisplay(Map<Integer, Double> scores, Consumer<Node> remove) {
         removeCons =remove;
@@ -36,7 +37,7 @@ public class GameOverDisplay {
     }
 
     private Double findWinner(Map<Integer, Double> scores){
-        double ret = .5;
+        double ret = DRAWVALUE;
         for (int k : scores.keySet()){
             if (scores.get(k).equals(WINVALUE)) {
                 ret = k;

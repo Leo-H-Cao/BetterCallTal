@@ -5,6 +5,7 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
@@ -122,5 +123,13 @@ public abstract class View extends BackendConnector {
 	protected Node makeExitGroup() {
 		Button Exit = makeExitButton();
 		return new Group(Exit);
+	}
+
+	protected ChoiceBox<String> makePackageSelectGroup() {
+		String[] langoptions = getFrontendWord("Packages").split(",");
+		ChoiceBox<String> packages = new ChoiceBox<>();
+		packages.getItems().addAll(langoptions);
+		packages.setValue(langoptions[0]);
+		return packages;
 	}
 }
