@@ -6,6 +6,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import oogasalad.Editor.ModelState.EditPiece.MovementGrid;
 import oogasalad.Frontend.util.NodeContainer;
 
@@ -42,6 +43,8 @@ public class PieceBoard extends NodeContainer {
 
 	private Node makeName() {
 		TextField textArea = new TextField(getEditorBackend().getPiecesState().getPiece(myId).getPieceName().getValue());
+		textArea.setFont(new Font(36));
+		textArea.setId("pieceName");
 
 		textArea.textProperty().addListener((ob, ov, nv) -> getEditorBackend().getPiecesState().getPiece(myId).setPieceName(nv));
 

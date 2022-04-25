@@ -38,7 +38,6 @@ public class BoardEditor extends NodeContainer {
 		GridPane ret = new GridPane();
 		ret.add(myPieceLibrary.getNode(), 0, 0);
 		ret.add(myBoardSettings.getNode(), 0, 1);
-
 		return ret;
 	}
 }
