@@ -1,5 +1,7 @@
 package oogasalad.Frontend.Menu;
 
+import static oogasalad.Frontend.Game.GameView.SERVER;
+
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -96,7 +98,7 @@ public class JoinGame extends View {
                 (e) -> {
                     Optional<ChessBoard> cb = getGameBackend().initalizeJoinServerChessBoard(ROOMID);
                     if(cb.isPresent()) {
-                        getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), false));
+                        getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), cb.get().getThisPlayer(), SERVER));
                     } else {
                         View.LOG.debug("Invalid JSON");
                     }
