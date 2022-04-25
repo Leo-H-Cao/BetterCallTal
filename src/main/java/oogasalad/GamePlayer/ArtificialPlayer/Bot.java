@@ -3,6 +3,7 @@ package oogasalad.GamePlayer.ArtificialPlayer;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.Set;
 import oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.CheckmateLoss;
 import oogasalad.Frontend.Menu.LocalPlay.RemotePlayer.RemotePlayer;
@@ -22,6 +23,8 @@ public class Bot implements RemotePlayer {
   private TurnManager turnManager;
   private DecisionTree decisionTree;
   private List<Utility> objectives;
+  private static final String RESOURCE_PATH = "oogasalad.GamePlayer.BotGameModes";
+  private String setting;
 
   private ArrayList<Piece> topMovePieces = new ArrayList<>();
   private ArrayList<ChessTile> topMoveTiles = new ArrayList<>();
@@ -40,6 +43,7 @@ public class Bot implements RemotePlayer {
     objectives = new ArrayList<>();
     objectives.add(new CheckmateLoss());
     objectives.add(new PieceValue());
+    setting = s;
   }
 
   public TurnUpdate getBotMove(ChessBoard board, int currentPlayer)
@@ -49,9 +53,31 @@ public class Bot implements RemotePlayer {
       return new TurnUpdate(Set.of(), -1);
     }
 
+    ResourceBundle botResources = ResourceBundle.getBundle(RESOURCE_PATH);
+    String[] depthProbabilities = botResources.getString(setting).split(",");
+    double[] depths = new double[depthProbabilities.length];
+    for(int i=0; i<depthProbabilities.length; i++){
+      depths[i] = Double.parseDouble(depthProbabilities[i]);
+    }
 
-    return getMinimaxMove(board, currentPlayer, minimaxDepth);
+    return getSettingBasedMove(board, currentPlayer, depths);
+    //return getMinimaxMove(board, currentPlayer, minimaxDepth);
     //return getRandomMove(board, currentPlayer);
+  }
+
+  private TurnUpdate getSettingBasedMove(ChessBoard board, int currentPlayer, double[] depths)
+      throws Throwable {
+    double seed = Math.random();
+    if(seed < depths[0]){
+      return getRandomMove(board,currentPlayer);
+    }
+    for(int i=0; i<depths.length; i++){
+      seed -= depths[i];
+      if(seed < 0){
+        return getMinimaxMove(board, currentPlayer, i);
+      }
+    }
+    return null;
   }
 
   private TurnUpdate getMinimaxMove(ChessBoard board, int currentPlayer, int depth)
