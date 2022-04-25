@@ -28,13 +28,13 @@ public class Swap implements TileAction {
    */
   @Override
   public Set<ChessTile> executeAction(ChessTile tile, ChessBoard board) throws EngineException {
-    List<Piece> nonTargetPiece = tile.getPieces().stream()
-        .filter(Piece::isTargetPiece).toList();
+    List<Piece> nonTargetPieces = tile.getPieces().stream()
+        .filter(piece -> !piece.isTargetPiece()).toList();
 
     Set<ChessTile> updatedTiles = new HashSet<>();
     updatedTiles.add(tile);
 
-    for (Piece p : nonTargetPiece) {
+    for (Piece p : nonTargetPieces) {
       List<Piece> pieces = board.getPieces().stream().filter(piece -> !piece.equals(p)).toList();
       Piece p2 = pieces.get(DICE.nextInt(pieces.size()));
       ChessTile secondTile = swap(p, p2, board);
@@ -58,8 +58,15 @@ public class Swap implements TileAction {
     Coordinate c1 = p1.getCoordinates();
     Coordinate c2 = p2.getCoordinates();
 
-    p1.updateCoordinates(board.getTile(c2), board);
-    p2.updateCoordinates(board.getTile(c1), board);
+    board.getTile(c1).removePiece(p1);
+    board.getTile(c2).removePiece(p2);
+
+    board.placePiece(c2, p1);
+    board.placePiece(c1, p2);
+
+    p1.forceUpdateCoordinates(c2);
+    p2.forceUpdateCoordinates(c1);
+
     return board.getTile(c2);
   }
 }
