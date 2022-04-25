@@ -35,9 +35,7 @@ public class Bot implements RemotePlayer {
     turnCriteria = tc;
   }
 
-
-
-  public Bot(TurnManager turnManager) {
+  public Bot(TurnManager turnManager, String s) {
     this.turnManager = turnManager;
     objectives = new ArrayList<>();
     objectives.add(new CheckmateLoss());

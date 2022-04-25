@@ -1,6 +1,7 @@
 package oogasalad.Frontend.Game;
 
 import static oogasalad.Frontend.Game.TurnKeeper.AI;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -15,12 +16,13 @@ import javafx.scene.control.ChoiceDialog;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import oogasalad.Frontend.Game.History.BoardHistory;
 import oogasalad.Frontend.Game.Sections.BoardGrid;
 import oogasalad.Frontend.Game.Sections.GameOverDisplay;
 import oogasalad.Frontend.Game.Sections.LeftSection;
 import oogasalad.Frontend.Game.Sections.TopSection;
-import oogasalad.Frontend.Menu.LocalPlay.RemotePlayer.RemotePlayer;
 import oogasalad.Frontend.Menu.HomeView;
+import oogasalad.Frontend.Menu.LocalPlay.RemotePlayer.RemotePlayer;
 import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.ArtificialPlayer.Bot;
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -40,6 +42,10 @@ import org.apache.logging.log4j.Logger;
 public class GameView extends View {
 
     private static final Logger LOG = LogManager.getLogger(GameView.class);
+    public static final String SERVER = "server";
+    public static final String MULTIPLAYER = "multiplayer";
+    public static final String SINGLEPLAYER = "singleplayer";
+    public static final String HUMAN = "human";
 
     private BoardGrid myBoardGrid;
     private static Integer myID;
@@ -58,9 +64,14 @@ public class GameView extends View {
     private TurnKeeper turnKeeper;
     private List<RemotePlayer> remotePlayers;
 
+    private BoardHistory myBoardHistory;
+
 
     public GameView(Stage stage) {
         super(stage);
+        remotePlayers = new ArrayList<>();
+        myBoardHistory = new BoardHistory();
+
     }
 
     /**
@@ -70,7 +81,8 @@ public class GameView extends View {
      * setting up the board.
      */
 
-    public void SetUpBoard(ChessBoard chessboard, boolean singleplayer) {
+    public void SetUpBoard(ChessBoard chessboard, int id, String mode) {
+
         myID = chessboard.getThisPlayer();
         isServer = false;  // getGameBackend().getChessBoard().getGameType().equals("SERVER");
         makeConsandRuns();
@@ -78,14 +90,17 @@ public class GameView extends View {
         //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
         remotePlayers = new ArrayList<>();
+        String[] splitMode = mode.split(" ");
+        switch (splitMode[0]) {
+            case SERVER -> turnKeeper = new TurnKeeper(new String[]{HUMAN, SERVER});
+            case SINGLEPLAYER -> {
+                turnKeeper = new TurnKeeper(new String[]{HUMAN, AI});
+                remotePlayers.add(new Bot(turnKeeper, splitMode[1]));
+            }
+            case MULTIPLAYER -> turnKeeper = new TurnKeeper(new String[]{HUMAN, HUMAN});
+        }
         chessboard.setShowAsyncError(this::showmyError);
         chessboard.setPerformAsyncTurnUpdate(this::updateBoard);
-        if (singleplayer) {
-            turnKeeper = new TurnKeeper(new String[]{"human", AI});
-            remotePlayers.add(new Bot(turnKeeper));
-        } else {
-            turnKeeper = new TurnKeeper(new String[]{"human", "human"});
-        }
     }
 
 
@@ -97,6 +112,7 @@ public class GameView extends View {
     }
 
     private void makeMove(Coordinate c) {
+        makeKeyListener();
         LOG.debug("makeMove in GameView reached\n");
         try {
             Collection<TurnUpdate> updates = new ArrayList<>();
@@ -168,6 +184,11 @@ public class GameView extends View {
                 break;
             }
         }
+        updateHistory(getGameBackend().getChessBoard().getHistory().getCurrentBoard());
+    }
+
+    private void updateHistory(ChessBoard board) {
+        myBoardHistory.update(board);
     }
 
     private void gameOver(){
@@ -212,11 +233,31 @@ public class GameView extends View {
         getGameBackend().showError(classname, message);
     }
 
+    private void makeKeyListener() {
+        myScene.setOnKeyPressed(e -> {
+            System.out.println(e.getCode());
+            switch (e.getCode()) {
+                case A -> onLeftKey();
+                case D -> onRightKey();
+            }
+        });
+    }
+
+    private void onLeftKey() {
+        LOG.debug("LEFT KEY PRESSED");
+        myBoardGrid.updateTiles(myBoardHistory.previous().getBoard().stream().flatMap(List::stream).toList());
+
+    }
+
+    private void onRightKey() {
+        LOG.debug("RIGHT KEY PRESSED");
+        myBoardGrid.updateTiles(myBoardHistory.next().getBoard().stream().flatMap(List::stream).toList());
+    }
 
     /**
      * RECEIVED PERMISSION FROM DUVALL TO DO THIS
      */
-    public static Piece promotionPopUp(List<Piece> possPromotions){
+    public static Piece promotionPopUp(List<Piece> possPromotions) {
         ChoiceDialog cd = new ChoiceDialog(possPromotions.get(0), possPromotions);
         Optional<Piece> p = cd.showAndWait();
         return p.orElse(null);

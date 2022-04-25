@@ -10,7 +10,7 @@ import oogasalad.Frontend.util.BackendConnector;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
-public class TestLocalMultiplayer extends DukeApplicationTest {
+public class TestLocalPlay extends DukeApplicationTest {
 
   private Stage myStage;
   private LocalGame myLocalGame;

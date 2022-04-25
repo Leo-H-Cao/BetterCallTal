@@ -1,11 +1,13 @@
 package oogasalad.GamePlayer.ValidStateChecker;
 
 import static oogasalad.GamePlayer.Movement.CustomMovements.BankLeaverTest.BOARD_TEST_FILES_HEADER;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import oogasalad.GamePlayer.EngineExceptions.InvalidBoardSizeException;
-import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.BoardSetup;
+import oogasalad.GamePlayer.Board.ChessBoard;
+import oogasalad.GamePlayer.EngineExceptions.InvalidBoardSizeException;
 import org.junit.jupiter.api.Test;
 
 class BankBlockerTest {
