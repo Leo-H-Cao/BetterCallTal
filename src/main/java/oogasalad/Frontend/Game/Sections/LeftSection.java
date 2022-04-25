@@ -20,6 +20,7 @@ public class LeftSection {
     private String Flip_ID = "flip";
     private String ServMess = "ServerMessage";
     private Double fontsize = 45.0;
+    private Button flipbutton; //MADE GLOBAL ONLY FOR TESTING
 
     public LeftSection(Runnable Switch) {
         SideVbox = makeSideVbox(Switch);
@@ -31,7 +32,7 @@ public class LeftSection {
         serverMessage.wrapTextProperty();
         VBox vb = new VBox();
 
-        Button flipbutton = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord(Flip, getClass()), Flip_ID,
+        flipbutton = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord(Flip, getClass()), Flip_ID,
                 (e) -> Switchrun.run());
         vb.getChildren().addAll(flipbutton);
         return vb;
@@ -49,4 +50,10 @@ public class LeftSection {
         }
     }
     public VBox getVbox() {return SideVbox;}
+
+    /**
+     * ONLY FOR TESTING
+     * @return flipbutton
+     */
+    public Button getFlip() {return flipbutton;}
 }
