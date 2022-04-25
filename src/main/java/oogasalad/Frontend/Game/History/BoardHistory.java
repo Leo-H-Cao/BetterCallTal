@@ -7,6 +7,9 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * @author Jose Santillan
+ */
 public class BoardHistory implements History {
 
   private List<ChessBoard> myHistory;
