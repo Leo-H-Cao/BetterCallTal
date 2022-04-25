@@ -59,6 +59,7 @@ public class EditorView extends View {
 		BorderPane ret = new BorderPane();
 		ret.setTop(makeMenu());
 		ret.setCenter(myBoardEditor.getNode());
+		ret.setPrefHeight(myScreenSize.getHeight());
 		return ret;
 	}
 

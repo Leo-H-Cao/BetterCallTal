@@ -45,4 +45,8 @@ public record TurnManagerData(GamePlayers players, TurnCriteria turn,
     return new LocalTurnManager(this);
   }
 
+  public TurnManagerData copy(){
+    return new TurnManagerData(this.players, this.turn.copy(), this.conditions, "");
+  }
+
 }

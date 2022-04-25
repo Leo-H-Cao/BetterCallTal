@@ -70,6 +70,7 @@ public class JoinGame extends View {
         hostID.setFont(new Font(50.0));
 
         RoomName = new TextArea();
+        RoomName.setId("RoomName");
         vb.setAlignment(Pos.CENTER);
         RoomName.setPrefHeight(TEXTAREAHEIGHT);
         RoomName.setPrefWidth(TEXTAREAWIDTH);
@@ -95,7 +96,7 @@ public class JoinGame extends View {
                 (e) -> {
                     Optional<ChessBoard> cb = getGameBackend().initalizeJoinServerChessBoard(ROOMID);
                     if(cb.isPresent()) {
-                        getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), cb.get().getThisPlayer(), false));
+                        getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), false));
                     } else {
                         View.LOG.debug("Invalid JSON");
                     }

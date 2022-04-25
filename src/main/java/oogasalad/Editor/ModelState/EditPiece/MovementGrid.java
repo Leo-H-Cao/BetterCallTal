@@ -3,6 +3,10 @@ package oogasalad.Editor.ModelState.EditPiece;
 import oogasalad.Editor.Exceptions.MovementGridException;
 import oogasalad.GamePlayer.Movement.Coordinate;
 
+/**
+ * Movement grid representing valid movements and captures for the piece that it belongs to
+ * @author Leo Cao
+ */
 public class MovementGrid {
   public static final int PIECE_GRID_SIZE = 7;
   private final int PIECE_LOC_X = 3;
@@ -17,15 +21,15 @@ public class MovementGrid {
     initializePieceBoard();
   }
 
+  /**
+   * Sets movement grid tile as open, closed, or capture for movement
+   * @param x coord of tile
+   * @param y coord of tile
+   * @param tileStatus determine whether tile is closed or open for movement/capture
+   */
   public void setTile(int x, int y, PieceGridTile tileStatus){
     checkCoordinates(x, y);
-    if((tileStatus == PieceGridTile.CAPTURE && pieceGrid[y][x] == PieceGridTile.OPEN) ||
-        (tileStatus == PieceGridTile.OPEN && pieceGrid[y][x] == PieceGridTile.CAPTURE)){
-      pieceGrid[y][x] = PieceGridTile.OPENANDCAPTURE;
-    }
-    else{
-      pieceGrid[y][x] = tileStatus;
-    }
+    pieceGrid[y][x] = tileStatus;
   }
 
   public PieceGridTile getTileStatus(int x, int y){

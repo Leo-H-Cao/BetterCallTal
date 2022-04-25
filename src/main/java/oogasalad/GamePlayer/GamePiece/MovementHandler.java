@@ -2,6 +2,8 @@ package oogasalad.GamePlayer.GamePiece;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.io.IOException;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,9 +26,9 @@ import org.apache.logging.log4j.Logger;
 public class MovementHandler {
 
   private static final Logger LOG = LogManager.getLogger(MovementHandler.class);
-  private List<MovementModifier> movementModifiers;
-  private List<MovementInterface> movements;
-  private List<MovementInterface> captures;
+  private Set<MovementInterface> movements;
+  private Set<MovementInterface> captures;
+  private Set<MovementModifier> movementModifiers;
 
   /**
    * @param movements         list of movements
@@ -34,11 +36,10 @@ public class MovementHandler {
    * @param movementModifiers list of modifiers to movement Creates an object that handles
    *                          movements, captures for pieces
    */
-  public MovementHandler(List<MovementInterface> movements, List<MovementInterface> captures,
-      List<MovementModifier> movementModifiers) {
-    this.movements = movements;
-    this.captures = captures;
-    this.movementModifiers = movementModifiers;
+  public MovementHandler(Collection<MovementInterface> movements, Collection<MovementInterface> captures, Collection<MovementModifier> movementModifiers) {
+    this.movements = new HashSet<>(movements);
+    this.captures = new HashSet<>(captures);
+    this.movementModifiers = new HashSet<>(movementModifiers);
   }
 
   /**
@@ -130,7 +131,7 @@ public class MovementHandler {
   /**
    * @return relative coordinates for all regular moves
    */
-  public List<MovementInterface> getMovements() {
+  public Set<MovementInterface> getMovements() {
     return /*getRelativeMoveCoordsFromList(*/movements;
   }
 
@@ -144,9 +145,8 @@ public class MovementHandler {
   /**
    * @return relative coordinates list for given movementList
    */
-  private List<Coordinate> getRelativeMoveCoordsFromList(List<MovementInterface> movementList) {
-    return movementList.stream().flatMap(m -> m.getRelativeCoords().stream())
-        .collect(Collectors.toList());
+  private List<Coordinate> getRelativeMoveCoordsFromList(Set<MovementInterface> movementList) {
+    return movementList.stream().flatMap(m -> m.getRelativeCoords().stream()).collect(Collectors.toList());
   }
 
   /**
@@ -159,26 +159,24 @@ public class MovementHandler {
   /**
    * @return relative coordinates for all regular moves and captures
    */
-  public List<MovementInterface> getCaptures() {
-    return /*getRelativeMoveCoordsFromList(*/captures;
+  public Set<MovementInterface> getCaptures() {
+    return captures;
   }
 
   /**
    * @param newMovements new coordinates for all regular moves to set
    * @param newCaptures  new coordinates for all regular captures to set
    */
-  public void setNewMovements(List<MovementInterface> newMovements,
-      List<MovementInterface> newCaptures) {
-    this.movements = newMovements;
-    this.captures = newCaptures;
+  public void setNewMovements(Collection<MovementInterface> newMovements, Collection<MovementInterface> newCaptures) {
+    this.movements = new HashSet<>(newMovements);
+    this.captures = new HashSet<>(newCaptures);
   }
 
   /**
    * @param newMovements new coordinates for all regular moves to set
    * @param newCaptures  new coordinates for all regular captures to set
    */
-  public void addNewMovements(List<MovementInterface> newMovements,
-      List<MovementInterface> newCaptures) {
+  public void addNewMovements(Collection<MovementInterface> newMovements, Collection<MovementInterface> newCaptures) {
     this.movements.addAll(newMovements);
     this.captures.addAll(newCaptures);
   }

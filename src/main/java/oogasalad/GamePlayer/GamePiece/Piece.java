@@ -3,6 +3,7 @@ package oogasalad.GamePlayer.GamePiece;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -188,7 +189,7 @@ public class Piece implements Cloneable {
   /**
    * @return relative coordinates for all regular moves, not including captures
    */
-  public List<MovementInterface> getMoves() {
+  public Set<MovementInterface> getMoves() {
     return movementHandler.getMovements();
   }
 
@@ -210,8 +211,7 @@ public class Piece implements Cloneable {
    * @param newMovements new coordinates for all regular moves to set
    * @param newCaptures  new coordinates for all regular captures to set
    */
-  public void setNewMovements(List<MovementInterface> newMovements,
-      List<MovementInterface> newCaptures) {
+  public void setNewMovements(Collection<MovementInterface> newMovements, Collection<MovementInterface> newCaptures) {
     movementHandler.setNewMovements(newMovements, newCaptures);
   }
 
@@ -219,15 +219,14 @@ public class Piece implements Cloneable {
    * @param newMovements new coordinates for all regular moves to add
    * @param newCaptures  new coordinates for all regular captures to add
    */
-  public void addNewMovements(List<MovementInterface> newMovements,
-      List<MovementInterface> newCaptures) {
+  public void addNewMovements(Collection<MovementInterface> newMovements, Collection<MovementInterface> newCaptures) {
     movementHandler.addNewMovements(newMovements, newCaptures);
   }
 
   /**
    * @return relative coordinates for all regular moves including captures
    */
-  public List<MovementInterface> getCaptures() {
+  public Set<MovementInterface> getCaptures() {
     return movementHandler.getCaptures();
   }
 
@@ -282,17 +281,10 @@ public class Piece implements Cloneable {
     return new Piece(clonedData, movementHandler);
   }
 
-  /**
-   * This method is used for the burn tile in order to
+  /***
+   * @return piece point value
    */
-  @Deprecated
-  public boolean burn() {
-    //TODO NEED TO ADD PIECE HEALTH TO JSON AND CONSTRUCTOR
-    PieceHealth health = new PieceHealth();
-    return health.damage();
-  }
-
-  public double getPieceValue() {
+  public double getPieceValue(){
     return suppPieceData.pointValue();
   }
 

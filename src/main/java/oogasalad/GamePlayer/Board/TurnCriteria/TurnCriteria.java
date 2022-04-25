@@ -44,6 +44,15 @@ public abstract class TurnCriteria {
     }
   }
 
+  /***
+   * Sets index to the given parameter
+   *
+   * @param i is the new index
+   */
+  protected final void setIndex(int i) {
+    index = i;
+  }
+
   /**
    * @return last index in players array
    */

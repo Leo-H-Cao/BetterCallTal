@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -172,5 +173,21 @@ public class CheckersCapture implements MovementInterface {
   @Override
   public List<Coordinate> getRelativeCoords() {
     return Collections.emptyList();
+  }
+
+  /***
+   * @return equals always if o is of the same class
+   */
+  @Override
+  public boolean equals(Object o) {
+    return o != null && getClass() == o.getClass();
+  }
+
+  /***
+   * @return hash of this object
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash();
   }
 }

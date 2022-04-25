@@ -2,6 +2,10 @@ package oogasalad.Editor.ModelState.BoardState;
 
 import javafx.scene.image.Image;
 
+/**
+ * Tile class representing a single spot on the editor board, can "own" an EditorPiece
+ * @author Leo Cao
+ */
 public class EditorTile {
   private TileEffect myTileEffect;
   private String pieceID;
@@ -38,6 +42,7 @@ public class EditorTile {
   public void removePiece(){
     pieceID = null;
     team = -1;
+    img = null;
   }
 
   public TileEffect getTileEffect() {

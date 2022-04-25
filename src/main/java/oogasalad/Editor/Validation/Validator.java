@@ -2,6 +2,10 @@ package oogasalad.Editor.Validation;
 
 import oogasalad.Editor.Exceptions.InvalidBoardSizeException;
 
+/**
+ * Validation class for game configurations set by user, ensures board size is not too small/large
+ * @author Leo Cao
+ */
 public class Validator {
   private final int MAX_BOARD_SIZE = 25;
   private final int MIN_BOARD_SIZE = 1;

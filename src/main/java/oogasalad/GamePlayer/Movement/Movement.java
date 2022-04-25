@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.Stack;
@@ -153,21 +154,6 @@ public class Movement implements MovementInterface{
     return allMoves;
   }
 
-  public Map<String, Set<ChessTile>> getLegalMoves(Piece piece, ChessBoard board)
-      throws Throwable {
-    Map<String, Set<ChessTile>> allMoves = getAllMoves(piece, board);
-    for(String moveType : allMoves.keySet()){
-      for(ChessTile move : allMoves.get(moveType)){
-        ChessBoard deepCopy = board.deepCopy();
-        deepCopy.move(piece, move.getCoordinates());
-        if(new Check().isValid(board, piece.getTeam())){
-          allMoves.get(moveType).remove(move);
-        }
-      }
-    }
-    return null;
-  }
-
   /***
    * Returns all possible captures a piece can make
    *
@@ -297,8 +283,8 @@ public class Movement implements MovementInterface{
    * @param movements to invert
    * @return inverted movements
    */
-  public static List<MovementInterface> invertMovements(List<MovementInterface> movements) {
-    List<MovementInterface> inverted = new ArrayList<>();
+  public static Set<MovementInterface> invertMovements(Set<MovementInterface> movements) {
+    Set<MovementInterface> inverted = new HashSet<>();
     movements.forEach(mi -> {
       if(mi.getClass().equals(Movement.class)) {
         Movement movement = (Movement) mi;
@@ -314,5 +300,29 @@ public class Movement implements MovementInterface{
       }
     });
     return inverted;
+  }
+
+  /***
+   * @return equal if both movements have the same possible moves and infinite is the same
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Movement movement = (Movement) o;
+    return infinite == movement.infinite && Objects.equals(possibleMoves,
+        movement.possibleMoves);
+  }
+
+  /***
+   * @return hash of this object
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(possibleMoves, infinite);
   }
 }

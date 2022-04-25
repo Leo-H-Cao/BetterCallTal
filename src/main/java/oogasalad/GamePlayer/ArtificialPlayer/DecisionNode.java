@@ -38,8 +38,7 @@ public class DecisionNode {
       //run minimax
       //turnCriteria.incrementTurn();
 
-      TurnCriteria copyCriteria = turnCriteria.copy();
-      copyCriteria.incrementTurn();
+      TurnCriteria copyCriteria = board.getTurnManagerData().turn();
       List<Piece> playerPieces = new ArrayList<Piece>();
       for(Piece p : board.getPieces()){
         if (p.getTeam()==copyCriteria.getCurrentPlayer()){
@@ -47,17 +46,25 @@ public class DecisionNode {
         }
       }
 
+
+      ArrayList<Double> utilityList = new ArrayList<>();
       double minUtility = Double.MAX_VALUE;
       for(Piece p : playerPieces){
+
         for(ChessTile t : board.getMoves(p)){
           ChessBoard copy = board.makeHypotheticalMove(p, t.getCoordinates());
-          DecisionNode child = new DecisionNode(copy, copyCriteria);
+          copy.getTurnManagerData().turn().incrementTurn();
+
+          DecisionNode child = new DecisionNode(copy, copy.getTurnManagerData().turn());
+          //recursion
           double util = child.calculateUtility(objectives, remainingDepth-1);
+          utilityList.add(util);
           if(util < minUtility){
             minUtility = util;
           }
         }
       }
+      int a = 0;//checkpoint for debugging
 
       return minUtility;
     }

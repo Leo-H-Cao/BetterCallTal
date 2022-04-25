@@ -26,7 +26,7 @@ public class EditorBackend {
 
 	public EditorBackend(){
 		piecesState = new PiecesState();
-		boardState = new BoardState();
+		boardState = new BoardState(piecesState);
 		gameRulesState = new GameRulesState();
 		selectedTypeProperty = new SimpleObjectProperty<>(OPEN);
 		selectedPieceId = new SimpleStringProperty("rook");

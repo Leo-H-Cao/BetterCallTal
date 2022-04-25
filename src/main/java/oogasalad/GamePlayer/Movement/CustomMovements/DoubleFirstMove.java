@@ -5,6 +5,7 @@ import static oogasalad.GamePlayer.Movement.CustomMovements.Castling.NO_MOVEMENT
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -39,7 +40,7 @@ public class DoubleFirstMove implements MovementInterface {
   @Override
   public Set<ChessTile> movePiece(Piece piece, Coordinate finalSquare, ChessBoard board)
       throws InvalidMoveException, OutsideOfBoardException {
-    if (!getMoves(piece, board).contains(board.getTile(finalSquare))) {
+    if(!getMoves(piece, board).contains(board.getTile(finalSquare))) {
       LOG.warn("Illegal double move attempted");
       throw new InvalidMoveException(finalSquare.toString());
     }
@@ -69,9 +70,7 @@ public class DoubleFirstMove implements MovementInterface {
    */
   @Override
   public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
-    if (piece.getHistory().size() != NO_MOVEMENT_HISTORY_LENGTH) {
-      return Set.of();
-    }
+    if(piece.getHistory().size() != NO_MOVEMENT_HISTORY_LENGTH) return Set.of();
 //    LOG.debug("Getting double moves: " + piece.getName());
     List<MovementInterface> newMovements = new ArrayList<>();
     piece.getRelativeMoveCoords().stream().filter((c) -> {
@@ -82,12 +81,11 @@ public class DoubleFirstMove implements MovementInterface {
         LOG.debug("Out of bounds");
         return false;
       }
-    }).forEach((c) -> {
-//      LOG.debug("Double move coord: " + Coordinate.of(c.getRow()*MULT, c.getCol()*MULT));
-      newMovements.add(new Movement(Coordinate.of(c.getRow() * MULT, c.getCol() * MULT), false));
-    });
-    return newMovements.stream().flatMap((m) -> m.getMoves(piece, board).stream())
-        .collect(Collectors.toSet());
+    }).forEach(c ->
+//      LOG.debug("Double move coord: " + Coordinate.of(c.getRow()*MULT, c.getCol()*MULT))
+      newMovements.add(new Movement(Coordinate.of(c.getRow()*MULT, c.getCol()*MULT), false))
+    );
+    return newMovements.stream().flatMap((m) -> m.getMoves(piece, board).stream()).collect(Collectors.toSet());
   }
 
   /***
@@ -96,5 +94,21 @@ public class DoubleFirstMove implements MovementInterface {
   @Override
   public List<Coordinate> getRelativeCoords() {
     return List.of();
+  }
+
+  /***
+   * @return equals always if o is of the same class
+   */
+  @Override
+  public boolean equals(Object o) {
+    return o != null && getClass() == o.getClass();
+  }
+
+  /***
+   * @return hash of this object
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash();
   }
 }

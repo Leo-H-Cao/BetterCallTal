@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.IntStream;
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -208,5 +209,21 @@ public class Castling implements MovementInterface {
         return true;
       }
     });
+  }
+
+  /***
+   * @return equals always if o is of the same class
+   */
+  @Override
+  public boolean equals(Object o) {
+    return o != null && getClass() == o.getClass();
+  }
+
+  /***
+   * @return hash of this object
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash();
   }
 }

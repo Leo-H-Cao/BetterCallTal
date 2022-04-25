@@ -76,4 +76,13 @@ class LoopAroundTest {
       fail();
     }
   }
+
+  @Test
+  void loopAroundEqualsTest() {
+    LoopAround test = new LoopAround();
+    assertEquals(test, test);
+    assertNotEquals(new LoopAround(), null);
+    assertEquals(new LoopAround("bad file"), new LoopAround());
+    assertNotEquals(new LoopAround("MoveUpLoop4"), new LoopAround());
+  }
 }

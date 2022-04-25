@@ -1,13 +1,16 @@
 package oogasalad.Editor.ModelState.BoardState;
 
+/**
+ * Enums representing the different tile modifiers that are allowed
+ * @author Leo Cao
+ */
 public enum TileEffect {
   NONE("none"),
   BLACKHOLE("BlackHoleAction"),
   PROMOTION("Promotion"),
   SWAP("Swap"),
   PROMOTIONREVERSE("PromotionReverse"),
-  DEMOTE("Demote"),
-  FIRE("Fire");
+  DEMOTE("Demote");
 
   // Member to hold the name
   private String string;

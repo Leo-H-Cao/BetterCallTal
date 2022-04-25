@@ -2,6 +2,11 @@ package oogasalad.Editor.ExportJSON;
 
 import java.util.ArrayList;
 
+/**
+ * Class that contains data for general section of main export file,
+ * designed to be serialized to JSON by Jackson library
+ * @author Leo Cao
+ */
 public class GeneralExport {
 
   private int rows;
