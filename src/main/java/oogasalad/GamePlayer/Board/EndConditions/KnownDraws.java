@@ -1,6 +1,6 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
-import static oogasalad.GamePlayer.Board.Setup.BoardSetup.JSON_EXTENSION;
+import static oogasalad.GamePlayer.Board.BoardSetup.JSON_EXTENSION;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,13 +13,16 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Player;
-import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.ValidStateChecker.BankBlocker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/***
+ * Creates an end condition for known draws, such as K+K+B
+ *
+ * @author Vincent Chen
+ */
 public class KnownDraws implements EndCondition {
 
   private static final String KD_CONFIG_FILE_HEADER = "doc/GameEngineResources/Other/";
@@ -75,8 +78,8 @@ public class KnownDraws implements EndCondition {
    */
   @Override
   public Map<Integer, Double> getScores(ChessBoard board) {
-    return drawConfigs.contains(board.getPieces().stream().filter(p -> !p.isTargetPiece()).map(
-        p -> p.getName().toLowerCase()).toList()) ? Arrays.stream(board.getPlayers()).collect(
+    return drawConfigs.contains(board.getPieces().stream().map(p ->
+        p.getName().toLowerCase()).toList()) ? Arrays.stream(board.getPlayers()).collect(
         Collectors.toMap(Player::teamID, p -> DRAW)) : Collections.emptyMap();
   }
 

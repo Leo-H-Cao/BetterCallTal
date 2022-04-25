@@ -5,6 +5,11 @@ import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
+/***
+ * Abstraction for different types of ways to check if a move is valid
+ *
+ * @author Vincent Chen
+ */
 public interface ValidStateChecker {
 
   /***

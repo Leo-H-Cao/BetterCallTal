@@ -2,12 +2,24 @@ package oogasalad.GamePlayer.Board.TurnCriteria;
 
 import oogasalad.GamePlayer.Board.Player;
 
+/***
+ * Creates TurnCriteria where each player gets one more move than the last
+ *
+ * @author Vincent Chen
+ */
 public class ConstantIncrease extends TurnCriteria {
 
   public static final int TURN_INCREMENT_NUM = 1;
 
   private int numMovesTotal;
   private int numMovesPlayed;
+
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public ConstantIncrease(){
+    super();
+  }
 
   /***
    * Creates TurnCriteria where each player gets one more move than the last
@@ -32,5 +44,12 @@ public class ConstantIncrease extends TurnCriteria {
       numMovesPlayed = 0;
     }
     return getCurrentPlayer();
+  }
+
+  /***
+   * @return copy of this turn criteria
+   */
+  public TurnCriteria copy(){
+    return new ConstantIncrease(this.players);
   }
 }

@@ -1,6 +1,6 @@
 package oogasalad.GamePlayer.ValidStateChecker;
 
-import static oogasalad.GamePlayer.Board.Setup.BoardSetup.JSON_EXTENSION;
+import static oogasalad.GamePlayer.Board.BoardSetup.JSON_EXTENSION;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,6 +18,8 @@ import org.json.JSONObject;
 
 /***
  * Creates a custom movement that prevents pieces from going into the piece bank
+ *
+ * @author Vincent Chen
  */
 public class BankBlocker implements ValidStateChecker {
 

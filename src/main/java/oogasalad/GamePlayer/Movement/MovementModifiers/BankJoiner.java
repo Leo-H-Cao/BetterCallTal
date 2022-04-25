@@ -1,6 +1,6 @@
 package oogasalad.GamePlayer.Movement.MovementModifiers;
 
-import static oogasalad.GamePlayer.Board.Setup.BoardSetup.JSON_EXTENSION;
+import static oogasalad.GamePlayer.Board.BoardSetup.JSON_EXTENSION;
 import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_CONFIG_FILE_HEADER;
 import static oogasalad.GamePlayer.ValidStateChecker.BankBlocker.CH_DEFAULT_FILE;
 
@@ -8,14 +8,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Set;
-import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.EngineExceptions.PieceNotFoundException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
@@ -25,6 +23,11 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/***
+ * Movement modifier where a captured piece joins the piece bank
+ *
+ * @author Vincent Chen
+ */
 public class BankJoiner implements MovementModifier{
 
   private static final Logger LOG = LogManager.getLogger(BankJoiner.class);
@@ -55,7 +58,15 @@ public class BankJoiner implements MovementModifier{
           getJSONArray("general").getJSONObject(0).getInt("blockerCol");
     } catch (IOException e) {
       blockCol = BankBlocker.DEFAULT_VALUE;
+      this.configFile = CH_CONFIG_FILE_HEADER + CH_DEFAULT_FILE + JSON_EXTENSION;
     }
+  }
+
+  /***
+   * @return blockCol for testing purposes
+   */
+  int getBlockCol() {
+    return blockCol;
   }
 
   /**
@@ -70,8 +81,7 @@ public class BankJoiner implements MovementModifier{
     try {
       Piece justTaken = board.getHistory().get(board.getHistory().size() - 1).board().getTile(
           piece.getCoordinates()).getPiece().orElse(
-          findTakenPiece(board, board.getHistory().get(board.getHistory().size() - 1).board(),
-              piece.getTeam()));
+          board.findTakenPiece(piece.getTeam()));
       LOG.debug(String.format("Just taken: %s", justTaken));
 
       ChessTile bankTile = findOpenSpot(board.getCurrentPlayer(), board);
@@ -86,33 +96,7 @@ public class BankJoiner implements MovementModifier{
       Set<ChessTile> updatedCoords = Set.of(bankTile);
       LOG.debug(String.format("Updated coords: %s", updatedCoords));
       return updatedCoords;
-    } catch(OutsideOfBoardException | NullPointerException /*| PieceNotFoundException*/ e) {
-      LOG.warn("Bank joining failed");
-      return Set.of();
-    }
-  }
-
-  /**
-   * If finding the captured piece by looking at the square covered by the current piece one move
-   * back (e.g. in en passant, the captured piece is on a different square), this function looks
-   * at the piece list for both states to find the captured piece
-   *
-   * @param presentBoard is the present state
-   * @param pastBoard is the board one move ago
-   * @param team is the team of the player
-   * @return piece in pastBoard that's missing from present board that is an opponent of team
-   */
-  private Piece findTakenPiece(ChessBoard presentBoard, ChessBoard pastBoard, int team)
-      /*throws PieceNotFoundException*/ {
-    List<Piece> pastPieces = pastBoard.getOpponentPieces(team);
-    List<Piece> presentPieces = presentBoard.getOpponentPieces(team);
-
-    LOG.debug(String.format("Past pieces: %s", pastPieces));
-    LOG.debug(String.format("Present pieces: %s", presentPieces));
-
-    return pastPieces.stream().filter(p -> !presentPieces.contains(p)).findFirst().orElse(null);
-    /* orElseThrow(
-        () -> new PieceNotFoundException("Taken piece cannot be found for crazyhouse"));*/
+    } catch(OutsideOfBoardException | NullPointerException /*| PieceNotFoundException*/ e) {return Collections.emptySet();}
   }
 
   /***
@@ -159,11 +143,7 @@ public class BankJoiner implements MovementModifier{
           return startRow;
         }
       }
-      LOG.warn("Default value used for bank start row");
       return DEFAULT_VALUE;
-    } catch (IOException e) {
-      LOG.warn("Default value used for bank start row");
-      return DEFAULT_VALUE;
-    }
+    } catch (IOException e) { return DEFAULT_VALUE;}
   }
 }

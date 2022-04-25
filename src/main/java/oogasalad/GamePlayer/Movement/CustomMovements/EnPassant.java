@@ -21,6 +21,8 @@ import org.apache.logging.log4j.Logger;
  * Creates a movement object that represents en passant: if a piece of the same name has just
  * moved and only moved once and is on the (height-3) rank relative to the piece doing en passant,
  * then the piece can capture the other piece by moving diagonally one square behind it
+ *
+ * @author Vincent Chen
  */
 public class EnPassant implements MovementInterface {
 
@@ -102,10 +104,8 @@ public class EnPassant implements MovementInterface {
    */
   private int getEpRow(Piece piece, int boardHeight) {
     if (movingUp(piece)) {
-//      LOG.debug("En passant row for current piece (1): " + EP_ROW_SUBTRACT);
       return epRowSubtract;
     } else {
-//      LOG.debug("En passant row for current piece (2): " + (boardHeight - EP_ROW_SUBTRACT - 1));
       return (boardHeight - epRowSubtract) - 1;
     }
   }
@@ -115,8 +115,7 @@ public class EnPassant implements MovementInterface {
    * @return if the given piece is moving up the board
    */
   private boolean movingUp(Piece piece) {
-    //FIXME: getRow() instead of get col for some reason i have no idea why this happens
-    return piece.getRelativeMoveCoords().stream().anyMatch((c) -> c.getRow() < 0);
+    return piece.getRelativeMoveCoords().stream().anyMatch(c -> c.getRow() < 0);
   }
 
   /**
@@ -138,30 +137,24 @@ public class EnPassant implements MovementInterface {
     try {
       possibleCaptures.add(
           board.getTile(Coordinate.of(base.getRow(), base.getCol() - EP_DISTANCE)));
-    } catch (Exception ignored) {
-    }
+    } catch (Exception ignored) {}
     try {
       possibleCaptures.add(
           board.getTile(Coordinate.of(base.getRow(), base.getCol() + EP_DISTANCE)));
-    } catch (Exception ignored) {
-    }
-//    LOG.debug("Preliminary capture squares: " + possibleCaptures);
-    Set<ChessTile> capSquares = possibleCaptures.stream().filter((t) -> t.getPiece().isPresent() &&
+    } catch (Exception ignored) {}
+    Set<ChessTile> capSquares = possibleCaptures.stream().filter(t -> t.getPiece().isPresent() &&
             (board.getHistory().isEmpty() || board.getHistory().get(board.getHistory().size() - 1)
                 .movedPieces().contains(t.getPiece().get())) &&
             t.getPiece().get().getName().equals(enPassantExacter.getName()) &&
             (board.getHistory().isEmpty()
                 || t.getPiece().get().getHistory().size() == ONE_MOVE_HISTORY_LENGTH))
         .collect(Collectors.toSet());
-//    LOG.debug("Actual capture squares: " + capSquares);
-    return capSquares.stream().map((c) -> {
+    return capSquares.stream().map(c -> {
       try {
         return board.getTile(
             Coordinate.of(c.getCoordinates().getRow() + (movingUp(enPassantExacter) ? -1 : 1),
                 c.getCoordinates().getCol()));
-      } catch (OutsideOfBoardException ignored) {
-        return null;
-      }
+      } catch (OutsideOfBoardException e) {return null;}
     }).collect(Collectors.toSet());
   }
 

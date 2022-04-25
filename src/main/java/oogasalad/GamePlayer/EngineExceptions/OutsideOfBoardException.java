@@ -1,5 +1,10 @@
 package oogasalad.GamePlayer.EngineExceptions;
 
+/***
+ * Exception due to a given coordinate being outside of the board
+ *
+ * @author Vincent Chen
+ */
 public class OutsideOfBoardException extends EngineException {
 
   /***

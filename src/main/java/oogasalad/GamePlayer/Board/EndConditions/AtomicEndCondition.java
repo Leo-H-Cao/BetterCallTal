@@ -6,12 +6,18 @@ import java.util.Map;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.GamePiece.Piece;
 
+/**
+ * Creates an end condition that ends the game if the king is exploded
+ *
+ * @author Vincent Chen
+ */
 public class AtomicEndCondition implements EndCondition {
 
   /**
-   * Creates an end condition that ends the game if the king is exploded
+   * Empty constructor used for Jackson serialization and deserialization
    */
   public AtomicEndCondition() {
+    super();
   }
 
   /**
@@ -35,14 +41,14 @@ public class AtomicEndCondition implements EndCondition {
         board.getPlayer(t).opponentIDs()).filter(o -> !scores.containsKey(o)).forEach(o ->
         scores.put(o, WIN)));
 
-    Arrays.stream(teams).filter((t) -> !scores.containsKey(t)).forEach(t ->
+    Arrays.stream(teams).filter(t -> !scores.containsKey(t)).forEach(t ->
         scores.put(t, DRAW));
 
     return scores;
   }
 
   /***
-  /**
+   /**
    * @return if the given team has its main piece on the given board
    */
   private boolean hasMainPiece(int team, ChessBoard board) {

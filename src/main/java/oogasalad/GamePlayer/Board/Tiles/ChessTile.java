@@ -1,7 +1,6 @@
 package oogasalad.GamePlayer.Board.Tiles;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -11,11 +10,14 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.CustomTiles.TileAction;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import org.apache.logging.log4j.Logger;
 
-public class ChessTile implements Tile, Cloneable {
+/***
+ * Class representing a tile on a chessboard
+ *
+ * @author Vincent Chen
+ */
+public class ChessTile implements Cloneable {
 
   private Coordinate coordinate;
   private List<Piece> pieces;
@@ -31,29 +33,6 @@ public class ChessTile implements Tile, Cloneable {
    */
   public ChessTile(Coordinate coordinate) {
     this(coordinate, new ArrayList<>());
-  }
-
-  /**
-   * Sets up the special actions list
-   *
-   * @param tileActions is this tile's special actions
-   */
-  public void setSpecialActions(List<TileAction> tileActions) {
-    specialActions = tileActions;
-  }
-
-  /***
-   * @param img to set customImg to
-   */
-  public void setCustomImg(String img) {
-    customImg = img;
-  }
-
-  /***
-   * @return custom img
-   */
-  public Optional<String> getCustomImg() {
-    return customImg == null ? Optional.empty() : Optional.of(customImg);
   }
 
   /**
@@ -78,6 +57,29 @@ public class ChessTile implements Tile, Cloneable {
     this.pieces = pieces;
     this.specialActions = actions;
     this.customImg = null;
+  }
+
+  /**
+   * Sets up the special actions list
+   *
+   * @param tileActions is this tile's special actions
+   */
+  public void setSpecialActions(List<TileAction> tileActions) {
+    specialActions = tileActions;
+  }
+
+  /***
+   * @return custom img
+   */
+  public Optional<String> getCustomImg() {
+    return customImg == null ? Optional.empty() : Optional.of(customImg);
+  }
+
+  /***
+   * @param img to set customImg to
+   */
+  public void setCustomImg(String img) {
+    customImg = img;
   }
 
   /**
@@ -135,7 +137,7 @@ public class ChessTile implements Tile, Cloneable {
    * @param board to execute actions on
    * @return set of updated tiles
    */
-  public Set<ChessTile> executeActions(ChessBoard board) throws OutsideOfBoardException {
+  public Set<ChessTile> executeActions(ChessBoard board) {
 
     return specialActions.stream().flatMap(t -> {
       try {
@@ -175,5 +177,31 @@ public class ChessTile implements Tile, Cloneable {
    */
   public void clearPieces() {
     pieces = new ArrayList<>();
+  }
+
+  /***
+   * Compare chess tiles
+   *
+   * @param o to compare
+   * @return if both chess tiles have the same coordinates
+   */
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ChessTile chessTile = (ChessTile) o;
+    return coordinate.equals(chessTile.coordinate);
+  }
+
+  /***
+   * @return hashcode of tile
+   */
+  @Override
+  public int hashCode() {
+    return super.hashCode();
   }
 }

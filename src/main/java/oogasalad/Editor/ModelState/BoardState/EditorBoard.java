@@ -6,6 +6,7 @@ import java.util.Locale;
 
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.scene.image.Image;
 import oogasalad.Editor.Exceptions.InvalidPieceIDException;
 import oogasalad.Editor.ModelState.PiecesState.EditorCoordinate;
 
@@ -84,6 +85,10 @@ public class EditorBoard {
 
   public EditorTile getTile(int x, int y){
     return board.get(y).get(x);
+  }
+
+  public void setTileImage(int x, int y, Image img){
+    board.get(y).get(x).setImg(img);
   }
 
   private EditorCoordinate findPieceLocation(String pieceID) {

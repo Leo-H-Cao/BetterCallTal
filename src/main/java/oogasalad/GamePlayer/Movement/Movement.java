@@ -1,5 +1,9 @@
 package oogasalad.GamePlayer.Movement;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,20 +14,25 @@ import java.util.Set;
 import java.util.Stack;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
-import oogasalad.GamePlayer.ValidStateChecker.Check;
 import oogasalad.GamePlayer.GamePiece.Piece;
+import oogasalad.GamePlayer.ValidStateChecker.Check;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/***
+ * Basic piece movement given relative coordinates
+ *
+ * @author Vincent Chen
+ */
 public class Movement implements MovementInterface{
 
   private static final Logger LOG = LogManager.getLogger(Movement.class);
 
   private static final String MOVE_KEY = "move";
   private static final String CAPTURE_KEY = "capture";
+
 
   private List<Coordinate> possibleMoves;
   private boolean infinite;
@@ -44,6 +53,13 @@ public class Movement implements MovementInterface{
   }
 
   /**
+   * Constructor for Jackson serialization and deserialization
+   */
+  public Movement(){
+    super();
+  }
+
+  /**
    * Moves the piece on fromSquare to finalSquare
    *
    * @param piece to move
@@ -56,7 +72,6 @@ public class Movement implements MovementInterface{
   public Set<ChessTile> movePiece(Piece piece, Coordinate finalSquare, ChessBoard board)
       throws InvalidMoveException, OutsideOfBoardException {
     ChessTile finalTile = convertCordToTile(finalSquare, board);
-//    LOG.debug("Moves: " + getMoves(piece, board));
 
     if(getMoves(piece, board).contains(finalTile)) {
       Set<ChessTile> updatedSquares = new HashSet<>(Set.of(board.getTile(piece.getCoordinates()), finalTile));
@@ -123,13 +138,13 @@ public class Movement implements MovementInterface{
 
     Coordinate baseCoordinates = piece.getCoordinates();
 
-    possibleMoves.forEach((delta) -> {
+    possibleMoves.forEach(delta -> {
       Stack<ChessTile> moveStack = generateMoveStack(baseCoordinates, delta, board);
       allMoves.get(MOVE_KEY).addAll(moveStack);
       Optional<ChessTile> capTile = moveStack.isEmpty() ? getNextTile(baseCoordinates, delta, board)
           : (infinite ? getNextTile(moveStack.peek().getCoordinates(), delta, board)
               : Optional.of(moveStack.peek()));
-      capTile.ifPresent((t) -> {
+      capTile.ifPresent(t -> {
         if (piece.isOpposing(t.getPieces(), board)) {
           allMoves.get(CAPTURE_KEY).add(t);
         }
@@ -139,7 +154,7 @@ public class Movement implements MovementInterface{
   }
 
   public Map<String, Set<ChessTile>> getLegalMoves(Piece piece, ChessBoard board)
-      throws EngineException {
+      throws Throwable {
     Map<String, Set<ChessTile>> allMoves = getAllMoves(piece, board);
     for(String moveType : allMoves.keySet()){
       for(ChessTile move : allMoves.get(moveType)){
@@ -205,7 +220,7 @@ public class Movement implements MovementInterface{
     if(infinite) {
       moveStack = getMoveBeam(base, delta, board);
     } else{
-      getNextTile(base, delta, board).filter((t) -> t.getPieces().isEmpty()).ifPresent(moveStack::add);
+      getNextTile(base, delta, board).filter(t -> t.getPieces().isEmpty()).ifPresent(moveStack::add);
     }
     return moveStack;
   }
@@ -254,7 +269,7 @@ public class Movement implements MovementInterface{
    * @param coordinate to check for emptiness
    * @return if the coordinate on the board is empty
    */
-  private boolean isTileEmpty(ChessBoard board, Coordinate coordinate) {
+  boolean isTileEmpty(ChessBoard board, Coordinate coordinate) {
     try {
       return board.isTileEmpty(coordinate);
     } catch (OutsideOfBoardException e) {
@@ -284,11 +299,11 @@ public class Movement implements MovementInterface{
    */
   public static List<MovementInterface> invertMovements(List<MovementInterface> movements) {
     List<MovementInterface> inverted = new ArrayList<>();
-    movements.forEach((mi) -> {
+    movements.forEach(mi -> {
       if(mi.getClass().equals(Movement.class)) {
         Movement movement = (Movement) mi;
         List<Coordinate> invertedCoords = new ArrayList<>();
-        movement.getRelativeCoords().forEach((c) -> {
+        movement.getRelativeCoords().forEach(c -> {
           Coordinate invertedCoord = Coordinate.of(-c.getRow(), -c.getCol());
           invertedCoords.add(invertedCoord);
           LOG.debug(String.format("Movement inverted: %s", invertedCoord));

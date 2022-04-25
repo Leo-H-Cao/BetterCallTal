@@ -15,11 +15,15 @@ import oogasalad.GamePlayer.util.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/***
+ * Creates an end condition where the game ends after a given amount of repeated positions
+ *
+ *  @author Vincent Chen
+ */
 public class Repetition implements EndCondition {
 
   private static final String REP_NUM_FILE_PATH_HEADER = "doc/GameEngineResources/Other/";
   private static final String DEFAULT_REP_FILE = "Repetition";
-  private static final Logger LOG = LogManager.getLogger(Repetition.class);
   private static final int DEFAULT_REP_NUM = 3;
 
   private int numRep;

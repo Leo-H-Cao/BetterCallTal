@@ -4,7 +4,19 @@ import static oogasalad.GamePlayer.Board.TurnCriteria.ConstantIncrease.TURN_INCR
 
 import oogasalad.GamePlayer.Board.Player;
 
+/***
+ * Creates a turn criteria that linearly goes across the player array: the most basic type
+ *
+ * @author Vincent Chen
+ */
 public class Linear extends TurnCriteria {
+
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public Linear(){
+    super();
+  }
 
   /***
    * Creates a turn criteria that linearly goes across the player array: the most basic type
@@ -22,5 +34,14 @@ public class Linear extends TurnCriteria {
   public int incrementTurn() {
     incrementIndex(TURN_INCREMENT_NUM);
     return getCurrentPlayer();
+  }
+
+  /***
+   * @return copy of this turn criteria
+   */
+  public TurnCriteria copy(){
+    Linear copy = new Linear(players);
+    copy.incrementTurn();//temporary fix
+    return copy;
   }
 }

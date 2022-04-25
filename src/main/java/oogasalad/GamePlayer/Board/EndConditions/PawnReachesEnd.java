@@ -9,6 +9,11 @@ import oogasalad.GamePlayer.util.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/***
+ * Creates an end condition where a given piece reaching the end results in a win
+ *
+ * @author Vincent Chen
+ */
 public class PawnReachesEnd implements EndCondition {
 
   private static final Logger LOG = LogManager.getLogger(PawnReachesEnd.class);
@@ -44,18 +49,18 @@ public class PawnReachesEnd implements EndCondition {
     Map<Integer, Double> scores = new HashMap<>();
     int[] teams = board.getTeams();
 
-    board.stream().filter((l) -> l.get(0).getCoordinates().getRow() == 0 ||
-        l.get(0).getCoordinates().getRow() == board.getBoardHeight() - 1).forEach((l) ->
-        l.stream().filter((t) -> t.getPiece().isPresent() &&
+    board.stream().filter(l -> l.get(0).getCoordinates().getRow() == 0 ||
+        l.get(0).getCoordinates().getRow() == board.getBoardHeight() - 1).forEach(l ->
+        l.stream().filter(t -> t.getPiece().isPresent() &&
             endzonePieces.contains(t.getPiece().get().getName())).findFirst().ifPresent(
-            (t) -> {
+            t -> {
               scores.put(t.getPiece().get().getTeam(), WIN);
-              Arrays.stream(teams).filter((team) -> team != t.getPiece().get().getTeam()).forEach(
-                  (team) -> scores.put(team, LOSS)
+              Arrays.stream(teams).filter(team -> team != t.getPiece().get().getTeam()).forEach(
+                  team -> scores.put(team, LOSS)
               );
             })
     );
-    LOG.debug("Scores: " + scores);
+    LOG.debug(String.format("Scores: %s", scores));
     return scores;
   }
 

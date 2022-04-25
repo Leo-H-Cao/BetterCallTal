@@ -1,13 +1,11 @@
 package oogasalad.GamePlayer.Movement.CustomMovements;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
@@ -19,12 +17,24 @@ import oogasalad.GamePlayer.Movement.MovementInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/***
+ * Checkers style capturing
+ *
+ * @author Vincent Chen
+ */
 public class CheckersCapture implements MovementInterface {
 
   private static final Logger LOG = LogManager.getLogger(CheckersCapture.class);
 
   private Map<Coordinate, Set<ChessTile>> capturePaths = new HashMap<>();
   private Set<Coordinate> visited = new HashSet<>();
+
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public CheckersCapture() {
+    super();
+  }
 
   /**
    * @return exception because no capture possible
@@ -52,14 +62,10 @@ public class CheckersCapture implements MovementInterface {
     Set<ChessTile> updatedSquares = new HashSet<>(List.of(board.getTile(captureSquare),
         board.getTile(piece.getCoordinates())));
     LOG.debug(String.format("Capture squares : %s", capturePaths.keySet()));
-    try {
-      capturePaths.get(captureSquare).forEach(t -> {
-        t.clearPieces();
-        updatedSquares.add(t);
-      });
-    } catch (Exception e) {
-      LOG.debug("Exception");
-    }
+    capturePaths.get(captureSquare).forEach(t -> {
+      t.clearPieces();
+      updatedSquares.add(t);
+    });
     piece.updateCoordinates(board.getTile(captureSquare), board);
     LOG.debug(String.format("Updated squares: %s", updatedSquares));
     return updatedSquares;
@@ -77,8 +83,12 @@ public class CheckersCapture implements MovementInterface {
         piece.getTeam(), new HashSet<>(), new HashSet<>());
     LOG.debug(String.format("All end squares: %s", capturePaths.keySet()));
     return capturePaths.keySet().stream().map(c -> {
-          try { return board.getTile(c);} catch (OutsideOfBoardException e) {return null;}
-        }).collect(Collectors.toSet());
+      try {
+        return board.getTile(c);
+      } catch (OutsideOfBoardException e) {
+        return null;
+      }
+    }).collect(Collectors.toSet());
   }
 
   /***
@@ -97,21 +107,23 @@ public class CheckersCapture implements MovementInterface {
       List<Coordinate> directions, int team,
       Set<ChessTile> currentJumps, Set<ChessTile> capTiles) {
     directions.stream().filter(d -> canCapture(board, startCoordinate, d, team) &&
-    !visited.contains(Coordinate.add(d, startCoordinate))).forEach(d -> {
+        !visited.contains(Coordinate.add(d, startCoordinate))).forEach(d -> {
       Coordinate capTile = Coordinate.add(d, startCoordinate);
       Coordinate jumpTile = Coordinate.add(d, capTile);
       Set<ChessTile> copyJump = new HashSet<>(currentJumps);
       Set<ChessTile> copyCap = new HashSet<>(capTiles);
 
       visited.add(capTile);
-      
+
       try {
         copyJump.add(board.getTile(jumpTile));
         copyCap.add(board.getTile(capTile));
-        LOG.debug(String.format("End tile, capture path calculation: %s, %s", startCoordinate, capTiles));
+        LOG.debug(
+            String.format("End tile, capture path calculation: %s, %s", startCoordinate, capTiles));
         capturePaths.put(jumpTile, copyCap);
+      } catch (OutsideOfBoardException ignored) {
+        LOG.debug("Capture out of bounds");
       }
-      catch (OutsideOfBoardException ignored) {LOG.debug("Capture out of bounds");}
       LOG.debug(String.format("Current capture tree jumps: %s", copyJump));
       LOG.debug(String.format("Current capture tree caps: %s", copyCap));
       generateCapturesTree(board, jumpTile, directions, team,
@@ -122,17 +134,20 @@ public class CheckersCapture implements MovementInterface {
   /**
    * Returns if a capture is possible based on checkers rules
    *
-   * @param board to jump on
+   * @param board     to jump on
    * @param startCord starting square
    * @param direction to jump in
    * @return if a capture is possible
    */
-  private boolean canCapture(ChessBoard board, Coordinate startCord, Coordinate direction, int team) {
+  private boolean canCapture(ChessBoard board, Coordinate startCord, Coordinate direction,
+      int team) {
 
     Coordinate passOverCord = Coordinate.add(direction, startCord);
     Coordinate finalCord = Coordinate.add(direction, passOverCord);
 
-    if(!board.inBounds(passOverCord) || !board.inBounds(finalCord)) return false;
+    if (!board.inBounds(passOverCord) || !board.inBounds(finalCord)) {
+      return false;
+    }
 
     try {
       return board.getTile(passOverCord).getPiece().isPresent() &&

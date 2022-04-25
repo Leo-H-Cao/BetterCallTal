@@ -1,7 +1,6 @@
 package oogasalad.Frontend.Editor.Board;
 
 import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
@@ -30,8 +29,8 @@ public class ChessBoardTile extends NodeContainer {
 	private Node makeGridTile() {
 		StackPane ret;
 		ImageView image = new ImageView();
-		image.setFitWidth(SIZE - 5);
-		image.setFitHeight(SIZE - 5);
+		image.setFitWidth(SIZE - PADDING);
+		image.setFitHeight(SIZE - PADDING);
 		image.setPreserveRatio(true);
 		image.setCache(true);
 		Rectangle rect = new Rectangle(SIZE, SIZE);
@@ -54,7 +53,7 @@ public class ChessBoardTile extends NodeContainer {
 
 	private void setPieceImage(ImageView image) {
 		String selectedId = String.valueOf(getEditorBackend().getSelectedPieceId().getValue());
-		int selectedTeam = getEditorBackend().getAlternatePiece().getValue();
+		int selectedTeam = getEditorBackend().getSelectedTeam().getValue();
 
 		getEditorBackend().getBoardState().setPieceStartingLocation(selectedId, myX, myY, selectedTeam);
 
@@ -67,7 +66,6 @@ public class ChessBoardTile extends NodeContainer {
 	private void removePieceImage(ImageView image) {
 		filled = false;
 		image.setImage(null);
-		// TODO: add backend functionality to removing pieces
-//		getEditorBackend().getBoardState().removePiece();
+		getEditorBackend().getBoardState().clearTile(myX, myY);
 	}
 }

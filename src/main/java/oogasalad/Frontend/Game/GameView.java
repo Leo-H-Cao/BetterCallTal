@@ -1,12 +1,12 @@
 package oogasalad.Frontend.Game;
 
 import static oogasalad.Frontend.Game.TurnKeeper.AI;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -18,6 +18,7 @@ import oogasalad.Frontend.Game.Sections.BoardGrid;
 import oogasalad.Frontend.Game.Sections.GameOverDisplay;
 import oogasalad.Frontend.Game.Sections.RightSideSection;
 import oogasalad.Frontend.Game.Sections.TopSection;
+import oogasalad.Frontend.LocalPlay.RemotePlayer.RemotePlayer;
 import oogasalad.Frontend.Menu.HomeView;
 import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.ArtificialPlayer.Bot;
@@ -50,9 +51,10 @@ public class GameView extends View {
     private Runnable flipRun;
     private RightSideSection myRightSide;
     private Consumer<TurnUpdate> servUpRun;
+    private BiConsumer<String, String> errorRun;
 
     private TurnKeeper turnKeeper;
-    private Bot bot;
+    private List<RemotePlayer> remotePlayers;
 
 
     public GameView(Stage stage) {
@@ -70,12 +72,15 @@ public class GameView extends View {
     public void SetUpBoard(ChessBoard chessboard, int id, boolean singleplayer) {
         myID = id;
         makeConsandRuns();
-        myBoardGrid = new BoardGrid(chessboard, id, lightUpCons, MoveCons); //TODO: Figure out player ID stuff
+        myBoardGrid = new BoardGrid(chessboard, id, lightUpCons, MoveCons, errorRun); //TODO: Figure out player ID stuff
         //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
+        remotePlayers = new ArrayList<>();
+        chessboard.setShowAsyncError(this::showmyError);
+        chessboard.setPerformAsyncTurnUpdate(this::updateBoard);
         if (singleplayer) {
             turnKeeper = new TurnKeeper(new String[]{"human", AI});
-            bot = new Bot(turnKeeper);
+            remotePlayers.add(new Bot(turnKeeper));
         } else {
             turnKeeper = new TurnKeeper(new String[]{"human", "human"});
         }
@@ -88,6 +93,7 @@ public class GameView extends View {
         removeGOCons = this::removeGameOverNode;
         flipRun = this::flipBoard;
         servUpRun = this::updateBoard;
+        errorRun = this::showmyError;
     }
 
     private void makeMove(Coordinate c) {
@@ -96,13 +102,21 @@ public class GameView extends View {
             Collection<TurnUpdate> updates = new ArrayList<>();
             TurnUpdate tu = getGameBackend().getChessBoard().move(myBoardGrid.getSelectedPiece(), c);
             updates.add(tu);
-            if (turnKeeper.hasAI()) {
-                updates.add(bot.getBotMove(getGameBackend().getChessBoard(), 1));
+            if (turnKeeper.hasRemote()) {
+                remotePlayers.forEach(e -> {
+                    try {
+                        updates.add(e.getRemoteMove(getGameBackend().getChessBoard(), 1));
+                    } catch (Throwable ex) {
+                        getGameBackend().showError(ex.getClass().getSimpleName(), ex.getMessage());
+                    }
+                });
             }
             updateBoard(updates);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception e){
+            getGameBackend().showError(e.getClass().getSimpleName(), e.getMessage());
             LOG.warn("Move failed");
+        } catch (Throwable t) {
+            LOG.warn(t.getMessage());
         }
     }
 
@@ -129,16 +143,23 @@ public class GameView extends View {
      * board will be displayed.
      */
 
-    private void updateBoard(TurnUpdate tu) {
+    private boolean updateBoard(TurnUpdate tu) {
         LOG.debug("Updating board");
         myBoardGrid.updateTiles(tu.updatedSquares());
         if (getGameBackend().getChessBoard().isGameOver()) {
            gameOver();
+           return false;
         }
+        return true;
     }
 
     private void updateBoard(Collection<TurnUpdate> tu) {
-        tu.forEach(this::updateBoard);
+        //tu.forEach(this::updateBoard);
+        for(TurnUpdate t : tu){
+            if(!updateBoard(t)){
+                break;
+            }
+        }
     }
 
     private void gameOver(){
@@ -180,6 +201,10 @@ public class GameView extends View {
 
     private void flipBoard() {
         myBoardGrid.flip();
+    }
+
+    private void showmyError(String classname, String message){
+        getGameBackend().showError(classname, message);
     }
 
 

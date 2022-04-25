@@ -2,14 +2,26 @@ package oogasalad.GamePlayer.Board.TurnCriteria;
 
 import oogasalad.GamePlayer.Board.Player;
 
+/***
+ * Abstraction of turn determination
+ *
+ * @author Vincent Chen
+ */
 public abstract class TurnCriteria {
 
-  private Player[] players;
+  protected Player[] players;
   private int index;
 
   public TurnCriteria(Player[] players) {
     this.players = players;
     this.index = 0;
+  }
+
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  protected TurnCriteria(){
+    super();
   }
 
   /**
@@ -55,4 +67,9 @@ public abstract class TurnCriteria {
    * @return int player id after turn is made
    */
   public abstract int incrementTurn();
+
+  /***
+   * @return copy of this turn criteria
+   */
+  public abstract TurnCriteria copy();
 }

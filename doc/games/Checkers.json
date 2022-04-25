@@ -1,0 +1,346 @@
+{
+  "general": [
+    {
+      "rows": 8,
+      "columns": 8,
+      "turnCriteria": "Linear",
+      "colors": ["black", "white"],
+      "endConditions": ["StalemateWin"],
+      "validStateCheckers": []
+    }
+  ],
+  "playerInfo": [
+    {
+      "team": 0,
+      "opponents": [1]
+    },
+    {
+      "team": 1,
+      "opponents": [0]
+    }
+  ],
+  "pieces": [
+    {
+      "row": 7,
+      "col": 0,
+      "pieceFile": "WhiteChecker",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 2,
+      "pieceFile": "WhiteChecker",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 4,
+      "pieceFile": "WhiteChecker",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 6,
+      "pieceFile": "WhiteChecker",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 1,
+      "pieceFile": "WhiteChecker",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 3,
+      "pieceFile": "WhiteChecker",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 5,
+      "pieceFile": "WhiteChecker",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 7,
+      "pieceFile": "WhiteChecker",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 5,
+      "col": 0,
+      "pieceFile": "WhiteChecker",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 5,
+      "col": 2,
+      "pieceFile": "WhiteChecker",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 5,
+      "col": 4,
+      "pieceFile": "WhiteChecker",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 5,
+      "col": 6,
+      "pieceFile": "WhiteChecker",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 1,
+      "pieceFile": "BlackChecker",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 3,
+      "pieceFile": "BlackChecker",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 5,
+      "pieceFile": "BlackChecker",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 7,
+      "pieceFile": "BlackChecker",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 0,
+      "pieceFile": "BlackChecker",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 2,
+      "pieceFile": "BlackChecker",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 4,
+      "pieceFile": "BlackChecker",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 6,
+      "pieceFile": "BlackChecker",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 2,
+      "col": 1,
+      "pieceFile": "BlackChecker",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 2,
+      "col": 3,
+      "pieceFile": "BlackChecker",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 2,
+      "col": 5,
+      "pieceFile": "BlackChecker",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 2,
+      "col": 7,
+      "pieceFile": "BlackChecker",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    }
+  ],
+  "tiles": [
+    {
+      "row": 0,
+      "col": 0,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 0,
+      "col": 1,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 0,
+      "col": 2,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 0,
+      "col": 3,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 0,
+      "col": 4,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 0,
+      "col": 5,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 0,
+      "col": 6,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 0,
+      "col": 7,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 7,
+      "col": 0,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 7,
+      "col": 1,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 7,
+      "col": 2,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 7,
+      "col": 3,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 7,
+      "col": 4,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 7,
+      "col": 5,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 7,
+      "col": 6,
+      "tileActions": ["PromotionReverse"]
+    },
+    {
+      "row": 7,
+      "col": 7,
+      "tileActions": ["PromotionReverse"]
+    }
+  ]
+}

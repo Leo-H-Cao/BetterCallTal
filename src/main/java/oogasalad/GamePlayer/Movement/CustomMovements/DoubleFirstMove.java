@@ -18,16 +18,28 @@ import oogasalad.GamePlayer.Movement.MovementInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/***
+ * First move(s) are doubled
+ *
+ * @author Vincent Chen
+ */
 public class DoubleFirstMove implements MovementInterface {
 
   private static final int MULT = 2;
 
   private static final Logger LOG = LogManager.getLogger(DoubleFirstMove.class);
 
+  /**
+   * Empty constructor used for Jackson serialization and deserialization
+   */
+  public DoubleFirstMove() {
+    super();
+  }
+
   @Override
   public Set<ChessTile> movePiece(Piece piece, Coordinate finalSquare, ChessBoard board)
       throws InvalidMoveException, OutsideOfBoardException {
-    if(!getMoves(piece, board).contains(board.getTile(finalSquare))) {
+    if (!getMoves(piece, board).contains(board.getTile(finalSquare))) {
       LOG.warn("Illegal double move attempted");
       throw new InvalidMoveException(finalSquare.toString());
     }
@@ -57,13 +69,14 @@ public class DoubleFirstMove implements MovementInterface {
    */
   @Override
   public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
-    if(piece.getHistory().size() != NO_MOVEMENT_HISTORY_LENGTH) return Set.of();
+    if (piece.getHistory().size() != NO_MOVEMENT_HISTORY_LENGTH) {
+      return Set.of();
+    }
 //    LOG.debug("Getting double moves: " + piece.getName());
     List<MovementInterface> newMovements = new ArrayList<>();
     piece.getRelativeMoveCoords().stream().filter((c) -> {
       try {
-//        LOG.debug(String.format("Relative coordinate: (%d, %d)", c.getRow(), c.getCol()));
-//        LOG.debug("Pieces in way: " +  board.getTile(Coordinate.add(c, piece.getCoordinates())).getPieces());
+        LOG.debug(String.format("Relative coordinate: (%d, %d)", c.getRow(), c.getCol()));
         return board.getTile(Coordinate.add(c, piece.getCoordinates())).getPieces().isEmpty();
       } catch (OutsideOfBoardException e) {
         LOG.debug("Out of bounds");
@@ -71,9 +84,10 @@ public class DoubleFirstMove implements MovementInterface {
       }
     }).forEach((c) -> {
 //      LOG.debug("Double move coord: " + Coordinate.of(c.getRow()*MULT, c.getCol()*MULT));
-      newMovements.add(new Movement(Coordinate.of(c.getRow()*MULT, c.getCol()*MULT), false));
+      newMovements.add(new Movement(Coordinate.of(c.getRow() * MULT, c.getCol() * MULT), false));
     });
-    return newMovements.stream().flatMap((m) -> m.getMoves(piece, board).stream()).collect(Collectors.toSet());
+    return newMovements.stream().flatMap((m) -> m.getMoves(piece, board).stream())
+        .collect(Collectors.toSet());
   }
 
   /***

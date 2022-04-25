@@ -1,7 +1,6 @@
 package oogasalad.Editor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -17,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
 
 public class EditPieceTest extends DukeApplicationTest {
+
   private Scene myScene;
   private Stage myStage;
   private LanguageModal mylangmod;
@@ -39,111 +39,67 @@ public class EditPieceTest extends DukeApplicationTest {
 
   @Test
   void testFiniteMovementChanges(){
-    assertEquals(editorPiece.getTileStatus(2,3), PieceGridTile.CLOSED);
-    assertEquals(editorPiece.getTileStatus(6, 5), PieceGridTile.CLOSED);
-    editorPiece.setTile(2,3, PieceGridTile.OPEN);
-    editorPiece.setTile(6,5, PieceGridTile.OPEN);
-    assertEquals(PieceGridTile.OPEN, editorPiece.getTileStatus(2,3));
-    assertEquals(PieceGridTile.OPEN, editorPiece.getTileStatus(6, 5));
-    editorPiece.setTile(2,3, PieceGridTile.CLOSED);
-    editorPiece.setTile(6,5, PieceGridTile.CLOSED);
-    assertEquals(editorPiece.getTileStatus(2,3), PieceGridTile.CLOSED);
-    assertEquals(editorPiece.getTileStatus(6, 5), PieceGridTile.CLOSED);
+    assertEquals(editorPiece.getTileStatus(2,3, 0), PieceGridTile.CLOSED);
+    assertEquals(editorPiece.getTileStatus(6, 5, 0), PieceGridTile.CLOSED);
+    editorPiece.setTile(2,3, PieceGridTile.OPEN, 0);
+    editorPiece.setTile(6,5, PieceGridTile.OPEN, 0);
+    assertEquals(PieceGridTile.OPEN, editorPiece.getTileStatus(2,3, 0));
+    assertEquals(PieceGridTile.OPEN, editorPiece.getTileStatus(6, 5, 0));
+    editorPiece.setTile(2,3, PieceGridTile.CLOSED, 0);
+    editorPiece.setTile(6,5, PieceGridTile.CLOSED, 0);
+    assertEquals(editorPiece.getTileStatus(2,3, 0), PieceGridTile.CLOSED);
+    assertEquals(editorPiece.getTileStatus(6, 5, 0), PieceGridTile.CLOSED);
   }
 
   @Test
   void testInfiniteDiagonalMovemementChanges(){
     checkBoardAllClosed();
-
-    editorPiece.setInfiniteTiles(-1, 1);
-    editorPiece.setInfiniteTiles(1, -1);
-
-    for(int i = 0; i < 7; i ++){
-      for(int j = 0; j < 7; j++){
-        if(i == 3 && j ==3){
-          assertEquals(editorPiece.getTileStatus(i,j), PieceGridTile.PIECE);
-        }
-        else if(i == j){
-          if(i == 0 || i == 6){
-            assertEquals(editorPiece.getTileStatus(i, j), PieceGridTile.INFINITY);
-          }
-          else{
-            assertEquals(editorPiece.getTileStatus(i, j), PieceGridTile.OPEN);
-          }
-        }
-        else{
-          assertEquals(editorPiece.getTileStatus(i,j), PieceGridTile.CLOSED);
-        }
-      }
-    }
-
-    editorPiece.removeInfiniteTiles(-1, 1);
-    editorPiece.removeInfiniteTiles(1, -1);
+    editorPiece.setTile(6,0, PieceGridTile.INFINITY, 0);
+    editorPiece.setTile(5,5, PieceGridTile.INFINITY, 0);
+    assertEquals(PieceGridTile.INFINITY, editorPiece.getTileStatus(6,0, 0));
+    assertEquals(PieceGridTile.INFINITY, editorPiece.getTileStatus(5, 5, 0));
+    editorPiece.setTile(6,0, PieceGridTile.CLOSED, 0);
+    editorPiece.setTile(5,5, PieceGridTile.CLOSED, 0);
     checkBoardAllClosed();
   }
 
   @Test
   void testNonDiagonalInfiniteMovement(){
     checkBoardAllClosed();
-    editorPiece.setInfiniteTiles(0, 1);
-    editorPiece.setInfiniteTiles(-1, 0);
-
-    for(int i = 0; i < 7; i ++){
-      for(int j = 0; j < 7; j++){
-        if(i == 3 && j ==3){
-          assertEquals(editorPiece.getTileStatus(i,j), PieceGridTile.PIECE);
-        }
-        else if( i == 3 && j <= 2){
-          if(j == 0){
-            assertEquals(editorPiece.getTileStatus(i, j),PieceGridTile.INFINITY);
-          }
-          else{
-            assertEquals(editorPiece.getTileStatus(i, j),PieceGridTile.OPEN);
-          }
-        }
-        else if(j == 3 && i<=2){
-          if(i == 0){
-            assertEquals(editorPiece.getTileStatus(i, j),PieceGridTile.INFINITY);
-          }
-          else{
-            assertEquals(editorPiece.getTileStatus(i, j),PieceGridTile.OPEN);
-          }
-        }
-        else{
-          assertEquals(editorPiece.getTileStatus(i,j), PieceGridTile.CLOSED);
-        }
-      }
-    }
-    editorPiece.removeInfiniteTiles(0, 1);
-    editorPiece.removeInfiniteTiles(-1,0);
+    editorPiece.setTile(1,3, PieceGridTile.INFINITY, 0);
+    editorPiece.setTile(3,4, PieceGridTile.INFINITY, 0);
+    assertEquals(PieceGridTile.INFINITY, editorPiece.getTileStatus(1,3, 0));
+    assertEquals(PieceGridTile.INFINITY, editorPiece.getTileStatus(3, 4, 0));
+    editorPiece.setTile(1,3, PieceGridTile.CLOSED, 0);
+    editorPiece.setTile(3,4, PieceGridTile.CLOSED, 0);
     checkBoardAllClosed();
   }
 
   @Test
   void testMovementGridExceptions(){
     Exception infiniteMovementInvalidDirections = assertThrows(MovementGridException.class, () -> {
-      editorPiece.setInfiniteTiles(-3, 1);
+      editorPiece.setTile(3, 3, PieceGridTile.CLOSED, 0);
     });
-    String infiniteMovementExpectedMessage = "Directions for infinite movement are invalid";
+    String editPIeceExpectedMessage = "Piece tile cannot be changed.";
     String actualMessage = infiniteMovementInvalidDirections.getMessage();
-    assertTrue(actualMessage.contains(infiniteMovementExpectedMessage));
+    assertTrue(actualMessage.contains(editPIeceExpectedMessage));
 
     Exception finiteMovementInvalidCoordinates = assertThrows(MovementGridException.class, () -> {
-      editorPiece.setTile(3, 8, PieceGridTile.OPEN);
+      editorPiece.setTile(3, 8, PieceGridTile.OPEN, 0);
     });
 
-    String finiteMovementExpectedMessage = "Coordinates for finite movement are invalid";;
+    String finiteMovementExpectedMessage = "Coordinates for movement are invalid";;
     actualMessage = finiteMovementInvalidCoordinates.getMessage();
     assertTrue(actualMessage.contains(finiteMovementExpectedMessage));
   }
 
   @Test
   void testEditorPieceImageChange(){
-    Image defaultMainPieceImage = new Image("images/pieces/white/rook.png");
-    Image defaultAltPieceImage = new Image("images/pieces/black/rook.png");
+    Image defaultMainPieceImage = new Image("images/pieces/white/kyle.png");
+    Image defaultAltPieceImage = new Image("images/pieces/black/cartman.png");
     assertEquals(defaultMainPieceImage.getUrl(), editorPiece.getImage(0).getValue().getUrl());
     assertEquals(defaultAltPieceImage.getUrl(), editorPiece.getImage(1).getValue().getUrl());
-    Image newImage = new Image("images/pieces/black/rook.png");
+    Image newImage = new Image("images/pieces/black/cartman.png");
     editorPiece.setImage(0, newImage);
     assertEquals(newImage, editorPiece.getImage(0).getValue());
     assertEquals(defaultAltPieceImage.getUrl(), editorPiece.getImage(1).getValue().getUrl());
@@ -153,10 +109,10 @@ public class EditPieceTest extends DukeApplicationTest {
     for(int i = 0; i < 7; i ++){
       for(int j = 0; j < 7; j++){
         if(i == 3 && j ==3){
-          assertEquals(editorPiece.getTileStatus(i,j), PieceGridTile.PIECE);
+          assertEquals(editorPiece.getTileStatus(i,j, 0), PieceGridTile.PIECE);
           continue;
         }
-        assertEquals(editorPiece.getTileStatus(i,j), PieceGridTile.CLOSED);
+        assertEquals(editorPiece.getTileStatus(i,j, 0), PieceGridTile.CLOSED);
       }
     }
   }

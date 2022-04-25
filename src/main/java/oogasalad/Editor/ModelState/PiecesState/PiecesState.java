@@ -7,7 +7,7 @@ import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 import java.util.Objects;
 
 public class PiecesState {
-  private SimpleListProperty<EditorPiece> availablePieces;
+  private final SimpleListProperty<EditorPiece> availablePieces;
 
   public PiecesState(){
     availablePieces = new SimpleListProperty<>(FXCollections.observableArrayList());
@@ -25,6 +25,12 @@ public class PiecesState {
     Objects.requireNonNull(findPiece(pieceID)).setImage(team, imageFile);
   }
 
+  public EditorPiece createDefaultPiece(String pieceId) {
+    EditorPiece newPiece = new EditorPiece(pieceId, true);
+    availablePieces.getValue().add(newPiece);
+    return newPiece;
+  }
+
   public EditorPiece createCustomPiece(String pieceID) {
     EditorPiece newPiece = new EditorPiece(pieceID);
     availablePieces.getValue().add(newPiece);
@@ -32,11 +38,11 @@ public class PiecesState {
   }
 
   public void setPiecePointValue(String pieceID, int points){
-    findPiece(pieceID).setPointValue(points);
+    Objects.requireNonNull(findPiece(pieceID)).setPointValue(points);
   }
 
   public void setPieceName(String pieceID, String name){
-    findPiece(pieceID).setPieceName(name);
+    Objects.requireNonNull(findPiece(pieceID)).setPieceName(name);
   }
 
   private EditorPiece findPiece(String pieceID){

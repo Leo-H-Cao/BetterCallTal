@@ -1,0 +1,190 @@
+{
+  "general": [
+    {
+      "rows": 10,
+      "columns": 10,
+      "turnCriteria": "Linear",
+      "colors": ["black", "white"],
+      "endConditions": ["Stalemate", ["ReachTile", "ReachTile09"]],
+      "validStateCheckers": [["RandomSelection", "RandomSelection3"]]
+    }
+  ],
+  "playerInfo": [
+    {
+      "team": 0,
+      "opponents": [1]
+    },
+    {
+      "team": 1,
+      "opponents": [0]
+    }
+  ],
+  "pieces": [
+    {
+      "row": 9,
+      "col": 0,
+      "pieceFile": "CALDefault",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 1
+    },
+    {
+      "row": 9,
+      "col": 1,
+      "pieceFile": "CALDefault",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 1
+    }
+  ],
+  "tiles": [
+    {
+      "row": 9,
+      "col": 4,
+      "tileActions": [["Teleport", "teleport65"]],
+      "img": "ladderEntrance"
+    },
+    {
+      "row": 6,
+      "col": 5,
+      "tileActions": [],
+      "img": "ladderExit"
+    },
+    {
+      "row": 5,
+      "col": 3,
+      "tileActions": [["Teleport", "teleport95"]],
+      "img": "chuteEntrance"
+    },
+    {
+      "row": 9,
+      "col": 5,
+      "tileActions": [],
+      "img": "chuteExit"
+    },
+    {
+      "row": 8,
+      "col": 7,
+      "tileActions": [["Teleport", "teleport44"]],
+      "img": "ladderEntrance"
+    },
+    {
+      "row": 4,
+      "col": 4,
+      "tileActions": [],
+      "img": "ladderExit"
+    },
+    {
+      "row": 8,
+      "col": 1,
+      "tileActions": [["Teleport", "teleport72"]],
+      "img": "ladderEntrance"
+    },
+    {
+      "row": 7,
+      "col": 2,
+      "tileActions": [],
+      "img": "ladderExit"
+    },
+    {
+      "row": 6,
+      "col": 1,
+      "tileActions": [["Teleport", "teleport12"]],
+      "img": "ladderEntrance"
+    },
+    {
+      "row": 1,
+      "col": 2,
+      "tileActions": [],
+      "img": "ladderExit"
+    },
+    {
+      "row": 1,
+      "col": 5,
+      "tileActions": [["Teleport", "teleport46"]],
+      "img": "chuteEntrance"
+    },
+    {
+      "row": 4,
+      "col": 6,
+      "tileActions": [],
+      "img": "chuteExit"
+    },
+    {
+      "row": 0,
+      "col": 7,
+      "tileActions": [["Teleport", "teleport84"]],
+      "img": "chuteEntrance"
+    },
+    {
+      "row": 8,
+      "col": 4,
+      "tileActions": [],
+      "img": "chuteExit"
+    },
+    {
+      "row": 1,
+      "col": 3,
+      "tileActions": [["Teleport", "teleport32"]],
+      "img": "chuteEntrance"
+    },
+    {
+      "row": 3,
+      "col": 2,
+      "tileActions": [],
+      "img": "chuteExit"
+    },
+    {
+      "row": 1,
+      "col": 0,
+      "tileActions": [["Teleport", "teleport41"]],
+      "img": "chuteEntrance"
+    },
+    {
+      "row": 4,
+      "col": 1,
+      "tileActions": [],
+      "img": "chuteExit"
+    },
+    {
+      "row": 5,
+      "col": 7,
+      "tileActions": [["Teleport", "teleport18"]],
+      "img": "ladderEntrance"
+    },
+    {
+      "row": 1,
+      "col": 8,
+      "tileActions": [],
+      "img": "ladderExit"
+    },
+    {
+      "row": 2,
+      "col": 4,
+      "tileActions": [["Teleport", "teleport27"]],
+      "img": "ladderEntrance"
+    },
+    {
+      "row": 2,
+      "col": 7,
+      "tileActions": [],
+      "img": "ladderExit"
+    },
+    {
+      "row": 0,
+      "col": 4,
+      "tileActions": [["Teleport", "teleport37"]],
+      "img": "chuteEntrance"
+    },
+    {
+      "row": 3,
+      "col": 7,
+      "tileActions": [],
+      "img": "chuteExit"
+    }
+  ]
+}

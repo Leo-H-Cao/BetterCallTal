@@ -1,6 +1,6 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
-import static oogasalad.GamePlayer.Board.Setup.BoardSetup.JSON_EXTENSION;
+import static oogasalad.GamePlayer.Board.BoardSetup.JSON_EXTENSION;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,28 +10,25 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.stream.IntStream;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.Movement.CustomMovements.EnPassant;
-import oogasalad.GamePlayer.ValidStateChecker.BankBlocker;
-import oogasalad.GamePlayer.util.FileReader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
+/***
+ * Creates an end condition where the first player to get n of x pieces in a row wins
+ *
+ * @author Vincent Chen
+ */
 public class InARow implements EndCondition {
 
-  private static final Logger LOG = LogManager.getLogger(InARow.class);
-  public static final int[] DIRECTIONS = new int[]{-1, 0, 1};
-
+  public static final List<Integer> DIRECTIONS = List.of(-1, 0, 1);
   public static final String IAR_CONFIG_FILE_HEADER = "doc/GameEngineResources/Other/";
   public static final String IAR_DEFAULT_FILE = "InARowThree";
-
+  private static final Logger LOG = LogManager.getLogger(InARow.class);
   private static final int IAR_DEFAULT_VAL = 3;
   private static final List<String> IAR_DEFAULT_NAMES = List.of("checker");
 
@@ -60,7 +57,7 @@ public class InARow implements EndCondition {
       numInARow = data.getInt("num");
       pieceNames = new ArrayList<>();
       JSONArray pieceArray = data.getJSONArray("pieces");
-      for(int i=0; i<pieceArray.length(); i++) {
+      for (int i = 0; i < pieceArray.length(); i++) {
         pieceNames.add(pieceArray.getString(i).toLowerCase());
       }
     } catch (IOException e) {
@@ -80,17 +77,19 @@ public class InARow implements EndCondition {
     Map<Integer, Double> scores = new HashMap<>();
     board.stream().flatMap(List::stream).toList().stream().filter(t ->
         t.getPiece().isPresent() &&
-        pieceNames.contains(t.getPiece().get().getName().toLowerCase()) &&
-        anyRayReachesNum(board, t.getCoordinates(),
-            t.getPiece().get().getName(), t.getPiece().get().getTeam())).forEach(t -> {
-          scores.put(t.getPiece().get().getTeam(), WIN);
-          Arrays.stream(board.getPlayer(t.getPiece().get().getTeam()).opponentIDs()).filter(o ->
-              !scores.containsKey(o)).forEach(o -> scores.put(o, LOSS));
-        });
+            pieceNames.contains(t.getPiece().get().getName().toLowerCase()) &&
+            anyRayReachesNum(board, t.getCoordinates(),
+                t.getPiece().get().getName(), t.getPiece().get().getTeam())).forEach(t -> {
+      scores.put(t.getPiece().get().getTeam(), WIN);
+      Arrays.stream(board.getPlayer(t.getPiece().get().getTeam()).opponentIDs()).filter(o ->
+          !scores.containsKey(o)).forEach(o -> scores.put(o, LOSS));
+    });
 
     LOG.debug(String.format("Scores: %s", scores));
 
-    if(scores.isEmpty()) return scores;
+    if (scores.isEmpty()) {
+      return scores;
+    }
 
     Arrays.stream(board.getPlayers()).filter(p -> !scores.containsKey(p.teamID())).forEach(p ->
         scores.put(p.teamID(), DRAW));
@@ -108,8 +107,8 @@ public class InARow implements EndCondition {
    * @return above
    */
   private boolean anyRayReachesNum(ChessBoard board, Coordinate start,
-    String pieceName, int pieceTeam) {
-    return Arrays.stream(DIRECTIONS).anyMatch(i -> Arrays.stream(DIRECTIONS).anyMatch(j ->
+      String pieceName, int pieceTeam) {
+    return DIRECTIONS.stream().anyMatch(i -> DIRECTIONS.stream().anyMatch(j ->
         rayReachesNum(board, pieceName, pieceTeam, start, Coordinate.of(i, j), numInARow)));
   }
 
@@ -127,9 +126,13 @@ public class InARow implements EndCondition {
    */
   private boolean rayReachesNum(ChessBoard board, String pieceName, int pieceTeam,
       Coordinate coordinate, Coordinate direction, int rayLength) {
-    if(rayLength == 0) return true;
-    if(direction.getCol() == 0 && direction.getRow() == 0 ||
-        !continueExtendingRay(board,coordinate, pieceName, pieceTeam)) return false;
+    if (rayLength == 0) {
+      return true;
+    }
+    if (direction.getCol() == 0 && direction.getRow() == 0 ||
+        !continueExtendingRay(board, coordinate, pieceName, pieceTeam)) {
+      return false;
+    }
 
     LOG.debug(String.format("Current coordinate and rayLength: (%d, %d), %d",
         coordinate.getRow(), coordinate.getCol(), rayLength));
@@ -153,8 +156,9 @@ public class InARow implements EndCondition {
     try {
       if (board.getTile(coordinate).getPiece().isPresent() &&
           board.getTile(coordinate).getPiece().get().getName().equalsIgnoreCase(pieceName) &&
-          board.getTile(coordinate).getPiece().get().getTeam() == pieceTeam)
+          board.getTile(coordinate).getPiece().get().getTeam() == pieceTeam) {
         return true;
+      }
     } catch (OutsideOfBoardException e) {
       return false;
     }

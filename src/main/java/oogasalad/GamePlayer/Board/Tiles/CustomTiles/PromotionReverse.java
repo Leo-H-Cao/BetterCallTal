@@ -1,15 +1,13 @@
 package oogasalad.GamePlayer.Board.Tiles.CustomTiles;
 
-import static oogasalad.GamePlayer.Board.Setup.BoardSetup.JSON_EXTENSION;
+import static oogasalad.GamePlayer.Board.BoardSetup.JSON_EXTENSION;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
@@ -23,15 +21,15 @@ import org.json.JSONObject;
 
 /**
  * Promotion but it just adds the reverse of possible moves
+ *
+ * @author Vincent Chen
  */
 public class PromotionReverse implements TileAction{
 
   private static final String PROMOTION_IMAGE_FILE_PATH_HEADER = "doc/GameEngineResources/Other/";
   private static final String DEFAULT_PROMOTION_FILE = "PromotionReverse";
   private static final String DEFAULT_PROMOTION_IMAGE = "checkerKing";
-  private static final List<String> DEFAULT_PROMOTABLE = List.of("Checker", "Pawn");
-
-  private static final Logger LOG = LogManager.getLogger(PromotionReverse.class);
+  private static final List<String> DEFAULT_PROMOTABLE = List.of("checker", "pawn");
 
   private String promotionImage;
   private List<String> promotablePieceNames;
@@ -64,7 +62,7 @@ public class PromotionReverse implements TileAction{
       String content = new String(Files.readAllBytes(Path.of(configFile)));
       JSONArray JSONContent = new JSONObject(content).getJSONArray("promotable");
       for(int i=0; i<JSONContent.length(); i++) {
-        nameList.add(JSONContent.getString(i));
+        nameList.add(JSONContent.getString(i).toLowerCase());
       }
       return nameList;
     } catch (IOException e) {
@@ -93,11 +91,14 @@ public class PromotionReverse implements TileAction{
   public Set<ChessTile> executeAction(ChessTile tile, ChessBoard board) throws EngineException {
     if(tile.getPiece().isEmpty()) return Collections.emptySet();
 
-    Piece promotedPiece = tile.getPiece().get();
-    promotedPiece.addNewMovements(Movement.invertMovements(promotedPiece.getMoves()),
-        Movement.invertMovements(promotedPiece.getCaptures()));
-    //FIXME: because of current frontend implementation, name change determines image file change
-    promotedPiece.updateName(promotionImage);
-    return Set.of(tile);
+    if(promotablePieceNames.contains(tile.getPiece().get().getName().toLowerCase())) {
+      Piece promotedPiece = tile.getPiece().get();
+      promotedPiece.addNewMovements(Movement.invertMovements(promotedPiece.getMoves()),
+          Movement.invertMovements(promotedPiece.getCaptures()));
+      //FIXME: because of current frontend implementation, name change determines image file change
+      promotedPiece.updateName(promotionImage);
+      return Set.of(tile);
+    }
+    return Collections.emptySet();
   }
 }
