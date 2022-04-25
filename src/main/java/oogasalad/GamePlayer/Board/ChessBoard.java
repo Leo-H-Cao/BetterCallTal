@@ -1,7 +1,7 @@
 package oogasalad.GamePlayer.Board;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -62,6 +62,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   private final List<ValidStateChecker> validStateCheckers;
   private final GameType gameType;
   private TurnManager turnManager;
+  private TurnManagerData turnManagerData;
   private HistoryManager history;
   private List<List<ChessTile>> board;
   private Map<Integer, List<Piece>> pieceList;
@@ -78,7 +79,8 @@ public class ChessBoard implements Iterable<ChessTile> {
   public ChessBoard(List<List<ChessTile>> board, TurnCriteria turnCriteria, Player[] players,
       List<ValidStateChecker> validStateCheckers, List<EndCondition> endConditions) {
     this.players = new GamePlayers(players);
-    this.turnManager = new LocalTurnManager(this.players, turnCriteria, endConditions, EMPTY_LINK);
+    this.turnManagerData = new TurnManagerData(this.players, turnCriteria, endConditions, EMPTY_LINK);
+    this.turnManager = new LocalTurnManager(this.turnManagerData);
     this.board = board;
     this.validStateCheckers = validStateCheckers;
     this.history = new LocalHistoryManager();
@@ -91,6 +93,7 @@ public class ChessBoard implements Iterable<ChessTile> {
       GamePlayers players,
       List<ValidStateChecker> validStateCheckers, HistoryManager history) {
     this.players = players;
+    this.turnManagerData = turnManagerData;
     this.turnManager = new LocalTurnManager(turnManagerData);
     this.board = board;
     this.validStateCheckers = validStateCheckers;
@@ -128,6 +131,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     this.gameType = boardData.gameType();
     this.board = boardData.board();
     this.validStateCheckers = boardData.validStateCheckers();
+    this.turnManagerData = boardData.turnManagerData();
     if (gameType == GameType.SERVER) {
       this.turnManager = new RemoteTurnManager(boardData.turnManagerData());
       this.history = new RemoteHistoryManager(boardData.history());
@@ -167,7 +171,7 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @return the data required to set up a new turn manager
    */
   public TurnManagerData getTurnManagerData() {
-    return new TurnManagerData(turnManager);
+    return turnManagerData;
   }
 
   /**
@@ -226,9 +230,9 @@ public class ChessBoard implements Iterable<ChessTile> {
     // TODO: valid state checker for person who just moved (redundunt - optional)
     // TODO: check end conditions for other player(s)
     if (!isGameOver() && piece.checkTeam(turnManager.getCurrentPlayer())) {
-      currentPlayer = turnManager.incrementTurn();
-      TurnUpdate update = new TurnUpdate(piece.move(getTileFromCoords(finalSquare), this),
-          currentPlayer, "");
+      Set<ChessTile> moveUpdate = piece.move(getTileFromCoords(finalSquare), this);
+      TurnUpdate update = new TurnUpdate(moveUpdate,
+          turnManager.incrementTurn(), getNotation(moveUpdate, piece));
       history.add(new History(deepCopy(), Set.of(piece), update.updatedSquares()));
       LOG.debug(String.format("History updated: %d", history.size()));
       return update;
@@ -712,9 +716,10 @@ public class ChessBoard implements Iterable<ChessTile> {
    *
    * @author Ritvik Janamsetty
    */
-  @JsonTypeInfo(use = Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "@class")
   public static class ChessBoardData {
 
+    @JsonProperty
+    @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private ChessTile[][] board;
     private TurnManagerData turnManagerData;
     private GamePlayers players;

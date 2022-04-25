@@ -65,6 +65,7 @@ public class RequestBuilder {
         .allowIfBaseType("java.util.ImmutableCollections$List12")
         .allowIfBaseType(List.of(new Coordinate(0, 0)).getClass())
         .allowIfBaseType("java.util.ImmutableCollections$ListN")
+        .allowIfBaseType(ChessBoardData.class)
         .build();
     return new ObjectMapper().activateDefaultTyping(ptv, DefaultTyping.NON_FINAL)
         .enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
