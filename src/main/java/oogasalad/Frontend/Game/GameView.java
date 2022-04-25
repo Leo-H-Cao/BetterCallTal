@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import javafx.geometry.Pos;
@@ -26,6 +27,7 @@ import oogasalad.Frontend.Game.Sections.LeftSection;
 import oogasalad.Frontend.Game.Sections.TopSection;
 import oogasalad.Frontend.Menu.HomeView;
 import oogasalad.Frontend.Menu.LocalPlay.RemotePlayer.RemotePlayer;
+import oogasalad.Frontend.ViewManager;
 import oogasalad.Frontend.util.View;
 import oogasalad.GamePlayer.ArtificialPlayer.Bot;
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -205,7 +207,11 @@ public class GameView extends View {
         myTopSection = new TopSection();
 
         myTopSection.setExitButton(e -> {
-            getView(HomeView.class).ifPresent(this::changeScene);
+
+            ResourceBundle resource = myResources.orElseGet(
+                () -> ResourceBundle.getBundle("oogasalad.Frontend.Menu.languages.English"));
+            resetView();
+            new ViewManager(myStage, resource);
         });
 
         bp.setTop(myTopSection.getGP());

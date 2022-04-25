@@ -1,5 +1,12 @@
 package oogasalad.Frontend.util;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.MissingResourceException;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.ResourceBundle;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -12,16 +19,13 @@ import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Menu.HomeView;
-import oogasalad.Frontend.ViewManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import java.io.File;
-import java.util.*;
 
 public abstract class View extends BackendConnector {
 
 	private static Collection<View> myViews;
-	private static boolean fullscreen = false;
+	private static boolean fullscreen;
 	protected Scene myScene;
 	protected Group myRoot;
 	protected Rectangle2D myScreenSize;
@@ -30,6 +34,7 @@ public abstract class View extends BackendConnector {
 	protected static final Logger LOG = LogManager.getLogger(View.class);
 
 	public View(Stage stage) {
+		fullscreen = false;
 		if(myViews == null) {
 			myViews = new ArrayList<>();
 		}
@@ -42,11 +47,28 @@ public abstract class View extends BackendConnector {
 			myResources = Optional.empty();
 		}
 	}
+
+	/**
+	 * Sets the stage to be full screen
+	 * @param b
+	 */
 	public static void setFullscreen(boolean b) {
 		fullscreen = b;
 	}
+
+	/**
+	 * adds a view to myViews
+	 * @param v
+	 */
 	public static void addView(View v) {
 		myViews.add(v);
+	}
+
+	/**
+	 * Resets all the views in the myViews array
+	 */
+	protected void resetView() {
+		myViews.clear();
 	}
 
 
