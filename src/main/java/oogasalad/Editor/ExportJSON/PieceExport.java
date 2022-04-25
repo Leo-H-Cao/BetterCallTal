@@ -20,7 +20,7 @@ public class PieceExport {
 
 
   public PieceExport(EditorPiece editorPiece, int teamNum){
-    pieceName = editorPiece.getPieceName().getValue();
+    pieceId = editorPiece.getPieceName().getValue();
     imgFile = editorPiece.getImage(teamNum).getValue().getUrl().split("/classes/")[1];
     pointValue = editorPiece.getPointValue();
     customMoves = editorPiece.getCustomMoves() == null ? new ArrayList<>() :editorPiece.getCustomMoves();
