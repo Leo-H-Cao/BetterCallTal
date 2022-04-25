@@ -96,12 +96,12 @@ public class GameView extends View {
         remotePlayers = new ArrayList<>();
         String[] splitMode = mode.split(" ");
         switch (splitMode[0]) {
-            case SERVER -> turnKeeper = new TurnKeeper(new String[]{HUMAN, SERVER});
+            case SERVER -> turnKeeper = new TurnKeeper(new String[]{HUMAN, SERVER}, getGameBackend().getChessBoard().getEndConditions());
             case SINGLEPLAYER -> {
-                turnKeeper = new TurnKeeper(new String[]{HUMAN, AI});
+                turnKeeper = new TurnKeeper(new String[]{HUMAN, AI}, getGameBackend().getChessBoard().getEndConditions());
                 remotePlayers.add(new Bot(turnKeeper, splitMode[1]));
             }
-            case MULTIPLAYER -> turnKeeper = new TurnKeeper(new String[]{HUMAN, HUMAN});
+            case MULTIPLAYER -> turnKeeper = new TurnKeeper(new String[]{HUMAN, HUMAN}, getGameBackend().getChessBoard().getEndConditions());
         }
         chessboard.setShowAsyncError(this::showmyError);
         chessboard.setPerformAsyncTurnUpdate(this::updateBoard);

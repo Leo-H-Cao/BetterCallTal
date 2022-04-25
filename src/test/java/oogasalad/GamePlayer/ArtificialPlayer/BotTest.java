@@ -22,7 +22,7 @@ public class BotTest {
   void setup() throws IOException {
     String JSONPath = "doc/testing_directory/AI_Testing/QueenBlunder.json";
     board = BoardSetup.createLocalBoard(JSONPath);
-    gameBot = new Bot(new TurnKeeper(new String[]{"human", "ai"}), "Hard");
+    gameBot = new Bot(new TurnKeeper(new String[]{"human", "ai"}, board.getEndConditions()), "Hard");
 
   }
 
