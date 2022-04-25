@@ -149,7 +149,7 @@ public class ChessBoard implements Iterable<ChessTile> {
           currentPlayer = turnManager.getCurrentPlayer();
           if (currentPlayer == thisPlayer) {
             History mostRecent = history.getCurrent();
-            TurnUpdate tu = new TurnUpdate(mostRecent.updatedTiles(), thisPlayer);
+            TurnUpdate tu = new TurnUpdate(mostRecent.updatedTiles(), thisPlayer, "");
             LOG.info(String.format("Performing turn update %s", tu));
             performAsyncTurnUpdate.accept(tu);
           }
@@ -228,7 +228,7 @@ public class ChessBoard implements Iterable<ChessTile> {
     if (!isGameOver() && piece.checkTeam(turnManager.getCurrentPlayer())) {
       currentPlayer = turnManager.incrementTurn();
       TurnUpdate update = new TurnUpdate(piece.move(getTileFromCoords(finalSquare), this),
-          currentPlayer);
+          currentPlayer, "");
       history.add(new History(deepCopy(), Set.of(piece), update.updatedSquares()));
       LOG.debug(String.format("History updated: %d", history.size()));
       return update;
@@ -248,16 +248,18 @@ public class ChessBoard implements Iterable<ChessTile> {
   private String getNotation(Collection<ChessTile> updatedTiles, Piece moved) {
     ChessTile endTile = updatedTiles.stream().filter(t ->
         t.getPiece().isPresent() && t.getPiece().get().equals(moved)).findFirst().orElse(null);
-    return endTile == null ? "Empty" : String.format("%s %s %s%d", moved.getName(), getMovePreposition(endTile),
+    return endTile == null ? "Empty"
+        : String.format("%s %s %s%d", moved.getName(), getMovePreposition(endTile),
             (char) (endTile.getCoordinates().getCol() + 'a'),
-        getBoardHeight() - endTile.getCoordinates().getRow());
+            getBoardHeight() - endTile.getCoordinates().getRow());
   }
 
   /***
    * @return to for move, x for capture
    */
   private String getMovePreposition(ChessTile tile) {
-    return history.getLast().board().getTileFromCoords(tile.getCoordinates()).getPiece().isPresent() ? "x" : "to";
+    return history.getLast().board().getTileFromCoords(tile.getCoordinates()).getPiece().isPresent()
+        ? "x" : "to";
   }
 
   /**
@@ -332,7 +334,9 @@ public class ChessBoard implements Iterable<ChessTile> {
           try {
             LOG.debug(String.format("Valid state checker class: %s", v.getClass()));
             return !v.isValid(this, piece, entry);
-          } catch (EngineException e) {return false;}
+          } catch (EngineException e) {
+            return false;
+          }
         }));
     return piece.checkTeam(turnManager.getCurrentPlayer()) ? allPieceMovements : Set.of();
   }
@@ -580,7 +584,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   }
 
   public Collection<EndCondition> getEndConditions() {
-    return endConditions;
+    return turnManager.getEndConditions();
   }
 
   /**
