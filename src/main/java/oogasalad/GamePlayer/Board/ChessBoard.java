@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -183,8 +184,9 @@ public class ChessBoard implements Iterable<ChessTile> {
     // TODO: valid state checker for person who just moved (redundunt - optional)
     // TODO: check end conditions for other player(s)
     if (!isGameOver() && piece.checkTeam(turnManager.getCurrentPlayer())) {
-      TurnUpdate update = new TurnUpdate(piece.move(getTileFromCoords(finalSquare), this),
-          turnManager.incrementTurn());
+      Set<ChessTile> moveUpdate = piece.move(getTileFromCoords(finalSquare), this);
+      TurnUpdate update = new TurnUpdate(moveUpdate,
+          turnManager.incrementTurn(), getNotation(moveUpdate, piece));
       history.add(new History(deepCopy(), Set.of(piece), update.updatedSquares()));
       LOG.debug(String.format("History updated: %d", history.size()));
       return update;
@@ -193,6 +195,27 @@ public class ChessBoard implements Iterable<ChessTile> {
     LOG.warn(isGameOver() ? "Move made after game over" : "Move made by wrong player");
     throw isGameOver() ? new MoveAfterGameEndException("") : new WrongPlayerException(
         "Expected: " + turnManager.getCurrentPlayer() + "\n Actual: " + piece.getTeam());
+  }
+
+  /***
+   * Converts a movement into a notation
+   *
+   * @param updatedTiles to get notation for
+   * @return list of notations based on updated squares
+   */
+  private String getNotation(Collection<ChessTile> updatedTiles, Piece moved) {
+    ChessTile endTile = updatedTiles.stream().filter(t ->
+        t.getPiece().isPresent() && t.getPiece().get().equals(moved)).findFirst().orElse(null);
+    return endTile == null ? "Empty" : String.format("%s %s %s%d", moved.getName(), getMovePreposition(endTile),
+            (char) (endTile.getCoordinates().getCol() + 'a'),
+        getBoardHeight() - endTile.getCoordinates().getRow());
+  }
+
+  /***
+   * @return to for move, x for capture
+   */
+  private String getMovePreposition(ChessTile tile) {
+    return history.getLast().board().getTileFromCoords(tile.getCoordinates()).getPiece().isPresent() ? "x" : "to";
   }
 
   /**

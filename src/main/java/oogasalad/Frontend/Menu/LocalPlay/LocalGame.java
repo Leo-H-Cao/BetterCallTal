@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -40,6 +41,7 @@ public class LocalGame extends View {
   private static final String DIFF_SELECTED = "DiffSelected";
   private static final String MULTIPLAYER = "multiplayer";
   private static final String SINGLEPLAYER = "singleplayer";
+  private static final String PROMPTPADDING = "     ";
 
   private static final int PADDING = 25;
   private final Integer TITLE_SIZE = 70;
@@ -57,6 +59,7 @@ public class LocalGame extends View {
   private Label playerSelectionLabel;
 
   private Button doneButton;
+  private ChoiceBox<String> packages;
 
   private String mode;
 
@@ -80,8 +83,8 @@ public class LocalGame extends View {
 
     root.setTop(top);
     root.setLeft(makeGamemodeSelection());
-    root.setCenter(makeSingleplayerSelection());
-    root.setRight(makePlayerSelection());
+    root.setCenter(makePlayerSelection());
+    root.setRight(makeSingleplayerSelection());
     root.setBottom(makeDonePanel());
 
     selectionHolder();
@@ -92,7 +95,7 @@ public class LocalGame extends View {
   private Node makeGamemodeSelection() {
     VBox box = new VBox();
 
-    Label prompt = new Label(BackendConnector.getFrontendWord(PROMPT_GAME, getClass()));
+    Label prompt = new Label(BackendConnector.getFrontendWord(PROMPT_GAME, getClass()) + PROMPTPADDING);
     prompt.setFont(new Font(PROMPT_SIZE));
     prompt.setAlignment(Pos.TOP_CENTER);
 
@@ -110,7 +113,7 @@ public class LocalGame extends View {
 
     GridPane buttons = makeSinglePlayerButtons();
 
-    Label prompt = new Label(BackendConnector.getFrontendWord(PROMPT_AI_DIFFICULTY, getClass()));
+    Label prompt = new Label(BackendConnector.getFrontendWord(PROMPT_AI_DIFFICULTY, getClass()) + PROMPTPADDING);
     prompt.setFont(new Font(PROMPT_SIZE));
     prompt.setAlignment(Pos.TOP_CENTER);
 
@@ -123,7 +126,7 @@ public class LocalGame extends View {
 
   private Node makePlayerSelection() {
     orderSelector = new VBox();
-    Label prompt = new Label(BackendConnector.getFrontendWord(PROMPT_ORDER, getClass()));
+    Label prompt = new Label(BackendConnector.getFrontendWord(PROMPT_ORDER, getClass()) + PROMPTPADDING);
     prompt.setFont(new Font(PROMPT_SIZE));
     prompt.setAlignment(Pos.TOP_CENTER);
 
@@ -202,9 +205,9 @@ public class LocalGame extends View {
       File f = chooseLoadFile();
       Optional<ChessBoard> cb = getGameBackend().initalizeLocalChessBoard(f);
       if (cb.isPresent() && mode.equals(SINGLEPLAYER)) {
-        getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), player(), String.format("%s %s", mode, diffSelectionLabel.getText()))); // hardcoded 0 here for white
+        getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), player(), String.format("%s %s", mode, diffSelectionLabel.getText()), packages.getValue())); // hardcoded 0 here for white
       } else if (cb.isPresent()) {
-        getView(GameView.class).ifPresent((c) -> ((GameView) c).SetUpBoard(cb.get(), player(), mode));// hardcoded 0 here for white
+        getView(GameView.class).ifPresent((c) -> ((GameView) c).SetUpBoard(cb.get(), player(), mode, packages.getValue()));// hardcoded 0 here for white
       }
       else {
         View.LOG.debug("INVALID JSON OR INVALID PLAYER SELECTION");
@@ -218,7 +221,9 @@ public class LocalGame extends View {
         List.of("upload", "done"),
         List.of(upload, done));
 
-    donePanel.getChildren().addAll(buttons);
+    packages = makePackageSelectGroup();
+
+    donePanel.getChildren().addAll(buttons, packages);
     donePanel.setPadding(new Insets(25));
     donePanel.setSpacing(25);
     return donePanel;
@@ -286,11 +291,16 @@ public class LocalGame extends View {
    * @param path filepath to example file for testing
    */
   public void injectBoard(String path) {
+
     File f = new File(path);
     Optional<ChessBoard> cb = getGameBackend().initalizeLocalChessBoard(f);
-    if (cb.isPresent()) {
-      getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), player(), mode)); // hardcoded 0 here for white
-   } else {
+
+    if (cb.isPresent() && mode.equals(SINGLEPLAYER)) {
+      getView(GameView.class).ifPresent((c) -> ((GameView)c).SetUpBoard(cb.get(), player(), String.format("%s %s", mode, diffSelectionLabel.getText()), packages.getValue())); // hardcoded 0 here for white
+    } else if (cb.isPresent()) {
+      getView(GameView.class).ifPresent((c) -> ((GameView) c).SetUpBoard(cb.get(), player(), mode, packages.getValue()));// hardcoded 0 here for white
+    }
+    else {
       View.LOG.debug("INVALID JSON OR INVALID PLAYER SELECTION");
     }
   }

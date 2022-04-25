@@ -29,8 +29,8 @@ public class EditorPiece {
 	public EditorPiece(String pieceID){
 		this.pieceID = pieceID;
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(getClass().getName());
-		String image0Path = String.format("images/pieces/white/%s.png", resourceBundle.getString("DefaultImage0"));
-		String image1Path = String.format("images/pieces/black/%s.png", resourceBundle.getString("DefaultImage1"));
+		String image0Path = String.format("images/pieces/Default/white/%s.png", resourceBundle.getString("DefaultImage0"));
+		String image1Path = String.format("images/pieces/Default/black/%s.png", resourceBundle.getString("DefaultImage1"));
 		onInteractionModifiers = new ArrayList<>();
 
 		movementGrid0 = new MovementGrid();
@@ -45,8 +45,8 @@ public class EditorPiece {
 	public EditorPiece(String pieceID, boolean defaultPiece) {
 		this.pieceID = pieceID;
 		ResourceBundle resourceBundle = ResourceBundle.getBundle(getClass().getName());
-		String image0Path = String.format("images/pieces/white/%s.png", resourceBundle.getString("DefaultImage0"));
-		String image1Path = String.format("images/pieces/black/%s.png", resourceBundle.getString("DefaultImage1"));
+		String image0Path = String.format("images/pieces/Default/white/%s.png", resourceBundle.getString("DefaultImage0"));
+		String image1Path = String.format("images/pieces/Default/black/%s.png", resourceBundle.getString("DefaultImage1"));
 		onInteractionModifiers = new ArrayList<>();
 
 		movementGrid0 = new MovementGrid();
@@ -69,7 +69,6 @@ public class EditorPiece {
 		else{
 			return movementGrid1;
 		}
-
 	}
 
 	/**

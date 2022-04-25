@@ -13,7 +13,6 @@ import oogasalad.Editor.ModelState.EditPiece.PieceGridTile;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Editor.ModelState.RulesState.GameRulesState;
 import oogasalad.Frontend.util.BackendConnector;
-
 import static oogasalad.Editor.ModelState.EditPiece.PieceGridTile.CAPTURE;
 import static oogasalad.Editor.ModelState.EditPiece.PieceGridTile.INFINITECAPTURE;
 import static oogasalad.Editor.ModelState.EditPiece.PieceGridTile.OPEN;
@@ -96,8 +95,8 @@ public class EditorBackend {
 
 	private void createDefaultPiece(String name, int val, MovementGrid moves) {
 		EditorPiece piece = getPiecesState().createDefaultPiece(name);
-		piece.setImage(0, new Image("images/pieces/white/" + name + ".png"));
-		piece.setImage(1, new Image("images/pieces/black/" + name + ".png"));
+		piece.setImage(0, new Image("images/pieces/Default/white/" + name + ".png"));
+		piece.setImage(1, new Image("images/pieces/Default/black/" + name + ".png"));
 		name = name.substring(0, 1).toUpperCase() + name.substring(1) + " " + BackendConnector.getFrontendWord("ro");
 		piece.setPieceName(name);
 		piece.setPointValue(val);
