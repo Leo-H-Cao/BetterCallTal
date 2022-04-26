@@ -1,0 +1,10 @@
+{
+  "pieceName": "invisible",
+  "imgFile": "invisible",
+  "pointValue": 9,
+  "basicMovements": ["bishop", "rook"],
+  "basicCaptures": ["bishop", "rook"],
+  "customMoves": [],
+  "movementModifiers": [],
+  "onInteractionModifier": []
+}

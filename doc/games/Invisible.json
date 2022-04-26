@@ -1,0 +1,730 @@
+{
+  "general": [
+    {
+      "rows": 8,
+      "columns": 8,
+      "turnCriteria": "Linear",
+      "colors": ["black", "white"],
+      "endConditions": ["Checkmate", "Stalemate", "KnownDraws", "Repetition"],
+      "validStateCheckers": ["Check"]
+    }
+  ],
+  "playerInfo": [
+    {
+      "team": 0,
+      "opponents": [1]
+    },
+    {
+      "team": 1,
+      "opponents": [0]
+    }
+  ],
+  "pieces": [
+    {
+      "row": 6,
+      "col": 0,
+      "pieceFile": "invisible/invisWhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 1,
+      "pieceFile": "invisible/invisWhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 2,
+      "pieceFile": "invisible/invisWhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 3,
+      "pieceFile": "invisible/invisWhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 4,
+      "pieceFile": "invisible/invisWhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 5,
+      "pieceFile": "invisible/invisWhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 6,
+      "pieceFile": "invisible/invisWhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 7,
+      "pieceFile": "invisible/invisWhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 0,
+      "pieceFile": "invisible/invisRook",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 7,
+      "pieceFile": "invisible/invisRook",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 1,
+      "pieceFile": "invisible/invisKnight",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 6,
+      "pieceFile": "invisible/invisKnight",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 2,
+      "pieceFile": "invisible/invisBishop",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 5,
+      "pieceFile": "invisible/invisBishop",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 3,
+      "pieceFile": "invisible/invisQueen",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 7,
+      "col": 4,
+      "pieceFile": "invisible/invisKing",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 1
+    },
+    {
+      "row": 1,
+      "col": 0,
+      "pieceFile": "invisible/invisBlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 1,
+      "pieceFile": "invisible/invisBlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 2,
+      "pieceFile": "invisible/invisBlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 3,
+      "pieceFile": "invisible/invisBlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 4,
+      "pieceFile": "invisible/invisBlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 5,
+      "pieceFile": "invisible/invisBlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 6,
+      "pieceFile": "invisible/invisBlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 7,
+      "pieceFile": "invisible/invisBlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 0,
+      "pieceFile": "invisible/invisRook",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 7,
+      "pieceFile": "invisible/invisRook",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 1,
+      "pieceFile": "invisible/invisKnight",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 6,
+      "pieceFile": "invisible/invisKnight",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 2,
+      "pieceFile": "invisible/invisBishop",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 5,
+      "pieceFile": "invisible/invisBishop",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 3,
+      "pieceFile": "invisible/invisQueen",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 4,
+      "pieceFile": "invisible/invisKing",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 1
+    }
+  ],
+  "tiles": [
+    {
+      "row": 0,
+      "col": 0,
+      "tileActions": ["Promotion"],
+      "img":"blocker"
+    },
+    {
+      "row": 0,
+      "col": 1,
+      "tileActions": ["Promotion"],
+      "img": "blocker"
+    },
+    {
+      "row": 0,
+      "col": 2,
+      "tileActions": ["Promotion"],
+      "img": "blocker"
+    },
+    {
+      "row": 0,
+      "col": 3,
+      "tileActions": ["Promotion"],
+      "img": "blocker"
+    },
+    {
+      "row": 0,
+      "col": 4,
+      "tileActions": ["Promotion"],
+      "img": "blocker"
+    },
+    {
+      "row": 0,
+      "col": 5,
+      "tileActions": ["Promotion"],
+      "img": "blocker"
+    },
+    {
+      "row": 0,
+      "col": 6,
+      "tileActions": ["Promotion"],
+      "img": "blocker"
+    },
+    {
+      "row": 0,
+      "col": 7,
+      "tileActions": ["Promotion"],
+      "img": "blocker"
+    },
+    {
+      "row": 1,
+      "col": 0,
+      "tileActions": [],
+      "img":"blocker"
+    },
+    {
+      "row": 1,
+      "col": 1,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 1,
+      "col": 2,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 1,
+      "col": 3,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 1,
+      "col": 4,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 1,
+      "col": 5,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 1,
+      "col": 6,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 1,
+      "col": 7,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 2,
+      "col": 0,
+      "tileActions": [],
+      "img":"blocker"
+    },
+    {
+      "row": 2,
+      "col": 1,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 2,
+      "col": 2,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 2,
+      "col": 3,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 2,
+      "col": 4,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 2,
+      "col": 5,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 2,
+      "col": 6,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 2,
+      "col": 7,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 3,
+      "col": 0,
+      "tileActions": [],
+      "img":"blocker"
+    },
+    {
+      "row": 3,
+      "col": 1,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 3,
+      "col": 2,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 3,
+      "col": 3,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 3,
+      "col": 4,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 3,
+      "col": 5,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 3,
+      "col": 6,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 3,
+      "col": 7,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 4,
+      "col": 0,
+      "tileActions": [],
+      "img":"blocker"
+    },
+    {
+      "row": 4,
+      "col": 1,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 4,
+      "col": 2,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 4,
+      "col": 3,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 4,
+      "col": 4,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 4,
+      "col": 5,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 4,
+      "col": 6,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 4,
+      "col": 7,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 5,
+      "col": 0,
+      "tileActions": [],
+      "img":"blocker"
+    },
+    {
+      "row": 5,
+      "col": 1,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 5,
+      "col": 2,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 5,
+      "col": 3,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 5,
+      "col": 4,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 5,
+      "col": 5,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 5,
+      "col": 6,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 5,
+      "col": 7,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 6,
+      "col": 0,
+      "tileActions": [],
+      "img":"blocker"
+    },
+    {
+      "row": 6,
+      "col": 1,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 6,
+      "col": 2,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 6,
+      "col": 3,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 6,
+      "col": 4,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 6,
+      "col": 5,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 6,
+      "col": 6,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 6,
+      "col": 7,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 7,
+      "col": 0,
+      "tileActions": ["Promotion"],
+      "img": "blocker"
+    },
+    {
+      "row": 7,
+      "col": 1,
+      "tileActions": ["Promotion"],
+      "img": "blocker"
+    },
+    {
+      "row": 7,
+      "col": 2,
+      "tileActions": ["Promotion"],
+      "img": "blocker"
+    },
+    {
+      "row": 7,
+      "col": 3,
+      "tileActions": ["Promotion"],
+      "img": "blocker"
+    },
+    {
+      "row": 7,
+      "col": 4,
+      "tileActions": ["Promotion"],
+      "img": "blocker"
+    },
+    {
+      "row": 7,
+      "col": 5,
+      "tileActions": ["Promotion"],
+      "img": "blocker"
+    },
+    {
+      "row": 7,
+      "col": 6,
+      "tileActions": ["Promotion"],
+      "img": "blocker"
+    },
+    {
+      "row": 7,
+      "col": 7,
+      "tileActions": ["Promotion"],
+      "img": "blocker"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "pieceName": "invisible",
+  "imgFile": "invisible",
+  "pointValue": 4,
+  "basicMovements": ["king"],
+  "basicCaptures": ["king"],
+  "customMoves": ["Castling"],
+  "movementModifiers": [],
+  "onInteractionModifier": []
+}

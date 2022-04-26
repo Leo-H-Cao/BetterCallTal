@@ -1,0 +1,10 @@
+{
+  "pieceName": "invisible",
+  "imgFile": "invisible",
+  "pointValue": 1,
+  "basicMovements": ["bPawnMov"],
+  "basicCaptures": ["bPawnCap"],
+  "customMoves": ["DoubleFirstMove", "EnPassant"],
+  "movementModifiers": [],
+  "onInteractionModifier": []
+}
