@@ -250,8 +250,7 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @return list of notations based on updated squares
    */
   private String getNotation(Collection<ChessTile> updatedTiles, Piece moved) {
-    ChessTile endTile = updatedTiles.stream().filter(t ->
-        t.getPiece().isPresent() && t.getPiece().get().equals(moved)).findFirst().orElse(null);
+    ChessTile endTile = getTileFromCoords(moved.getCoordinates());
     return endTile == null ? "Empty"
         : String.format("%s %s %s%d", moved.getName(), getMovePreposition(endTile, moved.getTeam()),
             (char) (endTile.getCoordinates().getCol() + 'a'),
