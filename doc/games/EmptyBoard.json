@@ -1,0 +1,30 @@
+{
+  "general": [
+    {
+      "rows": 8,
+      "columns": 8,
+      "turnCriteria": "Linear",
+      "colors": [
+        "black",
+        "white"
+      ],
+      "endConditions": [],
+      "validStateCheckers": []
+    }
+  ],
+  "playerInfo": [
+    {
+      "team": 0,
+      "opponents": [
+        1
+      ]
+    },
+    {
+      "team": 1,
+      "opponents": [
+        0
+      ]
+    }
+  ],
+  "pieces": []
+}

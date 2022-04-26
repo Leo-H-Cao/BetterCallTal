@@ -1,5 +1,6 @@
 package oogasalad.GamePlayer.Board.EndConditions;
 
+import static oogasalad.GamePlayer.Movement.CustomMovements.BankLeaverTest.BOARD_TEST_FILES_HEADER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -9,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import oogasalad.GamePlayer.Board.BoardSetup;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.EndConditions.NoEndCondition;
@@ -118,11 +120,12 @@ class EndConditionsTest {
   @Test
   void testNoEndCondition() {
     endCondition = new NoEndCondition();
-    setBoard();
     try {
-      assertFalse(board.isGameOver());
-      assertEquals(Map.of(), board.getScores());
+      ChessBoard test = BoardSetup.createLocalBoard(BOARD_TEST_FILES_HEADER + "EmptyBoard.json");
+      assertFalse(test.isGameOver());
+      assertEquals(Map.of(), endCondition.getScores(test));
     } catch (Exception e) {
+      e.printStackTrace();
       fail();
     }
   }

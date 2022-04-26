@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -525,6 +526,7 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @return list of opponent pieces
    */
   public List<Piece> getOpponentPieces(int team) {
+    if(this.getPlayer(team).opponentIDs() == null) return Collections.emptyList();
     return board.stream().flatMap(List::stream).toList().stream().map(ChessTile::getPieces)
         .flatMap(List::stream).toList().stream()
         .filter(p -> Arrays.stream(this.getPlayer(team).opponentIDs()).anyMatch(
