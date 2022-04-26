@@ -12,7 +12,7 @@ import java.util.List;
 public class PieceEditor extends NodeContainer {
 	private final String ID;
 	private final List<PieceBoard> myPieceBoards;
-	private final PieceTileTypeSelector myTileTypeSelector;
+	private final PieceTileSelector myPieceTileSelector;
 	private final PieceSettings myPieceSettings;
 	private final SimpleIntegerProperty mySelectedTeam;
 
@@ -22,7 +22,7 @@ public class PieceEditor extends NodeContainer {
 		myPieceBoards = new ArrayList<>();
 		myPieceBoards.add(new PieceBoard(id, 0));
 		myPieceBoards.add(new PieceBoard(id, 1));
-		myTileTypeSelector = new PieceTileTypeSelector();
+		myPieceTileSelector = new PieceTileSelector();
 		myPieceSettings = new PieceSettings(id, mySelectedTeam);
 	}
 
@@ -39,7 +39,7 @@ public class PieceEditor extends NodeContainer {
 		BorderPane ret = new BorderPane();
 		ret.setPrefWidth(myScreenSize.getWidth());
 		ret.setCenter(getCurrentPieceBoard());
-		ret.setLeft(myTileTypeSelector.getNode());
+		ret.setLeft(myPieceTileSelector.getNode());
 		ret.setRight(myPieceSettings.getNode());
 		return ret;
 	}

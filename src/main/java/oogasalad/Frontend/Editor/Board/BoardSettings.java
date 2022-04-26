@@ -6,13 +6,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.GridPane;
+import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.Frontend.util.LabelledContainer;
 
 public class BoardSettings extends LabelledContainer {
 	public static final int MAX_SIZE = 40;
 
 	public BoardSettings() {
-		super("Board Settings");
+		super(BackendConnector.getFrontendWord("BoardSettingsTitle"));
 	}
 
 	@Override
@@ -34,10 +35,10 @@ public class BoardSettings extends LabelledContainer {
 
 		Label text = new Label();
 		if (width) {
-			text.setText("board width");
+			text.setText(BackendConnector.getFrontendWord("Width", getClass()));
 			spinner.valueProperty().addListener((ob, ov, nv) -> getEditorBackend().getBoardState().setWidth(nv));
 		} else {
-			text.setText("board height");
+			text.setText(BackendConnector.getFrontendWord("Height", getClass()));
 			spinner.valueProperty().addListener((ob, ov, nv) -> getEditorBackend().getBoardState().setHeight(nv));
 		}
 		GridPane ret = new GridPane();

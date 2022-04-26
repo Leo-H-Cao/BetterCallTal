@@ -2,6 +2,7 @@ package oogasalad.Frontend.Editor.Board;
 
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.FlowPane;
@@ -11,14 +12,19 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
+import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.Frontend.util.LabelledContainer;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.ResourceBundle;
 
 public class PieceLibrary extends LabelledContainer {
 
+	private ResourceBundle resources;
+
 	public PieceLibrary() {
-		super("Piece Library");
+		super(BackendConnector.getFrontendWord("PieceLibraryTitle"));
+		myResources.ifPresent(e -> resources = e);
 	}
 
 	@Override
@@ -37,7 +43,7 @@ public class PieceLibrary extends LabelledContainer {
 			fp.getChildren().addAll(listOfNodes);
 		});
 
-		CheckBox placeAlternateColor = new CheckBox("Place alternate color");
+		CheckBox placeAlternateColor = new CheckBox(BackendConnector.getFrontendWord("Alt", getClass()));
 		placeAlternateColor.selectedProperty().addListener((ob, ov, nv) -> {
 			if(nv) {
 				getEditorBackend().setAlternatePiece(1);
@@ -46,17 +52,21 @@ public class PieceLibrary extends LabelledContainer {
 			}
 		});
 
-		ret.add(placeAlternateColor, 0, 0);
-		ret.add(fp, 0, 1);
+		Label instructions = new Label(BackendConnector.getFrontendWord("Instructions", getClass()));
+
+		ret.add(instructions, 0, 0);
+		ret.add(placeAlternateColor, 0, 1);
+		ret.add(fp, 0, 2);
 
 		return ret;
 	}
 
 	private Node createPiece(String id) {
-		int size = 80;
+		double size = Double.parseDouble(resources.getString("TileSize"));
+		double strokeWidth = Double.parseDouble(resources.getString("StrokeWidth"));
 		Rectangle rect = new Rectangle(size, size);
-		rect.setFill(Paint.valueOf("#ccc"));
-		rect.setStroke(Paint.valueOf("blue"));
+		rect.setFill(Paint.valueOf(resources.getString("FillColor")));
+		rect.setStroke(Paint.valueOf(resources.getString("StrokeColor")));
 		rect.setStrokeWidth(0);
 		rect.setStrokeType(StrokeType.INSIDE);
 
@@ -64,12 +74,12 @@ public class PieceLibrary extends LabelledContainer {
 
 		// Set initial outline
 		if(id.equals(getEditorBackend().getSelectedPieceId().getValue())) {
-			rect.setStrokeWidth(2);
+			rect.setStrokeWidth(strokeWidth);
 		}
 
 		getEditorBackend().getSelectedPieceId().addListener((e) -> {
 			if(id.equals(getEditorBackend().getSelectedPieceId().getValue())) {
-				rect.setStrokeWidth(2);
+				rect.setStrokeWidth(strokeWidth);
 			} else {
 				rect.setStrokeWidth(0);
 			}

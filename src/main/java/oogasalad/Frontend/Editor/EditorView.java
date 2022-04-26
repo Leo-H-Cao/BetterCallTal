@@ -20,12 +20,14 @@ import oogasalad.Frontend.util.View;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 public class EditorView extends View {
 	private final BoardEditor myBoardEditor;
 	private final Map<String, PieceEditor> myPieceEditors;
 	private final TabPane myTabs;
 	private int pieceEditorCount = 0;
+	private ResourceBundle resources;
 
 	public EditorView(Stage stage) {
 		super(stage);
@@ -44,6 +46,7 @@ public class EditorView extends View {
 			// Reset watched value after action occurs
 			getEditorBackend().setOpenCustomPieceProperty("");
 		});
+		myResources.ifPresent(e -> resources = e);
 	}
 
 	public TabPane getMyTabs() {
@@ -68,7 +71,7 @@ public class EditorView extends View {
 		String pieceId = "custom" + pieceEditorCount;
 		getEditorBackend().getPiecesState().createCustomPiece(pieceId);
 		EditorPiece piece = getEditorBackend().getPiecesState().getPiece(pieceId);
-		piece.setPieceName("customPiece" + pieceEditorCount);
+		piece.setPieceName( BackendConnector.getFrontendWord("CustomPiece", getClass()) + " " + pieceEditorCount);
 		openCustomPiece(pieceId);
 	}
 
@@ -107,7 +110,7 @@ public class EditorView extends View {
 		Button addCustomPieceButton = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("NewCustomPiece", getClass()), "newCustomPiece",
 				(e) -> newCustomPiece());
 		buttons.add(addCustomPieceButton, 1, 0);
-		buttons.add(ButtonFactory.makeButton(ButtonType.TEXT, "Export", "export", e -> exportAction()), 2, 0);
+		buttons.add(ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("Export", getClass()), "export", e -> exportAction()), 2, 0);
 		GridPane.setFillHeight(addCustomPieceButton, true);
 		ret.add(buttons, 0, 0);
 		ret.add(myTabs, 0, 1);
@@ -116,7 +119,7 @@ public class EditorView extends View {
 
 	private void exportAction() {
 		FileChooser chooser = new FileChooser();
-		chooser.setInitialFileName("MainFile.json");
+		chooser.setInitialFileName(resources.getString("InitialFileName"));
 		chooser.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("JSON Files", "*.json"));
 		File dir = chooser.showSaveDialog(new Stage());
 

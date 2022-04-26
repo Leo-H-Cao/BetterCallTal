@@ -12,8 +12,6 @@ public class ChessBoard extends NodeContainer {
 	private final SimpleIntegerProperty myHeight;
 	public ChessBoard(){
 		myGrid = new GridPane();
-		myGrid.setHgap(0);
-		myGrid.setVgap(0);
 		myHeight = getEditorBackend().getBoardState().getHeight();
 		myWidth = getEditorBackend().getBoardState().getWidth();
 

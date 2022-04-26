@@ -96,7 +96,7 @@ public class EditorBackend {
 		EditorPiece piece = getPiecesState().createDefaultPiece(name);
 		piece.setImage(0, new Image("images/pieces/Default/white/" + name + ".png"));
 		piece.setImage(1, new Image("images/pieces/Default/black/" + name + ".png"));
-		name = name.substring(0, 1).toUpperCase() + name.substring(1) + " " + BackendConnector.getFrontendWord("ro");
+		name = name.substring(0, 1).toUpperCase() + name.substring(1) + " (" + BackendConnector.getFrontendWord("ro") + ")";
 		piece.setPieceName(name);
 		piece.setPointValue(val);
 		piece.setMovementGrid(moves, 0);

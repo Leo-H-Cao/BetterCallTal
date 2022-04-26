@@ -10,6 +10,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import oogasalad.Frontend.util.BackendConnector;
 import oogasalad.Frontend.util.ButtonFactory;
 import oogasalad.Frontend.util.ButtonType;
 import oogasalad.Frontend.util.LabelledContainer;
@@ -20,7 +21,7 @@ public class PieceSettings extends LabelledContainer {
 	private final SimpleIntegerProperty mySelectedTeam;
 
 	public PieceSettings(String id, SimpleIntegerProperty selectedTeam) {
-		super("Piece Settings");
+		super(BackendConnector.getFrontendWord("PieceSettingsTitle"));
 		myId = id;
 		mySelectedTeam = selectedTeam;
 	}
@@ -33,7 +34,7 @@ public class PieceSettings extends LabelledContainer {
 		FlowPane ret = new FlowPane();
 		ret.setPrefWrapLength(1);
 		ret.setVgap(GAP);
-		Button setPieceImage = ButtonFactory.makeButton(ButtonType.TEXT, "Change image", "changeImage", (e) -> choosePieceImage());
+		Button setPieceImage = ButtonFactory.makeButton(ButtonType.TEXT, BackendConnector.getFrontendWord("ChangeImage", getClass()), "changeImage", (e) -> choosePieceImage());
 		ret.getChildren().add(makeTeamToggle());
 
 		// Prevent changing the image of a read only piece
@@ -48,10 +49,10 @@ public class PieceSettings extends LabelledContainer {
 		GridPane ret = new GridPane();
 		ToggleGroup tg = new ToggleGroup();
 
-		RadioButton mainPieceSelector = new RadioButton("Main Piece");
+		RadioButton mainPieceSelector = new RadioButton(BackendConnector.getFrontendWord("MainPiece", getClass()));
 		mainPieceSelector.setId("selectMain");
 
-		RadioButton altPieceSelector = new RadioButton("Alternate Piece");
+		RadioButton altPieceSelector = new RadioButton(BackendConnector.getFrontendWord("AltPiece", getClass()));
 		altPieceSelector.setId("selectAlt");
 		tg.getToggles().addAll(mainPieceSelector, altPieceSelector);
 
@@ -74,7 +75,7 @@ public class PieceSettings extends LabelledContainer {
 	private void choosePieceImage() {
 		Stage stage = new Stage();
 		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Open piece image");
+		fileChooser.setTitle(BackendConnector.getFrontendWord("OpenImage", getClass()));
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg"));
 		File selectedFile = fileChooser.showOpenDialog(stage);
 		if(selectedFile != null) {
