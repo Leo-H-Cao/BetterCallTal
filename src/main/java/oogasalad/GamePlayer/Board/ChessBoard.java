@@ -306,7 +306,7 @@ public class ChessBoard implements Iterable<ChessTile> {
       boardCopy.add(new ArrayList<>());
       boardCopy.get(i).addAll(this.board.get(i).stream().map(ChessTile::clone).toList());
     });
-    return new ChessBoard(boardCopy, new TurnManagerData(turnManager), this.players,
+    return new ChessBoard(boardCopy, new TurnManagerData(turnManager).copy(), this.players,
         this.validStateCheckers,
         this.history);
   }
