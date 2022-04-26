@@ -1,5 +1,5 @@
 {
-  "pieceName" : "piece2",
+  "pieceId" : "piece2",
   "imgFile" : "images/pieces/Default/black/rook.png",
   "pointValue" : 0,
   "customMoves" : [ ],

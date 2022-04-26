@@ -120,4 +120,16 @@ class GeneralBoardTest {
   void boardEqualsTest() {
     assertNotEquals(board, null);
   }
+
+  @Test
+  void deepCopyTest(){
+    ChessBoard copy = board.deepCopy();
+    assertEquals(0, board.getTurnManagerData().turn().getCurrentPlayer());
+    assertEquals(0, copy.getTurnManagerData().turn().getCurrentPlayer());
+
+    copy.getTurnManagerData().turn().incrementTurn();
+
+    assertEquals(0, board.getTurnManagerData().turn().getCurrentPlayer());
+    assertEquals(1, copy.getTurnManagerData().turn().getCurrentPlayer());
+  }
 }
