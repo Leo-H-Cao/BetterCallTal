@@ -1,0 +1,622 @@
+{
+  "general": [
+    {
+      "rows": 12,
+      "columns": 6,
+      "turnCriteria": "Linear",
+      "colors": ["black", "white"],
+      "endConditions": ["Checkmate", "Stalemate", "KnownDraws", "Repetition"],
+      "validStateCheckers": ["Check"]
+    }
+  ],
+  "playerInfo": [
+    {
+      "team": 0,
+      "opponents": [1]
+    },
+    {
+      "team": 1,
+      "opponents": [0]
+    }
+  ],
+  "pieces": [
+    {
+      "row": 8,
+      "col": 1,
+      "pieceFile": "WhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 8,
+      "col": 4,
+      "pieceFile": "WhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 9,
+      "col": 0,
+      "pieceFile": "WhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 9,
+      "col": 2,
+      "pieceFile": "WhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 9,
+      "col": 3,
+      "pieceFile": "WhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 9,
+      "col": 5,
+      "pieceFile": "WhitePawn",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 10,
+      "col": 1,
+      "pieceFile": "Rook",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 10,
+      "col": 4,
+      "pieceFile": "Rook",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 10,
+      "col": 2,
+      "pieceFile": "Knight",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 10,
+      "col": 3,
+      "pieceFile": "Knight",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 9,
+      "col": 1,
+      "pieceFile": "Bishop",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 9,
+      "col": 4,
+      "pieceFile": "Bishop",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 11,
+      "col": 2,
+      "pieceFile": "Queen",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 11,
+      "col": 3,
+      "pieceFile": "King",
+      "team": 0,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 1
+    },
+    {
+      "row": 2,
+      "col": 0,
+      "pieceFile": "BlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 3,
+      "col": 1,
+      "pieceFile": "BlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 2,
+      "col": 2,
+      "pieceFile": "BlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 2,
+      "col": 3,
+      "pieceFile": "BlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 3,
+      "col": 4,
+      "pieceFile": "BlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 2,
+      "col": 5,
+      "pieceFile": "BlackPawn",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 1,
+      "pieceFile": "Rook",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 4,
+      "pieceFile": "Rook",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 2,
+      "pieceFile": "Knight",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 3,
+      "pieceFile": "Knight",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 2,
+      "col": 1,
+      "pieceFile": "Bishop",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 2,
+      "col": 4,
+      "pieceFile": "Bishop",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 2,
+      "pieceFile": "Queen",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 3,
+      "pieceFile": "King",
+      "team": 1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 1
+    },
+    {
+      "row": 0,
+      "col": 0,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 1,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 0,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 4,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 0,
+      "col": 5,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 1,
+      "col": 5,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 10,
+      "col": 0,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 11,
+      "col": 0,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 11,
+      "col": 1,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 11,
+      "col": 4,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 11,
+      "col": 5,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 10,
+      "col": 5,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 5,
+      "col": 0,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 0,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 5,
+      "col": 5,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    },
+    {
+      "row": 6,
+      "col": 5,
+      "pieceFile": "Blocker",
+      "team": -1,
+      "customMoves": [],
+      "movementModifiers": [],
+      "onInteractionModifier": [],
+      "mainPiece": 0
+    }
+  ],
+  "tiles": [
+    {
+      "row": 0,
+      "col": 2,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 1,
+      "col": 1,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 0,
+      "col": 2,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 0,
+      "col": 3,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 1,
+      "col": 4,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 2,
+      "col": 5,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 9,
+      "col": 0,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 10,
+      "col": 1,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 11,
+      "col": 2,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 11,
+      "col": 3,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 10,
+      "col": 4,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 9,
+      "col": 5,
+      "tileActions": ["Promotion"]
+    },
+    {
+      "row": 0,
+      "col": 0,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 0,
+      "col": 1,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 1,
+      "col": 0,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 0,
+      "col": 4,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 0,
+      "col": 5,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 1,
+      "col": 5,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 10,
+      "col": 0,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 11,
+      "col": 0,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 11,
+      "col": 1,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 10,
+      "col": 5,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 11,
+      "col": 5,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 11,
+      "col": 4,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 5,
+      "col": 0,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 6,
+      "col": 0,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 5,
+      "col": 5,
+      "tileActions": [],
+      "img": "blocker"
+    },
+    {
+      "row": 6,
+      "col": 5,
+      "tileActions": [],
+      "img": "blocker"
+    }
+  ]
+}
