@@ -10,9 +10,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 
-class JacksonTests {
+class ServerManagerTests {
 
-  private static final Logger LOG = LogManager.getLogger(JacksonTests.class);
+  private static final Logger LOG = LogManager.getLogger(ServerManagerTests.class);
   private static final String filePath = "doc/games/";
   private final ObjectMapper mapper = RequestBuilder.objectMapperWithPTV();
 
@@ -22,7 +22,6 @@ class JacksonTests {
     testJSON("Atomic.json");
     testJSON("Antichess.json");
     testJSON("BlackHoleTileVariant.json");
-
   }
 
   @Test
@@ -48,6 +47,16 @@ class JacksonTests {
     testJSON("TicTacToeFour.json");
   }
 
+  @Test
+  void hostGame() {
+    try {
+      String name = "TicTacToeFiveButWithFourInARow.json";
+      String key = "test" + name;
+      ChessBoard board = BoardSetup.createRemoteBoard(filePath + name, "test" + name, 1);
+    } catch (Exception e) {
+      fail(e.getMessage());
+    }
+  }
 
   void testJSON(String fileName) throws Exception {
     try {
