@@ -26,9 +26,9 @@ import org.apache.logging.log4j.Logger;
  *
  * @author Vincent Chen
  */
-public abstract class BasicMovementInterface implements MovementInterface{
+public abstract class BasicMovementAbstract implements MovementInterface{
 
-  private static final Logger LOG = LogManager.getLogger(BasicMovementInterface.class);
+  private static final Logger LOG = LogManager.getLogger(BasicMovementAbstract.class);
 
   protected static final String MOVE_KEY = "move";
   protected static final String CAPTURE_KEY = "capture";
@@ -40,7 +40,7 @@ public abstract class BasicMovementInterface implements MovementInterface{
   /***
    * Creates a class representing a basic piece movement
    */
-  protected BasicMovementInterface(List<Coordinate> possibleMoves, boolean infinite) {
+  protected BasicMovementAbstract(List<Coordinate> possibleMoves, boolean infinite) {
     this.possibleMoves = possibleMoves;
     this.infinite = infinite;
   }
@@ -48,14 +48,14 @@ public abstract class BasicMovementInterface implements MovementInterface{
   /***
    * Creates a class representing a basic piece movement with one coordinate provided
    */
-  protected BasicMovementInterface(Coordinate possibleMove, boolean infinite) {
+  protected BasicMovementAbstract(Coordinate possibleMove, boolean infinite) {
     this(List.of(possibleMove), infinite);
   }
 
   /**
    * Constructor for Jackson serialization and deserialization
    */
-  protected BasicMovementInterface(){
+  protected BasicMovementAbstract(){
     this.possibleMoves = new ArrayList<>();
     this.infinite = false;
   }
@@ -79,7 +79,6 @@ public abstract class BasicMovementInterface implements MovementInterface{
       updatedSquares.addAll(piece.updateCoordinates(finalTile, board));
       return updatedSquares;
     }
-
 
     LOG.warn(String.format("Invalid move made: (%d, %d)", finalSquare.getRow(), finalSquare.getCol()));
     throw new InvalidMoveException(piece + ": " + finalSquare);
@@ -239,8 +238,8 @@ public abstract class BasicMovementInterface implements MovementInterface{
   public static Set<MovementInterface> invertMovements(Set<MovementInterface> movements) {
     Set<MovementInterface> inverted = new HashSet<>();
     movements.forEach(mi -> {
-      if(mi.getClass().isAssignableFrom(BasicMovementInterface.class)) {
-        BasicMovementInterface movement = (BasicMovementInterface) mi;
+      if(mi.getClass().isAssignableFrom(BasicMovementAbstract.class)) {
+        BasicMovementAbstract movement = (BasicMovementAbstract) mi;
         List<Coordinate> invertedCoords = new ArrayList<>();
         movement.getRelativeCoords().forEach(c -> {
           Coordinate invertedCoord = Coordinate.of(-c.getRow(), -c.getCol());
@@ -248,7 +247,7 @@ public abstract class BasicMovementInterface implements MovementInterface{
           LOG.debug(String.format("Movement inverted: %s", invertedCoord));
         });
         try {
-          inverted.add((BasicMovementInterface) createInstance(
+          inverted.add((BasicMovementAbstract) createInstance(
               mi.getClass().getName(), new Object[]{invertedCoords, movement.infinite}));
         } catch (IOException e) {
           inverted.add(mi);
@@ -271,7 +270,7 @@ public abstract class BasicMovementInterface implements MovementInterface{
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BasicMovementInterface movement = (BasicMovementInterface) o;
+    BasicMovementAbstract movement = (BasicMovementAbstract) o;
     return infinite == movement.infinite && Objects.equals(possibleMoves,
         movement.possibleMoves);
   }
