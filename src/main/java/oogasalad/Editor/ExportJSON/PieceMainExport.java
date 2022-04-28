@@ -18,15 +18,16 @@ public class PieceMainExport {
   private ArrayList<String> onInteractionModifier;
   private ArrayList<String> customMoves;
 
-  public PieceMainExport(int row, int col, int team, EditorPiece editorPiece){
+  public PieceMainExport(int row, int col, int teamNum, EditorPiece editorPiece){
+    String team = teamNum == 0 ? "White" : "Black";
     this.row = row;
     this.col = col;
-    this.team = team;
+    this.team = teamNum;
     this.mainPiece = editorPiece.isMainPiece() ? 1 : 0;
     movementModifiers = new ArrayList<>();
     onInteractionModifier = new ArrayList<>();
     customMoves = editorPiece.getCustomMoves() == null ? new ArrayList<>() :editorPiece.getCustomMoves();
-    pieceFile = editorPiece.getPieceID();
+    pieceFile = team+editorPiece.getPieceID();
   }
 
   public int getRow() {

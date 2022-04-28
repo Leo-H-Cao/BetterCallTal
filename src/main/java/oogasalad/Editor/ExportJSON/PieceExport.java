@@ -1,5 +1,6 @@
 package oogasalad.Editor.ExportJSON;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 
@@ -18,10 +19,14 @@ public class PieceExport {
 	private final ArrayList<String> basicMovements;
 	private final ArrayList<String> basicCaptures;
 
+	@JsonIgnore
+	private int teamNum;
+
 
   public PieceExport(EditorPiece editorPiece, int teamNum){
-    pieceName = editorPiece.getPieceID();
-    imgFile = editorPiece.getImage(teamNum).getValue().getUrl().split("/classes/")[1];
+		this.teamNum = teamNum;
+		pieceName = editorPiece.getPieceID();
+		imgFile = editorPiece.getImage(teamNum).getValue().getUrl().split("/classes/")[1];
     pointValue = editorPiece.getPointValue();
     customMoves = editorPiece.getCustomMoves() == null ? new ArrayList<>() :editorPiece.getCustomMoves();
     basicMovements = new ArrayList<>();
@@ -29,9 +34,8 @@ public class PieceExport {
 
 		String team = teamNum == 0 ? "w" : "b";
 		basicMovements.add(team + pieceName + "Mov");
-
-		//change for capture != movement
 		basicCaptures.add(team + pieceName + "Cap");
+
 		movementModifiers = new ArrayList<>();
 		onInteractionModifier = editorPiece.getOnInteractionModifiers();
 	}
@@ -66,5 +70,9 @@ public class PieceExport {
 
 	public ArrayList<String> getBasicCaptures() {
 		return basicCaptures;
+	}
+
+	public int getTeamNum() {
+		return teamNum;
 	}
 }
