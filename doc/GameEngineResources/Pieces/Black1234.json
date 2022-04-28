@@ -1,0 +1,10 @@
+{
+  "pieceName" : "1234",
+  "imgFile" : "images/pieces/Default/black/rook.png",
+  "pointValue" : 0,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : [ ],
+  "basicMovements" : [ "b1234Mov" ],
+  "basicCaptures" : [ "b1234Cap" ]
+}
