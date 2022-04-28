@@ -25,6 +25,7 @@ import org.apache.logging.log4j.Logger;
 
 public abstract class View extends BackendConnector {
 
+	protected static final Logger LOG = LogManager.getLogger(View.class);
 	private static Collection<View> myViews;
 	private static boolean fullscreen;
 	protected Scene myScene;
@@ -32,7 +33,6 @@ public abstract class View extends BackendConnector {
 	protected Rectangle2D myScreenSize;
 	protected Optional<ResourceBundle> myResources;
 	protected final Stage myStage;
-	protected static final Logger LOG = LogManager.getLogger(View.class);
 
 	public View(Stage stage) {
 		fullscreen = false;
@@ -43,7 +43,7 @@ public abstract class View extends BackendConnector {
 		myStage = stage;
 		myRoot = new Group();
 		try {
-			myResources = Optional.of(ResourceBundle.getBundle(getClass().getSimpleName()));
+			myResources = Optional.of(ResourceBundle.getBundle(getClass().getName()));
 		} catch (MissingResourceException e) {
 			myResources = Optional.empty();
 		}
@@ -51,7 +51,7 @@ public abstract class View extends BackendConnector {
 
 	/**
 	 * Sets the stage to be full screen
-	 * @param b
+	 * @param b should the screen be set to fullscreen
 	 */
 	public static void setFullscreen(boolean b) {
 		fullscreen = b;
@@ -59,7 +59,7 @@ public abstract class View extends BackendConnector {
 
 	/**
 	 * adds a view to myViews
-	 * @param v
+	 * @param v View to be added to myViews
 	 */
 	public static void addView(View v) {
 		myViews.add(v);
