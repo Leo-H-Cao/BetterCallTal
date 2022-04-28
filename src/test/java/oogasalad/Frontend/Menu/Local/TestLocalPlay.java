@@ -1,6 +1,8 @@
 package oogasalad.Frontend.Menu.Local;
 
 import java.util.ResourceBundle;
+
+import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 import oogasalad.Frontend.Menu.LocalPlay.LocalGame;
 import oogasalad.Frontend.util.BackendConnector;
@@ -38,6 +40,18 @@ public class TestLocalPlay extends DukeApplicationTest {
     clickOn(lookup("#easyAI").query());
     clickOn(lookup("#first").query());
 //    clickOn(lookup("#upload").query());
+    myLocalGame.injectBoard("doc/games/TicTacToe.json");
+    clickOn(lookup("#done").query());
+  }
+
+  @Test
+  void testPACKAGE() {
+    clickOn(lookup("#singleplayerButton").query());
+    clickOn(lookup("#easyAI").query());
+    clickOn(lookup("#first").query());
+//    clickOn(lookup("#upload").query());
+    ChoiceBox myPackages = lookup("#PackageSelect").query();
+    select(myPackages, "Fun");
     myLocalGame.injectBoard("doc/games/TicTacToe.json");
     clickOn(lookup("#done").query());
   }

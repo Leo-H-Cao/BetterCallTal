@@ -150,6 +150,7 @@ public abstract class View extends BackendConnector {
 	protected ChoiceBox<String> makePackageSelectGroup() {
 		String[] langoptions = getFrontendWord("Packages").split(",");
 		ChoiceBox<String> packages = new ChoiceBox<>();
+		packages.setId("PackageSelect");
 		packages.getItems().addAll(langoptions);
 		packages.setValue(langoptions[0]);
 		return packages;
