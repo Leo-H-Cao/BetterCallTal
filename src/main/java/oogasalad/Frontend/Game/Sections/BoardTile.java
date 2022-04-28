@@ -127,7 +127,7 @@ public class BoardTile {
             } else if (team == 1){TEAM = BLACK;
             } else if (team == -1){TEAM = PIECEMOD;
             } else {TEAM = TILEMODIF;}
-            Image image = new Image(new FileInputStream(Image_Path + TEAM + chosenPack + name.toLowerCase() + ".png"));
+            Image image = new Image(new FileInputStream(Image_Path + chosenPack + TEAM + name.toLowerCase() + ".png"));
             ImageView PieceView = new ImageView(image);
             if (team == -2) {
                 PieceView.setFitHeight(myTileHeight);

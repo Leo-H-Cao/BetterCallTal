@@ -114,7 +114,7 @@ public class GameView extends View {
         removeGOCons = this::removeGameOverNode;
         flipRun = this::flipBoard;
         errorRun = this::showmyError;
-    }q
+    }
 
     private void makeMove(Coordinate c) {
         makeKeyListener();
