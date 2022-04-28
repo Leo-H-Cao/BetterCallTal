@@ -140,5 +140,67 @@
       "onInteractionModifier": [],
       "mainPiece": 0
     }
+  ],
+  "tiles": [
+    {
+      "row": 0,
+      "col": 7,
+      "img": "blocker",
+      "tileActions": []
+    },
+    {
+      "row": 1,
+      "col": 7,
+      "img": "blocker",
+      "tileActions": []
+    },
+    {
+      "row": 2,
+      "col": 7,
+      "img": "blocker",
+      "tileActions": []
+    },
+    {
+      "row": 3,
+      "col": 7,
+      "img": "blocker",
+      "tileActions": []
+    },
+    {
+      "row": 4,
+      "col": 7,
+      "img": "blocker",
+      "tileActions": []
+    },
+    {
+      "row": 5,
+      "col": 7,
+      "img": "blocker",
+      "tileActions": []
+    },
+    {
+      "row": 1,
+      "col": 8,
+      "img": "blocker",
+      "tileActions": []
+    },
+    {
+      "row": 2,
+      "col": 8,
+      "img": "blocker",
+      "tileActions": []
+    },
+    {
+      "row": 3,
+      "col": 8,
+      "img": "blocker",
+      "tileActions": []
+    },
+    {
+      "row": 4,
+      "col": 8,
+      "img": "blocker",
+      "tileActions": []
+    }
   ]
 }
