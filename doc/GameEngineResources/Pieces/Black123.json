@@ -1,0 +1,10 @@
+{
+  "pieceName" : "123",
+  "imgFile" : "images/pieces/Default/black/customPiece1.png",
+  "pointValue" : 0,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : [ ],
+  "basicMovements" : [ "b123Mov" ],
+  "basicCaptures" : [ "b123Cap" ]
+}

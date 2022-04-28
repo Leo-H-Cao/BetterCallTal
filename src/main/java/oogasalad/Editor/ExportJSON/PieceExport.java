@@ -1,5 +1,6 @@
 package oogasalad.Editor.ExportJSON;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
 
@@ -9,7 +10,7 @@ import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
  * @author Leo Cao
  */
 public class PieceExport {
-	private final String pieceId;
+	private final String pieceName;
 	private final String imgFile;
 	private final int pointValue;
 	private final ArrayList<String> customMoves;
@@ -18,26 +19,29 @@ public class PieceExport {
 	private final ArrayList<String> basicMovements;
 	private final ArrayList<String> basicCaptures;
 
+	@JsonIgnore
+	private int teamNum;
+
 
   public PieceExport(EditorPiece editorPiece, int teamNum){
-    pieceId = editorPiece.getPieceName().getValue();
-    imgFile = editorPiece.getImage(teamNum).getValue().getUrl().split("/classes/")[1];
+		this.teamNum = teamNum;
+		pieceName = editorPiece.getPieceID();
+		imgFile = editorPiece.getImage(teamNum).getValue().getUrl().split("/classes/")[1];
     pointValue = editorPiece.getPointValue();
     customMoves = editorPiece.getCustomMoves() == null ? new ArrayList<>() :editorPiece.getCustomMoves();
     basicMovements = new ArrayList<>();
     basicCaptures = new ArrayList<>();
 
 		String team = teamNum == 0 ? "w" : "b";
-		basicMovements.add(team + pieceId + "Mov");
+		basicMovements.add(team + pieceName + "Mov");
+		basicCaptures.add(team + pieceName + "Cap");
 
-		//change for capture != movement
-		basicCaptures.add(team + pieceId + "Cap");
 		movementModifiers = new ArrayList<>();
 		onInteractionModifier = editorPiece.getOnInteractionModifiers();
 	}
 
-	public String getPieceId() {
-		return pieceId;
+	public String getPieceName() {
+		return pieceName;
 	}
 
 	public String getImgFile() {
@@ -66,5 +70,9 @@ public class PieceExport {
 
 	public ArrayList<String> getBasicCaptures() {
 		return basicCaptures;
+	}
+
+	public int getTeamNum() {
+		return teamNum;
 	}
 }
