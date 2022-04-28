@@ -9,7 +9,7 @@ import oogasalad.Editor.ModelState.EditPiece.EditorPiece;
  * @author Leo Cao
  */
 public class PieceExport {
-	private final String pieceId;
+	private final String pieceName;
 	private final String imgFile;
 	private final int pointValue;
 	private final ArrayList<String> customMoves;
@@ -20,7 +20,7 @@ public class PieceExport {
 
 
   public PieceExport(EditorPiece editorPiece, int teamNum){
-    pieceId = editorPiece.getPieceName().getValue();
+    pieceName = editorPiece.getPieceID();
     imgFile = editorPiece.getImage(teamNum).getValue().getUrl().split("/classes/")[1];
     pointValue = editorPiece.getPointValue();
     customMoves = editorPiece.getCustomMoves() == null ? new ArrayList<>() :editorPiece.getCustomMoves();
@@ -28,16 +28,16 @@ public class PieceExport {
     basicCaptures = new ArrayList<>();
 
 		String team = teamNum == 0 ? "w" : "b";
-		basicMovements.add(team + pieceId + "Mov");
+		basicMovements.add(team + pieceName + "Mov");
 
 		//change for capture != movement
-		basicCaptures.add(team + pieceId + "Cap");
+		basicCaptures.add(team + pieceName + "Cap");
 		movementModifiers = new ArrayList<>();
 		onInteractionModifier = editorPiece.getOnInteractionModifiers();
 	}
 
-	public String getPieceId() {
-		return pieceId;
+	public String getPieceName() {
+		return pieceName;
 	}
 
 	public String getImgFile() {

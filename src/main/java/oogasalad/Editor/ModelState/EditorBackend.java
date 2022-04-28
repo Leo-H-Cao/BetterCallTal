@@ -84,12 +84,12 @@ public class EditorBackend {
 	}
 
 	private void createDefaultPieces() {
-		createDefaultPiece("pawn", 1, createWhitePawnDefaultMoves());
-		createDefaultPiece("knight", 3, createKnightDefaultMoves());
-		createDefaultPiece("bishop", 3, createBishopDefaultMoves());
-		createDefaultPiece("rook", 5, createRookDefaultMoves());
-		createDefaultPiece("queen", 9, createQueenDefaultMoves());
-		createDefaultPiece("king", 99, createKingDefaultMoves());
+		createDefaultPiece("pawnDefault", 1, createWhitePawnDefaultMoves());
+		createDefaultPiece("knightDefault", 3, createKnightDefaultMoves());
+		createDefaultPiece("bishopDefault", 3, createBishopDefaultMoves());
+		createDefaultPiece("rookDefault", 5, createRookDefaultMoves());
+		createDefaultPiece("queenDefault", 9, createQueenDefaultMoves());
+		createDefaultPiece("kingDefault", 99, createKingDefaultMoves());
 	}
 
 	private void createDefaultPiece(String name, int val, MovementGrid moves) {
@@ -100,7 +100,7 @@ public class EditorBackend {
 		piece.setPieceName(name);
 		piece.setPointValue(val);
 		piece.setMovementGrid(moves, 0);
-		if(name.equals("Pawn")){
+		if(name.equals("PawnTest")){
 			piece.setMovementGrid(createBlackPawnDefaultMoves(), 1);
 		}
 		else{
