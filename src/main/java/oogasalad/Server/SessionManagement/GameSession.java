@@ -26,7 +26,6 @@ public final class GameSession {
    */
   public GameSession(String gameSessionId, int host, int opponent, ChessBoard initialBoard) {
     ChessBoard board = initialBoard.toServerChessBoard(gameSessionId, host);
-    board.disableTimer();
     this.gameSessionId = gameSessionId;
     this.host = host;
     this.opponent = opponent;

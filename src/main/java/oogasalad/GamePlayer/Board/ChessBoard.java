@@ -80,7 +80,8 @@ public class ChessBoard implements Iterable<ChessTile> {
   public ChessBoard(List<List<ChessTile>> board, TurnCriteria turnCriteria, Player[] players,
       List<ValidStateChecker> validStateCheckers, List<EndCondition> endConditions) {
     this.players = new GamePlayers(players);
-    this.turnManagerData = new TurnManagerData(this.players, turnCriteria, endConditions, EMPTY_LINK);
+    this.turnManagerData = new TurnManagerData(this.players, turnCriteria, endConditions,
+        EMPTY_LINK);
     this.turnManager = new LocalTurnManager(this.turnManagerData);
     this.board = board;
     this.validStateCheckers = validStateCheckers;
@@ -93,15 +94,23 @@ public class ChessBoard implements Iterable<ChessTile> {
   public ChessBoard(List<List<ChessTile>> board, TurnManagerData turnManagerData,
       GamePlayers players,
       List<ValidStateChecker> validStateCheckers, HistoryManager history) {
+    this(board, new LocalTurnManager(turnManagerData), players, validStateCheckers, history,
+        GameType.LOCAL, -1);
+  }
+
+  public ChessBoard(List<List<ChessTile>> board, TurnManager turnManager,
+      GamePlayers players,
+      List<ValidStateChecker> validStateCheckers, HistoryManager history, GameType gameType,
+      int thisPlayer) {
     this.players = players;
-    this.turnManagerData = turnManagerData;
-    this.turnManager = new LocalTurnManager(turnManagerData);
+    this.turnManagerData = new TurnManagerData(turnManager);
+    this.turnManager = turnManager;
     this.board = board;
     this.validStateCheckers = validStateCheckers;
     this.history = history;
     this.pieceList = new HashMap<>();
-    this.gameType = GameType.LOCAL;
-    thisPlayer = -1;
+    this.gameType = gameType;
+    this.thisPlayer = thisPlayer;
   }
 
   /**
@@ -136,12 +145,29 @@ public class ChessBoard implements Iterable<ChessTile> {
     if (gameType == GameType.SERVER) {
       this.turnManager = new RemoteTurnManager(boardData.turnManagerData());
       this.history = new RemoteHistoryManager(boardData.history());
-      timer.scheduleAtFixedRate(createTask(), TIME_DELAY, TIME_PERIOD);
     } else {
       this.turnManager = new LocalTurnManager(boardData.turnManagerData());
       this.history = new LocalHistoryManager(boardData.history());
     }
   }
+
+  public ChessBoard toServerChessBoard(String id, int thisPlayer) {
+    HistoryManager newHistory = new RemoteHistoryManager(getHistoryManagerData());
+    TurnManager newTurnManager = new RemoteTurnManager(getTurnManagerData());
+    newTurnManager.setLink(id);
+    newHistory.setLink(id);
+    return new ChessBoard(getTiles(), newTurnManager, getGamePlayers(), getValidStateCheckers(),
+        newHistory, GameType.SERVER, thisPlayer);
+  }
+
+  public void disableTimer() {
+    timer.cancel();
+  }
+
+  public void enableTimer() {
+    timer.scheduleAtFixedRate(createTask(), TIME_DELAY, TIME_PERIOD);
+  }
+
 
   public TimerTask createTask() {
     return new TimerTask() {
@@ -431,11 +457,11 @@ public class ChessBoard implements Iterable<ChessTile> {
     LOG.debug(String.format("Past pieces:    %s", pastPieces));
     LOG.debug(String.format("Present pieces: %s", presentPieces));
 
-    Piece takenPiece =  pastPieces.stream().filter(p -> !presentPieces.contains(p)).findFirst().orElse(null);
+    Piece takenPiece = pastPieces.stream().filter(p -> !presentPieces.contains(p)).findFirst()
+        .orElse(null);
     LOG.debug(String.format("Taken piece: %s", takenPiece));
     return takenPiece;
   }
-
 
   /**
    * Gets the player object with the associated ID
@@ -526,7 +552,9 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @return list of opponent pieces
    */
   public List<Piece> getOpponentPieces(int team) {
-    if(this.getPlayer(team).opponentIDs() == null) return Collections.emptyList();
+    if (this.getPlayer(team).opponentIDs() == null) {
+      return Collections.emptyList();
+    }
     return board.stream().flatMap(List::stream).toList().stream().map(ChessTile::getPieces)
         .flatMap(List::stream).toList().stream()
         .filter(p -> Arrays.stream(this.getPlayer(team).opponentIDs()).anyMatch(
@@ -666,22 +694,6 @@ public class ChessBoard implements Iterable<ChessTile> {
     return gameType;
   }
 
-  public ChessBoard toServerChessBoard(String id, int thisPlayer) {
-    String tmLink = turnManager.getLink();
-    String hmLink = history.getLink();
-    turnManager.setLink(id);
-    history.setLink(id);
-    ChessBoard server = getBoardData().toChessBoard(GameType.SERVER);
-    server.setThisPlayer(thisPlayer);
-    turnManager.setLink(tmLink);
-    history.setLink(hmLink);
-    return server;
-  }
-
-  public void disableTimer() {
-    timer.cancel();
-  }
-
   /**
    * Iterator class over the board list
    */
@@ -784,11 +796,6 @@ public class ChessBoard implements Iterable<ChessTile> {
      * @return the chess board
      */
     public ChessBoard toChessBoard() {
-      return new ChessBoard(this);
-    }
-
-    public ChessBoard toChessBoard(GameType gameType) {
-      this.gameType = gameType;
       return new ChessBoard(this);
     }
 
