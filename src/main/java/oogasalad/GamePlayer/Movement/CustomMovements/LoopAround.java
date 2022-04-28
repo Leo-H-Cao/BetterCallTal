@@ -94,33 +94,9 @@ public class LoopAround implements MovementInterface {
       throw new InvalidMoveException(finalSquare.toString());
     }
 
-//    if(enactedSecondaryMove) {
-//      LOG.debug(String.format("Secondary move enacted: %s", finalSquare));
-//      primaryMoveDirection = Coordinate.multiply(primaryMoveDirection, primaryMultiplier);
-//      enactedSecondaryMove = false;
-//    }
-
     ChessTile oldTile = board.getTile(piece.getCoordinates());
     piece.updateCoordinates(board.getTile(finalSquare), board);
     return Set.of(oldTile, board.getTile(piece.getCoordinates()));
-  }
-
-  /**
-   * @throws InvalidMoveException because no capture possible
-   */
-  @Override
-  public Set<ChessTile> capturePiece(Piece piece, Coordinate captureSquare, ChessBoard board)
-      throws InvalidMoveException {
-    LOG.warn("Snake does not support captures");
-    throw new InvalidMoveException("Snake does not support captures");
-  }
-
-  /***
-   * @return empty set, not applicable
-   */
-  @Override
-  public Set<ChessTile> getCaptures(Piece piece, ChessBoard board) {
-    return Collections.emptySet();
   }
 
   /***
@@ -170,14 +146,6 @@ public class LoopAround implements MovementInterface {
    */
   Coordinate getSMD() {
     return secondaryMoveDirection;
-  }
-
-  /***
-   * @return empty list, not applicable
-   */
-  @Override
-  public List<Coordinate> getRelativeCoords() {
-    return Collections.emptyList();
   }
 
   /***

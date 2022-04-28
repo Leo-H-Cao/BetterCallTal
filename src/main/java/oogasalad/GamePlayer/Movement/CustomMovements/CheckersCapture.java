@@ -38,24 +38,14 @@ public class CheckersCapture implements MovementInterface {
   }
 
   /**
-   * @return exception because no capture possible
-   */
-  @Override
-  public Set<ChessTile> movePiece(Piece piece, Coordinate finalSquare, ChessBoard board)
-      throws InvalidMoveException, OutsideOfBoardException {
-    LOG.warn("Checkers capture does not support moving");
-    throw new InvalidMoveException("Checkers capture does not support moving");
-  }
-
-  /**
    * Captures piece by jumping over it, multiple jumps possible if applicable
    *
    * @return set of updated chess tiles
    */
   @Override
-  public Set<ChessTile> capturePiece(Piece piece, Coordinate captureSquare, ChessBoard board)
+  public Set<ChessTile> movePiece(Piece piece, Coordinate captureSquare, ChessBoard board)
       throws InvalidMoveException, OutsideOfBoardException {
-    if (!getCaptures(piece, board).contains(board.getTile(captureSquare))) {
+    if (!getMoves(piece, board).contains(board.getTile(captureSquare))) {
       LOG.warn("Illegal checkers capture move attempted");
       throw new InvalidMoveException(captureSquare.toString());
     }
@@ -76,7 +66,7 @@ public class CheckersCapture implements MovementInterface {
    * @return possible captures by jumping over pieces
    */
   @Override
-  public Set<ChessTile> getCaptures(Piece piece, ChessBoard board) {
+  public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
     capturePaths = new HashMap<>();
     visited = new HashSet<>();
 
@@ -157,22 +147,6 @@ public class CheckersCapture implements MovementInterface {
     } catch (OutsideOfBoardException e) {
       return false;
     }
-  }
-
-  /**
-   * @return empty set because no moves possible
-   */
-  @Override
-  public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
-    return Collections.emptySet();
-  }
-
-  /**
-   * @return nothing, not applicable
-   */
-  @Override
-  public List<Coordinate> getRelativeCoords() {
-    return Collections.emptyList();
   }
 
   /***

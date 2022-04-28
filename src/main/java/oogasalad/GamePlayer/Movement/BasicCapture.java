@@ -24,30 +24,25 @@ import org.apache.logging.log4j.Logger;
  */
 public class BasicCapture extends BasicMovementInterface {
 
-  private static final Logger LOG = LogManager.getLogger(BasicCapture.class);
+  /***
+   * Creates a class representing a basic piece capture
+   */
+  public BasicCapture(List<Coordinate> possibleMoves, boolean infinite) {
+    super(possibleMoves, infinite);
+  }
 
   /***
-   * Captures piece on captureSquare
-   *
-   * @param piece to move
-   * @param captureSquare end square
-   * @param board to move on
-   * @return set of updated tiles
-   * @throws InvalidMoveException if the piece cannot move to the given square
+   * Creates a class representing a basic piece capture with one coordinate provided
    */
-  @Override
-  public Set<ChessTile> movePiece(Piece piece, Coordinate captureSquare, ChessBoard board)
-      throws InvalidMoveException, OutsideOfBoardException {
+  public BasicCapture(Coordinate possibleMove, boolean infinite) {
+    super(possibleMove, infinite);
+  }
 
-    ChessTile captureTile = convertCordToTile(captureSquare, board);
-    if(getMoves(piece, board).contains(captureTile)) {
-      Set<ChessTile> updatedSquares = new HashSet<>(Set.of(board.getTile(piece.getCoordinates()), board.getTile(captureSquare)));
-      captureTile.clearPieces();
-      updatedSquares.addAll(piece.updateCoordinates(board.getTile(captureSquare), board));
-      return updatedSquares;
-    }
-    LOG.warn(String.format("Invalid move made: (%d, %d)", captureSquare.getRow(), captureSquare.getCol()));
-    throw new InvalidMoveException(piece + ": " + captureSquare);
+  /**
+   * Constructor for Jackson serialization and deserialization
+   */
+  public BasicCapture(){
+    super();
   }
 
   /***
@@ -60,16 +55,5 @@ public class BasicCapture extends BasicMovementInterface {
   @Override
   public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
     return getFromMovesMap(piece, board, CAPTURE_KEY);
-  }
-
-  /***
-   * Returns all possible moves a piece can make
-   *
-   * @param piece to get moves from
-   * @param board to move on
-   * @return set of tiles the piece can move to
-   */
-  public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
-    return getFromMovesMap(piece, board, MOVE_KEY);
   }
 }

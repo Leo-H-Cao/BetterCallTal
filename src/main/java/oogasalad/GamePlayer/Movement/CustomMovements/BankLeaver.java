@@ -95,24 +95,6 @@ public class BankLeaver implements MovementInterface {
   }
 
   /***
-   * @throws InvalidMoveException not a valid move
-   */
-  @Override
-  public Set<ChessTile> capturePiece(Piece piece, Coordinate captureSquare, ChessBoard board)
-      throws InvalidMoveException, OutsideOfBoardException {
-    LOG.warn("Bank leaving does not support captures");
-    throw new InvalidMoveException("Bank leaving does not support captures");
-  }
-
-  /***
-   * @return nothing, not applicable
-   */
-  @Override
-  public Set<ChessTile> getCaptures(Piece piece, ChessBoard board) {
-    return Collections.emptySet();
-  }
-
-  /***
    * @return all open squares on board to the left of the bank, if piece is in the bank
    */
   @Override
@@ -155,14 +137,6 @@ public class BankLeaver implements MovementInterface {
       posInts.add(intArray.getInt(i) < 0 ? max + intArray.getInt(i) : intArray.getInt(i));
     }
     return posInts;
-  }
-
-  /***
-   * @return nothing, not applicable
-   */
-  @Override
-  public List<Coordinate> getRelativeCoords() {
-    return Collections.emptyList();
   }
 
   /***

@@ -50,20 +50,6 @@ public class DoubleFirstMove implements MovementInterface {
     return updatedSquares;
   }
 
-  @Override
-  public Set<ChessTile> capturePiece(Piece piece, Coordinate captureSquare, ChessBoard board)
-      throws InvalidMoveException, OutsideOfBoardException {
-    LOG.warn("Double first move does not support captures");
-    throw new InvalidMoveException("Double first move does not support captures");
-  }
-
-  /***
-   * @return nothing, this custom move does not apply to captures
-   */
-  @Override
-  public Set<ChessTile> getCaptures(Piece piece, ChessBoard board) {
-    return Set.of();
-  }
 
   /***
    * @return double of move if first move
@@ -73,7 +59,7 @@ public class DoubleFirstMove implements MovementInterface {
     if(piece.getHistory().size() != NO_MOVEMENT_HISTORY_LENGTH) return Set.of();
 //    LOG.debug("Getting double moves: " + piece.getName());
     List<MovementInterface> newMovements = new ArrayList<>();
-    piece.getRelativeMoveCoords().stream().filter((c) -> {
+    piece.getRelativeMoveCoords().stream().filter(c -> {
       try {
         LOG.debug(String.format("Relative coordinate: (%d, %d)", c.getRow(), c.getCol()));
         return board.getTile(Coordinate.add(c, piece.getCoordinates())).getPieces().isEmpty();
@@ -82,18 +68,9 @@ public class DoubleFirstMove implements MovementInterface {
         return false;
       }
     }).forEach(c ->
-//      LOG.debug("Double move coord: " + Coordinate.of(c.getRow()*MULT, c.getCol()*MULT))
       newMovements.add(new BasicMovement(Coordinate.of(c.getRow()*MULT, c.getCol()*MULT), false))
     );
-    return newMovements.stream().flatMap((m) -> m.getMoves(piece, board).stream()).collect(Collectors.toSet());
-  }
-
-  /***
-   * @return nothing, not applicable
-   */
-  @Override
-  public List<Coordinate> getRelativeCoords() {
-    return List.of();
+    return newMovements.stream().flatMap(m -> m.getMoves(piece, board).stream()).collect(Collectors.toSet());
   }
 
   /***

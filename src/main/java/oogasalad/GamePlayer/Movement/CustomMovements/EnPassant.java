@@ -56,25 +56,15 @@ public class EnPassant implements MovementInterface {
   }
 
   /**
-   * No applicable moves
-   */
-  @Override
-  public Set<ChessTile> movePiece(Piece piece, Coordinate finalSquare, ChessBoard board)
-      throws InvalidMoveException, OutsideOfBoardException {
-    LOG.warn("En passant does not support move, only capture");
-    throw new InvalidMoveException("En passant does not support move, only capture");
-  }
-
-  /**
    * @param piece         to move
    * @param captureSquare end square
    * @param board         to move on
    * @return square of piece captured, original piece square, and square piece moved to
    */
   @Override
-  public Set<ChessTile> capturePiece(Piece piece, Coordinate captureSquare, ChessBoard board)
+  public Set<ChessTile> movePiece(Piece piece, Coordinate captureSquare, ChessBoard board)
       throws InvalidMoveException, OutsideOfBoardException {
-    if (!getCaptures(piece, board).contains(board.getTile(captureSquare))) {
+    if (!getMoves(piece, board).contains(board.getTile(captureSquare))) {
       LOG.warn("Illegal en passant move attempted");
       throw new InvalidMoveException(captureSquare.toString());
     }
@@ -94,7 +84,7 @@ public class EnPassant implements MovementInterface {
    * @return possible en passants
    */
   @Override
-  public Set<ChessTile> getCaptures(Piece piece, ChessBoard board) {
+  public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
     return getPossibleEnPassantTiles(piece, board);
   }
 
@@ -157,23 +147,6 @@ public class EnPassant implements MovementInterface {
                 c.getCoordinates().getCol()));
       } catch (OutsideOfBoardException e) {return null;}
     }).collect(Collectors.toSet());
-  }
-
-  /**
-   * @return nothing, no applicable moves
-   */
-  @Override
-  public Set<ChessTile> getMoves(Piece piece, ChessBoard board) {
-    return Collections.emptySet();
-  }
-
-
-  /**
-   * @return nothing, not applicable
-   */
-  @Override
-  public List<Coordinate> getRelativeCoords() {
-    return Collections.emptyList();
   }
 
   /***

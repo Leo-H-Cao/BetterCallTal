@@ -103,24 +103,6 @@ public class Castling implements MovementInterface {
   }
 
   /**
-   * @throws InvalidMoveException because no capture possible
-   */
-  @Override
-  public Set<ChessTile> capturePiece(Piece piece, Coordinate captureSquare, ChessBoard board)
-      throws InvalidMoveException {
-    LOG.warn("Castling does not support captures");
-    throw new InvalidMoveException("Castling does not support captures");
-  }
-
-  /**
-   * @return empty set because no capture possible
-   */
-  @Override
-  public Set<ChessTile> getCaptures(Piece piece, ChessBoard board) {
-    return Collections.emptySet();
-  }
-
-  /**
    * @param mainPiece is the king
    * @param board     to get supporters from
    * @return supporters to main piece (i.e. rooks) if applicable
@@ -171,14 +153,6 @@ public class Castling implements MovementInterface {
       LOG.debug(String.format("Castling squares: %s", possibleSquares));
     }
     return possibleSquares;
-  }
-
-  /***
-   * @return nothing, not applicable
-   */
-  @Override
-  public List<Coordinate> getRelativeCoords() {
-    return Collections.emptyList();
   }
 
   /***
