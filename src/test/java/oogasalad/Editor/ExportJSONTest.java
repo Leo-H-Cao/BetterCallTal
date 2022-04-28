@@ -20,6 +20,7 @@ import oogasalad.Editor.ModelState.EditorBackend;
 import oogasalad.Editor.ModelState.PiecesState.PiecesState;
 import oogasalad.Editor.ModelState.RulesState.GameRulesState;
 import oogasalad.Frontend.Menu.LanguageModal;
+import oogasalad.Frontend.util.BackendConnector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -36,7 +37,7 @@ public class ExportJSONTest extends DukeApplicationTest {
   private PiecesState piecesState;
   private BoardState boardState;
   private GameRulesState gameRulesState;
-  private EditorBackend boardAndPieces;
+  private EditorBackend editorBackend;
   private ExportJSON exportJSON;
 
   @Override
@@ -51,10 +52,12 @@ public class ExportJSONTest extends DukeApplicationTest {
 
   @BeforeEach
   void setup() {
-   piecesState = new PiecesState();
-   boardAndPieces = new EditorBackend();
-   piecesState = boardAndPieces.getPiecesState();
-   boardState = boardAndPieces.getBoardState();
+   ResourceBundle rb = ResourceBundle.getBundle("oogasalad.Frontend.Menu.languages.English");
+    BackendConnector backendConnector = new BackendConnector();
+    BackendConnector.initBackend(rb);
+    editorBackend = backendConnector.getEditorBackend();
+   piecesState = editorBackend.getPiecesState();
+   boardState = editorBackend.getBoardState();
    gameRulesState = new GameRulesState();
   }
 

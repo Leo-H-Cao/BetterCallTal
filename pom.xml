@@ -43,6 +43,11 @@
       <artifactId>javafx-web</artifactId>
       <version>18</version>
     </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-swing</artifactId>
+      <version>18</version>
+    </dependency>
     <!-- framework for writing repeatable tests by using assertions about your code's values -->
     <dependency>
       <groupId>org.junit.jupiter</groupId>

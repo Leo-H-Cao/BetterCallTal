@@ -19,6 +19,8 @@ open module oogasalad {
     requires org.apache.tomcat.embed.core;
     requires java.net.http;
   requires com.fasterxml.jackson.datatype.jsr310;
+    requires java.desktop;
+    requires javafx.swing;
 
 // allow other classes to access listed packages in your project
     exports oogasalad;

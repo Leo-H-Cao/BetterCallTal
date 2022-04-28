@@ -99,30 +99,39 @@ public class EditorBoard {
     board.get(y).get(x).setImg(pieceImage);
   }
 
+  /**
+   * Getter for current width of board
+   * @return current width
+   */
   public SimpleIntegerProperty getWidth(){
     return myWidth;
   }
 
+  /**
+   * getter for current height of board
+   * @return current height
+   */
   public SimpleIntegerProperty getHeight(){
     return myHeight;
   }
 
+  /**
+   * Returns location of piece given certain pieceID
+   * @param pieceID, unique identifier of piece that is being found
+   * @return location of piece
+   */
   public EditorCoordinate getPieceLocation(String pieceID){
     return findPieceLocation(pieceID);
   }
 
+  /**
+   * Get tile at certain location of board
+   * @param x coord of tile
+   * @param y coord of tile
+   * @return tile at location (x,y)
+   */
   public EditorTile getTile(int x, int y){
     return board.get(y).get(x);
-  }
-
-  /**
-   * Sets tile of certain x and y in board to new image
-   * @param x coord of tile being edited
-   * @param y coord of tile being edited
-   * @param img new image of tile
-   */
-  public void setTileImage(int x, int y, Image img){
-    board.get(y).get(x).setImg(img);
   }
 
   /**

@@ -32,7 +32,7 @@ public class BackendConnector {
 		return myLanguage.getString(s);
 	}
 
-	protected EditorBackend getEditorBackend() {
+	public EditorBackend getEditorBackend() {
 		return myEditorBackend;
 	}
 

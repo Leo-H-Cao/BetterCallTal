@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import javafx.embed.swing.SwingFXUtils;
+import javax.imageio.ImageIO;
 import oogasalad.Editor.ModelState.BoardState.BoardState;
 import oogasalad.Editor.ModelState.BoardState.EditorTile;
 import oogasalad.Editor.ModelState.BoardState.TileEffect;
@@ -27,6 +29,7 @@ import org.apache.logging.log4j.Logger;
 public class ExportJSON {
   private static final Logger LOG = LogManager.getLogger(ExportJSON.class);
   private final String OBJECT_MAPPER_ERR_MSG = "JSON object mapper exception";
+  private final String IMAGE_IO_ERR_MSG = "Image exporting exception";
 
   private final PiecesState piecesState;
   private final GameRulesState gameRulesState;
@@ -61,7 +64,8 @@ public class ExportJSON {
     ObjectMapper objectMapper = new ObjectMapper();
     try{
         for(PieceExport piece : pieces){
-          objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/GameEngineResources/Pieces/"+piece.getPieceId()+".json"), piece);
+          String pieceFile = piece.getTeamNum() == 0 ? "White"+piece.getPieceName() : "Black"+piece.getPieceName();
+          objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File("doc/GameEngineResources/Pieces/"+pieceFile+".json"), piece);
         }
         MainJSONString = objectMapper.writeValueAsString(exportWrapper);
         String mainFileName = fileName.getAbsolutePath();
@@ -116,11 +120,12 @@ public class ExportJSON {
         EditorTile tile = boardState.getTile(x, y);
         if(tile.hasPiece()){
           EditorPiece curEditorPiece = piecesState.getPiece(tile.getPieceID());
+          exportPieceImages(curEditorPiece);
           piecesMain.add(new PieceMainExport(y,x, tile.getTeam(),piecesState.getPiece(tile.getPieceID())));
+          pieces.add(new PieceExport(curEditorPiece, tile.getTeam()));
           if(!seenPieceID.contains(curEditorPiece.getPieceID())){
-            pieces.add(new PieceExport(curEditorPiece, tile.getTeam()));
-            createBasicMovement(curEditorPiece.getMovementGrid(0), curEditorPiece.getPieceName().getValue(), 0);
-            createBasicMovement(curEditorPiece.getMovementGrid(1), curEditorPiece.getPieceName().getValue(), 1);
+            createBasicMovement(curEditorPiece.getMovementGrid(0), curEditorPiece.getPieceID(), 0);
+            createBasicMovement(curEditorPiece.getMovementGrid(1), curEditorPiece.getPieceID(), 1);
             seenPieceID.add(curEditorPiece.getPieceID());
           }
         }
@@ -133,6 +138,7 @@ public class ExportJSON {
         }
       }
     }
+    seenPieceID.clear();
   }
 
   /**
@@ -179,15 +185,22 @@ public class ExportJSON {
     ObjectMapper objectMapper = new ObjectMapper();
     try{
       File movementDir = new File("doc/GameEngineResources/BasicMovements");
-      if (!movementDir.exists()){
-        boolean result = movementDir.mkdirs();
-        if(result) {
-          objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(movementDir.getAbsolutePath()+"/"+team+pieceName+fileName), basicMovements);
-        }
-      }
+      objectMapper.writerWithDefaultPrettyPrinter().writeValue(new File(movementDir.getAbsolutePath()+"/"+team+pieceName+fileName), basicMovements);
     }
     catch (IOException e){
       LOG.warn(OBJECT_MAPPER_ERR_MSG);
+    }
+  }
+
+  private void exportPieceImages(EditorPiece piece){
+    try {
+      File outputFile = new File("src/main/resources/images/pieces/Default/white/"+piece.getPieceID()+".png");
+      ImageIO.write(SwingFXUtils.fromFXImage(piece.getImage(0).getValue(), null), "png", outputFile);
+      outputFile = new File("src/main/resources/images/pieces/Default/black/"+piece.getPieceID()+".png");
+      ImageIO.write(SwingFXUtils.fromFXImage(piece.getImage(1).getValue(), null), "png", outputFile);
+    }
+    catch(IOException e){
+      LOG.warn(IMAGE_IO_ERR_MSG);
     }
   }
 }

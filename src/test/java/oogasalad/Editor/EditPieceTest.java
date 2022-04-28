@@ -95,11 +95,11 @@ public class EditPieceTest extends DukeApplicationTest {
 
   @Test
   void testEditorPieceImageChange(){
-    Image defaultMainPieceImage = new Image("images/pieces/Default/white/kyle.png");
-    Image defaultAltPieceImage = new Image("images/pieces/Default/black/cartman.png");
+    Image defaultMainPieceImage = new Image("images/pieces/Default/white/customPiece1.png");
+    Image defaultAltPieceImage = new Image("images/pieces/Default/black/customPiece1.png");
     assertEquals(defaultMainPieceImage.getUrl(), editorPiece.getImage(0).getValue().getUrl());
     assertEquals(defaultAltPieceImage.getUrl(), editorPiece.getImage(1).getValue().getUrl());
-    Image newImage = new Image("images/pieces/Default/black/cartman.png");
+    Image newImage = new Image("images/pieces/Default/black/cartmanTest.png");
     editorPiece.setImage(0, newImage);
     assertEquals(newImage, editorPiece.getImage(0).getValue());
     assertEquals(defaultAltPieceImage.getUrl(), editorPiece.getImage(1).getValue().getUrl());
