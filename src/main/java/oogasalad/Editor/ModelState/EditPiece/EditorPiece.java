@@ -58,10 +58,19 @@ public class EditorPiece {
 		this.defaultPiece = defaultPiece;
 	}
 
+	/**
+	 * Default pieces such as rook, king, knight, etc.
+	 * @return true if this piece if default piece
+	 */
 	public boolean isDefaultPiece() {
 		return defaultPiece;
 	}
 
+	/**
+	 * Getter for movement grids of this piece
+	 * @param team determines which movement grid of current piece is returned
+	 * @return movementGrid for team 0 or movementGrid for team 1
+	 */
 	public MovementGrid getMovementGrid(int team) {
 		if(team == 0){
 			return movementGrid0;
@@ -128,6 +137,10 @@ public class EditorPiece {
 		else{return image1;}
 	}
 
+	/**
+	 * Set custom moves such as double first move for this piece
+	 * @param customMoves list of custom moves for this piece
+	 */
 	public void setCustomMoves(ArrayList<String> customMoves){
 		this.customMoves = customMoves;
 	}
@@ -136,6 +149,11 @@ public class EditorPiece {
 		return customMoves;
 	}
 
+	/**
+	 * Setter for either team 0 or team 1 movement grid for this piece
+	 * @param movementGrid
+	 * @param team determines which movement grid of this piece is being set
+	 */
 	public void setMovementGrid(MovementGrid movementGrid, int team) {
 		if(team == 1){
 			this.movementGrid1 = movementGrid;
@@ -145,6 +163,10 @@ public class EditorPiece {
 		}
 	}
 
+	/**
+	 * Main piece is objective of game, king by default
+	 * @return true is this piece is main piece
+	 */
 	public boolean isMainPiece() {
 		return mainPiece;
 	}
@@ -153,6 +175,10 @@ public class EditorPiece {
 		return pointValue;
 	}
 
+	/**
+	 * Set point value for this piece
+	 * @param pointValue
+	 */
 	public void setPointValue(int pointValue) {
 		this.pointValue = pointValue;
 	}
@@ -161,6 +187,10 @@ public class EditorPiece {
 		return pieceName;
 	}
 
+	/**
+	 * Set piece name for this piece
+	 * @param pieceName
+	 */
 	public void setPieceName(String pieceName) {
 		// Ensure that the piece name cannot be empty
 		if(pieceName.equals("")) return;
@@ -171,6 +201,10 @@ public class EditorPiece {
 		return onInteractionModifiers;
 	}
 
+	/**
+	 * Set on interaction modifiers such as "atomic" for this piece
+	 * @param onInteractionModifier
+	 */
 	public void setOnInteractionModifiers(
 			ArrayList<ArrayList<String>> onInteractionModifier) {
 		this.onInteractionModifiers = onInteractionModifier;
