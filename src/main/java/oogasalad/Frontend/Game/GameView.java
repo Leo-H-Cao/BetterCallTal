@@ -91,8 +91,7 @@ public class GameView extends View {
         isServer = getGameBackend().getChessBoard().getGameType() == GameType.SERVER;
         makeConsandRuns();
         myBoardHistory = new BoardHistory();
-        myBoardGrid = new BoardGrid(chessboard, lightUpCons, MoveCons, errorRun, myBoardHistory, imgPackage); //TODO: Figure out player ID stuff
-        //myBoardGrid = new BoardGrid(lightUpCons, id, MoveCons); // for testing
+        myBoardGrid = new BoardGrid(chessboard, lightUpCons, MoveCons, errorRun, myBoardHistory, imgPackage);
         myBoardGrid.getBoard().setAlignment(Pos.CENTER);
         remotePlayers = new ArrayList<>();
         String[] splitMode = mode.split(" ");
@@ -114,7 +113,8 @@ public class GameView extends View {
         MoveCons = this::makeMove;
         removeGOCons = this::removeGameOverNode;
         flipRun = this::flipBoard;
-    }
+        errorRun = this::showmyError;
+    }q
 
     private void makeMove(Coordinate c) {
         makeKeyListener();

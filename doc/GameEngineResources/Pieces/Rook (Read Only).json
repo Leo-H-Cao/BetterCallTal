@@ -1,0 +1,10 @@
+{
+  "pieceId" : "Rook (Read Only)",
+  "imgFile" : "images/pieces/Default/black/rook.png",
+  "pointValue" : 5,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : [ ],
+  "basicMovements" : [ "bRook (Read Only)Mov" ],
+  "basicCaptures" : [ "bRook (Read Only)Cap" ]
+}

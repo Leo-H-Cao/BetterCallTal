@@ -1,0 +1,10 @@
+{
+  "pieceId" : "Knight (Read Only)",
+  "imgFile" : "images/pieces/Default/white/knight.png",
+  "pointValue" : 3,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : [ ],
+  "basicMovements" : [ "wKnight (Read Only)Mov" ],
+  "basicCaptures" : [ "wKnight (Read Only)Cap" ]
+}

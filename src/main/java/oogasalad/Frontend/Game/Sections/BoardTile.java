@@ -40,15 +40,21 @@ public class BoardTile {
     private Double EMPTY_BORDER = 0.0;
     private int TILEMOD= -2;
     private Boolean Lit;
-    private String Image_Path;
+    private String Image_Path = "src/main/resources/images/pieces/";
     private Color BlackSquare = Color.GREEN;
     private Color WhiteSquare = Color.LIGHTGREY;
     private String LitColor = "Cyan";
     private BiConsumer<String, String> ErrorRunnable;
     private int borderSpacing = 10;
+    private String pack;
+    private String DEFAULT = "Default/";
+    private String WHITE = "white/";
+    private String BLACK = "black/";
+    private String PIECEMOD = "piecemodifiers/";
+    private String TILEMODIF = "tilemodifiers/";
 
-    public BoardTile(ChessTile ct, double width, double height, Consumer<Piece> lightupCons, Runnable clearlitrun, Consumer<Piece> setSelPiece, Consumer<Coordinate> MoveCons, BiConsumer<String, String> errorRun, String pack) {
-        Image_Path = "src/main/resources/images/pieces/" + pack + "/";
+    public BoardTile(ChessTile ct, double width, double height, Consumer<Piece> lightupCons, Runnable clearlitrun, Consumer<Piece> setSelPiece, Consumer<Coordinate> MoveCons, BiConsumer<String, String> errorRun, String chosenpack) {
+        pack = chosenpack + "/";
         myCoord = ct.getCoordinates();
         myStackPane = new StackPane();
         addActionToSP(lightupCons, clearlitrun, setSelPiece, MoveCons);
@@ -92,7 +98,7 @@ public class BoardTile {
         myImages.clear();
 
         if (ct.getCustomImg().isPresent()) {
-            ImageView tilemod = CreateImage(ct.getCustomImg().get(), TILEMOD);
+            ImageView tilemod = CreateImage(ct.getCustomImg().get(), TILEMOD, pack);
             myImages.add(tilemod);
             placeUnderRectangle(tilemod);
         }
@@ -109,19 +115,19 @@ public class BoardTile {
 
     private void givePiece(Piece p) {
         myPieces.add(p);
-        ImageView pieceview = CreateImage(p.getName(), p.getTeam());
+        ImageView pieceview = CreateImage(p.getName(), p.getTeam(), pack);
         myImages.add(pieceview);
         myStackPane.getChildren().add(pieceview);
     }
 
-    private ImageView CreateImage(String name, int team) {
+    private ImageView CreateImage(String name, int team, String chosenPack) {
         try {
             String TEAM;
-            if (team == 0) {TEAM = "white/";
-            } else if (team == 1){TEAM = "black/";
-            } else if (team == -1){TEAM = "piecemodifiers/";
-            } else {TEAM = "tilemodifiers/";}
-            Image image = new Image(new FileInputStream(Image_Path + TEAM + name.toLowerCase() + ".png"));
+            if (team == 0) {TEAM = WHITE;
+            } else if (team == 1){TEAM = BLACK;
+            } else if (team == -1){TEAM = PIECEMOD;
+            } else {TEAM = TILEMODIF;}
+            Image image = new Image(new FileInputStream(Image_Path + TEAM + chosenPack + name.toLowerCase() + ".png"));
             ImageView PieceView = new ImageView(image);
             if (team == -2) {
                 PieceView.setFitHeight(myTileHeight);
@@ -135,7 +141,11 @@ public class BoardTile {
             PieceView.setCache(true);
             return PieceView;
         } catch (Exception e) {
-            ErrorRunnable.accept(e.getClass().getSimpleName(), e.getMessage());
+            if (! chosenPack.equals(DEFAULT)) {
+                return CreateImage(name, team, DEFAULT);
+            } else {
+                ErrorRunnable.accept(e.getClass().getSimpleName(), e.getMessage());
+            }
         }
         return null;
     }
