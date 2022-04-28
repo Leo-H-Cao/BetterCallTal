@@ -16,7 +16,7 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.ValidStateChecker.Check;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.Movement.BasicMovement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
@@ -63,8 +63,8 @@ public class CheckmateTest {
     return new Piece(new PieceData(new Coordinate(row, col),
         "pawn" + team, 0, team, false,
 
-        List.of(new Movement(List.of(new Coordinate(-1, 0), new Coordinate(1, 0)), false)),
-        List.of(new Movement(List.of(new Coordinate(-1, 0), new Coordinate(1, 0)), false)),
+        List.of(new BasicMovement(List.of(new Coordinate(-1, 0), new Coordinate(1, 0)), false)),
+        List.of(new BasicMovement(List.of(new Coordinate(-1, 0), new Coordinate(1, 0)), false)),
         Collections.emptyList(), Collections.emptyList(), ""));
 
   }

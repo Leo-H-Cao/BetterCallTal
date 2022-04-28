@@ -12,8 +12,7 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.Movement.Movement;
-import oogasalad.GamePlayer.Movement.MovementModifiers.Atomic;
+import oogasalad.GamePlayer.Movement.BasicMovement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -43,7 +42,7 @@ class AtomicTest {
     blackKing = new Piece(new PieceData(Coordinate.of(1, 0), "test2", 0, 1, true,
         List.of(), Collections.emptyList(), Collections.emptyList(), List.of(new Atomic()), ""));
     whiteAttacker = new Piece(new PieceData(Coordinate.of(1, 1), "test2", 0, 0, false,
-        List.of(), List.of(new Movement(List.of(Coordinate.of(0, -1)), false)), Collections.emptyList(), List.of(new Atomic()),""));
+        List.of(), List.of(new BasicMovement(List.of(Coordinate.of(0, -1)), false)), Collections.emptyList(), List.of(new Atomic()),""));
     pieces = List.of(whiteKing, blackKing, whiteAttacker);
     board.setPieces(pieces);
   }

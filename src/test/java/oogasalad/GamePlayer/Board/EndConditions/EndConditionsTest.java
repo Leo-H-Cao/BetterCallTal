@@ -12,10 +12,6 @@ import java.util.List;
 import java.util.Map;
 import oogasalad.GamePlayer.Board.BoardSetup;
 import oogasalad.GamePlayer.Board.ChessBoard;
-import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
-import oogasalad.GamePlayer.Board.EndConditions.NoEndCondition;
-import oogasalad.GamePlayer.Board.EndConditions.PawnReachesEnd;
-import oogasalad.GamePlayer.Board.EndConditions.TwoMoves;
 import oogasalad.GamePlayer.Board.Player;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
@@ -23,7 +19,7 @@ import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.EngineExceptions.MoveAfterGameEndException;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.Movement.BasicMovement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -58,9 +54,9 @@ class EndConditionsTest {
     board = new ChessBoard(8, 3, turnCriteria, players, List.of(endCondition));
 
     pieceOne = new Piece(new PieceData(new Coordinate(0, 0), "Pawn", 0, 0, false,
-        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
+        List.of(new BasicMovement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
     pieceTwo = new Piece(new PieceData(new Coordinate(1, 0), "Pawn", 0, 1, false,
-        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
+        List.of(new BasicMovement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
     pieces = List.of(pieceOne, pieceTwo);
 
     board.setPieces(pieces);

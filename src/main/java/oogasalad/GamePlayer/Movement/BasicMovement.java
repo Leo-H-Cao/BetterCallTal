@@ -1,5 +1,8 @@
 package oogasalad.GamePlayer.Movement;
 
+import static oogasalad.GamePlayer.util.ClassCreator.createInstance;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -22,39 +25,9 @@ import org.apache.logging.log4j.Logger;
  *
  * @author Vincent Chen
  */
-public class Movement implements MovementInterface{
+public class BasicMovement extends BasicMovementInterface {
 
-  private static final Logger LOG = LogManager.getLogger(Movement.class);
-
-  private static final String MOVE_KEY = "move";
-  private static final String CAPTURE_KEY = "capture";
-
-
-  private List<Coordinate> possibleMoves;
-  private boolean infinite;
-
-  /***
-   * Creates a class representing a basic piece movement
-   */
-  public Movement(List<Coordinate> possibleMoves, boolean infinite) {
-    this.possibleMoves = possibleMoves;
-    this.infinite = infinite;
-  }
-
-  /***
-   * Creates a class representing a basic piece movement with one coordinate provided
-   */
-  public Movement(Coordinate possibleMove, boolean infinite) {
-    this(List.of(possibleMove), infinite);
-  }
-
-  /**
-   * Constructor for Jackson serialization and deserialization
-   */
-  public Movement(){
-    this.possibleMoves = new ArrayList<>();
-    this.infinite = false;
-  }
+  private static final Logger LOG = LogManager.getLogger(BasicMovement.class);
 
   /**
    * Moves the piece on fromSquare to finalSquare
@@ -66,6 +39,7 @@ public class Movement implements MovementInterface{
    * @throws InvalidMoveException if the piece cannot move to the given square
    * @throws OutsideOfBoardException if the provided square is outside the board
    */
+  @Override
   public Set<ChessTile> movePiece(Piece piece, Coordinate finalSquare, ChessBoard board)
       throws InvalidMoveException, OutsideOfBoardException {
     ChessTile finalTile = convertCordToTile(finalSquare, board);
@@ -260,20 +234,6 @@ public class Movement implements MovementInterface{
   }
 
   /**
-   * @return if infinite
-   */
-  public boolean isInfinite() {
-    return infinite;
-  }
-
-  /***
-   * @return String of all relative coordinates
-   */
-  public String toString() {
-    return possibleMoves.toString() + ": " + infinite;
-  }
-
-  /**
    * Utility function for inverting movements
    *
    * @param movements to invert
@@ -282,43 +242,24 @@ public class Movement implements MovementInterface{
   public static Set<MovementInterface> invertMovements(Set<MovementInterface> movements) {
     Set<MovementInterface> inverted = new HashSet<>();
     movements.forEach(mi -> {
-      if(mi.getClass().equals(Movement.class)) {
-        Movement movement = (Movement) mi;
+      if(mi.getClass().isAssignableFrom(BasicMovementInterface.class)) {
+        BasicMovementInterface movement = (BasicMovementInterface) mi;
         List<Coordinate> invertedCoords = new ArrayList<>();
         movement.getRelativeCoords().forEach(c -> {
           Coordinate invertedCoord = Coordinate.of(-c.getRow(), -c.getCol());
           invertedCoords.add(invertedCoord);
           LOG.debug(String.format("Movement inverted: %s", invertedCoord));
         });
-        inverted.add(new Movement(invertedCoords, movement.isInfinite()));
+        try {
+          inverted.add((MovementInterface) createInstance(
+              mi.getClass().getName(), new Object[]{invertedCoords, movement.isInfinite()}));
+        } catch (IOException e) {
+          inverted.add(mi);
+        }
       } else {
         inverted.add(mi);
       }
     });
     return inverted;
-  }
-
-  /***
-   * @return equal if both movements have the same possible moves and infinite is the same
-   */
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Movement movement = (Movement) o;
-    return infinite == movement.infinite && Objects.equals(possibleMoves,
-        movement.possibleMoves);
-  }
-
-  /***
-   * @return hash of this object
-   */
-  @Override
-  public int hashCode() {
-    return Objects.hash(possibleMoves, infinite);
   }
 }

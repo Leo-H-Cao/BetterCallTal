@@ -16,7 +16,7 @@ import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Board.BoardSetup;
-import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.Movement.BasicMovement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -62,9 +62,9 @@ class BasicCustomMovementTest {
   void doubleFMTest() {
     try {
       whiteBlockerOne = new Piece(new PieceData(new Coordinate(0, 2), "Pawn", 0, 0, false,
-          List.of(new Movement(List.of(new Coordinate(1, 0)), false), new Castling(), new DoubleFirstMove()), Collections.emptyList(), List.of(), Collections.emptyList(), ""));
+          List.of(new BasicMovement(List.of(new Coordinate(1, 0)), false), new Castling(), new DoubleFirstMove()), Collections.emptyList(), List.of(), Collections.emptyList(), ""));
       whiteBlockerTwo = new Piece(new PieceData(new Coordinate(0, 6), "Pawn", 0, 1, false,
-          List.of(new Movement(List.of(new Coordinate(1, 0)), false), new Castling(), new DoubleFirstMove()), Collections.emptyList(), List.of(), Collections.emptyList(), ""));
+          List.of(new BasicMovement(List.of(new Coordinate(1, 0)), false), new Castling(), new DoubleFirstMove()), Collections.emptyList(), List.of(), Collections.emptyList(), ""));
       myBoard.setPieces(List.of(whiteBlockerOne, whiteBlockerTwo));
       assertEquals(Set.of(myBoard.getTile(Coordinate.of(1, 2)), myBoard.getTile(Coordinate.of(2, 2))), whiteBlockerOne.getMoves(
           myBoard));
@@ -116,7 +116,7 @@ class BasicCustomMovementTest {
   void castleTestMovementK() {
     try {
       whiteKing = new Piece(new PieceData(new Coordinate(0, 4), "whiteKing", 0, 0, true,
-          List.of(new Movement(Coordinate.of(0, 1), false), new Castling()), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
+          List.of(new BasicMovement(Coordinate.of(0, 1), false), new Castling()), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
       whiteRookL = new Piece(new PieceData(new Coordinate(0, 0), "whiteRookL", 0, 0, true,
           List.of(new Castling()), Collections.emptyList(), Collections.emptyList(),
           Collections.emptyList(), ""));
@@ -135,7 +135,7 @@ class BasicCustomMovementTest {
       whiteKing = new Piece(new PieceData(new Coordinate(0, 4), "whiteKing", 0, 0, true,
           List.of(new Castling()), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
       whiteRookL = new Piece(new PieceData(new Coordinate(0, 1), "whiteRookL", 0, 0, true,
-          List.of(new Movement(Coordinate.of(0, -1), false)), Collections.emptyList(), Collections.emptyList(),
+          List.of(new BasicMovement(Coordinate.of(0, -1), false)), Collections.emptyList(), Collections.emptyList(),
           Collections.emptyList(), ""));
       myBoard.setPieces(List.of(whiteKing, whiteRookL));
       whiteRookL.move(myBoard.getTile(Coordinate.of(0, 0)), myBoard);

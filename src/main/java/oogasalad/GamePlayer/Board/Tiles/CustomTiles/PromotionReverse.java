@@ -13,7 +13,7 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.Movement.BasicMovement;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -91,8 +91,8 @@ public class PromotionReverse implements TileAction{
 
     if(promotablePieceNames.contains(tile.getPiece().get().getName().toLowerCase())) {
       Piece promotedPiece = tile.getPiece().get();
-      promotedPiece.addNewMovements(Movement.invertMovements(promotedPiece.getMoves()),
-          Movement.invertMovements(promotedPiece.getCaptures()));
+      promotedPiece.addNewMovements(BasicMovement.invertMovements(promotedPiece.getMoves()),
+          BasicMovement.invertMovements(promotedPiece.getCaptures()));
       //FIXME: because of current frontend implementation, name change determines image file change
       promotedPiece.updateName(promotionImage);
       return Set.of(tile);

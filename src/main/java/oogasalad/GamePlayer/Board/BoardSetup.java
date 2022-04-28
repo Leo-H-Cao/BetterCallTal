@@ -21,7 +21,7 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.GamePiece.PieceJSONData;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.Movement.BasicMovement;
 import oogasalad.GamePlayer.Movement.MovementInterface;
 import oogasalad.GamePlayer.Movement.MovementModifiers.MovementModifier;
 import oogasalad.GamePlayer.Server.SessionManager;
@@ -282,7 +282,7 @@ public class BoardSetup {
       JSONObject currentMove = moves.getJSONObject(i);
       Coordinate currentCoordinate = parseCoord(
           moves.getJSONObject(i).getJSONArray("relativeCoords"));
-      movements.add(new Movement(currentCoordinate, currentMove.getBoolean("infinite")));
+      movements.add(new BasicMovement(currentCoordinate, currentMove.getBoolean("infinite")));
     }
     LOG.debug(String.format("Movements in %s: %s", jsonFileName, movements));
     return movements;

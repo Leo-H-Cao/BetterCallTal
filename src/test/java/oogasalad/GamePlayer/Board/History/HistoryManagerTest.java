@@ -15,7 +15,7 @@ import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.Movement.BasicMovement;
 import oogasalad.GamePlayer.Server.SessionManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -41,7 +41,7 @@ class HistoryManagerTest {
 
     ChessBoard board = new ChessBoard(3, 3, turnCriteria, players, List.of());
     Piece piece = new Piece(new PieceData(new Coordinate(row, col), "test1", 0, 0, false,
-        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
+        List.of(new BasicMovement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
         Collections.emptyList(), Collections.emptyList(), "test1.png"));
     List<Piece> pieces = List.of(piece);
     board.setPieces(pieces);

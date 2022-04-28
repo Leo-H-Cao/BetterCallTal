@@ -17,7 +17,7 @@ import oogasalad.GamePlayer.EngineExceptions.WrongPlayerException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.Movement.BasicMovement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -49,13 +49,13 @@ class TurnTest {
   private void setBoard() {
     board = new ChessBoard(8, 8, turnCriteria, players, List.of());
     pieceOne = new Piece(new PieceData(new Coordinate(0, 0), "test1", 0, 0, false,
-        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
+        List.of(new BasicMovement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
         Collections.emptyList(), Collections.emptyList(), ""));
     pieceTwo = new Piece(new PieceData(new Coordinate(1, 0), "test2", 0, 1, false,
-        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
+        List.of(new BasicMovement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
         Collections.emptyList(), Collections.emptyList(), ""));
     pieceThree = new Piece(new PieceData(new Coordinate(2, 0), "test3", 0, 2, false,
-        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
+        List.of(new BasicMovement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
         Collections.emptyList(), Collections.emptyList(), ""));
     pieces = List.of(pieceOne, pieceTwo, pieceThree);
     board.setPieces(pieces);

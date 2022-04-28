@@ -17,7 +17,7 @@ import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.Movement.BasicMovement;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,11 +55,11 @@ public class CheckTests {
 
     pieceOne = new Piece(new PieceData(new Coordinate(row1, col1),
         "test1", 0, 0, false,
-        List.of(new Movement(List.of(new Coordinate(1, 0)), false)), List.of(new Movement(List.of(new Coordinate(1, 0)), false)), Collections.emptyList(), Collections.emptyList(), ""));
+        List.of(new BasicMovement(List.of(new Coordinate(1, 0)), false)), List.of(new BasicMovement(List.of(new Coordinate(1, 0)), false)), Collections.emptyList(), Collections.emptyList(), ""));
 
     pieceTwo = new Piece(new PieceData(new Coordinate(row2, col2),
         "test2", 0, 1, true,
-        List.of(new Movement(List.of(new Coordinate(1, 0)), false)), List.of(new Movement(List.of(new Coordinate(1, 0)), false)), Collections.emptyList(), Collections.emptyList(), ""));
+        List.of(new BasicMovement(List.of(new Coordinate(1, 0)), false)), List.of(new BasicMovement(List.of(new Coordinate(1, 0)), false)), Collections.emptyList(), Collections.emptyList(), ""));
 
     List<Piece> pieces = List.of(pieceOne, pieceTwo);
     board.setPieces(pieces);

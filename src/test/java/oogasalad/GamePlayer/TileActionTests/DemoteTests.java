@@ -11,7 +11,7 @@ import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.Movement.BasicMovement;
 import oogasalad.GamePlayer.ValidStateChecker.Check;
 import oogasalad.GamePlayer.ValidStateChecker.ValidStateChecker;
 import oogasalad.GamePlayer.Board.EndConditions.CheckmateTest;
@@ -49,21 +49,21 @@ public class DemoteTests {
   Piece makeKing(int row, int col, int team) {
     return new Piece(new PieceData(new Coordinate(row, col),
         "king" + team, 0, team, true,
-        List.of(new Movement(List.of(new Coordinate(1, 0)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
+        List.of(new BasicMovement(List.of(new Coordinate(1, 0)), false)), Collections.emptyList(), Collections.emptyList(), Collections.emptyList(), ""));
   }
 
   Piece makePawn(int row, int col, int team) {
     return new Piece(new PieceData(new Coordinate(row, col),
         "pawn" + team, 0, team, false,
 
-        List.of(new Movement(List.of(new Coordinate(-1, 0), new Coordinate(1, 0)), false)),
-        List.of(new Movement(List.of(new Coordinate(-1, 0), new Coordinate(1, 0)), false)),
+        List.of(new BasicMovement(List.of(new Coordinate(-1, 0), new Coordinate(1, 0)), false)),
+        List.of(new BasicMovement(List.of(new Coordinate(-1, 0), new Coordinate(1, 0)), false)),
         Collections.emptyList(), Collections.emptyList(), ""));
 
   }
 
   Piece makeRook(int row, int col, int team) {
-    Movement rookMovement = new Movement(List.of(
+    BasicMovement rookMovement = new BasicMovement(List.of(
         new Coordinate(1, 0),
         new Coordinate(-1, 0),
         new Coordinate(0, 1),

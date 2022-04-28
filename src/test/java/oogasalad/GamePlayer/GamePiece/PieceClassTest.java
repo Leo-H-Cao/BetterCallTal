@@ -13,7 +13,7 @@ import oogasalad.GamePlayer.Board.BoardSetup;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.Movement.BasicMovement;
 import org.junit.jupiter.api.Test;
 
 public class PieceClassTest {
@@ -21,7 +21,7 @@ public class PieceClassTest {
   @Test
   void pieceDataToStringTest() {
     PieceData test = new PieceData(new Coordinate(0, 0), "test1", 0, 0, false,
-        List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
+        List.of(new BasicMovement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
         Collections.emptyList(), Collections.emptyList(), "test1.png");
     assertEquals("test1: (0, 0); [[(0, 1)]: false]", test.toString());
   }
@@ -32,7 +32,7 @@ public class PieceClassTest {
       ChessBoard board = BoardSetup.createLocalBoard(
           "doc/testing_directory/test_boards/RegularGame.json");
       Piece test = new Piece(new PieceData(new Coordinate(100, 100), "test1", 0, 0, false,
-          List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
+          List.of(new BasicMovement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
           Collections.emptyList(), Collections.emptyList(), "test1.png"));
       assertThrows(
           OutsideOfBoardException.class,
@@ -45,11 +45,11 @@ public class PieceClassTest {
   @Test
   void pieceEqualsTest() {
     assertNotEquals(new Piece(new PieceData(new Coordinate(100, 100), "test1", 0, 0, false,
-            List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
+            List.of(new BasicMovement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
             Collections.emptyList(), Collections.emptyList(), "test1.png"))
         , null);
     assertNotEquals(new Piece(new PieceData(new Coordinate(100, 100), "test1", 0, 0, false,
-            List.of(new Movement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
+            List.of(new BasicMovement(List.of(new Coordinate(0, 1)), false)), Collections.emptyList(),
             Collections.emptyList(), Collections.emptyList(), "test1.png"))
         , "string");
   }
@@ -57,7 +57,7 @@ public class PieceClassTest {
   @Test
   void pieceRelativeCapCoordsTest() {
     Piece piece = new Piece(new PieceData(new Coordinate(100, 100), "test1", 0, 0, false,
-        List.of(), List.of(new Movement(List.of(new Coordinate(0, 1)), false)),
+        List.of(), List.of(new BasicMovement(List.of(new Coordinate(0, 1)), false)),
         Collections.emptyList(), Collections.emptyList(), "test1.png"));
     assertEquals(List.of(Coordinate.of(0, 1)), piece.getRelativeCapCoords());
   }

@@ -18,12 +18,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class MovementTest {
-  private Movement movementOne;
-  private Movement movementTwo;
-  private Movement movementThree;
+  private BasicMovement movementOne;
+  private BasicMovement movementTwo;
+  private BasicMovement movementThree;
 
-  private Movement captureOne;
-  private Movement captureTwo;
+  private BasicMovement captureOne;
+  private BasicMovement captureTwo;
 
   private ChessBoard board;
   private TurnCriteria turnCriteria;
@@ -50,12 +50,12 @@ class MovementTest {
 
     board = new ChessBoard(3, 3, turnCriteria, players, List.of());
 
-    movementOne = new Movement(new Coordinate(1, 1), false);
-    movementTwo = new Movement(new Coordinate(0, 1), true);
-    movementThree = new Movement(new Coordinate(0, -1), false);
+    movementOne = new BasicMovement(new Coordinate(1, 1), false);
+    movementTwo = new BasicMovement(new Coordinate(0, 1), true);
+    movementThree = new BasicMovement(new Coordinate(0, -1), false);
 
-    captureOne = new Movement(new Coordinate(1, 0), false);
-    captureTwo = new Movement(new Coordinate(1, 1), true);
+    captureOne = new BasicMovement(new Coordinate(1, 0), false);
+    captureTwo = new BasicMovement(new Coordinate(1, 1), true);
 
     pieceOne = new Piece(new PieceData(new Coordinate(0, 0), "test1", 0, 0, false,
         List.of(movementOne), List.of(captureOne, captureTwo), Collections.emptyList(), Collections.emptyList(),  ""));
@@ -72,8 +72,8 @@ class MovementTest {
 
   @Test
   void isEmptyTest() {
-    assertTrue(new Movement(List.of(), false).isTileEmpty(board, Coordinate.of(1, 1)));
-    assertFalse( new Movement(List.of(), false).isTileEmpty(board, Coordinate.of(1000, 10000)));
+    assertTrue(new BasicMovement(List.of(), false).isTileEmpty(board, Coordinate.of(1, 1)));
+    assertFalse( new BasicMovement(List.of(), false).isTileEmpty(board, Coordinate.of(1000, 10000)));
   }
 
   @Test
@@ -162,13 +162,13 @@ class MovementTest {
   void equalsTest() {
     assertEquals(movementOne, movementOne);
     assertNotEquals(movementThree, null);
-    assertEquals(movementOne, new Movement(new Coordinate(1, 1), false));
-    assertNotEquals(movementThree, new Movement(new Coordinate(1, 1), true));
+    assertEquals(movementOne, new BasicMovement(new Coordinate(1, 1), false));
+    assertNotEquals(movementThree, new BasicMovement(new Coordinate(1, 1), true));
   }
 
   @Test
   void defaultConstructorTest() {
-    Movement testMove = new Movement();
+    BasicMovement testMove = new BasicMovement();
     assertEquals(Collections.emptyList(), testMove.getRelativeCoords());
     Coordinate testCord = new Coordinate();
     assertEquals(0, testCord.getRow());

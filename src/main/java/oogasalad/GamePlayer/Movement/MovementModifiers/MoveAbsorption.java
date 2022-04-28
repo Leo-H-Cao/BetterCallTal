@@ -6,7 +6,7 @@ import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
-import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.Movement.BasicMovement;
 
 /***
  * Movement modifier that allows a piece to absorb the moves of the piece that was just taken
@@ -35,8 +35,8 @@ public class MoveAbsorption implements MovementModifier {
       Piece justTaken = board.getHistory().get(board.getHistory().size() - 1).board().getTile(
           piece.getCoordinates()).getPiece().orElse(
           board.findTakenPiece(piece.getTeam()));
-      piece.addNewMovements(Movement.invertMovements(justTaken.getMoves()),
-          Movement.invertMovements(justTaken.getCaptures()));
+      piece.addNewMovements(BasicMovement.invertMovements(justTaken.getMoves()),
+          BasicMovement.invertMovements(justTaken.getCaptures()));
       return Set.of(board.getTile(piece.getCoordinates()));
     } catch (OutsideOfBoardException e) {return Collections.emptySet();}
   }

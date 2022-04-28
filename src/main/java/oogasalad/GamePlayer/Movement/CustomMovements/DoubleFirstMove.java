@@ -14,7 +14,7 @@ import oogasalad.GamePlayer.EngineExceptions.InvalidMoveException;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.Movement.BasicMovement;
 import oogasalad.GamePlayer.Movement.MovementInterface;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -83,7 +83,7 @@ public class DoubleFirstMove implements MovementInterface {
       }
     }).forEach(c ->
 //      LOG.debug("Double move coord: " + Coordinate.of(c.getRow()*MULT, c.getCol()*MULT))
-      newMovements.add(new Movement(Coordinate.of(c.getRow()*MULT, c.getCol()*MULT), false))
+      newMovements.add(new BasicMovement(Coordinate.of(c.getRow()*MULT, c.getCol()*MULT), false))
     );
     return newMovements.stream().flatMap((m) -> m.getMoves(piece, board).stream()).collect(Collectors.toSet());
   }

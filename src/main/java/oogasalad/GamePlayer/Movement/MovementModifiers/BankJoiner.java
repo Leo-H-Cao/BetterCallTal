@@ -15,7 +15,7 @@ import oogasalad.GamePlayer.Board.Tiles.ChessTile;
 import oogasalad.GamePlayer.EngineExceptions.OutsideOfBoardException;
 import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.Movement.Coordinate;
-import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.Movement.BasicMovement;
 import oogasalad.GamePlayer.ValidStateChecker.BankBlocker;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -89,8 +89,8 @@ public class BankJoiner implements MovementModifier{
       justTaken.updateTeam(board.getCurrentPlayer());
       //TODO: this does not need to be fixed with the current frontend implementation, but should be
       justTaken.updateImgFile(piece.getImgFile());
-      justTaken.setNewMovements(Movement.invertMovements(justTaken.getMoves()),
-          Movement.invertMovements(justTaken.getCaptures()));
+      justTaken.setNewMovements(BasicMovement.invertMovements(justTaken.getMoves()),
+          BasicMovement.invertMovements(justTaken.getCaptures()));
 
       Set<ChessTile> updatedCoords = Set.of(bankTile);
       LOG.debug(String.format("Updated coords: %s", updatedCoords));
