@@ -173,7 +173,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   }
 
 
-  public TimerTask createTask() {
+  TimerTask createTask() {
     return new TimerTask() {
       @Override
       public void run() {
@@ -186,7 +186,8 @@ public class ChessBoard implements Iterable<ChessTile> {
             History mostRecent = history.getCurrent();
             TurnUpdate tu = new TurnUpdate(mostRecent.updatedTiles(), thisPlayer, "");
             LOG.info(String.format("Performing turn update %s", tu));
-            performAsyncTurnUpdate.accept(tu);
+            Runnable onAction = () -> performAsyncTurnUpdate.accept(tu);
+            onAction.run();
           }
         } else {
           LOG.info("Timer ran");
@@ -258,20 +259,24 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @return set of updated tiles + next player turn
    */
   public TurnUpdate move(Piece piece, Coordinate finalSquare) throws EngineException {
-    // TODO: valid state checker for person who just moved (redundunt - optional)
-    // TODO: check end conditions for other player(s)
-    if (!isGameOver() && piece.checkTeam(turnManager.getCurrentPlayer())) {
+    boolean isGameOver = isGameOver();
+    if (!isGameOver && piece.checkTeam(turnManager.getCurrentPlayer()) && !cantMakeServerMove(
+        piece)) {
       Set<ChessTile> moveUpdate = piece.move(getTileFromCoords(finalSquare), this);
       TurnUpdate update = new TurnUpdate(moveUpdate,
           turnManager.incrementTurn(), getNotation(moveUpdate, piece));
       history.add(new History(deepCopy(), Set.of(piece), update.updatedSquares()));
       LOG.debug(String.format("History updated: %d", history.size()));
+      currentPlayer = update.nextPlayer();
       return update;
     }
-
-    LOG.warn(isGameOver() ? "Move made after game over" : "Move made by wrong player");
-    throw isGameOver() ? new MoveAfterGameEndException(EMPTY_LINK) : new WrongPlayerException(
+    if (isGameOver) {
+      disableTimer();
+    }
+    LOG.warn(isGameOver ? "Move made after game over" : "Move made by wrong player");
+    throw isGameOver ? new MoveAfterGameEndException(EMPTY_LINK) : new WrongPlayerException(
         "Expected: " + turnManager.getCurrentPlayer() + "\n Actual: " + piece.getTeam());
+
   }
 
   /***
@@ -352,14 +357,29 @@ public class ChessBoard implements Iterable<ChessTile> {
   }
 
   /**
+   * Checks if the server can make a move
+   *
+   * @param piece to move
+   * @return true if the piece can move
+   */
+  private boolean cantMakeServerMove(Piece piece) {
+    boolean serverMode = gameType == GameType.SERVER;
+    boolean currentPlayerCheck = turnManager.getCurrentPlayer() != piece.getTeam();
+    boolean thisPlayerCheck = piece.getTeam() != thisPlayer;
+    return serverMode && (currentPlayerCheck || thisPlayerCheck);
+  }
+
+  /**
    * Returns all possible moves a piece can make
    *
    * @param piece to get moves from
    * @return set of tiles the piece can move to
    */
   public Set<ChessTile> getMoves(Piece piece) throws EngineException {
-    // TODO: add valid state checker here
-    if (isGameOver()) {
+    if (isGameOver() || cantMakeServerMove(piece)) {
+      if (isGameOver()) {
+        disableTimer();
+      }
       return Set.of();
     }
     Set<ChessTile> allPieceMovements = piece.getMoves(this);
@@ -691,6 +711,7 @@ public class ChessBoard implements Iterable<ChessTile> {
   public void setPerformAsyncTurnUpdate(
       Consumer<TurnUpdate> performAsyncTurnUpdate) {
     this.performAsyncTurnUpdate = performAsyncTurnUpdate;
+    enableTimer();
 
   }
 
