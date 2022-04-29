@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
 import oogasalad.GamePlayer.Board.ChessBoard.ChessBoardData;
 import oogasalad.GamePlayer.Server.RequestBuilder;
+import oogasalad.GamePlayer.Server.SessionManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
@@ -48,11 +49,13 @@ class ServerManagerTests {
   }
 
   @Test
-  void hostGame() {
+  void hostAndJoinGame() {
     try {
       String name = "TicTacToeFiveButWithFourInARow.json";
       String key = "test" + name;
-      ChessBoard board = BoardSetup.createRemoteBoard(filePath + name, "test" + name, 1);
+      BoardSetup.createRemoteBoard(filePath + name, "test" + name, 1);
+      BoardSetup.joinRemoteBoard(key);
+      new SessionManager().endGameSession("test" + name);
     } catch (Exception e) {
       fail(e.getMessage());
     }
