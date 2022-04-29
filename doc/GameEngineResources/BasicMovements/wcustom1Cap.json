@@ -1,0 +1,51 @@
+{
+  "moves" : [ {
+    "relativeCoords" : [ -3, 3 ],
+    "infinite" : true
+  }, {
+    "relativeCoords" : [ 0, 3 ],
+    "infinite" : true
+  }, {
+    "relativeCoords" : [ 3, 3 ],
+    "infinite" : true
+  }, {
+    "relativeCoords" : [ -2, 2 ],
+    "infinite" : true
+  }, {
+    "relativeCoords" : [ 0, 2 ],
+    "infinite" : true
+  }, {
+    "relativeCoords" : [ 2, 2 ],
+    "infinite" : true
+  }, {
+    "relativeCoords" : [ -3, 0 ],
+    "infinite" : true
+  }, {
+    "relativeCoords" : [ -2, 0 ],
+    "infinite" : true
+  }, {
+    "relativeCoords" : [ 2, 0 ],
+    "infinite" : true
+  }, {
+    "relativeCoords" : [ 3, 0 ],
+    "infinite" : true
+  }, {
+    "relativeCoords" : [ -2, -2 ],
+    "infinite" : true
+  }, {
+    "relativeCoords" : [ 0, -2 ],
+    "infinite" : true
+  }, {
+    "relativeCoords" : [ 2, -2 ],
+    "infinite" : true
+  }, {
+    "relativeCoords" : [ -3, -3 ],
+    "infinite" : true
+  }, {
+    "relativeCoords" : [ 0, -3 ],
+    "infinite" : true
+  }, {
+    "relativeCoords" : [ 3, -3 ],
+    "infinite" : true
+  } ]
+}

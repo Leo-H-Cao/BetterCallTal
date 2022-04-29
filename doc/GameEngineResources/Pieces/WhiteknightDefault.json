@@ -1,0 +1,10 @@
+{
+  "pieceName" : "knightDefault",
+  "imgFile" : "file:/Users/hosey/IdeaProjects/CS%20308/oogasalad_BetterCallTal/target/classes/images/pieces/Default/white/knightDefault.png",
+  "pointValue" : 3,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : [ ],
+  "basicMovements" : [ "wknightDefaultMov" ],
+  "basicCaptures" : [ "wknightDefaultCap" ]
+}

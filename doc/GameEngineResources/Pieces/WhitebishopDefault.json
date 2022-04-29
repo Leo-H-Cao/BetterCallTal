@@ -1,0 +1,10 @@
+{
+  "pieceName" : "bishopDefault",
+  "imgFile" : "file:/Users/hosey/IdeaProjects/CS%20308/oogasalad_BetterCallTal/target/classes/images/pieces/Default/white/bishopDefault.png",
+  "pointValue" : 3,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : [ ],
+  "basicMovements" : [ "wbishopDefaultMov" ],
+  "basicCaptures" : [ "wbishopDefaultCap" ]
+}

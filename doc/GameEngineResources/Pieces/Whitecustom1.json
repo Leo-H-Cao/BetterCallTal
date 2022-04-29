@@ -1,0 +1,10 @@
+{
+  "pieceName" : "custom1",
+  "imgFile" : "file:/Users/hosey/Desktop/Screenshots/045-Jose%20Santillan_Rubenstein-jby-21.jpg",
+  "pointValue" : 0,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : [ ],
+  "basicMovements" : [ "wcustom1Mov" ],
+  "basicCaptures" : [ "wcustom1Cap" ]
+}

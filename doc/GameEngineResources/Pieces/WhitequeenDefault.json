@@ -1,0 +1,10 @@
+{
+  "pieceName" : "queenDefault",
+  "imgFile" : "file:/Users/hosey/IdeaProjects/CS%20308/oogasalad_BetterCallTal/target/classes/images/pieces/Default/white/queenDefault.png",
+  "pointValue" : 9,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : [ ],
+  "basicMovements" : [ "wqueenDefaultMov" ],
+  "basicCaptures" : [ "wqueenDefaultCap" ]
+}

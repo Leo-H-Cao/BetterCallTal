@@ -1,6 +1,6 @@
 {
   "pieceName" : "1234",
-  "imgFile" : "images/pieces/Default/black/rook.png",
+  "imgFile" : "file:/Users/hosey/IdeaProjects/CS%20308/oogasalad_BetterCallTal/target/classes/images/pieces/Default/black/rook.png",
   "pointValue" : 0,
   "customMoves" : [ ],
   "movementModifiers" : [ ],
