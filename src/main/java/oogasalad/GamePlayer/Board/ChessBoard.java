@@ -56,9 +56,9 @@ import org.apache.logging.log4j.Logger;
  */
 public class ChessBoard implements Iterable<ChessTile> {
 
-  public static final String EMPTY_LINK = "";
-  public static final int TIME_PERIOD = 10000;
-  public static final int TIME_DELAY = 1000;
+  private static final String EMPTY_LINK = "";
+  private static final int TIME_PERIOD = 2000;
+  private static final int TIME_DELAY = 1000;
   private static final Logger LOG = LogManager.getLogger(ChessBoard.class);
   private final GamePlayers players;
   private final List<ValidStateChecker> validStateCheckers;
