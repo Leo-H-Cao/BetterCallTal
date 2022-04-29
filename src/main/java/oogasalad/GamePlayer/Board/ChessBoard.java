@@ -23,6 +23,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+import javafx.application.Platform;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.History.History;
 import oogasalad.GamePlayer.Board.History.HistoryManager;
@@ -172,28 +173,30 @@ public class ChessBoard implements Iterable<ChessTile> {
     timer.scheduleAtFixedRate(createTask(), TIME_DELAY, TIME_PERIOD);
   }
 
-
-  TimerTask createTask() {
+  private TimerTask createTask() {
     return new TimerTask() {
       @Override
       public void run() {
-        if (turnManager.isGameOver(ChessBoard.this)) {
-          timer.cancel();
-          LOG.info("Game over");
-        } else if (turnManager.getCurrentPlayer() != currentPlayer) {
-          currentPlayer = turnManager.getCurrentPlayer();
-          if (currentPlayer == thisPlayer) {
-            History mostRecent = history.getCurrent();
-            TurnUpdate tu = new TurnUpdate(mostRecent.updatedTiles(), thisPlayer, "");
-            LOG.info(String.format("Performing turn update %s", tu));
-            Runnable onAction = () -> performAsyncTurnUpdate.accept(tu);
+        Platform.runLater(() -> {
+          if (turnManager.isGameOver(ChessBoard.this)) {
+            timer.cancel();
+            Runnable onAction = () -> showAsyncError.accept(new Throwable("Game Over"));
             onAction.run();
+            LOG.info("Game over");
+          } else if (turnManager.getCurrentPlayer() != currentPlayer) {
+            currentPlayer = turnManager.getCurrentPlayer();
+            if (currentPlayer == thisPlayer) {
+              History mostRecent = history.getCurrent();
+              TurnUpdate tu = new TurnUpdate(mostRecent.updatedTiles(), thisPlayer, "");
+              LOG.info(String.format("Performing turn update %s", tu));
+              Runnable onAction = () -> performAsyncTurnUpdate.accept(tu);
+              onAction.run();
+            }
+          } else {
+            LOG.info("Timer ran");
           }
-        } else {
-          LOG.info("Timer ran");
-        }
+        });
       }
-
     };
   }
 

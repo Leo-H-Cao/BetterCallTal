@@ -63,19 +63,6 @@ class ServerManagerTests {
     }
   }
 
-  @Test
-  void checkTimer() {
-    try {
-      String name = "TicTacToeFiveButWithFourInARow.json";
-      String key = "test" + name;
-      ChessBoard board = BoardSetup.createRemoteBoard(filePath + name, "test" + name, 1);
-      board.enableTimer();
-      Thread.sleep(3000);
-    } catch (Exception e) {
-      fail(e.getMessage());
-    }
-  }
-
     void testJSON(String fileName) throws Exception {
     try {
       File file = new File(filePath + fileName);
