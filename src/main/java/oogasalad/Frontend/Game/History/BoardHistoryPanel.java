@@ -63,6 +63,8 @@ public class BoardHistoryPanel {
 
   public Node makeNode() {
     pane = new ScrollPane();
+    pane.setPrefViewportWidth(225);
+    pane.setPrefViewportHeight(300);
     pane.setContent(container);
     return pane;
   }

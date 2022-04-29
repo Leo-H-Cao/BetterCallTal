@@ -1,6 +1,6 @@
 {
   "pieceName" : "custom1",
-  "imgFile" : "file:/Users/hosey/Desktop/Screenshots/045-Jose%20Santillan_Rubenstein-jby-21.jpg",
+  "imgFile" : "file:/Users/hosey/IdeaProjects/CS%20308/oogasalad_BetterCallTal/target/classes/images/pieces/Default/white/customPiece1.png",
   "pointValue" : 0,
   "customMoves" : [ ],
   "movementModifiers" : [ ],

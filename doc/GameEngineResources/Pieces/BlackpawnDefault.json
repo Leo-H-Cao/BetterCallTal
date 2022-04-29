@@ -1,0 +1,10 @@
+{
+  "pieceName" : "pawnDefault",
+  "imgFile" : "file:/Users/hosey/IdeaProjects/CS%20308/oogasalad_BetterCallTal/target/classes/images/pieces/Default/black/pawnDefault.png",
+  "pointValue" : 1,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : [ ],
+  "basicMovements" : [ "bpawnDefaultMov" ],
+  "basicCaptures" : [ "bpawnDefaultCap" ]
+}

@@ -1,0 +1,10 @@
+{
+  "pieceName" : "custom2",
+  "imgFile" : "file:/Users/hosey/Desktop/Screen%20Shot%202022-04-07%20at%209.42.13%20PM.png",
+  "pointValue" : 0,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : [ ],
+  "basicMovements" : [ "wcustom2Mov" ],
+  "basicCaptures" : [ "wcustom2Cap" ]
+}

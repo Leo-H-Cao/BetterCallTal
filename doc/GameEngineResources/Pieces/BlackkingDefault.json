@@ -1,0 +1,10 @@
+{
+  "pieceName" : "kingDefault",
+  "imgFile" : "file:/Users/hosey/IdeaProjects/CS%20308/oogasalad_BetterCallTal/target/classes/images/pieces/Default/black/kingDefault.png",
+  "pointValue" : 99,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : [ ],
+  "basicMovements" : [ "bkingDefaultMov" ],
+  "basicCaptures" : [ "bkingDefaultCap" ]
+}

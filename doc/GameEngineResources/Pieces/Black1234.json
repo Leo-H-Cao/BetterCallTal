@@ -1,6 +1,10 @@
 {
   "pieceName" : "1234",
+<<<<<<< HEAD
   "imgFile" : "file:/Users/hosey/IdeaProjects/CS%20308/oogasalad_BetterCallTal/target/classes/images/pieces/Default/black/rook.png",
+=======
+  "imgFile" : "file:/Users/vchen21/Library/CloudStorage/OneDrive-DukeUniversity/Duke/Freshman/Semester%20Two/CS%20308/Projects/oogasalad_BetterCallTal/target/classes/images/pieces/Default/black/rook.png",
+>>>>>>> cfb9c693bb537641791f44af16478d5acfeaa17d
   "pointValue" : 0,
   "customMoves" : [ ],
   "movementModifiers" : [ ],
