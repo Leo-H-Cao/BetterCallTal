@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 import oogasalad.GamePlayer.Board.ChessBoard;
@@ -38,6 +40,7 @@ public class RemoteTurnManager implements TurnManager {
 
   public RemoteTurnManager(TurnManagerData turnManagerData) {
     this.id = turnManagerData.link();
+    this.showAsyncError = (Throwable e) -> LOG.error(e.getMessage());
   }
 
   /**
@@ -50,8 +53,8 @@ public class RemoteTurnManager implements TurnManager {
     String url = String.format(INCREMENT_TURN, id);
     String json = RequestBuilder.EMPTY_JSON;
     try {
-      HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.post(url, json));
-      return mapper.readValue(response.body(), Integer.class);
+      HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.put(url, json));
+      return Integer.parseInt(response.body());
     } catch (Exception e) {
       handleError(e);
       return -1;
@@ -68,7 +71,7 @@ public class RemoteTurnManager implements TurnManager {
     String url = String.format(GET_CURRENT_PLAYER, id);
     try {
       HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
-      return mapper.readValue(response.body(), Integer.class);
+      return Integer.parseInt(response.body());
     } catch (Exception e) {
       handleError(e);
       return -1;
@@ -84,10 +87,11 @@ public class RemoteTurnManager implements TurnManager {
   @Override
   public boolean isGameOver(ChessBoard board) {
     String url = String.format(IS_GAMEOVER, id);
-    String json = RequestBuilder.EMPTY_JSON;
     try {
+      String json = mapper.writeValueAsString(board.getBoardData());
       HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.put(url, json));
-      return mapper.readValue(response.body(), Boolean.class);
+      LOG.info("Game status: " + response.body());
+      return Boolean.parseBoolean(response.body());
     } catch (Exception e) {
       handleError(e);
       return false;
@@ -105,8 +109,13 @@ public class RemoteTurnManager implements TurnManager {
     String url = String.format(GET_SCORES, id);
     try {
       HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
-      return mapper.readValue(response.body(), new TypeReference<>() {
+      List<Double> scores = mapper.readValue(response.body(), new TypeReference<>() {
       });
+      Map<Integer, Double> scoresMap = new HashMap<>();
+      for (int i = 0; i < scores.size(); i++) {
+        scoresMap.put(i, scores.get(i));
+      }
+      return scoresMap;
     } catch (Exception e) {
       handleError(e);
       return Map.of();

@@ -2,9 +2,8 @@ package oogasalad.Server.Controllers;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
-
 import oogasalad.GamePlayer.Board.ChessBoard.ChessBoardData;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.Player;
@@ -12,6 +11,8 @@ import oogasalad.GamePlayer.Board.TurnCriteria.Linear;
 import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.Board.TurnManagement.GamePlayers;
 import oogasalad.Server.SessionManagement.GameSessionService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TurnController {
 
   private static final String EXCEPT_MSG = "Supposedly Unreachable Condition Reached";
-  private static final Logger logger = Logger.getLogger(TurnController.class.getName());
+  private static final Logger LOG = LogManager.getLogger(TurnController.class);
   private final GameSessionService activeSessions;
 
   /**
@@ -47,12 +48,11 @@ public class TurnController {
    * @return the current player
    */
   @PutMapping("/increment/{id}")
-  @ResponseBody
   public int incrementTurn(@PathVariable String id) {
     try {
       return activeSessions.getSession(id).turns().incrementTurn();
     } catch (Exception e) {
-      logger.log(java.util.logging.Level.SEVERE, EXCEPT_MSG, e);
+      LOG.error(EXCEPT_MSG, e);
       return -1;
     }
   }
@@ -64,12 +64,11 @@ public class TurnController {
    * @return int player id
    */
   @GetMapping("/current/{id}")
-  @ResponseBody
   public int getCurrentPlayer(@PathVariable String id) {
     try {
       return activeSessions.getSession(id).turns().getCurrentPlayer();
     } catch (Exception e) {
-      logger.log(java.util.logging.Level.SEVERE, EXCEPT_MSG, e);
+      LOG.error(EXCEPT_MSG, e);
       return -1;
     }
   }
@@ -82,12 +81,11 @@ public class TurnController {
    * @return true if the game is over, false otherwise
    */
   @PutMapping("/isGameOver/{id}")
-  @ResponseBody
   public boolean isGameOver(@PathVariable String id, @RequestBody ChessBoardData board) {
     try {
       return activeSessions.getSession(id).turns().isGameOver(board.toChessBoard());
     } catch (Exception e) {
-      logger.log(java.util.logging.Level.SEVERE, EXCEPT_MSG, e);
+      LOG.error(EXCEPT_MSG, e);
       return false;
     }
   }
@@ -101,12 +99,13 @@ public class TurnController {
    */
   @GetMapping("/getScores/{id}")
   @ResponseBody
-  public Map<Integer, Double> getScores(@PathVariable String id) {
+  public List<Double> getScores(@PathVariable String id) {
     try {
-      return activeSessions.getSession(id).turns().getScores();
+      Map<Integer, Double> scores = activeSessions.getSession(id).turns().getScores();
+      return new ArrayList<>(scores.values());
     } catch (Exception e) {
-      logger.log(java.util.logging.Level.SEVERE, EXCEPT_MSG, e);
-      return Map.of();
+      LOG.error(EXCEPT_MSG, e);
+      return List.of();
     }
   }
 
@@ -122,7 +121,7 @@ public class TurnController {
     try {
       return activeSessions.getSession(id).turns().getGamePlayers();
     } catch (Exception e) {
-      logger.log(java.util.logging.Level.SEVERE, EXCEPT_MSG, e);
+      LOG.error(EXCEPT_MSG, e);
       return new GamePlayers();
     }
   }
@@ -139,7 +138,7 @@ public class TurnController {
     try {
       return activeSessions.getSession(id).turns().getTurnCriteria();
     } catch (Exception e) {
-      logger.log(java.util.logging.Level.SEVERE, EXCEPT_MSG, e);
+      LOG.error(EXCEPT_MSG, e);
       return new Linear(new Player[1]);
     }
   }
@@ -156,7 +155,7 @@ public class TurnController {
     try {
       return activeSessions.getSession(id).turns().getEndConditions();
     } catch (Exception e) {
-      logger.log(java.util.logging.Level.SEVERE, EXCEPT_MSG, e);
+      LOG.error(EXCEPT_MSG, e);
       return new ArrayList<>();
     }
   }

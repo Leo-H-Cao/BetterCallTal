@@ -94,16 +94,18 @@ public class ChessBoard implements Iterable<ChessTile> {
   public ChessBoard(List<List<ChessTile>> board, TurnManagerData turnManagerData,
       GamePlayers players,
       List<ValidStateChecker> validStateCheckers, HistoryManager history) {
-    this(board, new LocalTurnManager(turnManagerData), players, validStateCheckers, history,
+    this(board, turnManagerData, new LocalTurnManager(turnManagerData), players, validStateCheckers,
+        history,
         GameType.LOCAL, -1);
   }
 
-  public ChessBoard(List<List<ChessTile>> board, TurnManager turnManager,
+  public ChessBoard(List<List<ChessTile>> board, TurnManagerData turnManagerData,
+      TurnManager turnManager,
       GamePlayers players,
       List<ValidStateChecker> validStateCheckers, HistoryManager history, GameType gameType,
       int thisPlayer) {
     this.players = players;
-    this.turnManagerData = new TurnManagerData(turnManager);
+    this.turnManagerData = turnManagerData;
     this.turnManager = turnManager;
     this.board = board;
     this.validStateCheckers = validStateCheckers;
@@ -152,12 +154,14 @@ public class ChessBoard implements Iterable<ChessTile> {
   }
 
   public ChessBoard toServerChessBoard(String id, int thisPlayer) {
-    HistoryManager newHistory = new RemoteHistoryManager(getHistoryManagerData());
-    TurnManager newTurnManager = new RemoteTurnManager(getTurnManagerData());
-    newTurnManager.setLink(id);
-    newHistory.setLink(id);
-    return new ChessBoard(getTiles(), newTurnManager, getGamePlayers(), getValidStateCheckers(),
-        newHistory, GameType.SERVER, thisPlayer);
+    TurnManagerData oldTurnData = getTurnManagerData();
+    TurnManagerData newTurnData = new TurnManagerData(oldTurnData.players(), oldTurnData.turn(),
+        oldTurnData.conditions(), id);
+    HistoryManagerData newHistoryData = new HistoryManagerData(id);
+    HistoryManager newHistory = new RemoteHistoryManager(newHistoryData);
+    TurnManager newTurnManager = new RemoteTurnManager(newTurnData);
+    return new ChessBoard(getTiles(), newTurnData, newTurnManager, getGamePlayers(),
+        getValidStateCheckers(), newHistory, GameType.SERVER, thisPlayer);
   }
 
   public void disableTimer() {

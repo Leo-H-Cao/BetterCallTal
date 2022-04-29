@@ -188,7 +188,7 @@ public final class RemoteHistoryManager implements HistoryManager {
     String url = String.format(IS_EMPTY, id);
     try {
       HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
-      return mapper.readValue(response.body(), Boolean.class);
+      return Boolean.parseBoolean(response.body());
     } catch (Exception e) {
       handleError(e);
       return true;
@@ -280,7 +280,7 @@ public final class RemoteHistoryManager implements HistoryManager {
     String url = String.format(baseURI, id);
     try {
       HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(url));
-      return mapper.readValue(response.body(), Integer.class);
+      return Integer.parseInt(response.body());
     } catch (Exception e) {
       handleError(e);
       return 0;

@@ -82,7 +82,6 @@ public class HistoryController {
    * @return the size of the history.
    */
   @GetMapping("/size/{id}")
-  @ResponseBody
   public int size(@PathVariable String id) {
     return activeSessions.getSession(id).history().size();
   }
@@ -131,7 +130,6 @@ public class HistoryController {
    * @return the index of the most recent state.
    */
   @GetMapping("/current-index/{id}")
-  @ResponseBody
   public int getCurrentIndex(@PathVariable String id) {
     return activeSessions.getSession(id).history().getCurrentIndex();
   }
@@ -155,7 +153,6 @@ public class HistoryController {
    * @param id The id of the game.
    */
   @DeleteMapping("/clear/{id}")
-  @ResponseBody
   public void clearHistory(@PathVariable String id) {
     activeSessions.getSession(id).history().clearHistory();
   }
@@ -167,7 +164,6 @@ public class HistoryController {
    * @return true if the history is empty, false otherwise.
    */
   @GetMapping("/empty/{id}")
-  @ResponseBody
   public boolean isEmpty(@PathVariable String id) {
     return activeSessions.getSession(id).history().isEmpty();
   }

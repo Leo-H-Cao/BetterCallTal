@@ -38,7 +38,8 @@ public class GameSessionService {
    * @param initialBoard the initial board for the session
    */
   public void addSession(String sessionId, int host, int opponent, ChessBoard initialBoard) {
-    activeSessions.put(sessionId, new GameSession(sessionId, host, opponent, initialBoard));
+    activeSessions.put(sessionId, new GameSession(sessionId, host, opponent));
+    activeSessions.get(sessionId).addInitialBoard(initialBoard);
   }
 
   /**
