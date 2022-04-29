@@ -2,11 +2,14 @@ package oogasalad.Frontend.Editor;
 
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import oogasalad.Frontend.util.BackendConnector;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import util.DukeApplicationTest;
+
+import java.io.File;
 import java.util.ResourceBundle;
 
 public class TestPieceEditor extends DukeApplicationTest {
@@ -58,5 +61,14 @@ public class TestPieceEditor extends DukeApplicationTest {
 		sleep(250);
 		Assertions.assertEquals(myEditorView.getMyTabs().getTabs().get(1), myEditorView.getMyTabs().getSelectionModel().getSelectedItem());
 
+	}
+
+	@Test
+	void testChangeImage() {
+		createPiece();
+		Image originalImage = myEditorView.getEditorBackend().getPiecesState().getPiece("custom1").getImage(0).getValue();
+		clickOn(lookup("#changeImage").query());
+		sleep(10000);
+		Assertions.assertNotEquals(myEditorView.getEditorBackend().getPiecesState().getPiece("custom1").getImage(0).getValue(), originalImage);
 	}
 }
