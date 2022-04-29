@@ -1,0 +1,10 @@
+{
+  "pieceName" : "custom1",
+  "imgFile" : "file:/C:/Users/nolan/cs308/oogasalad_BetterCallTal/target/classes/images/pieces/Default/white/customPiece1.png",
+  "pointValue" : 0,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : [ ],
+  "basicMovements" : [ "wcustom1Mov" ],
+  "basicCaptures" : [ "wcustom1Cap" ]
+}
