@@ -1,0 +1,10 @@
+{
+  "pieceName" : "kingDefault",
+  "imgFile" : "images/pieces/Default/white/kingDefault.png",
+  "pointValue" : 99,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : [ ],
+  "basicMovements" : [ "wkingDefaultMov" ],
+  "basicCaptures" : [ "wkingDefaultCap" ]
+}

@@ -1,0 +1,10 @@
+{
+  "pieceName" : "custom2",
+  "imgFile" : "images/pieces/Default/black/customPiece1.png",
+  "pointValue" : 0,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : [ ],
+  "basicMovements" : [ "bcustom2Mov" ],
+  "basicCaptures" : [ "bcustom2Cap" ]
+}

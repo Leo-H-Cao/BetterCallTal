@@ -1,0 +1,10 @@
+{
+  "pieceName" : "rookDefault",
+  "imgFile" : "images/pieces/Default/black/rookDefault.png",
+  "pointValue" : 5,
+  "customMoves" : [ ],
+  "movementModifiers" : [ ],
+  "onInteractionModifier" : [ ],
+  "basicMovements" : [ "brookDefaultMov" ],
+  "basicCaptures" : [ "brookDefaultCap" ]
+}

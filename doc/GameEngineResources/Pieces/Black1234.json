@@ -1,6 +1,6 @@
 {
   "pieceName" : "1234",
-  "imgFile" : "images/pieces/Default/black/rook.png",
+  "imgFile" : "file:/Users/vchen21/Library/CloudStorage/OneDrive-DukeUniversity/Duke/Freshman/Semester%20Two/CS%20308/Projects/oogasalad_BetterCallTal/target/classes/images/pieces/Default/black/rook.png",
   "pointValue" : 0,
   "customMoves" : [ ],
   "movementModifiers" : [ ],
