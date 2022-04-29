@@ -18,6 +18,7 @@ import oogasalad.GamePlayer.GamePiece.Piece;
 import oogasalad.GamePlayer.GamePiece.PieceData;
 import oogasalad.GamePlayer.Movement.Coordinate;
 import oogasalad.GamePlayer.Movement.Movement;
+import oogasalad.GamePlayer.Server.SessionManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -36,6 +37,7 @@ class TurnTest {
   private Piece pieceThree;
   private List<Piece> pieces;
   private GamePlayers gamePlayers;
+  private SessionManager sessionManager;
 
   @BeforeEach
   void setUp() {
@@ -61,10 +63,19 @@ class TurnTest {
     board.setPieces(pieces);
   }
 
-  @Test
-  void testLinear() {
-    turnCriteria = new Linear(gamePlayers.getPlayersArr()).copy();
-    setBoard();
+  private void setRemoteBoard() {
+    try {
+      String key = "remoteboardtest";
+      sessionManager = new SessionManager();
+      setBoard();
+      sessionManager.createGameSession(key, 0, 1, board);
+      board = board.toServerChessBoard(key, 0);
+    } catch (Exception e) {
+      fail();
+    }
+  }
+
+  private void testLinear() {
     try {
       TurnUpdate tu1 = board.move(pieceOne, new Coordinate(0, 1));
       assertEquals(tu1.nextPlayer(), 1);
@@ -79,6 +90,26 @@ class TurnTest {
       fail();
     }
   }
+
+  @Test
+  void testLocalLinear() {
+    turnCriteria = new Linear(gamePlayers.getPlayersArr()).copy();
+    setBoard();
+    testLinear();
+  }
+
+  @Test
+  void testRemoteLinear() {
+    turnCriteria = new Linear(gamePlayers.getPlayersArr()).copy();
+    try {
+      setRemoteBoard();
+      testLinear();
+      sessionManager.endGameSession("remoteboardtest");
+    } catch (Exception e) {
+      fail();
+    }
+  }
+
 
   @Test
   void testIncreasing() {
