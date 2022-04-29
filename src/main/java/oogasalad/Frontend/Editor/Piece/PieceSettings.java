@@ -79,7 +79,7 @@ public class PieceSettings extends LabelledContainer {
 		fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg"));
 		File selectedFile = fileChooser.showOpenDialog(stage);
 		if(selectedFile != null) {
-			getEditorBackend().getPiecesState().getPiece(myId).setImage(mySelectedTeam.getValue(), new Image(selectedFile.getAbsolutePath()));
+			getEditorBackend().getPiecesState().getPiece(myId).setImage(mySelectedTeam.getValue(), new Image(selectedFile.toURI().toString()));
 		}
 	}
 }
