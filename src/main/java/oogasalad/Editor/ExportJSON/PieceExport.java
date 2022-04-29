@@ -24,9 +24,9 @@ public class PieceExport {
 
 
   public PieceExport(EditorPiece editorPiece, int teamNum){
-		this.teamNum = teamNum;
-		pieceName = editorPiece.getPieceID();
-		imgFile = editorPiece.getImage(teamNum).getValue().getUrl().split("/classes/")[1];
+	this.teamNum = teamNum;
+	pieceName = editorPiece.getPieceID();
+	imgFile = editorPiece.getImage(teamNum).getValue().getUrl();
     pointValue = editorPiece.getPointValue();
     customMoves = editorPiece.getCustomMoves() == null ? new ArrayList<>() :editorPiece.getCustomMoves();
     basicMovements = new ArrayList<>();

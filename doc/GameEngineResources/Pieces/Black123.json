@@ -1,6 +1,6 @@
 {
   "pieceName" : "123",
-  "imgFile" : "images/pieces/Default/black/customPiece1.png",
+  "imgFile" : "file:/Users/vchen21/Library/CloudStorage/OneDrive-DukeUniversity/Duke/Freshman/Semester%20Two/CS%20308/Projects/oogasalad_BetterCallTal/target/classes/images/pieces/Default/black/customPiece1.png",
   "pointValue" : 0,
   "customMoves" : [ ],
   "movementModifiers" : [ ],

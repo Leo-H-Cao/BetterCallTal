@@ -44,7 +44,7 @@ public class SessionManager {
   public int joinGameSession(String id) throws EngineException, JsonProcessingException {
     String uri = String.format(JOIN, id);
     HttpResponse<String> response = RequestBuilder.sendRequest(RequestBuilder.get(uri));
-    return mapperJSON.readValue(response.body(), Integer.class);
+    return Integer.parseInt(response.body());
 
   }
 

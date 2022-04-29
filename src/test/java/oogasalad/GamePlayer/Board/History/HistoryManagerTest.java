@@ -73,7 +73,28 @@ class HistoryManagerTest {
       fail("Could not create session");
     }
     HistoryManager historyManager = new RemoteHistoryManager("test");
-    standardGameTest(historyManager);
+    assertEquals(1, historyManager.size());
+    historyManager.add(board1);
+    assertEquals(2, historyManager.size());
+    historyManager.add(board2);
+    assertEquals(3, historyManager.size());
+    historyManager.add(board3);
+    assertEquals(4, historyManager.size());
+    assertEquals(3, historyManager.getCurrentIndex());
+    assertEquals(historyManager.get(2).getHistoryData().updatedTiles().toString(),
+        board2.getHistoryData().updatedTiles().toString());
+    assertEquals(historyManager.getCurrent().getHistoryData().updatedTiles().toString(),
+        board3.getHistoryData().updatedTiles().toString());
+    assertEquals("[]",
+        historyManager.getFirst().getHistoryData().updatedTiles().toString());
+    assertEquals(historyManager.getCurrent().getHistoryData().updatedTiles().toString(),
+        historyManager.getLast().getHistoryData().updatedTiles().toString());
+    historyManager.goToState(1);
+    assertEquals(historyManager.getCurrent().getHistoryData().updatedTiles().toString(),
+        board1.getHistoryData().updatedTiles().toString());
+    historyManager.clearHistory();
+    assertTrue(historyManager.isEmpty());
+    assertEquals(0, historyManager.getCurrentIndex());
   }
 
   private void standardGameTest(HistoryManager historyManager) {

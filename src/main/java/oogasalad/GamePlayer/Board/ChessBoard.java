@@ -23,6 +23,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
+import javafx.application.Platform;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.History.History;
 import oogasalad.GamePlayer.Board.History.HistoryManager;
@@ -80,7 +81,8 @@ public class ChessBoard implements Iterable<ChessTile> {
   public ChessBoard(List<List<ChessTile>> board, TurnCriteria turnCriteria, Player[] players,
       List<ValidStateChecker> validStateCheckers, List<EndCondition> endConditions) {
     this.players = new GamePlayers(players);
-    this.turnManagerData = new TurnManagerData(this.players, turnCriteria, endConditions, EMPTY_LINK);
+    this.turnManagerData = new TurnManagerData(this.players, turnCriteria, endConditions,
+        EMPTY_LINK);
     this.turnManager = new LocalTurnManager(this.turnManagerData);
     this.board = board;
     this.validStateCheckers = validStateCheckers;
@@ -93,15 +95,25 @@ public class ChessBoard implements Iterable<ChessTile> {
   public ChessBoard(List<List<ChessTile>> board, TurnManagerData turnManagerData,
       GamePlayers players,
       List<ValidStateChecker> validStateCheckers, HistoryManager history) {
+    this(board, turnManagerData, new LocalTurnManager(turnManagerData), players, validStateCheckers,
+        history,
+        GameType.LOCAL, -1);
+  }
+
+  public ChessBoard(List<List<ChessTile>> board, TurnManagerData turnManagerData,
+      TurnManager turnManager,
+      GamePlayers players,
+      List<ValidStateChecker> validStateCheckers, HistoryManager history, GameType gameType,
+      int thisPlayer) {
     this.players = players;
     this.turnManagerData = turnManagerData;
-    this.turnManager = new LocalTurnManager(turnManagerData);
+    this.turnManager = turnManager;
     this.board = board;
     this.validStateCheckers = validStateCheckers;
     this.history = history;
     this.pieceList = new HashMap<>();
-    this.gameType = GameType.LOCAL;
-    thisPlayer = -1;
+    this.gameType = gameType;
+    this.thisPlayer = thisPlayer;
   }
 
   /**
@@ -136,33 +148,55 @@ public class ChessBoard implements Iterable<ChessTile> {
     if (gameType == GameType.SERVER) {
       this.turnManager = new RemoteTurnManager(boardData.turnManagerData());
       this.history = new RemoteHistoryManager(boardData.history());
-      timer.scheduleAtFixedRate(createTask(), TIME_DELAY, TIME_PERIOD);
     } else {
       this.turnManager = new LocalTurnManager(boardData.turnManagerData());
       this.history = new LocalHistoryManager(boardData.history());
     }
   }
 
-  public TimerTask createTask() {
+  public ChessBoard toServerChessBoard(String id, int thisPlayer) {
+    TurnManagerData oldTurnData = getTurnManagerData();
+    TurnManagerData newTurnData = new TurnManagerData(oldTurnData.players(), oldTurnData.turn(),
+        oldTurnData.conditions(), id);
+    HistoryManagerData newHistoryData = new HistoryManagerData(id);
+    HistoryManager newHistory = new RemoteHistoryManager(newHistoryData);
+    TurnManager newTurnManager = new RemoteTurnManager(newTurnData);
+    return new ChessBoard(getTiles(), newTurnData, newTurnManager, getGamePlayers(),
+        getValidStateCheckers(), newHistory, GameType.SERVER, thisPlayer);
+  }
+
+  public void disableTimer() {
+    timer.cancel();
+  }
+
+  public void enableTimer() {
+    timer.scheduleAtFixedRate(createTask(), TIME_DELAY, TIME_PERIOD);
+  }
+
+  private TimerTask createTask() {
     return new TimerTask() {
       @Override
       public void run() {
-        if (turnManager.isGameOver(ChessBoard.this)) {
-          timer.cancel();
-          LOG.info("Game over");
-        } else if (turnManager.getCurrentPlayer() != currentPlayer) {
-          currentPlayer = turnManager.getCurrentPlayer();
-          if (currentPlayer == thisPlayer) {
-            History mostRecent = history.getCurrent();
-            TurnUpdate tu = new TurnUpdate(mostRecent.updatedTiles(), thisPlayer, "");
-            LOG.info(String.format("Performing turn update %s", tu));
-            performAsyncTurnUpdate.accept(tu);
+        Platform.runLater(() -> {
+          if (turnManager.isGameOver(ChessBoard.this)) {
+            timer.cancel();
+            Runnable onAction = () -> showAsyncError.accept(new Throwable("Game Over"));
+            onAction.run();
+            LOG.info("Game over");
+          } else if (turnManager.getCurrentPlayer() != currentPlayer) {
+            currentPlayer = turnManager.getCurrentPlayer();
+            if (currentPlayer == thisPlayer) {
+              History mostRecent = history.getCurrent();
+              TurnUpdate tu = new TurnUpdate(mostRecent.updatedTiles(), thisPlayer, "");
+              LOG.info(String.format("Performing turn update %s", tu));
+              Runnable onAction = () -> performAsyncTurnUpdate.accept(tu);
+              onAction.run();
+            }
+          } else {
+            LOG.info("Timer ran");
           }
-        } else {
-          LOG.info("Timer ran");
-        }
+        });
       }
-
     };
   }
 
@@ -228,20 +262,24 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @return set of updated tiles + next player turn
    */
   public TurnUpdate move(Piece piece, Coordinate finalSquare) throws EngineException {
-    // TODO: valid state checker for person who just moved (redundunt - optional)
-    // TODO: check end conditions for other player(s)
-    if (!isGameOver() && piece.checkTeam(turnManager.getCurrentPlayer())) {
+    boolean isGameOver = isGameOver();
+    if (!isGameOver && piece.checkTeam(turnManager.getCurrentPlayer()) && !cantMakeServerMove(
+        piece)) {
       Set<ChessTile> moveUpdate = piece.move(getTileFromCoords(finalSquare), this);
       TurnUpdate update = new TurnUpdate(moveUpdate,
           turnManager.incrementTurn(), getNotation(moveUpdate, piece));
       history.add(new History(deepCopy(), Set.of(piece), update.updatedSquares()));
       LOG.debug(String.format("History updated: %d", history.size()));
+      currentPlayer = update.nextPlayer();
       return update;
     }
-
-    LOG.warn(isGameOver() ? "Move made after game over" : "Move made by wrong player");
-    throw isGameOver() ? new MoveAfterGameEndException(EMPTY_LINK) : new WrongPlayerException(
+    if (isGameOver) {
+      disableTimer();
+    }
+    LOG.warn(isGameOver ? "Move made after game over" : "Move made by wrong player");
+    throw isGameOver ? new MoveAfterGameEndException(EMPTY_LINK) : new WrongPlayerException(
         "Expected: " + turnManager.getCurrentPlayer() + "\n Actual: " + piece.getTeam());
+
   }
 
   /***
@@ -322,14 +360,29 @@ public class ChessBoard implements Iterable<ChessTile> {
   }
 
   /**
+   * Checks if the server can make a move
+   *
+   * @param piece to move
+   * @return true if the piece can move
+   */
+  private boolean cantMakeServerMove(Piece piece) {
+    boolean serverMode = gameType == GameType.SERVER;
+    boolean currentPlayerCheck = turnManager.getCurrentPlayer() != piece.getTeam();
+    boolean thisPlayerCheck = piece.getTeam() != thisPlayer;
+    return serverMode && (currentPlayerCheck || thisPlayerCheck);
+  }
+
+  /**
    * Returns all possible moves a piece can make
    *
    * @param piece to get moves from
    * @return set of tiles the piece can move to
    */
   public Set<ChessTile> getMoves(Piece piece) throws EngineException {
-    // TODO: add valid state checker here
-    if (isGameOver()) {
+    if (isGameOver() || cantMakeServerMove(piece)) {
+      if (isGameOver()) {
+        disableTimer();
+      }
       return Set.of();
     }
     Set<ChessTile> allPieceMovements = piece.getMoves(this);
@@ -431,11 +484,11 @@ public class ChessBoard implements Iterable<ChessTile> {
     LOG.debug(String.format("Past pieces:    %s", pastPieces));
     LOG.debug(String.format("Present pieces: %s", presentPieces));
 
-    Piece takenPiece =  pastPieces.stream().filter(p -> !presentPieces.contains(p)).findFirst().orElse(null);
+    Piece takenPiece = pastPieces.stream().filter(p -> !presentPieces.contains(p)).findFirst()
+        .orElse(null);
     LOG.debug(String.format("Taken piece: %s", takenPiece));
     return takenPiece;
   }
-
 
   /**
    * Gets the player object with the associated ID
@@ -526,7 +579,9 @@ public class ChessBoard implements Iterable<ChessTile> {
    * @return list of opponent pieces
    */
   public List<Piece> getOpponentPieces(int team) {
-    if(this.getPlayer(team).opponentIDs() == null) return Collections.emptyList();
+    if (this.getPlayer(team).opponentIDs() == null) {
+      return Collections.emptyList();
+    }
     return board.stream().flatMap(List::stream).toList().stream().map(ChessTile::getPieces)
         .flatMap(List::stream).toList().stream()
         .filter(p -> Arrays.stream(this.getPlayer(team).opponentIDs()).anyMatch(
@@ -659,27 +714,12 @@ public class ChessBoard implements Iterable<ChessTile> {
   public void setPerformAsyncTurnUpdate(
       Consumer<TurnUpdate> performAsyncTurnUpdate) {
     this.performAsyncTurnUpdate = performAsyncTurnUpdate;
+    enableTimer();
 
   }
 
   public GameType getGameType() {
     return gameType;
-  }
-
-  public ChessBoard toServerChessBoard(String id, int thisPlayer) {
-    String tmLink = turnManager.getLink();
-    String hmLink = history.getLink();
-    turnManager.setLink(id);
-    history.setLink(id);
-    ChessBoard server = getBoardData().toChessBoard(GameType.SERVER);
-    server.setThisPlayer(thisPlayer);
-    turnManager.setLink(tmLink);
-    history.setLink(hmLink);
-    return server;
-  }
-
-  public void disableTimer() {
-    timer.cancel();
   }
 
   /**
@@ -784,11 +824,6 @@ public class ChessBoard implements Iterable<ChessTile> {
      * @return the chess board
      */
     public ChessBoard toChessBoard() {
-      return new ChessBoard(this);
-    }
-
-    public ChessBoard toChessBoard(GameType gameType) {
-      this.gameType = gameType;
       return new ChessBoard(this);
     }
 

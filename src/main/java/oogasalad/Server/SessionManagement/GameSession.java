@@ -11,30 +11,34 @@ import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
 public final class GameSession {
 
   private final String gameSessionId;
-  private final TurnManager turns;
-  private final HistoryManager history;
   private final int host;
   private final int opponent;
+  private TurnManager turns;
+  private HistoryManager history;
   private boolean isPaused;
 
   /**
    * Creates the game session with the given id and the given initial board. Manages all of the
    *
    * @param gameSessionId the id of the game session.
-   * @param initialBoard  the initial board of the game, which includes the initial state and rules
-   *                      of the game.
    */
-  public GameSession(String gameSessionId, int host, int opponent, ChessBoard initialBoard) {
-    ChessBoard board = initialBoard.toServerChessBoard(gameSessionId, host);
-    board.disableTimer();
+  public GameSession(String gameSessionId, int host, int opponent) {
     this.gameSessionId = gameSessionId;
     this.host = host;
     this.opponent = opponent;
-    this.turns = new LocalTurnManager(initialBoard.getTurnManagerData());
-    this.history = new LocalHistoryManager(History.fromBoard(board));
     this.isPaused = false;
   }
 
+  /**
+   * Adds the initial board to the game session.
+   *
+   * @param initialBoard the board to link the turn manager to.
+   */
+  public void addInitialBoard(ChessBoard initialBoard) {
+    ChessBoard board = initialBoard.toServerChessBoard(gameSessionId, host);
+    this.turns = new LocalTurnManager(board.getTurnManagerData());
+    this.history = new LocalHistoryManager(History.fromBoard(board));
+  }
 
   /**
    * Checks if the game session is equal to the given object.
@@ -125,5 +129,4 @@ public final class GameSession {
   public int getOpponent() {
     return opponent;
   }
-
 }

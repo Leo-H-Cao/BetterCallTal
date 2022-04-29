@@ -4,15 +4,18 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
+import java.io.IOException;
 import oogasalad.GamePlayer.Board.ChessBoard.ChessBoardData;
+import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.Server.RequestBuilder;
+import oogasalad.GamePlayer.Server.SessionManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
 
-class JacksonTests {
+class ServerManagerTests {
 
-  private static final Logger LOG = LogManager.getLogger(JacksonTests.class);
+  private static final Logger LOG = LogManager.getLogger(ServerManagerTests.class);
   private static final String filePath = "doc/games/";
   private final ObjectMapper mapper = RequestBuilder.objectMapperWithPTV();
 
@@ -22,7 +25,6 @@ class JacksonTests {
     testJSON("Atomic.json");
     testJSON("Antichess.json");
     testJSON("BlackHoleTileVariant.json");
-
   }
 
   @Test
@@ -48,8 +50,20 @@ class JacksonTests {
     testJSON("TicTacToeFour.json");
   }
 
+  @Test
+  void hostAndJoinGame() {
+    try {
+      String name = "TicTacToeFiveButWithFourInARow.json";
+      String key = "test" + name;
+      BoardSetup.createRemoteBoard(filePath + name, "test" + name, 1);
+      BoardSetup.joinRemoteBoard(key);
+      new SessionManager().endGameSession("test" + name);
+    } catch (Exception e) {
+      fail(e.getMessage());
+    }
+  }
 
-  void testJSON(String fileName) throws Exception {
+    void testJSON(String fileName) throws Exception {
     try {
       File file = new File(filePath + fileName);
       LOG.info("Reading file: " + file.getPath());
