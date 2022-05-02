@@ -1,6 +1,6 @@
 {
   "pieceName" : "kingDefault",
-  "imgFile" : "images/pieces/Default/black/kingDefault.png",
+  "imgFile" : "file:/Users/luke/Desktop/CompSci/CS308/oogasalad_BetterCallTal/target/classes/images/pieces/Default/black/kingDefault.png",
   "pointValue" : 99,
   "customMoves" : [ ],
   "movementModifiers" : [ ],

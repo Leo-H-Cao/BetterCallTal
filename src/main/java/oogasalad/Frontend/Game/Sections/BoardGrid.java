@@ -1,3 +1,14 @@
+/**
+* I believe this code is a great example of well structured code.
+* This class manages the collection of BoardTiles, and I believe it does
+* a good job neatly directing the different paths of logic.
+*
+* The BoardGrid is designed to be usable by any game variant and to be as "dumb"
+* as possible. The boardgrid is ignorant of the game being played, and simply
+* updates whenever it is told to by the backend. I think I do a great job of doing this.
+*/
+
+
 package oogasalad.Frontend.Game.Sections;
 
 import javafx.scene.layout.ColumnConstraints;

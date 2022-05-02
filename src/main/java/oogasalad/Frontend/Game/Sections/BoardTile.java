@@ -1,3 +1,10 @@
+/**
+ * I believe that this code is well designed because the methods are clean (not smelly) and the
+ * well java-doc'd.
+ * Additionally, I feel that this class is a great example of following the SRP. The BoardTile only deals with
+ * the tile on BoardGrid and nothing else.
+ */
+
 package oogasalad.Frontend.Game.Sections;
 
 import javafx.scene.Node;
@@ -73,17 +80,17 @@ public class BoardTile {
     private void addActionToSP(Consumer<Piece> lightupCons, Runnable clearlitrun, Consumer<Piece> setSelPiece, Consumer<Coordinate> MoveCons) {
         ButtonFactory.addAction(myStackPane,
                 (e) -> {
-            if (!Lit && myPieces.isEmpty()) {clearlitrun.run();}
-            if (!Lit && ! myPieces.isEmpty()){
-                clearlitrun.run();
-                lightupCons.accept(myPieces.get(0));
-                setSelPiece.accept(myPieces.get(0));
-            }
-            if (Lit) {
-                clearlitrun.run();
-                MoveCons.accept(myCoord);
-            }
-        });
+                    if (!Lit && myPieces.isEmpty()) {clearlitrun.run();}
+                    if (!Lit && ! myPieces.isEmpty()){
+                        clearlitrun.run();
+                        lightupCons.accept(myPieces.get(0));
+                        setSelPiece.accept(myPieces.get(0));
+                    }
+                    if (Lit) {
+                        clearlitrun.run();
+                        MoveCons.accept(myCoord);
+                    }
+                });
     }
 
     /**
