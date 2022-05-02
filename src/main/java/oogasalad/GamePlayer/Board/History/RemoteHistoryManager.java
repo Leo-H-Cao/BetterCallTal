@@ -11,6 +11,17 @@ import oogasalad.GamePlayer.Server.RequestBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * This class is used to store prior states of the game. I chose this class as an example of a
+ * Masterpiece code since it showcase my abstraction, encapsulations, and skillful use of robust yet
+ * simple, stable APIs.
+ * <p>
+ * 1. https://coursework.cs.duke.edu/compsci308_2022spring/oogasalad_BetterCallTal/-/commit/5390354738d795cc83c21b823d5b8e6b979f6a5a
+ * 2. https://coursework.cs.duke.edu/compsci308_2022spring/oogasalad_BetterCallTal/-/commit/dd5f29f94f18d3fb5142565f71f53cc35634b5f4
+ * 3. https://coursework.cs.duke.edu/compsci308_2022spring/oogasalad_BetterCallTal/-/commit/8213a28db05c9463202f0a446abaccfcc8946620
+ * <p>
+ * Changes for Masterpiece: Added JavaDoc to Constructors + Auto Formatting
+ */
 public final class RemoteHistoryManager implements HistoryManager {
 
   private static final Logger LOG = LogManager.getLogger(RemoteHistoryManager.class);
@@ -31,11 +42,21 @@ public final class RemoteHistoryManager implements HistoryManager {
   private String id;
   private Consumer<Throwable> showAsyncError;
 
+  /**
+   * Creates a remote history manager with the given id.
+   *
+   * @param id the id of the remote history manager.
+   */
   public RemoteHistoryManager(String id) {
     this.id = id;
     this.showAsyncError = (Throwable e) -> LOG.error(e.getMessage());
   }
 
+  /**
+   * Creates a remote history manager from the given data
+   *
+   * @param history the data to create the remote history manager from
+   */
   public RemoteHistoryManager(HistoryManagerData history) {
     this.id = history.historyAPI();
   }

@@ -4,6 +4,16 @@ import java.util.function.Consumer;
 import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
+/**
+ * This class is used to store prior states of the game. I chose this class as an example of a
+ * Masterpiece code since it showcase my abstraction, encapsulations, and skillful use of robust yet
+ * simple, stable APIs.
+ * <p>
+ * 1. https://coursework.cs.duke.edu/compsci308_2022spring/oogasalad_BetterCallTal/-/commit/bfd2e7c3fbe8ef3a1acb2ce667372df467be94b2
+ * 2. https://coursework.cs.duke.edu/compsci308_2022spring/oogasalad_BetterCallTal/-/commit/0ec8151813409679bba0d19967ea555d949ce87f
+ * <p>
+ * Changes for Masterpiece: Auto Formatting
+ */
 public interface HistoryManager {
 
   /**
@@ -103,6 +113,7 @@ public interface HistoryManager {
 
   /**
    * Adds a link to the history manager
+   *
    * @param link the link to add
    */
   void setLink(String link);

@@ -9,8 +9,15 @@ import java.util.stream.Stream;
 import oogasalad.GamePlayer.Board.ChessBoard;
 
 /**
- * This class is used to store prior states of the game, allowing for checking complex game
- * interactions and rollback to previous states.
+ * This class is used to store prior states of the game. I chose this class as an example of a
+ * Masterpiece code since it showcase my abstraction, encapsulations, and skillful use of robust yet
+ * simple, stable APIs.
+ * <p>
+ * 1. https://coursework.cs.duke.edu/compsci308_2022spring/oogasalad_BetterCallTal/-/commit/6a7b9a55779db2751130b622ac228e77207588a1
+ * 2. https://coursework.cs.duke.edu/compsci308_2022spring/oogasalad_BetterCallTal/-/commit/bfd60d8be9eeec4d92e7eff8da381314e18ccd23
+ * 3. https://coursework.cs.duke.edu/compsci308_2022spring/oogasalad_BetterCallTal/-/commit/0ec8151813409679bba0d19967ea555d949ce87f
+ * <p>
+ * Changes for Masterpiece: Added JavaDoc to Constructors + Auto Formatting
  */
 public class LocalHistoryManager implements HistoryManager {
 
@@ -28,10 +35,20 @@ public class LocalHistoryManager implements HistoryManager {
     this(Collections.emptyList());
   }
 
+  /**
+   * Creates a chess history object, which can be used to store the past game states. Overloaded
+   * constructor used to create an empty history and a API link.
+   *
+   * @param link the API link to the history.
+   */
   public LocalHistoryManager(String link) {
     this(Collections.emptyList(), link);
   }
 
+  /**
+   * Creates a chess history object, which can be used to store the past game states. Overloaded
+   * constructor used to create a history from a HistoryManagerData object.
+   */
   public LocalHistoryManager(HistoryManagerData data) {
     this(data.historyAPI());
   }
@@ -45,6 +62,12 @@ public class LocalHistoryManager implements HistoryManager {
     this(history, EMPTY_LINK);
   }
 
+  /**
+   * Creates a chess history object, which can be used to store the past game states.
+   *
+   * @param history the collection of states to store.
+   * @param link    the API link to the history.
+   */
   public LocalHistoryManager(Collection<History> history, String link) {
     this.history = new ArrayList<>(history);
     this.currentIndex = history.size() - 1;
