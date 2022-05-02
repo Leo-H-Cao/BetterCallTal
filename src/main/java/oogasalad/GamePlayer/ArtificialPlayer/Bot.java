@@ -10,18 +10,14 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.CheckmateLoss;
 import oogasalad.Frontend.Menu.LocalPlay.RemotePlayer.RemotePlayer;
-import oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.KingOfTheHillWin;
 import oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.PieceValue;
 import oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.Utility;
 import oogasalad.GamePlayer.Board.ChessBoard;
 import oogasalad.GamePlayer.Board.EndConditions.EndCondition;
 import oogasalad.GamePlayer.Board.Tiles.ChessTile;
-import oogasalad.GamePlayer.Board.TurnCriteria.TurnCriteria;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnManager;
 import oogasalad.GamePlayer.Board.TurnManagement.TurnUpdate;
-import oogasalad.GamePlayer.EngineExceptions.EngineException;
 import oogasalad.GamePlayer.GamePiece.Piece;
-import org.apache.catalina.Engine;
 
 /***
  * Generalized AI player for all supported chess variants
@@ -30,8 +26,6 @@ import org.apache.catalina.Engine;
  */
 
 public class Bot implements RemotePlayer {
-  private TurnCriteria turnCriteria;
-  private int team;
   private TurnManager turnManager;
   private DecisionTree decisionTree;
   private List<Utility> objectives;
@@ -39,21 +33,15 @@ public class Bot implements RemotePlayer {
   private static final String OBJECTIVES_PATH = "oogasalad.GamePlayer.BotObjectives";
   private static final String UTILITY_FUNCTIONS_PATH = "oogasalad.GamePlayer.ArtificialPlayer.UtilityFunctions.";
   private String setting;
-  private boolean firstMove = true; //TODO: get the endconditions upon setup to complete setup of bot before a move is made
 
 
   private ArrayList<Piece> topMovePieces = new ArrayList<>();
   private ArrayList<ChessTile> topMoveTiles = new ArrayList<>();
-  ArrayList<Double> utilityList  = new ArrayList<>();
-  double maxUtility = Integer.MIN_VALUE;
   private int minimaxDepth = 2;
   private static final double RANDOMIZER_THRESHOLD = 0.001;
 
 
-  public Bot(int team, TurnCriteria tc){
-    this.team = team;
-    turnCriteria = tc;
-  }
+
 
   public Bot(TurnManager turnManager, String s) {
     this.turnManager = turnManager;
@@ -71,19 +59,6 @@ public class Bot implements RemotePlayer {
 
 
   /**
-   *
-   * @param board
-   * @param currentPlayer
-   * @return
-   * @throws Throwable
-   */
-
-  @Override
-  public TurnUpdate getRemoteMove(ChessBoard board, int currentPlayer) throws Throwable {
-    return getBotMove(board, currentPlayer);
-  }
-
-  /**
    * This method returns a TurnUpdate of the bot's move when it is asked to make a move
    * @param board the current state of the board
    * @param currentPlayer the bot's player ID
@@ -91,6 +66,13 @@ public class Bot implements RemotePlayer {
    * @throws Throwable runtime exception
    */
 
+  @Override
+  public TurnUpdate getRemoteMove(ChessBoard board, int currentPlayer) throws Throwable {
+    return getBotMove(board, currentPlayer);
+  }
+
+
+  //get the bot's move
   public TurnUpdate getBotMove(ChessBoard board, int currentPlayer)
       throws Throwable {
 
@@ -111,6 +93,8 @@ public class Bot implements RemotePlayer {
     //return getRandomMove(board, currentPlayer);
   }
 
+
+  //create the list of utility functions the bot should know, according to the game's end conditions
   private void setSpecialObjectives(Collection<EndCondition> endConditions)
       throws NoSuchMethodException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException {
     ResourceBundle botObjectiveResources = ResourceBundle.getBundle(OBJECTIVES_PATH);
@@ -127,6 +111,7 @@ public class Bot implements RemotePlayer {
 
   }
 
+  //get move based on difficulty setting
   private TurnUpdate getSettingBasedMove(ChessBoard board, int currentPlayer, double[] depths)
       throws Throwable {
     double seed = Math.random();
