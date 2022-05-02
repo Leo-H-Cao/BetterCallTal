@@ -69,6 +69,20 @@ public class Bot implements RemotePlayer {
     setting = s;
   }
 
+
+  /**
+   *
+   * @param board
+   * @param currentPlayer
+   * @return
+   * @throws Throwable
+   */
+
+  @Override
+  public TurnUpdate getRemoteMove(ChessBoard board, int currentPlayer) throws Throwable {
+    return getBotMove(board, currentPlayer);
+  }
+
   /**
    * This method returns a TurnUpdate of the bot's move when it is asked to make a move
    * @param board the current state of the board
@@ -128,36 +142,16 @@ public class Bot implements RemotePlayer {
     return new TurnUpdate(Set.of(), -1, "");
   }
 
+  //best move according to the minimax algorithm
   private TurnUpdate getMinimaxMove(ChessBoard board, int currentPlayer, int depth)
       throws Throwable {
-    List<Piece> playerPieces = new ArrayList<>();
-
-    for(Piece p : board.getPieces()){
-      if(p.getTeam()==currentPlayer && !p.getMoves(board).isEmpty()){
-        playerPieces.add(p);
-      }
-    }
-    utilityList  = new ArrayList<>();
-    maxUtility = Integer.MIN_VALUE;
-
-    topMovePieces = new ArrayList<>();
-    topMoveTiles = new ArrayList<>();
-    for(Piece p : playerPieces){
-      for(ChessTile t : board.getMoves(p)){
-        ChessBoard copy = board.makeHypotheticalMove(p, t.getCoordinates());
-        copy.getTurnManagerData().turn().incrementTurn();
-
-        evaluateChildNode(copy, p, t, depth);
-      }
-    }
-
-    int seed = (int) (Math.random() * topMovePieces.size());
-    //return board.move(movingPiece, finalSquare.getCoordinates());
-    return board.move(topMovePieces.get(seed), topMoveTiles.get(seed).getCoordinates());
+    DecisionTree decisionTree = new DecisionTree(board, currentPlayer, objectives);
+    return decisionTree.evaluatePosition(board, currentPlayer, depth);
   }
 
 
 
+  //random legal move
   private TurnUpdate getRandomMove(ChessBoard board, int currentPlayer) throws Throwable {
     List<Piece> playerPieces = new ArrayList<>();
 
@@ -188,24 +182,6 @@ public class Bot implements RemotePlayer {
     //return new TurnUpdate(movingPiece.move(finalSquare, board), turnManager.incrementTurn());
   }
 
-  private void evaluateChildNode(ChessBoard copy, Piece p, ChessTile t, int depth)
-      throws EngineException {
-    DecisionNode childNode = new DecisionNode(copy, turnCriteria);
-    double util = childNode.calculateUtility(objectives, depth);
-    utilityList.add(util);
-    if (util >= maxUtility) {
-      if (util > maxUtility) {
-        topMovePieces.clear();
-        topMoveTiles.clear();
-      }
-      maxUtility = util;
-      topMovePieces.add(p);
-      topMoveTiles.add(t);
-    }
-  }
 
-  @Override
-  public TurnUpdate getRemoteMove(ChessBoard board, int currentPlayer) throws Throwable {
-    return getBotMove(board, currentPlayer);
-  }
+
 }
